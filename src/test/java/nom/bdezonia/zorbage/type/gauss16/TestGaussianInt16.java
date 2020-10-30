@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.gaussian16.GaussianInt16Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
@@ -377,7 +377,7 @@ public class TestGaussianInt16 {
 		}
 		
 		HighPrecisionMember hp = G.HP.construct();
-		SignedInt32Member num = G.INT32.construct();
+		UnsignedInt32Member num = G.UINT32.construct();
 		
 		a.setR(14);
 		a.setI(-3);

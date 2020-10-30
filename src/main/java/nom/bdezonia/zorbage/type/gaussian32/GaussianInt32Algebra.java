@@ -60,7 +60,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.int64.UnsignedInt64Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
@@ -70,10 +70,10 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 public class GaussianInt32Algebra
 	implements
-		EuclideanDomain<GaussianInt32Algebra, GaussianInt32Member, SignedInt64Member>,
+		EuclideanDomain<GaussianInt32Algebra, GaussianInt32Member, UnsignedInt64Member>,
 		Random<GaussianInt32Member>,
 		Tolerance<GaussianInt32Member,GaussianInt32Member>,
-		Norm<GaussianInt32Member, SignedInt64Member>,
+		Norm<GaussianInt32Member, UnsignedInt64Member>,
 		Conjugate<GaussianInt32Member>,
 		ScaleByOneHalf<GaussianInt32Member>,
 		ScaleByTwo<GaussianInt32Member>,
@@ -301,20 +301,20 @@ public class GaussianInt32Algebra
 		return RAND;
 	}
 
-	private final Procedure2<GaussianInt32Member, SignedInt64Member> NORM =
-			new Procedure2<GaussianInt32Member, SignedInt64Member>()
+	private final Procedure2<GaussianInt32Member, UnsignedInt64Member> NORM =
+			new Procedure2<GaussianInt32Member, UnsignedInt64Member>()
 	{
 		@Override
-		public void call(GaussianInt32Member a, SignedInt64Member b) {
-			long val = ((long)a.r)*a.r + ((long)a.i)*a.i;
-			if (val < 0)
-				throw new IllegalArgumentException("overflow in norm calculation");
+		public void call(GaussianInt32Member a, UnsignedInt64Member b) {
+			BigInteger ar = BigInteger.valueOf(a.r);
+			BigInteger ai = BigInteger.valueOf(a.i);
+			BigInteger val = ar.multiply(ar).add(ai.multiply(ai));
 			b.setV(val);
 		}
 	};
 
 	@Override
-	public Procedure2<GaussianInt32Member, SignedInt64Member> norm() {
+	public Procedure2<GaussianInt32Member, UnsignedInt64Member> norm() {
 		return NORM;
 	}
 
@@ -368,7 +368,7 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member c) {
-			EuclideanGcd.compute(G.GAUSS32, G.INT64, a, b, c);
+			EuclideanGcd.compute(G.GAUSS32, G.UINT64, a, b, c);
 		}
 	};
 	
@@ -382,7 +382,7 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public void call(GaussianInt32Member a, GaussianInt32Member b, GaussianInt32Member c) {
-			EuclideanLcm.compute(G.GAUSS32, G.INT64, a, b, c);
+			EuclideanLcm.compute(G.GAUSS32, G.UINT64, a, b, c);
 		}
 	};
 
@@ -457,9 +457,9 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public Boolean call(GaussianInt32Member a) {
-			SignedInt64Member norm = G.INT64.construct();
+			UnsignedInt64Member norm = G.UINT64.construct();
 			norm().call(a, norm);
-			return (norm.v() & 1) == 0;
+			return norm.v().and(BigInteger.ONE).equals(BigInteger.ZERO);
 		}
 	};
 
@@ -473,9 +473,9 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public Boolean call(GaussianInt32Member a) {
-			SignedInt64Member norm = G.INT64.construct();
+			UnsignedInt64Member norm = G.UINT64.construct();
 			norm().call(a, norm);
-			return (norm.v() & 1) == 1;
+			return norm.v().and(BigInteger.ONE).equals(BigInteger.ONE);
 		}
 	};
 
@@ -489,9 +489,9 @@ public class GaussianInt32Algebra
 	{
 		@Override
 		public void call(GaussianInt32Member a, HighPrecisionMember b) {
-			SignedInt64Member norm = G.INT64.construct();
+			UnsignedInt64Member norm = G.UINT64.construct();
 			norm().call(a, norm);
-			BigDecimal n = BigDecimal.valueOf(norm.v());
+			BigDecimal n = new BigDecimal(norm.v());
 			b.setV(BigDecimalMath.sqrt(n, HighPrecisionAlgebra.getContext()));
 		}
 	};

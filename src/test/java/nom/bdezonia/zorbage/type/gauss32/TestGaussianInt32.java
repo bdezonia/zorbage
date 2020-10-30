@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.junit.Test;
 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.gaussian32.GaussianInt32Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.int64.UnsignedInt64Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 
 /**
@@ -377,7 +378,7 @@ public class TestGaussianInt32 {
 		}
 		
 		HighPrecisionMember hp = G.HP.construct();
-		SignedInt64Member num = G.INT64.construct();
+		UnsignedInt64Member num = G.UINT64.construct();
 		
 		a.setR(14);
 		a.setI(-3);
@@ -388,7 +389,7 @@ public class TestGaussianInt32 {
 		
 		G.GAUSS32.norm().call(a, num);
 
-		assertEquals((14*14 + (-3)*(-3)), num.v());
+		assertEquals(BigInteger.valueOf(14*14 + (-3)*(-3)), num.v());
 
 		a.setR(-3);
 		a.setI(7);

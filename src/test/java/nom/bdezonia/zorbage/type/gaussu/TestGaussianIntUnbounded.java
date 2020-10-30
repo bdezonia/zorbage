@@ -496,4 +496,5 @@ public class TestGaussianIntUnbounded {
 		assertEquals(BigInteger.valueOf(-4), c.r());
 		assertEquals(BigInteger.valueOf(12), c.i());
 	}
+	
 }
