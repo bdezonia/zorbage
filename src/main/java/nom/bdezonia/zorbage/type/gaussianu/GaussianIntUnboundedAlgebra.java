@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algorithm.EuclideanGcd;
+import nom.bdezonia.zorbage.algorithm.EuclideanLcm;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -354,8 +355,7 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public void call(GaussianIntUnboundedMember a, GaussianIntUnboundedMember b, GaussianIntUnboundedMember c) {
-			throw new IllegalArgumentException("code not done yet");
-			//Lcm.compute(G.GAUSS16, a, b, c);
+			EuclideanLcm.compute(G.GAUSSU, G.UNBOUND, a, b, c);
 		}
 	};
 
