@@ -827,66 +827,6 @@ public class DataBundle {
 			unbounds.add(ds);
 	}
 	
-	public void mergeComplexFloat16(DimensionedDataSource<ComplexFloat16Member> ds) {
-		if (ds != null)
-			chlfs.add(ds);
-	}
-	
-	public void mergeComplexFloat32(DimensionedDataSource<ComplexFloat32Member> ds) {
-		if (ds != null)
-			cflts.add(ds);
-	}
-
-	public void mergeComplexFloat64(DimensionedDataSource<ComplexFloat64Member> ds) {
-		if (ds != null)
-			cdbls.add(ds);
-	}
-	
-	public void mergeComplexHighPrec(DimensionedDataSource<ComplexHighPrecisionMember> ds) {
-		if (ds != null)
-			chps.add(ds);
-	}
-	
-	public void mergeQuaternionFloat16(DimensionedDataSource<QuaternionFloat16Member> ds) {
-		if (ds != null)
-			qhlfs.add(ds);
-	}
-	
-	public void mergeQuaternionFloat32(DimensionedDataSource<QuaternionFloat32Member> ds) {
-		if (ds != null)
-			qflts.add(ds);
-	}
-
-	public void mergeQuaternionFloat64(DimensionedDataSource<QuaternionFloat64Member> ds) {
-		if (ds != null)
-			qdbls.add(ds);
-	}
-	
-	public void mergeQuaternionHighPrec(DimensionedDataSource<QuaternionHighPrecisionMember> ds) {
-		if (ds != null)
-			qhps.add(ds);
-	}
-	
-	public void mergeOctonionFloat16(DimensionedDataSource<OctonionFloat16Member> ds) {
-		if (ds != null)
-			ohlfs.add(ds);
-	}
-	
-	public void mergeOctonionFloat32(DimensionedDataSource<OctonionFloat32Member> ds) {
-		if (ds != null)
-			oflts.add(ds);
-	}
-
-	public void mergeOctonionFloat64(DimensionedDataSource<OctonionFloat64Member> ds) {
-		if (ds != null)
-			odbls.add(ds);
-	}
-	
-	public void mergeOctonionHighPrec(DimensionedDataSource<OctonionHighPrecisionMember> ds) {
-		if (ds != null)
-			ohps.add(ds);
-	}
-	
 	public void mergeGaussianInt8(DimensionedDataSource<GaussianInt8Member> ds) {
 		if (ds != null)
 			gint8s.add(ds);
