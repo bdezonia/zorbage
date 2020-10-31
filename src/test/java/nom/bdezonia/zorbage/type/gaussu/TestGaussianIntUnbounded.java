@@ -493,22 +493,205 @@ public class TestGaussianIntUnbounded {
 		
 		assertEquals(BigInteger.valueOf(-4), c.r());
 		assertEquals(BigInteger.valueOf(12), c.i());
+
+		// gcd : real numbers
 		
-		try {
-			G.GAUSSU.gcd().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method gcd()");
-			assertTrue(true);
-		}
+		a.setR(BigInteger.valueOf(9));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(6));
+		b.setI(BigInteger.valueOf(0));
+		G.GAUSSU.power().call(4, a, b);
 		
-		try {
-			G.GAUSSU.lcm().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method lcm()");
-			assertTrue(true);
-		}
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(9), c.r());
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		a.setR(BigInteger.valueOf(120));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(70));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-10), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(0), c.i());
+
+		a.setR(BigInteger.valueOf(104));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(12));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-4), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		a.setR(BigInteger.valueOf(18000));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(250));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(250), c.r());
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		G.GAUSSU.gcd().call(b, a, c);
+		
+		assertEquals(BigInteger.valueOf(250), c.r());
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		// gcd : imag numbers
+		
+		a.setR(BigInteger.valueOf(1));
+		a.setI(BigInteger.valueOf(1));
+		G.GAUSSU.power().call(4, a, b);
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(1), c.r());
+		assertEquals(BigInteger.valueOf(1), c.i());
+		
+		a.setR(BigInteger.valueOf(3));
+		a.setI(BigInteger.valueOf(6));
+		b.setR(BigInteger.valueOf(1));
+		b.setI(BigInteger.valueOf(2));
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(1), c.r());
+		assertEquals(BigInteger.valueOf(2), c.i());
+
+		a.setR(BigInteger.valueOf(1));
+		a.setI(BigInteger.valueOf(2));
+		b.setR(BigInteger.valueOf(1));
+		b.setI(BigInteger.valueOf(5));
+		G.GAUSSU.power().call(2, b, c);
+		G.GAUSSU.multiply().call(a, b, b);
+		G.GAUSSU.assign().call(c, a);
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(1), c.r());
+		assertEquals(BigInteger.valueOf(5), c.i());
+		
+		a.setR(BigInteger.valueOf(1));
+		a.setI(BigInteger.valueOf(-2));
+		b.setR(BigInteger.valueOf(1));
+		b.setI(BigInteger.valueOf(-5));
+		G.GAUSSU.power().call(2, b, c);
+		G.GAUSSU.multiply().call(a, b, b);
+		G.GAUSSU.assign().call(c, a);
+		
+		G.GAUSSU.gcd().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(1), c.r());
+		assertEquals(BigInteger.valueOf(-5), c.i());
+		
+		G.GAUSSU.gcd().call(b, a, c);
+		
+		assertEquals(BigInteger.valueOf(1), c.r());
+		assertEquals(BigInteger.valueOf(-5), c.i());
+
+		// lcm : real numbers
+		
+		a.setR(BigInteger.valueOf(9));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(6));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-18), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		a.setR(BigInteger.valueOf(120));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(70));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-840), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(0), c.i());
+
+		a.setR(BigInteger.valueOf(104));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(12));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-312), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		a.setR(BigInteger.valueOf(18000));
+		a.setI(BigInteger.valueOf(0));
+		b.setR(BigInteger.valueOf(250));
+		b.setI(BigInteger.valueOf(0));
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(18000), c.r());
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		G.GAUSSU.lcm().call(b, a, c);
+		
+		assertEquals(BigInteger.valueOf(18000), c.r());
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		// lcm : imag numbers
+		
+		a.setR(BigInteger.valueOf(1));
+		a.setI(BigInteger.valueOf(1));
+		G.GAUSSU.power().call(4, a, b);
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-4), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(0), c.i());
+		
+		a.setR(BigInteger.valueOf(3));
+		a.setI(BigInteger.valueOf(6));
+		b.setR(BigInteger.valueOf(1));
+		b.setI(BigInteger.valueOf(2));
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(3), c.r());
+		assertEquals(BigInteger.valueOf(6), c.i());
+
+		a.setR(BigInteger.valueOf(1));
+		a.setI(BigInteger.valueOf(2));
+		b.setR(BigInteger.valueOf(1));
+		b.setI(BigInteger.valueOf(5));
+		G.GAUSSU.power().call(2, b, c);
+		G.GAUSSU.multiply().call(a, b, b);
+		G.GAUSSU.assign().call(c, a);
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-44), c.r());  // TODO : why negative
+		assertEquals(BigInteger.valueOf(-38), c.i());  // TODO : why negative
+		
+		a.setR(BigInteger.valueOf(1));
+		a.setI(BigInteger.valueOf(-2));
+		b.setR(BigInteger.valueOf(1));
+		b.setI(BigInteger.valueOf(-5));
+		G.GAUSSU.power().call(2, b, c);
+		G.GAUSSU.multiply().call(a, b, b);
+		G.GAUSSU.assign().call(c, a);
+		
+		G.GAUSSU.lcm().call(a, b, c);
+		
+		assertEquals(BigInteger.valueOf(-44), c.r());
+		assertEquals(BigInteger.valueOf(38), c.i());
+		
+		G.GAUSSU.lcm().call(b, a, c);
+		
+		assertEquals(BigInteger.valueOf(-44), c.r());
+		assertEquals(BigInteger.valueOf(38), c.i());
 	}
 	
 }

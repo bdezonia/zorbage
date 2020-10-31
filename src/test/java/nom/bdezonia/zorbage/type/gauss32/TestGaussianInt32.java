@@ -502,21 +502,204 @@ public class TestGaussianInt32 {
 				sames++;
 		}
 		assertFalse(sames > 10);
+
+		// gcd : real numbers
 		
-		try {
-			G.GAUSS32.gcd().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method gcd()");
-			assertTrue(true);
-		}
+		a.setR(9);
+		a.setI(0);
+		b.setR(6);
+		b.setI(0);
+		G.GAUSS32.power().call(4, a, b);
 		
-		try {
-			G.GAUSS32.lcm().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method lcm()");
-			assertTrue(true);
-		}
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(9, c.r());
+		assertEquals(0, c.i());
+		
+		a.setR(120);
+		a.setI(0);
+		b.setR(70);
+		b.setI(0);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(-10, c.r());  // TODO : why negative
+		assertEquals(0, c.i());
+
+		a.setR(104);
+		a.setI(0);
+		b.setR(12);
+		b.setI(0);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(-4, c.r());  // TODO : why negative
+		assertEquals(0, c.i());
+		
+		a.setR(18000);
+		a.setI(0);
+		b.setR(250);
+		b.setI(0);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(250, c.r());
+		assertEquals(0, c.i());
+		
+		G.GAUSS32.gcd().call(b, a, c);
+		
+		assertEquals(250, c.r());
+		assertEquals(0, c.i());
+		
+		// gcd : imag numbers
+		
+		a.setR(1);
+		a.setI(1);
+		G.GAUSS32.power().call(4, a, b);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(1, c.r());
+		assertEquals(1, c.i());
+		
+		a.setR(3);
+		a.setI(6);
+		b.setR(1);
+		b.setI(2);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(1, c.r());
+		assertEquals(2, c.i());
+
+		a.setR(1);
+		a.setI(2);
+		b.setR(1);
+		b.setI(5);
+		G.GAUSS32.power().call(2, b, c);
+		G.GAUSS32.multiply().call(a, b, b);
+		G.GAUSS32.assign().call(c, a);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(1, c.r());
+		assertEquals(5, c.i());
+		
+		a.setR(1);
+		a.setI(-2);
+		b.setR(1);
+		b.setI(-5);
+		G.GAUSS32.power().call(2, b, c);
+		G.GAUSS32.multiply().call(a, b, b);
+		G.GAUSS32.assign().call(c, a);
+		
+		G.GAUSS32.gcd().call(a, b, c);
+		
+		assertEquals(1, c.r());
+		assertEquals(-5, c.i());
+		
+		G.GAUSS32.gcd().call(b, a, c);
+		
+		assertEquals(1, c.r());
+		assertEquals(-5, c.i());
+
+		// lcm : real numbers
+		
+		a.setR(9);
+		a.setI(0);
+		b.setR(6);
+		b.setI(0);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(-18, c.r());  // TODO : why negative
+		assertEquals(0, c.i());
+		
+		a.setR(120);
+		a.setI(0);
+		b.setR(70);
+		b.setI(0);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(-840, c.r());  // TODO : why negative
+		assertEquals(0, c.i());
+
+		a.setR(104);
+		a.setI(0);
+		b.setR(12);
+		b.setI(0);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(-312, c.r());  // TODO : why negative
+		assertEquals(0, c.i());
+		
+		a.setR(18000);
+		a.setI(0);
+		b.setR(250);
+		b.setI(0);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(18000, c.r());
+		assertEquals(0, c.i());
+		
+		G.GAUSS32.lcm().call(b, a, c);
+		
+		assertEquals(18000, c.r());
+		assertEquals(0, c.i());
+		
+		// lcm : imag numbers
+		
+		a.setR(1);
+		a.setI(1);
+		G.GAUSS32.power().call(4, a, b);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(-4, c.r());  // TODO : why negative
+		assertEquals(0, c.i());
+		
+		a.setR(3);
+		a.setI(6);
+		b.setR(1);
+		b.setI(2);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(3, c.r());
+		assertEquals(6, c.i());
+
+		a.setR(1);
+		a.setI(2);
+		b.setR(1);
+		b.setI(5);
+		G.GAUSS32.power().call(2, b, c);
+		G.GAUSS32.multiply().call(a, b, b);
+		G.GAUSS32.assign().call(c, a);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(-44, c.r());  // TODO : why negative
+		assertEquals(-38, c.i());  // TODO : why negative
+		
+		a.setR(1);
+		a.setI(-2);
+		b.setR(1);
+		b.setI(-5);
+		G.GAUSS32.power().call(2, b, c);
+		G.GAUSS32.multiply().call(a, b, b);
+		G.GAUSS32.assign().call(c, a);
+		
+		G.GAUSS32.lcm().call(a, b, c);
+		
+		assertEquals(-44, c.r());
+		assertEquals(38, c.i());
+		
+		G.GAUSS32.lcm().call(b, a, c);
+		
+		assertEquals(-44, c.r());
+		assertEquals(38, c.i());
 	}
 }
