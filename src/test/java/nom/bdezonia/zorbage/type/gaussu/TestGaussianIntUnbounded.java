@@ -361,22 +361,6 @@ public class TestGaussianIntUnbounded {
 		assertEquals(BigInteger.valueOf(0), m.r());
 		assertEquals(BigInteger.valueOf(3), m.i());
 		
-		try {
-			G.GAUSSU.gcd().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method gcd()");
-			assertTrue(true);
-		}
-		
-		try {
-			G.GAUSSU.lcm().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method lcm()");
-			assertTrue(true);
-		}
-		
 		HighPrecisionMember hp = G.HP.construct();
 		UnboundedIntMember num = G.UNBOUND.construct();
 		
@@ -495,6 +479,22 @@ public class TestGaussianIntUnbounded {
 		
 		assertEquals(BigInteger.valueOf(-4), c.r());
 		assertEquals(BigInteger.valueOf(12), c.i());
+		
+		try {
+			G.GAUSSU.gcd().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method gcd()");
+			assertTrue(true);
+		}
+		
+		try {
+			G.GAUSSU.lcm().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method lcm()");
+			assertTrue(true);
+		}
 	}
 	
 }

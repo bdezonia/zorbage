@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.junit.Test;
 
@@ -360,22 +361,6 @@ public class TestGaussianInt8 {
 		assertEquals(0, m.r());
 		assertEquals(3, m.i());
 		
-		try {
-			G.GAUSS8.gcd().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method gcd()");
-			assertTrue(true);
-		}
-		
-		try {
-			G.GAUSS8.lcm().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method lcm()");
-			assertTrue(true);
-		}
-		
 		HighPrecisionMember hp = G.HP.construct();
 		UnsignedInt16Member num = G.UINT16.construct();
 		
@@ -389,6 +374,20 @@ public class TestGaussianInt8 {
 		G.GAUSS8.norm().call(a, num);
 
 		assertEquals((14*14 + (-3)*(-3)), num.v());
+
+		a.setR((int) Byte.MIN_VALUE);
+		a.setI((int) Byte.MIN_VALUE);
+		
+		G.GAUSS8.norm().call(a, num);
+		
+		assertEquals(BigInteger.valueOf(Byte.MIN_VALUE).multiply(BigInteger.valueOf(Byte.MIN_VALUE)).multiply(BigInteger.TWO).intValue(), num.v());
+
+		a.setR((int) Byte.MAX_VALUE);
+		a.setI((int) Byte.MAX_VALUE);
+		
+		G.GAUSS8.norm().call(a, num);
+		
+		assertEquals(BigInteger.valueOf(Byte.MAX_VALUE).multiply(BigInteger.valueOf(Byte.MAX_VALUE)).multiply(BigInteger.TWO).intValue(), num.v());
 
 		a.setR(-3);
 		a.setI(7);
@@ -503,5 +502,21 @@ public class TestGaussianInt8 {
 				sames++;
 		}
 		assertFalse(sames > 10);
+		
+		try {
+			G.GAUSS8.gcd().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method gcd()");
+			assertTrue(true);
+		}
+		
+		try {
+			G.GAUSS8.lcm().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method lcm()");
+			assertTrue(true);
+		}
 	}
 }

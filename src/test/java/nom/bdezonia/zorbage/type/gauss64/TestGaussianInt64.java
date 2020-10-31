@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.junit.Test;
 
@@ -360,22 +361,6 @@ public class TestGaussianInt64 {
 		assertEquals(0, m.r());
 		assertEquals(3, m.i());
 		
-		try {
-			G.GAUSS64.gcd().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method gcd()");
-			assertTrue(true);
-		}
-		
-		try {
-			G.GAUSS64.lcm().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method lcm()");
-			assertTrue(true);
-		}
-		
 		HighPrecisionMember hp = G.HP.construct();
 		UnboundedIntMember num = G.UNBOUND.construct();
 		
@@ -389,6 +374,20 @@ public class TestGaussianInt64 {
 		G.GAUSS64.norm().call(a, num);
 
 		assertEquals((14*14 + (-3)*(-3)), num.v().longValue());
+
+		a.setR(Long.MIN_VALUE);
+		a.setI(Long.MIN_VALUE);
+		
+		G.GAUSS64.norm().call(a, num);
+		
+		assertEquals(BigInteger.valueOf(Long.MIN_VALUE).multiply(BigInteger.valueOf(Long.MIN_VALUE)).multiply(BigInteger.TWO), num.v());
+
+		a.setR(Long.MAX_VALUE);
+		a.setI(Long.MAX_VALUE);
+		
+		G.GAUSS64.norm().call(a, num);
+		
+		assertEquals(BigInteger.valueOf(Long.MAX_VALUE).multiply(BigInteger.valueOf(Long.MAX_VALUE)).multiply(BigInteger.TWO), num.v());
 
 		a.setR(-3L);
 		a.setI(7L);
@@ -503,5 +502,21 @@ public class TestGaussianInt64 {
 				sames++;
 		}
 		assertFalse(sames > 10);
+		
+		try {
+			G.GAUSS64.gcd().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method gcd()");
+			assertTrue(true);
+		}
+		
+		try {
+			G.GAUSS64.lcm().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method lcm()");
+			assertTrue(true);
+		}
 	}
 }

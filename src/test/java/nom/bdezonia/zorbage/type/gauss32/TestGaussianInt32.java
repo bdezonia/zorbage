@@ -361,22 +361,6 @@ public class TestGaussianInt32 {
 		assertEquals(0, m.r());
 		assertEquals(3, m.i());
 		
-		try {
-			G.GAUSS32.gcd().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method gcd()");
-			assertTrue(true);
-		}
-		
-		try {
-			G.GAUSS32.lcm().call(a, b, c);
-			fail();
-		} catch (IllegalArgumentException e) {
-			System.out.println("Not testing unfinished method lcm()");
-			assertTrue(true);
-		}
-		
 		HighPrecisionMember hp = G.HP.construct();
 		UnsignedInt64Member num = G.UINT64.construct();
 		
@@ -390,6 +374,20 @@ public class TestGaussianInt32 {
 		G.GAUSS32.norm().call(a, num);
 
 		assertEquals(BigInteger.valueOf(14*14 + (-3)*(-3)), num.v());
+
+		a.setR(Integer.MIN_VALUE);
+		a.setI(Integer.MIN_VALUE);
+		
+		G.GAUSS32.norm().call(a, num);
+		
+		assertEquals(BigInteger.valueOf(Integer.MIN_VALUE).multiply(BigInteger.valueOf(Integer.MIN_VALUE)).multiply(BigInteger.TWO), num.v());
+
+		a.setR(Integer.MAX_VALUE);
+		a.setI(Integer.MAX_VALUE);
+		
+		G.GAUSS32.norm().call(a, num);
+		
+		assertEquals(BigInteger.valueOf(Integer.MAX_VALUE).multiply(BigInteger.valueOf(Integer.MAX_VALUE)).multiply(BigInteger.TWO), num.v());
 
 		a.setR(-3);
 		a.setI(7);
@@ -504,5 +502,21 @@ public class TestGaussianInt32 {
 				sames++;
 		}
 		assertFalse(sames > 10);
+		
+		try {
+			G.GAUSS32.gcd().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method gcd()");
+			assertTrue(true);
+		}
+		
+		try {
+			G.GAUSS32.lcm().call(a, b, c);
+			fail();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Not testing unfinished method lcm()");
+			assertTrue(true);
+		}
 	}
 }
