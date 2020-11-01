@@ -380,14 +380,14 @@ public class TestGaussianInt16 {
 		
 		G.GAUSS16.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Short.MIN_VALUE).multiply(BigInteger.valueOf(Short.MIN_VALUE)).multiply(BigInteger.TWO).longValue(), num.v());
+		assertEquals(BigInteger.valueOf(Short.MIN_VALUE).multiply(BigInteger.valueOf(Short.MIN_VALUE)).multiply(BigInteger.valueOf(2)).longValue(), num.v());
 
 		a.setR((int) Short.MAX_VALUE);
 		a.setI((int) Short.MAX_VALUE);
 		
 		G.GAUSS16.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Short.MAX_VALUE).multiply(BigInteger.valueOf(Short.MAX_VALUE)).multiply(BigInteger.TWO).longValue(), num.v());
+		assertEquals(BigInteger.valueOf(Short.MAX_VALUE).multiply(BigInteger.valueOf(Short.MAX_VALUE)).multiply(BigInteger.valueOf(2)).longValue(), num.v());
 		
 		a.setR(-3);
 		a.setI(7);

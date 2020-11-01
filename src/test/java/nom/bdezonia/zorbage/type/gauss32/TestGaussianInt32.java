@@ -380,14 +380,14 @@ public class TestGaussianInt32 {
 		
 		G.GAUSS32.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Integer.MIN_VALUE).multiply(BigInteger.valueOf(Integer.MIN_VALUE)).multiply(BigInteger.TWO), num.v());
+		assertEquals(BigInteger.valueOf(Integer.MIN_VALUE).multiply(BigInteger.valueOf(Integer.MIN_VALUE)).multiply(BigInteger.valueOf(2)), num.v());
 
 		a.setR(Integer.MAX_VALUE);
 		a.setI(Integer.MAX_VALUE);
 		
 		G.GAUSS32.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Integer.MAX_VALUE).multiply(BigInteger.valueOf(Integer.MAX_VALUE)).multiply(BigInteger.TWO), num.v());
+		assertEquals(BigInteger.valueOf(Integer.MAX_VALUE).multiply(BigInteger.valueOf(Integer.MAX_VALUE)).multiply(BigInteger.valueOf(2)), num.v());
 
 		a.setR(-3);
 		a.setI(7);

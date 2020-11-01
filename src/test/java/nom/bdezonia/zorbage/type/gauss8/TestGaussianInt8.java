@@ -380,14 +380,14 @@ public class TestGaussianInt8 {
 		
 		G.GAUSS8.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Byte.MIN_VALUE).multiply(BigInteger.valueOf(Byte.MIN_VALUE)).multiply(BigInteger.TWO).intValue(), num.v());
+		assertEquals(BigInteger.valueOf(Byte.MIN_VALUE).multiply(BigInteger.valueOf(Byte.MIN_VALUE)).multiply(BigInteger.valueOf(2)).intValue(), num.v());
 
 		a.setR((int) Byte.MAX_VALUE);
 		a.setI((int) Byte.MAX_VALUE);
 		
 		G.GAUSS8.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Byte.MAX_VALUE).multiply(BigInteger.valueOf(Byte.MAX_VALUE)).multiply(BigInteger.TWO).intValue(), num.v());
+		assertEquals(BigInteger.valueOf(Byte.MAX_VALUE).multiply(BigInteger.valueOf(Byte.MAX_VALUE)).multiply(BigInteger.valueOf(2)).intValue(), num.v());
 
 		a.setR(-3);
 		a.setI(7);

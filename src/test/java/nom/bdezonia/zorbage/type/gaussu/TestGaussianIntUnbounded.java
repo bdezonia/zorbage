@@ -380,14 +380,14 @@ public class TestGaussianIntUnbounded {
 		
 		G.GAUSSU.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Long.MIN_VALUE).multiply(BigInteger.valueOf(Long.MIN_VALUE)).multiply(BigInteger.TWO), num.v());
+		assertEquals(BigInteger.valueOf(Long.MIN_VALUE).multiply(BigInteger.valueOf(Long.MIN_VALUE)).multiply(BigInteger.valueOf(2)), num.v());
 
 		a.setR(BigInteger.valueOf(Long.MAX_VALUE));
 		a.setI(BigInteger.valueOf(Long.MAX_VALUE));
 		
 		G.GAUSSU.norm().call(a, num);
 		
-		assertEquals(BigInteger.valueOf(Long.MAX_VALUE).multiply(BigInteger.valueOf(Long.MAX_VALUE)).multiply(BigInteger.TWO), num.v());
+		assertEquals(BigInteger.valueOf(Long.MAX_VALUE).multiply(BigInteger.valueOf(Long.MAX_VALUE)).multiply(BigInteger.valueOf(2)), num.v());
 
 		a.setR(BigInteger.valueOf(-3));
 		a.setI(BigInteger.valueOf(7));
