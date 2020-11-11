@@ -43,35 +43,35 @@ public class Hasher {
 	}
 
 	public static int hashCode(char v) {
-		return Character.valueOf(v).hashCode();
+		return Character.hashCode(v);
 	}
 
 	public static int hashCode(boolean v) {
-		return v ? 1 : 0;
+		return Boolean.hashCode(v);
 	}
 
 	public static int hashCode(byte v) {
-		return v;
+		return Byte.hashCode(v);
 	}
 
 	public static int hashCode(short v) {
-		return v;
+		return Short.hashCode(v);
 	}
 
 	public static int hashCode(int v) {
-		return v;
+		return Integer.hashCode(v);
 	}
 
 	public static int hashCode(long v) {
-		return (int) v;
+		return Long.hashCode(v);
 	}
 
 	public static int hashCode(float v) {
-		return Float.valueOf(v).hashCode();
+		return Float.hashCode(v);
 	}
 
 	public static int hashCode(double v) {
-		return Double.valueOf(v).hashCode();
+		return Double.hashCode(v);
 	}
 
 	public static int hashCode(BigInteger v) {
