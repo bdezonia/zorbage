@@ -1,8 +1,8 @@
 (Note: I am looking to help some lab in remote sensing or other big data
  consumer by taking your slow analyses in Python or R or Matlab,
  reimplementing them to work with Zorbage, and iterating until the
- Zorbage implementation can outperform your current solutions. Contact
- me if you are interested in pursuing something like this.)
+ Zorbage implementation can outperform your current solutions. Create an
+ issue if you are interested in pursuing something like this.)
 
 Zorbage: algebraic data types and algorithms for use in numeric processing
 
