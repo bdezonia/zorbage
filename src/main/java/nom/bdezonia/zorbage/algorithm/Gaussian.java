@@ -47,11 +47,18 @@ public class Gaussian {
 	
 	/**
 	 * 
+	 * Gaussian
+	 * This algorithm calculates values along the gaussian curve of the normal distribution. One can specify
+	 * mean mu and deviation sigma of the normal curve. Then one passes in an x value that you want to
+	 * determine the curve value of and after calculation this algorithm will provide the resulting value.
+	 * 
+	 * Reference: https://en.wikipedia.org/wiki/Gaussian_function
+	 * 
 	 * @param alg
-	 * @param mu
-	 * @param sigma
-	 * @param x
-	 * @param result
+	 * @param mu The mean of this normally distributed distribution
+	 * @param sigma The standard deviation of this normally distributed distribution
+	 * @param x The value along the x axis that we want the y value for that lies on the normal curve
+	 * @param result The y value on the normal curve that this algorithm computes
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Exponential<U> &
 					Unity<U> & RealConstants<U> & Roots<U> & Invertible<U> & Ordered<U>,
