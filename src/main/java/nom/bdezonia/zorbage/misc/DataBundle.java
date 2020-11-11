@@ -164,6 +164,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<ComplexFloat32VectorMember>> cflt_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat32MatrixMember>> cflt_mats = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat32CartesianTensorProductMember>> cflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<CharMember>> chars = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat16Member>> chlfs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat16VectorMember>> chlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat16MatrixMember>> chlf_mats = new ArrayList<>();
@@ -181,8 +182,6 @@ public class DataBundle {
 	public List<DimensionedDataSource<Float32MatrixMember>> flt_mats = new ArrayList<>();
 	public List<DimensionedDataSource<Float32CartesianTensorProductMember>> flt_tens = new ArrayList<>();
 	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
-	public List<DimensionedDataSource<StringMember>> strs = new ArrayList<>();
-	public List<DimensionedDataSource<CharMember>> chars = new ArrayList<>();
 	public List<DimensionedDataSource<Float16Member>> hlfs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16VectorMember>> hlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16MatrixMember>> hlf_mats = new ArrayList<>();
@@ -245,6 +244,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember>> qhp_tens = new ArrayList<>();
 	public List<DimensionedDataSource<RationalMember>> rationals = new ArrayList<>();
 	public List<DimensionedDataSource<RgbMember>> rgbs = new ArrayList<>();
+	public List<DimensionedDataSource<StringMember>> strs = new ArrayList<>();
 	public List<DimensionedDataSource<UnsignedInt1Member>> uint1s = new ArrayList<>();
 	public List<DimensionedDataSource<UnsignedInt2Member>> uint2s = new ArrayList<>();
 	public List<DimensionedDataSource<UnsignedInt3Member>> uint3s = new ArrayList<>();
@@ -320,6 +320,11 @@ public class DataBundle {
 	public void mergeComplexFlt32Tens(DimensionedDataSource<ComplexFloat32CartesianTensorProductMember> ds) {
 		if (ds != null)
 			cflt_tens.add(ds);
+	}
+	
+	public void mergeChar(DimensionedDataSource<CharMember> ds) {
+		if (ds != null)
+			chars.add(ds);
 	}
 	
 	public void mergeComplexFlt16(DimensionedDataSource<ComplexFloat16Member> ds) {
@@ -405,16 +410,6 @@ public class DataBundle {
 	public void mergeFixedString(DimensionedDataSource<FixedStringMember> ds) {
 		if (ds != null)
 			fstrs.add(ds);
-	}
-	
-	public void mergeString(DimensionedDataSource<StringMember> ds) {
-		if (ds != null)
-			strs.add(ds);
-	}
-	
-	public void mergeChar(DimensionedDataSource<CharMember> ds) {
-		if (ds != null)
-			chars.add(ds);
 	}
 	
 	public void mergeFlt16(DimensionedDataSource<Float16Member> ds) {
@@ -727,6 +722,11 @@ public class DataBundle {
 			rgbs.add(ds);
 	}
 	
+	public void mergeString(DimensionedDataSource<StringMember> ds) {
+		if (ds != null)
+			strs.add(ds);
+	}
+	
 	public void mergeUInt1(DimensionedDataSource<UnsignedInt1Member> ds) {
 		if (ds != null)
 			uint1s.add(ds);
@@ -865,6 +865,7 @@ public class DataBundle {
 		cflt_vecs.addAll(other.cflt_vecs);
 		cflt_mats.addAll(other.cflt_mats);
 		cflt_tens.addAll(other.cflt_tens);
+		chars.addAll(other.chars);
 		chlfs.addAll(other.chlfs);
 		chlf_vecs.addAll(other.chlf_vecs);
 		chlf_mats.addAll(other.chlf_mats);
@@ -882,8 +883,6 @@ public class DataBundle {
 		flt_mats.addAll(other.flt_mats);
 		flt_tens.addAll(other.flt_tens);
 		fstrs.addAll(other.fstrs);
-		strs.addAll(other.strs);
-		chars.addAll(other.chars);
 		gint8s.addAll(other.gint8s);
 		gint16s.addAll(other.gint16s);
 		gint32s.addAll(other.gint32s);
@@ -951,6 +950,7 @@ public class DataBundle {
 		qhp_tens.addAll(other.qhp_tens);
 		rationals.addAll(other.rationals);
 		rgbs.addAll(other.rgbs);
+		strs.addAll(other.strs);
 		uint1s.addAll(other.uint1s);
 		uint2s.addAll(other.uint2s);
 		uint3s.addAll(other.uint3s);
