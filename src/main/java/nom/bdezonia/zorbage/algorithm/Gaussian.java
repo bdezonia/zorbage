@@ -54,7 +54,7 @@ public class Gaussian {
 	 * 
 	 * Reference: https://en.wikipedia.org/wiki/Gaussian_function
 	 * 
-	 * @param alg
+	 * @param alg The algebra for the type of numbers the algorithm will calculate with
 	 * @param mu The mean of this normally distributed distribution
 	 * @param sigma The standard deviation of this normally distributed distribution
 	 * @param x The value along the x axis that we want the y value for that lies on the normal curve
