@@ -49,11 +49,15 @@ public class GaussianFilter1D {
 	private GaussianFilter1D() { }
 	
 	/**
+	 * GaussianFilter1D
 	 * 
-	 * @param alg
-	 * @param radius
-	 * @param sigma
-	 * @return
+	 * Creates a 1-d gaussian filter given a radius and a spread parameter. This algorithm uses the
+	 * Gaussian algorithm to calculate individual points.
+	 * 
+	 * @param alg The algebra for the type of numbers the algorithm will calculate with
+	 * @param radius The radius of the 1-d filter. Filter size = 2 * radius + 1.
+	 * @param sigma The standard deviation (spread factor) of the normal distribution of interest
+	 * @return A data source containing the 1-d filter values
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> &
 					Exponential<U> & Unity<U> & RealConstants<U> & Roots<U> &

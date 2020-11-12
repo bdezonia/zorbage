@@ -46,8 +46,8 @@ public class Gaussian {
 	private Gaussian() { }
 	
 	/**
-	 * 
 	 * Gaussian
+	 * 
 	 * This algorithm calculates values along the gaussian curve of the normal distribution. One can specify
 	 * mean mu and deviation sigma of the normal curve. Then one passes in an x value that you want to
 	 * determine the curve value of and after calculation this algorithm will provide the resulting value.
