@@ -94,6 +94,8 @@ public class Float64CartesianTensorProduct
 		ScaleByHighPrec<Float64CartesianTensorProductMember>,
 		ScaleByRational<Float64CartesianTensorProductMember>,
 		ScaleByDouble<Float64CartesianTensorProductMember>,
+		ScaleByOneHalf<Float64CartesianTensorProductMember>,
+		ScaleByTwo<Float64CartesianTensorProductMember>,
 		Tolerance<Float64Member, Float64CartesianTensorProductMember>,
 		ArrayLikeMethods<Float64CartesianTensorProductMember, Float64Member>
 {
@@ -654,5 +656,42 @@ public class Float64CartesianTensorProduct
 	public Procedure3<Float64CartesianTensorProductMember, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
+			Float64Member factor = new Float64Member(2);
+			Float64CartesianTensorProductMember prod = G.DBL_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.DBL_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
+			Float64Member factor = new Float64Member(0.5);
+			Float64CartesianTensorProductMember prod = G.DBL_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.DBL_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float64CartesianTensorProductMember, Float64CartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
 }

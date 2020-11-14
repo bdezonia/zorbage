@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.highprec.octonion;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;
@@ -47,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -85,6 +87,8 @@ public class OctonionHighPrecisionCartesianTensorProduct
 		ScaleByHighPrec<OctonionHighPrecisionCartesianTensorProductMember>,
 		ScaleByRational<OctonionHighPrecisionCartesianTensorProductMember>,
 		ScaleByDouble<OctonionHighPrecisionCartesianTensorProductMember>,
+		ScaleByOneHalf<OctonionHighPrecisionCartesianTensorProductMember>,
+		ScaleByTwo<OctonionHighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, OctonionHighPrecisionCartesianTensorProductMember>,
 		ArrayLikeMethods<OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionMember>
 {
@@ -585,5 +589,43 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	public Procedure3<OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionHighPrecisionCartesianTensorProductMember a, OctonionHighPrecisionCartesianTensorProductMember b) {
+			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			OctonionHighPrecisionCartesianTensorProductMember prod = G.OHP_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHP_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionHighPrecisionCartesianTensorProductMember a, OctonionHighPrecisionCartesianTensorProductMember b) {
+			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			OctonionHighPrecisionCartesianTensorProductMember prod = G.OHP_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHP_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionCartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.type.highprec.quaternion;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;
@@ -47,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -85,6 +87,8 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		ScaleByHighPrec<QuaternionHighPrecisionCartesianTensorProductMember>,
 		ScaleByRational<QuaternionHighPrecisionCartesianTensorProductMember>,
 		ScaleByDouble<QuaternionHighPrecisionCartesianTensorProductMember>,
+		ScaleByOneHalf<QuaternionHighPrecisionCartesianTensorProductMember>,
+		ScaleByTwo<QuaternionHighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, QuaternionHighPrecisionCartesianTensorProductMember>,
 		ArrayLikeMethods<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionMember>
 {
@@ -585,5 +589,42 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	public Procedure3<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
+			QuaternionHighPrecisionMember factor = new QuaternionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			QuaternionHighPrecisionCartesianTensorProductMember prod = G.QHP_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QHP_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
+			QuaternionHighPrecisionMember factor = new QuaternionHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			QuaternionHighPrecisionCartesianTensorProductMember prod = G.QHP_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QHP_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
 }

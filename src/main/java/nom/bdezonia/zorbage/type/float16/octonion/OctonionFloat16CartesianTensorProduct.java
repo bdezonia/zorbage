@@ -95,6 +95,8 @@ public class OctonionFloat16CartesianTensorProduct
 		ScaleByHighPrec<OctonionFloat16CartesianTensorProductMember>,
 		ScaleByRational<OctonionFloat16CartesianTensorProductMember>,
 		ScaleByDouble<OctonionFloat16CartesianTensorProductMember>,
+		ScaleByOneHalf<OctonionFloat16CartesianTensorProductMember>,
+		ScaleByTwo<OctonionFloat16CartesianTensorProductMember>,
 		Tolerance<Float16Member, OctonionFloat16CartesianTensorProductMember>,
 		ArrayLikeMethods<OctonionFloat16CartesianTensorProductMember, OctonionFloat16Member>
 {
@@ -665,5 +667,43 @@ public class OctonionFloat16CartesianTensorProduct
 	public Procedure3<OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat16CartesianTensorProductMember a, OctonionFloat16CartesianTensorProductMember b) {
+			OctonionFloat16Member factor = new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat16CartesianTensorProductMember prod = G.OHLF_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHLF_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat16CartesianTensorProductMember a, OctonionFloat16CartesianTensorProductMember b) {
+			OctonionFloat16Member factor = new OctonionFloat16Member(0.5f, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat16CartesianTensorProductMember prod = G.OHLF_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHLF_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat16CartesianTensorProductMember, OctonionFloat16CartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

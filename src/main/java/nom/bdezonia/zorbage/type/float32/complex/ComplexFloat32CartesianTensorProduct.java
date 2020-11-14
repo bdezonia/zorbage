@@ -95,6 +95,8 @@ public class ComplexFloat32CartesianTensorProduct
 		ScaleByHighPrec<ComplexFloat32CartesianTensorProductMember>,
 		ScaleByRational<ComplexFloat32CartesianTensorProductMember>,
 		ScaleByDouble<ComplexFloat32CartesianTensorProductMember>,
+		ScaleByOneHalf<ComplexFloat32CartesianTensorProductMember>,
+		ScaleByTwo<ComplexFloat32CartesianTensorProductMember>,
 		Tolerance<Float32Member, ComplexFloat32CartesianTensorProductMember>,
 		ArrayLikeMethods<ComplexFloat32CartesianTensorProductMember, ComplexFloat32Member>
 {
@@ -664,6 +666,44 @@ public class ComplexFloat32CartesianTensorProduct
 	@Override
 	public Procedure3<ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember> outerProduct() {
 		return OUTER;
+	}
+
+	private final Procedure3<Integer, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
+			ComplexFloat32Member factor = new ComplexFloat32Member(2, 0);
+			ComplexFloat32CartesianTensorProductMember prod = G.CFLT_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CFLT_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
+			ComplexFloat32Member factor = new ComplexFloat32Member(0.5f, 0);
+			ComplexFloat32CartesianTensorProductMember prod = G.CFLT_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CFLT_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat32CartesianTensorProductMember, ComplexFloat32CartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
 	}
 	
 }

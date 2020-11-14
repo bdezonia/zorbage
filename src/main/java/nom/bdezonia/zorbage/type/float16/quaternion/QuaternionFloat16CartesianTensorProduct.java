@@ -95,6 +95,8 @@ public class QuaternionFloat16CartesianTensorProduct
 		ScaleByHighPrec<QuaternionFloat16CartesianTensorProductMember>,
 		ScaleByRational<QuaternionFloat16CartesianTensorProductMember>,
 		ScaleByDouble<QuaternionFloat16CartesianTensorProductMember>,
+		ScaleByOneHalf<QuaternionFloat16CartesianTensorProductMember>,
+		ScaleByTwo<QuaternionFloat16CartesianTensorProductMember>,
 		Tolerance<Float16Member, QuaternionFloat16CartesianTensorProductMember>,
 		ArrayLikeMethods<QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16Member>
 {
@@ -665,5 +667,43 @@ public class QuaternionFloat16CartesianTensorProduct
 	public Procedure3<QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat16CartesianTensorProductMember a, QuaternionFloat16CartesianTensorProductMember b) {
+			QuaternionFloat16Member factor = new QuaternionFloat16Member(2, 0, 0, 0);
+			QuaternionFloat16CartesianTensorProductMember prod = G.QHLF_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QHLF_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat16CartesianTensorProductMember a, QuaternionFloat16CartesianTensorProductMember b) {
+			QuaternionFloat16Member factor = new QuaternionFloat16Member(0.5f, 0, 0, 0);
+			QuaternionFloat16CartesianTensorProductMember prod = G.QHLF_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QHLF_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16CartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

@@ -94,6 +94,8 @@ public class Float16CartesianTensorProduct
 		ScaleByHighPrec<Float16CartesianTensorProductMember>,
 		ScaleByRational<Float16CartesianTensorProductMember>,
 		ScaleByDouble<Float16CartesianTensorProductMember>,
+		ScaleByOneHalf<Float16CartesianTensorProductMember>,
+		ScaleByTwo<Float16CartesianTensorProductMember>,
 		Tolerance<Float16Member, Float16CartesianTensorProductMember>,
 		ArrayLikeMethods<Float16CartesianTensorProductMember, Float16Member>
 
@@ -656,5 +658,42 @@ public class Float16CartesianTensorProduct
 	public Procedure3<Float16CartesianTensorProductMember, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
+			Float16Member factor = new Float16Member(2);
+			Float16CartesianTensorProductMember prod = G.HLF_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HLF_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
+			Float16Member factor = new Float16Member(0.5f);
+			Float16CartesianTensorProductMember prod = G.HLF_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HLF_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
 }

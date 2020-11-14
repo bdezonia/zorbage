@@ -95,6 +95,8 @@ public class QuaternionFloat32CartesianTensorProduct
 		ScaleByHighPrec<QuaternionFloat32CartesianTensorProductMember>,
 		ScaleByRational<QuaternionFloat32CartesianTensorProductMember>,
 		ScaleByDouble<QuaternionFloat32CartesianTensorProductMember>,
+		ScaleByOneHalf<QuaternionFloat32CartesianTensorProductMember>,
+		ScaleByTwo<QuaternionFloat32CartesianTensorProductMember>,
 		Tolerance<Float32Member, QuaternionFloat32CartesianTensorProductMember>,
 		ArrayLikeMethods<QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32Member>
 {
@@ -665,5 +667,42 @@ public class QuaternionFloat32CartesianTensorProduct
 	public Procedure3<QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember> outerProduct() {
 		return OUTER;
 	}
-	
+
+	private final Procedure3<Integer, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember> SCB2 =
+			new Procedure3<Integer, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat32CartesianTensorProductMember a, QuaternionFloat32CartesianTensorProductMember b) {
+			QuaternionFloat32Member factor = new QuaternionFloat32Member(2, 0, 0, 0);
+			QuaternionFloat32CartesianTensorProductMember prod = G.QFLT_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QFLT_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember> SCBH =
+			new Procedure3<Integer, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat32CartesianTensorProductMember a, QuaternionFloat32CartesianTensorProductMember b) {
+			QuaternionFloat32Member factor = new QuaternionFloat32Member(0.5f, 0, 0, 0);
+			QuaternionFloat32CartesianTensorProductMember prod = G.QFLT_TEN.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QFLT_TEN.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32CartesianTensorProductMember> scaleByOneHalf() {
+		return SCBH;
+	}
 }
