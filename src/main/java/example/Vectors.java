@@ -140,7 +140,6 @@ class Vectors {
 		G.FLT_VEC.scale();
 		G.FLT_VEC.scaleByDouble();
 		G.FLT_VEC.scaleByHighPrec();
-		G.FLT_VEC.scaleByHighPrec();
 		G.FLT_VEC.scaleByRational();
 		
 		// vector operations

@@ -348,6 +348,36 @@ class Numbers {
 	 *     Max: unlimited*
 	 *     Precision: 1 to 4000 decimal places
 	 *   Memory size: unlimited*
+	 *   
+	 * GaussianInt8Member
+	 *   Each (of 2) components
+	 *     Min: -128
+	 *     Max: 127
+	 *   Memory size: 2 bytes
+	 *   
+	 * GaussianInt16Member
+	 *   Each (of 2) components
+	 *     Min: -32768
+	 *     Max: 32767
+	 *   Memory size: 4 bytes
+	 *   
+	 * GaussianInt32Member
+	 *   Each (of 2) components
+	 *     Min: -2147483648
+	 *     Max: 2147483647
+	 *   Memory size: 8 bytes
+	 *   
+	 * GaussianInt64Member
+	 *   Each (of 2) components
+	 *     Min: -9223372036854775808
+	 *     Max: 9223372036854775807
+	 *   Memory size: 16 bytes
+	 *   
+	 * GaussianIntUnboundedMember
+	 *   Each (of 2) components
+	 *     Min: unlimited*
+	 *     Max: unlimited*
+	 *   Memory size: unlimited*
 	 * 
 	 * * Note that unlimited memory size objects are limited to the available RAM
 	 *   within your computer. One consequence, as of the writing of this help file,

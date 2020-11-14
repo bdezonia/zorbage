@@ -163,7 +163,6 @@ class Matrices {
 		G.HLF_MAT.scale();
 		G.HLF_MAT.scaleByDouble();
 		G.HLF_MAT.scaleByHighPrec();
-		G.HLF_MAT.scaleByHighPrec();
 		G.HLF_MAT.scaleByRational();
 
 		// Matrix operations

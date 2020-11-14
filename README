@@ -159,6 +159,8 @@ Zorbage breaks Java barriers
   - in Zorbage "arrays" are indexed by 64-bit long integers rather
       than 32-bit integers. Relatedly data lists sizes can reach
       2^63.
+      
+  - in Zorbage, due to JVM optimizations, you can pass primitives by reference
 
   - supports multidimensional arrays
       
@@ -202,14 +204,20 @@ Zorbage is flexible
 
 Is there a way to get data into a Zorbage backed application?
 
-  Code has been written to load NetCDF data into Zorbage structures.
-  You can find it here: https://github.com/bdezonia/zorbage-netcdf
+  Code has been written to load raster GIS data using the NetCDF library
+    into Zorbage structures. You can find it here:
+    
+    https://github.com/bdezonia/zorbage-netcdf
 
-  Code has been written to load Gdal data into Zorbage structures.
-  You can find it here: https://github.com/bdezonia/zorbage-gdal
+  Code has been written to load raster GIS data using the GDAL library
+    into Zorbage structures. You can find it here:
+  
+    https://github.com/bdezonia/zorbage-gdal
 
-  Code has been written to load Scifio data into Zorbage structures.
-  You can find it here: https://github.com/bdezonia/zorbage-scifio
+  Code has been written to load raster data using the SCIFIO library
+    into Zorbage structures. You can find it here:
+  
+    https://github.com/bdezonia/zorbage-scifio
   
 Is there a way to view Zorbage data?
 
@@ -220,24 +228,25 @@ Programming notes
 
   Java 11 info
     
-    Zorbage has been compiled and tested using Maven with OpenJDK Java on Linux
+    Zorbage has been compiled and tested using Maven with OpenJDK Java 11 on Linux
 
   Java 8 info
 
-    Zorbage was previously compiled and tested using Maven with OpenJDK Java on Linux
+    Zorbage was previously compiled and tested using Maven with OpenJDK Java 8 on Linux
 
       The Zorbage code has been scrubbed of API calls later than Java 8 and the
       Zorbage library API should be callable from Java 8.
 
   Java 7 info
 
-    At one time Zorbage was tested with Java 7 on the Macintosh. Recently
-      the Zorbage code was updated to take advantage of some Java 8 features
-      so it is possible it will not be callable from Java 7. YMMV
+    At one time Zorbage was compiled and tested using Maven with Oracle Java 7 on the
+      Macintosh. Recently the Zorbage code was updated to take advantage of some Java 8
+      features so it is possible it will not be callable from Java 7. YMMV
 
-  Eclipse info
+  Other platforms
     
-    Zorbage has been compiled and tested within many versions of Eclipse
+    Zorbage has been compiled and tested with many versions of Eclipse and some versions
+    of IntelliJ.
 
 How to include zorbage in your Maven project
 

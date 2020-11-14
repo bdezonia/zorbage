@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
 import nom.bdezonia.zorbage.type.float32.real.Float32Member;
 import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.gaussian64.GaussianInt64Member;
 import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 
@@ -238,5 +239,62 @@ class Complexes {
 		G.CDBL.sincpi();
 		G.CDBL.sinchpi();
 		
+	}
+	
+	// Gaussian integers are a special kind of complex number
+	
+	void example3() {
+	
+		// constructors
+		
+		GaussianInt64Member a = G.GAUSS64.construct();
+		GaussianInt64Member b = G.GAUSS64.construct("{4,9}");
+		GaussianInt64Member c = G.GAUSS64.construct(b);
+		
+		// setting values
+		
+		G.GAUSS64.assign().call(c, a);
+		G.GAUSS64.unity().call(a);
+		G.GAUSS64.zero().call(c);
+
+		// comparing values
+		
+		G.GAUSS64.isEqual();
+		G.GAUSS64.isNotEqual();
+		G.GAUSS64.isEven();
+		G.GAUSS64.isOdd();
+		G.GAUSS64.isZero();
+
+		// basic mathematical operations
+		
+		G.GAUSS64.add();
+		G.GAUSS64.subtract();
+		G.GAUSS64.multiply();
+		G.GAUSS64.div();
+		G.GAUSS64.mod();
+		G.GAUSS64.divMod();
+		G.GAUSS64.power();
+
+		// other operations
+		
+		G.GAUSS64.abs();
+		G.GAUSS64.conjugate();
+		G.GAUSS64.gcd();
+		G.GAUSS64.lcm();
+		G.GAUSS64.negate();
+		G.GAUSS64.norm();
+		G.GAUSS64.random();
+		G.GAUSS64.within();
+
+		// scaling methods
+		
+		G.GAUSS64.scale();
+		G.GAUSS64.scaleByDouble();
+		G.GAUSS64.scaleByDoubleAndRound();
+		G.GAUSS64.scaleByHighPrec();
+		G.GAUSS64.scaleByHighPrecAndRound();
+		G.GAUSS64.scaleByOneHalf();
+		G.GAUSS64.scaleByTwo();
+		G.GAUSS64.scaleByRational();
 	}
 }

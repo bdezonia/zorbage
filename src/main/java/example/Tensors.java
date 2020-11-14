@@ -141,7 +141,6 @@ class Tensors {
 		G.DBL_TEN.scale();
 		G.DBL_TEN.scaleByDouble();
 		G.DBL_TEN.scaleByHighPrec();
-		G.DBL_TEN.scaleByHighPrec();
 		G.DBL_TEN.scaleByRational();
 		
 		// tensor methods
