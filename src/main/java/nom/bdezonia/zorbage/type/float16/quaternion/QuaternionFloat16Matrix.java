@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float16.quaternion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
@@ -101,6 +103,8 @@ public class QuaternionFloat16Matrix
 		ScaleByHighPrec<QuaternionFloat16MatrixMember>,
 		ScaleByRational<QuaternionFloat16MatrixMember>,
 		ScaleByDouble<QuaternionFloat16MatrixMember>,
+		ScaleByOneHalf<QuaternionFloat16MatrixMember>,
+		ScaleByTwo<QuaternionFloat16MatrixMember>,
 		Tolerance<Float16Member,QuaternionFloat16MatrixMember>,
 		ArrayLikeMethods<QuaternionFloat16MatrixMember,QuaternionFloat16Member>
 {
@@ -905,4 +909,43 @@ public class QuaternionFloat16Matrix
 	public Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> SCB2 =
+			new Procedure3<Integer, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
+			QuaternionFloat16Member factor = new QuaternionFloat16Member(2, 0, 0, 0);
+			QuaternionFloat16MatrixMember prod = G.QHLF_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QHLF_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> SCBH =
+			new Procedure3<Integer, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
+			QuaternionFloat16Member factor = new QuaternionFloat16Member(0.5f, 0, 0, 0);
+			QuaternionFloat16MatrixMember prod = G.QHLF_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QHLF_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

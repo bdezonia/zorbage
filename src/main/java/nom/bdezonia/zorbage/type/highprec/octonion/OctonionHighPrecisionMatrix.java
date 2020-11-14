@@ -26,6 +26,9 @@
  */
 package nom.bdezonia.zorbage.type.highprec.octonion;
 
+import java.lang.Integer;
+import java.math.BigDecimal;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -64,6 +67,7 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -89,6 +93,8 @@ public class OctonionHighPrecisionMatrix
 		ScaleByHighPrec<OctonionHighPrecisionMatrixMember>,
 		ScaleByRational<OctonionHighPrecisionMatrixMember>,
 		ScaleByDouble<OctonionHighPrecisionMatrixMember>,
+		ScaleByOneHalf<OctonionHighPrecisionMatrixMember>,
+		ScaleByTwo<OctonionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionMatrixMember>,
 		ArrayLikeMethods<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMember>
 {
@@ -808,6 +814,44 @@ public class OctonionHighPrecisionMatrix
 	@Override
 	public Procedure3<OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> divideElements() {
 		return DIVELEM;
+	}
+
+	private final Procedure3<Integer, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SCB2 =
+			new Procedure3<Integer, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
+			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			OctonionHighPrecisionMatrixMember prod = G.OHP_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHP_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> SCBH =
+			new Procedure3<Integer, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
+			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			OctonionHighPrecisionMatrixMember prod = G.OHP_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHP_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember> scaleByOneHalf() {
+		return SCBH;
 	}
 
 }

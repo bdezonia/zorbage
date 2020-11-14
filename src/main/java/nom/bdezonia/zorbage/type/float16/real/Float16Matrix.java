@@ -100,6 +100,8 @@ public class Float16Matrix
 		ScaleByHighPrec<Float16MatrixMember>,
 		ScaleByRational<Float16MatrixMember>,
 		ScaleByDouble<Float16MatrixMember>,
+		ScaleByOneHalf<Float16MatrixMember>,
+		ScaleByTwo<Float16MatrixMember>,
 		Tolerance<Float16Member,Float16MatrixMember>,
 		ArrayLikeMethods<Float16MatrixMember,Float16Member>
 {
@@ -878,4 +880,43 @@ public class Float16Matrix
 	public Procedure3<Float16MatrixMember, Float16MatrixMember, Float16MatrixMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, Float16MatrixMember, Float16MatrixMember> SCB2 =
+			new Procedure3<Integer, Float16MatrixMember, Float16MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float16MatrixMember a, Float16MatrixMember b) {
+			Float16Member factor = new Float16Member(2);
+			Float16MatrixMember prod = G.HLF_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HLF_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16MatrixMember, Float16MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, Float16MatrixMember, Float16MatrixMember> SCBH =
+			new Procedure3<Integer, Float16MatrixMember, Float16MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float16MatrixMember a, Float16MatrixMember b) {
+			Float16Member factor = new Float16Member(0.5f);
+			Float16MatrixMember prod = G.HLF_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HLF_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16MatrixMember, Float16MatrixMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

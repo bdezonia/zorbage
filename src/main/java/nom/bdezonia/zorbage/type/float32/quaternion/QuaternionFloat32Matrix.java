@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float32.quaternion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
@@ -101,6 +103,8 @@ public class QuaternionFloat32Matrix
 		ScaleByHighPrec<QuaternionFloat32MatrixMember>,
 		ScaleByRational<QuaternionFloat32MatrixMember>,
 		ScaleByDouble<QuaternionFloat32MatrixMember>,
+		ScaleByOneHalf<QuaternionFloat32MatrixMember>,
+		ScaleByTwo<QuaternionFloat32MatrixMember>,
 		Tolerance<Float32Member,QuaternionFloat32MatrixMember>,
 		ArrayLikeMethods<QuaternionFloat32MatrixMember,QuaternionFloat32Member>
 {
@@ -905,4 +909,43 @@ public class QuaternionFloat32Matrix
 	public Procedure3<QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SCB2 =
+			new Procedure3<Integer, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
+			QuaternionFloat32Member factor = new QuaternionFloat32Member(2, 0, 0, 0);
+			QuaternionFloat32MatrixMember prod = G.QFLT_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QFLT_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> SCBH =
+			new Procedure3<Integer, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
+			QuaternionFloat32Member factor = new QuaternionFloat32Member(0.5f, 0, 0, 0);
+			QuaternionFloat32MatrixMember prod = G.QFLT_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QFLT_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

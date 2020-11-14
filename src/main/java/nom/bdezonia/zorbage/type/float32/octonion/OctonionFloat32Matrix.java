@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float32.octonion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
@@ -101,6 +103,8 @@ public class OctonionFloat32Matrix
 		ScaleByHighPrec<OctonionFloat32MatrixMember>,
 		ScaleByRational<OctonionFloat32MatrixMember>,
 		ScaleByDouble<OctonionFloat32MatrixMember>,
+		ScaleByOneHalf<OctonionFloat32MatrixMember>,
+		ScaleByTwo<OctonionFloat32MatrixMember>,
 		Tolerance<Float32Member,OctonionFloat32MatrixMember>,
 		ArrayLikeMethods<OctonionFloat32MatrixMember,OctonionFloat32Member>
 {
@@ -891,4 +895,43 @@ public class OctonionFloat32Matrix
 	public Procedure3<OctonionFloat32MatrixMember, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SCB2 =
+			new Procedure3<Integer, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
+			OctonionFloat32Member factor = new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat32MatrixMember prod = G.OFLT_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OFLT_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> SCBH =
+			new Procedure3<Integer, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
+			OctonionFloat32Member factor = new OctonionFloat32Member(0.5f, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat32MatrixMember prod = G.OFLT_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OFLT_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat32MatrixMember, OctonionFloat32MatrixMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

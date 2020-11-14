@@ -103,6 +103,8 @@ public class ComplexFloat64Matrix
 		ScaleByHighPrec<ComplexFloat64MatrixMember>,
 		ScaleByRational<ComplexFloat64MatrixMember>,
 		ScaleByDouble<ComplexFloat64MatrixMember>,
+		ScaleByOneHalf<ComplexFloat64MatrixMember>,
+		ScaleByTwo<ComplexFloat64MatrixMember>,
 		Tolerance<Float64Member,ComplexFloat64MatrixMember>,
 		ArrayLikeMethods<ComplexFloat64MatrixMember,ComplexFloat64Member>
 {
@@ -893,4 +895,43 @@ public class ComplexFloat64Matrix
 	public Procedure3<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SCB2 =
+			new Procedure3<Integer, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			ComplexFloat64Member factor = new ComplexFloat64Member(2, 0);
+			ComplexFloat64MatrixMember prod = G.CDBL_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CDBL_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> SCBH =
+			new Procedure3<Integer, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			ComplexFloat64Member factor = new ComplexFloat64Member(0.5, 0);
+			ComplexFloat64MatrixMember prod = G.CDBL_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CDBL_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

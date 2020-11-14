@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float64.octonion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
@@ -101,6 +103,8 @@ public class OctonionFloat64Matrix
 		ScaleByHighPrec<OctonionFloat64MatrixMember>,
 		ScaleByRational<OctonionFloat64MatrixMember>,
 		ScaleByDouble<OctonionFloat64MatrixMember>,
+		ScaleByOneHalf<OctonionFloat64MatrixMember>,
+		ScaleByTwo<OctonionFloat64MatrixMember>,
 		Tolerance<Float64Member,OctonionFloat64MatrixMember>,
 		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>
 {
@@ -890,6 +894,44 @@ public class OctonionFloat64Matrix
 	@Override
 	public Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> divideElements() {
 		return DIVELEM;
+	}
+
+	private final Procedure3<Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SCB2 =
+			new Procedure3<Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64Member factor = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat64MatrixMember prod = G.ODBL_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.ODBL_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> SCBH =
+			new Procedure3<Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat64MatrixMember a, OctonionFloat64MatrixMember b) {
+			OctonionFloat64Member factor = new OctonionFloat64Member(0.5, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat64MatrixMember prod = G.ODBL_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.ODBL_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember> scaleByOneHalf() {
+		return SCBH;
 	}
 
 }

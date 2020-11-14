@@ -103,6 +103,8 @@ public class ComplexFloat32Matrix
 		ScaleByHighPrec<ComplexFloat32MatrixMember>,
 		ScaleByRational<ComplexFloat32MatrixMember>,
 		ScaleByDouble<ComplexFloat32MatrixMember>,
+		ScaleByOneHalf<ComplexFloat32MatrixMember>,
+		ScaleByTwo<ComplexFloat32MatrixMember>,
 		Tolerance<Float32Member,ComplexFloat32MatrixMember>,
 		ArrayLikeMethods<ComplexFloat32MatrixMember,ComplexFloat32Member>
 {
@@ -893,4 +895,43 @@ public class ComplexFloat32Matrix
 	public Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SCB2 =
+			new Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			ComplexFloat32Member factor = new ComplexFloat32Member(2, 0);
+			ComplexFloat32MatrixMember prod = G.CFLT_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CFLT_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> SCBH =
+			new Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			ComplexFloat32Member factor = new ComplexFloat32Member(0.5f, 0);
+			ComplexFloat32MatrixMember prod = G.CFLT_MAT.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CFLT_MAT.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }
