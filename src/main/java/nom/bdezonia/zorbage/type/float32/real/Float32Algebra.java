@@ -1480,8 +1480,8 @@ public class Float32Algebra
 			new Procedure3<Float32Member, Float32Member, Float32Member>()
 	{
 		@Override
-		public void call(Float32Member a, Float32Member b, Float32Member c) {
-			c.setV(a.v() * b.v());
+		public void call(Float32Member factor, Float32Member a, Float32Member b) {
+			b.setV(factor.v() * a.v());
 		}
 	};
 

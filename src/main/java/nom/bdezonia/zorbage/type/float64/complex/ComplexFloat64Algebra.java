@@ -1378,9 +1378,9 @@ public class ComplexFloat64Algebra
 			new Procedure3<Float64Member, ComplexFloat64Member, ComplexFloat64Member>()
 	{
 		@Override
-		public void call(Float64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
+		public void call(Float64Member factor, ComplexFloat64Member a, ComplexFloat64Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
 		}
 	};
 

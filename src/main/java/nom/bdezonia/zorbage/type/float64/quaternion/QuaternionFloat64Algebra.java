@@ -1031,11 +1031,11 @@ public class QuaternionFloat64Algebra
 			new Procedure3<Float64Member, QuaternionFloat64Member, QuaternionFloat64Member>()
 	{
 		@Override
-		public void call(Float64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
-			c.setJ(a.v() * b.j());
-			c.setK(a.v() * b.k());
+		public void call(Float64Member factor, QuaternionFloat64Member a, QuaternionFloat64Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
+			b.setJ(factor.v() * a.j());
+			b.setK(factor.v() * a.k());
 		}
 	};
 

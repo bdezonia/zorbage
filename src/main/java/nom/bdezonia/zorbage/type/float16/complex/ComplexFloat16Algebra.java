@@ -1379,9 +1379,9 @@ public class ComplexFloat16Algebra
 			new Procedure3<Float16Member, ComplexFloat16Member, ComplexFloat16Member>()
 	{
 		@Override
-		public void call(Float16Member a, ComplexFloat16Member b, ComplexFloat16Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
+		public void call(Float16Member factor, ComplexFloat16Member a, ComplexFloat16Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
 		}
 	};
 

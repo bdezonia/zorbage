@@ -1378,9 +1378,9 @@ public class ComplexFloat32Algebra
 			new Procedure3<Float32Member, ComplexFloat32Member, ComplexFloat32Member>()
 	{
 		@Override
-		public void call(Float32Member a, ComplexFloat32Member b, ComplexFloat32Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
+		public void call(Float32Member factor, ComplexFloat32Member a, ComplexFloat32Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
 		}
 	};
 

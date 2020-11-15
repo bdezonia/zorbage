@@ -1396,15 +1396,15 @@ public class OctonionFloat64Algebra
 			new Procedure3<Float64Member, OctonionFloat64Member, OctonionFloat64Member>()
 	{
 		@Override
-		public void call(Float64Member a, OctonionFloat64Member b, OctonionFloat64Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
-			c.setJ(a.v() * b.j());
-			c.setK(a.v() * b.k());
-			c.setL(a.v() * b.l());
-			c.setI0(a.v() * b.i0());
-			c.setJ0(a.v() * b.j0());
-			c.setK0(a.v() * b.k0());
+		public void call(Float64Member factor, OctonionFloat64Member a, OctonionFloat64Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
+			b.setJ(factor.v() * a.j());
+			b.setK(factor.v() * a.k());
+			b.setL(factor.v() * a.l());
+			b.setI0(factor.v() * a.i0());
+			b.setJ0(factor.v() * a.j0());
+			b.setK0(factor.v() * a.k0());
 		}
 	};
 

@@ -1383,8 +1383,8 @@ public class Float16Algebra
 			new Procedure3<Float16Member, Float16Member, Float16Member>()
 	{
 		@Override
-		public void call(Float16Member a, Float16Member b, Float16Member c) {
-			c.setV(a.v() * b.v());
+		public void call(Float16Member factor, Float16Member a, Float16Member b) {
+			b.setV(factor.v() * a.v());
 		}
 	};
 

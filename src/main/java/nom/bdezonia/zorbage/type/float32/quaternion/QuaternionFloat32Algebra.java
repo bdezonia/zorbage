@@ -1031,11 +1031,11 @@ public class QuaternionFloat32Algebra
 			new Procedure3<Float32Member, QuaternionFloat32Member, QuaternionFloat32Member>()
 	{
 		@Override
-		public void call(Float32Member a, QuaternionFloat32Member b, QuaternionFloat32Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
-			c.setJ(a.v() * b.j());
-			c.setK(a.v() * b.k());
+		public void call(Float32Member factor, QuaternionFloat32Member a, QuaternionFloat32Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
+			b.setJ(factor.v() * a.j());
+			b.setK(factor.v() * a.k());
 		}
 	};
 

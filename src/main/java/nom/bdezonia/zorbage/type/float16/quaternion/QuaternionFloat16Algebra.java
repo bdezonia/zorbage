@@ -1031,11 +1031,11 @@ public class QuaternionFloat16Algebra
 			new Procedure3<Float16Member, QuaternionFloat16Member, QuaternionFloat16Member>()
 	{
 		@Override
-		public void call(Float16Member a, QuaternionFloat16Member b, QuaternionFloat16Member c) {
-			c.setR(a.v() * b.r());
-			c.setI(a.v() * b.i());
-			c.setJ(a.v() * b.j());
-			c.setK(a.v() * b.k());
+		public void call(Float16Member factor, QuaternionFloat16Member a, QuaternionFloat16Member b) {
+			b.setR(factor.v() * a.r());
+			b.setI(factor.v() * a.i());
+			b.setJ(factor.v() * a.j());
+			b.setK(factor.v() * a.k());
 		}
 	};
 

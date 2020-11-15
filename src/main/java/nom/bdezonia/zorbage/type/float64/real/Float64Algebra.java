@@ -1515,8 +1515,8 @@ public class Float64Algebra
 			new Procedure3<Float64Member, Float64Member, Float64Member>()
 	{
 		@Override
-		public void call(Float64Member a, Float64Member b, Float64Member c) {
-			c.setV(a.v() * b.v());
+		public void call(Float64Member factor, Float64Member a, Float64Member b) {
+			b.setV(factor.v() * a.v());
 		}
 	};
 
