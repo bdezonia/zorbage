@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Infinite;
+import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.Scale;
 import nom.bdezonia.zorbage.algebra.ScaleByDouble;
@@ -69,6 +71,8 @@ public class PointAlgebra
 		ScaleByTwo<Point>,
 		ScaleComponents<Point, Double>,
 		Tolerance<Double, Point>,
+		Infinite<Point>,
+		NaN<Point>,
 		Random<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
@@ -389,6 +393,74 @@ public class PointAlgebra
 	@Override
 	public Procedure3<Integer, Point, Point> scaleByOneHalf() {
 		return SBHALF;
+	}
+
+	private final Function1<Boolean, Point> ISNAN =
+			new Function1<Boolean, Point>()
+	{
+		@Override
+		public Boolean call(Point a) {
+			for (int i = 0; i < a.numDimensions(); i++) {
+				if (Double.isNaN(a.component(i)))
+					return true;
+			}
+			return false;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Point> isNaN() {
+		return ISNAN;
+	}
+
+	private final Procedure1<Point> NAN =
+			new Procedure1<Point>()
+	{
+		@Override
+		public void call(Point a) {
+			for (int i = 0; i < a.numDimensions(); i++) {
+				a.setComponent(i, Double.NaN);
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Point> nan() {
+		return NAN;
+	}
+
+	private final Function1<Boolean, Point> ISINF =
+			new Function1<Boolean, Point>()
+	{
+		@Override
+		public Boolean call(Point a) {
+			for (int i = 0; i < a.numDimensions(); i++) {
+				if (Double.isInfinite(a.component(i)))
+					return true;
+			}
+			return false;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Point> isInfinite() {
+		return ISINF;
+	}
+
+	private final Procedure1<Point> INF =
+			new Procedure1<Point>()
+	{
+		@Override
+		public void call(Point a) {
+			for (int i = 0; i < a.numDimensions(); i++) {
+				a.setComponent(i, Double.POSITIVE_INFINITY);
+			}
+		}
+	};
+
+	@Override
+	public Procedure1<Point> infinite() {
+		return INF;
 	}
 	
 }

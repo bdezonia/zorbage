@@ -30,8 +30,6 @@ import java.lang.Integer;
 import java.nio.ByteBuffer;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.RealUtils;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
@@ -44,8 +42,8 @@ import nom.bdezonia.zorbage.misc.Hasher;
  *
  */
 public class Point
-	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>, DimensionCount,
-		Allocatable<Point>, Duplicatable<Point>, Tolerance<Float64Member,Point>
+	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>,
+		Allocatable<Point>, Duplicatable<Point>, NumberMember<Point>
 {
 	private double[] vector;
 	
@@ -189,26 +187,6 @@ public class Point
 		return p;
 	}
 
-	private final Function3<Boolean, Float64Member, Point, Point> WITHIN =
-			new Function3<Boolean, Float64Member, Point, Point>()
-	{
-		@Override
-		public Boolean call(Float64Member tol, Point a, Point b) {
-			if (a.vector.length != b.vector.length)
-				throw new IllegalArgumentException("input points do not have the same dimension");
-			for (int i = 0; i < a.vector.length; i++) {
-				if (RealUtils.near(a.vector[i], b.vector[i], tol.v()))
-					return false;
-			}
-			return true;
-		}
-	};
-
-	@Override
-	public Function3<Boolean, Float64Member, Point, Point> within() {
-		return WITHIN;
-	}
-
 	@Override
 	public int hashCode() {
 		int v = 1;
@@ -240,5 +218,24 @@ public class Point
 		}
 		b.append(']');
 		return b.toString();
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d < 0)
+			throw new IllegalArgumentException("negative index error");
+		if (d < numDimensions())
+			return 1;
+		return 0;
+	}
+
+	@Override
+	public void getV(Point value) {
+		get(value);
+	}
+
+	@Override
+	public void setV(Point value) {
+		set(value);
 	}
 }
