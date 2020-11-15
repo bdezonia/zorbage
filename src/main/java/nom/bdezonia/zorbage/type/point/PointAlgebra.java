@@ -44,7 +44,10 @@ import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.Scale;
 import nom.bdezonia.zorbage.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.algebra.ScaleByHighPrec;
+import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByRational;
+import nom.bdezonia.zorbage.algebra.ScaleByTwo;
+import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
@@ -56,9 +59,18 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  *
  */
 public class PointAlgebra
-	implements Algebra<PointAlgebra,Point>, Addition<Point>, Scale<Point, Float64Member>,
-		Random<Point>, ScaleByHighPrec<Point>, ScaleByRational<Point>, ScaleByDouble<Point>,
-		Tolerance<Double, Point>
+	implements
+		Algebra<PointAlgebra,Point>,
+		Addition<Point>,
+		Scale<Point, Float64Member>,
+		ScaleByHighPrec<Point>,
+		ScaleByRational<Point>,
+		ScaleByDouble<Point>,
+		ScaleByOneHalf<Point>,
+		ScaleByTwo<Point>,
+		ScaleComponents<Point,Double>,
+		Tolerance<Double, Point>,
+		Random<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	
@@ -258,7 +270,7 @@ public class PointAlgebra
 			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
 			BigDecimal t;
-			for (int i = 0; i < b.numDimensions(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				t = BigDecimal.valueOf(a.component(i));
 				t = t.multiply(new BigDecimal(factor.n()));
 				t = t.divide(new BigDecimal(factor.d()), CONTEXT);
@@ -317,7 +329,7 @@ public class PointAlgebra
 		public Boolean call(Double tol, Point a, Point b) {
 			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
-			for (int i = 0; i < b.numDimensions(); i++) {
+			for (int i = 0; i < a.numDimensions(); i++) {
 				if (!RealUtils.near(a.component(i), b.component(i), tol))
 					return false;
 			}
@@ -328,6 +340,64 @@ public class PointAlgebra
 	@Override
 	public Function3<Boolean, Double, Point, Point> within() {
 		return WITHIN;
+	}
+
+	private final Procedure3<Double, Point, Point> SCMP =
+			new Procedure3<Double, Point, Point>()
+	{
+		@Override
+		public void call(Double factor, Point a, Point b) {
+			if (a.numDimensions() != b.numDimensions())
+				throw new IllegalArgumentException("mismatched point dimensionality");
+			for (int i = 0; i < a.numDimensions(); i++) {
+				b.setComponent(i, factor * a.component(i));
+			}
+		}
+	};
+
+	@Override
+	public Procedure3<Double, Point, Point> scaleComponents() {
+		return SCMP;
+	}
+
+	private final Procedure3<Integer, Point, Point> SBTWO =
+			new Procedure3<Integer, Point, Point>()
+	{
+		@Override
+		public void call(Integer numTimes, Point a, Point b) {
+			double factor;
+			if (numTimes < 0)
+				factor = 0.5;
+			else
+				factor = 2;
+			factor = Math.pow(factor, Math.abs(numTimes));
+			scaleComponents().call(factor, a, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Point, Point> scaleByTwo() {
+		return SBTWO;
+	}
+
+	private final Procedure3<Integer, Point, Point> SBHALF =
+			new Procedure3<Integer, Point, Point>()
+	{
+		@Override
+		public void call(Integer numTimes, Point a, Point b) {
+			double factor;
+			if (numTimes < 0)
+				factor = 2;
+			else
+				factor = 0.5;
+			factor = Math.pow(factor, Math.abs(numTimes));
+			scaleComponents().call(factor, a, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Point, Point> scaleByOneHalf() {
+		return SBHALF;
 	}
 	
 }
