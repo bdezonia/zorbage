@@ -232,11 +232,7 @@ public class PointAlgebra
 	{
 		@Override
 		public void call(Double factor, Point a, Point b) {
-			if (a.numDimensions() != b.numDimensions())
-				throw new IllegalArgumentException("mismatched point dimensionality");
-			for (int i = 0; i < a.numDimensions(); i++) {
-				b.setComponent(i, factor * a.component(i));
-			}
+			scaleComponents().call(factor, a, b);
 		}
 	};
 
@@ -288,11 +284,7 @@ public class PointAlgebra
 	{
 		@Override
 		public void call(Double factor, Point a, Point b) {
-			if (a.numDimensions() != b.numDimensions())
-				throw new IllegalArgumentException("mismatched point dimensionality");
-			for (int i = 0; i < a.numDimensions(); i++) {
-				b.setComponent(i, factor * a.component(i));
-			}
+			scaleComponents().call(factor, a, b);
 		}
 	};
 
