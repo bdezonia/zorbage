@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.highprec.complex;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -52,6 +53,7 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -74,6 +76,8 @@ public class ComplexHighPrecisionVector
 		ScaleByHighPrec<ComplexHighPrecisionVectorMember>,
 		ScaleByRational<ComplexHighPrecisionVectorMember>,
 		ScaleByDouble<ComplexHighPrecisionVectorMember>,
+		ScaleByOneHalf<ComplexHighPrecisionVectorMember>,
+		ScaleByTwo<ComplexHighPrecisionVectorMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>,
 		ArrayLikeMethods<ComplexHighPrecisionVectorMember,ComplexHighPrecisionMember>
 {
@@ -505,4 +509,43 @@ public class ComplexHighPrecisionVector
 	public Procedure3<ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SCB2 =
+			new Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			ComplexHighPrecisionMember factor = new ComplexHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO);
+			ComplexHighPrecisionVectorMember prod = G.CHP_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CHP_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> SCBH =
+			new Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			ComplexHighPrecisionMember factor = new ComplexHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO);
+			ComplexHighPrecisionVectorMember prod = G.CHP_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CHP_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

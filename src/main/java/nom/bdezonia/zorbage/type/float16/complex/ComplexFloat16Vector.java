@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float16.complex;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -80,6 +82,8 @@ public class ComplexFloat16Vector
 		ScaleByHighPrec<ComplexFloat16VectorMember>,
 		ScaleByRational<ComplexFloat16VectorMember>,
 		ScaleByDouble<ComplexFloat16VectorMember>,
+		ScaleByOneHalf<ComplexFloat16VectorMember>,
+		ScaleByTwo<ComplexFloat16VectorMember>,
 		Tolerance<Float16Member,ComplexFloat16VectorMember>,
 		ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>
 {
@@ -577,4 +581,43 @@ public class ComplexFloat16Vector
 	public Procedure3<ComplexFloat16VectorMember, ComplexFloat16VectorMember, ComplexFloat16VectorMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember> SCB2 =
+			new Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			ComplexFloat16Member factor = new ComplexFloat16Member(2, 0);
+			ComplexFloat16VectorMember prod = G.CHLF_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CHLF_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember> SCBH =
+			new Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			ComplexFloat16Member factor = new ComplexFloat16Member(0.5f, 0);
+			ComplexFloat16VectorMember prod = G.CHLF_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CHLF_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

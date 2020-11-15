@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float16.octonion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -80,6 +82,8 @@ public class OctonionFloat16RModule
 		ScaleByHighPrec<OctonionFloat16RModuleMember>,
 		ScaleByRational<OctonionFloat16RModuleMember>,
 		ScaleByDouble<OctonionFloat16RModuleMember>,
+		ScaleByOneHalf<OctonionFloat16RModuleMember>,
+		ScaleByTwo<OctonionFloat16RModuleMember>,
 		Tolerance<Float16Member,OctonionFloat16RModuleMember>,
 		ArrayLikeMethods<OctonionFloat16RModuleMember,OctonionFloat16Member>
 {
@@ -577,4 +581,43 @@ public class OctonionFloat16RModule
 	public Procedure3<OctonionFloat16RModuleMember, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember> SCB2 =
+			new Procedure3<Integer, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
+			OctonionFloat16Member factor = new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat16RModuleMember prod = G.OHLF_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHLF_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember> SCBH =
+			new Procedure3<Integer, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
+			OctonionFloat16Member factor = new OctonionFloat16Member(0.5f, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat16RModuleMember prod = G.OHLF_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHLF_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat16RModuleMember, OctonionFloat16RModuleMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

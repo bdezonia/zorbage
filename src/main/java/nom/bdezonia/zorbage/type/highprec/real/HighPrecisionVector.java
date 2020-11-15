@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.highprec.real;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -50,6 +51,7 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -71,6 +73,8 @@ public class HighPrecisionVector
 		ScaleByHighPrec<HighPrecisionVectorMember>,
 		ScaleByRational<HighPrecisionVectorMember>,
 		ScaleByDouble<HighPrecisionVectorMember>,
+		ScaleByOneHalf<HighPrecisionVectorMember>,
+		ScaleByTwo<HighPrecisionVectorMember>,
 		Tolerance<HighPrecisionMember,HighPrecisionVectorMember>,
 		ArrayLikeMethods<HighPrecisionVectorMember,HighPrecisionMember>
 {
@@ -492,4 +496,43 @@ public class HighPrecisionVector
 	public Procedure3<HighPrecisionVectorMember, HighPrecisionVectorMember, HighPrecisionVectorMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember> SCB2 =
+			new Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
+			HighPrecisionMember factor = new HighPrecisionMember(BigDecimal.valueOf(2));
+			HighPrecisionVectorMember prod = G.HP_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HP_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember> SCBH =
+			new Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
+			HighPrecisionMember factor = new HighPrecisionMember(C.ONE_HALF);
+			HighPrecisionVectorMember prod = G.HP_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HP_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

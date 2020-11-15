@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float64.complex;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -80,6 +82,8 @@ public class ComplexFloat64Vector
 		ScaleByHighPrec<ComplexFloat64VectorMember>,
 		ScaleByRational<ComplexFloat64VectorMember>,
 		ScaleByDouble<ComplexFloat64VectorMember>,
+		ScaleByOneHalf<ComplexFloat64VectorMember>,
+		ScaleByTwo<ComplexFloat64VectorMember>,
 		Tolerance<Float64Member,ComplexFloat64VectorMember>,
 		ArrayLikeMethods<ComplexFloat64VectorMember,ComplexFloat64Member>
 {
@@ -577,4 +581,43 @@ public class ComplexFloat64Vector
 	public Procedure3<ComplexFloat64VectorMember, ComplexFloat64VectorMember, ComplexFloat64VectorMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SCB2 =
+			new Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			ComplexFloat64Member factor = new ComplexFloat64Member(2, 0);
+			ComplexFloat64VectorMember prod = G.CDBL_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CDBL_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember> SCBH =
+			new Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			ComplexFloat64Member factor = new ComplexFloat64Member(0.5, 0);
+			ComplexFloat64VectorMember prod = G.CDBL_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.CDBL_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

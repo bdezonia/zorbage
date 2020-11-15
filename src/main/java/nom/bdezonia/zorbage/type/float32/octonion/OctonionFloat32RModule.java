@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float32.octonion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -80,6 +82,8 @@ public class OctonionFloat32RModule
 		ScaleByHighPrec<OctonionFloat32RModuleMember>,
 		ScaleByRational<OctonionFloat32RModuleMember>,
 		ScaleByDouble<OctonionFloat32RModuleMember>,
+		ScaleByOneHalf<OctonionFloat32RModuleMember>,
+		ScaleByTwo<OctonionFloat32RModuleMember>,
 		Tolerance<Float32Member,OctonionFloat32RModuleMember>,
 		ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>
 {
@@ -577,4 +581,43 @@ public class OctonionFloat32RModule
 	public Procedure3<OctonionFloat32RModuleMember, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SCB2 =
+			new Procedure3<Integer, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			OctonionFloat32Member factor = new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat32RModuleMember prod = G.OFLT_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OFLT_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> SCBH =
+			new Procedure3<Integer, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			OctonionFloat32Member factor = new OctonionFloat32Member(0.5f, 0, 0, 0, 0, 0, 0, 0);
+			OctonionFloat32RModuleMember prod = G.OFLT_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OFLT_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionFloat32RModuleMember, OctonionFloat32RModuleMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

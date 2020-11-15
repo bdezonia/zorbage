@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float64.quaternion;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -80,6 +82,8 @@ public class QuaternionFloat64RModule
 		ScaleByHighPrec<QuaternionFloat64RModuleMember>,
 		ScaleByRational<QuaternionFloat64RModuleMember>,
 		ScaleByDouble<QuaternionFloat64RModuleMember>,
+		ScaleByOneHalf<QuaternionFloat64RModuleMember>,
+		ScaleByTwo<QuaternionFloat64RModuleMember>,
 		Tolerance<Float64Member,QuaternionFloat64RModuleMember>,
 		ArrayLikeMethods<QuaternionFloat64RModuleMember,QuaternionFloat64Member>
 {
@@ -587,6 +591,44 @@ public class QuaternionFloat64RModule
 	@Override
 	public Procedure3<QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> divideElements() {
 		return DIVELEM;
+	}
+
+	private final Procedure3<Integer, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> SCB2 =
+			new Procedure3<Integer, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
+			QuaternionFloat64Member factor = new QuaternionFloat64Member(2, 0, 0, 0);
+			QuaternionFloat64RModuleMember prod = G.QDBL_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QDBL_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> SCBH =
+			new Procedure3<Integer, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, QuaternionFloat64RModuleMember a, QuaternionFloat64RModuleMember b) {
+			QuaternionFloat64Member factor = new QuaternionFloat64Member(0.5, 0, 0, 0);
+			QuaternionFloat64RModuleMember prod = G.QDBL_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.QDBL_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, QuaternionFloat64RModuleMember, QuaternionFloat64RModuleMember> scaleByOneHalf() {
+		return SCBH;
 	}
 
 }

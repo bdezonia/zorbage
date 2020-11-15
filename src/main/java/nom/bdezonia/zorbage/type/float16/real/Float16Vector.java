@@ -26,6 +26,8 @@
  */
 package nom.bdezonia.zorbage.type.float16.real;
 
+import java.lang.Integer;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
@@ -78,6 +80,8 @@ public class Float16Vector
 		ScaleByHighPrec<Float16VectorMember>,
 		ScaleByRational<Float16VectorMember>,
 		ScaleByDouble<Float16VectorMember>,
+		ScaleByOneHalf<Float16VectorMember>,
+		ScaleByTwo<Float16VectorMember>,
 		Tolerance<Float16Member,Float16VectorMember>,
 		ArrayLikeMethods<Float16VectorMember,Float16Member>
 {
@@ -561,4 +565,43 @@ public class Float16Vector
 	public Procedure3<Float16VectorMember, Float16VectorMember, Float16VectorMember> divideElements() {
 		return DIVELEM;
 	}
+
+	private final Procedure3<Integer, Float16VectorMember, Float16VectorMember> SCB2 =
+			new Procedure3<Integer, Float16VectorMember, Float16VectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float16VectorMember a, Float16VectorMember b) {
+			Float16Member factor = new Float16Member(2);
+			Float16VectorMember prod = G.HLF_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HLF_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16VectorMember, Float16VectorMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, Float16VectorMember, Float16VectorMember> SCBH =
+			new Procedure3<Integer, Float16VectorMember, Float16VectorMember>()
+	{
+		@Override
+		public void call(Integer numTimes, Float16VectorMember a, Float16VectorMember b) {
+			Float16Member factor = new Float16Member(0.5f);
+			Float16VectorMember prod = G.HLF_VEC.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.HLF_VEC.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16VectorMember, Float16VectorMember> scaleByOneHalf() {
+		return SCBH;
+	}
+
 }

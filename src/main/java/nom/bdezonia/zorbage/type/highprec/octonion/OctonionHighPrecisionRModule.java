@@ -26,6 +26,7 @@
  */
 package nom.bdezonia.zorbage.type.highprec.octonion;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -52,6 +53,7 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -74,6 +76,8 @@ public class OctonionHighPrecisionRModule
 		ScaleByHighPrec<OctonionHighPrecisionRModuleMember>,
 		ScaleByRational<OctonionHighPrecisionRModuleMember>,
 		ScaleByDouble<OctonionHighPrecisionRModuleMember>,
+		ScaleByOneHalf<OctonionHighPrecisionRModuleMember>,
+		ScaleByTwo<OctonionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
 		ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>
 {
@@ -504,6 +508,44 @@ public class OctonionHighPrecisionRModule
 	@Override
 	public Procedure3<OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> divideElements() {
 		return DIVELEM;
+	}
+
+	private final Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> SCB2 =
+			new Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			OctonionHighPrecisionRModuleMember prod = G.OHP_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHP_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByTwo() {
+		return SCB2;
+	}
+
+	private final Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> SCBH =
+			new Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember>()
+	{
+		@Override
+		public void call(Integer numTimes, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			OctonionHighPrecisionRModuleMember prod = G.OHP_RMOD.construct(a);
+			for (int i = 0; i < numTimes; i++) {
+				scale().call(factor, prod, prod);
+			}
+			G.OHP_RMOD.assign().call(prod, b);
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByOneHalf() {
+		return SCBH;
 	}
 
 }
