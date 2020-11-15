@@ -77,7 +77,7 @@ public class KMeans {
 		
 		Point point = algebra.construct();
 		SignedInt32Member clusterNum = G.INT32.construct();
-		Float64Member scale = G.DBL.construct();
+		double scale;
 		Float64Member dist = G.DBL.construct();
 		Float64Member minDist = G.DBL.construct();
 		
@@ -113,7 +113,7 @@ public class KMeans {
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
 				long count = counts.get(i);
-				scale.setV(1.0/count);
+				scale = 1.0 / count;
 				algebra.scale().call(scale, ctrSum, ctrSum);
 			}
 			

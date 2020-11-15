@@ -32,7 +32,6 @@ import java.math.BigDecimal;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 
@@ -100,7 +99,7 @@ public class TestPointAlgebra {
 		G.POINT.subtract().call(p, p, p3);
 		assertTrue(G.POINT.isZero().call(p3));
 		
-		G.POINT.scale().call(new Float64Member(1.5), p, p3);
+		G.POINT.scale().call(1.5, p, p3);
 		assertEquals(3, p3.numDimensions());
 		assertEquals(1.5*p.component(0), p3.component(0), 0);
 		assertEquals(1.5*p.component(1), p3.component(1), 0);
