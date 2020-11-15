@@ -51,6 +51,7 @@ public class BooleanAlgebra
 		Bounded<BooleanMember>,
 		Ordered<BooleanMember>,
 		LogicalOperations<BooleanMember>,
+		PredSucc<BooleanMember>,
 		Random<BooleanMember>
 {
 	
@@ -406,6 +407,16 @@ public class BooleanAlgebra
 	@Override
 	public Procedure1<BooleanMember> zero() {
 		return ZERO;
+	}
+
+	@Override
+	public Procedure2<BooleanMember, BooleanMember> pred() {
+		return NOT;
+	}
+
+	@Override
+	public Procedure2<BooleanMember, BooleanMember> succ() {
+		return NOT;
 	}
 
 }

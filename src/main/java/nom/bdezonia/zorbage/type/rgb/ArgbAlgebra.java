@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
 
 /**
@@ -43,7 +44,7 @@ import nom.bdezonia.zorbage.algebra.Random;
  *
  */
 public class ArgbAlgebra
-	implements Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>
+	implements Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>, PredSucc<ArgbMember>
 {
 
 	@Override
@@ -200,5 +201,75 @@ public class ArgbAlgebra
 
 	public Procedure4<Double, ArgbMember, ArgbMember, ArgbMember> blend() {
 		return BLEND;
+	}
+
+	private final Procedure2<ArgbMember, ArgbMember> PRED =
+			new Procedure2<ArgbMember, ArgbMember>()
+	{
+		@Override
+		public void call(ArgbMember a, ArgbMember b) {
+			b.setA(a.a());  // Note: we will not mess with alpha channels with this method. This might be a mistake.
+			if (a.b() == 0) {
+				b.setB(255);
+				if (a.r() == 0) {
+					b.setR(255);
+					if (a.g() == 0) {
+						b.setG(255);
+					}
+					else {
+						b.setG(a.g() - 1);
+					}
+				}
+				else {
+					b.setR(a.r() - 1);
+					b.setG(a.g());
+				}
+			}
+			else {
+				b.setB(a.b() - 1);
+				b.setR(a.r());
+				b.setG(a.g());
+			}
+		}
+	};
+
+	@Override
+	public Procedure2<ArgbMember, ArgbMember> pred() {
+		return PRED;
+	}
+
+	private final Procedure2<ArgbMember, ArgbMember> SUCC =
+			new Procedure2<ArgbMember, ArgbMember>()
+	{
+		@Override
+		public void call(ArgbMember a, ArgbMember b) {
+			b.setA(a.a());  // Note: we will not mess with alpha channels with this method. This might be a mistake.
+			if (a.b() == 255) {
+				b.setB(0);
+				if (a.r() == 255) {
+					b.setR(0);
+					if (a.g() == 255) {
+						b.setG(0);
+					}
+					else {
+						b.setG(a.g() + 1);
+					}
+				}
+				else {
+					b.setR(a.r() + 1);
+					b.setG(a.g());
+				}
+			}
+			else {
+				b.setB(a.b() + 1);
+				b.setR(a.r());
+				b.setG(a.g());
+			}
+		}
+	};
+
+	@Override
+	public Procedure2<ArgbMember, ArgbMember> succ() {
+		return SUCC;
 	}
 }
