@@ -154,7 +154,7 @@ public class Point
 	@Override
 	public void get(Point other) {
 		if (this == other) return;
-		if (other.vector.length != this.vector.length)
+		if (other.vector == null || other.vector.length != this.vector.length)
 			other.vector = this.vector.clone();
 		else {
 			for (int i = 0; i < this.vector.length; i++) {
@@ -192,7 +192,6 @@ public class Point
 	private final Function3<Boolean, Float64Member, Point, Point> WITHIN =
 			new Function3<Boolean, Float64Member, Point, Point>()
 	{
-		
 		@Override
 		public Boolean call(Float64Member tol, Point a, Point b) {
 			if (a.vector.length != b.vector.length)
@@ -228,5 +227,18 @@ public class Point
 			return G.POINT.isEqual().call(this, (Point) o);
 		}
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		b.append('[');
+		for (int i = 0; i < vector.length; i++) {
+			if (i != 0)
+				b.append(',');
+			b.append(vector[i]);
+		}
+		b.append(']');
+		return b.toString();
 	}
 }

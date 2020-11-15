@@ -187,7 +187,7 @@ public class PointAlgebra
 			if (a.numDimensions() != b.numDimensions() || a.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensions");
 			for (int i = 0; i < a.numDimensions(); i++) {
-				c.setComponent(i, a.component(i)+b.component(i));
+				c.setComponent(i, a.component(i) + b.component(i));
 			}
 		}
 	};
@@ -205,7 +205,7 @@ public class PointAlgebra
 			if (a.numDimensions() != b.numDimensions() || a.numDimensions() != c.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensions");
 			for (int i = 0; i < a.numDimensions(); i++) {
-				c.setComponent(i, a.component(i)-b.component(i));
+				c.setComponent(i, a.component(i) - b.component(i));
 			}
 		}
 	};
@@ -220,11 +220,11 @@ public class PointAlgebra
 			new Procedure3<Float64Member, Point, Point>()
 	{
 		@Override
-		public void call(Float64Member a, Point b, Point c) {
-			if (b.numDimensions() != c.numDimensions())
+		public void call(Float64Member factor, Point a, Point b) {
+			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
-			for (int i = 0; i < b.numDimensions(); i++) {
-				c.setComponent(i, a.v() * b.component(i));
+			for (int i = 0; i < a.numDimensions(); i++) {
+				b.setComponent(i, factor.v() * a.component(i));
 			}
 		}
 	};
@@ -254,15 +254,15 @@ public class PointAlgebra
 			new Procedure3<RationalMember, Point, Point>()
 	{
 		@Override
-		public void call(RationalMember a, Point b, Point c) {
-			if (b.numDimensions() != c.numDimensions())
+		public void call(RationalMember factor, Point a, Point b) {
+			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
 			BigDecimal t;
 			for (int i = 0; i < b.numDimensions(); i++) {
-				t = BigDecimal.valueOf(b.component(i));
-				t = t.multiply(new BigDecimal(a.n()));
-				t = t.divide(new BigDecimal(a.d()), CONTEXT);
-				c.setComponent(i, t.doubleValue());
+				t = BigDecimal.valueOf(a.component(i));
+				t = t.multiply(new BigDecimal(factor.n()));
+				t = t.divide(new BigDecimal(factor.d()), CONTEXT);
+				b.setComponent(i, t.doubleValue());
 			}
 		}
 	};
@@ -276,11 +276,11 @@ public class PointAlgebra
 			new Procedure3<Double, Point, Point>()
 	{
 		@Override
-		public void call(Double a, Point b, Point c) {
-			if (b.numDimensions() != c.numDimensions())
+		public void call(Double factor, Point a, Point b) {
+			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
-			for (int i = 0; i < b.numDimensions(); i++) {
-				c.setComponent(i, a * b.component(i));
+			for (int i = 0; i < a.numDimensions(); i++) {
+				b.setComponent(i, factor * a.component(i));
 			}
 		}
 	};
@@ -294,13 +294,13 @@ public class PointAlgebra
 			new Procedure3<HighPrecisionMember, Point, Point>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, Point b, Point c) {
-			if (b.numDimensions() != c.numDimensions())
+		public void call(HighPrecisionMember factor, Point a, Point b) {
+			if (a.numDimensions() != b.numDimensions())
 				throw new IllegalArgumentException("mismatched point dimensionality");
 			BigDecimal t;
-			for (int i = 0; i < b.numDimensions(); i++) {
-				t = a.v().multiply(BigDecimal.valueOf(b.component(i)));
-				c.setComponent(i, t.doubleValue());
+			for (int i = 0; i < a.numDimensions(); i++) {
+				t = factor.v().multiply(BigDecimal.valueOf(a.component(i)));
+				b.setComponent(i, t.doubleValue());
 			}
 		}
 	};
