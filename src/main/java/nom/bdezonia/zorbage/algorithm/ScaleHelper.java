@@ -63,7 +63,7 @@ public class ScaleHelper {
 		
 		W factor = factorAlg.construct();
 		factorAlg.unity().call(factor);
-		for (int i = 0; i < Math.abs(numTimes); i++) {
+		for (int i = 0; i < numTimes; i++) {
 			factorAlg.multiply().call(factor, num, factor);
 		}
 
