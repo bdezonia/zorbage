@@ -1411,7 +1411,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat16Member a, ComplexFloat16Member b) {
-			ScaleHelper.compute(G.CHLF, G.CHLF, TWO, numTimes, a, b);
+			ScaleHelper.compute(G.CHLF, G.CHLF, new ComplexFloat16Member(2, 0), numTimes, a, b);
 		}
 	};
 	
@@ -1425,7 +1425,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat16Member a, ComplexFloat16Member b) {
-			ScaleHelper.compute(G.CHLF, G.CHLF, ONE_HALF, numTimes, a, b);
+			ScaleHelper.compute(G.CHLF, G.CHLF, new ComplexFloat16Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 	

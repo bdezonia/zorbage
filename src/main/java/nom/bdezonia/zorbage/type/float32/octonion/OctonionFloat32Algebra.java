@@ -1434,7 +1434,7 @@ public class OctonionFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, OctonionFloat32Member a, OctonionFloat32Member b) {
-			ScaleHelper.compute(G.OFLT, G.OFLT, TWO, numTimes, a, b);
+			ScaleHelper.compute(G.OFLT, G.OFLT, new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 	
@@ -1448,7 +1448,7 @@ public class OctonionFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, OctonionFloat32Member a, OctonionFloat32Member b) {
-			ScaleHelper.compute(G.OFLT, G.OFLT, ONE_HALF, numTimes, a, b);
+			ScaleHelper.compute(G.OFLT, G.OFLT, new OctonionFloat32Member(0.5f, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 	

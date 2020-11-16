@@ -1434,7 +1434,7 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, OctonionFloat16Member a, OctonionFloat16Member b) {
-			ScaleHelper.compute(G.OHLF, G.OHLF, TWO, numTimes, a, b);
+			ScaleHelper.compute(G.OHLF, G.OHLF, new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 	

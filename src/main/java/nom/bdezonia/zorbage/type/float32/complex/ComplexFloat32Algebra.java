@@ -1410,7 +1410,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat32Member a, ComplexFloat32Member b) {
-			ScaleHelper.compute(G.CFLT, G.CFLT, TWO, numTimes, a, b);
+			ScaleHelper.compute(G.CFLT, G.CFLT, new ComplexFloat32Member(2, 0), numTimes, a, b);
 		}
 	};
 	
@@ -1424,7 +1424,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat32Member a, ComplexFloat32Member b) {
-			ScaleHelper.compute(G.CFLT, G.CFLT, ONE_HALF, numTimes, a, b);
+			ScaleHelper.compute(G.CFLT, G.CFLT, new ComplexFloat32Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 	
