@@ -45,6 +45,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -1409,9 +1410,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat32Member a, ComplexFloat32Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.CFLT, G.CFLT, TWO, numTimes, a, b);
 		}
 	};
 	
@@ -1425,9 +1424,7 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat32Member a, ComplexFloat32Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.CFLT, G.CFLT, ONE_HALF, numTimes, a, b);
 		}
 	};
 	

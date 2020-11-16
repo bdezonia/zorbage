@@ -45,13 +45,13 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -502,12 +502,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(Integer numTimes, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			HighPrecisionMember factor = new HighPrecisionMember(BigDecimal.valueOf(2));
-			HighPrecisionVectorMember prod = G.HP_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HP_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.HP_VEC, G.HP, new HighPrecisionMember(BigDecimal.valueOf(2)), numTimes, a, b);
 		}
 	};
 
@@ -521,12 +516,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(Integer numTimes, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
-			HighPrecisionMember factor = new HighPrecisionMember(C.ONE_HALF);
-			HighPrecisionVectorMember prod = G.HP_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HP_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.HP_VEC, G.HP, new HighPrecisionMember(BigDecimal.valueOf(0.5)), numTimes, a, b);
 		}
 	};
 

@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerAny;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -61,8 +62,6 @@ public class RationalAlgebra
 		ScaleByOneHalf<RationalMember>,
 		ScaleByTwo<RationalMember>
 {
-	private static final RationalMember TWO = new RationalMember(2);
-	
 	@Override
 	public RationalMember construct() {
 		return new RationalMember();
@@ -507,9 +506,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, RationalMember a, RationalMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.RAT, G.RAT, new RationalMember(2,1), numTimes, a, b);
 		}
 	};
 	
@@ -523,9 +520,7 @@ public class RationalAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, RationalMember a, RationalMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				div().call(b, TWO, b);
+			ScaleHelper.compute(G.RAT, G.RAT, new RationalMember(1,2), numTimes, a, b);
 		}
 	};
 	

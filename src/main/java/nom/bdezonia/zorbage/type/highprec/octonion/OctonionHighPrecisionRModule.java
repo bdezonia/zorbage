@@ -47,13 +47,13 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -515,12 +515,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(Integer numTimes, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
-			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-			OctonionHighPrecisionRModuleMember prod = G.OHP_RMOD.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.OHP_RMOD.assign().call(prod, b);
+			ScaleHelper.compute(G.OHP_RMOD, G.OHP, new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
 
@@ -534,12 +529,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(Integer numTimes, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
-			OctonionHighPrecisionMember factor = new OctonionHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-			OctonionHighPrecisionRModuleMember prod = G.OHP_RMOD.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.OHP_RMOD.assign().call(prod, b);
+			ScaleHelper.compute(G.OHP_RMOD, G.OHP, new OctonionHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
 

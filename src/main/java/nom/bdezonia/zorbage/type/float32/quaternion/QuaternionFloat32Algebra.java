@@ -34,6 +34,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -1064,9 +1065,7 @@ public class QuaternionFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, QuaternionFloat32Member a, QuaternionFloat32Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.QFLT, G.QFLT, new QuaternionFloat32Member(2, 0, 0, 0), numTimes, a, b);
 		}
 	};
 	
@@ -1080,9 +1079,7 @@ public class QuaternionFloat32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, QuaternionFloat32Member a, QuaternionFloat32Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.QFLT, G.QFLT, new QuaternionFloat32Member(0.5f, 0, 0, 0), numTimes, a, b);
 		}
 	};
 	

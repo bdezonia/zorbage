@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -673,12 +674,7 @@ public class QuaternionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat64CartesianTensorProductMember a, QuaternionFloat64CartesianTensorProductMember b) {
-			QuaternionFloat64Member factor = new QuaternionFloat64Member(2, 0, 0, 0);
-			QuaternionFloat64CartesianTensorProductMember prod = G.QDBL_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.QDBL_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.QDBL_TEN, G.QDBL, new QuaternionFloat64Member(2, 0, 0, 0), numTimes, a, b);
 		}
 	};
 
@@ -692,12 +688,7 @@ public class QuaternionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat64CartesianTensorProductMember a, QuaternionFloat64CartesianTensorProductMember b) {
-			QuaternionFloat64Member factor = new QuaternionFloat64Member(0.5, 0, 0, 0);
-			QuaternionFloat64CartesianTensorProductMember prod = G.QDBL_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.QDBL_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.QDBL_TEN, G.QDBL, new QuaternionFloat64Member(0.5, 0, 0, 0), numTimes, a, b);
 		}
 	};
 

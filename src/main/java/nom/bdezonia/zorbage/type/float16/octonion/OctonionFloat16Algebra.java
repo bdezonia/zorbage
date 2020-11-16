@@ -33,6 +33,7 @@ import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.OctonionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -1433,9 +1434,7 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, OctonionFloat16Member a, OctonionFloat16Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.OHLF, G.OHLF, TWO, numTimes, a, b);
 		}
 	};
 	
@@ -1449,9 +1448,7 @@ public class OctonionFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, OctonionFloat16Member a, OctonionFloat16Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.OHLF, G.OHLF, new OctonionFloat16Member(0.5f, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 	

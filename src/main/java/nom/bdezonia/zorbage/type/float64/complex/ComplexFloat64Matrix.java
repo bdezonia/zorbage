@@ -52,6 +52,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -901,12 +902,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64Member factor = new ComplexFloat64Member(2, 0);
-			ComplexFloat64MatrixMember prod = G.CDBL_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CDBL_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.CDBL_MAT, G.CDBL, new ComplexFloat64Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -920,12 +916,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
-			ComplexFloat64Member factor = new ComplexFloat64Member(0.5, 0);
-			ComplexFloat64MatrixMember prod = G.CDBL_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CDBL_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.CDBL_MAT, G.CDBL, new ComplexFloat64Member(0.5, 0), numTimes, a, b);
 		}
 	};
 

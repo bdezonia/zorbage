@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -90,7 +91,6 @@ public class Float16Algebra
 	private static final Float16Member E = new Float16Member((float)Math.E);
 	private static final Float16Member GAMMA = new Float16Member((float)0.57721566490153286060);
 	private static final Float16Member PHI = new Float16Member((float)1.61803398874989484820);
-	private static final Float16Member TWO = new Float16Member(2.0f);
 
 	public Float16Algebra() { }
 	
@@ -1413,9 +1413,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, Float16Member a, Float16Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.HLF, G.HLF, new Float16Member(2), numTimes, a, b);
 		}
 	};
 	
@@ -1429,9 +1427,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, Float16Member a, Float16Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.HLF, G.HLF, new Float16Member(0.5f), numTimes, a, b);
 		}
 	};
 	

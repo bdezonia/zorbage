@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -673,12 +674,7 @@ public class OctonionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat64CartesianTensorProductMember a, OctonionFloat64CartesianTensorProductMember b) {
-			OctonionFloat64Member factor = new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0);
-			OctonionFloat64CartesianTensorProductMember prod = G.ODBL_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.ODBL_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.ODBL_TEN, G.ODBL, new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 
@@ -692,12 +688,7 @@ public class OctonionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat64CartesianTensorProductMember a, OctonionFloat64CartesianTensorProductMember b) {
-			OctonionFloat64Member factor = new OctonionFloat64Member(0.5, 0, 0, 0, 0, 0, 0, 0);
-			OctonionFloat64CartesianTensorProductMember prod = G.ODBL_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.ODBL_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.ODBL_TEN, G.ODBL, new OctonionFloat64Member(0.5, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 

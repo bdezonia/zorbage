@@ -50,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -886,12 +887,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Integer numTimes, Float16MatrixMember a, Float16MatrixMember b) {
-			Float16Member factor = new Float16Member(2);
-			Float16MatrixMember prod = G.HLF_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HLF_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.HLF_MAT, G.HLF, new Float16Member(2), numTimes, a, b);
 		}
 	};
 
@@ -905,12 +901,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Integer numTimes, Float16MatrixMember a, Float16MatrixMember b) {
-			Float16Member factor = new Float16Member(0.5f);
-			Float16MatrixMember prod = G.HLF_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HLF_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.HLF_MAT, G.HLF, new Float16Member(0.5f), numTimes, a, b);
 		}
 	};
 

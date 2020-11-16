@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -587,12 +588,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-			ComplexFloat64Member factor = new ComplexFloat64Member(2, 0);
-			ComplexFloat64VectorMember prod = G.CDBL_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CDBL_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.CDBL_VEC, G.CDBL, new ComplexFloat64Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -606,12 +602,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
-			ComplexFloat64Member factor = new ComplexFloat64Member(0.5, 0);
-			ComplexFloat64VectorMember prod = G.CDBL_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CDBL_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.CDBL_VEC, G.CDBL, new ComplexFloat64Member(0.5, 0), numTimes, a, b);
 		}
 	};
 

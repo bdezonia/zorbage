@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -982,9 +983,7 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.QHP, G.QHP, new QuaternionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
 	
@@ -998,9 +997,7 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.QHP, G.QHP, new QuaternionHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
 	

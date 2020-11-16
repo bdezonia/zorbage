@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -571,12 +572,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Integer numTimes, Float16VectorMember a, Float16VectorMember b) {
-			Float16Member factor = new Float16Member(2);
-			Float16VectorMember prod = G.HLF_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HLF_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.HLF_VEC, G.HLF, new Float16Member(2), numTimes, a, b);
 		}
 	};
 
@@ -590,12 +586,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Integer numTimes, Float16VectorMember a, Float16VectorMember b) {
-			Float16Member factor = new Float16Member(0.5f);
-			Float16VectorMember prod = G.HLF_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HLF_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.HLF_VEC, G.HLF, new Float16Member(0.5f), numTimes, a, b);
 		}
 	};
 

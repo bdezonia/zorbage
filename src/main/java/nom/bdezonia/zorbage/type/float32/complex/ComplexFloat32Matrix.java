@@ -52,6 +52,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -901,12 +902,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			ComplexFloat32Member factor = new ComplexFloat32Member(2, 0);
-			ComplexFloat32MatrixMember prod = G.CFLT_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CFLT_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.CFLT_MAT, G.CFLT, new ComplexFloat32Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -920,12 +916,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
-			ComplexFloat32Member factor = new ComplexFloat32Member(0.5f, 0);
-			ComplexFloat32MatrixMember prod = G.CFLT_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CFLT_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.CFLT_MAT, G.CFLT, new ComplexFloat32Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 

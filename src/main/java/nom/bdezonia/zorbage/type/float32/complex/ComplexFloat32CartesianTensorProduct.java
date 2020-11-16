@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -673,12 +674,7 @@ public class ComplexFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
-			ComplexFloat32Member factor = new ComplexFloat32Member(2, 0);
-			ComplexFloat32CartesianTensorProductMember prod = G.CFLT_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CFLT_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.CFLT_TEN, G.CFLT, new ComplexFloat32Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -692,12 +688,7 @@ public class ComplexFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
-			ComplexFloat32Member factor = new ComplexFloat32Member(0.5f, 0);
-			ComplexFloat32CartesianTensorProductMember prod = G.CFLT_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CFLT_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.CFLT_TEN, G.CFLT, new ComplexFloat32Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 

@@ -30,6 +30,7 @@ import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
@@ -673,12 +674,7 @@ public class ComplexFloat16CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat16CartesianTensorProductMember a, ComplexFloat16CartesianTensorProductMember b) {
-			ComplexFloat16Member factor = new ComplexFloat16Member(2, 0);
-			ComplexFloat16CartesianTensorProductMember prod = G.CHLF_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CHLF_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.CHLF_TEN, G.CHLF, new ComplexFloat16Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -692,12 +688,7 @@ public class ComplexFloat16CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat16CartesianTensorProductMember a, ComplexFloat16CartesianTensorProductMember b) {
-			ComplexFloat16Member factor = new ComplexFloat16Member(0.5f, 0);
-			ComplexFloat16CartesianTensorProductMember prod = G.CHLF_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CHLF_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.CHLF_TEN, G.CHLF, new ComplexFloat16Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 

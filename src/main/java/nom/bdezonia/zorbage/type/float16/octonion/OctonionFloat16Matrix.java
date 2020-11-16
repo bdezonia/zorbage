@@ -54,6 +54,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -901,12 +902,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
-			OctonionFloat16Member factor = new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0);
-			OctonionFloat16MatrixMember prod = G.OHLF_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.OHLF_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.OHLF_MAT, G.OHLF, new OctonionFloat16Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 
@@ -920,12 +916,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
-			OctonionFloat16Member factor = new OctonionFloat16Member(0.5f, 0, 0, 0, 0, 0, 0, 0);
-			OctonionFloat16MatrixMember prod = G.OHLF_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.OHLF_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.OHLF_MAT, G.OHLF, new OctonionFloat16Member(0.5f, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 

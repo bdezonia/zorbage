@@ -50,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -886,12 +887,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Integer numTimes, Float32MatrixMember a, Float32MatrixMember b) {
-			Float32Member factor = new Float32Member(2);
-			Float32MatrixMember prod = G.FLT_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.FLT_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.FLT_MAT, G.FLT, new Float32Member(2), numTimes, a, b);
 		}
 	};
 
@@ -905,12 +901,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Integer numTimes, Float32MatrixMember a, Float32MatrixMember b) {
-			Float32Member factor = new Float32Member(0.5f);
-			Float32MatrixMember prod = G.FLT_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.FLT_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.FLT_MAT, G.FLT, new Float32Member(0.5f), numTimes, a, b);
 		}
 	};
 

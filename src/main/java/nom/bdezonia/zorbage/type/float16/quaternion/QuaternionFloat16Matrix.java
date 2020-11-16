@@ -54,6 +54,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixSubtraction;
 import nom.bdezonia.zorbage.algorithm.MatrixTranspose;
 import nom.bdezonia.zorbage.algorithm.MatrixUnity;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -915,12 +916,7 @@ public class QuaternionFloat16Matrix
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
-			QuaternionFloat16Member factor = new QuaternionFloat16Member(2, 0, 0, 0);
-			QuaternionFloat16MatrixMember prod = G.QHLF_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.QHLF_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.QHLF_MAT, G.QHLF, new QuaternionFloat16Member(2, 0, 0, 0), numTimes, a, b);
 		}
 	};
 
@@ -934,12 +930,7 @@ public class QuaternionFloat16Matrix
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat16MatrixMember a, QuaternionFloat16MatrixMember b) {
-			QuaternionFloat16Member factor = new QuaternionFloat16Member(0.5f, 0, 0, 0);
-			QuaternionFloat16MatrixMember prod = G.QHLF_MAT.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.QHLF_MAT.assign().call(prod, b);
+			ScaleHelper.compute(G.QHLF_MAT, G.QHLF, new QuaternionFloat16Member(0.5f, 0, 0, 0), numTimes, a, b);
 		}
 	};
 

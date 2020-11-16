@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -664,12 +665,7 @@ public class Float16CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
-			Float16Member factor = new Float16Member(2);
-			Float16CartesianTensorProductMember prod = G.HLF_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HLF_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.HLF_TEN, G.HLF, new Float16Member(2), numTimes, a, b);
 		}
 	};
 
@@ -683,12 +679,7 @@ public class Float16CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, Float16CartesianTensorProductMember a, Float16CartesianTensorProductMember b) {
-			Float16Member factor = new Float16Member(0.5f);
-			Float16CartesianTensorProductMember prod = G.HLF_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HLF_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.HLF_TEN, G.HLF, new Float16Member(0.5f), numTimes, a, b);
 		}
 	};
 

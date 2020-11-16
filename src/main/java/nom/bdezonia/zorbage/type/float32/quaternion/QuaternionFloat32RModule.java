@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -598,12 +599,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat32RModuleMember a, QuaternionFloat32RModuleMember b) {
-			QuaternionFloat32Member factor = new QuaternionFloat32Member(2, 0, 0, 0);
-			QuaternionFloat32RModuleMember prod = G.QFLT_RMOD.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.QFLT_RMOD.assign().call(prod, b);
+			ScaleHelper.compute(G.QFLT_RMOD, G.QFLT, new QuaternionFloat32Member(2, 0, 0, 0), numTimes, a, b);
 		}
 	};
 
@@ -617,12 +613,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat32RModuleMember a, QuaternionFloat32RModuleMember b) {
-			QuaternionFloat32Member factor = new QuaternionFloat32Member(0.5f, 0, 0, 0);
-			QuaternionFloat32RModuleMember prod = G.QFLT_RMOD.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.QFLT_RMOD.assign().call(prod, b);
+			ScaleHelper.compute(G.QFLT_RMOD, G.QFLT, new QuaternionFloat32Member(0.5f, 0, 0, 0), numTimes, a, b);
 		}
 	};
 

@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -587,12 +588,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
-			OctonionFloat32Member factor = new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0);
-			OctonionFloat32RModuleMember prod = G.OFLT_RMOD.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.OFLT_RMOD.assign().call(prod, b);
+			ScaleHelper.compute(G.OFLT_RMOD, G.OFLT, new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 
@@ -606,12 +602,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
-			OctonionFloat32Member factor = new OctonionFloat32Member(0.5f, 0, 0, 0, 0, 0, 0, 0);
-			OctonionFloat32RModuleMember prod = G.OFLT_RMOD.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.OFLT_RMOD.assign().call(prod, b);
+			ScaleHelper.compute(G.OFLT_RMOD, G.OFLT, new OctonionFloat32Member(0.5f, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
 

@@ -48,6 +48,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -587,12 +588,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
-			ComplexFloat16Member factor = new ComplexFloat16Member(2, 0);
-			ComplexFloat16VectorMember prod = G.CHLF_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CHLF_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.CHLF_VEC, G.CHLF, new ComplexFloat16Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -606,12 +602,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
-			ComplexFloat16Member factor = new ComplexFloat16Member(0.5f, 0);
-			ComplexFloat16VectorMember prod = G.CHLF_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CHLF_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.CHLF_VEC, G.CHLF, new ComplexFloat16Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 

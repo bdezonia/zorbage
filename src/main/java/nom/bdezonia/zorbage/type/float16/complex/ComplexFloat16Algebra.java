@@ -50,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
 import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -1410,9 +1411,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat16Member a, ComplexFloat16Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.CHLF, G.CHLF, TWO, numTimes, a, b);
 		}
 	};
 	
@@ -1426,9 +1425,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, ComplexFloat16Member a, ComplexFloat16Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.CHLF, G.CHLF, ONE_HALF, numTimes, a, b);
 		}
 	};
 	

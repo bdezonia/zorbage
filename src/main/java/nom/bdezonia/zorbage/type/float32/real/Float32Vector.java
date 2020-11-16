@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.algorithm.RModuleScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByHighPrec;
 import nom.bdezonia.zorbage.algorithm.RModuleScaleByRational;
 import nom.bdezonia.zorbage.algorithm.RModuleSubtract;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -571,12 +572,7 @@ public class Float32Vector
 	{
 		@Override
 		public void call(Integer numTimes, Float32VectorMember a, Float32VectorMember b) {
-			Float32Member factor = new Float32Member(2);
-			Float32VectorMember prod = G.FLT_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.FLT_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.FLT_VEC, G.FLT, new Float32Member(2), numTimes, a, b);
 		}
 	};
 
@@ -590,12 +586,7 @@ public class Float32Vector
 	{
 		@Override
 		public void call(Integer numTimes, Float32VectorMember a, Float32VectorMember b) {
-			Float32Member factor = new Float32Member(0.5f);
-			Float32VectorMember prod = G.FLT_VEC.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.FLT_VEC.assign().call(prod, b);
+			ScaleHelper.compute(G.FLT_VEC, G.FLT, new Float32Member(0.5f), numTimes, a, b);
 		}
 	};
 

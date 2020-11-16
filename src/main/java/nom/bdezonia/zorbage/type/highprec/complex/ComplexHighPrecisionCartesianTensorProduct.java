@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
@@ -48,7 +49,6 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -595,12 +595,7 @@ public class ComplexHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexHighPrecisionCartesianTensorProductMember a, ComplexHighPrecisionCartesianTensorProductMember b) {
-			ComplexHighPrecisionMember factor = new ComplexHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO);
-			ComplexHighPrecisionCartesianTensorProductMember prod = G.CHP_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CHP_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
 
@@ -614,12 +609,7 @@ public class ComplexHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexHighPrecisionCartesianTensorProductMember a, ComplexHighPrecisionCartesianTensorProductMember b) {
-			ComplexHighPrecisionMember factor = new ComplexHighPrecisionMember(C.ONE_HALF, BigDecimal.ZERO);
-			ComplexHighPrecisionCartesianTensorProductMember prod = G.CHP_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.CHP_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
 

@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -74,7 +75,6 @@ public class HighPrecisionAlgebra
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
-	private static final HighPrecisionMember TWO = new HighPrecisionMember(BigDecimal.valueOf(2));
 	
 	public static MathContext getContext() {
 		return CONTEXT;
@@ -963,9 +963,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, HighPrecisionMember a, HighPrecisionMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.HP, G.HP, new HighPrecisionMember(BigDecimal.valueOf(2)), numTimes, a, b);
 		}
 	};
 	
@@ -979,9 +977,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, HighPrecisionMember a, HighPrecisionMember b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.HP, G.HP, new HighPrecisionMember(BigDecimal.valueOf(0.5)), numTimes, a, b);
 		}
 	};
 	

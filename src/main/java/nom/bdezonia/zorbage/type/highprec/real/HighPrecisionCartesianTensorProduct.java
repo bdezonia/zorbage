@@ -32,6 +32,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
@@ -48,7 +49,6 @@ import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -584,12 +584,7 @@ public class HighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, HighPrecisionCartesianTensorProductMember a, HighPrecisionCartesianTensorProductMember b) {
-			HighPrecisionMember factor = new HighPrecisionMember(BigDecimal.valueOf(2));
-			HighPrecisionCartesianTensorProductMember prod = G.HP_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HP_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.HP_TEN, G.HP, new HighPrecisionMember(BigDecimal.valueOf(2)), numTimes, a, b);
 		}
 	};
 
@@ -603,12 +598,7 @@ public class HighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, HighPrecisionCartesianTensorProductMember a, HighPrecisionCartesianTensorProductMember b) {
-			HighPrecisionMember factor = new HighPrecisionMember(C.ONE_HALF);
-			HighPrecisionCartesianTensorProductMember prod = G.HP_TEN.construct(a);
-			for (int i = 0; i < numTimes; i++) {
-				scale().call(factor, prod, prod);
-			}
-			G.HP_TEN.assign().call(prod, b);
+			ScaleHelper.compute(G.HP_TEN, G.HP, new HighPrecisionMember(BigDecimal.valueOf(0.5)), numTimes, a, b);
 		}
 	};
 

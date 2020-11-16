@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
 import nom.bdezonia.zorbage.algorithm.Sinch;
 import nom.bdezonia.zorbage.algorithm.Sinchpi;
@@ -92,7 +93,6 @@ public class Float32Algebra
 	private static final Float32Member E = new Float32Member((float)Math.E);
 	private static final Float32Member GAMMA = new Float32Member((float)0.57721566490153286060);
 	private static final Float32Member PHI = new Float32Member((float)1.61803398874989484820);
-	private static final Float32Member TWO = new Float32Member(2.0f);
 	
 	public Float32Algebra() { }
 	
@@ -1510,9 +1510,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, Float32Member a, Float32Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				multiply().call(b, TWO, b);
+			ScaleHelper.compute(G.FLT, G.FLT, new Float32Member(2), numTimes, a, b);
 		}
 	};
 	
@@ -1526,9 +1524,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(java.lang.Integer numTimes, Float32Member a, Float32Member b) {
-			assign().call(a, b);
-			for (int i = 0; i < numTimes; i++)
-				divide().call(b, TWO, b);
+			ScaleHelper.compute(G.FLT, G.FLT, new Float32Member(0.5f), numTimes, a, b);
 		}
 	};
 	
