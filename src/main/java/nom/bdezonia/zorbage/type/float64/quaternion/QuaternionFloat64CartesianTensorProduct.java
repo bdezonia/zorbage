@@ -151,6 +151,7 @@ public class QuaternionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat64CartesianTensorProductMember from, QuaternionFloat64CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.QDBL, from.rawData(), to.rawData());
 		}

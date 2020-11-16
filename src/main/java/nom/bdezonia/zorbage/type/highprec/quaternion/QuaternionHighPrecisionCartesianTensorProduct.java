@@ -142,6 +142,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(QuaternionHighPrecisionCartesianTensorProductMember from, QuaternionHighPrecisionCartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.QHP, from.rawData(), to.rawData());
 		}

@@ -49,6 +49,7 @@ public class RModuleAssign {
 	public static <T extends Algebra<T,V>, U extends RModuleMember<V>, V>
 		void compute(T algebra, U from, U to)
 	{
+		if (from == to) return;
 		V tmp = algebra.construct();
 		final long length = from.length();
 		to.alloc(length);

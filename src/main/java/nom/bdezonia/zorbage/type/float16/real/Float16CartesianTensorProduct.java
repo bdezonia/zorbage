@@ -151,6 +151,7 @@ public class Float16CartesianTensorProduct
 	{
 		@Override
 		public void call(Float16CartesianTensorProductMember from, Float16CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.HLF, from.rawData(), to.rawData());
 		}

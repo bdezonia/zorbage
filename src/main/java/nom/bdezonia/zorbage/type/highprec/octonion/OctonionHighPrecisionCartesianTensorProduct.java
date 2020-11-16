@@ -142,6 +142,7 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionHighPrecisionCartesianTensorProductMember from, OctonionHighPrecisionCartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.OHP, from.rawData(), to.rawData());
 		}

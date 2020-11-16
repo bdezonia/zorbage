@@ -151,6 +151,7 @@ public class OctonionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat64CartesianTensorProductMember from, OctonionFloat64CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.ODBL, from.rawData(), to.rawData());
 		}

@@ -150,6 +150,7 @@ public class Float32CartesianTensorProduct
 	{
 		@Override
 		public void call(Float32CartesianTensorProductMember from, Float32CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.FLT, from.rawData(), to.rawData());
 		}

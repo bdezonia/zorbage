@@ -151,6 +151,7 @@ public class ComplexFloat16CartesianTensorProduct
 	{
 		@Override
 		public void call(ComplexFloat16CartesianTensorProductMember from, ComplexFloat16CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.CHLF, from.rawData(), to.rawData());
 		}

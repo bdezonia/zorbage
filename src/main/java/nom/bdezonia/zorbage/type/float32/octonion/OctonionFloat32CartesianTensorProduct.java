@@ -151,6 +151,7 @@ public class OctonionFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat32CartesianTensorProductMember from, OctonionFloat32CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.OFLT, from.rawData(), to.rawData());
 		}

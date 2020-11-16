@@ -151,6 +151,7 @@ public class ComplexFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(ComplexFloat64CartesianTensorProductMember from, ComplexFloat64CartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.CDBL, from.rawData(), to.rawData());
 		}

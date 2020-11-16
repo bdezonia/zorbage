@@ -141,6 +141,7 @@ public class HighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionCartesianTensorProductMember from, HighPrecisionCartesianTensorProductMember to) {
+			if (from == to) return;
 			TensorShape.compute(from, to);
 			Copy.compute(G.HP, from.rawData(), to.rawData());
 		}
