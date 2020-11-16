@@ -664,6 +664,7 @@ public class Float64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.DBL_TEN, G.DBL, new Float64Member(2), numTimes, a, b);
 		}
 	};
@@ -678,6 +679,7 @@ public class Float64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, Float64CartesianTensorProductMember a, Float64CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.DBL_TEN, G.DBL, new Float64Member(0.5), numTimes, a, b);
 		}
 	};

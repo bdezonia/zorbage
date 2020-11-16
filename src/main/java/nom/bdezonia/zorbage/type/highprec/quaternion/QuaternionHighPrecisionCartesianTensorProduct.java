@@ -596,6 +596,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.QHP_TEN, G.QHP, new QuaternionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
@@ -610,6 +611,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.QHP_TEN, G.QHP, new QuaternionHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};

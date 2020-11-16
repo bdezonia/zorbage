@@ -675,6 +675,7 @@ public class ComplexFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.CFLT_TEN, G.CFLT, new ComplexFloat32Member(2, 0), numTimes, a, b);
 		}
 	};
@@ -689,6 +690,7 @@ public class ComplexFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat32CartesianTensorProductMember a, ComplexFloat32CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.CFLT_TEN, G.CFLT, new ComplexFloat32Member(0.5f, 0), numTimes, a, b);
 		}
 	};

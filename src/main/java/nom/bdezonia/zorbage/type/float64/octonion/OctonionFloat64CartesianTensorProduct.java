@@ -675,6 +675,7 @@ public class OctonionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat64CartesianTensorProductMember a, OctonionFloat64CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.ODBL_TEN, G.ODBL, new OctonionFloat64Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};
@@ -689,6 +690,7 @@ public class OctonionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, OctonionFloat64CartesianTensorProductMember a, OctonionFloat64CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.ODBL_TEN, G.ODBL, new OctonionFloat64Member(0.5, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
 		}
 	};

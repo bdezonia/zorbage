@@ -596,6 +596,7 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, OctonionHighPrecisionCartesianTensorProductMember a, OctonionHighPrecisionCartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.OHP_TEN, G.OHP, new OctonionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
@@ -610,6 +611,7 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, OctonionHighPrecisionCartesianTensorProductMember a, OctonionHighPrecisionCartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.OHP_TEN, G.OHP, new OctonionHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
 		}
 	};

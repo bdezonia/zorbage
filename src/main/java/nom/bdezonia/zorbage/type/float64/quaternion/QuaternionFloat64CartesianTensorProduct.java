@@ -675,6 +675,7 @@ public class QuaternionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat64CartesianTensorProductMember a, QuaternionFloat64CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.QDBL_TEN, G.QDBL, new QuaternionFloat64Member(2, 0, 0, 0), numTimes, a, b);
 		}
 	};
@@ -689,6 +690,7 @@ public class QuaternionFloat64CartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, QuaternionFloat64CartesianTensorProductMember a, QuaternionFloat64CartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.QDBL_TEN, G.QDBL, new QuaternionFloat64Member(0.5, 0, 0, 0), numTimes, a, b);
 		}
 	};

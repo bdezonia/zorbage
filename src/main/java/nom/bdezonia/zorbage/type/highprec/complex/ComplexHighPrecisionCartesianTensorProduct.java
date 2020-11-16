@@ -596,6 +596,7 @@ public class ComplexHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexHighPrecisionCartesianTensorProductMember a, ComplexHighPrecisionCartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
@@ -610,6 +611,7 @@ public class ComplexHighPrecisionCartesianTensorProduct
 	{
 		@Override
 		public void call(Integer numTimes, ComplexHighPrecisionCartesianTensorProductMember a, ComplexHighPrecisionCartesianTensorProductMember b) {
+			TensorShape.compute(a, b);
 			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO), numTimes, a, b);
 		}
 	};
