@@ -42,31 +42,31 @@ public class ParallelTransform4 {
 	
 	/**
 	 * 
-	 * @param algU
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure4<U,U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c, IndexedDataSource<U> d)
+	public static <AA extends Algebra<AA,A>, A>
+		void compute(AA alg, Procedure4<A,A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c, IndexedDataSource<A> d)
 	{
-		compute(algU, algU, algU, algU, proc, a, b, c, d);	
+		compute(alg, alg, alg, alg, proc, a, b, c, d);	
 	}
 	
 	/**
 	 * 
-	 * @param algU
-	 * @param algW
-	 * @param algY
 	 * @param algA
+	 * @param algB
+	 * @param algC
+	 * @param algD
 	 * @param proc
 	 * @param a
 	 * @param b
 	 * @param c
 	 * @param d
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
-		void compute(T algU, V algW, X algY, Z algA, Procedure4<U,W,Y,A> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c, IndexedDataSource<A> d)
+	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
+		void compute(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d)
 	{
 		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
@@ -84,11 +84,11 @@ public class ParallelTransform4 {
 			else {
 				thSize = aSize;
 			}
-			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
-			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
-			IndexedDataSource<Y> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
-			IndexedDataSource<A> dTrimmed = new TrimmedDataSource<>(d, thOffset, thSize);
-			Runnable r = new Computer<T,U,V,W,X,Y,Z,A>(algU, algW, algY, algA, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
+			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
+			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, thOffset, thSize);
+			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D>(algA, algB, algC, algD, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
 			aSize -= slice;
@@ -105,33 +105,33 @@ public class ParallelTransform4 {
 		}
 	}
 	
-	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y, Z extends Algebra<Z,A>, A>
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
 		implements Runnable
 	{
-		private final T algebraU;
-		private final V algebraW;
-		private final X algebraY;
-		private final Z algebraA;
-		private final IndexedDataSource<U> list1;
-		private final IndexedDataSource<W> list2;
-		private final IndexedDataSource<Y> list3;
-		private final IndexedDataSource<A> list4;
-		private final Procedure4<U,W,Y,A> proc;
+		private final AA algebraA;
+		private final BB algebraB;
+		private final CC algebraC;
+		private final DD algebraD;
+		private final IndexedDataSource<A> listA;
+		private final IndexedDataSource<B> listB;
+		private final IndexedDataSource<C> listC;
+		private final IndexedDataSource<D> listD;
+		private final Procedure4<A,B,C,D> proc;
 		
-		Computer(T algU, V algW, X algY, Z algA, Procedure4<U,W,Y,A> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c, IndexedDataSource<A> d) {
-			algebraU = algU;
-			algebraW = algW;
-			algebraY = algY;
+		Computer(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d) {
 			algebraA = algA;
-			list1 = a;
-			list2 = b;
-			list3 = c;
-			list4 = d;
+			algebraB = algB;
+			algebraC = algC;
+			algebraD = algD;
+			listA = a;
+			listB = b;
+			listC = c;
+			listD = d;
 			this.proc = proc;
 		}
 		
 		public void run() {
-			Transform4.compute(algebraU, algebraW, algebraY, algebraA, proc, list1, list2, list3, list4);
+			Transform4.compute(algebraA, algebraB, algebraC, algebraD, proc, listA, listB, listC, listD);
 		}
 	}
 }

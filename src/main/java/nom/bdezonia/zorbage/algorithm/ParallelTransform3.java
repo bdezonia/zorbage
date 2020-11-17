@@ -42,29 +42,30 @@ public class ParallelTransform3 {
 	
 	/**
 	 * 
-	 * @param algU
-	 * @param proc
-	 * @param a
-	 * @param b
-	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
-	{
-		compute(algU, algU, algU, proc, a, b, c);	
-	}
-	
-	/**
-	 * 
-	 * @param algU
-	 * @param algW
-	 * @param algY
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
+	public static <AA extends Algebra<AA,A>, A>
+		void compute(AA algA, Procedure3<A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c)
+	{
+		compute(algA, algA, algA, proc, a, b, c);	
+	}
+	
+	/**
+	 * 
+	 * @param algA
+	 * @param algB
+	 * @param algC
+	 * @param proc
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
+	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C>
+		void compute(AA algA, BB algB, CC algC, Procedure3<A,B,C> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c)
 	{
 		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
@@ -82,10 +83,10 @@ public class ParallelTransform3 {
 			else {
 				thSize = aSize;
 			}
-			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
-			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
-			IndexedDataSource<Y> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
-			Runnable r = new Computer<T,U,V,W,X,Y>(algU, algW, algY, proc, aTrimmed, bTrimmed, cTrimmed);
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
+			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
+			Runnable r = new Computer<AA,A,BB,B,CC,C>(algA, algB, algC, proc, aTrimmed, bTrimmed, cTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
 			aSize -= slice;
@@ -102,29 +103,29 @@ public class ParallelTransform3 {
 		}
 	}
 	
-	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C>
 		implements Runnable
 	{
-		private final T algebraU;
-		private final V algebraW;
-		private final X algebraY;
-		private final IndexedDataSource<U> list1;
-		private final IndexedDataSource<W> list2;
-		private final IndexedDataSource<Y> list3;
-		private final Procedure3<U,W,Y> proc;
+		private final AA algebraA;
+		private final BB algebraB;
+		private final CC algebraC;
+		private final IndexedDataSource<A> listA;
+		private final IndexedDataSource<B> listB;
+		private final IndexedDataSource<C> listC;
+		private final Procedure3<A,B,C> proc;
 		
-		Computer(T algU, V algW, X algY, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c) {
-			algebraU = algU;
-			algebraW = algW;
-			algebraY = algY;
-			list1 = a;
-			list2 = b;
-			list3 = c;
+		Computer(AA algA, BB algB, CC algC, Procedure3<A,B,C> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c) {
+			algebraA = algA;
+			algebraB = algB;
+			algebraC = algC;
+			listA = a;
+			listB = b;
+			listC = c;
 			this.proc = proc;
 		}
 		
 		public void run() {
-			Transform3.compute(algebraU, algebraW, algebraY, proc, list1, list2, list3);
+			Transform3.compute(algebraA, algebraB, algebraC, proc, listA, listB, listC);
 		}
 	}
 

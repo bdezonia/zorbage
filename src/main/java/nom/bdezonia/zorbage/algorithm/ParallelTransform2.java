@@ -42,27 +42,27 @@ public class ParallelTransform2 {
 	
 	/**
 	 * 
-	 * @param algU
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	public static <AA extends Algebra<AA,A>, A>
+		void compute(AA alg, Procedure2<A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b)
 	{
-		compute(algU, algU, proc, a, b);	
+		compute(alg, alg, proc, a, b);	
 	}
 	
 	/**
 	 * 
-	 * @param algU
-	 * @param algW
+	 * @param algA
+	 * @param algB
 	 * @param proc
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
-		void compute(T algU, V algW, Procedure2<U, W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b)
+	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B>
+		void compute(AA algA, BB algB, Procedure2<A,B> proc, IndexedDataSource<A> a, IndexedDataSource<B> b)
 	{
 		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
@@ -80,9 +80,9 @@ public class ParallelTransform2 {
 			else {
 				thSize = aSize;
 			}
-			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
-			IndexedDataSource<W> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
-			Runnable r = new Computer<T,U,V,W>(algU, algW, proc, aTrimmed, bTrimmed);
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
+			Runnable r = new Computer<AA,A,BB,B>(algA, algB, proc, aTrimmed, bTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
 			aSize -= slice;
@@ -99,26 +99,25 @@ public class ParallelTransform2 {
 		}
 	}
 	
-	private static class Computer<T extends Algebra<T,U>, U, V extends Algebra<V,W>, W>
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B>
 		implements Runnable
 	{
-		private final T algebraU;
-		private final V algebraW;
-		private final IndexedDataSource<U> list1;
-		private final IndexedDataSource<W> list2;
-		private final Procedure2<U,W> proc;
+		private final AA algebraA;
+		private final BB algebraB;
+		private final IndexedDataSource<A> listA;
+		private final IndexedDataSource<B> listB;
+		private final Procedure2<A,B> proc;
 		
-		Computer(T algU, V algW, Procedure2<U, W> proc, IndexedDataSource<U> a, IndexedDataSource<W> b) {
-			algebraU = algU;
-			algebraW = algW;
-			list1 = a;
-			list2 = b;
+		Computer(AA algA, BB algB, Procedure2<A,B> proc, IndexedDataSource<A> a, IndexedDataSource<B> b) {
+			algebraA = algA;
+			algebraB = algB;
+			listA = a;
+			listB = b;
 			this.proc = proc;
 		}
 		
 		public void run() {
-			Transform2.compute(algebraU, algebraW, proc, list1, list2);
+			Transform2.compute(algebraA, algebraB, proc, listA, listB);
 		}
 	}
 }
-
