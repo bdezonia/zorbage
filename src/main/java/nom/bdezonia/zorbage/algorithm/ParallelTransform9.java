@@ -26,7 +26,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.procedure.Procedure9;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
@@ -36,9 +36,9 @@ import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ParallelTransform4 {
+public class ParallelTransform9 {
 
-	private ParallelTransform4() { }
+	private ParallelTransform9() { }
 	
 	/**
 	 * 
@@ -48,11 +48,16 @@ public class ParallelTransform4 {
 	 * @param b
 	 * @param c
 	 * @param d
+	 * @param e
+	 * @param f
+	 * @param g
+	 * @param h
+	 * @param i
 	 */
 	public static <AA extends Algebra<AA,A>, A>
-		void compute(AA alg, Procedure4<A,A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c, IndexedDataSource<A> d)
+		void compute(AA alg, Procedure9<A,A,A,A,A,A,A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c, IndexedDataSource<A> d, IndexedDataSource<A> e, IndexedDataSource<A> f, IndexedDataSource<A> g, IndexedDataSource<A> h, IndexedDataSource<A> i)
 	{
-		compute(alg, alg, alg, alg, proc, a, b, c, d);	
+		compute(alg, alg, alg, alg, alg, alg, alg, alg, alg, proc, a, b, c, d, e, f, g, h, i);	
 	}
 	
 	/**
@@ -61,14 +66,24 @@ public class ParallelTransform4 {
 	 * @param algB
 	 * @param algC
 	 * @param algD
+	 * @param algE
+	 * @param algF
+	 * @param algG
+	 * @param algH
+	 * @param algI
 	 * @param proc
 	 * @param a
 	 * @param b
 	 * @param c
 	 * @param d
+	 * @param e
+	 * @param f
+	 * @param g
+	 * @param h
+	 * @param ii
 	 */
-	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
-		void compute(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d)
+	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G, HH extends Algebra<HH,H>, H, II extends Algebra<II,I>, I>
+		void compute(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, Procedure9<A,B,C,D,E,F,G,H,I> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g, IndexedDataSource<H> h, IndexedDataSource<I> ii)
 	{
 		long aSize = a.size();
 		int numProcs = Runtime.getRuntime().availableProcessors();
@@ -90,7 +105,12 @@ public class ParallelTransform4 {
 			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
 			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
 			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, thOffset, thSize);
-			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D>(algA, algB, algC, algD, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
+			IndexedDataSource<E> eTrimmed = new TrimmedDataSource<>(e, thOffset, thSize);
+			IndexedDataSource<F> fTrimmed = new TrimmedDataSource<>(f, thOffset, thSize);
+			IndexedDataSource<G> gTrimmed = new TrimmedDataSource<>(g, thOffset, thSize);
+			IndexedDataSource<H> hTrimmed = new TrimmedDataSource<>(h, thOffset, thSize);
+			IndexedDataSource<I> iTrimmed = new TrimmedDataSource<>(ii, thOffset, thSize);
+			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I>(algA, algB, algC, algD, algE, algF, algG, algH, algI, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed, eTrimmed, fTrimmed, gTrimmed, hTrimmed, iTrimmed);
 			threads[i] = new Thread(r);
 			thOffset += slice;
 			aSize -= slice;
@@ -101,39 +121,59 @@ public class ParallelTransform4 {
 		for (int i = 0; i < numProcs; i++) {
 			try {
 				threads[i].join();
-			} catch(InterruptedException e) {
+			} catch(InterruptedException exc) {
 				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
 			}
 		}
 	}
 	
-	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G, HH extends Algebra<HH,H>, H, II extends Algebra<II,I>, I>
 		implements Runnable
 	{
 		private final AA algebraA;
 		private final BB algebraB;
 		private final CC algebraC;
 		private final DD algebraD;
+		private final EE algebraE;
+		private final FF algebraF;
+		private final GG algebraG;
+		private final HH algebraH;
+		private final II algebraI;
 		private final IndexedDataSource<A> listA;
 		private final IndexedDataSource<B> listB;
 		private final IndexedDataSource<C> listC;
 		private final IndexedDataSource<D> listD;
-		private final Procedure4<A,B,C,D> proc;
+		private final IndexedDataSource<E> listE;
+		private final IndexedDataSource<F> listF;
+		private final IndexedDataSource<G> listG;
+		private final IndexedDataSource<H> listH;
+		private final IndexedDataSource<I> listI;
+		private final Procedure9<A,B,C,D,E,F,G,H,I> proc;
 		
-		Computer(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d) {
+		Computer(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, Procedure9<A,B,C,D,E,F,G,H,I> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g, IndexedDataSource<H> h, IndexedDataSource<I> i) {
 			algebraA = algA;
 			algebraB = algB;
 			algebraC = algC;
 			algebraD = algD;
+			algebraE = algE;
+			algebraF = algF;
+			algebraG = algG;
+			algebraH = algH;
+			algebraI = algI;
 			listA = a;
 			listB = b;
 			listC = c;
 			listD = d;
+			listE = e;
+			listF = f;
+			listG = g;
+			listH = h;
+			listI = i;
 			this.proc = proc;
 		}
 		
 		public void run() {
-			Transform4.compute(algebraA, algebraB, algebraC, algebraD, proc, listA, listB, listC, listD);
+			Transform9.compute(algebraA, algebraB, algebraC, algebraD, algebraE, algebraF, algebraG, algebraH, algebraI, proc, listA, listB, listC, listD, listE, listF, listG, listH, listI);
 		}
 	}
 }
