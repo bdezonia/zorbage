@@ -42,18 +42,18 @@ public class Transform1 {
 	/**
 	 * Initialization of a list by repeated computation of a Procedure1.
 	 * 
-	 * @param algU
+	 * @param algA
 	 * @param proc
 	 * @param a
 	 */
-	public static <T extends Algebra<T,U>,U>
-		void compute(T algU, Procedure1<U> proc, IndexedDataSource<U> a)
+	public static <AA extends Algebra<AA,A>, A>
+		void compute(AA algA, Procedure1<A> proc, IndexedDataSource<A> a)
 	{
-		U value1 = algU.construct();
+		A valueA = algA.construct();
 		long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
-			proc.call(value1);
-			a.set(i, value1);
+			proc.call(valueA);
+			a.set(i, valueA);
 		}
 	}
 }

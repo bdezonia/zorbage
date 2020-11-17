@@ -41,40 +41,40 @@ public class Transform3 {
 
 	/**
 	 * 
-	 * @param algU
+	 * @param alg
 	 * @param proc
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
+	public static <AA extends Algebra<AA,A>, A>
+		void compute(AA alg, Procedure3<A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c)
 	{
-		compute(algU, algU, algU, proc, a, b, c);
+		compute(alg, alg, alg, proc, a, b, c);
 	}
 	
 	/**
 	 * 
-	 * @param algU
-	 * @param algW
-	 * @param algY
+	 * @param algA
+	 * @param algB
+	 * @param algC
 	 * @param proc
 	 * @param a
 	 * @param b
 	 * @param c
 	 */
-	public static <T extends Algebra<T,U>, U, V extends Algebra<V,W>, W, X extends Algebra<X,Y>, Y>
-		void compute(T algU, V algW, X algY, Procedure3<U,W,Y> proc, IndexedDataSource<U> a, IndexedDataSource<W> b, IndexedDataSource<Y> c)
+	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C>
+		void compute(AA algA, BB algB, CC algC, Procedure3<A,B,C> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c)
 	{
-		U valueU = algU.construct();
-		W valueW = algW.construct();
-		Y valueY = algY.construct();
+		A valueA = algA.construct();
+		B valueB = algB.construct();
+		C valueC = algC.construct();
 		long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
-			a.get(i, valueU);
-			b.get(i, valueW);
-			proc.call(valueU, valueW, valueY);
-			c.set(i, valueY);
+			a.get(i, valueA);
+			b.get(i, valueB);
+			proc.call(valueA, valueB, valueC);
+			c.set(i, valueC);
 		}
 	}
 }
