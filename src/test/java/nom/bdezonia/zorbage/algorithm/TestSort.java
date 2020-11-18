@@ -131,7 +131,7 @@ public class TestSort {
 				}
 			};
 			
-			InplaceTransform2.compute(G.DBL, proc, nums);
+			Transform2.compute(G.DBL, proc, nums, nums);
 			
 			Sort.compute(G.DBL, nums);
 			assertTrue(IsSorted.compute(G.DBL, nums));

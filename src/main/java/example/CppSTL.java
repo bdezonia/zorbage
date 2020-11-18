@@ -177,11 +177,6 @@ class CppSTL {
 		// FixedTransform2b.compute(algU, fixedValue, proc, a, b);
 		// FixedTransform2a.compute(algD, algF, fixedValue, proc, a, b);
 		// FixedTransform2b.compute(algD, algF, fixedValue, proc, a, b);
-	
-		// InplaceTransform1.compute(alg, proc, a);
-		// InplaceTransform2.compute(alg, proc, a);
-		// InplaceTransform3.compute(alg, proc, a);
-		// InplaceTransform4.compute(alg, proc, a);
 		
 		//  see https://en.cppreference.com/w/cpp/algorithm/transform
 	}

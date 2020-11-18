@@ -48,7 +48,7 @@ public class ForEach {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure2<U,U> proc, IndexedDataSource<U> a)
 	{
-		InplaceTransform2.compute(algU, proc, a);
+		Transform2.compute(algU, proc, a, a);
 	}
 
 }

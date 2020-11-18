@@ -30,7 +30,6 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
 import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
-import nom.bdezonia.zorbage.algorithm.InplaceTransform3;
 import nom.bdezonia.zorbage.algorithm.Map;
 import nom.bdezonia.zorbage.algorithm.ParallelTransform4;
 import nom.bdezonia.zorbage.algorithm.Reduce;
@@ -204,41 +203,6 @@ class Transforms {
 		// combine the data into results using as many threads as can be allocated to the app
 		
 		ParallelTransform4.compute(G.DBL, proc, a, b, c, results);
-	}
-	
-	// In place transforms: InplaceTransform1, InplaceTransform2, etc.
-	//
-	//   These transforms work on one list in place. Each element of the list is used as
-	//   an input to a procedure that combines the data as needed. The same list is used
-	//   as the destination of the output values.
-	
-	void example4() {
-
-		// create a list
-		
-		IndexedDataSource<Float32Member> data =
-				nom.bdezonia.zorbage.storage.Storage.allocate(G.FLT.construct(), new float[27000]);
-
-		// elsewhere : fill it with values
-		
-		// define a procedure to use to combine values
-		
-		Procedure3<Float32Member, Float32Member, Float32Member> addThem =
-				new Procedure3<Float32Member, Float32Member, Float32Member>()
-		{
-			@Override
-			public void call(Float32Member a, Float32Member b, Float32Member c) {
-				c.setV(a.v() + b.v());
-			}
-		};
-		
-		// Do an in place transform. The data is read an element at a time and used as an
-		// input as many times as necessary to compute a new value. That value is assigned
-		// to the original data.
-		
-		InplaceTransform3.compute(G.FLT, addThem, data);
-		
-		// at this point data has been doubled in place (x + x = 2x)
 	}
 	
 	// Fixed transforms
