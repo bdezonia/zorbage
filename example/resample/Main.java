@@ -28,8 +28,8 @@ import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.MirrorNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.tuple.Tuple3;
-import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
 /**
  * 

@@ -12,8 +12,8 @@ import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.CyclicNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Algebra;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Algebra;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
 
 /**
  * 

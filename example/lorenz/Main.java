@@ -19,8 +19,8 @@ import nom.bdezonia.zorbage.algorithm.OdeSolveRK4;
 import nom.bdezonia.zorbage.datasource.ArrayDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure3;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32VectorMember;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
 
 /**
  * 
