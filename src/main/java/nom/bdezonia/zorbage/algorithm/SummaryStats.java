@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 
 /**
  * 

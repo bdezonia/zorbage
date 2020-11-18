@@ -33,9 +33,9 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

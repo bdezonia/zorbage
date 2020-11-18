@@ -41,10 +41,10 @@ import nom.bdezonia.zorbage.algorithm.WithinTolerance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.point.Point;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

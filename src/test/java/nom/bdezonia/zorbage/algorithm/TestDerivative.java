@@ -33,10 +33,10 @@ import nom.bdezonia.zorbage.algebra.G;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64Algebra;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Algebra;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

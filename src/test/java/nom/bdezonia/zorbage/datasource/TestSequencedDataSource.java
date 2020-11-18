@@ -32,7 +32,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
 /**
  * 

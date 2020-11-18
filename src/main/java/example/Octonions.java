@@ -30,14 +30,14 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetOctonion;
-import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16Member;
-import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.highprec.octonion.OctonionHighPrecisionMember;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Member;
+import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Member;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
+import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMember;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 // What are Octonions? See https://en.wikipedia.org/wiki/Octonion
 

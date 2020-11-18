@@ -39,9 +39,9 @@ import nom.bdezonia.zorbage.datasource.ReversedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

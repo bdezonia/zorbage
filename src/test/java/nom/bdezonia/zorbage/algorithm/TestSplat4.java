@@ -32,8 +32,8 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.tuple.Tuple10;
 import nom.bdezonia.zorbage.tuple.Tuple4;
-import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
 /**
  * 

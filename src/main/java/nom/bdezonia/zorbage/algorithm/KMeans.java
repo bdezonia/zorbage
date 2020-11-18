@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.point.Point;
 import nom.bdezonia.zorbage.type.point.PointAlgebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

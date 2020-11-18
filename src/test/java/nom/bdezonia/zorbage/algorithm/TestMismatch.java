@@ -33,8 +33,8 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.predicate.LessThanEqual;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Algebra;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
 

@@ -51,8 +51,8 @@ import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * 

@@ -28,12 +28,12 @@ package nom.bdezonia.zorbage.data;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 import java.util.Map;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

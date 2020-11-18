@@ -52,10 +52,10 @@ import nom.bdezonia.zorbage.predicate.OrPredicate;
 import nom.bdezonia.zorbage.predicate.XnorPredicate;
 import nom.bdezonia.zorbage.predicate.XorPredicate;
 import nom.bdezonia.zorbage.tuple.Tuple2;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Algebra;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Algebra;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

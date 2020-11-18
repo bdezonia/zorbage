@@ -35,11 +35,11 @@ import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.algorithm.Variance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.int32.UnsignedInt32Algebra;
-import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Algebra;
+import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * @author Barry DeZonia

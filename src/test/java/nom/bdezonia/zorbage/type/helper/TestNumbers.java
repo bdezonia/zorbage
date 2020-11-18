@@ -34,8 +34,8 @@ import static org.junit.Assert.fail;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
 
 /**
  * 

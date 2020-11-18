@@ -61,20 +61,20 @@ import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.float16.real.Float16Algebra;
-import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.int10.UnsignedInt10Algebra;
-import nom.bdezonia.zorbage.type.int10.UnsignedInt10Member;
-import nom.bdezonia.zorbage.type.int12.UnsignedInt12Member;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Algebra;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.int4.UnsignedInt4Member;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int10.UnsignedInt10Algebra;
+import nom.bdezonia.zorbage.type.integer.int10.UnsignedInt10Member;
+import nom.bdezonia.zorbage.type.integer.int12.UnsignedInt12Member;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Algebra;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int4.UnsignedInt4Member;
+import nom.bdezonia.zorbage.type.real.float16.Float16Algebra;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * @author Barry DeZonia

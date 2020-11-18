@@ -31,9 +31,8 @@ import static org.junit.Assert.assertTrue;
 
 import nom.bdezonia.zorbage.algebra.*;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16Member;
-import nom.bdezonia.zorbage.type.int10.SignedInt10Member;
+import nom.bdezonia.zorbage.type.integer.int10.SignedInt10Member;
+import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
 
 /**
  * 

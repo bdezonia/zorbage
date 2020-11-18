@@ -31,7 +31,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.RModuleMember;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * 

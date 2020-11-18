@@ -28,8 +28,8 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32VectorMember;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
 
 /**
  * @author Barry DeZonia

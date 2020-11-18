@@ -34,11 +34,11 @@ import nom.bdezonia.zorbage.algorithm.UInt1ToBool;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.float32.real.Float32VectorMember;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.int14.SignedInt14Member;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int14.SignedInt14Member;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
 import nom.bdezonia.zorbage.type.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.UniversalConverter;
 

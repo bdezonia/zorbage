@@ -35,8 +35,8 @@ import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

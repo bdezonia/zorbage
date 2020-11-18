@@ -31,11 +31,10 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigInteger;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
-import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
 
 /**
  * 

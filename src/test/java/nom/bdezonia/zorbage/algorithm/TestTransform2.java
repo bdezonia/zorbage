@@ -31,8 +31,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;

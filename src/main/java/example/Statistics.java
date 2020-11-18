@@ -61,10 +61,10 @@ import nom.bdezonia.zorbage.algorithm.SummaryStats;
 import nom.bdezonia.zorbage.algorithm.Variance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * @author Barry DeZonia

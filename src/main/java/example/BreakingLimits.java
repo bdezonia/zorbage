@@ -33,16 +33,16 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.int12.SignedInt12Member;
-import nom.bdezonia.zorbage.type.int128.SignedInt128Member;
-import nom.bdezonia.zorbage.type.int128.UnsignedInt128Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.int4.UnsignedInt4Member;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.int12.SignedInt12Member;
+import nom.bdezonia.zorbage.type.integer.int128.SignedInt128Member;
+import nom.bdezonia.zorbage.type.integer.int128.UnsignedInt128Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int4.UnsignedInt4Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
-import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 
 /**
  * @author Barry DeZonia

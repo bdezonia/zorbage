@@ -33,8 +33,8 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Algebra;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Algebra;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
 /**
  * 

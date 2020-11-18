@@ -31,9 +31,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.RampFill;
-import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.helper.MatrixDiagonalRModuleBridge.Origin;
+import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

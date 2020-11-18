@@ -33,7 +33,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 
 /**
  * 

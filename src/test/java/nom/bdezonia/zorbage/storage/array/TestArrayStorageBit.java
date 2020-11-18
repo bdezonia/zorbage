@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.storage.array;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

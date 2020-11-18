@@ -37,8 +37,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Algebra;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Algebra;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 
 /**
  * 

@@ -29,8 +29,7 @@ package nom.bdezonia.zorbage.misc;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.int10.UnsignedInt10Member;
+import nom.bdezonia.zorbage.type.integer.int10.UnsignedInt10Member;
 
 /**
  * 

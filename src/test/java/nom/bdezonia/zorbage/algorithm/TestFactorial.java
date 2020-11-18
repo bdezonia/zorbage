@@ -33,22 +33,21 @@ import static org.junit.Assert.fail;
 import java.math.BigInteger;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
-import nom.bdezonia.zorbage.type.int10.UnsignedInt10Member;
-import nom.bdezonia.zorbage.type.int11.SignedInt11Member;
-import nom.bdezonia.zorbage.type.int128.UnsignedInt128Member;
-import nom.bdezonia.zorbage.type.int13.UnsignedInt13Member;
-import nom.bdezonia.zorbage.type.int16.UnsignedInt16Member;
-import nom.bdezonia.zorbage.type.int2.UnsignedInt2Member;
-import nom.bdezonia.zorbage.type.int3.UnsignedInt3Member;
-import nom.bdezonia.zorbage.type.int32.UnsignedInt32Member;
-import nom.bdezonia.zorbage.type.int5.UnsignedInt5Member;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
-import nom.bdezonia.zorbage.type.int64.UnsignedInt64Member;
-import nom.bdezonia.zorbage.type.int7.UnsignedInt7Member;
-import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int10.UnsignedInt10Member;
+import nom.bdezonia.zorbage.type.integer.int11.SignedInt11Member;
+import nom.bdezonia.zorbage.type.integer.int128.UnsignedInt128Member;
+import nom.bdezonia.zorbage.type.integer.int13.UnsignedInt13Member;
+import nom.bdezonia.zorbage.type.integer.int16.UnsignedInt16Member;
+import nom.bdezonia.zorbage.type.integer.int2.UnsignedInt2Member;
+import nom.bdezonia.zorbage.type.integer.int3.UnsignedInt3Member;
+import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int5.UnsignedInt5Member;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int64.UnsignedInt64Member;
+import nom.bdezonia.zorbage.type.integer.int7.UnsignedInt7Member;
+import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

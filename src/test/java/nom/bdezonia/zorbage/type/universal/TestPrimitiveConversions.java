@@ -33,14 +33,14 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64VectorMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
-import nom.bdezonia.zorbage.type.int8.UnsignedInt8Member;
-import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64VectorMember;
+import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
 
 /**
  * 

@@ -30,12 +30,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
-import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.int3.UnsignedInt3Member;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.integer.int3.UnsignedInt3Member;
+import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Member;
+import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
 

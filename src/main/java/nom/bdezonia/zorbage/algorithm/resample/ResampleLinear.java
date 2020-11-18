@@ -34,10 +34,10 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionAlgebra;
 
 /**
  * 

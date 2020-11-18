@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.algorithm.Shuffle;
 import nom.bdezonia.zorbage.algorithm.Sort;
 import nom.bdezonia.zorbage.algorithm.StableSort;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

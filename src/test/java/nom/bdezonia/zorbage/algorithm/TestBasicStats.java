@@ -7,7 +7,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
 /**
  * 

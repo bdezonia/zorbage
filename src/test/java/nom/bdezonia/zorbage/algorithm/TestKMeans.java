@@ -29,8 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.point.Point;
 import nom.bdezonia.zorbage.type.point.PointAlgebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;

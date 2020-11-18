@@ -33,7 +33,7 @@ import nom.bdezonia.zorbage.algorithm.SetSymmetricDifference;
 import nom.bdezonia.zorbage.algorithm.SetUnion;
 import nom.bdezonia.zorbage.algorithm.Unique;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

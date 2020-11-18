@@ -29,9 +29,9 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertEquals;
 
 import nom.bdezonia.zorbage.algebra.G;
-import org.junit.Test;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import org.junit.Test;
 
 /**
  * 

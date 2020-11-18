@@ -33,8 +33,8 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ProcedurePaddedDataSource;
 

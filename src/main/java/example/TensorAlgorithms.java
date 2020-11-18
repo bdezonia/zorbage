@@ -36,9 +36,9 @@ import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

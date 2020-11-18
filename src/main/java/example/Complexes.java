@@ -30,15 +30,15 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetComplex;
-import nom.bdezonia.zorbage.type.float16.complex.ComplexFloat16Member;
-import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.gaussian64.GaussianInt64Member;
-import nom.bdezonia.zorbage.type.highprec.complex.ComplexHighPrecisionMember;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Member;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionMember;
+import nom.bdezonia.zorbage.type.gaussian.int64.GaussianInt64Member;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 // TODO - discuss the Complex constructor helpers
 

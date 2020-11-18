@@ -36,8 +36,8 @@ import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

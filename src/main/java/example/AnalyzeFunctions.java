@@ -35,12 +35,12 @@ import nom.bdezonia.zorbage.datasource.ProcedureDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Algebra;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Algebra;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

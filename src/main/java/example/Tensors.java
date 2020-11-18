@@ -28,8 +28,8 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.float64.real.Float64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 
 // What are Tensors? See https://en.wikipedia.org/wiki/Tensor

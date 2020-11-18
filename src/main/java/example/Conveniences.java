@@ -58,17 +58,17 @@ import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.tuple.Tuple3;
 import nom.bdezonia.zorbage.tuple.Tuple4;
 import nom.bdezonia.zorbage.tuple.Tuple6;
-import nom.bdezonia.zorbage.type.float16.octonion.OctonionFloat16Member;
-import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.float32.octonion.OctonionFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Algebra;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.int12.UnsignedInt12Algebra;
-import nom.bdezonia.zorbage.type.int12.UnsignedInt12Member;
-import nom.bdezonia.zorbage.type.int14.SignedInt14Algebra;
-import nom.bdezonia.zorbage.type.int14.SignedInt14Member;
-import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.int12.UnsignedInt12Algebra;
+import nom.bdezonia.zorbage.type.integer.int12.UnsignedInt12Member;
+import nom.bdezonia.zorbage.type.integer.int14.SignedInt14Algebra;
+import nom.bdezonia.zorbage.type.integer.int14.SignedInt14Member;
+import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Member;
+import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Member;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.type.tuple.Tuple3Algebra;
 
 /**

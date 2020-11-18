@@ -27,11 +27,11 @@
 package nom.bdezonia.zorbage.datasource;
 
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
 
 /**
  * 

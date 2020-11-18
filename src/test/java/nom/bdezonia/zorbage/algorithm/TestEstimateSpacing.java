@@ -36,9 +36,9 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionVectorMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVectorMember;
 
 /**
  * 

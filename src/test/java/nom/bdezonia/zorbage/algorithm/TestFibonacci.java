@@ -31,9 +31,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.int13.UnsignedInt13Member;
-import nom.bdezonia.zorbage.type.unbounded.UnboundedIntMember;
+import nom.bdezonia.zorbage.type.integer.int13.UnsignedInt13Member;
+import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
 
 /**
  * 

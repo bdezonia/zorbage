@@ -29,12 +29,11 @@ package nom.bdezonia.zorbage.algorithm;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 

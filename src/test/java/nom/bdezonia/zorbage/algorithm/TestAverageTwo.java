@@ -31,8 +31,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
-import nom.bdezonia.zorbage.type.int8.UnsignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 
 /**
  * 

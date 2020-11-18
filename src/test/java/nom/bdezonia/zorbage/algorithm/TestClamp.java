@@ -31,9 +31,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import nom.bdezonia.zorbage.algebra.G;
-import org.junit.Test;
+import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 
-import nom.bdezonia.zorbage.type.int64.SignedInt64Member;
+import org.junit.Test;
 
 /**
  * 

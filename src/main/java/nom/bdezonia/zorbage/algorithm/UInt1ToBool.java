@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.int1.UnsignedInt1Member;
+import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

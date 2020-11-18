@@ -38,9 +38,9 @@ import nom.bdezonia.zorbage.storage.file.FileStorage;
 import nom.bdezonia.zorbage.storage.jdbc.JdbcStorage;
 import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
-import nom.bdezonia.zorbage.type.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 
 /**
  * @author Barry DeZonia

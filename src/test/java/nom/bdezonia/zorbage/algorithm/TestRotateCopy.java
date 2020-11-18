@@ -32,7 +32,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.int16.SignedInt16Member;
+import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
 
 /**
  * 

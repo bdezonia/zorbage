@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.storage.array.ArrayStorageSignedInt32;
-import nom.bdezonia.zorbage.type.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
 /**
  * 

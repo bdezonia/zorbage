@@ -33,7 +33,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 
 /**
  * 

@@ -29,7 +29,7 @@ package nom.bdezonia.zorbage.storage.array;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64Member;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
 
 // This test implemented for speed testing OctonionFloat64Member.
 // I tried reading/writing components from 0 to 7 and also from 7

@@ -34,8 +34,8 @@ import static org.junit.Assert.fail;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 
 /**
  * 

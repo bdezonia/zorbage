@@ -48,9 +48,9 @@ import nom.bdezonia.zorbage.oob.oned.EdgeOOB;
 import nom.bdezonia.zorbage.oob.oned.MirrorOOB;
 import nom.bdezonia.zorbage.oob.oned.NanOOB;
 import nom.bdezonia.zorbage.oob.oned.ZeroOOB;
-import nom.bdezonia.zorbage.type.float32.complex.ComplexFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Algebra;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
 /**
  * @author Barry DeZonia

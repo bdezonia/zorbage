@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * 

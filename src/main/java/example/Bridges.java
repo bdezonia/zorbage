@@ -27,8 +27,8 @@
 package example;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
 import nom.bdezonia.zorbage.type.helper.NumberRModuleBridge;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * @author Barry DeZonia

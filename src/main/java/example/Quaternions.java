@@ -30,14 +30,14 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetQuaternion;
-import nom.bdezonia.zorbage.type.float16.quaternion.QuaternionFloat16Member;
-import nom.bdezonia.zorbage.type.float16.real.Float16Member;
-import nom.bdezonia.zorbage.type.float32.quaternion.QuaternionFloat32Member;
-import nom.bdezonia.zorbage.type.float32.real.Float32Member;
-import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.highprec.quaternion.QuaternionHighPrecisionMember;
-import nom.bdezonia.zorbage.type.highprec.real.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
+import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Member;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMember;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 // What are Quaternions? See https://en.wikipedia.org/wiki/Quaternion
 

@@ -31,18 +31,18 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64Member;
-import nom.bdezonia.zorbage.type.float64.complex.ComplexFloat64VectorMember;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64Member;
-import nom.bdezonia.zorbage.type.float64.octonion.OctonionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64Member;
-import nom.bdezonia.zorbage.type.float64.quaternion.QuaternionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.float64.real.Float64Member;
-import nom.bdezonia.zorbage.type.float64.real.Float64VectorMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64VectorMember;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64RModuleMember;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64MatrixMember;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Member;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64RModuleMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
 
 /**
  * 
