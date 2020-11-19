@@ -175,8 +175,8 @@ public class Main {
 		return algo.call(G.FLT, DIMS, padded);
 	}
 
-	private static Function3<DimensionedDataSource<Float32Member>,Float32Algebra,long[],DimensionedDataSource<Float32Member>> RESAMPLE_NN
-		= new Function3<DimensionedDataSource<Float32Member>, Float32Algebra, long[], DimensionedDataSource<Float32Member>>()
+	private static Function3<DimensionedDataSource<Float32Member>,Float32Algebra,long[],DimensionedDataSource<Float32Member>> RESAMPLE_NN =
+		new Function3<DimensionedDataSource<Float32Member>, Float32Algebra, long[], DimensionedDataSource<Float32Member>>()
 	{
 		@Override
 		public DimensionedDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
@@ -186,8 +186,8 @@ public class Main {
 		}
 	};
 	
-	private static Function3<DimensionedDataSource<Float32Member>,Float32Algebra,long[],DimensionedDataSource<Float32Member>> RESAMPLE_LINEAR
-		= new Function3<DimensionedDataSource<Float32Member>, Float32Algebra, long[], DimensionedDataSource<Float32Member>>()
+	private static Function3<DimensionedDataSource<Float32Member>,Float32Algebra,long[],DimensionedDataSource<Float32Member>> RESAMPLE_LINEAR =
+		new Function3<DimensionedDataSource<Float32Member>, Float32Algebra, long[], DimensionedDataSource<Float32Member>>()
 	{
 		@Override
 		public DimensionedDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
@@ -197,9 +197,8 @@ public class Main {
 		}
 	};
 	
-
-	private static Function3<DimensionedDataSource<Float32Member>,Float32Algebra,long[],DimensionedDataSource<Float32Member>> RESAMPLE_CUBIC
-		= new Function3<DimensionedDataSource<Float32Member>, Float32Algebra, long[], DimensionedDataSource<Float32Member>>()
+	private static Function3<DimensionedDataSource<Float32Member>,Float32Algebra,long[],DimensionedDataSource<Float32Member>> RESAMPLE_CUBIC =
+		new Function3<DimensionedDataSource<Float32Member>, Float32Algebra, long[], DimensionedDataSource<Float32Member>>()
 	{
 		@Override
 		public DimensionedDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
