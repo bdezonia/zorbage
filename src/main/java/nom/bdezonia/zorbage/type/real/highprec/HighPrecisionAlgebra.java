@@ -71,7 +71,8 @@ public class HighPrecisionAlgebra
 		Tolerance<HighPrecisionMember,HighPrecisionMember>,
 		Exponential<HighPrecisionMember>,
 		ScaleByOneHalf<HighPrecisionMember>,
-		ScaleByTwo<HighPrecisionMember>
+		ScaleByTwo<HighPrecisionMember>,
+		MiscFloat<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
@@ -984,6 +985,62 @@ public class HighPrecisionAlgebra
 	@Override
 	public Procedure3<java.lang.Integer, HighPrecisionMember, HighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
+	}
+
+	private final Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> CSGN =
+			new Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember magnitude, HighPrecisionMember sign, HighPrecisionMember a) {
+			a.setV(magnitude.v().abs().multiply(BigDecimal.valueOf(sign.v().signum())));
+		}
+	};
+	
+	@Override
+	public Procedure3<HighPrecisionMember, HighPrecisionMember, HighPrecisionMember> copySign() {
+		return CSGN;
+	}
+
+	private final Function1<Integer, HighPrecisionMember> GETEXP =
+			new Function1<Integer, HighPrecisionMember>()
+	{
+		@Override
+		public Integer call(HighPrecisionMember a) {
+			return a.v().scale();
+		}
+	};
+
+	@Override
+	public Function1<Integer, HighPrecisionMember> getExponent() {
+		return GETEXP;
+	}
+
+	private final Procedure3<Integer, HighPrecisionMember, HighPrecisionMember> SCALB =
+			new Procedure3<Integer, HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(Integer scaleFactor, HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(a.v().multiply(BigDecimal.valueOf(2).pow(scaleFactor), CONTEXT));
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, HighPrecisionMember, HighPrecisionMember> scalb() {
+		return SCALB;
+	}
+
+	private final Procedure2<HighPrecisionMember, HighPrecisionMember> ULP =
+			new Procedure2<HighPrecisionMember, HighPrecisionMember>()
+	{
+		@Override
+		public void call(HighPrecisionMember a, HighPrecisionMember b) {
+			b.setV(a.v().ulp());
+		}
+	};
+
+	@Override
+	public Procedure2<HighPrecisionMember, HighPrecisionMember> ulp() {
+		return ULP;
 	}
 
 }
