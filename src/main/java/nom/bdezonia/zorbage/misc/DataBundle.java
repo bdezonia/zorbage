@@ -35,8 +35,6 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.CharMember;
-import nom.bdezonia.zorbage.type.character.FixedStringMember;
-import nom.bdezonia.zorbage.type.character.StringMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Member;
@@ -149,6 +147,8 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVectorMember;
 import nom.bdezonia.zorbage.type.rgb.ArgbMember;
 import nom.bdezonia.zorbage.type.rgb.RgbMember;
+import nom.bdezonia.zorbage.type.string.FixedStringMember;
+import nom.bdezonia.zorbage.type.string.StringMember;
 
 /**
  * @author Barry DeZonia

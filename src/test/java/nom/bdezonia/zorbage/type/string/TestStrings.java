@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.character;
+package nom.bdezonia.zorbage.type.string;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +35,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
+import nom.bdezonia.zorbage.type.string.StringMember;
 
 /**
  * 

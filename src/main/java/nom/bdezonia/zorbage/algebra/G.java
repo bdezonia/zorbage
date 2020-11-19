@@ -28,8 +28,6 @@ package nom.bdezonia.zorbage.algebra;
 
 import nom.bdezonia.zorbage.type.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.character.CharAlgebra;
-import nom.bdezonia.zorbage.type.character.FixedStringAlgebra;
-import nom.bdezonia.zorbage.type.character.StringAlgebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Matrix;
@@ -142,6 +140,8 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVector;
 import nom.bdezonia.zorbage.type.rgb.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.rgb.RgbAlgebra;
+import nom.bdezonia.zorbage.type.string.FixedStringAlgebra;
+import nom.bdezonia.zorbage.type.string.StringAlgebra;
 
 /**
  * G is the container for the global set of defined Algebras.

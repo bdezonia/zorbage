@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
-import nom.bdezonia.zorbage.type.character.StringMember;
 import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Member;
@@ -46,6 +45,7 @@ import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.type.string.StringMember;
 
 /**
  * @author Barry DeZonia
