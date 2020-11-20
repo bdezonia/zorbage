@@ -637,4 +637,22 @@ public class TestFloat16Algebra {
 		assertEquals(1, G.HLF.signum().call(a), 0);
 		
 	}
+	
+	@Test
+	public void testUlp() {
+		
+		Float16Member a = G.HLF.construct();
+		Float16Member b = G.HLF.construct();
+		for (int i = 0; i <= 0xffff; i++) {
+			float val = Float16Util.convertHFloatToFloat((short) i);
+			a.setV(val);
+			G.HLF.ulp().call(a, b);
+			if (b.v() < 0)
+				System.out.println("num " + i + "  encoded " + a.encV() + "  ulp " + b.v());
+		}
+		
+//		for (double x = -Double.MAX_VALUE; x <= Double.MAX_VALUE; x += (Double.MAX_VALUE / 250)) {
+//			System.out.println(x + "  " + Math.ulp(x));
+//		}
+	}
 }

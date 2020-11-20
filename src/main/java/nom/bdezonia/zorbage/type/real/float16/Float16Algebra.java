@@ -1485,17 +1485,15 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a, Float16Member b) {
 			short next;
-			float ulp;
 			if (a.v() < 0) {
 				short min = (short) 0b1111101111111111;
 				next = Float16Util.nextAfter(a.encV(), min);
-				ulp = a.v() - Float16Util.convertHFloatToFloat(next);
 			}
 			else {
 				short max = (short) 0b0111101111111111;
 				next = Float16Util.nextAfter(a.encV(), max);
-				ulp = Float16Util.convertHFloatToFloat(next) - a.v();
 			}
+			float ulp = Float16Util.convertHFloatToFloat(next) - a.v();
 			b.setV(ulp);
 		}
 	};
