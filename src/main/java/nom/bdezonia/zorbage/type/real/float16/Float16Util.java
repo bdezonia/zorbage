@@ -226,4 +226,29 @@ public class Float16Util {
 		0, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 
 		0, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 };
 	
+	public static short nextAfter(short from, short towards) {
+		int fabs = from & 0x7FFF;
+		int tabs = towards & 0x7FFF;
+		if (fabs > 0x7C00 || tabs > 0x7C00)
+			return (short) (((from & 0x7FFF) > 0x7C00) ? (from|0x200) : (towards|0x200));
+		if (from == towards || (fabs|tabs) == 0)
+			return towards;
+		if (fabs == 0) {
+			return (short) ((towards&0x8000)+1);
+		}
+		int fr = from;
+		int to = towards;
+		int frSign = fr >> 15;
+		int toSign = to >> 15;
+		int fromDelta = 0x8000-frSign;
+		int toDelta = 0x8000-toSign;
+		int fux = (0x8000|(fromDelta));
+		int tux = (to^(0x8000|(toDelta))  );
+		int mask = 0;
+		if ((fr^(fux)) < tux)
+			mask = 1;
+        int out = fr + (((frSign >>15)^mask)<<1) - 1;
+        return (short) out;
+	}
+	
 }

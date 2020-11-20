@@ -85,7 +85,8 @@ public class Float16Algebra
 		ScaleComponents<Float16Member, Float16Member>,
 		Tolerance<Float16Member,Float16Member>,
 		ScaleByOneHalf<Float16Member>,
-		ScaleByTwo<Float16Member>
+		ScaleByTwo<Float16Member>,
+		MiscFloat<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
@@ -1333,10 +1334,10 @@ public class Float16Algebra
 			new Procedure3<HighPrecisionMember, Float16Member, Float16Member>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, Float16Member b, Float16Member c) {
+		public void call(HighPrecisionMember factor, Float16Member a, Float16Member b) {
 			BigDecimal tmp;
-			tmp = a.v().multiply(BigDecimal.valueOf(b.v()));
-			c.setV(tmp.floatValue());
+			tmp = factor.v().multiply(BigDecimal.valueOf(a.v()));
+			b.setV(tmp.floatValue());
 		}
 	};
 
@@ -1349,14 +1350,14 @@ public class Float16Algebra
 			new Procedure3<RationalMember, Float16Member, Float16Member>()
 	{
 		@Override
-		public void call(RationalMember a, Float16Member b, Float16Member c) {
-			BigDecimal n = new BigDecimal(a.n());
-			BigDecimal d = new BigDecimal(a.d());
+		public void call(RationalMember factor, Float16Member a, Float16Member b) {
+			BigDecimal n = new BigDecimal(factor.n());
+			BigDecimal d = new BigDecimal(factor.d());
 			BigDecimal tmp;
-			tmp = BigDecimal.valueOf(b.v());
+			tmp = BigDecimal.valueOf(a.v());
 			tmp = tmp.multiply(n);
 			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
-			c.setV(tmp.floatValue());
+			b.setV(tmp.floatValue());
 		}
 	};
 
@@ -1369,8 +1370,8 @@ public class Float16Algebra
 			new Procedure3<Double, Float16Member, Float16Member>()
 	{
 		@Override
-		public void call(Double a, Float16Member b, Float16Member c) {
-			c.setV((float)(a * b.v()));
+		public void call(Double factor, Float16Member a, Float16Member b) {
+			b.setV((float)(factor * a.v()));
 		}
 	};
 
@@ -1436,4 +1437,71 @@ public class Float16Algebra
 		return SHALF;
 	}
 
+	private final Procedure3<Float16Member, Float16Member, Float16Member> CSGN =
+			new Procedure3<Float16Member, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member magnitude, Float16Member sign, Float16Member a) {
+			a.setV( Math.abs(magnitude.v()) * Math.signum(sign.v()) );
+		}
+	};
+	
+	@Override
+	public Procedure3<Float16Member, Float16Member, Float16Member> copySign() {
+		return CSGN;
+	}
+
+	private final Function1<Integer, Float16Member> GETEXP =
+			new Function1<Integer, Float16Member>()
+	{
+		@Override
+		public Integer call(Float16Member a) {
+			return Math.getExponent(a.v());
+		}
+	};
+
+	@Override
+	public Function1<Integer, Float16Member> getExponent() {
+		return GETEXP;
+	}
+
+	private final Procedure3<Integer, Float16Member, Float16Member> SCALB =
+			new Procedure3<Integer, Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Integer scaleFactor, Float16Member a, Float16Member b) {
+			b.setV( (float) (Math.scalb(a.v(), scaleFactor)) );
+		}
+	};
+
+	@Override
+	public Procedure3<Integer, Float16Member, Float16Member> scalb() {
+		return SCALB;
+	}
+
+	private final Procedure2<Float16Member, Float16Member> ULP =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			short next;
+			float ulp;
+			if (a.v() < 0) {
+				short min = (short) 0b1111101111111111;
+				next = Float16Util.nextAfter(a.encV(), min);
+				ulp = a.v() - Float16Util.convertHFloatToFloat(next);
+			}
+			else {
+				short max = (short) 0b0111101111111111;
+				next = Float16Util.nextAfter(a.encV(), max);
+				ulp = Float16Util.convertHFloatToFloat(next) - a.v();
+			}
+			b.setV(ulp);
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member, Float16Member> ulp() {
+		return ULP;
+	}
 }
