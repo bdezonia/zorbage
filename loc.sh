@@ -1,1 +1,1 @@
-git ls-files | xargs -s 10000000 wc -l
+git ls-files | xargs -s 2090248 wc -l
