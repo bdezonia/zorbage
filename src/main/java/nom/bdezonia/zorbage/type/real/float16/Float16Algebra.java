@@ -1167,8 +1167,8 @@ public class Float16Algebra
 			// This code created by BDZ after studying http://prng.di.unimi.it/
 			// Tested for uniformity by generating 64K nums and viewing histogram in ImageJ
 			short v = (short) rng.nextInt(65536);
-		    double r = (v >>> 5) * 0x1.0p-11;
-		    a.setV((float) r); 
+			double r = (v >>> 5) * 0x1.0p-11;
+			a.setV((float) r); 
 		}
 	};
 	
