@@ -276,7 +276,7 @@ public class Float16Util {
         if (num >= 31745 && num <= 32255) return (short) (num + 512);
         if (num >= 32256 && num <= 32767) return (short) num;
         if (num >= 32768 && num <= 64510) return (short) (num + 1);
-        if (num >= 64511 && num <= 64512) return (short) 64511;
+        if (num >= 64511 && num <= 64512) return (short) num;
         if (num >= 64513 && num <= 65023) return (short) (num + 512);
         if (num >= 65024 && num <= 65535) return (short) num;
         throw new IllegalArgumentException("bad boundary problem");
