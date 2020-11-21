@@ -49,8 +49,9 @@ public class TestFloat16Algebra {
 		Float16Member min = G.HLF.construct();
 		G.HLF.maxBound().call(max);
 		G.HLF.minBound().call(min);
-		System.out.println("Half precision float: max = "+ max.v() + " min = " + min.v());
-		assertTrue(true);
+		//System.out.println("Half precision float: max = "+ max.v() + " min = " + min.v());
+		assertEquals(65504.0f, max.v(), 0);
+		assertEquals(-65504.0f, min.v(), 0);
 	}
 	@Test
 	public void testFloats() {
@@ -679,5 +680,20 @@ public class TestFloat16Algebra {
 			if (b.v() < 0)
 				System.out.println("negative ulp for val " + i + "  encoded " + a.encV() + "  ulp " + b.v());
 		}
+
+		int odds = 0;
+		int evens = 0;
+		for (int i = 0; i < 100000000; i++) {
+			G.HLF.random().call(a);
+			float v = a.v();
+			if (v < 0 || v >= 1)
+				System.out.println("one is out of bounds");
+			if ((a.encV() & 1) == 1)
+				odds++;
+			else
+				evens++;
+		}
+		System.out.println("odds  " + odds);
+		System.out.println("evens " + evens);
 	}
 }
