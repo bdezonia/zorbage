@@ -657,15 +657,24 @@ public class TestFloat16Algebra {
 			System.out.println("barooga");
 		}
 		*/
+	
+		//System.out.println("ulp of    0 is " + Math.ulp(0.0f));
+		//System.out.println("ulp of  NaN is " + Math.ulp(Float.NaN));
+		//System.out.println("ulp of  Inf is " + Math.ulp(Float.POSITIVE_INFINITY));
+		//System.out.println("ulp of -Inf is " + Math.ulp(Float.NEGATIVE_INFINITY));
 		
 		Float16Member a = G.HLF.construct();
 		Float16Member b = G.HLF.construct();
+		
+		//a.setV(0); System.out.println("zero encV == "+a.encV());
+		//a.setV(1); System.out.println("one  encV == "+a.encV());
+
 		for (int i = 0; i <= 0xffff; i++) {
 			float val = Float16Util.convertHFloatToFloat((short) i);
 			a.setV(val);
 			G.HLF.ulp().call(a, b);
 			if (b.v() < 0)
-				System.out.println("num " + i + "  encoded " + a.encV() + "  ulp " + b.v());
+				System.out.println("negative ulp for val " + i + "  encoded " + a.encV() + "  ulp " + b.v());
 		}
 
 		/*
@@ -678,11 +687,6 @@ public class TestFloat16Algebra {
 			short next = Float16Util.nextAfter((short) i, max);
 		    System.out.println(i + " prev " + (0xffff & prev) + " next " + (0xffff & next));
 		}
-		
-//		for (double x = -Double.MAX_VALUE; x <= Double.MAX_VALUE; x += (Double.MAX_VALUE / 250)) {
-//			System.out.println(x + "  " + Math.ulp(x));
-//		}
- * 
- */
+		 */
 	}
 }
