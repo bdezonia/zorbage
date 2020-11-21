@@ -30,6 +30,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import net.jafama.FastMath;
@@ -640,6 +644,19 @@ public class TestFloat16Algebra {
 	
 	@Test
 	public void testUlp() {
+		/*
+		try {
+			File file = new File("/tmp/bloog");
+			FileOutputStream ostr = new FileOutputStream(file);
+			PrintStream pstr = new PrintStream(ostr);
+			for (int i = 0; i < 65536; i++) {
+				pstr.println((0xffff & i) + " prev " + (0xffff & Float16Util.prev((short) i)) + " next " + (0xffff & Float16Util.next((short) i)));
+			}
+			pstr.close();
+		} catch (Exception e) {
+			System.out.println("barooga");
+		}
+		*/
 		
 		Float16Member a = G.HLF.construct();
 		Float16Member b = G.HLF.construct();
@@ -650,9 +667,22 @@ public class TestFloat16Algebra {
 			if (b.v() < 0)
 				System.out.println("num " + i + "  encoded " + a.encV() + "  ulp " + b.v());
 		}
+
+		/*
+		G.HLF.minBound().call(a);
+		G.HLF.maxBound().call(b);
+		short min = a.encV();
+		short max = b.encV();
+		for (int i = 0; i < 65536; i++) {
+			short prev = Float16Util.nextAfter((short) i, min);
+			short next = Float16Util.nextAfter((short) i, max);
+		    System.out.println(i + " prev " + (0xffff & prev) + " next " + (0xffff & next));
+		}
 		
 //		for (double x = -Double.MAX_VALUE; x <= Double.MAX_VALUE; x += (Double.MAX_VALUE / 250)) {
 //			System.out.println(x + "  " + Math.ulp(x));
 //		}
+ * 
+ */
 	}
 }

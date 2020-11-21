@@ -226,29 +226,60 @@ public class Float16Util {
 		0, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 
 		0, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024 };
 	
-	public static short nextAfter(short from, short towards) {
-		int fabs = from & 0x7FFF;
-		int tabs = towards & 0x7FFF;
-		if (fabs > 0x7C00 || tabs > 0x7C00)
-			return (short) (((from & 0x7FFF) > 0x7C00) ? (from|0x200) : (towards|0x200));
-		if (from == towards || (fabs|tabs) == 0)
-			return towards;
-		if (fabs == 0) {
-			return (short) ((towards&0x8000)+1);
-		}
-		int fr = from;
-		int to = towards;
-		int frSign = fr >> 15;
-		int toSign = to >> 15;
-		int fromDelta = 0x8000-frSign;
-		int toDelta = 0x8000-toSign;
-		int fux = (0x8000|(fromDelta));
-		int tux = (to^(0x8000|(toDelta))  );
-		int mask = 0;
-		if ((fr^(fux)) < tux)
-			mask = 1;
-        int out = fr + (((frSign >>15)^mask)<<1) - 1;
-        return (short) out;
+	/*
+	 * Did a table dump of Christian Rau's half library next func and classified here
+	 * 
+	 * next     num
+	 * range    0     - 31742   next = num + 1
+	 *          31743           next = num
+	 *          31744           next = num - 1
+	 *          31745 - 32255   next = num + 512
+	 * range    32256 - 32767   next = num
+	 * range    32768           next = 1
+	 * range    32769 - 64512   next = num - 1
+	 *          64513 - 65023   next = num + 512
+	 * range    65024 - 65535   next = num
+	 */
+	
+	public static short next(short val) {
+		int num = val & 0xffff;
+        if (num >= 0 && num <= 31742) return (short) (num + 1);
+        if (num == 31743) return (short) num;
+        if (num == 31744) return (short) (num - 1);
+        if (num >= 31745 && num <= 32255) return (short) (num + 512);
+        if (num >= 32256 && num <= 32767) return (short) num;
+        if (num == 32768) return 1;
+        if (num >= 32769 && num <= 64512) return (short) (num - 1);
+        if (num >= 64513 && num <= 65023) return (short) (num + 512);
+        if (num >= 65024 && num <= 65535) return (short) num;
+        throw new IllegalArgumentException("bad boundary problem");
+	}
+	
+	/*
+	 * Did a table dump of Christian Rau's half library prev func and classified here
+	 * 
+	 * prev     num
+	 * range    0               prev = 32769
+	 *          1     - 31744   prev = num - 1
+	 *          31745 - 32255   prev = num + 512
+	 * range    32256 - 32767   prev = num
+	 * range    32768 - 64510   prev = num + 1
+	 *          64511 - 64512   prev = num
+	 *          64513 - 65023   prev = num + 512
+	 * range    65024 - 65535   prev = num
+	 */
+
+	public static short prev(short val) {
+		int num = val & 0xffff;
+		if (num == 0) return (short) 32769;
+        if (num >= 1 && num <= 31744) return (short) (num - 1);
+        if (num >= 31745 && num <= 32255) return (short) (num + 512);
+        if (num >= 32256 && num <= 32767) return (short) num;
+        if (num >= 32768 && num <= 64510) return (short) (num + 1);
+        if (num >= 64511 && num <= 64512) return (short) 64511;
+        if (num >= 64513 && num <= 65023) return (short) (num + 512);
+        if (num >= 65024 && num <= 65535) return (short) num;
+        throw new IllegalArgumentException("bad boundary problem");
 	}
 	
 }

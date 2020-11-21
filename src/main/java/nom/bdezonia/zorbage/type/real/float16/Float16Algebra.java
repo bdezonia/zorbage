@@ -1484,16 +1484,36 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			short next;
-			if (a.v() < 0) {
-				short min = (short) 0b1111101111111111;
-				next = Float16Util.nextAfter(a.encV(), min);
+			short x = a.encV();
+			short y;
+			float ulp;
+			if (isNaN().call(a)) {
+				nan().call(b);
+				return;
+			}
+			else if (isInfinite().call(a)) {
+				if (signum().call(a) == -1)
+					negInfinite().call(a);
+				else
+					infinite().call(a);
+				return;
+			}
+			else if (a.v() < 0) {
+				// next towards 0
+				y = Float16Util.next(x);
+				ulp = Float16Util.convertHFloatToFloat(y) - a.v();
+			}
+			else if (a.v() > 0) {
+				// next towards 0
+				y = Float16Util.prev(x);
+				ulp = a.v() - Float16Util.convertHFloatToFloat(y);
 			}
 			else {
-				short max = (short) 0b0111101111111111;
-				next = Float16Util.nextAfter(a.encV(), max);
+				// a.v() == 0
+				// next towards +inf
+				y = Float16Util.next(x);
+				ulp = Float16Util.convertHFloatToFloat(y);
 			}
-			float ulp = Float16Util.convertHFloatToFloat(next) - a.v();
 			b.setV(ulp);
 		}
 	};
