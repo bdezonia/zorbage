@@ -1215,7 +1215,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a, Float32Member b) {
-			b.setV( Math.nextAfter( a.v(), Double.NEGATIVE_INFINITY ) ) ; // Note that Double is intentional here
+			b.setV( Math.nextDown( a.v() ) );
 		}
 	};
 	

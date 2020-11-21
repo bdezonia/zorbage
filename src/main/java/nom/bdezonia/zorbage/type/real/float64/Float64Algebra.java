@@ -1250,7 +1250,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV(Math.nextAfter(a.v(), Double.NEGATIVE_INFINITY));
+			b.setV( Math.nextDown( a.v() ) );
 		}
 	};
 	

@@ -672,17 +672,5 @@ public class TestFloat16Algebra {
 			if (b.v() < 0)
 				System.out.println("negative ulp for val " + i + "  encoded " + a.encV() + "  ulp " + b.v());
 		}
-
-		/*
-		G.HLF.minBound().call(a);
-		G.HLF.maxBound().call(b);
-		short min = a.encV();
-		short max = b.encV();
-		for (int i = 0; i < 65536; i++) {
-			short prev = Float16Util.nextAfter((short) i, min);
-			short next = Float16Util.nextAfter((short) i, max);
-		    System.out.println(i + " prev " + (0xffff & prev) + " next " + (0xffff & next));
-		}
-		 */
 	}
 }
