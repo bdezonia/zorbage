@@ -1176,15 +1176,16 @@ public class Float16Algebra
 			
 			// Note that if you look at the last bit in the float representation it is only 1 about one fourth
 			// of the time. I thought this meant the this routine spit out odd numbers at a 1 to 3 ratio to
-			// even numbers. So I then did the same test with Java's Math.nextFloat() results and got the same
-			// 1 to 3 ratio. I must be misunderstanding how odd numbers are represented in bits. Or else both
-			// my code and Java's code are inaccurate. They both rely on the same random number generators so
-			// that is a possibility.
-			
-			// Okay, so maybe I understand a little better. A 1 is the 1st decimal place of the mantissa
+			// even numbers. So I then did the same test with Java's Math.nextFloat() to generate 500K numbers
+			// and got the same 1 to 3 ratio. I must be misunderstanding how odd numbers are represented in bits.
+			// Or else both my code and Java's code are inaccurate. They both rely on the same random number
+			// generators so that is a possibility.
+
+			// Later edit:
+			// Okay, so maybe I understand a little better. A one in the 1st decimal place of the mantissa
 			// might pertain to 0.5. Which is kind of odd (last significant digit is odd) and kind of even
-			// (very last digit in the representation is 0). So I think it is not the case that last
-			// significant digit being odd implies the number's last significant digit is odd.
+			// (very last digit in the representation is 0). So I think it is not the case that the last
+			// digit in the mantissa being odd implies the number's last significant digit is odd.
 		}
 	};
 	
