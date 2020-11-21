@@ -1180,6 +1180,11 @@ public class Float16Algebra
 			// 1 to 3 ratio. I must be misunderstanding how odd numbers are represented in bits. Or else both
 			// my code and Java's code are inaccurate. They both rely on the same random number generators so
 			// that is a possibility.
+			
+			// Okay, so maybe I understand a little better. A 1 is the 1st decimal place of the mantissa
+			// might pertain to 0.5. Which is kind of odd (last significant digit is odd) and kind of even
+			// (very last digit in the representation is 0). So I think it is not the case that last
+			// significant digit being odd implies the number's last significant digit is odd.
 		}
 	};
 	
