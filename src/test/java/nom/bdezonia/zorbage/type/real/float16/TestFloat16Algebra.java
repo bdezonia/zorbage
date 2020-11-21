@@ -640,14 +640,21 @@ public class TestFloat16Algebra {
 	
 	@Test
 	public void testUlp() {
+
 		/*
 		try {
+			Float16Member a = G.HLF.construct();
 			File file = new File("/tmp/bloog");
 			FileOutputStream ostr = new FileOutputStream(file);
-			PrintStream pstr = new PrintStream(ostr);
-			for (int i = 0; i < 65536; i++) {
-				pstr.println((0xffff & i) + " prev " + (0xffff & Float16Util.prev((short) i)) + " next " + (0xffff & Float16Util.next((short) i)));
+			BufferedOutputStream bstr = new BufferedOutputStream(ostr);
+			PrintStream pstr = new PrintStream(bstr);
+			for (int i = 0; i < 500000; i++) {
+				G.HLF.random().call(a);
+				pstr.println(a.v());
 			}
+			//for (int i = 0; i < 65536; i++) {
+			//	pstr.println((0xffff & i) + " prev " + (0xffff & Float16Util.prev((short) i)) + " next " + (0xffff & Float16Util.next((short) i)));
+			//}
 			pstr.close();
 		} catch (Exception e) {
 			System.out.println("barooga");
