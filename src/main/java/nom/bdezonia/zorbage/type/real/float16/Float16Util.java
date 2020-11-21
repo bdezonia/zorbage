@@ -243,16 +243,16 @@ public class Float16Util {
 	
 	public static short next(short val) {
 		int num = val & 0xffff;
-        if (num >= 0 && num <= 31742) return (short) (num + 1);
-        if (num == 31743) return (short) num;
-        if (num == 31744) return (short) (num - 1);
-        if (num >= 31745 && num <= 32255) return (short) (num + 512);
-        if (num >= 32256 && num <= 32767) return (short) num;
-        if (num == 32768) return 1;
-        if (num >= 32769 && num <= 64512) return (short) (num - 1);
-        if (num >= 64513 && num <= 65023) return (short) (num + 512);
-        if (num >= 65024 && num <= 65535) return (short) num;
-        throw new IllegalArgumentException("bad boundary problem");
+		if (num >= 0 && num <= 31742) return (short) (num + 1);
+		if (num == 31743) return (short) num;
+		if (num == 31744) return (short) (num - 1);
+		if (num >= 31745 && num <= 32255) return (short) (num + 512);
+		if (num >= 32256 && num <= 32767) return (short) num;
+		if (num == 32768) return 1;
+		if (num >= 32769 && num <= 64512) return (short) (num - 1);
+		if (num >= 64513 && num <= 65023) return (short) (num + 512);
+		if (num >= 65024 && num <= 65535) return (short) num;
+		throw new IllegalArgumentException("bad boundary problem");
 	}
 	
 	/*
@@ -273,15 +273,15 @@ public class Float16Util {
 	public static short prev(short val) {
 		int num = val & 0xffff;
 		if (num == 0) return (short) 32769;
-        if (num >= 1 && num <= 31744) return (short) (num - 1);
-        if (num >= 31745 && num <= 32255) return (short) (num + 512);
-        if (num >= 32256 && num <= 32767) return (short) num;
-        if (num >= 32768 && num <= 64510) return (short) (num + 1);
-        if (num == 64511) return (short) num;
-        if (num == 64512) return (short) (num - 1);
-        if (num >= 64513 && num <= 65023) return (short) (num + 512);
-        if (num >= 65024 && num <= 65535) return (short) num;
-        throw new IllegalArgumentException("bad boundary problem");
+		if (num >= 1 && num <= 31744) return (short) (num - 1);
+		if (num >= 31745 && num <= 32255) return (short) (num + 512);
+		if (num >= 32256 && num <= 32767) return (short) num;
+		if (num >= 32768 && num <= 64510) return (short) (num + 1);
+		if (num == 64511) return (short) num;
+		if (num == 64512) return (short) (num - 1);
+		if (num >= 64513 && num <= 65023) return (short) (num + 512);
+		if (num >= 65024 && num <= 65535) return (short) num;
+		throw new IllegalArgumentException("bad boundary problem");
 	}
 	
 }
