@@ -1163,14 +1163,23 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			
 			// This code created by BDZ after studying http://prng.di.unimi.it/
-			// Output numbers tested for uniformity by generating 500K
-			// nums, testing that all the values were in [0,1) and
-			// viewing the histogram statistics in ImageJ.
+			// Output numbers tested for uniformity by generating 500K numbers,
+			// testing that all the values were in [0,1) and viewing the
+			// histogram statistics using ImageJ.
+			
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
 			int v = rng.nextInt(65536);
-			double r = (v >>> 5) * 0x1.0p-11;
-			a.setV((float) r);
+			float r = (v >>> 5) * 0x1.0p-11f;
+			a.setV(r);
+			
+			// Note that if you look at the last bit in the float representation it is only 1 about one fourth
+			// of the time. I thought this meant the this routine spit out odd numbers at a 1 to 3 ratio to
+			// even numbers. So I then did the same test with Java's Math.nextFloat() results and got the same
+			// 1 to 3 ratio. I must be misunderstanding how odd numbers are represented in bits. Or else both
+			// my code and Java's code are inaccurate. They both rely on the same random number generators so
+			// that is a possibility.
 		}
 	};
 	

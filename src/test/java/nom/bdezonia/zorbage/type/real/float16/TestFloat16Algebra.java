@@ -681,6 +681,7 @@ public class TestFloat16Algebra {
 				System.out.println("negative ulp for val " + i + "  encoded " + a.encV() + "  ulp " + b.v());
 		}
 
+		/*
 		int odds = 0;
 		int evens = 0;
 		for (int i = 0; i < 100000000; i++) {
@@ -695,5 +696,18 @@ public class TestFloat16Algebra {
 		}
 		System.out.println("odds  " + odds);
 		System.out.println("evens " + evens);
+		Random rng = new Random();
+		for (int i = 0; i < 100000000; i++) {
+			float v = rng.nextFloat();
+			if (v < 0 || v >= 1)
+				System.out.println("one is out of bounds");
+			if ((Float.floatToIntBits(v) & 1) == 1)
+				odds++;
+			else
+				evens++;
+		}
+		System.out.println("odds  " + odds);
+		System.out.println("evens " + evens);
+		 */
 	}
 }
