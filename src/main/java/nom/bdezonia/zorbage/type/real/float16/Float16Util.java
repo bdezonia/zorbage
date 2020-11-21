@@ -264,7 +264,8 @@ public class Float16Util {
 	 *          31745 - 32255   prev = num + 512
 	 * range    32256 - 32767   prev = num
 	 * range    32768 - 64510   prev = num + 1
-	 *          64511 - 64512   prev = num
+	 *          64511           prev = num
+	 *          64512           prev = num - 1
 	 *          64513 - 65023   prev = num + 512
 	 * range    65024 - 65535   prev = num
 	 */
