@@ -1165,7 +1165,9 @@ public class Float16Algebra
 		public void call(Float16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
 			// This code created by BDZ after studying http://prng.di.unimi.it/
-			// Tested for uniformity by generating 64K nums and viewing histogram in ImageJ
+			// Output numbers tested for uniformity by generating 500K
+			// nums, testing that all the values were in [0,1) and
+			// viewing the histogram statistics in ImageJ.
 			int v = rng.nextInt(65536);
 			double r = (v >>> 5) * 0x1.0p-11;
 			a.setV((float) r);
