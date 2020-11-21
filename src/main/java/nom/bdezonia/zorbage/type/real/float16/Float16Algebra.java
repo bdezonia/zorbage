@@ -1164,7 +1164,10 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setV(rng.nextFloat());
+			// 0.0f encoded = 0
+			// 1.0f encoded = 15360
+			int encVal = rng.nextInt(15360);
+			a.setV(Float16Util.convertHFloatToFloat((short) encVal));
 		}
 	};
 	
@@ -1484,35 +1487,31 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a, Float16Member b) {
-			short x = a.encV();
-			short y;
+			short neigh;
 			float ulp;
 			if (isNaN().call(a)) {
 				nan().call(b);
 				return;
 			}
 			else if (isInfinite().call(a)) {
-				if (signum().call(a) == -1)
-					negInfinite().call(a);
-				else
-					infinite().call(a);
+				infinite().call(b);
 				return;
 			}
 			else if (a.v() < 0) {
-				// next towards 0
-				y = Float16Util.next(x);
-				ulp = Float16Util.convertHFloatToFloat(y) - a.v();
+				// neigh is next closer to 0
+				neigh = Float16Util.next(a.encV());
+				ulp = Float16Util.convertHFloatToFloat(neigh) - a.v();
 			}
 			else if (a.v() > 0) {
-				// next towards 0
-				y = Float16Util.prev(x);
-				ulp = a.v() - Float16Util.convertHFloatToFloat(y);
+				// neigh is next closer to 0
+				neigh = Float16Util.prev(a.encV());
+				ulp = a.v() - Float16Util.convertHFloatToFloat(neigh);
 			}
 			else {
 				// a.v() == 0
-				// next towards +inf
-				y = Float16Util.next(x);
-				ulp = Float16Util.convertHFloatToFloat(y);
+				// neigh is next away from zero towards +Inf
+				neigh = Float16Util.next(a.encV());
+				ulp = Float16Util.convertHFloatToFloat(neigh);
 			}
 			b.setV(ulp);
 		}
