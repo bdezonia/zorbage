@@ -1164,10 +1164,11 @@ public class Float16Algebra
 		@Override
 		public void call(Float16Member a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			// 0.0f encoded = 0
-			// 1.0f encoded = 15360
-			int encVal = rng.nextInt(15360);
-			a.setV(Float16Util.convertHFloatToFloat((short) encVal));
+			// This code created by BDZ after studying http://prng.di.unimi.it/
+			// Tested for uniformity by generating 64K nums and viewing histogram in ImageJ
+			short v = (short) rng.nextInt(65536);
+		    double r = (v >>> 5) * 0x1.0p-11;
+		    a.setV((float) r); 
 		}
 	};
 	
