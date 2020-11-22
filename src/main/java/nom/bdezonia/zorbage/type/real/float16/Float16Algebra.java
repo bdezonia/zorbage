@@ -87,7 +87,8 @@ public class Float16Algebra
 		Tolerance<Float16Member,Float16Member>,
 		ScaleByOneHalf<Float16Member>,
 		ScaleByTwo<Float16Member>,
-		MiscFloat<Float16Member>
+		MiscFloat<Float16Member>,
+		PredSucc<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
@@ -746,7 +747,7 @@ public class Float16Algebra
 	};
 
 	//@Override
-	public Procedure2<Float16Member,Float16Member> coth(Float16Member a, Float16Member b) {
+	public Procedure2<Float16Member,Float16Member> coth() {
 		return COTH;
 	}
 	
@@ -1540,5 +1541,33 @@ public class Float16Algebra
 	@Override
 	public Procedure2<Float16Member, Float16Member> ulp() {
 		return ULP;
+	}
+
+	private final Procedure2<Float16Member, Float16Member> PRED =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setEncV( Float16Util.prev(a.encV()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member, Float16Member> pred() {
+		return PRED;
+	}
+
+	private final Procedure2<Float16Member, Float16Member> SUCC =
+			new Procedure2<Float16Member, Float16Member>()
+	{
+		@Override
+		public void call(Float16Member a, Float16Member b) {
+			b.setEncV( Float16Util.next(a.encV()) );
+		}
+	};
+
+	@Override
+	public Procedure2<Float16Member, Float16Member> succ() {
+		return SUCC;
 	}
 }
