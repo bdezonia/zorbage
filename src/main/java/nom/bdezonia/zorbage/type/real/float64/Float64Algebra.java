@@ -70,6 +70,7 @@ public class Float64Algebra
 		Hyperbolic<Float64Member>,
 		InverseHyperbolic<Float64Member>,
 		Infinite<Float64Member>,
+		NegInfinite<Float64Member>,
 		NaN<Float64Member>,
 		Roots<Float64Member>,
 		Power<Float64Member>,
@@ -1058,6 +1059,7 @@ public class Float64Algebra
 		}
 	};
 	
+	@Override
 	public Procedure1<Float64Member> negInfinite() {
 		return NINF;
 	}

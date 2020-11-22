@@ -70,6 +70,7 @@ public class Float16Algebra
 		Hyperbolic<Float16Member>,
 		InverseHyperbolic<Float16Member>,
 		Infinite<Float16Member>,
+		NegInfinite<Float16Member>,
 		NaN<Float16Member>,
 		Roots<Float16Member>,
 		Power<Float16Member>,
@@ -1028,6 +1029,7 @@ public class Float16Algebra
 		}
 	};
 			
+	@Override
 	public Procedure1<Float16Member> negInfinite() {
 		return NINF;
 	}

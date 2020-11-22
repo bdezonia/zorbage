@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Infinite;
+import nom.bdezonia.zorbage.algebra.NegInfinite;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Random;
 import nom.bdezonia.zorbage.algebra.Scale;
@@ -72,6 +73,7 @@ public class PointAlgebra
 		ScaleComponents<Point, Double>,
 		Tolerance<Double, Point>,
 		Infinite<Point>,
+		NegInfinite<Point>,
 		NaN<Point>,
 		Random<Point>
 {
@@ -462,5 +464,21 @@ public class PointAlgebra
 	public Procedure1<Point> infinite() {
 		return INF;
 	}
+
+	private final Procedure1<Point> NEGINF =
+			new Procedure1<Point>()
+	{
+		@Override
+		public void call(Point a) {
+			for (int i = 0; i < a.numDimensions(); i++) {
+				a.setComponent(i, Double.NEGATIVE_INFINITY);
+			}
+		}
+	};
 	
+	@Override
+	public Procedure1<Point> negInfinite() {
+		return NEGINF;
+	}
+
 }

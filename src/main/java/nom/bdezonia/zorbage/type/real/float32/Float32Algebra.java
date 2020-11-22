@@ -70,6 +70,7 @@ public class Float32Algebra
 		Hyperbolic<Float32Member>,
 		InverseHyperbolic<Float32Member>,
 		Infinite<Float32Member>,
+		NegInfinite<Float32Member>,
 		NaN<Float32Member>,
 		Roots<Float32Member>,
 		Power<Float32Member>,
@@ -1023,6 +1024,7 @@ public class Float32Algebra
 		}
 	};
 	
+	@Override
 	public Procedure1<Float32Member> negInfinite() {
 		return NINF;
 	}

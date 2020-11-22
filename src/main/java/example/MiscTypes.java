@@ -135,19 +135,24 @@ class MiscTypes {
 
 		// basic operations
 		
-		G.POINT.assign();   // set b = a
-		G.POINT.add();      // set c = a + b
-		G.POINT.subtract(); // set c = a - b
-		G.POINT.negate();   // set b = -a
-		G.POINT.zero();     // set to zero
-		G.POINT.random();   // set the coords of a point to a bunch of random doubles
-		G.POINT.within();   // within a tolerance of another point
+		G.POINT.assign();      // set b = a
+		G.POINT.add();         // set c = a + b
+		G.POINT.subtract();    // set c = a - b
+		G.POINT.negate();      // set b = -a
+		G.POINT.zero();        // set to zero
+		G.POINT.random();      // set the coords of a point to a bunch of random doubles
+		G.POINT.within();      // within a tolerance of another point
+		G.POINT.infinite();    // set components to infinity
+		G.POINT.negInfinite(); // set components to negative infinity
+		G.POINT.nan();         // set components to nan
 
 		// comparison
 		
 		G.POINT.isEqual();
 		G.POINT.isNotEqual();
 		G.POINT.isZero();
+		G.POINT.isInfinite();
+		G.POINT.isNaN();
 		
 		// scaling
 		
@@ -155,6 +160,9 @@ class MiscTypes {
 		G.POINT.scaleByDouble();
 		G.POINT.scaleByHighPrec();
 		G.POINT.scaleByRational();
+		G.POINT.scaleByOneHalf();
+		G.POINT.scaleByTwo();
+		G.POINT.scaleComponents();
 	}
 
 	// Zorbage supports Boolean values.
