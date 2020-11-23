@@ -49,7 +49,6 @@ public class TestFloat16Algebra {
 		Float16Member min = G.HLF.construct();
 		G.HLF.maxBound().call(max);
 		G.HLF.minBound().call(min);
-		//System.out.println("Half precision float: max = "+ max.v() + " min = " + min.v());
 		assertEquals(65504.0f, max.v(), 0);
 		assertEquals(-65504.0f, min.v(), 0);
 	}
@@ -709,5 +708,94 @@ public class TestFloat16Algebra {
 		System.out.println("odds  " + odds);
 		System.out.println("evens " + evens);
 		 */
+
+		/*
+		System.out.println("doubles");
+		System.out.println(" nan  down " + Math.nextDown(Double.NaN));
+		System.out.println("-inf  down " + Math.nextDown(Double.NEGATIVE_INFINITY));
+		System.out.println("-min  down " + Math.nextDown(-Double.MAX_VALUE));
+		System.out.println("-1    down " + Math.nextDown(-1));
+		System.out.println(" 0    down " + Math.nextDown(0));
+		System.out.println("+1    down " + Math.nextDown(1));
+		System.out.println("+max  down " + Math.nextDown(Double.MAX_VALUE));
+		System.out.println("+inf  down " + Math.nextDown(Double.POSITIVE_INFINITY));
+		
+		System.out.println(" nan  up " + Math.nextUp(Double.NaN));
+		System.out.println("-inf  up " + Math.nextUp(Double.NEGATIVE_INFINITY));
+		System.out.println("-min  up " + Math.nextUp(-Double.MAX_VALUE));
+		System.out.println("-1    up " + Math.nextUp(-1));
+		System.out.println(" 0    up " + Math.nextUp(0));
+		System.out.println("+1    up " + Math.nextUp(1));
+		System.out.println("+max  up " + Math.nextUp(Double.MAX_VALUE));
+		System.out.println("+inf  up " + Math.nextUp(Double.POSITIVE_INFINITY));
+		
+		System.out.println("float16s");
+
+		a.setV(Float.NaN);
+		G.HLF.pred().call(a, b);
+		System.out.println(" nan  down " + b.v());
+
+		a.setV(Float.NEGATIVE_INFINITY);
+		G.HLF.pred().call(a, b);
+		System.out.println("-inf  down " + b.v());
+
+		a.setV(-65504);
+		G.HLF.pred().call(a, b);
+		System.out.println("-min  down " + b.v());
+
+		a.setV(-1);
+		G.HLF.pred().call(a, b);
+		System.out.println("--1  down " + b.v());
+
+		a.setV(0);
+		G.HLF.pred().call(a, b);
+		System.out.println("0  down " + b.v());
+
+		a.setV(1);
+		G.HLF.pred().call(a, b);
+		System.out.println("+1  down " + b.v());
+
+		a.setV(65504);
+		G.HLF.pred().call(a, b);
+		System.out.println("+max  down " + b.v());
+
+		a.setV(Float.POSITIVE_INFINITY);
+		G.HLF.pred().call(a, b);
+		System.out.println("+inf  down " + b.v());
+		
+		
+		a.setV(Float.NaN);
+		G.HLF.succ().call(a, b);
+		System.out.println(" nan  up " + b.v());
+
+		a.setV(Float.NEGATIVE_INFINITY);
+		G.HLF.succ().call(a, b);
+		System.out.println("-inf  up " + b.v());
+
+		a.setV(-65504);
+		G.HLF.succ().call(a, b);
+		System.out.println("-min  up " + b.v());
+
+		a.setV(-1);
+		G.HLF.succ().call(a, b);
+		System.out.println("--1   up " + b.v());
+
+		a.setV(0);
+		G.HLF.succ().call(a, b);
+		System.out.println("0     up " + b.v());
+
+		a.setV(1);
+		G.HLF.succ().call(a, b);
+		System.out.println("+1    up " + b.v());
+
+		a.setV(65504);
+		G.HLF.succ().call(a, b);
+		System.out.println("+max  up " + b.v());
+
+		a.setV(Float.POSITIVE_INFINITY);
+		G.HLF.succ().call(a, b);
+		System.out.println("+inf  up " + b.v());
+		 */
+		
 	}
 }

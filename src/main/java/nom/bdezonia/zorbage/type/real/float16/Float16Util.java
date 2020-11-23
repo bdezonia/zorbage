@@ -230,9 +230,8 @@ public class Float16Util {
 	 * Did a table dump of Christian Rau's half library next func and classified here
 	 * 
 	 * next     num
-	 * range    0     - 31742   next = num + 1
-	 *          31743           next = num
-	 *          31744           next = num - 1
+	 * range    0     - 31743   next = num + 1
+	 *          31744           next = num
 	 *          31745 - 32255   next = num + 512
 	 * range    32256 - 32767   next = num
 	 * range    32768           next = 1
@@ -240,12 +239,11 @@ public class Float16Util {
 	 *          64513 - 65023   next = num + 512
 	 * range    65024 - 65535   next = num
 	 */
-	
+
 	public static short next(short val) {
 		int num = val & 0xffff;
-		if (num >= 0 && num <= 31742) return (short) (num + 1);
-		if (num == 31743) return (short) num;
-		if (num == 31744) return (short) (num - 1);
+		if (num >= 0 && num <= 31743) return (short) (num + 1);
+		if (num == 31744) return (short) num;
 		if (num >= 31745 && num <= 32255) return (short) (num + 512);
 		if (num >= 32256 && num <= 32767) return (short) num;
 		if (num == 32768) return 1;
@@ -263,9 +261,8 @@ public class Float16Util {
 	 *          1     - 31744   prev = num - 1
 	 *          31745 - 32255   prev = num + 512
 	 * range    32256 - 32767   prev = num
-	 * range    32768 - 64510   prev = num + 1
-	 *          64511           prev = num
-	 *          64512           prev = num - 1
+	 * range    32768 - 64511   prev = num + 1
+	 *          64512           prev = num
 	 *          64513 - 65023   prev = num + 512
 	 * range    65024 - 65535   prev = num
 	 */
@@ -276,9 +273,8 @@ public class Float16Util {
 		if (num >= 1 && num <= 31744) return (short) (num - 1);
 		if (num >= 31745 && num <= 32255) return (short) (num + 512);
 		if (num >= 32256 && num <= 32767) return (short) num;
-		if (num >= 32768 && num <= 64510) return (short) (num + 1);
-		if (num == 64511) return (short) num;
-		if (num == 64512) return (short) (num - 1);
+		if (num >= 32768 && num <= 64511) return (short) (num + 1);
+		if (num == 64512) return (short) num;
 		if (num >= 64513 && num <= 65023) return (short) (num + 512);
 		if (num >= 65024 && num <= 65535) return (short) num;
 		throw new IllegalArgumentException("bad boundary problem");
