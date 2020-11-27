@@ -235,7 +235,7 @@ Programming notes
     Zorbage was previously compiled and tested using Maven with OpenJDK Java 8 on Linux
 
       The Zorbage code has been scrubbed of API calls later than Java 8 and the
-      Zorbage library API should be callable from Java 8.
+      Zorbage library API should be compilable with Java 8.
 
   Java 7 info
 
