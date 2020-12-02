@@ -38,221 +38,220 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Tuple16Algebra<A extends Algebra<A,B>,B,
-							C extends Algebra<C,D>,D,
-							E extends Algebra<E,F>,F,
-							G extends Algebra<G,H>,H,
-							I extends Algebra<I,J>,J,
-							K extends Algebra<K,L>,L,
-							M extends Algebra<M,N>,N,
-							O extends Algebra<O,P>,P,
-							Q extends Algebra<Q,R>,R,
-							S extends Algebra<S,T>,T,
-							U extends Algebra<U,V>,V,
-							W extends Algebra<W,X>,X,
-							Y extends Algebra<Y,Z>,Z,
-							AA extends Algebra<AA,BB>,BB,
-							CC extends Algebra<CC,DD>,DD,
-							EE extends Algebra<EE,FF>,FF>
-	implements Algebra<Tuple16Algebra<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,BB,CC,DD,EE,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>>
+public class Tuple16Algebra<AA extends Algebra<AA,A>, A,
+							BB extends Algebra<BB,B>, B,
+							CC extends Algebra<CC,C>, C,
+							DD extends Algebra<DD,D>, D,
+							EE extends Algebra<EE,E>, E,
+							FF extends Algebra<FF,F>, F,
+							GG extends Algebra<GG,G>, G,
+							HH extends Algebra<HH,H>, H,
+							II extends Algebra<II,I>, I,
+							JJ extends Algebra<JJ,J>, J,
+							KK extends Algebra<KK,K>, K,
+							LL extends Algebra<LL,L>, L,
+							MM extends Algebra<MM,M>, M,
+							NN extends Algebra<NN,N>, N,
+							OO extends Algebra<OO,O>, O,
+							PP extends Algebra<PP,P>, P>
+	implements Algebra<Tuple16Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M,NN,N,OO,O,PP,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>>
 {
-	private final A alg1;
-	private final C alg2;
-	private final E alg3;
-	private final G alg4;
-	private final I alg5;
-	private final K alg6;
-	private final M alg7;
-	private final O alg8;
-	private final Q alg9;
-	private final S alg10;
-	private final U alg11;
-	private final W alg12;
-	private final Y alg13;
-	private final AA alg14;
-	private final CC alg15;
-	private final EE alg16;
+	private final AA algA;
+	private final BB algB;
+	private final CC algC;
+	private final DD algD;
+	private final EE algE;
+	private final FF algF;
+	private final GG algG;
+	private final HH algH;
+	private final II algI;
+	private final JJ algJ;
+	private final KK algK;
+	private final LL algL;
+	private final MM algM;
+	private final NN algN;
+	private final OO algO;
+	private final PP algP;
 	
-	public Tuple16Algebra(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9, S alg10, U alg11, W alg12, Y alg13, AA alg14, CC alg15, EE alg16) {
-		this.alg1 = alg1;
-		this.alg2 = alg2;
-		this.alg3 = alg3;
-		this.alg4 = alg4;
-		this.alg5 = alg5;
-		this.alg6 = alg6;
-		this.alg7 = alg7;
-		this.alg8 = alg8;
-		this.alg9 = alg9;
-		this.alg10 = alg10;
-		this.alg11 = alg11;
-		this.alg12 = alg12;
-		this.alg13 = alg13;
-		this.alg14 = alg14;
-		this.alg15 = alg15;
-		this.alg16 = alg16;
+	public Tuple16Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP) {
+		this.algA = algA;
+		this.algB = algB;
+		this.algC = algC;
+		this.algD = algD;
+		this.algE = algE;
+		this.algF = algF;
+		this.algG = algG;
+		this.algH = algH;
+		this.algI = algI;
+		this.algJ = algJ;
+		this.algK = algK;
+		this.algL = algL;
+		this.algM = algM;
+		this.algN = algN;
+		this.algO = algO;
+		this.algP = algP;
 	}
 	
 	@Override
-	public Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> construct() {
-		return new Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>(
-				alg1.construct(),
-				alg2.construct(),
-				alg3.construct(),
-				alg4.construct(),
-				alg5.construct(),
-				alg6.construct(),
-				alg7.construct(),
-				alg8.construct(),
-				alg9.construct(),
-				alg10.construct(),
-				alg11.construct(),
-				alg12.construct(),
-				alg13.construct(),
-				alg14.construct(),
-				alg15.construct(),
-				alg16.construct());
+	public Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> construct() {
+		return new Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>(
+				algA.construct(),
+				algB.construct(),
+				algC.construct(),
+				algD.construct(),
+				algE.construct(),
+				algF.construct(),
+				algG.construct(),
+				algH.construct(),
+				algI.construct(),
+				algJ.construct(),
+				algK.construct(),
+				algL.construct(),
+				algM.construct(),
+				algN.construct(),
+				algO.construct(),
+				algP.construct());
 	}
 
 	@Override
-	public Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> construct(Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> other) {
-		Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> result = construct();
+	public Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> construct(Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> other) {
+		Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> result = construct();
 		assign().call(other, result);
 		return result;
 	}
 
 	@Override
-	public Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> construct(String str) {
+	public Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> construct(String str) {
 		throw new IllegalArgumentException("to be implemented");
 	}
 
-	private final Function2<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> EQ =
-			new Function2<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>>()
+	private final Function2<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> EQ =
+			new Function2<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>>()
 	{
 		@Override
-		public Boolean call(Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> a, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> b) {
-			return alg1.isEqual().call(a.a(), b.a()) &&
-					alg2.isEqual().call(a.b(), b.b()) &&
-					alg3.isEqual().call(a.c(), b.c()) &&
-					alg4.isEqual().call(a.d(), b.d()) &&
-					alg5.isEqual().call(a.e(), b.e()) &&
-					alg6.isEqual().call(a.f(), b.f()) &&
-					alg7.isEqual().call(a.g(), b.g()) &&
-					alg8.isEqual().call(a.h(), b.h()) &&
-					alg9.isEqual().call(a.i(), b.i()) &&
-					alg10.isEqual().call(a.j(), b.j()) &&
-					alg11.isEqual().call(a.k(), b.k()) &&
-					alg12.isEqual().call(a.l(), b.l()) &&
-					alg13.isEqual().call(a.m(), b.m()) &&
-					alg14.isEqual().call(a.n(), b.n()) &&
-					alg15.isEqual().call(a.o(), b.o()) &&
-					alg16.isEqual().call(a.p(), b.p());
+		public Boolean call(Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> a, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> b) {
+			return algA.isEqual().call(a.a(), b.a()) &&
+					algB.isEqual().call(a.b(), b.b()) &&
+					algC.isEqual().call(a.c(), b.c()) &&
+					algD.isEqual().call(a.d(), b.d()) &&
+					algE.isEqual().call(a.e(), b.e()) &&
+					algF.isEqual().call(a.f(), b.f()) &&
+					algG.isEqual().call(a.g(), b.g()) &&
+					algH.isEqual().call(a.h(), b.h()) &&
+					algI.isEqual().call(a.i(), b.i()) &&
+					algJ.isEqual().call(a.j(), b.j()) &&
+					algK.isEqual().call(a.k(), b.k()) &&
+					algL.isEqual().call(a.l(), b.l()) &&
+					algM.isEqual().call(a.m(), b.m()) &&
+					algN.isEqual().call(a.n(), b.n()) &&
+					algO.isEqual().call(a.o(), b.o()) &&
+					algP.isEqual().call(a.p(), b.p());
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> isEqual() {
+	public Function2<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> isEqual() {
 		return EQ;
 	}
 
-	private final Function2<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> NEQ =
-			new Function2<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>>()
+	private final Function2<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> NEQ =
+			new Function2<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>>()
 	{
 		@Override
-		public Boolean call(Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> a, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> b) {
+		public Boolean call(Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> a, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> b) {
 			return !isEqual().call(a, b);
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> isNotEqual() {
+	public Function2<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> isNotEqual() {
 		return NEQ;
 	}
 
-	private final Procedure2<Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> ASSIGN =
-			new Procedure2<Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>>()
+	private final Procedure2<Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> ASSIGN =
+			new Procedure2<Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>>()
 	{
 		@Override
-		public void call(Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> a, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> b) {
-			alg1.assign().call(a.a(), b.a());
-			alg2.assign().call(a.b(), b.b());
-			alg3.assign().call(a.c(), b.c());
-			alg4.assign().call(a.d(), b.d());
-			alg5.assign().call(a.e(), b.e());
-			alg6.assign().call(a.f(), b.f());
-			alg7.assign().call(a.g(), b.g());
-			alg8.assign().call(a.h(), b.h());
-			alg9.assign().call(a.i(), b.i());
-			alg10.assign().call(a.j(), b.j());
-			alg11.assign().call(a.k(), b.k());
-			alg12.assign().call(a.l(), b.l());
-			alg13.assign().call(a.m(), b.m());
-			alg14.assign().call(a.n(), b.n());
-			alg15.assign().call(a.o(), b.o());
-			alg16.assign().call(a.p(), b.p());
+		public void call(Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> a, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> b) {
+			algA.assign().call(a.a(), b.a());
+			algB.assign().call(a.b(), b.b());
+			algC.assign().call(a.c(), b.c());
+			algD.assign().call(a.d(), b.d());
+			algE.assign().call(a.e(), b.e());
+			algF.assign().call(a.f(), b.f());
+			algG.assign().call(a.g(), b.g());
+			algH.assign().call(a.h(), b.h());
+			algI.assign().call(a.i(), b.i());
+			algJ.assign().call(a.j(), b.j());
+			algK.assign().call(a.k(), b.k());
+			algL.assign().call(a.l(), b.l());
+			algM.assign().call(a.m(), b.m());
+			algN.assign().call(a.n(), b.n());
+			algO.assign().call(a.o(), b.o());
+			algP.assign().call(a.p(), b.p());
 		}
 	};
 
 	@Override
-	public Procedure2<Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> assign() {
+	public Procedure2<Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> assign() {
 		return ASSIGN;
 	}
 
-	private final Function1<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> ISZERO =
-			new Function1<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>>()
+	private final Function1<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> ISZERO =
+			new Function1<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>>()
 	{
 		@Override
-		public Boolean call(Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> a) {
-			return alg1.isZero().call(a.a()) &&
-					alg2.isZero().call(a.b()) &&
-					alg3.isZero().call(a.c()) &&
-					alg4.isZero().call(a.d()) &&
-					alg5.isZero().call(a.e()) &&
-					alg6.isZero().call(a.f()) &&
-					alg7.isZero().call(a.g()) &&
-					alg8.isZero().call(a.h()) &&
-					alg9.isZero().call(a.i()) &&
-					alg10.isZero().call(a.j()) &&
-					alg11.isZero().call(a.k()) &&
-					alg12.isZero().call(a.l()) &&
-					alg13.isZero().call(a.m()) &&
-					alg14.isZero().call(a.n()) &&
-					alg15.isZero().call(a.o()) &&
-					alg16.isZero().call(a.p());
+		public Boolean call(Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> a) {
+			return algA.isZero().call(a.a()) &&
+					algB.isZero().call(a.b()) &&
+					algC.isZero().call(a.c()) &&
+					algD.isZero().call(a.d()) &&
+					algE.isZero().call(a.e()) &&
+					algF.isZero().call(a.f()) &&
+					algG.isZero().call(a.g()) &&
+					algH.isZero().call(a.h()) &&
+					algI.isZero().call(a.i()) &&
+					algJ.isZero().call(a.j()) &&
+					algK.isZero().call(a.k()) &&
+					algL.isZero().call(a.l()) &&
+					algM.isZero().call(a.m()) &&
+					algN.isZero().call(a.n()) &&
+					algO.isZero().call(a.o()) &&
+					algP.isZero().call(a.p());
 		}
 	};
 
 	@Override
-	public Function1<Boolean, Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> isZero() {
+	public Function1<Boolean, Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> isZero() {
 		return ISZERO;
 	}
 	
-	private final Procedure1<Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> ZERO =
-			new Procedure1<Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>>()
+	private final Procedure1<Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> ZERO =
+			new Procedure1<Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>>()
 	{
 		@Override
-		public void call(Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF> a) {
-			alg1.zero().call(a.a());
-			alg2.zero().call(a.b());
-			alg2.zero().call(a.b());
-			alg3.zero().call(a.c());
-			alg4.zero().call(a.d());
-			alg5.zero().call(a.e());
-			alg6.zero().call(a.f());
-			alg7.zero().call(a.g());
-			alg8.zero().call(a.h());
-			alg9.zero().call(a.i());
-			alg10.zero().call(a.j());
-			alg11.zero().call(a.k());
-			alg12.zero().call(a.l());
-			alg13.zero().call(a.m());
-			alg14.zero().call(a.n());
-			alg15.zero().call(a.o());
-			alg16.zero().call(a.p());
+		public void call(Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P> a) {
+			algA.zero().call(a.a());
+			algB.zero().call(a.b());
+			algC.zero().call(a.c());
+			algD.zero().call(a.d());
+			algE.zero().call(a.e());
+			algF.zero().call(a.f());
+			algG.zero().call(a.g());
+			algH.zero().call(a.h());
+			algI.zero().call(a.i());
+			algJ.zero().call(a.j());
+			algK.zero().call(a.k());
+			algL.zero().call(a.l());
+			algM.zero().call(a.m());
+			algN.zero().call(a.n());
+			algO.zero().call(a.o());
+			algP.zero().call(a.p());
 		}
 	};
 	
 	@Override
-	public Procedure1<Tuple16<B,D,F,H,J,L,N,P,R,T,V,X,Z,BB,DD,FF>> zero() {
+	public Procedure1<Tuple16<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P>> zero() {
 		return ZERO;
 	}
 	

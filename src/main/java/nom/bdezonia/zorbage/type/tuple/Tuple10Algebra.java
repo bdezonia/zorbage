@@ -38,172 +38,172 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Tuple10Algebra<A extends Algebra<A,B>,B,
-							C extends Algebra<C,D>,D,
-							E extends Algebra<E,F>,F,
-							G extends Algebra<G,H>,H,
-							I extends Algebra<I,J>,J,
-							K extends Algebra<K,L>,L,
-							M extends Algebra<M,N>,N,
-							O extends Algebra<O,P>,P,
-							Q extends Algebra<Q,R>,R,
-							S extends Algebra<S,T>,T>
-	implements Algebra<Tuple10Algebra<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>>
+public class Tuple10Algebra<AA extends Algebra<AA,A>, A,
+							BB extends Algebra<BB,B>, B,
+							CC extends Algebra<CC,C>, C,
+							DD extends Algebra<DD,D>, D,
+							EE extends Algebra<EE,E>, E,
+							FF extends Algebra<FF,F>, F,
+							GG extends Algebra<GG,G>, G,
+							HH extends Algebra<HH,H>, H,
+							II extends Algebra<II,I>, I,
+							JJ extends Algebra<JJ,J>, J>
+	implements Algebra<Tuple10Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>>
 {
-	private final A alg1;
-	private final C alg2;
-	private final E alg3;
-	private final G alg4;
-	private final I alg5;
-	private final K alg6;
-	private final M alg7;
-	private final O alg8;
-	private final Q alg9;
-	private final S alg10;
+	private final AA algA;
+	private final BB algB;
+	private final CC algC;
+	private final DD algD;
+	private final EE algE;
+	private final FF algF;
+	private final GG algG;
+	private final HH algH;
+	private final II algI;
+	private final JJ algJ;
 	
-	public Tuple10Algebra(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9, S alg10) {
-		this.alg1 = alg1;
-		this.alg2 = alg2;
-		this.alg3 = alg3;
-		this.alg4 = alg4;
-		this.alg5 = alg5;
-		this.alg6 = alg6;
-		this.alg7 = alg7;
-		this.alg8 = alg8;
-		this.alg9 = alg9;
-		this.alg10 = alg10;
+	public Tuple10Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ) {
+		this.algA = algA;
+		this.algB = algB;
+		this.algC = algC;
+		this.algD = algD;
+		this.algE = algE;
+		this.algF = algF;
+		this.algG = algG;
+		this.algH = algH;
+		this.algI = algI;
+		this.algJ = algJ;
 	}
 	
 	@Override
-	public Tuple10<B,D,F,H,J,L,N,P,R,T> construct() {
-		return new Tuple10<B,D,F,H,J,L,N,P,R,T>(
-				alg1.construct(),
-				alg2.construct(),
-				alg3.construct(),
-				alg4.construct(),
-				alg5.construct(),
-				alg6.construct(),
-				alg7.construct(),
-				alg8.construct(),
-				alg9.construct(),
-				alg10.construct());
+	public Tuple10<A,B,C,D,E,F,G,H,I,J> construct() {
+		return new Tuple10<A,B,C,D,E,F,G,H,I,J>(
+				algA.construct(),
+				algB.construct(),
+				algC.construct(),
+				algD.construct(),
+				algE.construct(),
+				algF.construct(),
+				algG.construct(),
+				algH.construct(),
+				algI.construct(),
+				algJ.construct());
 	}
 
 	@Override
-	public Tuple10<B,D,F,H,J,L,N,P,R,T> construct(Tuple10<B,D,F,H,J,L,N,P,R,T> other) {
-		Tuple10<B,D,F,H,J,L,N,P,R,T> result = construct();
+	public Tuple10<A,B,C,D,E,F,G,H,I,J> construct(Tuple10<A,B,C,D,E,F,G,H,I,J> other) {
+		Tuple10<A,B,C,D,E,F,G,H,I,J> result = construct();
 		assign().call(other, result);
 		return result;
 	}
 
 	@Override
-	public Tuple10<B,D,F,H,J,L,N,P,R,T> construct(String str) {
+	public Tuple10<A,B,C,D,E,F,G,H,I,J> construct(String str) {
 		throw new IllegalArgumentException("to be implemented");
 	}
 
-	private final Function2<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>> EQ =
-			new Function2<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>>()
+	private final Function2<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>> EQ =
+			new Function2<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>>()
 	{
 		@Override
-		public Boolean call(Tuple10<B,D,F,H,J,L,N,P,R,T> a, Tuple10<B,D,F,H,J,L,N,P,R,T> b) {
-			return alg1.isEqual().call(a.a(), b.a()) &&
-					alg2.isEqual().call(a.b(), b.b()) &&
-					alg3.isEqual().call(a.c(), b.c()) &&
-					alg4.isEqual().call(a.d(), b.d()) &&
-					alg5.isEqual().call(a.e(), b.e()) &&
-					alg6.isEqual().call(a.f(), b.f()) &&
-					alg7.isEqual().call(a.g(), b.g()) &&
-					alg8.isEqual().call(a.h(), b.h()) &&
-					alg9.isEqual().call(a.i(), b.i()) &&
-					alg10.isEqual().call(a.j(), b.j());
+		public Boolean call(Tuple10<A,B,C,D,E,F,G,H,I,J> a, Tuple10<A,B,C,D,E,F,G,H,I,J> b) {
+			return algA.isEqual().call(a.a(), b.a()) &&
+					algB.isEqual().call(a.b(), b.b()) &&
+					algC.isEqual().call(a.c(), b.c()) &&
+					algD.isEqual().call(a.d(), b.d()) &&
+					algE.isEqual().call(a.e(), b.e()) &&
+					algF.isEqual().call(a.f(), b.f()) &&
+					algG.isEqual().call(a.g(), b.g()) &&
+					algH.isEqual().call(a.h(), b.h()) &&
+					algI.isEqual().call(a.i(), b.i()) &&
+					algJ.isEqual().call(a.j(), b.j());
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>> isEqual() {
+	public Function2<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>> isEqual() {
 		return EQ;
 	}
 
-	private final Function2<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>> NEQ =
-			new Function2<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>>()
+	private final Function2<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>> NEQ =
+			new Function2<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>>()
 	{
 		@Override
-		public Boolean call(Tuple10<B,D,F,H,J,L,N,P,R,T> a, Tuple10<B,D,F,H,J,L,N,P,R,T> b) {
+		public Boolean call(Tuple10<A,B,C,D,E,F,G,H,I,J> a, Tuple10<A,B,C,D,E,F,G,H,I,J> b) {
 			return !isEqual().call(a, b);
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>> isNotEqual() {
+	public Function2<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>> isNotEqual() {
 		return NEQ;
 	}
 
-	private final Procedure2<Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>> ASSIGN =
-			new Procedure2<Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>>()
+	private final Procedure2<Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>> ASSIGN =
+			new Procedure2<Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>>()
 	{
 		@Override
-		public void call(Tuple10<B,D,F,H,J,L,N,P,R,T> a, Tuple10<B,D,F,H,J,L,N,P,R,T> b) {
-			alg1.assign().call(a.a(), b.a());
-			alg2.assign().call(a.b(), b.b());
-			alg3.assign().call(a.c(), b.c());
-			alg4.assign().call(a.d(), b.d());
-			alg5.assign().call(a.e(), b.e());
-			alg6.assign().call(a.f(), b.f());
-			alg7.assign().call(a.g(), b.g());
-			alg8.assign().call(a.h(), b.h());
-			alg9.assign().call(a.i(), b.i());
-			alg10.assign().call(a.j(), b.j());
+		public void call(Tuple10<A,B,C,D,E,F,G,H,I,J> a, Tuple10<A,B,C,D,E,F,G,H,I,J> b) {
+			algA.assign().call(a.a(), b.a());
+			algB.assign().call(a.b(), b.b());
+			algC.assign().call(a.c(), b.c());
+			algD.assign().call(a.d(), b.d());
+			algE.assign().call(a.e(), b.e());
+			algF.assign().call(a.f(), b.f());
+			algG.assign().call(a.g(), b.g());
+			algH.assign().call(a.h(), b.h());
+			algI.assign().call(a.i(), b.i());
+			algJ.assign().call(a.j(), b.j());
 		}
 	};
 
 	@Override
-	public Procedure2<Tuple10<B,D,F,H,J,L,N,P,R,T>, Tuple10<B,D,F,H,J,L,N,P,R,T>> assign() {
+	public Procedure2<Tuple10<A,B,C,D,E,F,G,H,I,J>, Tuple10<A,B,C,D,E,F,G,H,I,J>> assign() {
 		return ASSIGN;
 	}
 
-	private final Function1<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>> ISZERO =
-			new Function1<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>>()
+	private final Function1<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>> ISZERO =
+			new Function1<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>>()
 	{
 		@Override
-		public Boolean call(Tuple10<B,D,F,H,J,L,N,P,R,T> a) {
-			return alg1.isZero().call(a.a()) &&
-					alg2.isZero().call(a.b()) &&
-					alg3.isZero().call(a.c()) &&
-					alg4.isZero().call(a.d()) &&
-					alg5.isZero().call(a.e()) &&
-					alg6.isZero().call(a.f()) &&
-					alg7.isZero().call(a.g()) &&
-					alg8.isZero().call(a.h()) &&
-					alg9.isZero().call(a.i()) &&
-					alg10.isZero().call(a.j());
+		public Boolean call(Tuple10<A,B,C,D,E,F,G,H,I,J> a) {
+			return algA.isZero().call(a.a()) &&
+					algB.isZero().call(a.b()) &&
+					algC.isZero().call(a.c()) &&
+					algD.isZero().call(a.d()) &&
+					algE.isZero().call(a.e()) &&
+					algF.isZero().call(a.f()) &&
+					algG.isZero().call(a.g()) &&
+					algH.isZero().call(a.h()) &&
+					algI.isZero().call(a.i()) &&
+					algJ.isZero().call(a.j());
 		}
 	};
 
 	@Override
-	public Function1<Boolean, Tuple10<B,D,F,H,J,L,N,P,R,T>> isZero() {
+	public Function1<Boolean, Tuple10<A,B,C,D,E,F,G,H,I,J>> isZero() {
 		return ISZERO;
 	}
 	
-	private final Procedure1<Tuple10<B,D,F,H,J,L,N,P,R,T>> ZERO =
-			new Procedure1<Tuple10<B,D,F,H,J,L,N,P,R,T>>()
+	private final Procedure1<Tuple10<A,B,C,D,E,F,G,H,I,J>> ZERO =
+			new Procedure1<Tuple10<A,B,C,D,E,F,G,H,I,J>>()
 	{
 		@Override
-		public void call(Tuple10<B,D,F,H,J,L,N,P,R,T> a) {
-			alg1.zero().call(a.a());
-			alg2.zero().call(a.b());
-			alg3.zero().call(a.c());
-			alg4.zero().call(a.d());
-			alg5.zero().call(a.e());
-			alg6.zero().call(a.f());
-			alg7.zero().call(a.g());
-			alg8.zero().call(a.h());
-			alg9.zero().call(a.i());
-			alg10.zero().call(a.j());
+		public void call(Tuple10<A,B,C,D,E,F,G,H,I,J> a) {
+			algA.zero().call(a.a());
+			algB.zero().call(a.b());
+			algC.zero().call(a.c());
+			algD.zero().call(a.d());
+			algE.zero().call(a.e());
+			algF.zero().call(a.f());
+			algG.zero().call(a.g());
+			algH.zero().call(a.h());
+			algI.zero().call(a.i());
+			algJ.zero().call(a.j());
 		}
 	};
 	
 	@Override
-	public Procedure1<Tuple10<B,D,F,H,J,L,N,P,R,T>> zero() {
+	public Procedure1<Tuple10<A,B,C,D,E,F,G,H,I,J>> zero() {
 		return ZERO;
 	}
 	

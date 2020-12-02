@@ -38,164 +38,164 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Tuple9Algebra<A extends Algebra<A,B>,B,
-							C extends Algebra<C,D>,D,
-							E extends Algebra<E,F>,F,
-							G extends Algebra<G,H>,H,
-							I extends Algebra<I,J>,J,
-							K extends Algebra<K,L>,L,
-							M extends Algebra<M,N>,N,
-							O extends Algebra<O,P>,P,
-							Q extends Algebra<Q,R>,R>
-	implements Algebra<Tuple9Algebra<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R>, Tuple9<B,D,F,H,J,L,N,P,R>>
+public class Tuple9Algebra<AA extends Algebra<AA,A>, A,
+							BB extends Algebra<BB,B>, B,
+							CC extends Algebra<CC,C>, C,
+							DD extends Algebra<DD,D>, D,
+							EE extends Algebra<EE,E>, E,
+							FF extends Algebra<FF,F>, F,
+							GG extends Algebra<GG,G>, G,
+							HH extends Algebra<HH,H>, H,
+							II extends Algebra<II,I>, I>
+	implements Algebra<Tuple9Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I>, Tuple9<A,B,C,D,E,F,G,H,I>>
 {
-	private final A alg1;
-	private final C alg2;
-	private final E alg3;
-	private final G alg4;
-	private final I alg5;
-	private final K alg6;
-	private final M alg7;
-	private final O alg8;
-	private final Q alg9;
+	private final AA algA;
+	private final BB algB;
+	private final CC algC;
+	private final DD algD;
+	private final EE algE;
+	private final FF algF;
+	private final GG algG;
+	private final HH algH;
+	private final II algI;
 	
-	public Tuple9Algebra(A alg1, C alg2, E alg3, G alg4, I alg5, K alg6, M alg7, O alg8, Q alg9) {
-		this.alg1 = alg1;
-		this.alg2 = alg2;
-		this.alg3 = alg3;
-		this.alg4 = alg4;
-		this.alg5 = alg5;
-		this.alg6 = alg6;
-		this.alg7 = alg7;
-		this.alg8 = alg8;
-		this.alg9 = alg9;
+	public Tuple9Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI) {
+		this.algA = algA;
+		this.algB = algB;
+		this.algC = algC;
+		this.algD = algD;
+		this.algE = algE;
+		this.algF = algF;
+		this.algG = algG;
+		this.algH = algH;
+		this.algI = algI;
 	}
 	
 	@Override
-	public Tuple9<B,D,F,H,J,L,N,P,R> construct() {
-		return new Tuple9<B,D,F,H,J,L,N,P,R>(
-				alg1.construct(),
-				alg2.construct(),
-				alg3.construct(),
-				alg4.construct(),
-				alg5.construct(),
-				alg6.construct(),
-				alg7.construct(),
-				alg8.construct(),
-				alg9.construct());
+	public Tuple9<A,B,C,D,E,F,G,H,I> construct() {
+		return new Tuple9<A,B,C,D,E,F,G,H,I>(
+				algA.construct(),
+				algB.construct(),
+				algC.construct(),
+				algD.construct(),
+				algE.construct(),
+				algF.construct(),
+				algG.construct(),
+				algH.construct(),
+				algI.construct());
 	}
 
 	@Override
-	public Tuple9<B,D,F,H,J,L,N,P,R> construct(Tuple9<B,D,F,H,J,L,N,P,R> other) {
-		Tuple9<B,D,F,H,J,L,N,P,R> result = construct();
+	public Tuple9<A,B,C,D,E,F,G,H,I> construct(Tuple9<A,B,C,D,E,F,G,H,I> other) {
+		Tuple9<A,B,C,D,E,F,G,H,I> result = construct();
 		assign().call(other, result);
 		return result;
 	}
 
 	@Override
-	public Tuple9<B,D,F,H,J,L,N,P,R> construct(String str) {
+	public Tuple9<A,B,C,D,E,F,G,H,I> construct(String str) {
 		throw new IllegalArgumentException("to be implemented");
 	}
 
-	private final Function2<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>> EQ =
-			new Function2<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>>()
+	private final Function2<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>> EQ =
+			new Function2<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>>()
 	{
 		@Override
-		public Boolean call(Tuple9<B,D,F,H,J,L,N,P,R> a, Tuple9<B,D,F,H,J,L,N,P,R> b) {
-			return alg1.isEqual().call(a.a(), b.a()) &&
-					alg2.isEqual().call(a.b(), b.b()) &&
-					alg3.isEqual().call(a.c(), b.c()) &&
-					alg4.isEqual().call(a.d(), b.d()) &&
-					alg5.isEqual().call(a.e(), b.e()) &&
-					alg6.isEqual().call(a.f(), b.f()) &&
-					alg7.isEqual().call(a.g(), b.g()) &&
-					alg8.isEqual().call(a.h(), b.h()) &&
-					alg9.isEqual().call(a.i(), b.i());
+		public Boolean call(Tuple9<A,B,C,D,E,F,G,H,I> a, Tuple9<A,B,C,D,E,F,G,H,I> b) {
+			return algA.isEqual().call(a.a(), b.a()) &&
+					algB.isEqual().call(a.b(), b.b()) &&
+					algC.isEqual().call(a.c(), b.c()) &&
+					algD.isEqual().call(a.d(), b.d()) &&
+					algE.isEqual().call(a.e(), b.e()) &&
+					algF.isEqual().call(a.f(), b.f()) &&
+					algG.isEqual().call(a.g(), b.g()) &&
+					algH.isEqual().call(a.h(), b.h()) &&
+					algI.isEqual().call(a.i(), b.i());
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>> isEqual() {
+	public Function2<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>> isEqual() {
 		return EQ;
 	}
 
-	private final Function2<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>> NEQ =
-			new Function2<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>>()
+	private final Function2<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>> NEQ =
+			new Function2<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>>()
 	{
 		@Override
-		public Boolean call(Tuple9<B,D,F,H,J,L,N,P,R> a, Tuple9<B,D,F,H,J,L,N,P,R> b) {
+		public Boolean call(Tuple9<A,B,C,D,E,F,G,H,I> a, Tuple9<A,B,C,D,E,F,G,H,I> b) {
 			return !isEqual().call(a, b);
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>> isNotEqual() {
+	public Function2<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>> isNotEqual() {
 		return NEQ;
 	}
 
-	private final Procedure2<Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>> ASSIGN =
-			new Procedure2<Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>>()
+	private final Procedure2<Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>> ASSIGN =
+			new Procedure2<Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>>()
 	{
 		@Override
-		public void call(Tuple9<B,D,F,H,J,L,N,P,R> a, Tuple9<B,D,F,H,J,L,N,P,R> b) {
-			alg1.assign().call(a.a(), b.a());
-			alg2.assign().call(a.b(), b.b());
-			alg3.assign().call(a.c(), b.c());
-			alg4.assign().call(a.d(), b.d());
-			alg5.assign().call(a.e(), b.e());
-			alg6.assign().call(a.f(), b.f());
-			alg7.assign().call(a.g(), b.g());
-			alg8.assign().call(a.h(), b.h());
-			alg9.assign().call(a.i(), b.i());
+		public void call(Tuple9<A,B,C,D,E,F,G,H,I> a, Tuple9<A,B,C,D,E,F,G,H,I> b) {
+			algA.assign().call(a.a(), b.a());
+			algB.assign().call(a.b(), b.b());
+			algC.assign().call(a.c(), b.c());
+			algD.assign().call(a.d(), b.d());
+			algE.assign().call(a.e(), b.e());
+			algF.assign().call(a.f(), b.f());
+			algG.assign().call(a.g(), b.g());
+			algH.assign().call(a.h(), b.h());
+			algI.assign().call(a.i(), b.i());
 		}
 	};
 
 	@Override
-	public Procedure2<Tuple9<B,D,F,H,J,L,N,P,R>, Tuple9<B,D,F,H,J,L,N,P,R>> assign() {
+	public Procedure2<Tuple9<A,B,C,D,E,F,G,H,I>, Tuple9<A,B,C,D,E,F,G,H,I>> assign() {
 		return ASSIGN;
 	}
 
-	private final Function1<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>> ISZERO =
-			new Function1<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>>()
+	private final Function1<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>> ISZERO =
+			new Function1<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>>()
 	{
 		@Override
-		public Boolean call(Tuple9<B,D,F,H,J,L,N,P,R> a) {
-			return alg1.isZero().call(a.a()) &&
-					alg2.isZero().call(a.b()) &&
-					alg3.isZero().call(a.c()) &&
-					alg4.isZero().call(a.d()) &&
-					alg5.isZero().call(a.e()) &&
-					alg6.isZero().call(a.f()) &&
-					alg7.isZero().call(a.g()) &&
-					alg8.isZero().call(a.h()) &&
-					alg9.isZero().call(a.i());
+		public Boolean call(Tuple9<A,B,C,D,E,F,G,H,I> a) {
+			return algA.isZero().call(a.a()) &&
+					algB.isZero().call(a.b()) &&
+					algC.isZero().call(a.c()) &&
+					algD.isZero().call(a.d()) &&
+					algE.isZero().call(a.e()) &&
+					algF.isZero().call(a.f()) &&
+					algG.isZero().call(a.g()) &&
+					algH.isZero().call(a.h()) &&
+					algI.isZero().call(a.i());
 		}
 	};
 
 	@Override
-	public Function1<Boolean, Tuple9<B,D,F,H,J,L,N,P,R>> isZero() {
+	public Function1<Boolean, Tuple9<A,B,C,D,E,F,G,H,I>> isZero() {
 		return ISZERO;
 	}
 	
-	private final Procedure1<Tuple9<B,D,F,H,J,L,N,P,R>> ZERO =
-			new Procedure1<Tuple9<B,D,F,H,J,L,N,P,R>>()
+	private final Procedure1<Tuple9<A,B,C,D,E,F,G,H,I>> ZERO =
+			new Procedure1<Tuple9<A,B,C,D,E,F,G,H,I>>()
 	{
 		@Override
-		public void call(Tuple9<B,D,F,H,J,L,N,P,R> a) {
-			alg1.zero().call(a.a());
-			alg2.zero().call(a.b());
-			alg3.zero().call(a.c());
-			alg4.zero().call(a.d());
-			alg5.zero().call(a.e());
-			alg6.zero().call(a.f());
-			alg7.zero().call(a.g());
-			alg8.zero().call(a.h());
-			alg9.zero().call(a.i());
+		public void call(Tuple9<A,B,C,D,E,F,G,H,I> a) {
+			algA.zero().call(a.a());
+			algB.zero().call(a.b());
+			algC.zero().call(a.c());
+			algD.zero().call(a.d());
+			algE.zero().call(a.e());
+			algF.zero().call(a.f());
+			algG.zero().call(a.g());
+			algH.zero().call(a.h());
+			algI.zero().call(a.i());
 		}
 	};
 	
 	@Override
-	public Procedure1<Tuple9<B,D,F,H,J,L,N,P,R>> zero() {
+	public Procedure1<Tuple9<A,B,C,D,E,F,G,H,I>> zero() {
 		return ZERO;
 	}
 }

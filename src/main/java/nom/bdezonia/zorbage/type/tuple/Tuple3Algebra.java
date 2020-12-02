@@ -38,116 +38,116 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  * @author Barry DeZonia
  *
  */
-public class Tuple3Algebra<A extends Algebra<A,B>,B,
-							C extends Algebra<C,D>,D,
-							E extends Algebra<E,F>,F>
-	implements Algebra<Tuple3Algebra<A,B,C,D,E,F>, Tuple3<B,D,F>>
+public class Tuple3Algebra<AA extends Algebra<AA,A>, A,
+							BB extends Algebra<BB,B>, B,
+							CC extends Algebra<CC,C>, C>
+	implements Algebra<Tuple3Algebra<AA,A,BB,B,CC,C>, Tuple3<A,B,C>>
 {
-	private final A alg1;
-	private final C alg2;
-	private final E alg3;
+	private final AA algA;
+	private final BB algB;
+	private final CC algC;
 	
-	public Tuple3Algebra(A alg1, C alg2, E alg3) {
-		this.alg1 = alg1;
-		this.alg2 = alg2;
-		this.alg3 = alg3;
+	public Tuple3Algebra(AA algA, BB algB, CC algC) {
+		this.algA = algA;
+		this.algB = algB;
+		this.algC = algC;
 	}
 	
 	@Override
-	public Tuple3<B,D,F> construct() {
-		return new Tuple3<B,D,F>(
-				alg1.construct(),
-				alg2.construct(),
-				alg3.construct());
+	public Tuple3<A,B,C> construct() {
+		return new Tuple3<A,B,C>(
+				algA.construct(),
+				algB.construct(),
+				algC.construct());
 	}
 
 	@Override
-	public Tuple3<B,D,F> construct(Tuple3<B,D,F> other) {
-		Tuple3<B,D,F> result = construct();
+	public Tuple3<A,B,C> construct(Tuple3<A,B,C> other) {
+		Tuple3<A,B,C> result = construct();
 		assign().call(other, result);
 		return result;
 	}
 
 	@Override
-	public Tuple3<B,D,F> construct(String str) {
+	public Tuple3<A,B,C> construct(String str) {
 		throw new IllegalArgumentException("to be implemented");
 	}
 
-	private final Function2<Boolean, Tuple3<B,D,F>, Tuple3<B,D,F>> EQ =
-			new Function2<Boolean, Tuple3<B,D,F>, Tuple3<B,D,F>>()
+	private final Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>> EQ =
+			new Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>>()
 	{
 		@Override
-		public Boolean call(Tuple3<B,D,F> a, Tuple3<B,D,F> b) {
-			return alg1.isEqual().call(a.a(), b.a()) &&
-					alg2.isEqual().call(a.b(), b.b()) &&
-					alg3.isEqual().call(a.c(), b.c());
+		public Boolean call(Tuple3<A,B,C> a, Tuple3<A,B,C> b) {
+			return algA.isEqual().call(a.a(), b.a()) &&
+					algB.isEqual().call(a.b(), b.b()) &&
+					algC.isEqual().call(a.c(), b.c());
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple3<B,D,F>, Tuple3<B,D,F>> isEqual() {
+	public Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>> isEqual() {
 		return EQ;
 	}
 
-	private final Function2<Boolean, Tuple3<B,D,F>, Tuple3<B,D,F>> NEQ =
-			new Function2<Boolean, Tuple3<B,D,F>, Tuple3<B,D,F>>()
+	private final Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>> NEQ =
+			new Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>>()
 	{
 		@Override
-		public Boolean call(Tuple3<B,D,F> a, Tuple3<B,D,F> b) {
+		public Boolean call(Tuple3<A,B,C> a, Tuple3<A,B,C> b) {
 			return !isEqual().call(a, b);
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Tuple3<B,D,F>, Tuple3<B,D,F>> isNotEqual() {
+	public Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>> isNotEqual() {
 		return NEQ;
 	}
 
-	private final Procedure2<Tuple3<B,D,F>, Tuple3<B,D,F>> ASSIGN =
-			new Procedure2<Tuple3<B,D,F>, Tuple3<B,D,F>>()
+	private final Procedure2<Tuple3<A,B,C>, Tuple3<A,B,C>> ASSIGN =
+			new Procedure2<Tuple3<A,B,C>, Tuple3<A,B,C>>()
 	{
 		@Override
-		public void call(Tuple3<B,D,F> a, Tuple3<B,D,F> b) {
-			alg1.assign().call(a.a(), b.a());
-			alg2.assign().call(a.b(), b.b());
-			alg3.assign().call(a.c(), b.c());
+		public void call(Tuple3<A,B,C> a, Tuple3<A,B,C> b) {
+			algA.assign().call(a.a(), b.a());
+			algB.assign().call(a.b(), b.b());
+			algC.assign().call(a.c(), b.c());
 		}
 	};
 
 	@Override
-	public Procedure2<Tuple3<B,D,F>, Tuple3<B,D,F>> assign() {
+	public Procedure2<Tuple3<A,B,C>, Tuple3<A,B,C>> assign() {
 		return ASSIGN;
 	}
 
-	private final Function1<Boolean, Tuple3<B,D,F>> ISZERO =
-			new Function1<Boolean, Tuple3<B,D,F>>()
+	private final Function1<Boolean, Tuple3<A,B,C>> ISZERO =
+			new Function1<Boolean, Tuple3<A,B,C>>()
 	{
 		@Override
-		public Boolean call(Tuple3<B,D,F> a) {
-			return alg1.isZero().call(a.a()) &&
-					alg2.isZero().call(a.b()) &&
-					alg3.isZero().call(a.c());
+		public Boolean call(Tuple3<A,B,C> a) {
+			return algA.isZero().call(a.a()) &&
+					algB.isZero().call(a.b()) &&
+					algC.isZero().call(a.c());
 		}
 	};
 
 	@Override
-	public Function1<Boolean, Tuple3<B,D,F>> isZero() {
+	public Function1<Boolean, Tuple3<A,B,C>> isZero() {
 		return ISZERO;
 	}
 	
-	private final Procedure1<Tuple3<B,D,F>> ZERO =
-			new Procedure1<Tuple3<B,D,F>>()
+	private final Procedure1<Tuple3<A,B,C>> ZERO =
+			new Procedure1<Tuple3<A,B,C>>()
 	{
 		@Override
-		public void call(Tuple3<B,D,F> a) {
-			alg1.zero().call(a.a());
-			alg2.zero().call(a.b());
-			alg3.zero().call(a.c());
+		public void call(Tuple3<A,B,C> a) {
+			algA.zero().call(a.a());
+			algB.zero().call(a.b());
+			algC.zero().call(a.c());
 		}
 	};
 	
 	@Override
-	public Procedure1<Tuple3<B,D,F>> zero() {
+	public Procedure1<Tuple3<A,B,C>> zero() {
 		return ZERO;
 	}
 }
