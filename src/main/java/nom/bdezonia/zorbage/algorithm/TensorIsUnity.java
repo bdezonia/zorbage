@@ -51,16 +51,28 @@ public class TensorIsUnity {
 		boolean compute(T alg, TensorMember<U> a)
 	{
 		int numD = a.numDimensions();
-		if (numD == 0)
-			return false;
+		IntegerIndex idx = new IntegerIndex(numD);
+		U value = alg.construct();
+		if (numD == 0) {
+			// a number
+			a.getV(idx, value);
+			return alg.isUnity().call(value);
+		}
+		if (numD == 1) {
+			// a vector
+			if (a.dimension(0) != 1)
+				return false;
+			// a number
+			a.getV(idx, value);
+			return alg.isUnity().call(value);
+		}
+		// if here than numD is 2 or more
 		for (int i = 0; i < numD; i++) {
 			if (a.dimension(i) < 1)
 				return false;
 		}
-		// note that we do not require num rows == num cols. this means nonrectangular matrices can be unity-like.
-		IntegerIndex idx = new IntegerIndex(numD);
+		// note that we do not require perfectly shaped tensors. many things can be unity-like.
 		SamplingIterator<IntegerIndex> iter = GridIterator.compute(a);
-		U value = alg.construct();
 		while (iter.hasNext()) {
 			iter.next(idx);
 			a.getV(idx, value);
