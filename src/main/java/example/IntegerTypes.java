@@ -26,6 +26,9 @@
  */
 package example;
 
+import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.type.integer.int12.SignedInt12Member;
+
 /**
  * @author Barry DeZonia
  */
@@ -68,4 +71,75 @@ class IntegerTypes {
 	// For more details about the ranges and sizes of these integers see:
 	//
 	//   https://github.com/bdezonia/zorbage/blob/master/src/main/java/example/Numbers.java
+	
+	// Here are the supported calls for Integers (using int12s as an example)
+	
+	@SuppressWarnings("unused")
+	void example1() {
+		
+		SignedInt12Member a = G.INT12.construct();
+		SignedInt12Member b = G.INT12.construct("14");
+		SignedInt12Member c = G.INT12.construct(b);
+		SignedInt12Member d = new SignedInt12Member(25);
+
+		G.INT12.zero();
+		G.INT12.unity();
+		
+		G.INT12.maxBound();
+		G.INT12.minBound();
+
+		G.INT12.isEqual();
+		G.INT12.isEven();
+		G.INT12.isOdd();
+		G.INT12.isNotEqual();
+		G.INT12.isGreater();
+		G.INT12.isGreaterEqual();
+		G.INT12.isLess();
+		G.INT12.isLessEqual();
+		G.INT12.isZero();
+		G.INT12.signum();
+		G.INT12.compare();
+
+		G.INT12.assign();
+		G.INT12.add();
+		G.INT12.subtract();
+		G.INT12.multiply();
+		G.INT12.div();
+		G.INT12.mod();
+		G.INT12.divMod();
+		G.INT12.pow();
+		G.INT12.power();
+		G.INT12.negate();
+
+		G.INT12.bitAnd();
+		G.INT12.bitAndNot();
+		G.INT12.bitNot();
+		G.INT12.bitOr();
+		G.INT12.bitXor();
+		G.INT12.bitShiftLeft();
+		G.INT12.bitShiftRight();
+		G.INT12.bitShiftRightFillZero();
+
+		G.INT12.abs();
+		G.INT12.gcd();
+		G.INT12.lcm();
+		G.INT12.max();
+		G.INT12.min();
+		G.INT12.norm();
+		G.INT12.within();
+
+		G.INT12.pred();
+		G.INT12.succ();
+
+		G.INT12.scale();
+		G.INT12.scaleByDouble();
+		G.INT12.scaleByDoubleAndRound();
+		G.INT12.scaleByHighPrec();
+		G.INT12.scaleByHighPrecAndRound();
+		G.INT12.scaleByRational();
+		G.INT12.scaleByOneHalf();
+		G.INT12.scaleByTwo();
+
+		G.INT12.random();
+	}
 }
