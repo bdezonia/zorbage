@@ -175,12 +175,14 @@ public class TestPointAlgebra {
 		assertFalse(G.POINT.within().call(tol, p, p3));
 		
 		G.POINT.assign().call(p, p3);
+		p3.setComponent(0, -1);
 		assertFalse(G.POINT.isInfinite().call(p3));
 		G.POINT.infinite().call(p3);
 		assertTrue(p3.component(0) > 0);
 		assertTrue(G.POINT.isInfinite().call(p3));
 		
 		G.POINT.assign().call(p, p3);
+		p3.setComponent(0, 1);
 		assertFalse(G.POINT.isInfinite().call(p3));
 		G.POINT.negInfinite().call(p3);
 		assertTrue(p3.component(0) < 0);
