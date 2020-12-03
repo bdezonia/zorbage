@@ -117,7 +117,35 @@ public class TestPointAlgebra {
 		assertEquals(1.8*p.component(0), p3.component(0), 0);
 		assertEquals(1.8*p.component(1), p3.component(1), 0);
 		assertEquals(1.8*p.component(2), p3.component(2), 0);
-	
+		
+		G.POINT.zero().call(p3);
+		G.POINT.scaleByDouble().call(6.7, p, p3);
+		assertEquals(3, p3.numDimensions());
+		assertEquals(6.7*p.component(0), p3.component(0), 0);
+		assertEquals(6.7*p.component(1), p3.component(1), 0);
+		assertEquals(6.7*p.component(2), p3.component(2), 0);
+		
+		G.POINT.zero().call(p3);
+		G.POINT.scaleByOneHalf().call(1, p, p3);
+		assertEquals(3, p3.numDimensions());
+		assertEquals(0.5*p.component(0), p3.component(0), 0);
+		assertEquals(0.5*p.component(1), p3.component(1), 0);
+		assertEquals(0.5*p.component(2), p3.component(2), 0);
+		
+		G.POINT.zero().call(p3);
+		G.POINT.scaleByTwo().call(1, p, p3);
+		assertEquals(3, p3.numDimensions());
+		assertEquals(2.0*p.component(0), p3.component(0), 0);
+		assertEquals(2.0*p.component(1), p3.component(1), 0);
+		assertEquals(2.0*p.component(2), p3.component(2), 0);
+		
+		G.POINT.zero().call(p3);
+		G.POINT.scaleComponents().call(14.7, p, p3);
+		assertEquals(3, p3.numDimensions());
+		assertEquals(14.7*p.component(0), p3.component(0), 0);
+		assertEquals(14.7*p.component(1), p3.component(1), 0);
+		assertEquals(14.7*p.component(2), p3.component(2), 0);
+
 		G.POINT.random().call(p3);
 		
 		double tol;
@@ -145,6 +173,26 @@ public class TestPointAlgebra {
 		assertTrue(G.POINT.within().call(tol, p, p3));
 		tol = 0.000499999;
 		assertFalse(G.POINT.within().call(tol, p, p3));
+		
+		G.POINT.assign().call(p, p3);
+		assertFalse(G.POINT.isInfinite().call(p3));
+		G.POINT.infinite().call(p3);
+		assertTrue(p3.component(0) > 0);
+		assertTrue(G.POINT.isInfinite().call(p3));
+		
+		G.POINT.assign().call(p, p3);
+		assertFalse(G.POINT.isInfinite().call(p3));
+		G.POINT.negInfinite().call(p3);
+		assertTrue(p3.component(0) < 0);
+		assertTrue(G.POINT.isInfinite().call(p3));
+		
+		G.POINT.assign().call(p, p3);
+		assertFalse(G.POINT.isNaN().call(p3));
+		G.POINT.nan().call(p3);
+		assertFalse(p3.component(0) > 0);
+		assertFalse(p3.component(0) == 0);
+		assertFalse(p3.component(0) < 0);
+		assertTrue(G.POINT.isNaN().call(p3));
 	}
 
 }
