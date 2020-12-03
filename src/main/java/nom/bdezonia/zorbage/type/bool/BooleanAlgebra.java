@@ -419,4 +419,18 @@ public class BooleanAlgebra
 		return NOT;
 	}
 
+	private final Function1<Boolean, BooleanMember> ISUNITY =
+			new Function1<Boolean, BooleanMember>()
+	{
+		@Override
+		public Boolean call(BooleanMember a) {
+			return a.v() == true;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, BooleanMember> isUnity() {
+		return ISUNITY;
+	}
+
 }

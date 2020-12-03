@@ -793,4 +793,17 @@ public class UnsignedInt4Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, UnsignedInt4Member> ISUNITY =
+			new Function1<Boolean, UnsignedInt4Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt4Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt4Member> isUnity() {
+		return ISUNITY;
+	}
 }

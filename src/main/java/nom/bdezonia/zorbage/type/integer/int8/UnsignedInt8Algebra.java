@@ -785,4 +785,17 @@ public class UnsignedInt8Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, UnsignedInt8Member> ISUNITY =
+			new Function1<Boolean, UnsignedInt8Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt8Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt8Member> isUnity() {
+		return ISUNITY;
+	}
 }

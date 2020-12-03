@@ -1433,4 +1433,18 @@ public class ComplexFloat64Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, ComplexFloat64Member> ISUNITY =
+			new Function1<Boolean, ComplexFloat64Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat64Member a) {
+			return G.CDBL.isEqual().call(a, ONE);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean, ComplexFloat64Member> isUnity() {
+		return ISUNITY;
+	}
+
 }

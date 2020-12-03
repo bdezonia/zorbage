@@ -1088,4 +1088,17 @@ public class QuaternionFloat16Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, QuaternionFloat16Member> ISUNITY =
+			new Function1<Boolean, QuaternionFloat16Member>()
+	{
+		@Override
+		public Boolean call(QuaternionFloat16Member a) {
+			return G.QHLF.isEqual().call(a, ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionFloat16Member> isUnity() {
+		return ISUNITY;
+	}
 }

@@ -796,4 +796,17 @@ public class UnsignedInt32Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, UnsignedInt32Member> ISUNITY =
+			new Function1<Boolean, UnsignedInt32Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt32Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt32Member> isUnity() {
+		return ISUNITY;
+	}
 }

@@ -24,19 +24,61 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface Unity<U>
-{
-	Procedure1<U> unity();
-	Function1<Boolean,U> isUnity();
+public class TensorIsUnity {
+
+	private TensorIsUnity() { }
+	
+	/**
+	 * 
+	 * @param alg
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Algebra<T,U> & Unity<U>, U>
+		boolean compute(T alg, TensorMember<U> a)
+	{
+		int numD = a.numDimensions();
+		if (numD == 0)
+			return false;
+		for (int i = 0; i < numD; i++) {
+			if (a.dimension(i) < 1)
+				return false;
+		}
+		// note that we do not require num rows == num cols. this means nonrectangular matrices can be unity-like.
+		IntegerIndex idx = new IntegerIndex(numD);
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(a);
+		U value = alg.construct();
+		while (iter.hasNext()) {
+			iter.next(idx);
+			a.getV(idx, value);
+			boolean onDiag = true;
+			long tmp = idx.get(0);
+			for (int i = 1; i < idx.numDimensions(); i++) {
+				if (idx.get(i) != tmp)
+					onDiag = false;
+			}
+			if (onDiag) {
+				if (!alg.isUnity().call(value))
+					return false;
+			}
+			else {
+				if (!alg.isZero().call(value))
+					return false;
+			}
+		}
+		return true;
+	}
 }

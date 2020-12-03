@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
+import nom.bdezonia.zorbage.algorithm.MatrixIsUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
@@ -925,4 +926,17 @@ public class OctonionFloat32Matrix
 		return SCBH;
 	}
 
+	private final Function1<Boolean, OctonionFloat32MatrixMember> ISUNITY =
+			new Function1<Boolean, OctonionFloat32MatrixMember>()
+	{
+		@Override
+		public Boolean call(OctonionFloat32MatrixMember a) {
+			return MatrixIsUnity.compute(G.OFLT, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, OctonionFloat32MatrixMember> isUnity() {
+		return ISUNITY;
+	}
 }

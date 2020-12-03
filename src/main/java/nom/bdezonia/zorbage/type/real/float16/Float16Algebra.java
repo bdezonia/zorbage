@@ -1570,4 +1570,18 @@ public class Float16Algebra
 	public Procedure2<Float16Member, Float16Member> succ() {
 		return SUCC;
 	}
+
+	private final Function1<Boolean, Float16Member> ISUNITY =
+			new Function1<Boolean, Float16Member>()
+	{
+		@Override
+		public Boolean call(Float16Member a) {
+			return a.v() == 1;
+		}
+	};
+	
+	@Override
+	public Function1<Boolean, Float16Member> isUnity() {
+		return ISUNITY;
+	}
 }

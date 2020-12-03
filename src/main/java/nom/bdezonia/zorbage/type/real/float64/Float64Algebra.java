@@ -1570,4 +1570,18 @@ public class Float64Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, Float64Member> ISUNITY =
+			new Function1<Boolean, Float64Member>()
+	{
+		@Override
+		public Boolean call(Float64Member a) {
+			return a.v() == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float64Member> isUnity() {
+		return ISUNITY;
+	}
+
 }

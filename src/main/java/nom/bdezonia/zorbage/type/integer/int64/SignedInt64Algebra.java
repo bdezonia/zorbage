@@ -836,4 +836,17 @@ public class SignedInt64Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, SignedInt64Member> ISUNITY =
+			new Function1<Boolean, SignedInt64Member>()
+	{
+		@Override
+		public Boolean call(SignedInt64Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt64Member> isUnity() {
+		return ISUNITY;
+	}
 }

@@ -943,4 +943,18 @@ public class UnboundedIntAlgebra
 	public Procedure3<java.lang.Integer, UnboundedIntMember, UnboundedIntMember> scaleByOneHalf() {
 		return SHALF;
 	}
+
+	private final Function1<Boolean, UnboundedIntMember> ISUNITY =
+			new Function1<Boolean, UnboundedIntMember>()
+	{
+		@Override
+		public Boolean call(UnboundedIntMember a) {
+			return a.v().equals(BigInteger.ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnboundedIntMember> isUnity() {
+		return ISUNITY;
+	}
 }

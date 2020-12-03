@@ -598,4 +598,18 @@ public class GaussianInt16Algebra
 	public Procedure3<GaussianInt16Member, GaussianInt16Member, GaussianInt16Member> scale() {
 		return MUL;
 	}
+
+	private final Function1<Boolean, GaussianInt16Member> ISUNITY =
+			new Function1<Boolean, GaussianInt16Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt16Member a) {
+			return a.r() == 1 && a.i() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean,GaussianInt16Member> isUnity() {
+		return ISUNITY;
+	}
 }

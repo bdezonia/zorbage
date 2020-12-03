@@ -1433,4 +1433,18 @@ public class ComplexFloat32Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, ComplexFloat32Member> ISUNITY =
+			new Function1<Boolean, ComplexFloat32Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat32Member a) {
+			return G.CFLT.isEqual().call(a, ONE);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean, ComplexFloat32Member> isUnity() {
+		return ISUNITY;
+	}
+
 }

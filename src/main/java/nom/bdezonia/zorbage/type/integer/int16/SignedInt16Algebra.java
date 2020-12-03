@@ -815,4 +815,17 @@ public class SignedInt16Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, SignedInt16Member> ISUNITY =
+			new Function1<Boolean, SignedInt16Member>()
+	{
+		@Override
+		public Boolean call(SignedInt16Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt16Member> isUnity() {
+		return ISUNITY;
+	}
 }

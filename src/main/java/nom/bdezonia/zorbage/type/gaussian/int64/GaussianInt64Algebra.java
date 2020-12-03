@@ -615,4 +615,18 @@ public class GaussianInt64Algebra
 	public Procedure3<GaussianInt64Member, GaussianInt64Member, GaussianInt64Member> scale() {
 		return MUL;
 	}
+
+	private final Function1<Boolean, GaussianInt64Member> ISUNITY =
+			new Function1<Boolean, GaussianInt64Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt64Member a) {
+			return a.r() == 1 && a.i() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean,GaussianInt64Member> isUnity() {
+		return ISUNITY;
+	}
 }

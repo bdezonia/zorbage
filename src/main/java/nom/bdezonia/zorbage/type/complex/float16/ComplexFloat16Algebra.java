@@ -1434,4 +1434,18 @@ public class ComplexFloat16Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, ComplexFloat16Member> ISUNITY =
+			new Function1<Boolean, ComplexFloat16Member>()
+	{
+		@Override
+		public Boolean call(ComplexFloat16Member a) {
+			return G.CHLF.isEqual().call(a, ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexFloat16Member> isUnity() {
+		return ISUNITY;
+	}
+
 }

@@ -820,4 +820,17 @@ public class UnsignedInt64Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, UnsignedInt64Member> ISUNITY =
+			new Function1<Boolean, UnsignedInt64Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt64Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt64Member> isUnity() {
+		return ISUNITY;
+	}
 }

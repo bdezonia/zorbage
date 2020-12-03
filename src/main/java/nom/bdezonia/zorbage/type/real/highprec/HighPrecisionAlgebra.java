@@ -1043,4 +1043,18 @@ public class HighPrecisionAlgebra
 		return ULP;
 	}
 
+	private final Function1<Boolean, HighPrecisionMember> ISUNITY =
+			new Function1<Boolean, HighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(HighPrecisionMember a) {
+			return a.v().equals(BigDecimal.ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, HighPrecisionMember> isUnity() {
+		return ISUNITY;
+	}
+
 }

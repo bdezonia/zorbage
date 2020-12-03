@@ -528,4 +528,18 @@ public class RationalAlgebra
 	public Procedure3<java.lang.Integer, RationalMember, RationalMember> scaleByOneHalf() {
 		return SHALF;
 	}
+
+	private final Function1<Boolean, RationalMember> ISUNITY =
+			new Function1<Boolean, RationalMember>()
+	{
+		@Override
+		public Boolean call(RationalMember a) {
+			return a.n.equals(BigInteger.ONE) && a.d.equals(BigInteger.ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, RationalMember> isUnity() {
+		return ISUNITY;
+	}
 }

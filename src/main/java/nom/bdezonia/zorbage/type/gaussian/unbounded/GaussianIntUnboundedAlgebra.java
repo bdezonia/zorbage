@@ -583,4 +583,18 @@ public class GaussianIntUnboundedAlgebra
 	public Procedure3<GaussianIntUnboundedMember, GaussianIntUnboundedMember, GaussianIntUnboundedMember> scale() {
 		return MUL;
 	}
+
+	private final Function1<Boolean, GaussianIntUnboundedMember> ISUNITY =
+			new Function1<Boolean, GaussianIntUnboundedMember>()
+	{
+		@Override
+		public Boolean call(GaussianIntUnboundedMember a) {
+			return a.r().equals(BigInteger.ONE) && a.i().equals(BigInteger.ZERO);
+		}
+	};
+
+	@Override
+	public Function1<Boolean,GaussianIntUnboundedMember> isUnity() {
+		return ISUNITY;
+	}
 }

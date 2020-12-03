@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
@@ -606,4 +607,17 @@ public class OctonionHighPrecisionCartesianTensorProduct
 		return SCBH;
 	}
 
+	private final Function1<Boolean, OctonionHighPrecisionCartesianTensorProductMember> ISUNITY =
+			new Function1<Boolean, OctonionHighPrecisionCartesianTensorProductMember>()
+	{
+		@Override
+		public Boolean call(OctonionHighPrecisionCartesianTensorProductMember a) {
+			return TensorIsUnity.compute(G.OHP, a);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean, OctonionHighPrecisionCartesianTensorProductMember> isUnity() {
+		return ISUNITY;
+	}
 }

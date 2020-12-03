@@ -838,4 +838,17 @@ public class SignedInt11Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, SignedInt11Member> ISUNITY =
+			new Function1<Boolean, SignedInt11Member>()
+	{
+		@Override
+		public Boolean call(SignedInt11Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt11Member> isUnity() {
+		return ISUNITY;
+	}
 }

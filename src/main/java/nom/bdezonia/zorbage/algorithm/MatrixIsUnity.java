@@ -24,19 +24,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.algebra;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.MatrixMember;
+import nom.bdezonia.zorbage.algebra.Unity;
 
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface Unity<U>
-{
-	Procedure1<U> unity();
-	Function1<Boolean,U> isUnity();
+public class MatrixIsUnity {
+
+	private MatrixIsUnity() { }
+	
+	/**
+	 * 
+	 * @param alg
+	 * @param a
+	 * @return
+	 */
+	public static <T extends Algebra<T,U> & Unity<U>, U>
+		boolean compute(T alg, MatrixMember<U> a)
+	{
+		if (a.rows() < 1 || a.cols() < 1)
+			return false;
+		// note that we do not require num rows == num cols. this means nonrectangular matrices can be unity-like.
+		U value = alg.construct();
+		for (long r = 0; r < a.rows(); r++) {
+			for (long c = 0; c < a.cols(); c++) {
+				a.getV(r, c, value);
+				if (r == c) {
+					if (!alg.isUnity().call(value))
+						return false;
+				}
+				else {
+					if (!alg.isZero().call(value))
+						return false;
+				}
+			}
+		}
+		return true;
+	}
 }

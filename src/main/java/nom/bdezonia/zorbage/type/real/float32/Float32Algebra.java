@@ -1535,4 +1535,18 @@ public class Float32Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, Float32Member> ISUNITY =
+			new Function1<Boolean, Float32Member>()
+	{
+		@Override
+		public Boolean call(Float32Member a) {
+			return a.v() == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, Float32Member> isUnity() {
+		return ISUNITY;
+	}
+
 }

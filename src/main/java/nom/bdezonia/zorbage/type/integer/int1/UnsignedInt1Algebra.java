@@ -804,4 +804,17 @@ public class UnsignedInt1Algebra
 		return WITHIN;
 	}
 
+	private final Function1<Boolean, UnsignedInt1Member> ISUNITY =
+			new Function1<Boolean, UnsignedInt1Member>()
+	{
+		@Override
+		public Boolean call(UnsignedInt1Member a) {
+			return a.v == 1;
+		}
+	};
+
+	@Override
+	public Function1<Boolean, UnsignedInt1Member> isUnity() {
+		return ISUNITY;
+	}
 }

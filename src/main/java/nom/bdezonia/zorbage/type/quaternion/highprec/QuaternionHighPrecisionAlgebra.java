@@ -1005,4 +1005,18 @@ public class QuaternionHighPrecisionAlgebra
 	public Procedure3<java.lang.Integer, QuaternionHighPrecisionMember, QuaternionHighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
 	}
+
+	private final Function1<Boolean, QuaternionHighPrecisionMember> ISUNITY =
+			new Function1<Boolean, QuaternionHighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(QuaternionHighPrecisionMember a) {
+			return G.QHP.isEqual().call(a, ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionHighPrecisionMember> isUnity() {
+		return ISUNITY;
+	}
 }

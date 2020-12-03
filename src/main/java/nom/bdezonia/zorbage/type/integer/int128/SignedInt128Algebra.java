@@ -982,4 +982,17 @@ public class SignedInt128Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, SignedInt128Member> ISUNITY =
+			new Function1<Boolean, SignedInt128Member>()
+	{
+		@Override
+		public Boolean call(SignedInt128Member a) {
+			return a.v().equals(BigInteger.ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, SignedInt128Member> isUnity() {
+		return ISUNITY;
+	}
 }

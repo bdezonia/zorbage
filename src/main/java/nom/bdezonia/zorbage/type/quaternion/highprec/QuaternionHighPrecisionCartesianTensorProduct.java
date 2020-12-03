@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
@@ -604,5 +605,19 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	@Override
 	public Procedure3<Integer, QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionCartesianTensorProductMember> scaleByOneHalf() {
 		return SCBH;
+	}
+
+	private final Function1<Boolean, QuaternionHighPrecisionCartesianTensorProductMember> ISUNITY =
+			new Function1<Boolean, QuaternionHighPrecisionCartesianTensorProductMember>()
+	{
+		@Override
+		public Boolean call(QuaternionHighPrecisionCartesianTensorProductMember a) {
+			return TensorIsUnity.compute(G.QHP, a);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean, QuaternionHighPrecisionCartesianTensorProductMember> isUnity() {
+		return ISUNITY;
 	}
 }

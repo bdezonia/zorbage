@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
@@ -674,5 +675,19 @@ public class Float16CartesianTensorProduct
 	@Override
 	public Procedure3<Integer, Float16CartesianTensorProductMember, Float16CartesianTensorProductMember> scaleByOneHalf() {
 		return SCBH;
+	}
+
+	private final Function1<Boolean, Float16CartesianTensorProductMember> ISUNITY =
+			new Function1<Boolean, Float16CartesianTensorProductMember>()
+	{
+		@Override
+		public Boolean call(Float16CartesianTensorProductMember a) {
+			return TensorIsUnity.compute(G.HLF, a);
+		}
+	};
+	
+	@Override
+	public Function1<Boolean, Float16CartesianTensorProductMember> isUnity() {
+		return ISUNITY;
 	}
 }

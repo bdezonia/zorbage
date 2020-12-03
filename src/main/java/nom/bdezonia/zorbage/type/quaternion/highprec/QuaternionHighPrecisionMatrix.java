@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algorithm.MatrixDeterminant;
 import nom.bdezonia.zorbage.algorithm.MatrixDirectProduct;
 import nom.bdezonia.zorbage.algorithm.MatrixEqual;
 import nom.bdezonia.zorbage.algorithm.MatrixInvert;
+import nom.bdezonia.zorbage.algorithm.MatrixIsUnity;
 import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
 import nom.bdezonia.zorbage.algorithm.MatrixNegate;
 import nom.bdezonia.zorbage.algorithm.MatrixPower;
@@ -856,4 +857,17 @@ public class QuaternionHighPrecisionMatrix
 		return SCBH;
 	}
 
+	private final Function1<Boolean, QuaternionHighPrecisionMatrixMember> ISUNITY =
+			new Function1<Boolean, QuaternionHighPrecisionMatrixMember>()
+	{
+		@Override
+		public Boolean call(QuaternionHighPrecisionMatrixMember a) {
+			return MatrixIsUnity.compute(G.QHP, a);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, QuaternionHighPrecisionMatrixMember> isUnity() {
+		return ISUNITY;
+	}
 }

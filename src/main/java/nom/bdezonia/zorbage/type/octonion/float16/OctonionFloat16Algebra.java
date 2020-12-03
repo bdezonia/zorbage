@@ -1457,4 +1457,17 @@ public class OctonionFloat16Algebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, OctonionFloat16Member> ISUNITY =
+			new Function1<Boolean, OctonionFloat16Member>()
+	{
+		@Override
+		public Boolean call(OctonionFloat16Member a) {
+			return G.OHLF.isEqual().call(a, ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, OctonionFloat16Member> isUnity() {
+		return ISUNITY;
+	}
 }

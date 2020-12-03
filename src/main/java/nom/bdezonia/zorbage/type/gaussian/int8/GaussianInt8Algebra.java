@@ -598,4 +598,18 @@ public class GaussianInt8Algebra
 	public Procedure3<GaussianInt8Member, GaussianInt8Member, GaussianInt8Member> scale() {
 		return MUL;
 	}
+
+	private final Function1<Boolean, GaussianInt8Member> ISUNITY =
+			new Function1<Boolean, GaussianInt8Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt8Member a) {
+			return a.r() == 1 && a.i() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean,GaussianInt8Member> isUnity() {
+		return ISUNITY;
+	}
 }

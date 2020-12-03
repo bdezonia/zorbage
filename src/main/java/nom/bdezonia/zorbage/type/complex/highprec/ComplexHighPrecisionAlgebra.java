@@ -1378,4 +1378,18 @@ public class ComplexHighPrecisionAlgebra
 	public Procedure3<java.lang.Integer, ComplexHighPrecisionMember, ComplexHighPrecisionMember> scaleByOneHalf() {
 		return SHALF;
 	}
+
+	private final Function1<Boolean, ComplexHighPrecisionMember> ISUNITY =
+			new Function1<Boolean, ComplexHighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(ComplexHighPrecisionMember a) {
+			return G.CHP.isEqual().call(a, ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, ComplexHighPrecisionMember> isUnity() {
+		return ISUNITY;
+	}
 }

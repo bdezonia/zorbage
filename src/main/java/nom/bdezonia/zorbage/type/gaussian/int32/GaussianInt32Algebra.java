@@ -604,4 +604,18 @@ public class GaussianInt32Algebra
 	public Procedure3<GaussianInt32Member, GaussianInt32Member, GaussianInt32Member> scale() {
 		return MUL;
 	}
+
+	private final Function1<Boolean, GaussianInt32Member> ISUNITY =
+			new Function1<Boolean, GaussianInt32Member>()
+	{
+		@Override
+		public Boolean call(GaussianInt32Member a) {
+			return a.r() == 1 && a.i() == 0;
+		}
+	};
+
+	@Override
+	public Function1<Boolean,GaussianInt32Member> isUnity() {
+		return ISUNITY;
+	}
 }

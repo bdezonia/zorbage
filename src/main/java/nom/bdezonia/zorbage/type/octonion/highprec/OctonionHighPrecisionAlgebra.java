@@ -1383,4 +1383,17 @@ public class OctonionHighPrecisionAlgebra
 		return SHALF;
 	}
 
+	private final Function1<Boolean, OctonionHighPrecisionMember> ISUNITY =
+			new Function1<Boolean, OctonionHighPrecisionMember>()
+	{
+		@Override
+		public Boolean call(OctonionHighPrecisionMember a) {
+			return G.OHP.isEqual().call(a, ONE);
+		}
+	};
+
+	@Override
+	public Function1<Boolean, OctonionHighPrecisionMember> isUnity() {
+		return ISUNITY;
+	}
 }
