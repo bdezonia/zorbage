@@ -38,7 +38,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 public class TestRgbAlgebra {
 
 	@Test
-	public void test() {
+	public void test1() {
 		RgbMember a = G.RGB.construct();
 		assertEquals(0, a.r());
 		assertEquals(0, a.g());
@@ -61,6 +61,11 @@ public class TestRgbAlgebra {
 		assertEquals(100, c.r());
 		assertEquals(75, c.g());
 		assertEquals(50, c.b());
+
+		RgbMember d = G.RGB.construct("[1,2,3]");
+		assertEquals(1, d.r());
+		assertEquals(2, d.g());
+		assertEquals(3, d.b());
 
 		a.setR(1);
 		a.setG(2);
@@ -87,5 +92,45 @@ public class TestRgbAlgebra {
 		
 		G.RGB.random().call(a);
 	}
+	
+	@Test
+	public void test2() {
+		
+		RgbMember rgb = G.RGB.construct();
+		G.RGB.minBound().call(rgb);
+		for (int r = 0; r < 256; r++) {
+			for (int g = 0; g < 256; g++) {
+				for (int b = 0; b < 256; b++) {
+					assertEquals(r, rgb.r());
+					assertEquals(g, rgb.g());
+					assertEquals(b, rgb.b());
+					G.RGB.succ().call(rgb, rgb);
+				}
+			}
+		}
+		assertEquals(0, rgb.r());
+		assertEquals(0, rgb.g());
+		assertEquals(0, rgb.b());
+	}
 
+	
+	@Test
+	public void test3() {
+		
+		RgbMember rgb = G.RGB.construct();
+		G.RGB.maxBound().call(rgb);
+		for (int r = 0; r < 256; r++) {
+			for (int g = 0; g < 256; g++) {
+				for (int b = 0; b < 256; b++) {
+					assertEquals(255 - r, rgb.r());
+					assertEquals(255 - g, rgb.g());
+					assertEquals(255 - b, rgb.b());
+					G.RGB.pred().call(rgb, rgb);
+				}
+			}
+		}
+		assertEquals(255, rgb.r());
+		assertEquals(255, rgb.g());
+		assertEquals(255, rgb.b());
+	}
 }

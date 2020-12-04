@@ -67,7 +67,7 @@ public class RgbAlgebra
 	{
 		@Override
 		public Boolean call(RgbMember a, RgbMember b) {
-			return a.r() == b.r() && a.b() == b.b() && a.g() == b.g();
+			return a.r() == b.r() && a.g() == b.g() && a.b() == b.b();
 		}
 	};
 
@@ -205,24 +205,24 @@ public class RgbAlgebra
 		public void call(RgbMember a, RgbMember b) {
 			if (a.b() == 0) {
 				b.setB(255);
-				if (a.r() == 0) {
-					b.setR(255);
-					if (a.g() == 0) {
-						b.setG(255);
+				if (a.g() == 0) {
+					b.setG(255);
+					if (a.r() == 0) {
+						b.setR(255);
 					}
 					else {
-						b.setG(a.g() - 1);
+						b.setR(a.r() - 1);
 					}
 				}
 				else {
-					b.setR(a.r() - 1);
-					b.setG(a.g());
+					b.setG(a.g() - 1);
+					b.setR(a.r());
 				}
 			}
 			else {
 				b.setB(a.b() - 1);
-				b.setR(a.r());
 				b.setG(a.g());
+				b.setR(a.r());
 			}
 		}
 	};
@@ -239,24 +239,24 @@ public class RgbAlgebra
 		public void call(RgbMember a, RgbMember b) {
 			if (a.b() == 255) {
 				b.setB(0);
-				if (a.r() == 255) {
-					b.setR(0);
-					if (a.g() == 255) {
-						b.setG(0);
+				if (a.g() == 255) {
+					b.setG(0);
+					if (a.r() == 255) {
+						b.setR(0);
 					}
 					else {
-						b.setG(a.g() + 1);
+						b.setR(a.r() + 1);
 					}
 				}
 				else {
-					b.setR(a.r() + 1);
-					b.setG(a.g());
+					b.setG(a.g() + 1);
+					b.setR(a.r());
 				}
 			}
 			else {
 				b.setB(a.b() + 1);
-				b.setR(a.r());
 				b.setG(a.g());
+				b.setR(a.r());
 			}
 		}
 	};
