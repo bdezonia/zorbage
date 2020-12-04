@@ -127,6 +127,7 @@ class Tensors {
 		G.DBL_TEN.isNotEqual();
 		G.DBL_TEN.isInfinite();
 		G.DBL_TEN.isNaN();
+		G.DBL_TEN.isUnity();
 		G.DBL_TEN.isZero();
 
 		// set values: infinity, nan, identity, zero

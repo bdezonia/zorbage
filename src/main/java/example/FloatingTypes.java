@@ -175,6 +175,7 @@ class FloatingTypes
 		G.HLF.isLessEqual();
 		G.HLF.isNaN();
 		G.HLF.isInfinite();
+		G.HLF.isUnity();
 		G.HLF.isZero();
 		G.HLF.max();
 		G.HLF.min();
@@ -291,6 +292,7 @@ class FloatingTypes
 		G.FLT.isLessEqual();
 		G.FLT.isNaN();
 		G.FLT.isInfinite();
+		G.FLT.isUnity();
 		G.FLT.isZero();
 		G.FLT.max();
 		G.FLT.min();
@@ -407,6 +409,7 @@ class FloatingTypes
 		G.DBL.isLessEqual();
 		G.DBL.isNaN();
 		G.DBL.isInfinite();
+		G.DBL.isUnity();
 		G.DBL.isZero();
 		G.DBL.max();
 		G.DBL.min();
@@ -518,6 +521,7 @@ class FloatingTypes
 		G.HP.isGreaterEqual();
 		G.HP.isLess();
 		G.HP.isLessEqual();
+		G.HP.isUnity();
 		G.HP.isZero();
 		G.HP.max();
 		G.HP.min();

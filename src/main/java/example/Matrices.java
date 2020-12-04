@@ -126,6 +126,7 @@ class Matrices {
 		G.HLF_MAT.isNotEqual();
 		G.HLF_MAT.isInfinite();
 		G.HLF_MAT.isNaN();
+		G.HLF_MAT.isUnity();
 		G.HLF_MAT.isZero();
 
 		// set values: infinity, nan, identity, zero

@@ -96,6 +96,7 @@ class IntegerTypes {
 		G.INT12.isGreaterEqual();
 		G.INT12.isLess();
 		G.INT12.isLessEqual();
+		G.INT12.isUnity();
 		G.INT12.isZero();
 		G.INT12.signum();
 		G.INT12.compare();

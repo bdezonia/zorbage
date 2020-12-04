@@ -96,6 +96,7 @@ class MiscTypes {
 		G.RAT.isLess();
 		G.RAT.isLessEqual();
 		G.RAT.isNotEqual();
+		G.RAT.isUnity();
 		G.RAT.isZero();
 		G.RAT.min();  // return the minimum of two values
 		G.RAT.max();  // return the maximum of two values
@@ -200,6 +201,7 @@ class MiscTypes {
 		G.BOOL.isLess();
 		G.BOOL.isLessEqual();
 		G.BOOL.isNotEqual();
+		G.BOOL.isUnity();
 		G.BOOL.isZero();
 		G.BOOL.compare();
 		G.BOOL.signum();

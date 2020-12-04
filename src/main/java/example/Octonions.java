@@ -160,6 +160,7 @@ class Octonions {
 		G.ODBL.isNotEqual();
 		G.ODBL.isInfinite();
 		G.ODBL.isNaN();
+		G.ODBL.isUnity();
 		G.ODBL.isZero();
 
 		// set to one or inf or nan or zero or random value

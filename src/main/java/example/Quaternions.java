@@ -150,6 +150,7 @@ class Quaternions {
 		G.QDBL.isNotEqual();
 		G.QDBL.isInfinite();
 		G.QDBL.isNaN();
+		G.QDBL.isUnity();
 		G.QDBL.isZero();
 
 		// set to one or inf or nan or zero or random value

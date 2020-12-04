@@ -144,6 +144,7 @@ class Complexes {
 		G.CDBL.isNotEqual();
 		G.CDBL.isInfinite();
 		G.CDBL.isNaN();
+		G.CDBL.isUnity();
 		G.CDBL.isZero();
 
 		// set to one or inf or nan or zero or random value
@@ -263,6 +264,7 @@ class Complexes {
 		G.GAUSS64.isNotEqual();
 		G.GAUSS64.isEven();
 		G.GAUSS64.isOdd();
+		G.GAUSS64.isUnity();
 		G.GAUSS64.isZero();
 
 		// basic mathematical operations
