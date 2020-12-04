@@ -59,7 +59,7 @@ public class ArgbAlgebra
 
 	@Override
 	public ArgbMember construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		return new ArgbMember(str);
 	}
 
 	private final Function2<Boolean, ArgbMember, ArgbMember> EQ =

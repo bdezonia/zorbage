@@ -27,8 +27,11 @@
 package nom.bdezonia.zorbage.type.rgb;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
+import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
 
 /**
  * 
@@ -45,6 +48,21 @@ public class RgbMember
 	}
 	
 	public RgbMember(int r, int g, int b) {
+		setR(r);
+		setG(g);
+		setB(b);
+	}
+	
+	public RgbMember(String str) {
+		TensorStringRepresentation rep = new TensorStringRepresentation(str);
+		long valueCount = rep.firstVectorDimension();
+		BigList<OctonionRepresentation> values = rep.firstVectorValues();
+		int r = 0;
+		int g = 0;
+		int b = 0;
+		if (valueCount > 0) r = values.get(0).r().intValue();
+		if (valueCount > 1) g = values.get(1).r().intValue();
+		if (valueCount > 2) b = values.get(2).r().intValue();
 		setR(r);
 		setG(g);
 		setB(b);

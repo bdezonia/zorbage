@@ -59,7 +59,7 @@ public class RgbAlgebra
 
 	@Override
 	public RgbMember construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		return new RgbMember(str);
 	}
 
 	private final Function2<Boolean, RgbMember, RgbMember> EQ =
