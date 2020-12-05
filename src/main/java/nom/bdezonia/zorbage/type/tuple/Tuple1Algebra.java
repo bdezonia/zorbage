@@ -61,7 +61,9 @@ public class Tuple1Algebra<AA extends Algebra<AA,A>, A>
 
 	@Override
 	public Tuple1<A> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		return new Tuple1<A>(a);
 	}
 
 	private final Function2<Boolean, Tuple1<A>, Tuple1<A>> EQ =

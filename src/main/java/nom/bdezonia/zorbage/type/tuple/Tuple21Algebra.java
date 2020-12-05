@@ -80,10 +80,10 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 	private final QQ algQ;
 	private final RR algR;
 	private final SS algS;
-	private final TT algB0;
+	private final TT algT;
 	private final UU algU;
 	
-	public Tuple21Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS, TT algB0, UU algU) {
+	public Tuple21Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS, TT algT, UU algU) {
 		this.algA = algA;
 		this.algB = algB;
 		this.algC = algC;
@@ -103,7 +103,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 		this.algQ = algQ;
 		this.algR = algR;
 		this.algS = algS;
-		this.algB0 = algB0;
+		this.algT = algT;
 		this.algU = algU;
 	}
 	
@@ -129,7 +129,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 				algQ.construct(),
 				algR.construct(),
 				algS.construct(),
-				algB0.construct(),
+				algT.construct(),
 				algU.construct());
 	}
 
@@ -142,7 +142,29 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 
 	@Override
 	public Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		B b = (elements.length > 1 ? algB.construct(elements[1]) : algB.construct());
+		C c = (elements.length > 2 ? algC.construct(elements[2]) : algC.construct());
+		D d = (elements.length > 3 ? algD.construct(elements[3]) : algD.construct());
+		E e = (elements.length > 4 ? algE.construct(elements[4]) : algE.construct());
+		F f = (elements.length > 5 ? algF.construct(elements[5]) : algF.construct());
+		G g = (elements.length > 6 ? algG.construct(elements[6]) : algG.construct());
+		H h = (elements.length > 7 ? algH.construct(elements[7]) : algH.construct());
+		I i = (elements.length > 8 ? algI.construct(elements[8]) : algI.construct());
+		J j = (elements.length > 9 ? algJ.construct(elements[9]) : algJ.construct());
+		K k = (elements.length > 10 ? algK.construct(elements[10]) : algK.construct());
+		L l = (elements.length > 11 ? algL.construct(elements[11]) : algL.construct());
+		M m = (elements.length > 12 ? algM.construct(elements[12]) : algM.construct());
+		N n = (elements.length > 13 ? algN.construct(elements[13]) : algN.construct());
+		O o = (elements.length > 14 ? algO.construct(elements[14]) : algO.construct());
+		P p = (elements.length > 15 ? algP.construct(elements[15]) : algP.construct());
+		Q q = (elements.length > 16 ? algQ.construct(elements[16]) : algQ.construct());
+		R r = (elements.length > 17 ? algR.construct(elements[17]) : algR.construct());
+		S s = (elements.length > 18 ? algS.construct(elements[18]) : algS.construct());
+		T t = (elements.length > 19 ? algT.construct(elements[19]) : algT.construct());
+		U u = (elements.length > 20 ? algU.construct(elements[20]) : algU.construct());
+		return new Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U>(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u);
 	}
 
 	private final Function2<Boolean, Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U>, Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U>> EQ =
@@ -169,7 +191,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 					algQ.isEqual().call(a.q(), b.q()) &&
 					algR.isEqual().call(a.r(), b.r()) &&
 					algS.isEqual().call(a.s(), b.s()) &&
-					algB0.isEqual().call(a.t(), b.t()) &&
+					algT.isEqual().call(a.t(), b.t()) &&
 					algU.isEqual().call(a.u(), b.u());
 		}
 	};
@@ -217,7 +239,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 			algQ.assign().call(a.q(), b.q());
 			algR.assign().call(a.r(), b.r());
 			algS.assign().call(a.s(), b.s());
-			algB0.assign().call(a.t(), b.t());
+			algT.assign().call(a.t(), b.t());
 			algU.assign().call(a.u(), b.u());
 		}
 	};
@@ -251,7 +273,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 					algQ.isZero().call(a.q()) &&
 					algR.isZero().call(a.r()) &&
 					algS.isZero().call(a.s()) &&
-					algB0.isZero().call(a.t()) &&
+					algT.isZero().call(a.t()) &&
 					algU.isZero().call(a.u());
 		}
 	};
@@ -285,7 +307,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 			algQ.zero().call(a.q());
 			algR.zero().call(a.r());
 			algS.zero().call(a.s());
-			algB0.zero().call(a.t());
+			algT.zero().call(a.t());
 			algU.zero().call(a.u());
 		}
 	};

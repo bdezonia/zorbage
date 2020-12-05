@@ -70,7 +70,11 @@ public class Tuple3Algebra<AA extends Algebra<AA,A>, A,
 
 	@Override
 	public Tuple3<A,B,C> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		B b = (elements.length > 1 ? algB.construct(elements[1]) : algB.construct());
+		C c = (elements.length > 2 ? algC.construct(elements[2]) : algC.construct());
+		return new Tuple3<A,B,C>(a,b,c);
 	}
 
 	private final Function2<Boolean, Tuple3<A,B,C>, Tuple3<A,B,C>> EQ =

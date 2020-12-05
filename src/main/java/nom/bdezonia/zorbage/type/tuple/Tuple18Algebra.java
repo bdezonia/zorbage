@@ -130,7 +130,26 @@ public class Tuple18Algebra<AA extends Algebra<AA,A>, A,
 
 	@Override
 	public Tuple18<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		B b = (elements.length > 1 ? algB.construct(elements[1]) : algB.construct());
+		C c = (elements.length > 2 ? algC.construct(elements[2]) : algC.construct());
+		D d = (elements.length > 3 ? algD.construct(elements[3]) : algD.construct());
+		E e = (elements.length > 4 ? algE.construct(elements[4]) : algE.construct());
+		F f = (elements.length > 5 ? algF.construct(elements[5]) : algF.construct());
+		G g = (elements.length > 6 ? algG.construct(elements[6]) : algG.construct());
+		H h = (elements.length > 7 ? algH.construct(elements[7]) : algH.construct());
+		I i = (elements.length > 8 ? algI.construct(elements[8]) : algI.construct());
+		J j = (elements.length > 9 ? algJ.construct(elements[9]) : algJ.construct());
+		K k = (elements.length > 10 ? algK.construct(elements[10]) : algK.construct());
+		L l = (elements.length > 11 ? algL.construct(elements[11]) : algL.construct());
+		M m = (elements.length > 12 ? algM.construct(elements[12]) : algM.construct());
+		N n = (elements.length > 13 ? algN.construct(elements[13]) : algN.construct());
+		O o = (elements.length > 14 ? algO.construct(elements[14]) : algO.construct());
+		P p = (elements.length > 15 ? algP.construct(elements[15]) : algP.construct());
+		Q q = (elements.length > 16 ? algQ.construct(elements[16]) : algQ.construct());
+		R r = (elements.length > 17 ? algR.construct(elements[17]) : algR.construct());
+		return new Tuple18<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R>(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r);
 	}
 
 	private final Function2<Boolean, Tuple18<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R>, Tuple18<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R>> EQ =

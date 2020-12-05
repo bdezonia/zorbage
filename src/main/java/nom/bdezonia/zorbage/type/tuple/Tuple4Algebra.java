@@ -74,7 +74,12 @@ public class Tuple4Algebra<AA extends Algebra<AA,A>, A,
 
 	@Override
 	public Tuple4<A,B,C,D> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		B b = (elements.length > 1 ? algB.construct(elements[1]) : algB.construct());
+		C c = (elements.length > 2 ? algC.construct(elements[2]) : algC.construct());
+		D d = (elements.length > 3 ? algD.construct(elements[3]) : algD.construct());
+		return new Tuple4<A,B,C,D>(a,b,c,d);
 	}
 
 	private final Function2<Boolean, Tuple4<A,B,C,D>, Tuple4<A,B,C,D>> EQ =

@@ -102,7 +102,19 @@ public class Tuple11Algebra<AA extends Algebra<AA,A>, A,
 
 	@Override
 	public Tuple11<A,B,C,D,E,F,G,H,I,J,K> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		B b = (elements.length > 1 ? algB.construct(elements[1]) : algB.construct());
+		C c = (elements.length > 2 ? algC.construct(elements[2]) : algC.construct());
+		D d = (elements.length > 3 ? algD.construct(elements[3]) : algD.construct());
+		E e = (elements.length > 4 ? algE.construct(elements[4]) : algE.construct());
+		F f = (elements.length > 5 ? algF.construct(elements[5]) : algF.construct());
+		G g = (elements.length > 6 ? algG.construct(elements[6]) : algG.construct());
+		H h = (elements.length > 7 ? algH.construct(elements[7]) : algH.construct());
+		I i = (elements.length > 8 ? algI.construct(elements[8]) : algI.construct());
+		J j = (elements.length > 9 ? algJ.construct(elements[9]) : algJ.construct());
+		K k = (elements.length > 10 ? algK.construct(elements[10]) : algK.construct());
+		return new Tuple11<A,B,C,D,E,F,G,H,I,J,K>(a,b,c,d,e,f,g,h,i,j,k);
 	}
 
 	private final Function2<Boolean, Tuple11<A,B,C,D,E,F,G,H,I,J,K>, Tuple11<A,B,C,D,E,F,G,H,I,J,K>> EQ =

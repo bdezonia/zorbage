@@ -63,7 +63,10 @@ public class Tuple2Algebra<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>
 
 	@Override
 	public Tuple2<A,B> construct(String str) {
-		throw new IllegalArgumentException("to be implemented");
+		String[] elements = str.split(":");
+		A a = (elements.length > 0 ? algA.construct(elements[0]) : algA.construct());
+		B b = (elements.length > 1 ? algB.construct(elements[1]) : algB.construct());
+		return new Tuple2<A,B>(a,b);
 	}
 
 	private final Function2<Boolean, Tuple2<A,B>, Tuple2<A,B>> EQ =
