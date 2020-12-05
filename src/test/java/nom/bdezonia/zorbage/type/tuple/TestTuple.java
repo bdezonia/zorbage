@@ -53,8 +53,10 @@ public class TestTuple {
 	@Test
 	public void test1() {
 		
-		Tuple4<Float64Member,SignedInt4Member,BooleanMember,UnsignedInt128Member> tuple =
-				new Tuple4Algebra<Float64Algebra,Float64Member,SignedInt4Algebra,SignedInt4Member,BooleanAlgebra,BooleanMember,UnsignedInt128Algebra,UnsignedInt128Member>(G.DBL,G.INT4,G.BOOL,G.UINT128).construct("14.2:-2:true");
+		Tuple4Algebra<Float64Algebra,Float64Member,SignedInt4Algebra,SignedInt4Member,BooleanAlgebra,BooleanMember,UnsignedInt128Algebra,UnsignedInt128Member>
+			alg = new Tuple4Algebra<>(G.DBL,G.INT4,G.BOOL,G.UINT128);
+		
+		Tuple4<Float64Member,SignedInt4Member,BooleanMember,UnsignedInt128Member> tuple = alg.construct("14.2:-2:true");
 		
 		assertEquals(14.2, tuple.a().v(), 0);
 		assertEquals(-2, tuple.b().v());
