@@ -24,7 +24,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.rgb;
+package nom.bdezonia.zorbage.type.color;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.misc.BigList;
@@ -38,42 +38,34 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
  * @author Barry DeZonia
  *
  */
-public class ArgbMember
-	implements ByteCoder, Allocatable<ArgbMember>, Duplicatable<ArgbMember>,
-		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>
+public class RgbMember
+	implements ByteCoder, Allocatable<RgbMember>, Duplicatable<RgbMember>,
+				Settable<RgbMember>, Gettable<RgbMember>, NumberMember<RgbMember>
 {
-	private byte a, r, g, b;
+	private byte r, g, b;
 	
-	public ArgbMember() {
+	public RgbMember() {
 	}
 	
-	public ArgbMember(int a, int r, int g, int b) {
-		setA(a);
+	public RgbMember(int r, int g, int b) {
 		setR(r);
 		setG(g);
 		setB(b);
 	}
 	
-	
-	public ArgbMember(String str) {
+	public RgbMember(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		long valueCount = rep.firstVectorDimension();
 		BigList<OctonionRepresentation> values = rep.firstVectorValues();
-		int a = 0;
 		int r = 0;
 		int g = 0;
 		int b = 0;
-		if (valueCount > 0) a = values.get(0).r().intValue();
-		if (valueCount > 1) r = values.get(1).r().intValue();
-		if (valueCount > 2) g = values.get(2).r().intValue();
-		if (valueCount > 3) b = values.get(3).r().intValue();
-		setA(a);
+		if (valueCount > 0) r = values.get(0).r().intValue();
+		if (valueCount > 1) g = values.get(1).r().intValue();
+		if (valueCount > 2) b = values.get(2).r().intValue();
 		setR(r);
 		setG(g);
 		setB(b);
-	}
-	public void setA(int a) {
-		this.a = (byte) (a & 0xff);
 	}
 	
 	public void setR(int r) {
@@ -86,10 +78,6 @@ public class ArgbMember
 	
 	public void setB(int b) {
 		this.b = (byte) (b & 0xff);
-	}
-	
-	public int a() {
-		return a & 0xff;
 	}
 	
 	public int r() {
@@ -106,23 +94,21 @@ public class ArgbMember
 
 	@Override
 	public int byteCount() {
-		return 4;
+		return 3;
 	}
 
 	@Override
 	public void fromByteArray(byte[] arr, int index) {
-		a = arr[index];
-		r = arr[index+1];
-		g = arr[index+2];
-		b = arr[index+3];
+		r = arr[index];
+		g = arr[index+1];
+		b = arr[index+2];
 	}
 
 	@Override
 	public void toByteArray(byte[] arr, int index) {
-		arr[index] = a;
-		arr[index+1] = r;
-		arr[index+2] = g;
-		arr[index+3] = b;
+		arr[index] = r;
+		arr[index+1] = g;
+		arr[index+2] = b;
 	}
 
 	@Override
@@ -137,47 +123,44 @@ public class ArgbMember
 	}
 
 	@Override
-	public void getV(ArgbMember value) {
+	public void getV(RgbMember value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(ArgbMember value) {
+	public void setV(RgbMember value) {
 		set(value);
 	}
 
 	@Override
-	public void get(ArgbMember other) {
-		other.a = a;
+	public void get(RgbMember other) {
 		other.r = r;
 		other.g = g;
 		other.b = b;
 	}
 
 	@Override
-	public void set(ArgbMember other) {
-		a = other.a;
+	public void set(RgbMember other) {
 		r = other.r;
 		g = other.g;
 		b = other.b;
 	}
 
 	@Override
-	public ArgbMember duplicate() {
-		ArgbMember val = allocate();
+	public RgbMember duplicate() {
+		RgbMember val = allocate();
 		get(val);
 		return val;
 	}
 
 	@Override
-	public ArgbMember allocate() {
-		return new ArgbMember();
+	public RgbMember allocate() {
+		return new RgbMember();
 	}
 
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = Hasher.PRIME * v + Hasher.hashCode(a);
 		v = Hasher.PRIME * v + Hasher.hashCode(r);
 		v = Hasher.PRIME * v + Hasher.hashCode(g);
 		v = Hasher.PRIME * v + Hasher.hashCode(b);
@@ -188,8 +171,8 @@ public class ArgbMember
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o instanceof ArgbMember) {
-			return G.ARGB.isEqual().call(this, (ArgbMember) o);
+		if (o instanceof RgbMember) {
+			return G.RGB.isEqual().call(this, (RgbMember) o);
 		}
 		return false;
 	}

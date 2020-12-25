@@ -24,11 +24,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package nom.bdezonia.zorbage.type.rgb;
+package nom.bdezonia.zorbage.type.color;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.type.color.ArgbMember;
 
 /**
  * 

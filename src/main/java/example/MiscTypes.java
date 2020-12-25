@@ -31,10 +31,10 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.CharAlgebra;
 import nom.bdezonia.zorbage.type.character.CharMember;
+import nom.bdezonia.zorbage.type.color.ArgbMember;
+import nom.bdezonia.zorbage.type.color.RgbMember;
 import nom.bdezonia.zorbage.type.point.Point;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
-import nom.bdezonia.zorbage.type.rgb.ArgbMember;
-import nom.bdezonia.zorbage.type.rgb.RgbMember;
 import nom.bdezonia.zorbage.type.string.FixedStringMember;
 import nom.bdezonia.zorbage.type.string.StringMember;
 
