@@ -61,9 +61,9 @@ public class CieLabMember
 		double l = 0;
 		double a = 0;
 		double b = 0;
-		if (valueCount > 0) l = values.get(0).r().intValue();
-		if (valueCount > 1) a = values.get(1).r().intValue();
-		if (valueCount > 2) b = values.get(2).r().intValue();
+		if (valueCount > 0) l = values.get(0).r().doubleValue();
+		if (valueCount > 1) a = values.get(1).r().doubleValue();
+		if (valueCount > 2) b = values.get(2).r().doubleValue();
 		setL(l);
 		setA(a);
 		setB(b);
