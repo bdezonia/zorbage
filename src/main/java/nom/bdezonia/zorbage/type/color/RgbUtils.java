@@ -68,5 +68,107 @@ public class RgbUtils {
 
 		return (int) ((1-t)*a1 + t*a2);
 	}
-	
+
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static int a(int color) {
+		return (color & 0xff000000) >>> 24;
+	}
+
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static int r(int color) {
+		return (color & 0x00ff0000) >> 16;
+	}
+
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static int g(int color) {
+		return (color & 0x0000ff00) >> 8;
+	}
+
+	/**
+	 * 
+	 * @param color
+	 * @return
+	 */
+	public static int b(int color) {
+		return (color & 0x000000ff) >> 0;
+	}
+
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
+	public static int a_enc(int v) {
+		if (v < 0) v = 0;
+		if (v > 255) v = 255;
+		return v << 24;
+	}
+
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
+	public static int r_enc(int v) {
+		if (v < 0) v = 0;
+		if (v > 255) v = 255;
+		return v << 16;
+	}
+
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
+	public static int g_enc(int v) {
+		if (v < 0) v = 0;
+		if (v > 255) v = 255;
+		return v << 8;
+	}
+
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
+	public static int b_enc(int v) {
+		if (v < 0) v = 0;
+		if (v > 255) v = 255;
+		return v;
+	}
+
+	/**
+	 * 
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return
+	 */
+	public static int rgb(int r, int g, int b) {
+		return r_enc(r) | g_enc(g) | b_enc(b);
+	}
+
+	/**
+	 * 
+	 * @param a
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return
+	 */
+	public static int argb(int a, int r, int g, int b) {
+		return a_enc(a) | r_enc(r) | g_enc(g) | b_enc(b);
+	}
 }

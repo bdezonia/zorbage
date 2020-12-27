@@ -23,6 +23,7 @@ import nom.bdezonia.zorbage.algorithm.FFT;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.type.color.RgbUtils;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 
 /**
@@ -69,9 +70,9 @@ public class Main {
 		for (int r = 0, i = 0; r < img.getHeight(); r++) {
 			for (int c = 0; c < img.getWidth(); c++, i++) {
 				int rgb = img.getRGB(c, r);
-				int R = (rgb & 0x00ff0000) >> 16;
-				int G = (rgb & 0x0000ff00) >> 8;
-				int B = (rgb & 0x000000ff) >> 0;
+				int R = RgbUtils.r(rgb);
+				int G = RgbUtils.g(rgb);
+				int B = RgbUtils.b(rgb);
 				double luminance = 0.2126*R + 0.7152*G + 0.0722*B;
 				value.setR(luminance);
 				value.setI(0);
@@ -99,13 +100,8 @@ public class Main {
 			outData.get(i, value);
 			int scaledR = (int) Math.round(255.0 * (value.r() - min) / (max - min));
 			int scaledI = (int) Math.round(255.0 * (value.i() - min) / (max - min));
-			// deal with outliers
-			if (scaledR < 0) scaledR = 0;
-			if (scaledR > 255) scaledR = 255;
-			if (scaledI < 0) scaledI = 0;
-			if (scaledI > 255) scaledI = 255;
-			int rArgb = (0x7f000000) | (scaledR << 16) | (scaledR << 8) | (scaledR << 0);
-			int iArgb = (0x7f000000) | (scaledI << 16) | (scaledI << 8) | (scaledI << 0);
+			int rArgb = RgbUtils.argb(0x7f, scaledR, scaledR, scaledR);
+			int iArgb = RgbUtils.argb(0x7f, scaledI, scaledI, scaledI);
 			planeR.setRGB(c, r, rArgb);
 			planeI.setRGB(c, r, iArgb);
 			c++;

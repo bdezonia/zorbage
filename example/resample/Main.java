@@ -28,6 +28,7 @@ import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.oob.nd.MirrorNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.tuple.Tuple3;
+import nom.bdezonia.zorbage.type.color.RgbUtils;
 import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
@@ -89,9 +90,9 @@ public class Main {
 			for (int c = 0; c < cols; c++) {
 				idx.set(0, c);
 				int rgb = in.getRGB(c, r);
-				int R = (rgb & 0xff0000) >> 16;
-				int G = (rgb & 0x00ff00) >> 8;
-				int B = (rgb & 0x0000ff) >> 0;
+				int R = RgbUtils.r(rgb);
+				int G = RgbUtils.g(rgb);
+				int B = RgbUtils.b(rgb);
 				value.setV(R);
 				rs.set(idx, value);
 				value.setV(G);
@@ -115,24 +116,14 @@ public class Main {
 		for (int r = 0; r < rows; r++) {
 			idx.set(1, r);
 			for (int c = 0; c < cols; c++) {
-				int component = 0;
 				int rgb = 0;
 				idx.set(0, c);
 				rs.get(idx, value);
-				component = (int) Math.round(value.v());
-				if (component < 0) component = 0;
-				if (component > 255) component = 255;
-				rgb = ((component << 16) & 0xff0000);
+				rgb |= RgbUtils.r_enc((int) Math.round(value.v()));
 				gs.get(idx, value);
-				component = (int) Math.round(value.v());
-				if (component < 0) component = 0;
-				if (component > 255) component = 255;
-				rgb |= (component << 8) & 0x00ff00;
+				rgb |= RgbUtils.g_enc((int) Math.round(value.v()));
 				bs.get(idx, value);
-				component = (int) Math.round(value.v());
-				if (component < 0) component = 0;
-				if (component > 255) component = 255;
-				rgb |= (component << 0) & 0x0000ff;
+				rgb |= RgbUtils.b_enc((int) Math.round(value.v()));
 				img.setRGB(c, r, rgb);
 			}
 		}
