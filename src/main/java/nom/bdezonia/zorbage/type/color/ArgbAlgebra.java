@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.ColorMethods;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
 
@@ -44,7 +45,7 @@ import nom.bdezonia.zorbage.algebra.Random;
  *
  */
 public class ArgbAlgebra
-	implements Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>, PredSucc<ArgbMember>
+	implements Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>, PredSucc<ArgbMember>, ColorMethods<Double, ArgbMember>
 {
 
 	@Override
@@ -199,6 +200,7 @@ public class ArgbAlgebra
 		}
 	};
 
+	@Override
 	public Procedure4<Double, ArgbMember, ArgbMember, ArgbMember> blend() {
 		return BLEND;
 	}
