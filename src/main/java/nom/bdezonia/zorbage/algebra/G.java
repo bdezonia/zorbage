@@ -29,6 +29,7 @@ package nom.bdezonia.zorbage.algebra;
 import nom.bdezonia.zorbage.type.bool.BooleanAlgebra;
 import nom.bdezonia.zorbage.type.character.CharAlgebra;
 import nom.bdezonia.zorbage.type.color.ArgbAlgebra;
+import nom.bdezonia.zorbage.type.color.CieLabAlgebra;
 import nom.bdezonia.zorbage.type.color.RgbAlgebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProduct;
@@ -169,6 +170,7 @@ public class G {
 
 	public static final ArgbAlgebra ARGB = new ArgbAlgebra();
 	public static final RgbAlgebra RGB = new RgbAlgebra();
+	public static final CieLabAlgebra LAB = new CieLabAlgebra();
 
 	public static final Float16Algebra HLF = new Float16Algebra();
 	public static final Float16Vector HLF_VEC = new Float16Vector();
