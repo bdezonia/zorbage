@@ -680,8 +680,6 @@ public final class UnsignedInt8Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt8Member) {
 			return G.UINT8.isEqual().call(this, (UnsignedInt8Member) o);
 		}

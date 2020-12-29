@@ -908,8 +908,6 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexHighPrecisionCartesianTensorProductMember) {
 			return G.CHP_TEN.isEqual().call(this, (ComplexHighPrecisionCartesianTensorProductMember) o);
 		}

@@ -1158,8 +1158,6 @@ public final class QuaternionFloat64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionFloat64Member) {
 			return G.QDBL.isEqual().call(this, (QuaternionFloat64Member) o);
 		}

@@ -673,8 +673,6 @@ public final class Float64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float64Member) {
 			return G.DBL.isEqual().call(this, (Float64Member) o);
 		}

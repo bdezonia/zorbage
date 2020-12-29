@@ -763,8 +763,6 @@ public final class ComplexFloat16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat16Member) {
 			return G.CHLF.isEqual().call(this, (ComplexFloat16Member) o);
 		}

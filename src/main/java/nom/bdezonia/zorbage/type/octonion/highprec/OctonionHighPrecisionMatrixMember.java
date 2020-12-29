@@ -2109,8 +2109,6 @@ public final class OctonionHighPrecisionMatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionHighPrecisionMatrixMember) {
 			return G.OHP_MAT.isEqual().call(this, (OctonionHighPrecisionMatrixMember) o);
 		}

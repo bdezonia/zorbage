@@ -675,8 +675,6 @@ public final class UnboundedIntMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnboundedIntMember) {
 			return G.UNBOUND.isEqual().call(this, (UnboundedIntMember) o);
 		}

@@ -939,8 +939,6 @@ public final class Float32VectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float32VectorMember) {
 			return G.FLT_VEC.isEqual().call(this, (Float32VectorMember) o);
 		}

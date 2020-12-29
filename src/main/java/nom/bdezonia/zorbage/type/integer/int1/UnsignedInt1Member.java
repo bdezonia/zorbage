@@ -702,8 +702,6 @@ public final class UnsignedInt1Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt1Member) {
 			return G.UINT1.isEqual().call(this, (UnsignedInt1Member) o);
 		}

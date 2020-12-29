@@ -673,8 +673,6 @@ public final class Float32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float32Member) {
 			return G.FLT.isEqual().call(this, (Float32Member) o);
 		}

@@ -768,8 +768,6 @@ public class GaussianInt64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof GaussianInt64Member) {
 			return G.GAUSS64.isEqual().call(this, (GaussianInt64Member) o);
 		}

@@ -1157,8 +1157,6 @@ public final class ComplexFloat32MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat32MatrixMember) {
 			return G.CFLT_MAT.isEqual().call(this, (ComplexFloat32MatrixMember) o);
 		}

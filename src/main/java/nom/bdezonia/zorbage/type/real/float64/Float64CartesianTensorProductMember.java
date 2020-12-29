@@ -803,8 +803,6 @@ public final class Float64CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float64CartesianTensorProductMember) {
 			return G.DBL_TEN.isEqual().call(this, (Float64CartesianTensorProductMember) o);
 		}

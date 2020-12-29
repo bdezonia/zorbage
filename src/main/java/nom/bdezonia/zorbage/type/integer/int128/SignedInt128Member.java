@@ -706,8 +706,6 @@ public final class SignedInt128Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt128Member) {
 			return G.INT128.isEqual().call(this, (SignedInt128Member) o);
 		}

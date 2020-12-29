@@ -822,8 +822,6 @@ public final class UnsignedInt9Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt9Member) {
 			return G.UINT9.isEqual().call(this, (UnsignedInt9Member) o);
 		}

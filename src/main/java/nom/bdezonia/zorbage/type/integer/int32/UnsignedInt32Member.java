@@ -678,8 +678,6 @@ public final class UnsignedInt32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt32Member) {
 			return G.UINT32.isEqual().call(this, (UnsignedInt32Member) o);
 		}

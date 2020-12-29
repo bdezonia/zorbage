@@ -169,8 +169,6 @@ public class RgbMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof RgbMember) {
 			return G.RGB.isEqual().call(this, (RgbMember) o);
 		}

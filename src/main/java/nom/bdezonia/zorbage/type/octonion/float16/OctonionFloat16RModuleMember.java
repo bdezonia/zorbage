@@ -1960,8 +1960,6 @@ public final class OctonionFloat16RModuleMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat16RModuleMember) {
 			return G.OHLF_RMOD.isEqual().call(this, (OctonionFloat16RModuleMember) o);
 		}

@@ -685,8 +685,6 @@ public final class UnsignedInt4Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt4Member) {
 			return G.UINT4.isEqual().call(this, (UnsignedInt4Member) o);
 		}

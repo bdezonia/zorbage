@@ -1834,8 +1834,6 @@ public final class OctonionFloat32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat32Member) {
 			return G.OFLT.isEqual().call(this, (OctonionFloat32Member) o);
 		}

@@ -679,8 +679,6 @@ public final class UnsignedInt16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt16Member) {
 			return G.UINT16.isEqual().call(this, (UnsignedInt16Member) o);
 		}

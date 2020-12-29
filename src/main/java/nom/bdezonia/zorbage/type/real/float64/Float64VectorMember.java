@@ -939,8 +939,6 @@ public final class Float64VectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float64VectorMember) {
 			return G.DBL_VEC.isEqual().call(this, (Float64VectorMember) o);
 		}

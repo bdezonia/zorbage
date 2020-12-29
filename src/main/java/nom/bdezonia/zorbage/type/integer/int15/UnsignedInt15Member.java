@@ -924,8 +924,6 @@ public final class UnsignedInt15Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt15Member) {
 			return G.UINT15.isEqual().call(this, (UnsignedInt15Member) o);
 		}

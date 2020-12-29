@@ -723,8 +723,6 @@ public final class SignedInt3Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt3Member) {
 			return G.INT3.isEqual().call(this, (SignedInt3Member) o);
 		}

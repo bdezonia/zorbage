@@ -939,8 +939,6 @@ public final class Float16VectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float16VectorMember) {
 			return G.HLF_VEC.isEqual().call(this, (Float16VectorMember) o);
 		}

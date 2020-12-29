@@ -176,8 +176,6 @@ public class CieLabMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof CieLabMember) {
 			return G.LAB.isEqual().call(this, (CieLabMember) o);
 		}

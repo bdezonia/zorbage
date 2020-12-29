@@ -722,8 +722,6 @@ public final class UnsignedInt3Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt3Member) {
 			return G.UINT3.isEqual().call(this, (UnsignedInt3Member) o);
 		}

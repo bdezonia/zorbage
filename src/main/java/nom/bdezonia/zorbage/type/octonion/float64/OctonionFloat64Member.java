@@ -1834,8 +1834,6 @@ public final class OctonionFloat64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat64Member) {
 			return G.ODBL.isEqual().call(this, (OctonionFloat64Member) o);
 		}

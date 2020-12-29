@@ -1709,8 +1709,6 @@ public final class OctonionFloat16CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat16CartesianTensorProductMember) {
 			return G.OHLF_TEN.isEqual().call(this, (OctonionFloat16CartesianTensorProductMember) o);
 		}

@@ -1157,8 +1157,6 @@ public final class ComplexFloat16MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat16MatrixMember) {
 			return G.CHLF_MAT.isEqual().call(this, (ComplexFloat16MatrixMember) o);
 		}

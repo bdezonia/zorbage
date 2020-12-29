@@ -200,8 +200,6 @@ public final class FixedStringMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof FixedStringMember) {
 			return G.FSTRING.isEqual().call(this, (FixedStringMember) o);
 		}

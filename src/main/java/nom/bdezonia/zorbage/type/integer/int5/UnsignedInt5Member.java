@@ -756,8 +756,6 @@ public final class UnsignedInt5Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt5Member) {
 			return G.UINT5.isEqual().call(this, (UnsignedInt5Member) o);
 		}

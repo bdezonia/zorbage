@@ -1836,8 +1836,6 @@ public final class OctonionFloat16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat16Member) {
 			return G.OHLF.isEqual().call(this, (OctonionFloat16Member) o);
 		}

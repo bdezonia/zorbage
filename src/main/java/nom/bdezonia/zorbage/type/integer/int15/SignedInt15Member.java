@@ -928,8 +928,6 @@ public final class SignedInt15Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt15Member) {
 			return G.INT15.isEqual().call(this, (SignedInt15Member) o);
 		}

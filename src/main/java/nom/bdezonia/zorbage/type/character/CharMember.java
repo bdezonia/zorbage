@@ -121,8 +121,6 @@ public class CharMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof CharMember) {
 			return G.CHAR.isEqual().call(this, (CharMember) o);
 		}

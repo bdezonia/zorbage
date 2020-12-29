@@ -709,8 +709,6 @@ public final class BooleanMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof BooleanMember) {
 			return G.BOOL.isEqual().call(this, (BooleanMember) o);
 		}

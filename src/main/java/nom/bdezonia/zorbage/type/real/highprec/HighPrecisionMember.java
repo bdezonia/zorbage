@@ -672,8 +672,6 @@ public final class HighPrecisionMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof HighPrecisionMember) {
 			return G.HP.isEqual().call(this, (HighPrecisionMember) o);
 		}

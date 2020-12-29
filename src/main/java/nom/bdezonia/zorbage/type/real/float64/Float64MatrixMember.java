@@ -1088,8 +1088,6 @@ public final class Float64MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float64MatrixMember) {
 			return G.DBL_MAT.isEqual().call(this, (Float64MatrixMember) o);
 		}

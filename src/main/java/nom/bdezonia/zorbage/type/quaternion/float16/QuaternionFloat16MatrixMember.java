@@ -1517,8 +1517,6 @@ public final class QuaternionFloat16MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionFloat16MatrixMember) {
 			return G.QHLF_MAT.isEqual().call(this, (QuaternionFloat16MatrixMember) o);
 		}

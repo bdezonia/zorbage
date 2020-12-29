@@ -1007,8 +1007,6 @@ public final class ComplexFloat64VectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat64VectorMember) {
 			return G.CDBL_VEC.isEqual().call(this, (ComplexFloat64VectorMember) o);
 		}

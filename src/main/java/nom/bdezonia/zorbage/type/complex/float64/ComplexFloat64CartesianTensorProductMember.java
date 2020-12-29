@@ -908,8 +908,6 @@ public final class ComplexFloat64CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat64CartesianTensorProductMember) {
 			return G.CDBL_TEN.isEqual().call(this, (ComplexFloat64CartesianTensorProductMember) o);
 		}

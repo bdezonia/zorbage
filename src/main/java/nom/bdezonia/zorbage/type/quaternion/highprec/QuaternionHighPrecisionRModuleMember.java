@@ -1368,8 +1368,6 @@ public final class QuaternionHighPrecisionRModuleMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionHighPrecisionRModuleMember) {
 			return G.QHP_RMOD.isEqual().call(this, (QuaternionHighPrecisionRModuleMember) o);
 		}

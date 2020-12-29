@@ -186,8 +186,6 @@ public class ArgbMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ArgbMember) {
 			return G.ARGB.isEqual().call(this, (ArgbMember) o);
 		}

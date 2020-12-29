@@ -760,8 +760,6 @@ public final class ComplexFloat64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat64Member) {
 			return G.CDBL.isEqual().call(this, (ComplexFloat64Member) o);
 		}

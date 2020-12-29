@@ -1088,8 +1088,6 @@ public final class HighPrecisionMatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof HighPrecisionMatrixMember) {
 			return G.HP_MAT.isEqual().call(this, (HighPrecisionMatrixMember) o);
 		}

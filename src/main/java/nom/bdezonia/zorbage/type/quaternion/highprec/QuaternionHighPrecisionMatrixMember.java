@@ -1517,8 +1517,6 @@ public final class QuaternionHighPrecisionMatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionHighPrecisionMatrixMember) {
 			return G.QHP_MAT.isEqual().call(this, (QuaternionHighPrecisionMatrixMember) o);
 		}

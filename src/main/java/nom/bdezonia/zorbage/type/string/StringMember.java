@@ -96,8 +96,6 @@ public final class StringMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof StringMember) {
 			return G.STRING.isEqual().call(this, (StringMember) o);
 		}

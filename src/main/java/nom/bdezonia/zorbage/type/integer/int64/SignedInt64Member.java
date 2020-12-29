@@ -673,8 +673,6 @@ public final class SignedInt64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt64Member) {
 			return G.INT64.isEqual().call(this, (SignedInt64Member) o);
 		}

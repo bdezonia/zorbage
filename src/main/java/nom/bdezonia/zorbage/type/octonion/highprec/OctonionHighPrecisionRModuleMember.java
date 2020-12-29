@@ -1961,8 +1961,6 @@ public final class OctonionHighPrecisionRModuleMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionHighPrecisionRModuleMember) {
 			return G.OHP_RMOD.isEqual().call(this, (OctonionHighPrecisionRModuleMember) o);
 		}

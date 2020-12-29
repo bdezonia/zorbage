@@ -768,8 +768,6 @@ public class GaussianInt32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof GaussianInt32Member) {
 			return G.GAUSS32.isEqual().call(this, (GaussianInt32Member) o);
 		}

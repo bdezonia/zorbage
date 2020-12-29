@@ -1158,8 +1158,6 @@ public final class QuaternionFloat32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionFloat32Member) {
 			return G.QFLT.isEqual().call(this, (QuaternionFloat32Member) o);
 		}

@@ -768,8 +768,6 @@ public class GaussianInt8Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof GaussianInt8Member) {
 			return G.GAUSS8.isEqual().call(this, (GaussianInt8Member) o);
 		}

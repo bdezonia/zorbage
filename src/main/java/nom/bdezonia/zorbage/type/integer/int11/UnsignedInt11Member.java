@@ -856,8 +856,6 @@ public final class UnsignedInt11Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt11Member) {
 			return G.UINT11.isEqual().call(this, (UnsignedInt11Member) o);
 		}

@@ -803,8 +803,6 @@ public final class Float32CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float32CartesianTensorProductMember) {
 			return G.FLT_TEN.isEqual().call(this, (Float32CartesianTensorProductMember) o);
 		}

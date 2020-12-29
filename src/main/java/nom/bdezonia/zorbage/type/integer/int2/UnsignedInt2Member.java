@@ -685,8 +685,6 @@ public final class UnsignedInt2Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt2Member) {
 			return G.UINT2.isEqual().call(this, (UnsignedInt2Member) o);
 		}

@@ -803,8 +803,6 @@ public final class HighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof HighPrecisionCartesianTensorProductMember) {
 			return G.HP_TEN.isEqual().call(this, (HighPrecisionCartesianTensorProductMember) o);
 		}

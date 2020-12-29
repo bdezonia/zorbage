@@ -768,8 +768,6 @@ public class GaussianInt16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof GaussianInt16Member) {
 			return G.GAUSS16.isEqual().call(this, (GaussianInt16Member) o);
 		}

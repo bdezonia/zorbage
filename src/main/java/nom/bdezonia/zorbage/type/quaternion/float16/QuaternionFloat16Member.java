@@ -1160,8 +1160,6 @@ public final class QuaternionFloat16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionFloat16Member) {
 			return G.QHLF.isEqual().call(this, (QuaternionFloat16Member) o);
 		}

@@ -731,8 +731,6 @@ public final class SignedInt12Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt12Member) {
 			return G.INT12.isEqual().call(this, (SignedInt12Member) o);
 		}

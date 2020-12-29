@@ -673,8 +673,6 @@ public final class SignedInt16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt16Member) {
 			return G.INT16.isEqual().call(this, (SignedInt16Member) o);
 		}

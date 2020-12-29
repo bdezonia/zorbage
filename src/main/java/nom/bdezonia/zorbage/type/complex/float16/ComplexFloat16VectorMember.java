@@ -1007,8 +1007,6 @@ public final class ComplexFloat16VectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat16VectorMember) {
 			return G.CHLF_VEC.isEqual().call(this, (ComplexFloat16VectorMember) o);
 		}

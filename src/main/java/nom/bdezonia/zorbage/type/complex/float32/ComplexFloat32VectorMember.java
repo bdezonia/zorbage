@@ -1007,8 +1007,6 @@ public final class ComplexFloat32VectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat32VectorMember) {
 			return G.CFLT_VEC.isEqual().call(this, (ComplexFloat32VectorMember) o);
 		}

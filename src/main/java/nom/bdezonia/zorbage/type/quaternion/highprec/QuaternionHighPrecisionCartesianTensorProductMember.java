@@ -1173,8 +1173,6 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionHighPrecisionCartesianTensorProductMember) {
 			return G.QHP_TEN.isEqual().call(this, (QuaternionHighPrecisionCartesianTensorProductMember) o);
 		}

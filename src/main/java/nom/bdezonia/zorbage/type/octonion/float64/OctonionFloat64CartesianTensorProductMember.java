@@ -1709,8 +1709,6 @@ public final class OctonionFloat64CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat64CartesianTensorProductMember) {
 			return G.ODBL_TEN.isEqual().call(this, (OctonionFloat64CartesianTensorProductMember) o);
 		}

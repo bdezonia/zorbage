@@ -683,8 +683,6 @@ public final class Float16Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float16Member) {
 			return G.HLF.isEqual().call(this, (Float16Member) o);
 		}

@@ -673,8 +673,6 @@ public final class SignedInt8Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt8Member) {
 			return G.INT8.isEqual().call(this, (SignedInt8Member) o);
 		}

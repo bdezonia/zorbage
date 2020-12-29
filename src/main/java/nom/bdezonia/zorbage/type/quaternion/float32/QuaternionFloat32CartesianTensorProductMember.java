@@ -1173,8 +1173,6 @@ public final class QuaternionFloat32CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionFloat32CartesianTensorProductMember) {
 			return G.QFLT_TEN.isEqual().call(this, (QuaternionFloat32CartesianTensorProductMember) o);
 		}

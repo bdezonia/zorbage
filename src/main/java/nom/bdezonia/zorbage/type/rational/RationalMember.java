@@ -709,8 +709,6 @@ public class RationalMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof RationalMember) {
 			return G.RAT.isEqual().call(this, (RationalMember) o);
 		}

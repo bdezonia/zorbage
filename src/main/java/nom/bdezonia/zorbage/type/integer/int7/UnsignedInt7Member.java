@@ -790,8 +790,6 @@ public final class UnsignedInt7Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt7Member) {
 			return G.UINT7.isEqual().call(this, (UnsignedInt7Member) o);
 		}

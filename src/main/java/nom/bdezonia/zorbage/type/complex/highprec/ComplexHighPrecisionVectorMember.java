@@ -1007,8 +1007,6 @@ public final class ComplexHighPrecisionVectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexHighPrecisionVectorMember) {
 			return G.CHP_VEC.isEqual().call(this, (ComplexHighPrecisionVectorMember) o);
 		}

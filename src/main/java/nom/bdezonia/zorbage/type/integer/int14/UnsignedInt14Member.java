@@ -907,8 +907,6 @@ public final class UnsignedInt14Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt14Member) {
 			return G.UINT14.isEqual().call(this, (UnsignedInt14Member) o);
 		}

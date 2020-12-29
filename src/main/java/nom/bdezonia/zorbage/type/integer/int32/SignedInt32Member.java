@@ -673,8 +673,6 @@ public final class SignedInt32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt32Member) {
 			return G.INT32.isEqual().call(this, (SignedInt32Member) o);
 		}

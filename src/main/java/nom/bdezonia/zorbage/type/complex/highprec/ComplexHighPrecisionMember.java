@@ -760,8 +760,6 @@ public final class ComplexHighPrecisionMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexHighPrecisionMember) {
 			return G.CHP.isEqual().call(this, (ComplexHighPrecisionMember) o);
 		}

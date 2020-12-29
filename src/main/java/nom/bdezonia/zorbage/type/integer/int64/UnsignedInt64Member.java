@@ -693,8 +693,6 @@ public final class UnsignedInt64Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt64Member) {
 			return G.UINT64.isEqual().call(this, (UnsignedInt64Member) o);
 		}

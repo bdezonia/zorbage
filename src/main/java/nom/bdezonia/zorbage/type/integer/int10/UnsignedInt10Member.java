@@ -839,8 +839,6 @@ public final class UnsignedInt10Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt10Member) {
 			return G.UINT10.isEqual().call(this, (UnsignedInt10Member) o);
 		}

@@ -939,8 +939,6 @@ public final class HighPrecisionVectorMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof HighPrecisionVectorMember) {
 			return G.HP_VEC.isEqual().call(this, (HighPrecisionVectorMember) o);
 		}

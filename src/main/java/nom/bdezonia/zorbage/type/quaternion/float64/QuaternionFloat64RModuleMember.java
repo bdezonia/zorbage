@@ -1368,8 +1368,6 @@ public final class QuaternionFloat64RModuleMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionFloat64RModuleMember) {
 			return G.QDBL_RMOD.isEqual().call(this, (QuaternionFloat64RModuleMember) o);
 		}

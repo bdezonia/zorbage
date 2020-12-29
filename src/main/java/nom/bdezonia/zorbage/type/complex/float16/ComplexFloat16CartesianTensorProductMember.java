@@ -908,8 +908,6 @@ public final class ComplexFloat16CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat16CartesianTensorProductMember) {
 			return G.CHLF_TEN.isEqual().call(this, (ComplexFloat16CartesianTensorProductMember) o);
 		}

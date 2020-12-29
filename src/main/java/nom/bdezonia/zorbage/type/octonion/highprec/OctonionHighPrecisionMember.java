@@ -1834,8 +1834,6 @@ public final class OctonionHighPrecisionMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionHighPrecisionMember) {
 			return G.OHP.isEqual().call(this, (OctonionHighPrecisionMember) o);
 		}

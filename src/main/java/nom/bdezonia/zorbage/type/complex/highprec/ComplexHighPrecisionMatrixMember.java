@@ -1157,8 +1157,6 @@ public final class ComplexHighPrecisionMatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexHighPrecisionMatrixMember) {
 			return G.CHP_MAT.isEqual().call(this, (ComplexHighPrecisionMatrixMember) o);
 		}

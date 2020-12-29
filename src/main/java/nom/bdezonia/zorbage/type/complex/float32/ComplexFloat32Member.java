@@ -760,8 +760,6 @@ public final class ComplexFloat32Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat32Member) {
 			return G.CFLT.isEqual().call(this, (ComplexFloat32Member) o);
 		}

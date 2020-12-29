@@ -1713,8 +1713,6 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionHighPrecisionCartesianTensorProductMember) {
 			return G.OHP_TEN.isEqual().call(this, (OctonionHighPrecisionCartesianTensorProductMember) o);
 		}

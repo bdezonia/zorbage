@@ -758,8 +758,6 @@ public final class SignedInt5Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt5Member) {
 			return G.INT5.isEqual().call(this, (SignedInt5Member) o);
 		}

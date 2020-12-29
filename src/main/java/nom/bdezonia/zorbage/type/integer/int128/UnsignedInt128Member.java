@@ -710,8 +710,6 @@ public final class UnsignedInt128Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt128Member) {
 			return G.UINT128.isEqual().call(this, (UnsignedInt128Member) o);
 		}

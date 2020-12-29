@@ -803,8 +803,6 @@ public final class Float16CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float16CartesianTensorProductMember) {
 			return G.HLF_TEN.isEqual().call(this, (Float16CartesianTensorProductMember) o);
 		}

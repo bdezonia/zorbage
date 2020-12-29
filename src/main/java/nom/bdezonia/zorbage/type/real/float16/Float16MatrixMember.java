@@ -1088,8 +1088,6 @@ public final class Float16MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float16MatrixMember) {
 			return G.HLF_MAT.isEqual().call(this, (Float16MatrixMember) o);
 		}

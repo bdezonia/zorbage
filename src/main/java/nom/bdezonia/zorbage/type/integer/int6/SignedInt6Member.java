@@ -775,8 +775,6 @@ public final class SignedInt6Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof SignedInt6Member) {
 			return G.INT6.isEqual().call(this, (SignedInt6Member) o);
 		}

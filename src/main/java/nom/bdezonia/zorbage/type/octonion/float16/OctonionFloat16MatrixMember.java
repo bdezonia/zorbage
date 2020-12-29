@@ -2109,8 +2109,6 @@ public final class OctonionFloat16MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof OctonionFloat16MatrixMember) {
 			return G.OHLF_MAT.isEqual().call(this, (OctonionFloat16MatrixMember) o);
 		}

@@ -1157,8 +1157,6 @@ public final class ComplexFloat64MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof ComplexFloat64MatrixMember) {
 			return G.CDBL_MAT.isEqual().call(this, (ComplexFloat64MatrixMember) o);
 		}

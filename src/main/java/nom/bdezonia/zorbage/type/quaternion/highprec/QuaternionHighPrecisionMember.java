@@ -1157,8 +1157,6 @@ public final class QuaternionHighPrecisionMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof QuaternionHighPrecisionMember) {
 			return G.QHP.isEqual().call(this, (QuaternionHighPrecisionMember) o);
 		}

@@ -890,8 +890,6 @@ public final class UnsignedInt13Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt13Member) {
 			return G.UINT13.isEqual().call(this, (UnsignedInt13Member) o);
 		}

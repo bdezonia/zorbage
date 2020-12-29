@@ -743,8 +743,6 @@ public final class UnsignedInt12Member
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof UnsignedInt12Member) {
 			return G.UINT12.isEqual().call(this, (UnsignedInt12Member) o);
 		}

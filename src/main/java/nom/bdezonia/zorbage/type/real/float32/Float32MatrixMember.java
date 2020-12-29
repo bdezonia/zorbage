@@ -1088,8 +1088,6 @@ public final class Float32MatrixMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
-			return true;
 		if (o instanceof Float32MatrixMember) {
 			return G.FLT_MAT.isEqual().call(this, (Float32MatrixMember) o);
 		}
