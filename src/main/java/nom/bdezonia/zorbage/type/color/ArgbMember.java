@@ -128,7 +128,7 @@ public class ArgbMember
 	@Override
 	public long dimension(int d) {
 		if (d < 0) throw new IllegalArgumentException("negative index");
-		return 1;
+		return 0;
 	}
 
 	@Override
