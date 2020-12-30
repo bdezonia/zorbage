@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
@@ -60,10 +59,10 @@ public class SamplingSphericalRealGrid implements Sampling<RealIndex> {
 				double angleTheta = th * dtheta;
 				for (int r = 0; r < rCount; r++) {
 					double radius = r * dr;
-					double sineTheta = FastMath.sin(angleTheta);
-					double cosineTheta = FastMath.cos(angleTheta);
-					double sinePhi = FastMath.sin(anglePhi);
-					double cosinePhi = FastMath.cos(anglePhi);
+					double sineTheta = Math.sin(angleTheta);
+					double cosineTheta = Math.cos(angleTheta);
+					double sinePhi = Math.sin(anglePhi);
+					double cosinePhi = Math.cos(anglePhi);
 					// http://tutorial.math.lamar.edu/Classes/CalcIII/SphericalCoords.aspx
 					value.set(0, radius * sinePhi * cosineTheta); // xcoord
 					value.set(1, radius * sinePhi * sineTheta);  // ycoord

@@ -26,7 +26,6 @@
  */
 package example;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.InsertionSort;
@@ -112,7 +111,7 @@ class Sorting {
 			@Override
 			public Boolean call(ComplexFloat32Member a, ComplexFloat32Member b) {
 
-				return FastMath.hypot(a.r(), a.i()) < FastMath.hypot(b.r(), b.i());
+				return Math.hypot(a.r(), a.i()) < Math.hypot(b.r(), b.i());
 			}
 		};
 		

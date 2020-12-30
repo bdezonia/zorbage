@@ -32,7 +32,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
@@ -341,7 +340,7 @@ public class TestFloat16Complex {
 		a.setR((float)Math.PI/4);
 		a.setI(0);
 		G.CHLF.tan().call(a, b);
-		assertEquals(FastMath.tan(Math.PI/4), b.r(), tol);
+		assertEquals(Math.tan(Math.PI/4), b.r(), tol);
 		assertEquals(0, b.i(), tol);
 
 		// G.CHLF.tanh();

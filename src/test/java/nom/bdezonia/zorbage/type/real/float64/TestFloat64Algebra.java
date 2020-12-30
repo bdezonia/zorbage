@@ -32,7 +32,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
@@ -262,7 +261,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.acos();
 		a.setV(Math.PI/2);
 		G.DBL.acos().call(a, b);
-		assertEquals(FastMath.acos(Math.PI/2), b.v(), 0);
+		assertEquals(Math.acos(Math.PI/2), b.v(), 0);
 		
 		// G.CDBL.acosh();
 		
@@ -287,7 +286,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.asin();
 		a.setV(Math.PI/2);
 		G.DBL.asin().call(a, b);
-		assertEquals(FastMath.asin(Math.PI/2), b.v(), 0);
+		assertEquals(Math.asin(Math.PI/2), b.v(), 0);
 		
 		// G.CDBL.asinh();
 		
@@ -299,7 +298,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.atan();
 		a.setV(Math.PI/2);
 		G.DBL.atan().call(a, b);
-		assertEquals(FastMath.atan(Math.PI/2), b.v(), 0);
+		assertEquals(Math.atan(Math.PI/2), b.v(), 0);
 		
 		// G.CDBL.atanh();
 		
@@ -328,12 +327,12 @@ public class TestFloat64Algebra {
 		// G.CDBL.cos();
 		a.setV(Math.PI/2);
 		G.DBL.cos().call(a, b);
-		assertEquals(FastMath.cos(Math.PI/2), b.v(), tol);
+		assertEquals(Math.cos(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.cosh();
 		a.setV(Math.PI/2);
 		G.DBL.cosh().call(a, b);
-		assertEquals(FastMath.cosh(Math.PI/2), b.v(), tol);
+		assertEquals(Math.cosh(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.cot();
 		
@@ -356,12 +355,12 @@ public class TestFloat64Algebra {
 		// G.CDBL.exp();
 		a.setV(4);
 		G.DBL.exp().call(a, b);
-		assertEquals(FastMath.exp(4), b.v(), tol);
+		assertEquals(Math.exp(4), b.v(), tol);
 		
 		// G.CDBL.expm1();
 		a.setV(4);
 		G.DBL.expm1().call(a, b);
-		assertEquals(FastMath.expm1(4), b.v(), tol);
+		assertEquals(Math.expm1(4), b.v(), tol);
 		
 		// G.CDBL.infinite();
 		a = G.DBL.construct();
@@ -477,7 +476,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.sin();
 		a.setV(Math.PI/2);
 		G.DBL.sin().call(a, b);
-		assertEquals(FastMath.sin(Math.PI/2), b.v(), tol);
+		assertEquals(Math.sin(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.sinAndCos();
 		
@@ -492,7 +491,7 @@ public class TestFloat64Algebra {
 		// G.CDBL.sinh();
 		a.setV(Math.PI/2);
 		G.DBL.sinh().call(a, b);
-		assertEquals(FastMath.sinh(Math.PI/2), b.v(), tol);
+		assertEquals(Math.sinh(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.sinhAndCosh();
 		
@@ -510,12 +509,12 @@ public class TestFloat64Algebra {
 		// G.CDBL.tan();
 		a.setV(Math.PI/2);
 		G.DBL.tan().call(a, b);
-		assertEquals(FastMath.tan(Math.PI/2), b.v(), tol);
+		assertEquals(Math.tan(Math.PI/2), b.v(), tol);
 
 		// G.CDBL.tanh();
 		a.setV(Math.PI/2);
 		G.DBL.tanh().call(a, b);
-		assertEquals(FastMath.tanh(Math.PI/2), b.v(), tol);
+		assertEquals(Math.tanh(Math.PI/2), b.v(), tol);
 
 		// G.CDBL.unity();
 		a = new Float64Member(0.1);

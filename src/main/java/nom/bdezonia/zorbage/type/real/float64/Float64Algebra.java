@@ -30,7 +30,6 @@ import java.lang.Integer;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
@@ -391,7 +390,7 @@ public class Float64Algebra
 				b.setV(Double.NaN);
 			}
 			else
-				b.setV( FastMath.pow(a.v(), power) );
+				b.setV( Math.pow(a.v(), power) );
 		}
 	};
 	
@@ -489,7 +488,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.exp(a.v()) );
+			b.setV( Math.exp(a.v()) );
 		}
 	};
 	
@@ -503,7 +502,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.expm1(a.v()) );
+			b.setV( Math.expm1(a.v()) );
 		}
 	};
 	
@@ -543,7 +542,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.cos(a.v()) );
+			b.setV( Math.cos(a.v()) );
 		}
 	};
 	
@@ -557,7 +556,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.sin(a.v()) );
+			b.setV( Math.sin(a.v()) );
 		}
 	};
 	
@@ -605,7 +604,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.tan(a.v()) );
+			b.setV( Math.tan(a.v()) );
 		}
 	};
 	
@@ -621,7 +620,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( 1.0 / FastMath.sin(a.v()) );
+			b.setV( 1.0 / Math.sin(a.v()) );
 		}
 	};
 	
@@ -637,7 +636,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( 1.0 / FastMath.cos(a.v()) );
+			b.setV( 1.0 / Math.cos(a.v()) );
 		}
 	};
 	
@@ -653,7 +652,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( 1.0 / FastMath.tan(a.v()) );
+			b.setV( 1.0 / Math.tan(a.v()) );
 		}
 	};
 	
@@ -667,7 +666,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.cosh(a.v()) );
+			b.setV( Math.cosh(a.v()) );
 		}
 	};
 	
@@ -681,7 +680,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.sinh(a.v()) );
+			b.setV( Math.sinh(a.v()) );
 		}
 	};
 	
@@ -726,7 +725,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.tanh(a.v()) );
+			b.setV( Math.tanh(a.v()) );
 		}
 	};
 	
@@ -742,7 +741,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( 1.0 / FastMath.sinh(a.v()) );
+			b.setV( 1.0 / Math.sinh(a.v()) );
 		}
 	};
 	
@@ -758,7 +757,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( 1.0 / FastMath.cosh(a.v()) );
+			b.setV( 1.0 / Math.cosh(a.v()) );
 		}
 	};
 	
@@ -774,7 +773,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( 1.0 / FastMath.tanh(a.v()) );
+			b.setV( 1.0 / Math.tanh(a.v()) );
 		}
 	};
 	
@@ -788,7 +787,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.acos(a.v()) );
+			b.setV( Math.acos(a.v()) );
 		}
 	};
 	
@@ -802,7 +801,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.asin(a.v()) );
+			b.setV( Math.asin(a.v()) );
 		}
 	};
 	
@@ -816,7 +815,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.atan(a.v()) );
+			b.setV( Math.atan(a.v()) );
 		}
 	};
 	
@@ -830,7 +829,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b, Float64Member c) {
-			c.setV( FastMath.atan2(a.v(), b.v()) );
+			c.setV( Math.atan2(a.v(), b.v()) );
 		}
 	};
 	
@@ -1083,7 +1082,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a, Float64Member b) {
-			b.setV( FastMath.cbrt(a.v()) );
+			b.setV( Math.cbrt(a.v()) );
 		}
 	};
 	
@@ -1143,7 +1142,7 @@ public class Float64Algebra
 				c.setV(Double.NaN);
 			}
 			else
-				c.setV( FastMath.pow(a.v(), b.v()) );
+				c.setV( Math.pow(a.v(), b.v()) );
 		}
 	};
 	

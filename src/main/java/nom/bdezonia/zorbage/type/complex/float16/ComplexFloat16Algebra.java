@@ -41,7 +41,6 @@ import java.lang.Integer;
 import java.math.BigDecimal;
 import java.util.concurrent.ThreadLocalRandom;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
@@ -141,10 +140,10 @@ public class ComplexFloat16Algebra
 				assign().call(NaN_, b);
 				return;
 			}
-			double rToTheN = FastMath.pow(FastMath.hypot(a.r(), a.i()), power);
+			double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);
 			double nTheta = power * getArgument(a);
-			b.setR((float) (rToTheN * FastMath.cos(nTheta)));
-			b.setI((float) (rToTheN * FastMath.sin(nTheta)));
+			b.setR((float) (rToTheN * Math.cos(nTheta)));
+			b.setI((float) (rToTheN * Math.sin(nTheta)));
 		}
 	};
 
@@ -336,7 +335,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a, Float16Member b) {
-			b.setV( (float) FastMath.hypot(a.r(),a.i()) );
+			b.setV( (float) Math.hypot(a.r(),a.i()) );
 		}
 	};
 
@@ -978,9 +977,9 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
-			double constant = FastMath.exp(a.r());
-			b.setR( (float) (constant * FastMath.cos(a.i())) );
-			b.setI( (float) (constant * FastMath.sin(a.i())) );
+			double constant = Math.exp(a.r());
+			b.setR( (float) (constant * Math.cos(a.i())) );
+			b.setI( (float) (constant * Math.sin(a.i())) );
 		}
 	};
 	
@@ -1011,7 +1010,7 @@ public class ComplexFloat16Algebra
 	{
 		@Override
 		public void call(ComplexFloat16Member a, ComplexFloat16Member b) {
-			double modulus = FastMath.hypot(a.r(), a.i());
+			double modulus = Math.hypot(a.r(), a.i());
 			double argument = getArgument(a);
 			b.setR( (float) Math.log(modulus) );
 			b.setI( (float) getPrincipalArgument(argument) );
@@ -1042,7 +1041,7 @@ public class ComplexFloat16Algebra
 				theta = Math.PI;
 		}
 		else // x && y both != 0
-			theta = FastMath.atan2(y,x);
+			theta = Math.atan2(y,x);
 		
 		return theta;
 	}

@@ -32,7 +32,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 
@@ -271,7 +270,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.acos();
 		a.setV((float)Math.PI/2);
 		G.HLF.acos().call(a, b);
-		assertEquals(FastMath.acos(Math.PI/2), b.v(), 0);
+		assertEquals(Math.acos(Math.PI/2), b.v(), 0);
 		
 		// G.CDBL.acosh();
 		
@@ -296,7 +295,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.asin();
 		a.setV((float)Math.PI/2);
 		G.HLF.asin().call(a, b);
-		assertEquals(FastMath.asin(Math.PI/2), b.v(), 0);
+		assertEquals(Math.asin(Math.PI/2), b.v(), 0);
 		
 		// G.CDBL.asinh();
 		
@@ -308,7 +307,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.atan();
 		a.setV((float)Math.PI/2);
 		G.HLF.atan().call(a, b);
-		assertEquals(FastMath.atan(Math.PI/2), b.v(), 0.0005);
+		assertEquals(Math.atan(Math.PI/2), b.v(), 0.0005);
 		
 		// G.CDBL.atanh();
 		
@@ -337,12 +336,12 @@ public class TestFloat16Algebra {
 		// G.CDBL.cos();
 		a.setV((float)Math.PI/2);
 		G.HLF.cos().call(a, b);
-		assertEquals(FastMath.cos(Math.PI/2), b.v(), tol);
+		assertEquals(Math.cos(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.cosh();
 		a.setV((float)(Math.PI/2));
 		G.HLF.cosh().call(a, b);
-		assertEquals(FastMath.cosh(Math.PI/2), b.v(), tol);
+		assertEquals(Math.cosh(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.cot();
 		
@@ -365,12 +364,12 @@ public class TestFloat16Algebra {
 		// G.CDBL.exp();
 		a.setV(4);
 		G.HLF.exp().call(a, b);
-		assertEquals(FastMath.exp(4), b.v(), tol);
+		assertEquals(Math.exp(4), b.v(), tol);
 		
 		// G.CDBL.expm1();
 		a.setV(4);
 		G.HLF.expm1().call(a, b);
-		assertEquals(FastMath.expm1(4), b.v(), tol);
+		assertEquals(Math.expm1(4), b.v(), tol);
 		
 		// G.CDBL.infinite();
 		a = G.HLF.construct();
@@ -486,7 +485,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.sin();
 		a.setV((float)(Math.PI/2));
 		G.HLF.sin().call(a, b);
-		assertEquals(FastMath.sin(Math.PI/2), b.v(), tol);
+		assertEquals(Math.sin(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.sinAndCos();
 		
@@ -501,7 +500,7 @@ public class TestFloat16Algebra {
 		// G.CDBL.sinh();
 		a.setV((float)(Math.PI/2));
 		G.HLF.sinh().call(a, b);
-		assertEquals(FastMath.sinh(Math.PI/2), b.v(), tol);
+		assertEquals(Math.sinh(Math.PI/2), b.v(), tol);
 		
 		// G.CDBL.sinhAndCosh();
 		
@@ -519,12 +518,12 @@ public class TestFloat16Algebra {
 		// G.CDBL.tan();
 		a.setV((float)(Math.PI/4));
 		G.HLF.tan().call(a, b);
-		assertEquals(FastMath.tan(Math.PI/4), b.v(), tol);
+		assertEquals(Math.tan(Math.PI/4), b.v(), tol);
 
 		// G.CDBL.tanh();
 		a.setV((float)(Math.PI/4));
 		G.HLF.tanh().call(a, b);
-		assertEquals(FastMath.tanh(Math.PI/4), b.v(), tol);
+		assertEquals(Math.tanh(Math.PI/4), b.v(), tol);
 
 		// G.CDBL.unity();
 		a = new Float16Member(0.1f);

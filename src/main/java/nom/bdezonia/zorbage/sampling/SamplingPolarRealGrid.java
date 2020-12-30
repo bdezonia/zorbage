@@ -26,7 +26,6 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
-import net.jafama.FastMath;
 import nom.bdezonia.zorbage.misc.RealUtils;
 
 /**
@@ -56,8 +55,8 @@ public class SamplingPolarRealGrid implements Sampling<RealIndex> {
 			double angle = th * dtheta;
 			for (int r = 0; r < rCount; r++) {
 				double radius = r * dr;
-				value.set(0, FastMath.cos(angle) * radius);  // xcoord
-				value.set(1, FastMath.sin(angle) * radius);  // ycoord
+				value.set(0, Math.cos(angle) * radius);  // xcoord
+				value.set(1, Math.sin(angle) * radius);  // ycoord
 				if ((r != 0) || (r == 0 && th == 0)) // only add origin once
 					sampling.add(value);
 			}
