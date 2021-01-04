@@ -72,7 +72,7 @@ public class TestGeometricMean {
 		Float64Member value = G.DBL.construct();
 		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), new double[] {4,25});
 		GeometricMean.compute(G.DBL, nums, value);
-		assertEquals(10, value.v(), 0);
+		assertEquals(10, value.v(), 0.000000000000002);
 	}
 
 	@Test
