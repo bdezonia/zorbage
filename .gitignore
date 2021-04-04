@@ -7,5 +7,4 @@ bin
 /target/
 mysql*
 launch_tests.sh
-deploy.sh
 local-install.sh
