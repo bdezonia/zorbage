@@ -204,15 +204,25 @@ Zorbage is flexible
 
 Is there a way to get data into a Zorbage backed application?
 
-  Code has been written to load raster GIS data using the NetCDF library
-    into Zorbage structures. You can find it here:
+  Code has been written to load ECAT scan data using the zorbage
+    ecat library into Zorbage structures. You can find it here:
     
-    https://github.com/bdezonia/zorbage-netcdf
+    https://github.com/bdezonia/zorbage-ecat
 
   Code has been written to load raster GIS data using the GDAL library
     into Zorbage structures. You can find it here:
   
     https://github.com/bdezonia/zorbage-gdal
+
+  Code has been written to load raster GIS data using the NetCDF library
+    into Zorbage structures. You can find it here:
+    
+    https://github.com/bdezonia/zorbage-netcdf
+
+  Code has been written to load Nifti scan data using the zorbage
+    nifti library into Zorbage structures. You can find it here:
+    
+    https://github.com/bdezonia/zorbage-nifti
 
   Code has been written to load raster data using the SCIFIO library
     into Zorbage structures. You can find it here:
