@@ -73,18 +73,18 @@ public class Affine3dCoordinateSystem
 			BigDecimal y0, BigDecimal y1, BigDecimal y2, BigDecimal y3,
 			BigDecimal z0, BigDecimal z1, BigDecimal z2, BigDecimal z3)
 	{
-		this.x0 = x0 == null ? BigDecimal.ZERO : x0;
-		this.x1 = x1 == null ? BigDecimal.ZERO : x1;
-		this.x2 = x2 == null ? BigDecimal.ZERO : x2;
-		this.x3 = x3 == null ? BigDecimal.ZERO : x3;
-		this.y0 = y0 == null ? BigDecimal.ZERO : y0;
-		this.y1 = y1 == null ? BigDecimal.ZERO : y1;
-		this.y2 = y2 == null ? BigDecimal.ZERO : y2;
-		this.y3 = y3 == null ? BigDecimal.ZERO : y3;
-		this.z0 = z0 == null ? BigDecimal.ZERO : z0;
-		this.z1 = z1 == null ? BigDecimal.ZERO : z1;
-		this.z2 = z2 == null ? BigDecimal.ZERO : z2;
-		this.z3 = z3 == null ? BigDecimal.ZERO : z3;
+		this.x0 = value(x0);
+		this.x1 = value(x1);
+		this.x2 = value(x2);
+		this.x3 = value(x3);
+		this.y0 = value(y0);
+		this.y1 = value(y1);
+		this.y2 = value(y2);
+		this.y3 = value(y3);
+		this.z0 = value(z0);
+		this.z1 = value(z1);
+		this.z2 = value(z2);
+		this.z3 = value(z3);
 	}
 	
 	@Override
@@ -139,5 +139,11 @@ public class Affine3dCoordinateSystem
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1));
 		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2));
 		return tmp.add(t3);
+	}
+
+	private BigDecimal value(BigDecimal v) {
+		if (v == null)
+			return BigDecimal.ZERO;
+		return v;
 	}
 }

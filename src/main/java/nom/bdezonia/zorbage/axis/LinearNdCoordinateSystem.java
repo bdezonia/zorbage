@@ -47,8 +47,8 @@ public class LinearNdCoordinateSystem
 		this.scales = new BigDecimal[scales.length];
 		this.offsets = new BigDecimal[offsets.length];
 		for (int i = 0; i < scales.length; i++) {
-			this.scales[i] = scales[i] == null ? BigDecimal.ZERO : scales[i];
-			this.offsets[i] = offsets[i] == null ? BigDecimal.ZERO : offsets[i];
+			this.scales[i] = value(scales[i]);
+			this.offsets[i] = value(offsets[i]);
 		}
 	}
 
@@ -67,4 +67,9 @@ public class LinearNdCoordinateSystem
 		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis]).add(offsets[axis]);
 	}
 
+	private BigDecimal value(BigDecimal v) {
+		if (v == null)
+			return BigDecimal.ZERO;
+		return v;
+	}
 }
