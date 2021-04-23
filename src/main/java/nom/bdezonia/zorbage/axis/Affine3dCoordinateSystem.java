@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
-// Note: this class inspired by Niftii's header docs on their affine coord xform
+// Note: this class inspired by Nifti's header docs on their affine coord xform
 
 /**
  * 
