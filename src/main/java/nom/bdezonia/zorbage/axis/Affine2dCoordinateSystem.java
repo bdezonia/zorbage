@@ -30,103 +30,75 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
-// Note: this class inspired by Nifti's header docs on their affine coord xform
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Affine3dCoordinateSystem
+public class Affine2dCoordinateSystem
 	implements CoordinateSystem
 {
 	private final BigDecimal x0;
 	private final BigDecimal x1;
 	private final BigDecimal x2;
-	private final BigDecimal x3;
 	private final BigDecimal y0;
 	private final BigDecimal y1;
 	private final BigDecimal y2;
-	private final BigDecimal y3;
-	private final BigDecimal z0;
-	private final BigDecimal z1;
-	private final BigDecimal z2;
-	private final BigDecimal z3;
 
 	/**
 	 * 
 	 * @param x0
 	 * @param x1
 	 * @param x2
-	 * @param x3
 	 * @param y0
 	 * @param y1
 	 * @param y2
-	 * @param y3
-	 * @param z0
-	 * @param z1
-	 * @param z2
-	 * @param z3
 	 */
-	public Affine3dCoordinateSystem(
-			BigDecimal x0, BigDecimal x1, BigDecimal x2, BigDecimal x3,
-			BigDecimal y0, BigDecimal y1, BigDecimal y2, BigDecimal y3,
-			BigDecimal z0, BigDecimal z1, BigDecimal z2, BigDecimal z3)
+	public Affine2dCoordinateSystem(
+			BigDecimal x0, BigDecimal x1, BigDecimal x2,
+			BigDecimal y0, BigDecimal y1, BigDecimal y2)
 	{
 		this.x0 = value(x0);
 		this.x1 = value(x1);
 		this.x2 = value(x2);
-		this.x3 = value(x3);
 		this.y0 = value(y0);
 		this.y1 = value(y1);
 		this.y2 = value(y2);
-		this.y3 = value(y3);
-		this.z0 = value(z0);
-		this.z1 = value(z1);
-		this.z2 = value(z2);
-		this.z3 = value(z3);
 	}
 	
 	@Override
 	public int numDimensions() {
-		return 3;
+		return 2;
 	}
 
 	@Override
 	public BigDecimal coordinateValue(long[] coord, int axis) {
-		if (axis < 0 || axis > 2)
+		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(coord[0], coord[1], coord[2], x0, x1, x2, x3);
+			return transform(coord[0], coord[1], x0, x1, x2);
 		}
-		else if (axis == 1) {
-			return transform(coord[0], coord[1], coord[2], y0, y1, y2, y3);
-		}
-		else { // axis == 2
-			return transform(coord[0], coord[1], coord[2], z0, z1, z2, z3);
+		else { // axis == 1
+			return transform(coord[0], coord[1], y0, y1, y2);
 		}
 	}
 
 	@Override
 	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
-		if (axis < 0 || axis > 2)
+		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(coord.get(0), coord.get(1), coord.get(2), x0, x1, x2, x3);
+			return transform(coord.get(0), coord.get(1), x0, x1, x2);
 		}
-		else if (axis == 1) {
-			return transform(coord.get(0), coord.get(1), coord.get(2), y0, y1, y2, y3);
-		}
-		else { // axis == 2
-			return transform(coord.get(0), coord.get(1), coord.get(2), z0, z1, z2, z3);
+		else { // axis == 1)
+			return transform(coord.get(0), coord.get(1), y0, y1, y2);
 		}
 	}
-	
-	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
+
+	private BigDecimal transform(long i, long j, BigDecimal t0, BigDecimal t1, BigDecimal t2) {
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0);
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1));
-		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2));
-		return tmp.add(t3);
+		return tmp.add(t2);
 	}
 
 	private BigDecimal value(BigDecimal v) {
