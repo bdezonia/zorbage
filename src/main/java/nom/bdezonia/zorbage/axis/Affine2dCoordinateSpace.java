@@ -36,8 +36,8 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class Affine2dCoordinateSystem
-	implements CoordinateSystem
+public class Affine2dCoordinateSpace
+	implements CoordinateSpace
 {
 	private final BigDecimal x0;
 	private final BigDecimal x1;
@@ -56,7 +56,7 @@ public class Affine2dCoordinateSystem
 	 * @param y1
 	 * @param y2
 	 */
-	public Affine2dCoordinateSystem(
+	public Affine2dCoordinateSpace(
 			BigDecimal x0, BigDecimal x1, BigDecimal x2,
 			BigDecimal y0, BigDecimal y1, BigDecimal y2)
 	{
@@ -75,7 +75,7 @@ public class Affine2dCoordinateSystem
 	}
 
 	@Override
-	public BigDecimal coordinateValue(long[] coord, int axis) {
+	public BigDecimal toRn(long[] coord, int axis) {
 		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -87,7 +87,7 @@ public class Affine2dCoordinateSystem
 	}
 
 	@Override
-	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
+	public BigDecimal toRn(IntegerIndex coord, int axis) {
 		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -105,7 +105,7 @@ public class Affine2dCoordinateSystem
 	private BigDecimal transform(long i, long j, BigDecimal t0, BigDecimal t1, BigDecimal t2) {
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
-		return tmp.add(t2);
+		return tmp.add(t2, context);
 	}
 
 	private BigDecimal value(BigDecimal v) {

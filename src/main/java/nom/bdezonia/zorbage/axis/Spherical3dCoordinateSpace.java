@@ -37,25 +37,25 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class Cylindrical3dCoordinateSystem
-	implements CoordinateSystem
+public class Spherical3dCoordinateSpace
+	implements CoordinateSpace
 {
-	private final BigDecimal rUnit;
+	private final BigDecimal rhoUnit;
 	private final BigDecimal thetaUnit;
-	private final BigDecimal zUnit;
+	private final BigDecimal phiUnit;
 	private MathContext context;
 
 	/**
 	 * 
-	 * @param rUnit The spacing between r values.
+	 * @param rhoUnit The spacing between rho values.
 	 * @param thetaUnit The spacing between theta values (in radians).
-	 * @param zUnit The spacing between z values.
+	 * @param phiUnit The spacing between phi values (in radians).
 	 */
-	public Cylindrical3dCoordinateSystem(BigDecimal rUnit, BigDecimal thetaUnit, BigDecimal zUnit)
+	public Spherical3dCoordinateSpace(BigDecimal rhoUnit, BigDecimal thetaUnit, BigDecimal phiUnit)
 	{
-		this.rUnit = rUnit;
+		this.rhoUnit = rhoUnit;
 		this.thetaUnit = thetaUnit;
-		this.zUnit = zUnit;
+		this.phiUnit = phiUnit;
 		this.context = new MathContext(20);
 	}
 	
@@ -65,32 +65,32 @@ public class Cylindrical3dCoordinateSystem
 	}
 
 	@Override
-	public BigDecimal coordinateValue(long[] coord, int axis) {
+	public BigDecimal toRn(long[] coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return x(coord[0], coord[1]);
+			return x(coord[0], coord[1], coord[2]);
 		}
 		else if (axis == 1) {
-			return y(coord[0], coord[1]);
+			return y(coord[0], coord[1], coord[2]);
 		}
 		else { // axis == 2
-			return z(coord[2]);
+			return z(coord[0], coord[2]);
 		}
 	}
 
 	@Override
-	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
+	public BigDecimal toRn(IntegerIndex coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return x(coord.get(0), coord.get(1));
+			return x(coord.get(0), coord.get(1), coord.get(2));
 		}
 		else if (axis == 1) {
-			return x(coord.get(0), coord.get(1));
+			return y(coord.get(0), coord.get(1), coord.get(2));
 		}
 		else { // axis == 2
-			return z(coord.get(2));
+			return z(coord.get(0), coord.get(2));
 		}
 	}
 
@@ -98,19 +98,25 @@ public class Cylindrical3dCoordinateSystem
 		this.context = new MathContext(precision);
 	}
 	
-	private BigDecimal x(long r, long th) {
-		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
-		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
+	private BigDecimal x(long rh, long th, long ph) {
+		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
+		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
+		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.cos(thVal, context));
+		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
 	}
 	
-	private BigDecimal y(long r, long th) {
-		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
-		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
+	private BigDecimal y(long rh, long th, long ph) {
+		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
+		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
+		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.sin(thVal, context));
+		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
 	}
 	
-	private BigDecimal z(long z) {
-		return zUnit.multiply(BigDecimal.valueOf(z), context);
+	private BigDecimal z(long rh, long ph) {
+		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
+		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
+		return rhoVal.multiply(BigDecimalMath.cos(phiVal, context));
 	}
 }

@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -35,30 +36,47 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class IdentityCoordinateSystem
-	implements CoordinateSystem
+public class LinearNdCoordinateSpace
+	implements CoordinateSpace
 {
-	private final int numDims;
+	private final BigDecimal[] scales;
+	private final BigDecimal[] offsets;
+	private MathContext context;
 	
-	public IdentityCoordinateSystem(int numDims) {
-		if (numDims < 0)
-			throw new IllegalArgumentException("coordinate system dimensionality must be >= 0");
-		this.numDims = numDims;
+	public LinearNdCoordinateSpace(BigDecimal[] scales, BigDecimal[] offsets) {
+		if (scales.length != offsets.length)
+			throw new IllegalArgumentException("inconsistent definition of a linear coord system");
+		this.scales = new BigDecimal[scales.length];
+		this.offsets = new BigDecimal[offsets.length];
+		for (int i = 0; i < scales.length; i++) {
+			this.scales[i] = value(scales[i]);
+			this.offsets[i] = value(offsets[i]);
+		}
+		this.context = new MathContext(20);
 	}
-	
+
 	@Override
 	public int numDimensions() {
-		return numDims;
+		return scales.length;
 	}
 
 	@Override
-	public BigDecimal coordinateValue(long[] coord, int axis) {
-		return BigDecimal.valueOf(coord[axis]);
+	public BigDecimal toRn(long[] coord, int axis) {
+		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
 	@Override
-	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
-		return BigDecimal.valueOf(coord.get(axis));
+	public BigDecimal toRn(IntegerIndex coord, int axis) {
+		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
+	public void setPrecision(int precision) {
+		this.context = new MathContext(precision);
+	}
+
+	private BigDecimal value(BigDecimal v) {
+		if (v == null)
+			return BigDecimal.ZERO;
+		return v;
+	}
 }

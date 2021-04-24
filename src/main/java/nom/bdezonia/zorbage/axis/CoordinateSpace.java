@@ -27,8 +27,8 @@
 package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
+import nom.bdezonia.zorbage.algebra.DimensionCount;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -36,47 +36,22 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class LinearNdCoordinateSystem
-	implements CoordinateSystem
+public interface CoordinateSpace
+	extends DimensionCount
 {
-	private final BigDecimal[] scales;
-	private final BigDecimal[] offsets;
-	private MathContext context;
-	
-	public LinearNdCoordinateSystem(BigDecimal[] scales, BigDecimal[] offsets) {
-		if (scales.length != offsets.length)
-			throw new IllegalArgumentException("inconsistent definition of a linear coord system");
-		this.scales = new BigDecimal[scales.length];
-		this.offsets = new BigDecimal[offsets.length];
-		for (int i = 0; i < scales.length; i++) {
-			this.scales[i] = value(scales[i]);
-			this.offsets[i] = value(offsets[i]);
-		}
-		this.context = new MathContext(20);
-	}
+	/**
+	 * 
+	 * @param coord A set of long valued coordinates within the coordinate space
+	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
+	 * @return The real coordinate value along the desired axis for the given coordinate
+	 */
+	BigDecimal toRn(long[] coord, int axis);
 
-	@Override
-	public int numDimensions() {
-		return scales.length;
-	}
-
-	@Override
-	public BigDecimal coordinateValue(long[] coord, int axis) {
-		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
-	}
-
-	@Override
-	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
-		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
-	}
-
-	public void setPrecision(int precision) {
-		this.context = new MathContext(precision);
-	}
-
-	private BigDecimal value(BigDecimal v) {
-		if (v == null)
-			return BigDecimal.ZERO;
-		return v;
-	}
+	/**
+	 * 
+	 * @param coord A set of long valued coordinates within the coordinate space
+	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
+	 * @return The real coordinate value along the desired axis for the given coordinate
+	 */
+	BigDecimal toRn(IntegerIndex coord, int axis);
 }

@@ -28,7 +28,6 @@ package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
 
-import nom.bdezonia.zorbage.algebra.DimensionCount;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -36,11 +35,30 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public interface CoordinateSystem
-	extends DimensionCount
+public class IdentityCoordinateSpace
+	implements CoordinateSpace
 {
+	private final int numDims;
+	
+	public IdentityCoordinateSpace(int numDims) {
+		if (numDims < 0)
+			throw new IllegalArgumentException("coordinate system dimensionality must be >= 0");
+		this.numDims = numDims;
+	}
+	
+	@Override
+	public int numDimensions() {
+		return numDims;
+	}
 
-	BigDecimal coordinateValue(long[] coord, int axis);
+	@Override
+	public BigDecimal toRn(long[] coord, int axis) {
+		return BigDecimal.valueOf(coord[axis]);
+	}
 
-	BigDecimal coordinateValue(IntegerIndex coord, int axis);
+	@Override
+	public BigDecimal toRn(IntegerIndex coord, int axis) {
+		return BigDecimal.valueOf(coord.get(axis));
+	}
+
 }

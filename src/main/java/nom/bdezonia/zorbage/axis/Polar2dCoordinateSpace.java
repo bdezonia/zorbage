@@ -37,8 +37,8 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class Polar2dCoordinateSystem
-	implements CoordinateSystem
+public class Polar2dCoordinateSpace
+	implements CoordinateSpace
 {
 	private final BigDecimal rUnit;
 	private final BigDecimal thetaUnit;
@@ -49,7 +49,7 @@ public class Polar2dCoordinateSystem
 	 * @param rUnit The spacing between r values.
 	 * @param thetaUnit The spacing between theta values (in radians).
 	 */
-	public Polar2dCoordinateSystem(BigDecimal rUnit, BigDecimal thetaUnit)
+	public Polar2dCoordinateSpace(BigDecimal rUnit, BigDecimal thetaUnit)
 	{
 		this.rUnit = rUnit;
 		this.thetaUnit = thetaUnit;
@@ -62,7 +62,7 @@ public class Polar2dCoordinateSystem
 	}
 
 	@Override
-	public BigDecimal coordinateValue(long[] coord, int axis) {
+	public BigDecimal toRn(long[] coord, int axis) {
 		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -74,7 +74,7 @@ public class Polar2dCoordinateSystem
 	}
 
 	@Override
-	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
+	public BigDecimal toRn(IntegerIndex coord, int axis) {
 		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {

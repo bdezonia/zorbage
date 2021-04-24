@@ -29,64 +29,33 @@ package nom.bdezonia.zorbage.axis;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-
-// Note: this class inspired by Nifti's header docs on their affine coord xform
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Affine3dCoordinateSystem
-	implements CoordinateSystem
+public class Cylindrical3dCoordinateSpace
+	implements CoordinateSpace
 {
-	private final BigDecimal x0;
-	private final BigDecimal x1;
-	private final BigDecimal x2;
-	private final BigDecimal x3;
-	private final BigDecimal y0;
-	private final BigDecimal y1;
-	private final BigDecimal y2;
-	private final BigDecimal y3;
-	private final BigDecimal z0;
-	private final BigDecimal z1;
-	private final BigDecimal z2;
-	private final BigDecimal z3;
+	private final BigDecimal rUnit;
+	private final BigDecimal thetaUnit;
+	private final BigDecimal zUnit;
 	private MathContext context;
 
 	/**
 	 * 
-	 * @param x0
-	 * @param x1
-	 * @param x2
-	 * @param x3
-	 * @param y0
-	 * @param y1
-	 * @param y2
-	 * @param y3
-	 * @param z0
-	 * @param z1
-	 * @param z2
-	 * @param z3
+	 * @param rUnit The spacing between r values.
+	 * @param thetaUnit The spacing between theta values (in radians).
+	 * @param zUnit The spacing between z values.
 	 */
-	public Affine3dCoordinateSystem(
-			BigDecimal x0, BigDecimal x1, BigDecimal x2, BigDecimal x3,
-			BigDecimal y0, BigDecimal y1, BigDecimal y2, BigDecimal y3,
-			BigDecimal z0, BigDecimal z1, BigDecimal z2, BigDecimal z3)
+	public Cylindrical3dCoordinateSpace(BigDecimal rUnit, BigDecimal thetaUnit, BigDecimal zUnit)
 	{
-		this.x0 = value(x0);
-		this.x1 = value(x1);
-		this.x2 = value(x2);
-		this.x3 = value(x3);
-		this.y0 = value(y0);
-		this.y1 = value(y1);
-		this.y2 = value(y2);
-		this.y3 = value(y3);
-		this.z0 = value(z0);
-		this.z1 = value(z1);
-		this.z2 = value(z2);
-		this.z3 = value(z3);
+		this.rUnit = rUnit;
+		this.thetaUnit = thetaUnit;
+		this.zUnit = zUnit;
 		this.context = new MathContext(20);
 	}
 	
@@ -96,32 +65,32 @@ public class Affine3dCoordinateSystem
 	}
 
 	@Override
-	public BigDecimal coordinateValue(long[] coord, int axis) {
+	public BigDecimal toRn(long[] coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(coord[0], coord[1], coord[2], x0, x1, x2, x3);
+			return x(coord[0], coord[1]);
 		}
 		else if (axis == 1) {
-			return transform(coord[0], coord[1], coord[2], y0, y1, y2, y3);
+			return y(coord[0], coord[1]);
 		}
 		else { // axis == 2
-			return transform(coord[0], coord[1], coord[2], z0, z1, z2, z3);
+			return z(coord[2]);
 		}
 	}
 
 	@Override
-	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
+	public BigDecimal toRn(IntegerIndex coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(coord.get(0), coord.get(1), coord.get(2), x0, x1, x2, x3);
+			return x(coord.get(0), coord.get(1));
 		}
 		else if (axis == 1) {
-			return transform(coord.get(0), coord.get(1), coord.get(2), y0, y1, y2, y3);
+			return x(coord.get(0), coord.get(1));
 		}
 		else { // axis == 2
-			return transform(coord.get(0), coord.get(1), coord.get(2), z0, z1, z2, z3);
+			return z(coord.get(2));
 		}
 	}
 
@@ -129,16 +98,19 @@ public class Affine3dCoordinateSystem
 		this.context = new MathContext(precision);
 	}
 	
-	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
-		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
-		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
-		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2, context));
-		return tmp.add(t3, context);
+	private BigDecimal x(long r, long th) {
+		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
+		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
 	}
-
-	private BigDecimal value(BigDecimal v) {
-		if (v == null)
-			return BigDecimal.ZERO;
-		return v;
+	
+	private BigDecimal y(long r, long th) {
+		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
+		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
+	}
+	
+	private BigDecimal z(long z) {
+		return zUnit.multiply(BigDecimal.valueOf(z), context);
 	}
 }
