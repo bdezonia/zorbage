@@ -53,15 +53,19 @@ public class ComputeRnBoundingBox {
 	 */
 	public static
 		void compute(DimensionedDataSource<?> data,
-						RModuleMember<HighPrecisionMember> min,
-						RModuleMember<HighPrecisionMember> max)
+						RModuleMember<HighPrecisionMember> mins,
+						RModuleMember<HighPrecisionMember> maxes)
 	{
-		HighPrecisionMember mn = G.HP.construct();
-		HighPrecisionMember mx = G.HP.construct();
+		HighPrecisionMember mn = G.HP.construct("1");
+		HighPrecisionMember mx = G.HP.construct("-1");
 		HighPrecisionMember tmp = G.HP.construct();
 		int numD = data.numDimensions();
-		min.alloc(numD);
-		max.alloc(numD);
+		mins.alloc(numD);
+		maxes.alloc(numD);
+		for (int i = 0; i < numD; i++) {
+			mins.setV(i, mn);
+			maxes.setV(i, mx);
+		}
 		CoordinateSpace cspace = data.getCoordinateSpace();
 		IntegerIndex idx = new IntegerIndex(numD);
 		SamplingIterator<IntegerIndex> iter = GridIterator.compute(data);
@@ -69,18 +73,18 @@ public class ComputeRnBoundingBox {
 			iter.next(idx);
 			for (int i = 0; i < numD; i++) {
 				tmp.setV(cspace.toRn(idx, i));
-				max.getV(i, mx);
-				min.getV(i, mn);
-				if (G.HP.isLess().call(mx,mn)) {
-					max.setV(i, mx);
-					min.setV(i, mn);
+				maxes.getV(i, mx);
+				mins.getV(i, mn);
+				if (G.HP.isLess().call(mx, mn)) {
+					maxes.setV(i, tmp);
+					mins.setV(i, tmp);
 				}
 				else {
 					if (G.HP.isLess().call(tmp, mn)) {
-						min.setV(i, tmp);
+						mins.setV(i, tmp);
 					}
 					if (G.HP.isGreater().call(tmp, mx)) {
-						max.setV(i, tmp);
+						maxes.setV(i, tmp);
 					}
 				}
 			}
