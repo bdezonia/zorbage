@@ -148,6 +148,10 @@ public class FindCompatibleType {
 		case BYTE:
 			if (components == 1)
 				return (T) G.INT8;
+			if (components == 3)
+				return (T) G.RGB;
+			if (components == 4)
+				return (T) G.ARGB;
 			break;
 		default:
 			throw new IllegalArgumentException("unknown primitive rep "+rep);
