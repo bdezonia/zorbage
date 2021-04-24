@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
+import nom.bdezonia.zorbage.axis.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -56,12 +56,14 @@ public class TestEstimateSpacing {
 		
 		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(G.DBL.construct(), dims);
 		
-		data.setAxisEquation(0, new StringDefinedAxisEquation("0.5 + 2*$0"));
-		data.setAxisEquation(1, new StringDefinedAxisEquation("0.6 + 3*$0"));
-		data.setAxisEquation(2, new StringDefinedAxisEquation("0.7 + 4*$0"));
-		data.setAxisEquation(3, new StringDefinedAxisEquation("0.8 + 5*$0"));
-		data.setAxisEquation(4, new StringDefinedAxisEquation("0.9 + 6*$0"));
+		BigDecimal[] scales = new BigDecimal[] {BigDecimal.valueOf(2),BigDecimal.valueOf(3),BigDecimal.valueOf(4),BigDecimal.valueOf(5),BigDecimal.valueOf(6)};
+		
+		BigDecimal[] offsets = new BigDecimal[] {BigDecimal.valueOf(0.5),BigDecimal.valueOf(0.6),BigDecimal.valueOf(0.7),BigDecimal.valueOf(0.8),BigDecimal.valueOf(0.9)};
 
+		LinearNdCoordinateSpace cspace = new LinearNdCoordinateSpace(scales, offsets);
+		
+		data.setCoordinateSpace(cspace);
+		
 		EstimateSpacing.compute(data, spacings);
 
 		HighPrecisionMember value = G.HP.construct();

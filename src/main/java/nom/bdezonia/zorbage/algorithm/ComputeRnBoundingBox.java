@@ -28,8 +28,10 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.RModuleMember;
+import nom.bdezonia.zorbage.axis.CoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
@@ -37,11 +39,11 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class BoundingBox {
+public class ComputeRnBoundingBox {
 
 	// do not instantiate
 	
-	private BoundingBox() { }
+	private ComputeRnBoundingBox() { }
 	
 	/**
 	 * 
@@ -54,16 +56,34 @@ public class BoundingBox {
 						RModuleMember<HighPrecisionMember> min,
 						RModuleMember<HighPrecisionMember> max)
 	{
-		HighPrecisionMember value = G.HP.construct();
+		HighPrecisionMember mn = G.HP.construct();
+		HighPrecisionMember mx = G.HP.construct();
+		HighPrecisionMember tmp = G.HP.construct();
 		int numD = data.numDimensions();
 		min.alloc(numD);
 		max.alloc(numD);
-		for (int i = 0; i < numD; i++) {
-			Procedure2<Long, HighPrecisionMember> axis = data.getAxisEquation(i);
-			axis.call(0L, value);
-			min.setV(i, value);
-			axis.call(data.dimension(i)-1, value);
-			max.setV(i, value);
+		CoordinateSpace cspace = data.getCoordinateSpace();
+		IntegerIndex idx = new IntegerIndex(numD);
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(data);
+		while (iter.hasNext()) {
+			iter.next(idx);
+			for (int i = 0; i < numD; i++) {
+				tmp.setV(cspace.toRn(idx, i));
+				max.getV(i, mx);
+				min.getV(i, mn);
+				if (G.HP.isLess().call(mx,mn)) {
+					max.setV(i, mx);
+					min.setV(i, mn);
+				}
+				else {
+					if (G.HP.isLess().call(tmp, mn)) {
+						min.setV(i, tmp);
+					}
+					if (G.HP.isGreater().call(tmp, mx)) {
+						max.setV(i, tmp);
+					}
+				}
+			}
 		}
 	}
 }

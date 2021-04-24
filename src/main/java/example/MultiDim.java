@@ -30,6 +30,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.DimensionalPermutation;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
+import nom.bdezonia.zorbage.axis.IdentityAxisEquation;
 import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
@@ -108,15 +109,13 @@ class MultiDim {
 		
 		HighPrecisionMember axisValue = G.HP.construct();
 		
-		Procedure2<Long, HighPrecisionMember> xAxisEqn = data.getAxisEquation(0);
+		Procedure2<Long, HighPrecisionMember> xAxisEqn = new IdentityAxisEquation();
 		
 		xAxisEqn.call(4L, axisValue);  // axisValue will equal 4
 		
 		// You can calibrate the axes to arbitrary precision with any equation you desire.
 		
-		data.setAxisEquation(0, new StringDefinedAxisEquation("$0 * 5 - 3"));  // out = in * 5 - 3
-		
-		xAxisEqn = data.getAxisEquation(0);
+		xAxisEqn = new StringDefinedAxisEquation("$0 * 5 - 3");  // out = in * 5 - 3
 		
 		xAxisEqn.call(4L, axisValue);  // axisValue will equal 4 * 5 - 3 (= 17)
 		

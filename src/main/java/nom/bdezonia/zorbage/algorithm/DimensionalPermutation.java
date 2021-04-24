@@ -26,8 +26,12 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigDecimal;
+
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.axis.IdentityCoordinateSpace;
+import nom.bdezonia.zorbage.axis.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -92,10 +96,31 @@ public class DimensionalPermutation {
 		output.setName(input.getName());
 		output.setValueType(input.getValueType());
 		output.setValueUnit(input.getValueUnit());
-		for (int i = 0; i < numD; i++) {
-			output.setAxisEquation(permutation[i], input.getAxisEquation(i));
-			output.setAxisType(permutation[i], input.getAxisType(i));
-			output.setAxisUnit(permutation[i], input.getAxisUnit(i));
+		if (input.getCoordinateSpace() instanceof IdentityCoordinateSpace)
+		{
+			output.setCoordinateSpace(new IdentityCoordinateSpace(numD));
+			for (int i = 0; i < numD; i++) {
+				output.setAxisType(permutation[i], input.getAxisType(i));
+				output.setAxisUnit(permutation[i], input.getAxisUnit(i));
+			}
+		}
+		else if (input.getCoordinateSpace() instanceof LinearNdCoordinateSpace)
+		{
+			LinearNdCoordinateSpace inSpace = (LinearNdCoordinateSpace) input.getCoordinateSpace();
+			BigDecimal[] scales = new BigDecimal[numD];
+			BigDecimal[] offsets = new BigDecimal[numD];
+			for (int i = 0; i < numD; i++) {
+				scales[permutation[i]] = inSpace.getScale(i);
+				offsets[permutation[i]] = inSpace.getOffset(i);
+				output.setAxisType(permutation[i], input.getAxisType(i));
+				output.setAxisUnit(permutation[i], input.getAxisUnit(i));
+			}
+			LinearNdCoordinateSpace outSpace = new LinearNdCoordinateSpace(scales, offsets);
+			output.setCoordinateSpace(outSpace);
+		}
+		else // some random space : we can't permute coord space
+		{
+			throw new IllegalArgumentException("do not know how to permute this coordinate space");
 		}
 		
 		// copy all the sample data

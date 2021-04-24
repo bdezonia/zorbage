@@ -74,6 +74,14 @@ public class LinearNdCoordinateSpace
 		this.context = new MathContext(precision);
 	}
 
+	public BigDecimal getScale(int axis) {
+		return scales[axis];
+	}
+
+	public BigDecimal getOffset(int axis) {
+		return offsets[axis];
+	}
+	
 	private BigDecimal value(BigDecimal v) {
 		if (v == null)
 			return BigDecimal.ZERO;

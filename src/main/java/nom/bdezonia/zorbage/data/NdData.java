@@ -26,16 +26,13 @@
  */
 package nom.bdezonia.zorbage.data;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import nom.bdezonia.zorbage.axis.IdentityAxisEquation;
+import nom.bdezonia.zorbage.axis.CoordinateSpace;
+import nom.bdezonia.zorbage.axis.IdentityCoordinateSpace;
 import nom.bdezonia.zorbage.misc.LongUtils;
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -51,7 +48,7 @@ public class NdData<U>
 	private String source;
 	private final long[] dims;
 	private final IndexedDataSource<U> data;
-	private final List<Procedure2<Long,HighPrecisionMember>> axisEqns;
+	private CoordinateSpace space;
 	private final String[] axisUnits;
 	private final String[] axisTypes;
 	private String valueType;
@@ -77,9 +74,7 @@ public class NdData<U>
 			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
 		this.dims = dims;
 		this.data = data;
-		this.axisEqns = new ArrayList<Procedure2<Long,HighPrecisionMember>>();
-		for (int i = 0; i < dims.length; i++)
-			this.axisEqns.add(new IdentityAxisEquation());
+		this.space = new IdentityCoordinateSpace(dims.length);
 		this.axisUnits = new String[dims.length];
 		this.axisTypes = new String[dims.length];
 		this.valueType = null;
@@ -110,13 +105,15 @@ public class NdData<U>
 	}
 
 	@Override
-	public Procedure2<Long,HighPrecisionMember> getAxisEquation(int i) {
-		return this.axisEqns.get(i);
+	public CoordinateSpace getCoordinateSpace() {
+		return space;
 	}
 	
 	@Override
-	public void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc) {
-		this.axisEqns.set(i, proc);
+	public void setCoordinateSpace(CoordinateSpace space) {
+		if (space.numDimensions() != numDimensions())
+			throw new IllegalArgumentException("coord space dimensions do not match data dimensions");
+		this.space = space;
 	}
 	
 	@Override

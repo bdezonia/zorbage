@@ -28,12 +28,12 @@ package nom.bdezonia.zorbage.data;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 import java.util.Map;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.axis.CoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -87,16 +87,6 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 		return dd.numElements();
 	}
 
-	@Override
-	public Procedure2<Long,HighPrecisionMember> getAxisEquation(int i) {
-		return dd.getAxisEquation(i);
-	}
-	
-	@Override
-	public void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc) {
-		dd.setAxisEquation(i, proc);
-	}
-	
 	@Override
 	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
 		return dd.piped(dim, coord);
@@ -207,5 +197,15 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	@Override
 	public void setValueType(String type) {
 		dd.setValueType(type);
+	}
+
+	@Override
+	public CoordinateSpace getCoordinateSpace() {
+		return dd.getCoordinateSpace();
+	}
+
+	@Override
+	public void setCoordinateSpace(CoordinateSpace cspace) {
+		dd.setCoordinateSpace(cspace);
 	}
 }

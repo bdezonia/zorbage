@@ -26,14 +26,13 @@
  */
 package nom.bdezonia.zorbage.data;
 
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 import java.util.Map;
 
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.algebra.StorageType;
+import nom.bdezonia.zorbage.axis.CoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
 
@@ -88,14 +87,14 @@ public interface DimensionedDataSource<U>
 	void setValueUnit(String unit);
 	
 	/**
-	 * Get the equation for a given dim that scales the long spaced grid into high precision real space
+	 * Get the coordinate space for mapping grid values to Rn coord space
 	 */
-	Procedure2<Long,HighPrecisionMember> getAxisEquation(int i);
+	CoordinateSpace getCoordinateSpace();
 	
 	/**
-	 * Set the equation for a given dim that scales the long spaced grid into high precision real space
+	 * Get the coordinate space for mapping grid values to Rn coord space
 	 */
-	void setAxisEquation(int i, Procedure2<Long,HighPrecisionMember> proc);
+	void setCoordinateSpace(CoordinateSpace cspace);
 	
 	/**
 	 * Get the unit along a given dimension's axis. For example, "cm", "mile", "parsec", etc. 

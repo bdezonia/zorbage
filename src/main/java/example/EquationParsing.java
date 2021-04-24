@@ -130,22 +130,15 @@ class EquationParsing {
 	
 	void example2() {
 		
-		long[] dims = new long[]{100, 100};
-		
-		DimensionedDataSource<Float64Member> data =
-				DimensionedStorage.allocate(G.DBL.construct(), dims);
-		
-		data.setAxisEquation(
-				0,
+		StringDefinedAxisEquation a = 
 				new StringDefinedAxisEquation(
 					"56.30417 * $0 + 13.201"  // a linear scaling
-				));
+				);
 
-		data.setAxisEquation(
-				1,
+		StringDefinedAxisEquation b = 
 				new StringDefinedAxisEquation(
 						"12.4367 * log($0) + 0.003"  // a log scaling
-				));
+				);
 		
 		HighPrecisionMember calibratedValueX = G.HP.construct();
 		
@@ -153,9 +146,9 @@ class EquationParsing {
 		
 		// we're going to look at the calibrated values for point (8, 14)
 		
-		data.getAxisEquation(0).call(8L, calibratedValueX);  // calibrated value for x = 8
+		a.call(8L, calibratedValueX);  // calibrated value for x = 8
 		
-		data.getAxisEquation(1).call(14L, calibratedValueY);  // calibrated value for y = 14
+		b.call(14L, calibratedValueY);  // calibrated value for y = 14
 	}
 }
 
