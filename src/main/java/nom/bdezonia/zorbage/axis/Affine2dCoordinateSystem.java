@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -44,7 +45,8 @@ public class Affine2dCoordinateSystem
 	private final BigDecimal y0;
 	private final BigDecimal y1;
 	private final BigDecimal y2;
-
+	private MathContext context;
+	
 	/**
 	 * 
 	 * @param x0
@@ -64,6 +66,7 @@ public class Affine2dCoordinateSystem
 		this.y0 = value(y0);
 		this.y1 = value(y1);
 		this.y2 = value(y2);
+		this.context = new MathContext(20);
 	}
 	
 	@Override
@@ -95,9 +98,13 @@ public class Affine2dCoordinateSystem
 		}
 	}
 
+	public void setPrecision(int precision) {
+		this.context = new MathContext(precision);
+	}
+
 	private BigDecimal transform(long i, long j, BigDecimal t0, BigDecimal t1, BigDecimal t2) {
-		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0);
-		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1));
+		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
+		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
 		return tmp.add(t2);
 	}
 

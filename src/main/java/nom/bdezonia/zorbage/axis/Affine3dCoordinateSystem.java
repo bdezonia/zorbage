@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -52,6 +53,7 @@ public class Affine3dCoordinateSystem
 	private final BigDecimal z1;
 	private final BigDecimal z2;
 	private final BigDecimal z3;
+	private MathContext context;
 
 	/**
 	 * 
@@ -85,6 +87,7 @@ public class Affine3dCoordinateSystem
 		this.z1 = value(z1);
 		this.z2 = value(z2);
 		this.z3 = value(z3);
+		this.context = new MathContext(20);
 	}
 	
 	@Override
@@ -121,12 +124,16 @@ public class Affine3dCoordinateSystem
 			return transform(coord.get(0), coord.get(1), coord.get(2), z0, z1, z2, z3);
 		}
 	}
+
+	public void setPrecision(int precision) {
+		this.context = new MathContext(precision);
+	}
 	
 	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
-		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0);
-		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1));
-		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2));
-		return tmp.add(t3);
+		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
+		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
+		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2, context));
+		return tmp.add(t3, context);
 	}
 
 	private BigDecimal value(BigDecimal v) {

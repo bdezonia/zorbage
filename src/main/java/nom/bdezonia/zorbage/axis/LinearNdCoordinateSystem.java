@@ -27,6 +27,7 @@
 package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
@@ -40,6 +41,7 @@ public class LinearNdCoordinateSystem
 {
 	private final BigDecimal[] scales;
 	private final BigDecimal[] offsets;
+	private MathContext context;
 	
 	public LinearNdCoordinateSystem(BigDecimal[] scales, BigDecimal[] offsets) {
 		if (scales.length != offsets.length)
@@ -50,6 +52,7 @@ public class LinearNdCoordinateSystem
 			this.scales[i] = value(scales[i]);
 			this.offsets[i] = value(offsets[i]);
 		}
+		this.context = new MathContext(20);
 	}
 
 	@Override
@@ -59,12 +62,16 @@ public class LinearNdCoordinateSystem
 
 	@Override
 	public BigDecimal coordinateValue(long[] coord, int axis) {
-		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis]).add(offsets[axis]);
+		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
 	@Override
 	public BigDecimal coordinateValue(IntegerIndex coord, int axis) {
-		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis]).add(offsets[axis]);
+		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
+	}
+
+	public void setPrecision(int precision) {
+		this.context = new MathContext(precision);
 	}
 
 	private BigDecimal value(BigDecimal v) {

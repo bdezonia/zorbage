@@ -27,7 +27,9 @@
 package nom.bdezonia.zorbage.axis;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -41,18 +43,20 @@ public class Cylindrical3dCoordinateSystem
 	private final BigDecimal rUnit;
 	private final BigDecimal thetaUnit;
 	private final BigDecimal zUnit;
+	private MathContext context;
 
 	/**
 	 * 
 	 * @param rUnit The spacing between r values.
 	 * @param thetaUnit The spacing between theta values (in radians).
-	 * @param maxZs The spacing between z values.
+	 * @param zUnit The spacing between z values.
 	 */
 	public Cylindrical3dCoordinateSystem(BigDecimal rUnit, BigDecimal thetaUnit, BigDecimal zUnit)
 	{
 		this.rUnit = rUnit;
 		this.thetaUnit = thetaUnit;
 		this.zUnit = zUnit;
+		this.context = new MathContext(20);
 	}
 	
 	@Override
@@ -65,13 +69,13 @@ public class Cylindrical3dCoordinateSystem
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(rUnit, coord[0]);
+			return x(coord[0], coord[1]);
 		}
 		else if (axis == 1) {
-			return transform(thetaUnit, coord[1]);
+			return y(coord[0], coord[1]);
 		}
 		else { // axis == 2
-			return transform(zUnit, coord[2]);
+			return z(coord[2]);
 		}
 	}
 
@@ -80,17 +84,33 @@ public class Cylindrical3dCoordinateSystem
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(rUnit, coord.get(0));
+			return x(coord.get(0), coord.get(1));
 		}
 		else if (axis == 1) {
-			return transform(thetaUnit, coord.get(1));
+			return x(coord.get(0), coord.get(1));
 		}
 		else { // axis == 2
-			return transform(zUnit, coord.get(2));
+			return z(coord.get(2));
 		}
 	}
+
+	public void setPrecision(int precision) {
+		this.context = new MathContext(precision);
+	}
 	
-	private BigDecimal transform(BigDecimal unit, long i) {
-		return unit.multiply(BigDecimal.valueOf(i));
+	private BigDecimal x(long r, long th) {
+		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
+		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
+	}
+	
+	private BigDecimal y(long r, long th) {
+		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
+		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
+	}
+	
+	private BigDecimal z(long z) {
+		return zUnit.multiply(BigDecimal.valueOf(z), context);
 	}
 }
