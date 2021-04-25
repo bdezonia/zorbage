@@ -34,8 +34,8 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
-import nom.bdezonia.zorbage.axis.IdentityCoordinateSpace;
-import nom.bdezonia.zorbage.axis.LinearNdCoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.IdentityCoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;

@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -40,52 +40,78 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class LinearNdCoordinateSpace
+public class Affine2dCoordinateSpace
 	implements CoordinateSpace
 {
-	private final BigDecimal[] scales;
-	private final BigDecimal[] offsets;
+	private final BigDecimal x0;
+	private final BigDecimal x1;
+	private final BigDecimal x2;
+	private final BigDecimal y0;
+	private final BigDecimal y1;
+	private final BigDecimal y2;
 	private MathContext context;
 	
-	public LinearNdCoordinateSpace(BigDecimal[] scales, BigDecimal[] offsets) {
-		if (scales.length != offsets.length)
-			throw new IllegalArgumentException("inconsistent definition of a linear coord system");
-		this.scales = new BigDecimal[scales.length];
-		this.offsets = new BigDecimal[offsets.length];
-		for (int i = 0; i < scales.length; i++) {
-			this.scales[i] = value(scales[i]);
-			this.offsets[i] = value(offsets[i]);
-		}
+	/**
+	 * 
+	 * @param x0
+	 * @param x1
+	 * @param x2
+	 * @param y0
+	 * @param y1
+	 * @param y2
+	 */
+	public Affine2dCoordinateSpace(
+			BigDecimal x0, BigDecimal x1, BigDecimal x2,
+			BigDecimal y0, BigDecimal y1, BigDecimal y2)
+	{
+		this.x0 = value(x0);
+		this.x1 = value(x1);
+		this.x2 = value(x2);
+		this.y0 = value(y0);
+		this.y1 = value(y1);
+		this.y2 = value(y2);
 		this.context = new MathContext(20);
 	}
-
+	
 	@Override
 	public int numDimensions() {
-		return scales.length;
+		return 2;
 	}
 
 	@Override
 	public BigDecimal toRn(long[] coord, int axis) {
-		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
+		if (axis < 0 || axis > 1)
+			throw new IllegalArgumentException("axis out of bounds error");
+		else if (axis == 0) {
+			return transform(coord[0], coord[1], x0, x1, x2);
+		}
+		else { // axis == 1
+			return transform(coord[0], coord[1], y0, y1, y2);
+		}
 	}
 
 	@Override
 	public BigDecimal toRn(IntegerIndex coord, int axis) {
-		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
+		if (axis < 0 || axis > 1)
+			throw new IllegalArgumentException("axis out of bounds error");
+		else if (axis == 0) {
+			return transform(coord.get(0), coord.get(1), x0, x1, x2);
+		}
+		else { // axis == 1)
+			return transform(coord.get(0), coord.get(1), y0, y1, y2);
+		}
 	}
 
 	public void setPrecision(int precision) {
 		this.context = new MathContext(precision);
 	}
 
-	public BigDecimal getScale(int axis) {
-		return scales[axis];
+	private BigDecimal transform(long i, long j, BigDecimal t0, BigDecimal t1, BigDecimal t2) {
+		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
+		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
+		return tmp.add(t2, context);
 	}
 
-	public BigDecimal getOffset(int axis) {
-		return offsets[axis];
-	}
-	
 	private BigDecimal value(BigDecimal v) {
 		if (v == null)
 			return BigDecimal.ZERO;

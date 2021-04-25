@@ -28,69 +28,38 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-
-// Note: this class inspired by Nifti's header docs on their affine coord xform
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class Affine3dCoordinateSpace
+public class Spherical3dCoordinateSpace
 	implements CoordinateSpace
 {
-	private final BigDecimal x0;
-	private final BigDecimal x1;
-	private final BigDecimal x2;
-	private final BigDecimal x3;
-	private final BigDecimal y0;
-	private final BigDecimal y1;
-	private final BigDecimal y2;
-	private final BigDecimal y3;
-	private final BigDecimal z0;
-	private final BigDecimal z1;
-	private final BigDecimal z2;
-	private final BigDecimal z3;
+	private final BigDecimal rhoUnit;
+	private final BigDecimal thetaUnit;
+	private final BigDecimal phiUnit;
 	private MathContext context;
 
 	/**
 	 * 
-	 * @param x0
-	 * @param x1
-	 * @param x2
-	 * @param x3
-	 * @param y0
-	 * @param y1
-	 * @param y2
-	 * @param y3
-	 * @param z0
-	 * @param z1
-	 * @param z2
-	 * @param z3
+	 * @param rhoUnit The spacing between rho values.
+	 * @param thetaUnit The spacing between theta values (in radians).
+	 * @param phiUnit The spacing between phi values (in radians).
 	 */
-	public Affine3dCoordinateSpace(
-			BigDecimal x0, BigDecimal x1, BigDecimal x2, BigDecimal x3,
-			BigDecimal y0, BigDecimal y1, BigDecimal y2, BigDecimal y3,
-			BigDecimal z0, BigDecimal z1, BigDecimal z2, BigDecimal z3)
+	public Spherical3dCoordinateSpace(BigDecimal rhoUnit, BigDecimal thetaUnit, BigDecimal phiUnit)
 	{
-		this.x0 = value(x0);
-		this.x1 = value(x1);
-		this.x2 = value(x2);
-		this.x3 = value(x3);
-		this.y0 = value(y0);
-		this.y1 = value(y1);
-		this.y2 = value(y2);
-		this.y3 = value(y3);
-		this.z0 = value(z0);
-		this.z1 = value(z1);
-		this.z2 = value(z2);
-		this.z3 = value(z3);
+		this.rhoUnit = rhoUnit;
+		this.thetaUnit = thetaUnit;
+		this.phiUnit = phiUnit;
 		this.context = new MathContext(20);
 	}
 	
@@ -104,13 +73,13 @@ public class Affine3dCoordinateSpace
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(coord[0], coord[1], coord[2], x0, x1, x2, x3);
+			return x(coord[0], coord[1], coord[2]);
 		}
 		else if (axis == 1) {
-			return transform(coord[0], coord[1], coord[2], y0, y1, y2, y3);
+			return y(coord[0], coord[1], coord[2]);
 		}
 		else { // axis == 2
-			return transform(coord[0], coord[1], coord[2], z0, z1, z2, z3);
+			return z(coord[0], coord[2]);
 		}
 	}
 
@@ -119,13 +88,13 @@ public class Affine3dCoordinateSpace
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return transform(coord.get(0), coord.get(1), coord.get(2), x0, x1, x2, x3);
+			return x(coord.get(0), coord.get(1), coord.get(2));
 		}
 		else if (axis == 1) {
-			return transform(coord.get(0), coord.get(1), coord.get(2), y0, y1, y2, y3);
+			return y(coord.get(0), coord.get(1), coord.get(2));
 		}
 		else { // axis == 2
-			return transform(coord.get(0), coord.get(1), coord.get(2), z0, z1, z2, z3);
+			return z(coord.get(0), coord.get(2));
 		}
 	}
 
@@ -133,16 +102,25 @@ public class Affine3dCoordinateSpace
 		this.context = new MathContext(precision);
 	}
 	
-	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
-		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
-		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
-		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2, context));
-		return tmp.add(t3, context);
+	private BigDecimal x(long rh, long th, long ph) {
+		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
+		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
+		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.cos(thVal, context));
+		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
 	}
-
-	private BigDecimal value(BigDecimal v) {
-		if (v == null)
-			return BigDecimal.ZERO;
-		return v;
+	
+	private BigDecimal y(long rh, long th, long ph) {
+		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
+		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
+		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.sin(thVal, context));
+		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
+	}
+	
+	private BigDecimal z(long rh, long ph) {
+		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
+		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
+		return rhoVal.multiply(BigDecimalMath.cos(phiVal, context));
 	}
 }

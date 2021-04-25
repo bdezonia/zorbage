@@ -28,12 +28,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -41,80 +40,55 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class Cylindrical3dCoordinateSpace
+public class LinearNdCoordinateSpace
 	implements CoordinateSpace
 {
-	private final BigDecimal rUnit;
-	private final BigDecimal thetaUnit;
-	private final BigDecimal zUnit;
+	private final BigDecimal[] scales;
+	private final BigDecimal[] offsets;
 	private MathContext context;
-
-	/**
-	 * 
-	 * @param rUnit The spacing between r values.
-	 * @param thetaUnit The spacing between theta values (in radians).
-	 * @param zUnit The spacing between z values.
-	 */
-	public Cylindrical3dCoordinateSpace(BigDecimal rUnit, BigDecimal thetaUnit, BigDecimal zUnit)
-	{
-		this.rUnit = rUnit;
-		this.thetaUnit = thetaUnit;
-		this.zUnit = zUnit;
+	
+	public LinearNdCoordinateSpace(BigDecimal[] scales, BigDecimal[] offsets) {
+		if (scales.length != offsets.length)
+			throw new IllegalArgumentException("inconsistent definition of a linear coord system");
+		this.scales = new BigDecimal[scales.length];
+		this.offsets = new BigDecimal[offsets.length];
+		for (int i = 0; i < scales.length; i++) {
+			this.scales[i] = value(scales[i]);
+			this.offsets[i] = value(offsets[i]);
+		}
 		this.context = new MathContext(20);
 	}
-	
+
 	@Override
 	public int numDimensions() {
-		return 3;
+		return scales.length;
 	}
 
 	@Override
 	public BigDecimal toRn(long[] coord, int axis) {
-		if (axis < 0 || axis > 2)
-			throw new IllegalArgumentException("axis out of bounds error");
-		else if (axis == 0) {
-			return x(coord[0], coord[1]);
-		}
-		else if (axis == 1) {
-			return y(coord[0], coord[1]);
-		}
-		else { // axis == 2
-			return z(coord[2]);
-		}
+		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
 	@Override
 	public BigDecimal toRn(IntegerIndex coord, int axis) {
-		if (axis < 0 || axis > 2)
-			throw new IllegalArgumentException("axis out of bounds error");
-		else if (axis == 0) {
-			return x(coord.get(0), coord.get(1));
-		}
-		else if (axis == 1) {
-			return x(coord.get(0), coord.get(1));
-		}
-		else { // axis == 2
-			return z(coord.get(2));
-		}
+		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
 	public void setPrecision(int precision) {
 		this.context = new MathContext(precision);
 	}
-	
-	private BigDecimal x(long r, long th) {
-		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
-		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
+
+	public BigDecimal getScale(int axis) {
+		return scales[axis];
+	}
+
+	public BigDecimal getOffset(int axis) {
+		return offsets[axis];
 	}
 	
-	private BigDecimal y(long r, long th) {
-		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
-		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
-	}
-	
-	private BigDecimal z(long z) {
-		return zUnit.multiply(BigDecimal.valueOf(z), context);
+	private BigDecimal value(BigDecimal v) {
+		if (v == null)
+			return BigDecimal.ZERO;
+		return v;
 	}
 }

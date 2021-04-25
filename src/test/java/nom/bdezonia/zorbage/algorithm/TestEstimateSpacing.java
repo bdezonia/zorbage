@@ -37,7 +37,7 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.axis.LinearNdCoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;

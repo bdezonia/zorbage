@@ -36,7 +36,7 @@ import java.util.Map;
 
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.algebra.StorageType;
-import nom.bdezonia.zorbage.axis.CoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
 

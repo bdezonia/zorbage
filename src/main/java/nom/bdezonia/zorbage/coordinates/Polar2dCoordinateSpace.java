@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -41,60 +41,51 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class Spherical3dCoordinateSpace
+public class Polar2dCoordinateSpace
 	implements CoordinateSpace
 {
-	private final BigDecimal rhoUnit;
+	private final BigDecimal rUnit;
 	private final BigDecimal thetaUnit;
-	private final BigDecimal phiUnit;
 	private MathContext context;
 
 	/**
 	 * 
-	 * @param rhoUnit The spacing between rho values.
+	 * @param rUnit The spacing between r values.
 	 * @param thetaUnit The spacing between theta values (in radians).
-	 * @param phiUnit The spacing between phi values (in radians).
 	 */
-	public Spherical3dCoordinateSpace(BigDecimal rhoUnit, BigDecimal thetaUnit, BigDecimal phiUnit)
+	public Polar2dCoordinateSpace(BigDecimal rUnit, BigDecimal thetaUnit)
 	{
-		this.rhoUnit = rhoUnit;
+		this.rUnit = rUnit;
 		this.thetaUnit = thetaUnit;
-		this.phiUnit = phiUnit;
 		this.context = new MathContext(20);
 	}
 	
 	@Override
 	public int numDimensions() {
-		return 3;
+		return 2;
 	}
 
 	@Override
 	public BigDecimal toRn(long[] coord, int axis) {
-		if (axis < 0 || axis > 2)
+		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return x(coord[0], coord[1], coord[2]);
+			return x(coord[0], coord[1]);
 		}
-		else if (axis == 1) {
-			return y(coord[0], coord[1], coord[2]);
-		}
-		else { // axis == 2
-			return z(coord[0], coord[2]);
+		else { // axis == 1
+			return y(coord[0], coord[1]);
 		}
 	}
 
 	@Override
 	public BigDecimal toRn(IntegerIndex coord, int axis) {
-		if (axis < 0 || axis > 2)
+		if (axis < 0 || axis > 1)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
-			return x(coord.get(0), coord.get(1), coord.get(2));
+			return x(coord.get(0), coord.get(1));
 		}
-		else if (axis == 1) {
-			return y(coord.get(0), coord.get(1), coord.get(2));
-		}
-		else { // axis == 2
-			return z(coord.get(0), coord.get(2));
+		else { // axis == 1
+			return y(coord.get(0), coord.get(1));
 		}
 	}
 
@@ -102,25 +93,15 @@ public class Spherical3dCoordinateSpace
 		this.context = new MathContext(precision);
 	}
 	
-	private BigDecimal x(long rh, long th, long ph) {
-		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
-		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
-		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.cos(thVal, context));
-		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
+	private BigDecimal x(long r, long th) {
+		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
+		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
 	}
 	
-	private BigDecimal y(long rh, long th, long ph) {
-		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
-		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
-		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.sin(thVal, context));
-		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
-	}
-	
-	private BigDecimal z(long rh, long ph) {
-		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
-		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
-		return rhoVal.multiply(BigDecimalMath.cos(phiVal, context));
+	private BigDecimal y(long r, long th) {
+		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
+		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
+		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
 	}
 }

@@ -33,11 +33,11 @@ package nom.bdezonia.zorbage.data;
 import java.util.HashMap;
 import java.util.Map;
 
-import nom.bdezonia.zorbage.axis.CoordinateSpace;
-import nom.bdezonia.zorbage.axis.IdentityCoordinateSpace;
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.IdentityCoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**

@@ -28,12 +28,10 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -41,67 +39,30 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class Polar2dCoordinateSpace
+public class IdentityCoordinateSpace
 	implements CoordinateSpace
 {
-	private final BigDecimal rUnit;
-	private final BigDecimal thetaUnit;
-	private MathContext context;
-
-	/**
-	 * 
-	 * @param rUnit The spacing between r values.
-	 * @param thetaUnit The spacing between theta values (in radians).
-	 */
-	public Polar2dCoordinateSpace(BigDecimal rUnit, BigDecimal thetaUnit)
-	{
-		this.rUnit = rUnit;
-		this.thetaUnit = thetaUnit;
-		this.context = new MathContext(20);
+	private final int numDims;
+	
+	public IdentityCoordinateSpace(int numDims) {
+		if (numDims < 0)
+			throw new IllegalArgumentException("coordinate system dimensionality must be >= 0");
+		this.numDims = numDims;
 	}
 	
 	@Override
 	public int numDimensions() {
-		return 2;
+		return numDims;
 	}
 
 	@Override
 	public BigDecimal toRn(long[] coord, int axis) {
-		if (axis < 0 || axis > 1)
-			throw new IllegalArgumentException("axis out of bounds error");
-		else if (axis == 0) {
-			return x(coord[0], coord[1]);
-		}
-		else { // axis == 1
-			return y(coord[0], coord[1]);
-		}
+		return BigDecimal.valueOf(coord[axis]);
 	}
 
 	@Override
 	public BigDecimal toRn(IntegerIndex coord, int axis) {
-		if (axis < 0 || axis > 1)
-			throw new IllegalArgumentException("axis out of bounds error");
-		else if (axis == 0) {
-			return x(coord.get(0), coord.get(1));
-		}
-		else { // axis == 1
-			return y(coord.get(0), coord.get(1));
-		}
+		return BigDecimal.valueOf(coord.get(axis));
 	}
 
-	public void setPrecision(int precision) {
-		this.context = new MathContext(precision);
-	}
-	
-	private BigDecimal x(long r, long th) {
-		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
-		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
-	}
-	
-	private BigDecimal y(long r, long th) {
-		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
-		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
-	}
 }

@@ -33,7 +33,7 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
-import nom.bdezonia.zorbage.axis.StringDefinedAxisEquation;
+import nom.bdezonia.zorbage.coordinates.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.procedure.Procedure;

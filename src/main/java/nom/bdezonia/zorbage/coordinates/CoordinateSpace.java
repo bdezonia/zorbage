@@ -28,10 +28,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import java.math.BigDecimal;
 
+import nom.bdezonia.zorbage.algebra.DimensionCount;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -39,30 +40,22 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class IdentityCoordinateSpace
-	implements CoordinateSpace
+public interface CoordinateSpace
+	extends DimensionCount
 {
-	private final int numDims;
-	
-	public IdentityCoordinateSpace(int numDims) {
-		if (numDims < 0)
-			throw new IllegalArgumentException("coordinate system dimensionality must be >= 0");
-		this.numDims = numDims;
-	}
-	
-	@Override
-	public int numDimensions() {
-		return numDims;
-	}
+	/**
+	 * 
+	 * @param coord A set of long valued coordinates within the coordinate space
+	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
+	 * @return The real coordinate value along the desired axis for the given coordinate
+	 */
+	BigDecimal toRn(long[] coord, int axis);
 
-	@Override
-	public BigDecimal toRn(long[] coord, int axis) {
-		return BigDecimal.valueOf(coord[axis]);
-	}
-
-	@Override
-	public BigDecimal toRn(IntegerIndex coord, int axis) {
-		return BigDecimal.valueOf(coord.get(axis));
-	}
-
+	/**
+	 * 
+	 * @param coord A set of long valued coordinates within the coordinate space
+	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
+	 * @return The real coordinate value along the desired axis for the given coordinate
+	 */
+	BigDecimal toRn(IntegerIndex coord, int axis);
 }

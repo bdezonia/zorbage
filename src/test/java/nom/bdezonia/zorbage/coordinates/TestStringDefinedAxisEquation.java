@@ -28,13 +28,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.axis;
+package nom.bdezonia.zorbage.coordinates;
 
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.coordinates.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**

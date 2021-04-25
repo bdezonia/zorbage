@@ -32,7 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.RModuleMember;
-import nom.bdezonia.zorbage.axis.CoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
