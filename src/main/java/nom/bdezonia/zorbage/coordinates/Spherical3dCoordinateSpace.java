@@ -69,7 +69,7 @@ public class Spherical3dCoordinateSpace
 	}
 
 	@Override
-	public BigDecimal toRn(long[] coord, int axis) {
+	public BigDecimal project(long[] coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -84,7 +84,7 @@ public class Spherical3dCoordinateSpace
 	}
 
 	@Override
-	public BigDecimal toRn(IntegerIndex coord, int axis) {
+	public BigDecimal project(IntegerIndex coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -95,6 +95,22 @@ public class Spherical3dCoordinateSpace
 		}
 		else { // axis == 2
 			return z(coord.get(0), coord.get(2));
+		}
+	}
+
+	@Override
+	public void project(long[] coord, BigDecimal[] output) {
+		
+		for (int i = 0; i < numDimensions(); i++) {
+			output[i] = project(coord, i);
+		}
+	}
+
+	@Override
+	public void project(IntegerIndex coord, BigDecimal[] output) {
+		
+		for (int i = 0; i < numDimensions(); i++) {
+			output[i] = project(coord, i);
 		}
 	}
 

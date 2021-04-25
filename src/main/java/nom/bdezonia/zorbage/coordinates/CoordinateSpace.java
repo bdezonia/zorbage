@@ -49,7 +49,7 @@ public interface CoordinateSpace
 	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
 	 * @return The real coordinate value along the desired axis for the given coordinate
 	 */
-	BigDecimal toRn(long[] coord, int axis);
+	BigDecimal project(long[] coord, int axis);
 
 	/**
 	 * 
@@ -57,5 +57,19 @@ public interface CoordinateSpace
 	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
 	 * @return The real coordinate value along the desired axis for the given coordinate
 	 */
-	BigDecimal toRn(IntegerIndex coord, int axis);
+	BigDecimal project(IntegerIndex coord, int axis);
+	
+	/**
+	 * 
+	 * @param coord A set of long valued coordinates within the coordinate space
+	 * @param output The output point that contains the coordinates after projection
+	 */
+	void project(long[] coord, BigDecimal[] output);
+	
+	/**
+	 * 
+	 * @param coord A set of long valued coordinates within the coordinate space
+	 * @param output The output point that contains the coordinates after projection
+	 */
+	void project(IntegerIndex coord, BigDecimal[] output);
 }

@@ -100,7 +100,7 @@ public class Affine3dCoordinateSpace
 	}
 
 	@Override
-	public BigDecimal toRn(long[] coord, int axis) {
+	public BigDecimal project(long[] coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -115,7 +115,7 @@ public class Affine3dCoordinateSpace
 	}
 
 	@Override
-	public BigDecimal toRn(IntegerIndex coord, int axis) {
+	public BigDecimal project(IntegerIndex coord, int axis) {
 		if (axis < 0 || axis > 2)
 			throw new IllegalArgumentException("axis out of bounds error");
 		else if (axis == 0) {
@@ -129,10 +129,26 @@ public class Affine3dCoordinateSpace
 		}
 	}
 
+	@Override
+	public void project(long[] coord, BigDecimal[] output) {
+		
+		for (int i = 0; i < numDimensions(); i++) {
+			output[i] = project(coord, i);
+		}
+	}
+
+	@Override
+	public void project(IntegerIndex coord, BigDecimal[] output) {
+		
+		for (int i = 0; i < numDimensions(); i++) {
+			output[i] = project(coord, i);
+		}
+	}
+
 	public void setPrecision(int precision) {
 		this.context = new MathContext(precision);
 	}
-	
+
 	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));

@@ -65,13 +65,29 @@ public class LinearNdCoordinateSpace
 	}
 
 	@Override
-	public BigDecimal toRn(long[] coord, int axis) {
+	public BigDecimal project(long[] coord, int axis) {
 		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
 	@Override
-	public BigDecimal toRn(IntegerIndex coord, int axis) {
+	public BigDecimal project(IntegerIndex coord, int axis) {
 		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
+	}
+
+	@Override
+	public void project(long[] coord, BigDecimal[] output) {
+		
+		for (int i = 0; i < numDimensions(); i++) {
+			output[i] = project(coord, i);
+		}
+	}
+
+	@Override
+	public void project(IntegerIndex coord, BigDecimal[] output) {
+		
+		for (int i = 0; i < numDimensions(); i++) {
+			output[i] = project(coord, i);
+		}
 	}
 
 	public void setPrecision(int precision) {

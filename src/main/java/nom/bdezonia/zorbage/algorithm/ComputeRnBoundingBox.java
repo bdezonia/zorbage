@@ -76,7 +76,7 @@ public class ComputeRnBoundingBox {
 		while (iter.hasNext()) {
 			iter.next(idx);
 			for (int i = 0; i < numD; i++) {
-				tmp.setV(cspace.toRn(idx, i));
+				tmp.setV(cspace.project(idx, i));
 				maxes.getV(i, mx);
 				mins.getV(i, mn);
 				if (G.HP.isLess().call(mx, mn)) {
