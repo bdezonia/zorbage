@@ -44,6 +44,7 @@ public interface CoordinateSpace
 	extends DimensionCount
 {
 	/**
+	 * Project a single axis of a coordinate and return a projected space value.
 	 * 
 	 * @param coord A set of long valued coordinates within the coordinate space
 	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
@@ -52,6 +53,7 @@ public interface CoordinateSpace
 	BigDecimal project(long[] coord, int axis);
 
 	/**
+	 * Project a single axis of a coordinate and return a projected space value.
 	 * 
 	 * @param coord A set of long valued coordinates within the coordinate space
 	 * @param axis The desired axis (0 == x, 1 == y, 2 == z, etc.)
@@ -60,6 +62,9 @@ public interface CoordinateSpace
 	BigDecimal project(IntegerIndex coord, int axis);
 	
 	/**
+	 * Project a whole coordinate point and set projected space coordinate values.
+	 * Note that this method projects for all the dimensions in this CoordinateSpace.
+	 * One can pass in an output point with more dimensions than this CoordinateSpace.
 	 * 
 	 * @param coord A set of long valued coordinates within the coordinate space
 	 * @param output The output point that contains the coordinates after projection
@@ -67,6 +72,9 @@ public interface CoordinateSpace
 	void project(long[] coord, BigDecimal[] output);
 	
 	/**
+	 * Project a whole coordinate point and set projected space coordinate values.
+	 * Note that this method projects for all the dimensions in this CoordinateSpace.
+	 * One can pass in an output point with more dimensions than this CoordinateSpace.
 	 * 
 	 * @param coord A set of long valued coordinates within the coordinate space
 	 * @param output The output point that contains the coordinates after projection
