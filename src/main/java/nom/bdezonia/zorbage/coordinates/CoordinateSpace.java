@@ -66,6 +66,10 @@ public interface CoordinateSpace
 	 * Note that this method projects for all the dimensions in this CoordinateSpace.
 	 * One can pass in an output point with more dimensions than this CoordinateSpace.
 	 * 
+	 * This is a convenience method for when you need all projected values at once.
+	 * Individual implementers can design this method to speed up coordinate calculations
+	 * when possible.
+	 * 
 	 * @param coord A set of long valued coordinates within the coordinate space
 	 * @param output The output point that contains the coordinates after projection
 	 */
@@ -75,6 +79,10 @@ public interface CoordinateSpace
 	 * Project a whole coordinate point and set projected space coordinate values.
 	 * Note that this method projects for all the dimensions in this CoordinateSpace.
 	 * One can pass in an output point with more dimensions than this CoordinateSpace.
+	 * 
+	 * This is a convenience method for when you need all projected values at once.
+	 * Individual implementers can design this method to speed up coordinate calculations
+	 * when possible.
 	 * 
 	 * @param coord A set of long valued coordinates within the coordinate space
 	 * @param output The output point that contains the coordinates after projection
