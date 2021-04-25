@@ -62,6 +62,15 @@ public class DimensionalPermutation {
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
 		DimensionedDataSource<U> compute(T alg, int[] permutation, DimensionedDataSource<U> input)
 	{
+		// make sure it is a space we know how to permute
+		if (!(input.getCoordinateSpace() instanceof IdentityCoordinateSpace) &&
+			!(input.getCoordinateSpace() instanceof LinearNdCoordinateSpace))
+		
+		{
+			// some random space : we can't permute coord space
+			throw new IllegalArgumentException("do not know how to permute this coordinate space");
+		}
+
 		int numD = input.numDimensions();
 		
 		long[] origDims = new long[numD];
@@ -102,11 +111,11 @@ public class DimensionalPermutation {
 		output.setValueUnit(input.getValueUnit());
 		if (input.getCoordinateSpace() instanceof IdentityCoordinateSpace)
 		{
-			output.setCoordinateSpace(new IdentityCoordinateSpace(numD));
 			for (int i = 0; i < numD; i++) {
 				output.setAxisType(permutation[i], input.getAxisType(i));
 				output.setAxisUnit(permutation[i], input.getAxisUnit(i));
 			}
+			output.setCoordinateSpace(new IdentityCoordinateSpace(numD));
 		}
 		else if (input.getCoordinateSpace() instanceof LinearNdCoordinateSpace)
 		{
@@ -119,12 +128,7 @@ public class DimensionalPermutation {
 				output.setAxisType(permutation[i], input.getAxisType(i));
 				output.setAxisUnit(permutation[i], input.getAxisUnit(i));
 			}
-			LinearNdCoordinateSpace outSpace = new LinearNdCoordinateSpace(scales, offsets);
-			output.setCoordinateSpace(outSpace);
-		}
-		else // some random space : we can't permute coord space
-		{
-			throw new IllegalArgumentException("do not know how to permute this coordinate space");
+			output.setCoordinateSpace(new LinearNdCoordinateSpace(scales, offsets));
 		}
 		
 		// copy all the sample data
