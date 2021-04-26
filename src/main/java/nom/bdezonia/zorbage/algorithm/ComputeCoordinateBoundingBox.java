@@ -50,25 +50,28 @@ public class ComputeCoordinateBoundingBox {
 	private ComputeCoordinateBoundingBox() { }
 	
 	/**
+	 * Compute the bounding box of the coordinate space of a DimensionsDataSource. The
+	 * complete set of the data source's dimensions are transformed using its
+	 * CoordinateSpace and a bounding box in transformed coordinates is computed.
 	 * 
-	 * @param data
-	 * @param min
-	 * @param max
+	 * @param data The data source of interest.
+	 * @param minPt The computed min point (as a rmodule/vector).
+	 * @param maxPt The computed max point (as a rmodule/vector).
 	 */
 	public static
 		void compute(DimensionedDataSource<?> data,
-						RModuleMember<HighPrecisionMember> mins,
-						RModuleMember<HighPrecisionMember> maxes)
+						RModuleMember<HighPrecisionMember> minPt,
+						RModuleMember<HighPrecisionMember> maxPt)
 	{
 		HighPrecisionMember mn = G.HP.construct("1");
 		HighPrecisionMember mx = G.HP.construct("-1");
 		HighPrecisionMember tmp = G.HP.construct();
 		int numD = data.numDimensions();
-		mins.alloc(numD);
-		maxes.alloc(numD);
+		minPt.alloc(numD);
+		maxPt.alloc(numD);
 		for (int i = 0; i < numD; i++) {
-			mins.setV(i, mn);
-			maxes.setV(i, mx);
+			minPt.setV(i, mn);
+			maxPt.setV(i, mx);
 		}
 		CoordinateSpace cspace = data.getCoordinateSpace();
 		IntegerIndex idx = new IntegerIndex(numD);
@@ -77,18 +80,18 @@ public class ComputeCoordinateBoundingBox {
 			iter.next(idx);
 			for (int i = 0; i < numD; i++) {
 				tmp.setV(cspace.project(idx, i));
-				maxes.getV(i, mx);
-				mins.getV(i, mn);
+				maxPt.getV(i, mx);
+				minPt.getV(i, mn);
 				if (G.HP.isLess().call(mx, mn)) {
-					maxes.setV(i, tmp);
-					mins.setV(i, tmp);
+					minPt.setV(i, tmp);
+					maxPt.setV(i, tmp);
 				}
 				else {
 					if (G.HP.isLess().call(tmp, mn)) {
-						mins.setV(i, tmp);
+						minPt.setV(i, tmp);
 					}
 					if (G.HP.isGreater().call(tmp, mx)) {
-						maxes.setV(i, tmp);
+						maxPt.setV(i, tmp);
 					}
 				}
 			}
