@@ -60,7 +60,7 @@ public class EstimateSpacing {
 		RModuleMember<HighPrecisionMember> min = G.HP_VEC.construct();
 		RModuleMember<HighPrecisionMember> max = G.HP_VEC.construct();
 
-		ComputeRnBoundingBox.compute(data, min, max);
+		ComputeCoordinateBoundingBox.compute(data, min, max);
 		
 		result.alloc(min.length());
 		

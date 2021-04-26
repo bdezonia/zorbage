@@ -43,11 +43,11 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class ComputeRnBoundingBox {
+public class ComputeCoordinateBoundingBox {
 
 	// do not instantiate
 	
-	private ComputeRnBoundingBox() { }
+	private ComputeCoordinateBoundingBox() { }
 	
 	/**
 	 * 

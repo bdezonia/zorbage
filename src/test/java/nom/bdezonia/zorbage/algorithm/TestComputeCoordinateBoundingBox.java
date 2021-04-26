@@ -50,7 +50,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVectorMember;
  * @author Barry DeZonia
  *
  */
-public class TestComputeRnBoundingBox {
+public class TestComputeCoordinateBoundingBox {
 
 	@Test
 	public void test1() {
@@ -62,7 +62,7 @@ public class TestComputeRnBoundingBox {
 		
 		DimensionedDataSource<Float64Member> data = DimensionedStorage.allocate(G.DBL.construct(), dims);
 		
-		ComputeRnBoundingBox.compute(data, min, max);
+		ComputeCoordinateBoundingBox.compute(data, min, max);
 
 		HighPrecisionMember value = G.HP.construct();
 		
@@ -82,7 +82,7 @@ public class TestComputeRnBoundingBox {
 
 		data.setCoordinateSpace(cspace);
 		
-		ComputeRnBoundingBox.compute(data, min, max);
+		ComputeCoordinateBoundingBox.compute(data, min, max);
 
 		min.getV(0, value);
 		assertEquals(BigDecimal.valueOf(0.5), value.v());
