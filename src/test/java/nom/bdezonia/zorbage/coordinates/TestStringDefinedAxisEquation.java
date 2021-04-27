@@ -35,7 +35,6 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.coordinates.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**

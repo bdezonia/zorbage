@@ -37,7 +37,6 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
 /**
  * 

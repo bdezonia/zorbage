@@ -36,7 +36,6 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.MatrixMaximumAbsoluteColumnSumNorm;
 import nom.bdezonia.zorbage.algorithm.MatrixMaximumAbsoluteRowSumNorm;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**

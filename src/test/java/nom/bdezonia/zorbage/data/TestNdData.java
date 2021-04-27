@@ -34,7 +34,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;

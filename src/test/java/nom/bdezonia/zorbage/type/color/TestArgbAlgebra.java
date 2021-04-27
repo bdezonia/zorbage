@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.type.color;
 import static org.junit.Assert.*;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.color.ArgbMember;
 
 /**
  * 

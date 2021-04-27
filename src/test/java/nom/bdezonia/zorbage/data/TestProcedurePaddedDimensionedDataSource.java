@@ -33,9 +33,6 @@ package nom.bdezonia.zorbage.data;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.data.NdData;
-import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.Storage;

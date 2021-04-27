@@ -38,9 +38,6 @@ import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.LUSolve;
 import nom.bdezonia.zorbage.type.real.float16.Float16MatrixMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
-import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64Member;
-import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**

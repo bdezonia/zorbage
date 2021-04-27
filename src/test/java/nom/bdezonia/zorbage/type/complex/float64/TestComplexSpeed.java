@@ -34,8 +34,6 @@ import nom.bdezonia.zorbage.algebra.*;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64MatrixMember;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 
 /**
  * 

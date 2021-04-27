@@ -33,8 +33,6 @@ package nom.bdezonia.zorbage.data;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.type.integer.int3.SignedInt3Member;
 
 /**

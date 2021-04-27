@@ -45,8 +45,6 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**

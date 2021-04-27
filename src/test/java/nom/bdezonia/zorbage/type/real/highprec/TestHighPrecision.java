@@ -36,8 +36,6 @@ import static org.junit.Assert.fail;
 import java.math.BigDecimal;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * 

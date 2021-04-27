@@ -60,8 +60,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import nom.bdezonia.zorbage.type.color.RgbUtils;
-
 /**
  * 
  * @author Barry DeZonia

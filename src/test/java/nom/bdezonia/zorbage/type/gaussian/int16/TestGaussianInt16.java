@@ -44,7 +44,6 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Member;
 import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;

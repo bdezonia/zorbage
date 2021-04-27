@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.type.integer.int8;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 
 /**
  * 
