@@ -115,8 +115,10 @@ public class NdData<U>
 	
 	@Override
 	public void setCoordinateSpace(CoordinateSpace space) {
+		if (space == null)
+			throw new IllegalArgumentException("coordinate space cannot be null");
 		if (space.numDimensions() != numDimensions())
-			throw new IllegalArgumentException("coord space dimensions do not match data dimensions");
+			throw new IllegalArgumentException("coordinate space dimensions do not match data dimensions");
 		this.space = space;
 	}
 	
