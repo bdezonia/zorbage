@@ -102,65 +102,65 @@ public class FindCompatibleType {
 		case BIGDECIMAL:
 			if (components == 1)
 				return (T) G.HP;
-			else if (components == 2)
+			if (components == 2)
 				return (T) G.CHP;
-			else if (components == 4)
+			if (components == 4)
 				return (T) G.QHP;
-			else if (components == 8)
+			if (components == 8)
 				return (T) G.OHP;
 			break;
 		case BIGINTEGER:
 			if (components == 1)
 				return (T) G.UNBOUND;
-			else if (components == 2)
+			if (components == 2)
 				return (T) G.GAUSSU;
 			break;
 		case DOUBLE:
 			if (components == 1)
 				return (T) G.DBL;
-			else if (components <= 2)
+			if (components <= 2)
 				return (T) G.CDBL;
-			else if (components <= 4)
+			if (components <= 4)
 				return (T) G.QDBL;
-			else if (components <= 8)
+			if (components <= 8)
 				return (T) G.ODBL;
 			break;
 		case FLOAT:
 			if (components == 1)
 				return (T) G.FLT;
-			else if (components <= 2)
+			if (components <= 2)
 				return (T) G.CFLT;
-			else if (components <= 4)
+			if (components <= 4)
 				return (T) G.QFLT;
-			else if (components <= 8)
+			if (components <= 8)
 				return (T) G.OFLT;
 			break;
 		case LONG:
 			if (components == 1)
 				return (T) G.INT64;
-			else if (components == 2)
+			if (components == 2)
 				return (T) G.GAUSS64;
 			break;
 		case INT:
 			if (components == 1)
 				return (T) G.INT32;
-			else if (components == 2)
+			if (components == 2)
 				return (T) G.GAUSS32;
 			break;
 		case SHORT:
 			if (components == 1)
 				return (T) G.INT16;
-			else if (components == 2)
+			if (components == 2)
 				return (T) G.GAUSS16;
 			break;
 		case BYTE:
 			if (components == 1)
 				return (T) G.INT8;
-			else if (components == 2)
+			if (components == 2)
 				return (T) G.GAUSS8;
-			else if (components == 3)
+			if (components == 3)
 				return (T) G.RGB;
-			else if (components == 4)
+			if (components == 4)
 				return (T) G.ARGB;
 			break;
 		default:
