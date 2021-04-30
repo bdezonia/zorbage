@@ -112,6 +112,8 @@ public class FindCompatibleType {
 		case BIGINTEGER:
 			if (components == 1)
 				return (T) G.UNBOUND;
+			else if (components == 2)
+				return (T) G.GAUSSU;
 			break;
 		case DOUBLE:
 			if (components == 1)
@@ -136,21 +138,29 @@ public class FindCompatibleType {
 		case LONG:
 			if (components == 1)
 				return (T) G.INT64;
+			else if (components == 2)
+				return (T) G.GAUSS64;
 			break;
 		case INT:
 			if (components == 1)
 				return (T) G.INT32;
+			else if (components == 2)
+				return (T) G.GAUSS32;
 			break;
 		case SHORT:
 			if (components == 1)
 				return (T) G.INT16;
+			else if (components == 2)
+				return (T) G.GAUSS16;
 			break;
 		case BYTE:
 			if (components == 1)
 				return (T) G.INT8;
-			if (components == 3)
+			else if (components == 2)
+				return (T) G.GAUSS8;
+			else if (components == 3)
 				return (T) G.RGB;
-			if (components == 4)
+			else if (components == 4)
 				return (T) G.ARGB;
 			break;
 		default:
