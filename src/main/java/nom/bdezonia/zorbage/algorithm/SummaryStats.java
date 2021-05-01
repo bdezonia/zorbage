@@ -99,7 +99,7 @@ public class SummaryStats {
 
 		IndexedDataSource<U> copy = DeepCopy.compute(alg, data);
 		
-		StableSort.compute(alg, copy);
+		Sort.compute(alg, copy);
 		
 		U sum = alg.construct();
 		U count = alg.construct();

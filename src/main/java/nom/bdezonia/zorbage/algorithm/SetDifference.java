@@ -79,8 +79,7 @@ public class SetDifference {
 		tmpList.get(0, value);
 		for (long i = count; i < aSize; i++)
 			tmpList.set(i, value);
-		// for now avoiding Sort because it is susceptible to quicksort worst case performance
-		StableSort.compute(alg, tmpList);
+		Sort.compute(alg, tmpList);
 		return Unique.compute(alg, tmpList);
 	}
 }

@@ -58,8 +58,7 @@ public class MedianValues {
 		// this method needs to do a deep copy because it will sort the data. So we
 		// avoid sorting original data.
 		IndexedDataSource<U> localStorage = DeepCopy.compute(alg, storage);
-		// for now avoiding Sort because it is susceptible to quicksort worst case performance
-		StableSort.compute(alg, localStorage);
+		Sort.compute(alg, localStorage);
 		long localStorageSize = localStorage.size();
 		if (localStorageSize == 0) {
 			throw new IllegalArgumentException("MedianValues called on an empty list");
