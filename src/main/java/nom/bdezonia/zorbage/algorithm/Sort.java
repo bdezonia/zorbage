@@ -31,9 +31,16 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.function.Function2;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
 
 /**
  * 
@@ -51,10 +58,10 @@ public class Sort {
 	 * @param alg
 	 * @param storage
 	 */
-	public static <T extends Algebra<T,U> & Ordered<U> ,U>
+	public static <T extends Algebra<T,U> & Ordered<U>, U extends Allocatable<U>>
 		void compute(T alg, IndexedDataSource<U> storage)
 	{
-		compute(alg, alg.isLess(), storage);
+		compute(alg, alg.isLessEqual(), storage);
 	}
 
 	/**
@@ -62,28 +69,36 @@ public class Sort {
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param compare
+	 * @param lessOrEqual
 	 * @param storage
 	 */
-	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, Function2<Boolean,U,U> compare, IndexedDataSource<U> storage)
+	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
+		void compute(T alg, Function2<Boolean,U,U> lessOrEqual, IndexedDataSource<U> storage)
 	{
-		qsort(alg, compare, 0, storage.size()-1, storage);
+		long maxDepth;
+		if (storage.size() == 0)
+			maxDepth = 1;
+		else
+			maxDepth = (BigDecimalMath.log(BigDecimal.valueOf(storage.size()), new MathContext(3)).longValue() + 1) * 2;
+		introsort(alg, lessOrEqual, 0, storage.size() - 1, maxDepth, storage);
 	}
 
-	private static <T extends Algebra<T,U>, U>
-		void qsort(T alg, Function2<Boolean,U,U> compare, long left, long right, IndexedDataSource<U> storage)
+	private static <T extends Algebra<T,U>, U extends Allocatable<U>>
+		void introsort(T alg, Function2<Boolean,U,U> lessOrEqual, long left, long right, long maxDepth, IndexedDataSource<U> a)
 	{
-		if (left < right) {
-			// small list? 20 was determined optimal after many test runs
-			if (right - left <= 20) {
-				InsertionSort.compute(alg, compare, storage, left, right);
-			}
-			else {
-				long pivotPoint = partition(alg, compare, left, right, storage);
-				qsort(alg, compare, left, pivotPoint-1, storage);
-				qsort(alg, compare, pivotPoint+1, right, storage);
-			}
+		// small list? 20 was determined optimal after many test runs
+		if (right - left <= 20) {
+			InsertionSort.compute(alg, lessOrEqual, a, left, right);
+		}
+		else if (maxDepth == 0) {
+			TrimmedDataSource<U> sublist = new TrimmedDataSource<U>(a, left, right-left+1);
+			// TODO ideally we'd do heapsort rather than mergesort. This is how my code deviates from true introsort
+			StableSort.compute(alg, lessOrEqual, sublist);
+		}
+		else {
+			long p = partition(alg, lessOrEqual, left, right, a);
+			introsort(alg, lessOrEqual, left, p-1, maxDepth-1, a);
+			introsort(alg, lessOrEqual, p+1, right, maxDepth-1, a);
 		}
 	}
 	
@@ -136,5 +151,4 @@ public class Sort {
 	
 		return rightmark;
 	}
-
 }
