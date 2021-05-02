@@ -45,6 +45,9 @@ public class InPlaceSort {
 	private InPlaceSort() {}
 
 	/**
+	 * Sort data in place, never allocating any additional memory or disk space. This sort
+	 * is modeled upon quicksort and may show poor performance on worst case data
+	 * arrangements.
 	 * 
 	 * @param <T>
 	 * @param <U>
@@ -58,6 +61,9 @@ public class InPlaceSort {
 	}
 
 	/**
+	 * Sort data in place, never allocating any additional memory or disk space. This sort
+	 * is modeled upon quicksort and may show poor performance on worst case data
+	 * arrangements.
 	 * 
 	 * @param <T>
 	 * @param <U>
