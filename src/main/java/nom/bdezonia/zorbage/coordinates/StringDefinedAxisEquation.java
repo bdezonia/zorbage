@@ -48,11 +48,11 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 public class StringDefinedAxisEquation implements Procedure2<Long,HighPrecisionMember>
 {
 	private final Procedure<HighPrecisionMember> parsedAxisProc;
+	private final String error;
 	
 	public StringDefinedAxisEquation(String eqn) {
 		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.HP, eqn);
-		if (parseResult.a() != null)
-			throw new IllegalArgumentException("axis equation could not be parsed: "+parseResult.a());
+		error = parseResult.a();
 		parsedAxisProc = parseResult.b();
 	}
 	
@@ -67,4 +67,7 @@ public class StringDefinedAxisEquation implements Procedure2<Long,HighPrecisionM
 
 	}
 
+	public String parseError() {
+		return error;
+	}
 }
