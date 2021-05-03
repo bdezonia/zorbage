@@ -51,6 +51,8 @@ public class StringDefinedAxisEquation implements Procedure2<Long,HighPrecisionM
 	
 	public StringDefinedAxisEquation(String eqn) {
 		Tuple2<String, Procedure<HighPrecisionMember>> parseResult = new EquationParser<HighPrecisionAlgebra,HighPrecisionMember>().parse(G.HP, eqn);
+		if (parseResult.a() != null)
+			throw new IllegalArgumentException("axis equation could not be parsed: "+parseResult.a());
 		parsedAxisProc = parseResult.b();
 	}
 	
