@@ -151,8 +151,8 @@ public class Affine3dCoordinateSpace
 
 	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
-		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
-		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2, context));
+		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context), context);
+		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2, context), context);
 		return tmp.add(t3, context);
 	}
 

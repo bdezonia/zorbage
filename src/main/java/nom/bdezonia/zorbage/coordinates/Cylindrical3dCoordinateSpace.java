@@ -91,7 +91,7 @@ public class Cylindrical3dCoordinateSpace
 			return x(coord.get(0), coord.get(1));
 		}
 		else if (axis == 1) {
-			return x(coord.get(0), coord.get(1));
+			return y(coord.get(0), coord.get(1));
 		}
 		else { // axis == 2
 			return z(coord.get(2));
@@ -121,13 +121,13 @@ public class Cylindrical3dCoordinateSpace
 	private BigDecimal x(long r, long th) {
 		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
 		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
+		return rVal.multiply(BigDecimalMath.cos(thetaVal, context), context);
 	}
 	
 	private BigDecimal y(long r, long th) {
 		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
 		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
+		return rVal.multiply(BigDecimalMath.sin(thetaVal, context), context);
 	}
 	
 	private BigDecimal z(long z) {

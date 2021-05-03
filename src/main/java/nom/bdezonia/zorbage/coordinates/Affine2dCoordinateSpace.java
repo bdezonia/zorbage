@@ -124,7 +124,7 @@ public class Affine2dCoordinateSpace
 
 	private BigDecimal transform(long i, long j, BigDecimal t0, BigDecimal t1, BigDecimal t2) {
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
-		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context));
+		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context), context);
 		return tmp.add(t2, context);
 	}
 

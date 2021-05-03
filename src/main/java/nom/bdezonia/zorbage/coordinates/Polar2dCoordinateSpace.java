@@ -112,12 +112,12 @@ public class Polar2dCoordinateSpace
 	private BigDecimal x(long r, long th) {
 		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
 		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.cos(thetaVal, context));
+		return rVal.multiply(BigDecimalMath.cos(thetaVal, context), context);
 	}
 	
 	private BigDecimal y(long r, long th) {
 		BigDecimal rVal = rUnit.multiply(BigDecimal.valueOf(r), context);
 		BigDecimal thetaVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
-		return rVal.multiply(BigDecimalMath.sin(thetaVal, context));
+		return rVal.multiply(BigDecimalMath.sin(thetaVal, context), context);
 	}
 }

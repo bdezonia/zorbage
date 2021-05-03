@@ -123,7 +123,7 @@ public class Spherical3dCoordinateSpace
 		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
 		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
 		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.cos(thVal, context));
-		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
+		return tmp.multiply(BigDecimalMath.sin(phiVal, context), context);
 	}
 	
 	private BigDecimal y(long rh, long th, long ph) {
@@ -131,12 +131,12 @@ public class Spherical3dCoordinateSpace
 		BigDecimal thVal = thetaUnit.multiply(BigDecimal.valueOf(th), context);
 		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
 		BigDecimal tmp = rhoVal.multiply(BigDecimalMath.sin(thVal, context));
-		return tmp.multiply(BigDecimalMath.sin(phiVal, context));
+		return tmp.multiply(BigDecimalMath.sin(phiVal, context), context);
 	}
 	
 	private BigDecimal z(long rh, long ph) {
 		BigDecimal rhoVal = rhoUnit.multiply(BigDecimal.valueOf(rh), context);
 		BigDecimal phiVal = phiUnit.multiply(BigDecimal.valueOf(ph), context);
-		return rhoVal.multiply(BigDecimalMath.cos(phiVal, context));
+		return rhoVal.multiply(BigDecimalMath.cos(phiVal, context), context);
 	}
 }
