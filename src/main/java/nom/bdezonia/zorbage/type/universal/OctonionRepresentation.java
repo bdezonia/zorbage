@@ -136,14 +136,14 @@ public class OctonionRepresentation
 	@Override
 	public OctonionRepresentation duplicate() {
 		OctonionRepresentation val = allocate();
-		val.setR(this.r);
-		val.setI(this.i);
-		val.setJ(this.j);
-		val.setK(this.k);
-		val.setL(this.l);
-		val.setI0(this.i0);
-		val.setJ0(this.j0);
-		val.setK0(this.k0);
+		val.r = this.r;
+		val.i = this.i;
+		val.j = this.j;
+		val.k = this.k;
+		val.l = this.l;
+		val.i0 = this.i0;
+		val.j0 = this.j0;
+		val.k0 = this.k0;
 		return val;
 	}
 }
