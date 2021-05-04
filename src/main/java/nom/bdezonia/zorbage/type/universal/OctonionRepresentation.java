@@ -45,7 +45,6 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class OctonionRepresentation
 	implements Allocatable<OctonionRepresentation>, Duplicatable<OctonionRepresentation>
 {
-
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionRepresentation() {
@@ -75,6 +74,17 @@ public class OctonionRepresentation
 		this.i0 = BigDecimalUtils.value(i0);
 		this.j0 = BigDecimalUtils.value(j0);
 		this.k0 = BigDecimalUtils.value(k0);
+	}
+	
+	public OctonionRepresentation(OctonionRepresentation other) {
+		this.r = other.r;
+		this.i = other.i;
+		this.j = other.j;
+		this.k = other.k;
+		this.l = other.l;
+		this.i0 = other.i0;
+		this.j0 = other.j0;
+		this.k0 = other.k0;
 	}
 	
 	public BigDecimal r() { return r; }
@@ -135,15 +145,6 @@ public class OctonionRepresentation
 
 	@Override
 	public OctonionRepresentation duplicate() {
-		OctonionRepresentation val = allocate();
-		val.r = this.r;
-		val.i = this.i;
-		val.j = this.j;
-		val.k = this.k;
-		val.l = this.l;
-		val.i0 = this.i0;
-		val.j0 = this.j0;
-		val.k0 = this.k0;
-		return val;
+		return new OctonionRepresentation(this);
 	}
 }
