@@ -34,8 +34,13 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
+import nom.bdezonia.zorbage.algebra.GetOctonion;
+import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetOctonion;
+import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.misc.Hasher;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * 
@@ -43,7 +48,10 @@ import nom.bdezonia.zorbage.misc.Hasher;
  *
  */
 public class OctonionRepresentation
-	implements Allocatable<OctonionRepresentation>, Duplicatable<OctonionRepresentation>
+	implements
+		Allocatable<OctonionRepresentation>, Duplicatable<OctonionRepresentation>,
+		Gettable<OctonionRepresentation>, Settable<OctonionRepresentation>,
+		GetOctonion<HighPrecisionMember>, SetOctonion<HighPrecisionMember>
 {
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
 	
@@ -77,14 +85,7 @@ public class OctonionRepresentation
 	}
 	
 	public OctonionRepresentation(OctonionRepresentation other) {
-		this.r = other.r;
-		this.i = other.i;
-		this.j = other.j;
-		this.k = other.k;
-		this.l = other.l;
-		this.i0 = other.i0;
-		this.j0 = other.j0;
-		this.k0 = other.k0;
+		set(other);
 	}
 	
 	public BigDecimal r() { return r; }
@@ -146,5 +147,109 @@ public class OctonionRepresentation
 	@Override
 	public OctonionRepresentation duplicate() {
 		return new OctonionRepresentation(this);
+	}
+
+	@Override
+	public void getR(HighPrecisionMember v) {
+		v.setV(this.r);
+	}
+
+	@Override
+	public void getI(HighPrecisionMember v) {
+		v.setV(this.i);
+	}
+
+	@Override
+	public void getJ(HighPrecisionMember v) {
+		v.setV(this.j);
+	}
+
+	@Override
+	public void getK(HighPrecisionMember v) {
+		v.setV(this.k);
+	}
+
+	@Override
+	public void getL(HighPrecisionMember v) {
+		v.setV(this.l);
+	}
+
+	@Override
+	public void getI0(HighPrecisionMember v) {
+		v.setV(this.i0);
+	}
+
+	@Override
+	public void getJ0(HighPrecisionMember v) {
+		v.setV(this.j0);
+	}
+
+	@Override
+	public void getK0(HighPrecisionMember v) {
+		v.setV(this.k0);
+	}
+
+	@Override
+	public void setR(HighPrecisionMember val) {
+		this.r = val.v();
+	}
+
+	@Override
+	public void setI(HighPrecisionMember val) {
+		this.i = val.v();
+	}
+
+	@Override
+	public void setJ(HighPrecisionMember val) {
+		this.j = val.v();
+	}
+
+	@Override
+	public void setK(HighPrecisionMember val) {
+		this.k = val.v();
+	}
+
+	@Override
+	public void setL(HighPrecisionMember val) {
+		this.l = val.v();
+	}
+
+	@Override
+	public void setI0(HighPrecisionMember val) {
+		this.i0 = val.v();
+	}
+
+	@Override
+	public void setJ0(HighPrecisionMember val) {
+		this.j0 = val.v();
+	}
+
+	@Override
+	public void setK0(HighPrecisionMember val) {
+		this.k0 = val.v();
+	}
+
+	@Override
+	public void set(OctonionRepresentation other) {
+		this.r = other.r;
+		this.i = other.i;
+		this.j = other.j;
+		this.k = other.k;
+		this.l = other.l;
+		this.i0 = other.i0;
+		this.j0 = other.j0;
+		this.k0 = other.k0;
+	}
+
+	@Override
+	public void get(OctonionRepresentation other) {
+		other.r = this.r;
+		other.i = this.i;
+		other.j = this.j;
+		other.k = this.k;
+		other.l = this.l;
+		other.i0 = this.i0;
+		other.j0 = this.j0;
+		other.k0 = this.k0;
 	}
 }
