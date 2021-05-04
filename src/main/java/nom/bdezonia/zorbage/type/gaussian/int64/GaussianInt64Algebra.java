@@ -56,7 +56,7 @@ import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -442,13 +442,13 @@ public class GaussianInt64Algebra
 			ComplexHighPrecisionMember cd = new ComplexHighPrecisionMember();
 			G.CHP.divide().call(ca, cb, cd);
 			if (cd.r().signum() < 0)
-				cd.setR(cd.r().subtract(C.ONE_HALF));
+				cd.setR(cd.r().subtract(BigDecimalUtils.ONE_HALF));
 			else
-				cd.setR(cd.r().add(C.ONE_HALF));
+				cd.setR(cd.r().add(BigDecimalUtils.ONE_HALF));
 			if (cd.i().signum() < 0)
-				cd.setI(cd.i().subtract(C.ONE_HALF));
+				cd.setI(cd.i().subtract(BigDecimalUtils.ONE_HALF));
 			else
-				cd.setI(cd.i().add(C.ONE_HALF));
+				cd.setI(cd.i().add(BigDecimalUtils.ONE_HALF));
 			d.setR( cd.r().longValue() );
 			d.setI( cd.i().longValue() );
 			G.GAUSS64.multiply().call(d, b, tmp);  // Order of ops doesn't matter since complex multiplication commutes
@@ -537,13 +537,13 @@ public class GaussianInt64Algebra
 			BigDecimal br = BigDecimal.valueOf(a.r()).multiply(factor.v());
 			BigDecimal bi = BigDecimal.valueOf(a.i()).multiply(factor.v());
 			if (br.signum() < 0)
-				br = br.subtract(C.ONE_HALF);
+				br = br.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				br = br.add(C.ONE_HALF);
+				br = br.add(BigDecimalUtils.ONE_HALF);
 			if (bi.signum() < 0)
-				bi = bi.subtract(C.ONE_HALF);
+				bi = bi.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				bi = bi.add(C.ONE_HALF);
+				bi = bi.add(BigDecimalUtils.ONE_HALF);
 			b.setR(br.longValue());
 			b.setI(bi.longValue());
 		}
@@ -580,13 +580,13 @@ public class GaussianInt64Algebra
 			BigDecimal br = new BigDecimal(a.r()).multiply(scale);
 			BigDecimal bi = new BigDecimal(a.i()).multiply(scale);
 			if (br.signum() < 0)
-				br = br.subtract(C.ONE_HALF);
+				br = br.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				br = br.add(C.ONE_HALF);
+				br = br.add(BigDecimalUtils.ONE_HALF);
 			if (bi.signum() < 0)
-				bi = bi.subtract(C.ONE_HALF);
+				bi = bi.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				bi = bi.add(C.ONE_HALF);
+				bi = bi.add(BigDecimalUtils.ONE_HALF);
 			b.setR(br.longValue());
 			b.setI(bi.longValue());
 		}

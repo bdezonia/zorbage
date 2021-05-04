@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.misc.C;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 
 /**
  * 
@@ -177,7 +177,7 @@ public class ResampleNN {
 				coords[i] = coords[i].divide(BigDecimal.valueOf(outputDims[i]-1),HighPrecisionAlgebra.getContext());
 				coords[i] = coords[i].multiply(BigDecimal.valueOf(inputDims[i]-1));
 				// force rounding to nearest neighbor
-				coords[i] = coords[i].add(C.ONE_HALF);
+				coords[i] = coords[i].add(BigDecimalUtils.ONE_HALF);
 			}
 			
 			// get the base coord

@@ -56,7 +56,7 @@ import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -526,13 +526,13 @@ public class GaussianInt8Algebra
 			BigDecimal br = BigDecimal.valueOf(a.r()).multiply(factor.v());
 			BigDecimal bi = BigDecimal.valueOf(a.i()).multiply(factor.v());
 			if (br.signum() < 0)
-				br = br.subtract(C.ONE_HALF);
+				br = br.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				br = br.add(C.ONE_HALF);
+				br = br.add(BigDecimalUtils.ONE_HALF);
 			if (bi.signum() < 0)
-				bi = bi.subtract(C.ONE_HALF);
+				bi = bi.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				bi = bi.add(C.ONE_HALF);
+				bi = bi.add(BigDecimalUtils.ONE_HALF);
 			b.setR(br.intValue());
 			b.setI(bi.intValue());
 		}

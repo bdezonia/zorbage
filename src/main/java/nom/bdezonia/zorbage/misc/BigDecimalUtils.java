@@ -34,13 +34,25 @@ import java.math.BigDecimal;
 
 /**
  * 
- * Global constants
- * 
  * @author Barry DeZonia
  *
  */
-public class C {
+public class BigDecimalUtils {
 
+	// do not instantiate
+	
+	private BigDecimalUtils() { }
+	
 	public static final BigDecimal ONE_HALF = BigDecimal.ONE.divide(BigDecimal.valueOf(2));
 
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
+	public static BigDecimal value(BigDecimal v) {
+		if (v == null)
+			return BigDecimal.ZERO;
+		return v;
+	}
 }

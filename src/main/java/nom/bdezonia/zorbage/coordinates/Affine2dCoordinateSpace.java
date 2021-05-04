@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.coordinates;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -64,12 +65,12 @@ public class Affine2dCoordinateSpace
 			BigDecimal x0, BigDecimal x1, BigDecimal x2,
 			BigDecimal y0, BigDecimal y1, BigDecimal y2)
 	{
-		this.x0 = value(x0);
-		this.x1 = value(x1);
-		this.x2 = value(x2);
-		this.y0 = value(y0);
-		this.y1 = value(y1);
-		this.y2 = value(y2);
+		this.x0 = BigDecimalUtils.value(x0);
+		this.x1 = BigDecimalUtils.value(x1);
+		this.x2 = BigDecimalUtils.value(x2);
+		this.y0 = BigDecimalUtils.value(y0);
+		this.y1 = BigDecimalUtils.value(y1);
+		this.y2 = BigDecimalUtils.value(y2);
 		this.context = new MathContext(20);
 	}
 	
@@ -126,11 +127,5 @@ public class Affine2dCoordinateSpace
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context), context);
 		return tmp.add(t2, context);
-	}
-
-	private BigDecimal value(BigDecimal v) {
-		if (v == null)
-			return BigDecimal.ZERO;
-		return v;
 	}
 }

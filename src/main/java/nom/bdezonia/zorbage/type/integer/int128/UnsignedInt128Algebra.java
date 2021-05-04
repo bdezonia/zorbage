@@ -46,7 +46,7 @@ import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
-import nom.bdezonia.zorbage.misc.C;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -818,9 +818,9 @@ public class UnsignedInt128Algebra
 			tmp = tmp.multiply(new BigDecimal(b.v()));
 			int signum = tmp.signum();
 			if (signum < 0)
-				tmp = tmp.subtract(C.ONE_HALF);
+				tmp = tmp.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				tmp = tmp.add(C.ONE_HALF);
+				tmp = tmp.add(BigDecimalUtils.ONE_HALF);
 			c.setV(tmp.toBigInteger());
 		}
 	};
@@ -872,9 +872,9 @@ public class UnsignedInt128Algebra
 			tmp = tmp.multiply(BigDecimal.valueOf(a));
 			int signum = tmp.signum();
 			if (signum < 0)
-				tmp = tmp.subtract(C.ONE_HALF);
+				tmp = tmp.subtract(BigDecimalUtils.ONE_HALF);
 			else
-				tmp = tmp.add(C.ONE_HALF);
+				tmp = tmp.add(BigDecimalUtils.ONE_HALF);
 			c.setV(tmp.toBigInteger());
 		}
 	};

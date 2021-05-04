@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.coordinates;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 // Note: this class inspired by Nifti's header docs on their affine coord xform
@@ -79,18 +80,18 @@ public class Affine3dCoordinateSpace
 			BigDecimal y0, BigDecimal y1, BigDecimal y2, BigDecimal y3,
 			BigDecimal z0, BigDecimal z1, BigDecimal z2, BigDecimal z3)
 	{
-		this.x0 = value(x0);
-		this.x1 = value(x1);
-		this.x2 = value(x2);
-		this.x3 = value(x3);
-		this.y0 = value(y0);
-		this.y1 = value(y1);
-		this.y2 = value(y2);
-		this.y3 = value(y3);
-		this.z0 = value(z0);
-		this.z1 = value(z1);
-		this.z2 = value(z2);
-		this.z3 = value(z3);
+		this.x0 = BigDecimalUtils.value(x0);
+		this.x1 = BigDecimalUtils.value(x1);
+		this.x2 = BigDecimalUtils.value(x2);
+		this.x3 = BigDecimalUtils.value(x3);
+		this.y0 = BigDecimalUtils.value(y0);
+		this.y1 = BigDecimalUtils.value(y1);
+		this.y2 = BigDecimalUtils.value(y2);
+		this.y3 = BigDecimalUtils.value(y3);
+		this.z0 = BigDecimalUtils.value(z0);
+		this.z1 = BigDecimalUtils.value(z1);
+		this.z2 = BigDecimalUtils.value(z2);
+		this.z3 = BigDecimalUtils.value(z3);
 		this.context = new MathContext(20);
 	}
 	
@@ -154,11 +155,5 @@ public class Affine3dCoordinateSpace
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context), context);
 		tmp = tmp.add(BigDecimal.valueOf(k).multiply(t2, context), context);
 		return tmp.add(t3, context);
-	}
-
-	private BigDecimal value(BigDecimal v) {
-		if (v == null)
-			return BigDecimal.ZERO;
-		return v;
 	}
 }

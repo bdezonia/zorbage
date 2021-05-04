@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.coordinates;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
@@ -53,8 +54,8 @@ public class LinearNdCoordinateSpace
 		this.scales = new BigDecimal[scales.length];
 		this.offsets = new BigDecimal[offsets.length];
 		for (int i = 0; i < scales.length; i++) {
-			this.scales[i] = value(scales[i]);
-			this.offsets[i] = value(offsets[i]);
+			this.scales[i] = BigDecimalUtils.value(scales[i]);
+			this.offsets[i] = BigDecimalUtils.value(offsets[i]);
 		}
 		this.context = new MathContext(20);
 	}
@@ -100,11 +101,5 @@ public class LinearNdCoordinateSpace
 
 	public BigDecimal getOffset(int axis) {
 		return offsets[axis];
-	}
-	
-	private BigDecimal value(BigDecimal v) {
-		if (v == null)
-			return BigDecimal.ZERO;
-		return v;
 	}
 }

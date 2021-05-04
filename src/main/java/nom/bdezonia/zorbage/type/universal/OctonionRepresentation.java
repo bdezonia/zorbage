@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.universal;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -65,22 +66,14 @@ public class OctonionRepresentation
 	public OctonionRepresentation(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k,
 			BigDecimal l, BigDecimal i0, BigDecimal j0, BigDecimal k0)
 	{
-		if (r == null) r = BigDecimal.ZERO;
-		if (i == null) i = BigDecimal.ZERO;
-		if (j == null) j = BigDecimal.ZERO;
-		if (k == null) k = BigDecimal.ZERO;
-		if (l == null) l = BigDecimal.ZERO;
-		if (i0 == null) i0 = BigDecimal.ZERO;
-		if (j0 == null) j0 = BigDecimal.ZERO;
-		if (k0 == null) k0 = BigDecimal.ZERO;
-		this.r = r;
-		this.i = i;
-		this.j = j;
-		this.k = k;
-		this.l = l;
-		this.i0 = i0;
-		this.j0 = j0;
-		this.k0 = k0;
+		this.r = BigDecimalUtils.value(r);
+		this.i = BigDecimalUtils.value(i);
+		this.j = BigDecimalUtils.value(j);
+		this.k = BigDecimalUtils.value(k);
+		this.l = BigDecimalUtils.value(l);
+		this.i0 = BigDecimalUtils.value(i0);
+		this.j0 = BigDecimalUtils.value(j0);
+		this.k0 = BigDecimalUtils.value(k0);
 	}
 	
 	public BigDecimal r() { return r; }
@@ -92,14 +85,14 @@ public class OctonionRepresentation
 	public BigDecimal j0() { return j0; }
 	public BigDecimal k0() { return k0; }
 	
-	public void setR(BigDecimal r) { if (r == null) r = BigDecimal.ZERO; this.r = r; }
-	public void setI(BigDecimal i) { if (i == null) i = BigDecimal.ZERO; this.i = i; }
-	public void setJ(BigDecimal j) { if (j == null) j = BigDecimal.ZERO; this.j = j; }
-	public void setK(BigDecimal k) { if (k == null) k = BigDecimal.ZERO; this.k = k; }
-	public void setL(BigDecimal l) { if (l == null) l = BigDecimal.ZERO; this.l = l; }
-	public void setI0(BigDecimal i0) { if (i0 == null) i0 = BigDecimal.ZERO; this.i0 = i0; }
-	public void setJ0(BigDecimal j0) { if (j0 == null) j0 = BigDecimal.ZERO; this.j0 = j0; }
-	public void setK0(BigDecimal k0) { if (k0 == null) k0 = BigDecimal.ZERO; this.k0 = k0; }
+	public void setR(BigDecimal r) { this.r = BigDecimalUtils.value(r); }
+	public void setI(BigDecimal i) { this.i = BigDecimalUtils.value(i); }
+	public void setJ(BigDecimal j) { this.j = BigDecimalUtils.value(j); }
+	public void setK(BigDecimal k) { this.k = BigDecimalUtils.value(k); }
+	public void setL(BigDecimal l) { this.l = BigDecimalUtils.value(l); }
+	public void setI0(BigDecimal i0) { this.i0 = BigDecimalUtils.value(i0); }
+	public void setJ0(BigDecimal j0) { this.j0 = BigDecimalUtils.value(j0); }
+	public void setK0(BigDecimal k0) { this.k0 = BigDecimalUtils.value(k0); }
 	
 	@Override
 	public int hashCode() {
@@ -122,14 +115,14 @@ public class OctonionRepresentation
 		if (o instanceof OctonionRepresentation) {
 			OctonionRepresentation oct = (OctonionRepresentation) o;
 			return
-					this.r.equals(oct.r) &&
-					this.i.equals(oct.i) &&
-					this.j.equals(oct.j) &&
-					this.k.equals(oct.k) &&
-					this.l.equals(oct.l) &&
-					this.i0.equals(oct.i0) &&
-					this.j0.equals(oct.j0) &&
-					this.k0.equals(oct.k0);
+				this.r.equals(oct.r) &&
+				this.i.equals(oct.i) &&
+				this.j.equals(oct.j) &&
+				this.k.equals(oct.k) &&
+				this.l.equals(oct.l) &&
+				this.i0.equals(oct.i0) &&
+				this.j0.equals(oct.j0) &&
+				this.k0.equals(oct.k0);
 		}
 		return false;
 	}
