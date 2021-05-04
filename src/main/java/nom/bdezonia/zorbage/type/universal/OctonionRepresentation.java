@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.universal;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.misc.Hasher;
 
@@ -42,7 +43,7 @@ import nom.bdezonia.zorbage.misc.Hasher;
  *
  */
 public class OctonionRepresentation
-	implements Allocatable<OctonionRepresentation>
+	implements Allocatable<OctonionRepresentation>, Duplicatable<OctonionRepresentation>
 {
 
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
@@ -130,5 +131,19 @@ public class OctonionRepresentation
 	@Override
 	public OctonionRepresentation allocate() {
 		return new OctonionRepresentation();
+	}
+
+	@Override
+	public OctonionRepresentation duplicate() {
+		OctonionRepresentation val = allocate();
+		val.setR(this.r);
+		val.setI(this.i);
+		val.setJ(this.j);
+		val.setK(this.k);
+		val.setL(this.l);
+		val.setI0(this.i0);
+		val.setJ0(this.j0);
+		val.setK0(this.k0);
+		return val;
 	}
 }
