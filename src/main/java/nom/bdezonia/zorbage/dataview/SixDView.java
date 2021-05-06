@@ -91,4 +91,26 @@ public class SixDView<U> {
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
+	
+	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
+		if (outOfBounds(i0,i1,i2,i3,i4,i5))
+			throw new IllegalArgumentException("view index out of bounds");
+		get(i0,i1,i2,i3,i4,i5,val);
+	}
+	
+	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
+		if (outOfBounds(i0,i1,i2,i3,i4,i5))
+			throw new IllegalArgumentException("view index out of bounds");
+		set(i0,i1,i2,i3,i4,i5,val);
+	}
+	
+	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5) {
+		if (i0 < 0 || i0 >= d0) return true;
+		if (i1 < 0 || i1 >= d1) return true;
+		if (i2 < 0 || i2 >= d2) return true;
+		if (i3 < 0 || i3 >= d3) return true;
+		if (i4 < 0 || i4 >= d4) return true;
+		if (i5 < 0 || i5 >= d5) return true;
+		return false;
+	}
 }

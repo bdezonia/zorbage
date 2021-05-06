@@ -73,4 +73,23 @@ public class ThreeDView<U> {
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
+	
+	public void safeGet(long i0, long i1, long i2, U val) {
+		if (outOfBounds(i0,i1,i2))
+			throw new IllegalArgumentException("view index out of bounds");
+		get(i0,i1,i2,val);
+	}
+	
+	public void safeSet(long i0, long i1, long i2, U val) {
+		if (outOfBounds(i0,i1,i2))
+			throw new IllegalArgumentException("view index out of bounds");
+		set(i0,i1,i2,val);
+	}
+	
+	private boolean outOfBounds(long i0, long i1, long i2) {
+		if (i0 < 0 || i0 >= d0) return true;
+		if (i1 < 0 || i1 >= d1) return true;
+		if (i2 < 0 || i2 >= d2) return true;
+		return false;
+	}
 }

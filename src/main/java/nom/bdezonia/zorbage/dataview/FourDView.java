@@ -79,4 +79,24 @@ public class FourDView<U> {
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
+	
+	public void safeGet(long i0, long i1, long i2, long i3, U val) {
+		if (outOfBounds(i0,i1,i2,i3))
+			throw new IllegalArgumentException("view index out of bounds");
+		get(i0,i1,i2,i3,val);
+	}
+	
+	public void safeSet(long i0, long i1, long i2, long i3, U val) {
+		if (outOfBounds(i0,i1,i2,i3))
+			throw new IllegalArgumentException("view index out of bounds");
+		set(i0,i1,i2,i3,val);
+	}
+	
+	private boolean outOfBounds(long i0, long i1, long i2, long i3) {
+		if (i0 < 0 || i0 >= d0) return true;
+		if (i1 < 0 || i1 >= d1) return true;
+		if (i2 < 0 || i2 >= d2) return true;
+		if (i3 < 0 || i3 >= d3) return true;
+		return false;
+	}
 }
