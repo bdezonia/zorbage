@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
  * @author Barry DeZonia
  *
  */
-public class ConcatenateDataSources {
+public class NdConcatenation {
 
 	/**
 	 * Generate a data source by concatenating data sources along an axis. The data sources can
@@ -127,16 +127,16 @@ public class ConcatenateDataSources {
 		
 		// calc a way to identify which input DS to query when moving alongAxis in the output DS
 		
-		List<Long> offsets = new ArrayList<>();
-		offsets.add(0L);
+		long[] offsets = new long[dataSources.size()];
+		offsets[0] = 0;
 		for (int i = 1; i < dataSources.size(); i++) {
-			long prevOffset = offsets.get(i-1);
+			long prevOffset = offsets[i-1];
 			long offset = 0;
 			DimensionedDataSource<U> currDs = dataSources.get(i);
 			for (int d = 0; d < numDims; d++) {
 				offset = prevOffset + currDs.dimension(d);
 			}
-			offsets.add(offset);
+			offsets[i] = offset;
 		}
 
 		// now fill the data from the inputs using the nodata value when needed
@@ -154,8 +154,8 @@ public class ConcatenateDataSources {
 			
 			long axisVal = idx.get(alongAxis);
 			int dsNum = -1;
-			for (int i = 1; i < offsets.size(); i++) {
-				long offset = offsets.get(i);
+			for (int i = 1; i < offsets.length; i++) {
+				long offset = offsets[i];
 				if (axisVal < offset) {
 					dsNum = i;
 					break;
@@ -164,7 +164,7 @@ public class ConcatenateDataSources {
 			
 			// transform the output point into input data source's coordinate space
 			
-			long offset = offsets.get(dsNum);
+			long offset = offsets[dsNum];
 			idx.set(alongAxis, idx.get(alongAxis) - offset);
 			
 			// get the value at the input point
