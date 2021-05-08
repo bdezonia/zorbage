@@ -63,11 +63,13 @@ public class DimensionalPermutation {
 		DimensionedDataSource<U> compute(T alg, int[] permutation, DimensionedDataSource<U> input)
 	{
 		// make sure it is a space we know how to permute
+		
 		if (!(input.getCoordinateSpace() instanceof IdentityCoordinateSpace) &&
 			!(input.getCoordinateSpace() instanceof LinearNdCoordinateSpace))
 		
 		{
-			// some random space : we can't permute coord space
+			// some random space : we can't permute coordinate space
+			
 			throw new IllegalArgumentException("do not know how to permute this coordinate space");
 		}
 
