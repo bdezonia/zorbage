@@ -36,6 +36,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 
+// TODO - as much as possible use ConcatenateDataSources as a template to implement this algorithm
+
 /**
  * 
  * @author Barry DeZonia
