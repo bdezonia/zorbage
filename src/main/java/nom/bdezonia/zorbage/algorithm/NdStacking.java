@@ -81,7 +81,7 @@ public class NdStacking {
 		
 		// find the overall dimensions of the fully stacked data source
 
-		long[] outputDims = new long[firstDs.numDimensions()+1];
+		long[] outputDims = new long[numDims+1];
 		for (int d = 0; d < numDims; d++) {
 			outputDims[d] = firstDs.dimension(d);
 		}
