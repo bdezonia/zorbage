@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,15 +79,22 @@ public class NdConcatenation {
 			throw new IllegalArgumentException("No data sources given to concat algorithm");
 		
 		int numDims = dataSources.get(0).numDimensions();
-		for (int i = 1; i < dataSources.size(); i++) {
-			DimensionedDataSource<U> ds = dataSources.get(i);
-			if (ds.numDimensions() != numDims)
-				throw new IllegalArgumentException("Cannot mix dimensionality of input datasets");
-		}
 		
 		if (alongAxis < 0 || alongAxis >= numDims)
 			throw new IllegalArgumentException("specified axis is outside dimensionality of inputs");
 
+		BigInteger axisSize = BigInteger.valueOf(dataSources.get(0).dimension(alongAxis));
+
+		for (int i = 1; i < dataSources.size(); i++) {
+			DimensionedDataSource<U> ds = dataSources.get(i);
+			if (ds.numDimensions() != numDims)
+				throw new IllegalArgumentException("Cannot mix dimensionality of input datasets");
+			axisSize = axisSize.add(ds.dimension(alongAxis));
+		}
+
+		if (axisSize.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
+			throw new IllegalArgumentException("proposed concatenation would result in a axis dimension that exceeds Long.MAX_VALUE");
+			
 		// find the overall dimensions of the fully concatenated data source
 
 		//   start with the first data source and init counting variables
