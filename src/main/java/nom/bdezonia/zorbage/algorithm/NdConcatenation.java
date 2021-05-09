@@ -89,7 +89,7 @@ public class NdConcatenation {
 			DimensionedDataSource<U> ds = dataSources.get(i);
 			if (ds.numDimensions() != numDims)
 				throw new IllegalArgumentException("Cannot mix dimensionality of input datasets");
-			axisSize = axisSize.add(ds.dimension(alongAxis));
+			axisSize = axisSize.add(BigInteger.valueOf(ds.dimension(alongAxis)));
 		}
 
 		if (axisSize.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0)
