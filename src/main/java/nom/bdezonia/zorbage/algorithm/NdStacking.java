@@ -126,7 +126,7 @@ public class NdStacking {
 				// set the output point coords from the input point. remember dims+1 entry already set
 				
 				for (int d = 0; d < numDims; d++) {
-					idxO.set(d, idxI.get(i));
+					idxO.set(d, idxI.get(d));
 				}
 
 				// set the value at output point
