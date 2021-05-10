@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -38,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  * @param <U>
  */
-public class TwoDView<U> {
+public class TwoDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final long d1;
@@ -50,6 +52,14 @@ public class TwoDView<U> {
 		this.d0 = d0;
 		this.d1 = d1;
 		this.list = data;
+	}
+	
+	public TwoDView(DimensionedDataSource<U> ds) {
+		if (ds.numDimensions() != 2)
+			throw new IllegalArgumentException("2-d view passed a data source that is "+ds.numDimensions()+"-d");
+		d0 = ds.dimension(0);
+		d1 = ds.dimension(1);
+		list = ds.rawData();
 	}
 	
 	public long d0() { return d0; }
@@ -84,5 +94,17 @@ public class TwoDView<U> {
 		if (i0 < 0 || i0 >= d0) return true;
 		if (i1 < 0 || i1 >= d1) return true;
 		return false;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 2;
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d == 0) return d0;
+		if (d == 1) return d1;
+		throw new IllegalArgumentException("dimension out of bounds");
 	}
 }

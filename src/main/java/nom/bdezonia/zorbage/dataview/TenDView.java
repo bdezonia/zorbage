@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -38,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  * @param <U>
  */
-public class TenDView<U> {
+public class TenDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final long d1;
@@ -66,6 +68,22 @@ public class TenDView<U> {
 		this.d8 = d8;
 		this.d9 = d9;
 		this.list = data;
+	}
+	
+	public TenDView(DimensionedDataSource<U> ds) {
+		if (ds.numDimensions() != 10)
+			throw new IllegalArgumentException("10-d view passed a data source that is "+ds.numDimensions()+"-d");
+		d0 = ds.dimension(0);
+		d1 = ds.dimension(1);
+		d2 = ds.dimension(2);
+		d3 = ds.dimension(3);
+		d4 = ds.dimension(4);
+		d5 = ds.dimension(5);
+		d6 = ds.dimension(6);
+		d7 = ds.dimension(7);
+		d8 = ds.dimension(8);
+		d9 = ds.dimension(9);
+		list = ds.rawData();
 	}
 	
 	public long d0() { return d0; }
@@ -140,5 +158,25 @@ public class TenDView<U> {
 		if (i8 < 0 || i8 >= d8) return true;
 		if (i9 < 0 || i9 >= d9) return true;
 		return false;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 10;
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d == 0) return d0;
+		if (d == 1) return d1;
+		if (d == 2) return d2;
+		if (d == 3) return d3;
+		if (d == 4) return d4;
+		if (d == 5) return d5;
+		if (d == 6) return d6;
+		if (d == 7) return d7;
+		if (d == 8) return d8;
+		if (d == 9) return d9;
+		throw new IllegalArgumentException("dimension out of bounds");
 	}
 }

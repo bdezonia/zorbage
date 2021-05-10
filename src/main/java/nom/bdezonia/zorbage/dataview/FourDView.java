@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -38,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  * @param <U>
  */
-public class FourDView<U> {
+public class FourDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final long d1;
@@ -54,6 +56,16 @@ public class FourDView<U> {
 		this.d2 = d2;
 		this.d3 = d3;
 		this.list = data;
+	}
+	
+	public FourDView(DimensionedDataSource<U> ds) {
+		if (ds.numDimensions() != 4)
+			throw new IllegalArgumentException("4-d view passed a data source that is "+ds.numDimensions()+"-d");
+		d0 = ds.dimension(0);
+		d1 = ds.dimension(1);
+		d2 = ds.dimension(2);
+		d3 = ds.dimension(3);
+		list = ds.rawData();
 	}
 	
 	public long d0() { return d0; }
@@ -98,5 +110,19 @@ public class FourDView<U> {
 		if (i2 < 0 || i2 >= d2) return true;
 		if (i3 < 0 || i3 >= d3) return true;
 		return false;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 4;
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d == 0) return d0;
+		if (d == 1) return d1;
+		if (d == 2) return d2;
+		if (d == 3) return d3;
+		throw new IllegalArgumentException("dimension out of bounds");
 	}
 }

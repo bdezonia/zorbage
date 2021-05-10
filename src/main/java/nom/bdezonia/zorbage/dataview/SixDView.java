@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -38,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  * @param <U>
  */
-public class SixDView<U> {
+public class SixDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final long d1;
@@ -58,6 +60,18 @@ public class SixDView<U> {
 		this.d4 = d4;
 		this.d5 = d5;
 		this.list = data;
+	}
+	
+	public SixDView(DimensionedDataSource<U> ds) {
+		if (ds.numDimensions() != 6)
+			throw new IllegalArgumentException("6-d view passed a data source that is "+ds.numDimensions()+"-d");
+		d0 = ds.dimension(0);
+		d1 = ds.dimension(1);
+		d2 = ds.dimension(2);
+		d3 = ds.dimension(3);
+		d4 = ds.dimension(4);
+		d5 = ds.dimension(5);
+		list = ds.rawData();
 	}
 	
 	public long d0() { return d0; }
@@ -112,5 +126,21 @@ public class SixDView<U> {
 		if (i4 < 0 || i4 >= d4) return true;
 		if (i5 < 0 || i5 >= d5) return true;
 		return false;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 6;
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d == 0) return d0;
+		if (d == 1) return d1;
+		if (d == 2) return d2;
+		if (d == 3) return d3;
+		if (d == 4) return d4;
+		if (d == 5) return d5;
+		throw new IllegalArgumentException("dimension out of bounds");
 	}
 }

@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -38,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  * @param <U>
  */
-public class EightDView<U> {
+public class EightDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final long d1;
@@ -62,6 +64,20 @@ public class EightDView<U> {
 		this.d6 = d6;
 		this.d7 = d7;
 		this.list = data;
+	}
+	
+	public EightDView(DimensionedDataSource<U> ds) {
+		if (ds.numDimensions() != 8)
+			throw new IllegalArgumentException("8-d view passed a data source that is "+ds.numDimensions()+"-d");
+		d0 = ds.dimension(0);
+		d1 = ds.dimension(1);
+		d2 = ds.dimension(2);
+		d3 = ds.dimension(3);
+		d4 = ds.dimension(4);
+		d5 = ds.dimension(5);
+		d6 = ds.dimension(6);
+		d7 = ds.dimension(7);
+		list = ds.rawData();
 	}
 	
 	public long d0() { return d0; }
@@ -126,5 +142,23 @@ public class EightDView<U> {
 		if (i6 < 0 || i6 >= d6) return true;
 		if (i7 < 0 || i7 >= d7) return true;
 		return false;
+	}
+
+	@Override
+	public int numDimensions() {
+		return 8;
+	}
+
+	@Override
+	public long dimension(int d) {
+		if (d == 0) return d0;
+		if (d == 1) return d1;
+		if (d == 2) return d2;
+		if (d == 3) return d3;
+		if (d == 4) return d4;
+		if (d == 5) return d5;
+		if (d == 6) return d6;
+		if (d == 7) return d7;
+		throw new IllegalArgumentException("dimension out of bounds");
 	}
 }
