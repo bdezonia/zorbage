@@ -31,22 +31,18 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
-import nom.bdezonia.zorbage.oob.nd.ConstantNdOOB;
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
 // TODO: no metadata is copied with this algorithm
 
-// TODO: I could use some ancillary data structures and algos to omprove the speed of this code
+// TODO: I could use some ancillary data structures and algos to improve the speed of this code
 
 /**
  * 
@@ -56,22 +52,22 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 public class NdConcatenation {
 
 	/**
-	 * Generate a data source by concatenating data sources along an axis. The data sources can
-	 * have different shapes but must have the same number of dimensions. The output data source
-	 * has dimensions that engulf the dimensions of all the other data sources. A nodata value
-	 * is needed for when one input data source is smaller than the others and gets queried
-	 * outside its bounds.
+	 * Generate a data source by concatenating data sources along an axis. The data sources have
+	 * to have the same dimensionality. The shapes of each dataset must match in all dims except
+	 * along the axis of interest. Along that axis values can vary. you can concat a 1x2, a 4x2,
+	 * and a 7x2 along axis 0 (getting a 12x2). You cannot concatenate these along axis 1 because
+	 * all the axis 0 values vary. The output data source has dimensions that encompass the
+	 * dimensions of all the other data sources.
 	 *  
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param nodataValue
 	 * @param alongAxis
 	 * @param dataSources
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		DimensionedDataSource<U> compute(T alg, U nodataValue, int alongAxis, List<DimensionedDataSource<U>> dataSources)
+		DimensionedDataSource<U> compute(T alg, int alongAxis, List<DimensionedDataSource<U>> dataSources)
 	{
 		// check correctness of inputs
 		
@@ -100,54 +96,26 @@ public class NdConcatenation {
 		//   start with the first data source and init counting variables
 		
 		DimensionedDataSource<U> ds = dataSources.get(0);
-		long sumDim = ds.dimension(alongAxis);
-		long[] maxDims = new long[numDims];
+		long[] outDims = new long[numDims];
 		for (int d = 0; d < numDims; d++) {
-			maxDims[d] = ds.dimension(d);
+			outDims[d] = ds.dimension(d);
 		}
-		
-		//   for each data source after the first update the max overall sizes
-		
-		for (int i = 1; i < dataSources.size(); i++) {
-			ds = dataSources.get(i);
-			sumDim += ds.dimension(alongAxis);
-			for (int d = 0; d < numDims; d++) {
-				if (ds.dimension(d) > maxDims[d])
-					maxDims[d] = ds.dimension(d);
-			}
-		}
+		outDims[alongAxis] = axisSize.longValue();
 		
 		// create the output data source that fits the combined dims
 		
-		long[] outputDims = maxDims.clone();
-		outputDims[alongAxis] = sumDim;
-		DimensionedDataSource<U> output = DimensionedStorage.allocate(nodataValue, outputDims);
-		
-		// pad the input data sources with the nodata value
-		//   The input data sources share the same dimension but their extents can be different
-		
-		List<DimensionedDataSource<U>> paddeds = new ArrayList<>();
-		for (int i = 0; i < dataSources.size(); i++) {
-			DimensionedDataSource<U> data = dataSources.get(i);
-			Procedure2<IntegerIndex,U> oobProc = new ConstantNdOOB<T,U>(alg, data, nodataValue);
-			paddeds.add(new ProcedurePaddedDimensionedDataSource<T,U>(alg, data, oobProc));
-		}
+		DimensionedDataSource<U> output = DimensionedStorage.allocate(alg.construct(), outDims);
 		
 		// calc a way to identify which input DS to query when moving alongAxis in the output DS
 		
-		long[] offsets = new long[dataSources.size()];
-		offsets[0] = 0;
+		long[] maxVals = new long[dataSources.size()];
+		maxVals[0] = dataSources.get(0).dimension(alongAxis);
 		for (int i = 1; i < dataSources.size(); i++) {
-			long prevOffset = offsets[i-1];
-			long offset = 0;
-			DimensionedDataSource<U> currDs = dataSources.get(i);
-			for (int d = 0; d < numDims; d++) {
-				offset = prevOffset + currDs.dimension(d);
-			}
-			offsets[i] = offset;
+			long prevMax = maxVals[i-1];
+			maxVals[i] = prevMax + dataSources.get(i).dimension(alongAxis);
 		}
 
-		// now fill the data from the inputs using the nodata value when needed
+		// now fill the data from the inputs
 		
 		U val = alg.construct();
 		IntegerIndex idx = new IntegerIndex(numDims);
@@ -158,13 +126,12 @@ public class NdConcatenation {
 			
 			iter.next(idx);
 			
-			// find the input DS associated with the value of the coordinate alongAxis
+			// find the input DS associated with the value of the output coordinate alongAxis
 			
 			long axisVal = idx.get(alongAxis);
 			int dsNum = -1;
-			for (int i = 1; i < offsets.length; i++) {
-				long offset = offsets[i];
-				if (axisVal < offset) {
+			for (int i = 0; i < maxVals.length; i++) {
+				if (axisVal < maxVals[i]) {
 					dsNum = i;
 					break;
 				}
@@ -172,18 +139,17 @@ public class NdConcatenation {
 			
 			// transform the output point into input data source's coordinate space
 			
-			long offset = offsets[dsNum];
+			long offset = (dsNum == 0) ? 0 : maxVals[dsNum-1];
+			
 			idx.set(alongAxis, idx.get(alongAxis) - offset);
 			
 			// get the value at the input point
 			
-			paddeds.get(dsNum).get(idx, val);
+			dataSources.get(dsNum).get(idx, val);
 			
 			// transform the input point back to the output data source's coordinate space
 			
-			for (int i = 0; i < numDims; i++) {
-				idx.set(alongAxis, idx.get(alongAxis) + offset);
-			}
+			idx.set(alongAxis, idx.get(alongAxis) + offset);
 			
 			// set the value at output point
 			
