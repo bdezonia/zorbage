@@ -40,6 +40,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.dataview.OneDView;
 import nom.bdezonia.zorbage.dataview.TwoDView;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
@@ -464,23 +465,30 @@ public class TestNdConcatenation {
 		datasets.add(DimensionedStorage.allocate(G.INT32.construct(), new long[] {1}));
 		datasets.add(DimensionedStorage.allocate(G.INT32.construct(), new long[] {1}));
 		
+		OneDView<SignedInt32Member> view1;
+		
+		view1 = new OneDView<SignedInt32Member>(datasets.get(0));
 		val.setV(1);
-		datasets.get(0).rawData().set(0, val);
+		view1.set(0, val);
+		view1 = new OneDView<SignedInt32Member>(datasets.get(1));
 		val.setV(2);
-		datasets.get(1).rawData().set(0, val);
+		view1.set(0, val);
+		view1 = new OneDView<SignedInt32Member>(datasets.get(2));
 		val.setV(3);
-		datasets.get(2).rawData().set(0, val);
+		view1.set(0, val);
 		
 		ds = NdConcatenation.compute(G.INT32, 0, datasets);
 		
 		assertEquals(1, ds.numDimensions());
 		assertEquals(3, ds.dimension(0));
 		
-		ds.rawData().get(0, val);
+		view1 = new OneDView<SignedInt32Member>(ds);
+		
+		view1.get(0, val);
 		assertEquals(1, val.v());
-		ds.rawData().get(1, val);
+		view1.get(1, val);
 		assertEquals(2, val.v());
-		ds.rawData().get(2, val);
+		view1.get(2, val);
 		assertEquals(3, val.v());
 
 		/*
