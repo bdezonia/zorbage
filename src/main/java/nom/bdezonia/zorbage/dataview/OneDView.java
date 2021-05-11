@@ -46,15 +46,15 @@ public class OneDView<U> implements Dimensioned {
 	private final IndexedDataSource<U> list;
 	
 	public OneDView(IndexedDataSource<U> data) {
-		this.d0 = data.size();
 		this.list = data;
+		this.d0 = data.size();
 	}
 	
 	public OneDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 1)
 			throw new IllegalArgumentException("1-d view passed a data source that is "+ds.numDimensions()+"-d");
-		d0 = ds.dimension(0);
-		list = ds.rawData();
+		this.list = ds.rawData();
+		this.d0 = list.size();
 	}
 	
 	public long d0() { return d0; }
