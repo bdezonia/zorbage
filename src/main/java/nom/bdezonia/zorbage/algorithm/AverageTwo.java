@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class AverageTwo {
 
+	private AverageTwo() { }
+	
 	/**
 	 * Average two things quickly (avoiding division when possible and avoiding overflow conditions of a naive approach)
 	 * 

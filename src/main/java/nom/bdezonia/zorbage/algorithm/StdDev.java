@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class StdDev {
 
+	private StdDev() { }
+	
 	/**
 	 *
 	 * @param alg

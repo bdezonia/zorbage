@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class CreateMask {
 
+	private CreateMask() { }
+	
 	/**
 	 * 
 	 * @param <T>

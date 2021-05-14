@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class TensorUnity {
 
+	private TensorUnity() { }
+	
 	/**
 	 * 
 	 * @param <S>

@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ResampleAveragedCubics {
 
+	private ResampleAveragedCubics() { }
+	
 	/**
 	 * Cubicly resamples one multidim dataset into another multidim dataset using 4 points per axis.
 	 * The algorithm computes a series of cubicly interpolated values from the four nearest points

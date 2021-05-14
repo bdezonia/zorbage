@@ -45,6 +45,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class CartesianProduct {
 
+	private CartesianProduct() { }
+	
 	/**
 	 * 
 	 * @param algU

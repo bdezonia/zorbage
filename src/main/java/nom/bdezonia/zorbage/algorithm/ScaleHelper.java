@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class ScaleHelper {
 
+	private ScaleHelper() { }
+	
 	/**
 	 * 
 	 * @param typeAlg

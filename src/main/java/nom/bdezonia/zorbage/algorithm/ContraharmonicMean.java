@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 public class ContraharmonicMean {
 
 	// https://en.wikipedia.org/wiki/Contraharmonic_mean
+	
+	private ContraharmonicMean() { }
 		
 	/**
 	 * 

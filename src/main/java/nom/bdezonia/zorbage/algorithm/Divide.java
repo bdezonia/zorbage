@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.ModularDivision;
  */
 public class Divide {
 
+	private Divide() { }
+	
 	/**
 	 * 
 	 * @param alg

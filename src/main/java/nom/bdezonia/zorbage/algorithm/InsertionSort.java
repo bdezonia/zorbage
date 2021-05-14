@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class InsertionSort {
 
+	private InsertionSort() { }
+	
 	/**
 	 * 
 	 * @param alg

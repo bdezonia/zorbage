@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class OdeSolveRK4 {
 
+	private OdeSolveRK4() { }
+	
 	/**
 	 * Solves ODEs (1-d or n-d) using a classic fourth order Runge Kutta algorithm.
 	 * @param uAlg

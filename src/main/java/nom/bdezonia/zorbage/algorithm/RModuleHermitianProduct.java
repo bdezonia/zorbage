@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.RModuleMember;
  */
 public class RModuleHermitianProduct {
 
+	private RModuleHermitianProduct() {}
+	
 	/**
 	 * 
 	 * @param <T>
