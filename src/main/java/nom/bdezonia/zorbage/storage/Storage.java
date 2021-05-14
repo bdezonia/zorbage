@@ -57,6 +57,10 @@ import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
  */
 public class Storage {
 
+	// do not instantiate
+	
+	private Storage() { }
+	
 	/**
 	 * 
 	 * @param numElements

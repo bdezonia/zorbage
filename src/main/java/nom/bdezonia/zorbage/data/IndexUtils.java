@@ -39,6 +39,10 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  */
 public class IndexUtils {
 
+	// do not instantiate
+	
+	private IndexUtils() { }
+	
 	/**
 	 * 
 	 * @param dims

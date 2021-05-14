@@ -37,6 +37,8 @@ package nom.bdezonia.zorbage.misc;
  */
 public class RealUtils {
 
+	// do not instantiate
+	
 	private RealUtils() { }
 	
 	public static boolean near(float f1, float f2, float tol) {

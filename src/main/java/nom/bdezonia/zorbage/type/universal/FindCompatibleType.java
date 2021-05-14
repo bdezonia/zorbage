@@ -39,6 +39,10 @@ import nom.bdezonia.zorbage.algebra.G;
  */
 public class FindCompatibleType {
 
+	// do not instantiate
+	
+	private FindCompatibleType() { }
+	
 	/**
 	 * 
 	 * @param a

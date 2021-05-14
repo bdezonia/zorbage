@@ -40,6 +40,10 @@ import java.math.BigInteger;
  */
 public class Hasher {
 
+	// do not instantiate
+	
+	private Hasher() { }
+	
 	public static final int PRIME = 23;
 	
 	public static int hashCode(String v) {

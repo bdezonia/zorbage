@@ -36,5 +36,7 @@ package nom.bdezonia.zorbage.misc;
  *
  */
 public interface ThreadFriendly {
+	
 	// no implementation: a marker interface
+
 }

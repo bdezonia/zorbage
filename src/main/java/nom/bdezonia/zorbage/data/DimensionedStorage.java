@@ -44,6 +44,10 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class DimensionedStorage {
 
+	// do not instantiate
+	
+	private DimensionedStorage() { }
+	
 	/**
 	 * 
 	 * @param dims

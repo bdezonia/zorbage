@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.misc.LongUtils;
  *
  */
 public class TensorStringRepresentation {
+
 	private final long[] dimensions;
 	private final BigList<OctonionRepresentation> elements;
 	private BigDecimal tmp;
