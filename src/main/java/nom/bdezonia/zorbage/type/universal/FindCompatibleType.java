@@ -106,11 +106,11 @@ public class FindCompatibleType {
 		case BIGDECIMAL:
 			if (components == 1)
 				return (T) G.HP;
-			if (components == 2)
+			if (components <= 2)
 				return (T) G.CHP;
-			if (components == 4)
+			if (components <= 4)
 				return (T) G.QHP;
-			if (components == 8)
+			if (components <= 8)
 				return (T) G.OHP;
 			break;
 		case BIGINTEGER:
