@@ -162,7 +162,7 @@ public class TestNdStacking {
 		assertEquals(3, stack.dimension(1));
 		assertEquals(4, stack.dimension(2));
 		
-		ThreeDView<SignedInt32Member> view3 = new ThreeDView<SignedInt32Member>(2,3,4,stack.rawData());
+		ThreeDView<SignedInt32Member> view3 = new ThreeDView<>(2, 3, 4, stack.rawData());
 		
 		view3.get(0, 0, 0, val);
 		assertEquals(1, val.v());

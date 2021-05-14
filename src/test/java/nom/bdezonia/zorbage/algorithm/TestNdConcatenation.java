@@ -199,7 +199,7 @@ public class TestNdConcatenation {
 		assertEquals(7, ds.dimension(0));
 		assertEquals(3, ds.dimension(1));
 		
-		TwoDView<SignedInt32Member> view2 = new TwoDView<SignedInt32Member>(7,3,ds.rawData());
+		TwoDView<SignedInt32Member> view2 = new TwoDView<>(7, 3, ds.rawData());
 
 		// from 1st ds
 		
@@ -338,7 +338,7 @@ public class TestNdConcatenation {
 		assertEquals(3, ds.dimension(0));
 		assertEquals(7, ds.dimension(1));
 		
-		view2 = new TwoDView<SignedInt32Member>(3,7,ds.rawData());
+		view2 = new TwoDView<>(3, 7, ds.rawData());
 
 		// from 1st ds
 		
@@ -416,7 +416,7 @@ public class TestNdConcatenation {
 		datasets = new ArrayList<>();
 		datasets.add(DimensionedStorage.allocate(G.INT32.construct(), new long[] {1,3}));
 		
-		view = new TwoDView<SignedInt32Member>(1,3,datasets.get(0).rawData());
+		view = new TwoDView<>(1, 3, datasets.get(0).rawData());
 		val.setV(3);
 		view.set(0, 2, val);
 		val.setV(2);
@@ -432,7 +432,7 @@ public class TestNdConcatenation {
 		assertEquals(1, ds.dimension(0));
 		assertEquals(3, ds.dimension(1));
 		
-		view = new TwoDView<SignedInt32Member>(1,3,ds.rawData());
+		view = new TwoDView<>(1, 3, ds.rawData());
 		
 		view.get(0, 0, val);
 		assertEquals(1, val.v());
@@ -449,7 +449,7 @@ public class TestNdConcatenation {
 		assertEquals(1, ds.dimension(0));
 		assertEquals(3, ds.dimension(1));
 		
-		view = new TwoDView<SignedInt32Member>(1,3,ds.rawData());
+		view = new TwoDView<>(1, 3, ds.rawData());
 		
 		view.get(0, 0, val);
 		assertEquals(1, val.v());
@@ -467,13 +467,13 @@ public class TestNdConcatenation {
 		
 		OneDView<SignedInt32Member> view1;
 		
-		view1 = new OneDView<SignedInt32Member>(datasets.get(0));
+		view1 = new OneDView<>(datasets.get(0));
 		val.setV(1);
 		view1.set(0, val);
-		view1 = new OneDView<SignedInt32Member>(datasets.get(1));
+		view1 = new OneDView<>(datasets.get(1));
 		val.setV(2);
 		view1.set(0, val);
-		view1 = new OneDView<SignedInt32Member>(datasets.get(2));
+		view1 = new OneDView<>(datasets.get(2));
 		val.setV(3);
 		view1.set(0, val);
 		
@@ -482,7 +482,7 @@ public class TestNdConcatenation {
 		assertEquals(1, ds.numDimensions());
 		assertEquals(3, ds.dimension(0));
 		
-		view1 = new OneDView<SignedInt32Member>(ds);
+		view1 = new OneDView<>(ds);
 		
 		view1.get(0, val);
 		assertEquals(1, val.v());
