@@ -49,6 +49,10 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
  */
 public class NdConcatenation {
 
+	// do not instantiate
+	
+	private NdConcatenation() { }
+	
 	/**
 	 * Generate a data source by concatenating data sources along an axis. The data sources have
 	 * to have the same dimensionality. The shapes of each dataset must match in all dims except
