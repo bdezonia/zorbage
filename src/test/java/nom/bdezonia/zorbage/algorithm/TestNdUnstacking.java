@@ -64,6 +64,7 @@ public class TestNdUnstacking {
 		data = DimensionedStorage.allocate(G.INT32.construct(), new long[] {4});
 		try {
 			results = NdUnstacking.compute(G.INT32, data);
+			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
