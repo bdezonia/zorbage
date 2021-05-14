@@ -71,7 +71,7 @@ public class TestNdUnstacking {
 		
 		data = DimensionedStorage.allocate(G.INT32.construct(), new long[] {4, 3});
 		
-		view2 = new TwoDView<SignedInt32Member>(data);
+		view2 = new TwoDView<>(data);
 		
 		value.setV(1);
 		view2.set(3, 0, value);
@@ -98,7 +98,7 @@ public class TestNdUnstacking {
 
 		data = DimensionedStorage.allocate(G.INT32.construct(), new long[] {4, 2, 3});
 		
-		view3 = new ThreeDView<SignedInt32Member>(data);
+		view3 = new ThreeDView<>(data);
 		
 		value.setV(1);
 		view3.set(3, 1, 0, value);
