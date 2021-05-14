@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class BinarySearchRight {
 
+	// do not instantiate
+	
 	private BinarySearchRight() { }
 	
 	/**

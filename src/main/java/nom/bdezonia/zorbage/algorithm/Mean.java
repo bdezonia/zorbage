@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  */
 public class Mean {
 
+	// do not instantiate
+	
 	private Mean() {}
 
 	/**

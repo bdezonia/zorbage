@@ -50,6 +50,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ResampleCubic {
 
+	// do not instantiate
+	
 	private ResampleCubic() { }
 
 	/**

@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class Zeroes {
 
+	// do not instantiate
+	
 	private Zeroes() { }
 	
 	/**

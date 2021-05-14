@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.storage.Storage;
  */
 public class SetIntersection {
 
+	// do not instantiate
+	
 	private SetIntersection() { }
 	
 	/**

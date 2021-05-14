@@ -51,6 +51,8 @@ import nom.bdezonia.zorbage.algebra.SetReal;
  */
 public class RModuleDefaultNorm {
 
+	// do not instantiate
+	
 	private RModuleDefaultNorm() { }
 
 	/**

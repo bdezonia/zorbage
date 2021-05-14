@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class CorrConv1D {
 
+	// do not instantiate
+	
 	private CorrConv1D() { }
 	
 	/**

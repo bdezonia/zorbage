@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  */
 public class MaxElement {
 
+	// do not instantiate
+	
 	private MaxElement() {}
 
 	/**

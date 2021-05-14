@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class SequenceL0Norm {
 
+	// do not instantiate
+	
 	private SequenceL0Norm() { }
 	
 	/**

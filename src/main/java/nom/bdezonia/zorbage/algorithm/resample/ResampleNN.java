@@ -49,6 +49,8 @@ import nom.bdezonia.zorbage.misc.BigDecimalUtils;
  */
 public class ResampleNN {
 
+	// do not instantiate
+	
 	private ResampleNN() { }
 
 	/**

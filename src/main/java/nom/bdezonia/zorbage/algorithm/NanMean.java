@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  */
 public class NanMean {
 
+	// do not instantiate
+	
 	private NanMean() {}
 
 	/**

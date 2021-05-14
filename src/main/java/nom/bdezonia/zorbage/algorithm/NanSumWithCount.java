@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class NanSumWithCount {
 
+	// do not instantiate
+	
 	private NanSumWithCount() {}
 	
 	/**

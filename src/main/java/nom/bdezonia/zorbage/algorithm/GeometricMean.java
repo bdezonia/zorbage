@@ -46,6 +46,8 @@ public class GeometricMean {
 
 	// https://www.wikihow.com/Calculate-the-Geometric-Mean
 	
+	// do not instantiate
+	
 	private GeometricMean() { }
 	
 	/**

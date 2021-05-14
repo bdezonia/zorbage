@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixSubtraction {
 
+	// do not instantiate
+	
 	private MatrixSubtraction() { }
 	
 	/**

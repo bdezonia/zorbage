@@ -46,9 +46,9 @@ import nom.bdezonia.zorbage.algebra.Ring;
  */
 public class DotProduct {
 
-	private DotProduct() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private DotProduct() { }
 	
 	/**
 	 * 

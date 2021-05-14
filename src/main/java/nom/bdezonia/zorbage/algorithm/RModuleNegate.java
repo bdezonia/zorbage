@@ -41,9 +41,9 @@ import nom.bdezonia.zorbage.algebra.RModuleMember;
  */
 public class RModuleNegate {
 
-	private RModuleNegate() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private RModuleNegate() { }
 	
 	/**
 	 * 

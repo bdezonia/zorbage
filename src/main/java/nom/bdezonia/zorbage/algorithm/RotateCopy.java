@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class RotateCopy {
 
+	// do not instantiate
+	
 	private RotateCopy() { }
 	
 	/**

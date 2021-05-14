@@ -70,6 +70,8 @@ DEALINGS IN THE SOFTWARE.
  */
 public class QuaternionCylindroSpherical {
 
+	// do not instantiate
+	
 	private QuaternionCylindroSpherical() { }
 	
 	/**

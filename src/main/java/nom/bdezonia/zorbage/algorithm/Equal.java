@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Equal {
 
+	// do not instantiate
+	
 	private Equal() {}
 
 	/**

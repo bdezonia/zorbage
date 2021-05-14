@@ -47,6 +47,8 @@ public class ScientificNotation {
 
 	private static final MathContext context = new MathContext(100, RoundingMode.HALF_EVEN);
 
+	// do not instantiate
+	
 	private ScientificNotation() { }
 	
 	/**

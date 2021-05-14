@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.type.rational.RationalMember;
  */
 public class SplatRational {
 
+	// do not instantiate
+	
 	private SplatRational() { }
 	
 	/**

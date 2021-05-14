@@ -41,9 +41,9 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class RModuleScaleByDouble {
 
-	private RModuleScaleByDouble() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private RModuleScaleByDouble() { }
 	
 	/**
 	 * 

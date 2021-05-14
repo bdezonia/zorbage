@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class SampleWithReplacement {
 
+	// do not instantiate
+	
 	private SampleWithReplacement() { }
 	
 	/**

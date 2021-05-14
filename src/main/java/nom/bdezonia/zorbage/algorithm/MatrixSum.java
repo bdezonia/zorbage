@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class MatrixSum {
 
+	// do not instantiate
+	
 	private MatrixSum() { }
 	
 	/**

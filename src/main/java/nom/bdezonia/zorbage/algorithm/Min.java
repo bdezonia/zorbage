@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  */
 public class Min {
 	
+	// do not instantiate
+	
 	private Min() { }
 	
 	/**

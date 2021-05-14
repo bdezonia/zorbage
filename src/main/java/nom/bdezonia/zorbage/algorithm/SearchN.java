@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class SearchN {
 
+	// do not instantiate
+	
 	private SearchN() { }
 
 	/**

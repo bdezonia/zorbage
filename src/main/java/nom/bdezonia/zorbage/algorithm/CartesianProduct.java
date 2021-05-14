@@ -45,6 +45,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class CartesianProduct {
 
+	// do not instantiate
+	
 	private CartesianProduct() { }
 	
 	/**

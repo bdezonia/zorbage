@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
  */
 public class MinElement {
 
+	// do not instantiate
+	
 	private MinElement() {}
 
 	/**

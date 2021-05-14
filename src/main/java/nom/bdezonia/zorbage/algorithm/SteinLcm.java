@@ -50,9 +50,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class SteinLcm {
 	
-	/**
-	 * Do not instantiate. Private constructor for utility class.
-	 */
+	// do not instantiate
+	
 	private SteinLcm() {}
 	
 	/**

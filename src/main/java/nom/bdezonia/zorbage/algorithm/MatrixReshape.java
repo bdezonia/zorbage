@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixReshape {
 
+	// do not instantiate
+	
 	private MatrixReshape() { }
 
 	/**

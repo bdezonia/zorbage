@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixZero {
 
+	// do not instantiate
+	
 	private MatrixZero() { }
 	
 	/**

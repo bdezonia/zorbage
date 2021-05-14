@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
  */
 public class Generate {
 
+	// do not instantiate
+	
 	private Generate() { }
 	
 	/**

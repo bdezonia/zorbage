@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixConjugate {
 
+	// do not instantiate
+	
 	private MatrixConjugate() { }
 	
 	/**

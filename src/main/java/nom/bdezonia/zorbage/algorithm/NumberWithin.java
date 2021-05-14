@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  */
 public class NumberWithin {
 
+	// do not instantiate
+	
 	private NumberWithin() { }
 	
 	/**

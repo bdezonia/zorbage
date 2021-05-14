@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.*;
  */
 public class BoolToUInt1 {
 
+	// do not instantiate
+	
 	private BoolToUInt1() { }
 
 	/**

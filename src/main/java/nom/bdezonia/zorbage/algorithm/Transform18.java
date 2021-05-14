@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Transform18 {
 
+	// do not instantiate
+	
 	private Transform18() { }
 
 	/**

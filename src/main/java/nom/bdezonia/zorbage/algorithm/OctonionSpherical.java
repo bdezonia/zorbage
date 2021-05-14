@@ -70,6 +70,8 @@ DEALINGS IN THE SOFTWARE.
  */
 public class OctonionSpherical {
 
+	// do not instantiate
+	
 	private OctonionSpherical() { }
 		
 	/**

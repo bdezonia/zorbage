@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class Mismatch {
 
+	// do not instantiate
+	
 	private Mismatch() { }
 		
 	/**

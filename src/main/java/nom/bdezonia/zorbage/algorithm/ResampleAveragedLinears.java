@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ResampleAveragedLinears {
 
+	// do not instantiate
+	
 	private ResampleAveragedLinears() { }
 
 	/**

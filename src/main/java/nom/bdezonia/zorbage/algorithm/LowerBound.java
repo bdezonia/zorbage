@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class LowerBound {
 
+	// do not instantiate
+	
 	private LowerBound() { }
 	
 	// see http://www.cplusplus.com/reference/algorithm/lower_bound/

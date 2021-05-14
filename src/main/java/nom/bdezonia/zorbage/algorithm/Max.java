@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  */
 public class Max {
 	
+	// do not instantiate
+	
 	private Max() { }
 	
 	/**

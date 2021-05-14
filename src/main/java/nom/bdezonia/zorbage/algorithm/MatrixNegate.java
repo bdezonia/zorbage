@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixNegate {
 
+	// do not instantiate
+	
 	private MatrixNegate() { }
 	
 	/**

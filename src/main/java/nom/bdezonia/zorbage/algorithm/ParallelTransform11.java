@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
  */
 public class ParallelTransform11 {
 
+	// do not instantiate
+	
 	private ParallelTransform11() { }
 	
 	/**

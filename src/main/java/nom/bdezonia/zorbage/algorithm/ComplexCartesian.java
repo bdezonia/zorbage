@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algebra.SetComplex;
  */
 public class ComplexCartesian {
 
+	// do not instantiate
+	
 	private ComplexCartesian() { }
 
 	/**

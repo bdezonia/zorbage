@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Find {
 
+	// do not instantiate
+	
 	private Find() {}
 
 	/**

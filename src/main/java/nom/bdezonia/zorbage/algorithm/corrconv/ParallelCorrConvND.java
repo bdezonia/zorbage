@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
  */
 public class ParallelCorrConvND {
 
+	// do not instantiate
+	
 	private ParallelCorrConvND() { }
 	
 	/**

@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
  */
 public class TensorIsUnity {
 
+	// do not instantiate
+	
 	private TensorIsUnity() { }
 	
 	/**

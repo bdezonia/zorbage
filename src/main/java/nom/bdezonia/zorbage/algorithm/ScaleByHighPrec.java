@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class ScaleByHighPrec {
 
+	// do not instantiate
+	
 	private ScaleByHighPrec() {}
 	
 	/**

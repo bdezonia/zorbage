@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Correlate1D {
 
+	// do not instantiate
+	
 	private Correlate1D() { }
 	
 	/**

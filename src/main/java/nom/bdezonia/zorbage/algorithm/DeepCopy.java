@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.storage.Storage;
  */
 public class DeepCopy {
 
+	// do not instantiate
+	
 	private DeepCopy() { }
 	
 	/**

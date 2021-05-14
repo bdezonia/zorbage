@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class Eye {
 
+	// do not instantiate
+	
 	private Eye() { }
 	
 	/**

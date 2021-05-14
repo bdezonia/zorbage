@@ -48,6 +48,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class Multiply {
 	
+	// do not instantiate
+	
 	private Multiply() { }
 	
 	/**

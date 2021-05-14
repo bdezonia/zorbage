@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.Multiplication;
  */
 public class ConvolveND {
 
+	// do not instantiate
+	
 	private ConvolveND() { }
 	
 	/**

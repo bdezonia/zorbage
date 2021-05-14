@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.NaN;
  */
 public class NanMaxElement {
 
+	// do not instantiate
+	
 	private NanMaxElement() {}
 
 	/**

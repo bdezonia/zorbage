@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class TwoElementFraction {
 
+	// do not instantiate
+	
 	private TwoElementFraction() { }
 	
 	/**

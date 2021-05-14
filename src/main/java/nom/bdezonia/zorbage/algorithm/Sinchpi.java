@@ -45,6 +45,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class Sinchpi {
 
+	// do not instantiate
+	
 	private Sinchpi() { }
 	
 	/**

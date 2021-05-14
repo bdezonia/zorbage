@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.Multiplication;
  */
 public class ParallelCorrelateND {
 
+	// do not instantiate
+	
 	private ParallelCorrelateND() { }
 	
 	/**

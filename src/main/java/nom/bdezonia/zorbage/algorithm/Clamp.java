@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  */
 public class Clamp {
 
+	// do not instantiate
+	
 	private Clamp() { }
 	
 	/**

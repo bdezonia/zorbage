@@ -39,10 +39,18 @@ package nom.bdezonia.zorbage.type.universal;
  */
 public class UniversalConverter {
 
-	// don't instantiate
+	// do not instantiate
 	
 	private UniversalConverter() {}
-	
+
+	/**
+	 * 
+	 * @param <U>
+	 * @param <V>
+	 * @param rep
+	 * @param a
+	 * @param b
+	 */
 	public static <U extends UniversalRepresentation, V extends UniversalRepresentation>
 		void convert(TensorOctonionRepresentation rep, U a, V b)
 	{

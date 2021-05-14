@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algebra.SetQuaternion;
  */
 public class QuaternionCartesian {
 
+	// do not instantiate
+	
 	private QuaternionCartesian() { }
 	
 	/**

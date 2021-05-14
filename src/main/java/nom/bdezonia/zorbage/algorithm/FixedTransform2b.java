@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class FixedTransform2b {
 
+	// do not instantiate
+	
 	private FixedTransform2b() {}
 
 	/**

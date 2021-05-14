@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
  */
 public class SampleWithoutReplacement {
 
+	// do not instantiate
+	
 	private SampleWithoutReplacement() { }
 	
 	/**

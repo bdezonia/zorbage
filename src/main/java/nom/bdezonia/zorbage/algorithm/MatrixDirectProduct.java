@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Multiplication;
  */
 public class MatrixDirectProduct {
 
+	// do not instantiate
+	
 	private MatrixDirectProduct() { }
 	
 	/**

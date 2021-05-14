@@ -41,9 +41,9 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class MatrixScaleByDouble {
 
-	private MatrixScaleByDouble() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private MatrixScaleByDouble() { }
 	
 	/**
 	 * 

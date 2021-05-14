@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class ReplaceCopy {
 
+	// do not instantiate
+	
 	private ReplaceCopy() { }
 	
 	/**

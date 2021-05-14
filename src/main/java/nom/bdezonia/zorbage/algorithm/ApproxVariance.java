@@ -45,6 +45,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class ApproxVariance {
 
+	// do not instantiate
+	
 	private ApproxVariance() {}
 	
 	/**

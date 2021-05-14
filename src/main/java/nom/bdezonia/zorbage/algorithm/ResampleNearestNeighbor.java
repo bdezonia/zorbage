@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ResampleNearestNeighbor {
 
+	// do not instantiate
+	
 	private ResampleNearestNeighbor() { }
 
 	/**

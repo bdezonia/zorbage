@@ -41,9 +41,9 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class BinarySearch {
 
-	private BinarySearch() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private BinarySearch() { }
 	
 	/**
 	 * Search a list that is sorted in ascending order for a given value.

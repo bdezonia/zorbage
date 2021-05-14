@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class MatrixScale {
 
+	// do not instantiate
+	
 	private MatrixScale() { }
 
 	/**

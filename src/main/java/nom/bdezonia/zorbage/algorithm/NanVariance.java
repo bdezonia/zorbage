@@ -45,6 +45,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class NanVariance {
 
+	// do not instantiate
+	
 	private NanVariance() {}
 	
 	/**

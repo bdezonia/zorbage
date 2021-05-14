@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  */
 public class ComplexNumberWithin {
 
+	// do not instantiate
+	
 	private ComplexNumberWithin() { }
 	
 	/**

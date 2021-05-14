@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetOctonion;
  */
 public class OctonionFromQuaternion {
 
+	// do not instantiate
+	
 	private OctonionFromQuaternion() { }
 	
 	/**

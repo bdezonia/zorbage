@@ -45,6 +45,8 @@ public class PointDistance {
 	
 	// TODO - relies on doubles. Could rely on a U type that currently is Float64Member.
 	
+	// do not instantiate
+	
 	private PointDistance() { }
 	
 	/**

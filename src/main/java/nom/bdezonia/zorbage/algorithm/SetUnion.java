@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class SetUnion {
 
+	// do not instantiate
+	
 	private SetUnion() { }
 	
 	/**

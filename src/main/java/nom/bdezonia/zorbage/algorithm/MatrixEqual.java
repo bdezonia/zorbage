@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixEqual {
 
+	// do not instantiate
+	
 	private MatrixEqual() { }
 	
 	/**

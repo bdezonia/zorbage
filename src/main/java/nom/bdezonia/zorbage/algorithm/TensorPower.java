@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class TensorPower {
 
-	// don't instantiate
+	// do not instantiate
 	
 	private TensorPower() { }
 	

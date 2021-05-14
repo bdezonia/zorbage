@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class ApproxStdDev {
 
+	// do not instantiate
+	
 	private ApproxStdDev() {}
 	
 	/**

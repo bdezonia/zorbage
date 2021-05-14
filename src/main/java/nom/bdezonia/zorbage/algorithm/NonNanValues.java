@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.storage.Storage;
  */
 public class NonNanValues {
 
+	// do not instantiate
+	
 	private NonNanValues() { }
 
 	/**

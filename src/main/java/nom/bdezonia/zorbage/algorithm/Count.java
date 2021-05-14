@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Count {
 
+	// do not instantiate
+	
 	private Count() {}
 
 	/**

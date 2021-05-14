@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ParallelResampleNearestNeighbor {
 
+	// do not instantiate
+	
 	private ParallelResampleNearestNeighbor() { }
 
 	/**

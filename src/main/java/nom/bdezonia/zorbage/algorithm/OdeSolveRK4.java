@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class OdeSolveRK4 {
 
+	// do not instantiate
+	
 	private OdeSolveRK4() { }
 	
 	/**

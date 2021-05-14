@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class NoneOf {
 
+	// do not instantiate
+	
 	private NoneOf() {}
 
 	/**

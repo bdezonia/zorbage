@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class FillNaN {
 
+	// do not instantiate
+	
 	private FillNaN() { }
 	
 	/**

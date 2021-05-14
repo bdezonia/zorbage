@@ -51,9 +51,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class SteinGcd {
 	
-	/**
-	 * Do not instantiate. Private constructor for utility class.
-	 */
+	// do not instantiate
+	
 	private SteinGcd() {}
 	
 	/**

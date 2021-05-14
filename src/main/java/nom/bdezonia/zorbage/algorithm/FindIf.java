@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class FindIf {
 
+	// do not instantiate
+	
 	private FindIf() {}
 
 	/**

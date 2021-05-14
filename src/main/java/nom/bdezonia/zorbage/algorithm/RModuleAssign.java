@@ -40,9 +40,9 @@ import nom.bdezonia.zorbage.algebra.RModuleMember;
  */
 public class RModuleAssign {
 
-	private RModuleAssign() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private RModuleAssign() { }
 	
 	/**
 	 * 

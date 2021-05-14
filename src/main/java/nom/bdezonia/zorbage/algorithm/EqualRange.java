@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class EqualRange {
 
+	// do not instantiate
+	
 	private EqualRange() { }
 	
 	/**

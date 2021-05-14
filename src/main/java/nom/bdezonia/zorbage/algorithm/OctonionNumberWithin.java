@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Ordered;
  */
 public class OctonionNumberWithin {
 
+	// do not instantiate
+	
 	private OctonionNumberWithin() { }
 		
 	/**

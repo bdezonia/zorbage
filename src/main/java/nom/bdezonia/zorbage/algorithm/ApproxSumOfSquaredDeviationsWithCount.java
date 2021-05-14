@@ -47,6 +47,8 @@ public class ApproxSumOfSquaredDeviationsWithCount {
 
 	// TODO: maybe based upon data characteristics we can choose between impl 1 and impl 3
 	
+	// do not instantiate
+	
 	private ApproxSumOfSquaredDeviationsWithCount() {}
 	
 	/**

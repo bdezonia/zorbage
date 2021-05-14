@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class Gaussian {
 
+	// do not instantiate
+	
 	private Gaussian() { }
 	
 	/**

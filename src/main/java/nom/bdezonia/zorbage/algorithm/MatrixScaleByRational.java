@@ -42,9 +42,9 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class MatrixScaleByRational {
 
-	private MatrixScaleByRational() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private MatrixScaleByRational() { }
 	
 	/**
 	 * 

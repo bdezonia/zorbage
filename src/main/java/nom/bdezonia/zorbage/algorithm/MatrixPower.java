@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.algebra.RingWithUnity;
  */
 public class MatrixPower {
 
+	// do not instantiate
+	
 	private MatrixPower() { }
 
 	/**

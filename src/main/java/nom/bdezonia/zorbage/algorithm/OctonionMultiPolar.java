@@ -70,6 +70,8 @@ DEALINGS IN THE SOFTWARE.
  */
 public class OctonionMultiPolar {
 
+	// do not instantiate
+	
 	private OctonionMultiPolar() { }
 	
 	/**

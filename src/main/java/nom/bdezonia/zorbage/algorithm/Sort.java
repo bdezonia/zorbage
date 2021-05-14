@@ -49,6 +49,8 @@ import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
  */
 public class Sort {
 
+	// do not instantiate
+	
 	private Sort() {}
 
 	/**

@@ -44,9 +44,8 @@ import nom.bdezonia.zorbage.algebra.RingWithUnity;
  */
 public class LUSolve {
 
-	/**
-	 * Do not instantiate. Private constructor for utility class.
-	 */
+	// do not instantiate
+	
 	private LUSolve() {}
 	
 	/**

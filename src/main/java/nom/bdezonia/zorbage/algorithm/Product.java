@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Product {
 
+	// do not instantiate
+	
 	private Product() { }
 	
 	/**

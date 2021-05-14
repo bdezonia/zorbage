@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class RampFill {
 
+	// do not instantiate
+	
 	private RampFill() { }
 	
 	/**

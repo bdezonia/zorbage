@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class ScaleByDouble {
 
+	// do not instantiate
+	
 	private ScaleByDouble() {}
 	
 	/**

@@ -50,6 +50,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ResampleLinear {
 
+	// do not instantiate
+	
 	private ResampleLinear() { }
 
 	/**

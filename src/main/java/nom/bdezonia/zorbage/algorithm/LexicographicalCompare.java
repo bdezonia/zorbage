@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class LexicographicalCompare {
 
+	// do not instantiate
+	
 	private LexicographicalCompare() { }
 	
 	/**

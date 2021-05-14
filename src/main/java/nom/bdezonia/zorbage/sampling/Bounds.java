@@ -41,9 +41,9 @@ import nom.bdezonia.zorbage.algebra.DimensionCount;
  */
 public class Bounds {
 	
-	private Bounds() {
-		// don't instantiate
-	}
+	// do not instantiate
+	
+	private Bounds() { }
 
 	/**
 	 * Find the bounds of a sampling.

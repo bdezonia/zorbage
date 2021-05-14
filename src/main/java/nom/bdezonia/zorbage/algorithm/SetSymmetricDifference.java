@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class SetSymmetricDifference {
 
+	// do not instantiate
+	
 	private SetSymmetricDifference() { }
 	
 	/**

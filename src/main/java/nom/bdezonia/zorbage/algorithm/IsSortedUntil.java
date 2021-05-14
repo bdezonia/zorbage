@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class IsSortedUntil {
 
+	// do not instantiate
+	
 	private IsSortedUntil() { }
 	
 	/**

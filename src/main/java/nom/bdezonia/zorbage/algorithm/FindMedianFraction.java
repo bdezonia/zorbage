@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class FindMedianFraction {
 
+	// do not instantiate
+	
 	private FindMedianFraction() {}
 
 	/**

@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class StablePartition {
 
+	// do not instantiate
+	
 	private StablePartition() { }
 	
 	/**

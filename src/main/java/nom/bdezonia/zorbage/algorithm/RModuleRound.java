@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Rounding;
  */
 public class RModuleRound {
 
+	// do not instantiate
+	
 	private RModuleRound() { }
 	
 	/**

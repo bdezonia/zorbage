@@ -45,6 +45,8 @@ public class HarmonicMean {
 
 	// https://mathworld.wolfram.com/HarmonicMean.html
 	
+	// do not instantiate
+	
 	private HarmonicMean() { }
 	
 	/**

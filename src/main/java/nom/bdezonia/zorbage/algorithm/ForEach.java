@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class ForEach {
 
+	// do not instantiate
+	
 	private ForEach() { }
 	
 	/**

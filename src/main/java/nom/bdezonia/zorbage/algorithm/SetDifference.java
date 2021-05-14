@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.storage.Storage;
  */
 public class SetDifference {
 
+	// do not instantiate
+	
 	private SetDifference() { }
 	
 	/**

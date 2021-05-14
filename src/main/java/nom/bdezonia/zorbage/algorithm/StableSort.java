@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class StableSort {
 
+	// do not instantiate
+	
 	private StableSort() { }
 
 	/**

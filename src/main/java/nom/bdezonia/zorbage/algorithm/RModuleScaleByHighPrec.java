@@ -42,9 +42,9 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class RModuleScaleByHighPrec {
 
-	private RModuleScaleByHighPrec() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private RModuleScaleByHighPrec() { }
 	
 	/**
 	 * 

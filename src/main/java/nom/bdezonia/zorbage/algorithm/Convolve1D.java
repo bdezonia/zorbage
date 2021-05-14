@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Convolve1D {
 
+	// do not instantiate
+	
 	private Convolve1D() { }
 	
 	/**

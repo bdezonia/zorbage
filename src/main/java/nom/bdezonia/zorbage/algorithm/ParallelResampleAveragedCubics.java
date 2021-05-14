@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class ParallelResampleAveragedCubics {
 
+	// do not instantiate
+	
 	private ParallelResampleAveragedCubics() { }
 	
 	/**

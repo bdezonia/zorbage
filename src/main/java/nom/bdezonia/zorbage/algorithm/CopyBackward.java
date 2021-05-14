@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class CopyBackward {
 
+	// do not instantiate
+	
 	private CopyBackward() { }
 	
 	/**

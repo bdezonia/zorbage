@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.RModuleMember;
  */
 public class RModuleDirectProduct {
 
+	// do not instantiate
+	
 	private RModuleDirectProduct() { }
 
 	/**

@@ -55,6 +55,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Sum {
 
+	// do not instantiate
+	
 	private Sum() {}
 	
 	/**

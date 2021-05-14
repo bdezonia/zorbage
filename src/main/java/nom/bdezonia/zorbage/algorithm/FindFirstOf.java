@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class FindFirstOf {
 
+	// do not instantiate
+	
 	private FindFirstOf() { }
 		
 	/** 

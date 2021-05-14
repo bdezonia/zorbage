@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetQuaternion;
  */
 public class QuaternionFromComplex {
 
+	// do not instantiate
+	
 	private QuaternionFromComplex() { }
 	
 	/**

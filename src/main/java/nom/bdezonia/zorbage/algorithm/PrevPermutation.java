@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
  */
 public class PrevPermutation {
 
+	// do not instantiate
+	
 	private PrevPermutation() { }
 	
 	/**

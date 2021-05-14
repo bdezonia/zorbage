@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  */
 public class MedianValues {
 
+	// do not instantiate
+	
 	private MedianValues() {}
 
 	/**

@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class DivMod {
 
+	// do not instantiate
+	
 	private DivMod() { }
 	
 	/**

@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class SequenceIsNan {
 
+	// do not instantiate
+	
 	private SequenceIsNan() {}
 
 	/**

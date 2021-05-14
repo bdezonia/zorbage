@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class TaylorEstimateLog {
 
+	// do not instantiate
+	
 	private TaylorEstimateLog() { }
 
 	/**

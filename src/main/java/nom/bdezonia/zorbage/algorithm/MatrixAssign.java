@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixAssign {
 
+	// do not instantiate
+	
 	private MatrixAssign() { }
 	
 	/**

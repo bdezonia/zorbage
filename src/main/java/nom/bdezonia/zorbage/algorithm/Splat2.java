@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.SetComplex;
  */
 public class Splat2 {
 
+	// do not instantiate
+	
 	private Splat2() { }
 	
 	/**

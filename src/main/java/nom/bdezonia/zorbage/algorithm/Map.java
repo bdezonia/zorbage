@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Map {
 
+	// do not instantiate
+	
 	private Map() { }
 	
 	/**

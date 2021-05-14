@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algebra.SetOctonion;
  */
 public class OctonionCartesian {
 
+	// do not instantiate
+	
 	private OctonionCartesian() { }
 	
 	/**

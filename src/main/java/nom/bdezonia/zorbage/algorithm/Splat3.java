@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.SetQuaternion;
  */
 public class Splat3 {
 
+	// do not instantiate
+	
 	private Splat3() { }
 	
 	/**

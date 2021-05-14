@@ -38,6 +38,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class StdDev {
 
+	// do not instantiate
+	
 	private StdDev() { }
 	
 	/**

@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.SetReal;
  */
 public class Splat1 {
 
+	// do not instantiate
+	
 	private Splat1() { }
 	
 	/**

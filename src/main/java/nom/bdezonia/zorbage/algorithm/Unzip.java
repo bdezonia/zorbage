@@ -50,6 +50,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Unzip {
 
+	// do not instantiate
+	
 	private Unzip() { }
 	
 	/**

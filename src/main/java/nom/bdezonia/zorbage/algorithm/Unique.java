@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.storage.Storage;
  */
 public class Unique {
 
+	// do not instantiate
+	
 	private Unique() { }
 	
 	/**

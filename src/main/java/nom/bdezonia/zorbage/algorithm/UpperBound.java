@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.function.Function1;
  */
 public class UpperBound {
 
+	// do not instantiate
+	
 	private UpperBound() { }
 
 	// see http://www.cplusplus.com/reference/algorithm/upper_bound/

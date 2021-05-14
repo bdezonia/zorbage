@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class FillInfinite {
 
+	// do not instantiate
+	
 	private FillInfinite() { }
 	
 	/**

@@ -45,6 +45,8 @@ public class ContraharmonicMean {
 
 	// https://en.wikipedia.org/wiki/Contraharmonic_mean
 	
+	// do not instantiate
+	
 	private ContraharmonicMean() { }
 		
 	/**

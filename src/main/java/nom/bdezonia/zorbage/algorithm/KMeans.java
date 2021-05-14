@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class KMeans {
 
+	// do not instantiate
+	
 	private KMeans() { }
 	
 	/**

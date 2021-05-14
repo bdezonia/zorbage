@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class EstimateErf {
 
+	// do not instantiate
+	
 	private EstimateErf() { }
 	
 	/**

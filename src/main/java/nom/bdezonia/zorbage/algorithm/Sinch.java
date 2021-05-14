@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class Sinch {
 
+	// do not instantiate
+	
 	private Sinch() { }
 	
 	/**

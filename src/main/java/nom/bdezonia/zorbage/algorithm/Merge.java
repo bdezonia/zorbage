@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Merge {
 
+	// do not instantiate
+	
 	private Merge() { }
 	
 	/**

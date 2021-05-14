@@ -42,9 +42,9 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class MatrixScaleByHighPrec {
 
-	private MatrixScaleByHighPrec() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private MatrixScaleByHighPrec() { }
 	
 	/**
 	 * 

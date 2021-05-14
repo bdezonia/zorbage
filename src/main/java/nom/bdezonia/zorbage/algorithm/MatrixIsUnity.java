@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class MatrixIsUnity {
 
+	// do not instantiate
+	
 	private MatrixIsUnity() { }
 	
 	/**

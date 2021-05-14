@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Power;
  */
 public class ExponentialCalculation {
 
+	// do not instantiate
+	
 	private ExponentialCalculation() { }
 	
 	/**

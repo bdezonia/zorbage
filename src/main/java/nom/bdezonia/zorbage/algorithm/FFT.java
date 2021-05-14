@@ -47,7 +47,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class FFT {
 
-	// don't instantiate
+	// do not instantiate
 	
 	private FFT() {}
 

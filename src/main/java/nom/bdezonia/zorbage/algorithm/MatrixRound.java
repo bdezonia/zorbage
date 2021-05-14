@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Rounding;
  */
 public class MatrixRound {
 
+	// do not instantiate
+	
 	private MatrixRound() { }
 	
 	/**

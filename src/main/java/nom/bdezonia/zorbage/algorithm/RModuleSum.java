@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.datasource.RawData;
  */
 public class RModuleSum {
 
+	// do not instantiate
+	
 	private RModuleSum() { }
 	
 	/**

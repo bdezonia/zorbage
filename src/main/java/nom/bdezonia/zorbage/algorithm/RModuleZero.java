@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algebra.RModuleMember;
  */
 public class RModuleZero {
 
+	// do not instantiate
+	
 	private RModuleZero() { }
 	
 	/**

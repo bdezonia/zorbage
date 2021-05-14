@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class AverageTwo {
 
+	// do not instantiate
+	
 	private AverageTwo() { }
 	
 	/**

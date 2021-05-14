@@ -43,9 +43,9 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
  */
 public class CrossProduct {
 
-	private CrossProduct() {
-		// do not instantiate
-	}
+	// do not instantiate
+	
+	private CrossProduct() { }
 	
 	/**
 	 * 

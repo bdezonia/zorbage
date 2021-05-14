@@ -44,6 +44,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class Median {
 
+	// do not instantiate
+	
 	private Median() {}
 
 	/**

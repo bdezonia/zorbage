@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class PowerNonNegative {
 
+	// do not instantiate
+	
 	private PowerNonNegative() {}
 	
 	/**

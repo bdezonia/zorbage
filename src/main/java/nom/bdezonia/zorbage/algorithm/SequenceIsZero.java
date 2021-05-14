@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class SequenceIsZero {
 
+	// do not instantiate
+	
 	private SequenceIsZero() {}
 
 	/**

@@ -70,6 +70,8 @@ DEALINGS IN THE SOFTWARE.
  */
 public class QuaternionSemiPolar {
 
+	// do not instantiate
+	
 	private QuaternionSemiPolar() { }
 	
 	/**

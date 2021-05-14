@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.MatrixMember;
  */
 public class MatrixConstantDiagonal {
 
+	// do not instantiate
+	
 	private MatrixConstantDiagonal() { }
 	
 	/**

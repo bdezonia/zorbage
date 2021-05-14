@@ -42,6 +42,8 @@ import nom.bdezonia.zorbage.algebra.Trigonometric;
  */
 public class ComplexPolar {
 
+	// do not instantiate
+	
 	private ComplexPolar() { }
 
 	/**

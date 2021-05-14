@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class UInt1ToBool {
 
+	// do not instantiate
+	
 	private UInt1ToBool() { }
 	
 	/**

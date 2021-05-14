@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.algebra.SetOctonion;
  */
 public class Splat7 {
 
+	// do not instantiate
+	
 	private Splat7() { }
 	
 	/**

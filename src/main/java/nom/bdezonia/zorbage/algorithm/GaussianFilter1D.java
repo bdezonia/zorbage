@@ -50,6 +50,8 @@ import nom.bdezonia.zorbage.storage.Storage;
  */
 public class GaussianFilter1D {
 
+	// do not instantiate
+	
 	private GaussianFilter1D() { }
 	
 	/**

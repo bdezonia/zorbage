@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.RModuleMember;
  */
 public class RModuleReshape {
 
+	// do not instantiate
+	
 	private RModuleReshape() { }
 
 	/**
