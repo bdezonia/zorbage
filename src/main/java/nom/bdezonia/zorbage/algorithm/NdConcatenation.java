@@ -42,8 +42,6 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
 // TODO: no metadata is copied with this algorithm
 
-// TODO: I could use some ancillary data structures and algos to improve the speed of this code
-
 /**
  * 
  * @author Barry DeZonia
@@ -54,10 +52,12 @@ public class NdConcatenation {
 	/**
 	 * Generate a data source by concatenating data sources along an axis. The data sources have
 	 * to have the same dimensionality. The shapes of each dataset must match in all dims except
-	 * along the axis of interest. Along that axis values can vary. you can concat a 1x2, a 4x2,
+	 * along the axis of interest. Along that axis values can vary. You can concat a 1x2, a 4x2,
 	 * and a 7x2 along axis 0 (getting a 12x2). You cannot concatenate these along axis 1 because
 	 * all the axis 0 values vary. The output data source has dimensions that encompass the
-	 * dimensions of all the other data sources.
+	 * dimensions of all the other data sources. The output data source has the same number of
+	 * dimensions as the input sources. You can think of this operation as gluing data sources
+	 * edge to edge (not stacked).
 	 *  
 	 * @param <T>
 	 * @param <U>

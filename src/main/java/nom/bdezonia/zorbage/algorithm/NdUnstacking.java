@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -46,17 +47,17 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
  * @author Barry DeZonia
  *
  */
-public class NdStacking {
+public class NdUnstacking {
 	
 	// do not instantiate
 	
-	private NdStacking() { }
+	private NdUnstacking() { }
 
 	/**
-	 * Generate a data source by stacking data sources along a new axis (one dimension higher).
-	 * The data sources each have the same shape and the same number of dimensions. The output
-	 * data source lives in a space one dimension higher than the input sources. For instance
-	 * you stack 2d planes into a 3d dataset.
+	 * Generate a list of data sources by unstacking a data source along it's outermost axis.
+	 * The data sources each live in a space one dimension lower (e.g. unstack a 3d data source
+	 * into a set of 2d data sources). The data sources each have the same shape and the same
+	 * number of dimensions.
 	 *  
 	 * @param <T>
 	 * @param <U>
@@ -65,81 +66,71 @@ public class NdStacking {
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
-		DimensionedDataSource<U> compute(T alg, List<DimensionedDataSource<U>> dataSources)
+		List<DimensionedDataSource<U>> compute(T alg, DimensionedDataSource<U> dataSource)
 	{
 		// check correctness of inputs
 		
-		if (dataSources.size() < 1)
-			throw new IllegalArgumentException("No data sources given to concat algorithm");
+		int numDims = dataSource.numDimensions();
 		
-		int numDims = dataSources.get(0).numDimensions();
-		DimensionedDataSource<U> firstDs = dataSources.get(0);
-		for (int i = 1; i < dataSources.size(); i++) {
-			DimensionedDataSource<U> ds = dataSources.get(i);
-			if (ds.numDimensions() != numDims)
-				throw new IllegalArgumentException("Cannot mix dimensionality of input datasets");
-			for (int d = 0; d < numDims; d++) {
-				if (ds.dimension(d) != firstDs.dimension(d))
-					throw new IllegalArgumentException("Input data sources are not all the same shape");
-			}
-		}
-		
+		if (numDims < 2)
+			throw new IllegalArgumentException("cannot unstack data sources with less than 2 dimensions");
+
 		// find the overall dimensions of the fully stacked data source
 
-		long[] outputDims = new long[numDims+1];
-		for (int d = 0; d < numDims; d++) {
-			outputDims[d] = firstDs.dimension(d);
+		long[] outputDims = new long[numDims - 1];
+		for (int d = 0; d < outputDims.length; d++) {
+			outputDims[d] = dataSource.dimension(d);
 		}
-		outputDims[numDims] = dataSources.size();
 		
-		// create the output data source that fits the combined dims
+		// generate each slice as an output
 		
-		DimensionedDataSource<U> output = DimensionedStorage.allocate(alg.construct(), outputDims);
+		List<DimensionedDataSource<U>> outputs = new ArrayList<>();
 		
-		// now fill the data from the inputs
+		for (long i = 0; i < dataSource.dimension(dataSource.numDimensions()-1); i++) {
+			
+			// create an output data source
 
-		U value = alg.construct();
-		IntegerIndex idxI = new IntegerIndex(numDims);
-		IntegerIndex idxO = new IntegerIndex(numDims+1);
+			DimensionedDataSource<U> oneOutput = DimensionedStorage.allocate(alg.construct(), outputDims);
+
+			// now fill the data from the inputs
+
+			U value = alg.construct();
+			IntegerIndex idxI = new IntegerIndex(numDims);
+			IntegerIndex idxO = new IntegerIndex(numDims-1);
+			
+			// choose the plane from which the input data will be placed in the output data source
+			
+			idxI.set(numDims-1, i);
 		
-		// for each input source
-
-		for (int i = 0; i < dataSources.size(); i++) {
-
-			// choose the plane into which the input data will be placed in the output data source
-			
-			idxO.set(numDims, i);
-			
-			// get current input source
-			
-			DimensionedDataSource<U> ds = dataSources.get(i);
-			
 			// iterate this single input source
 			
-			SamplingIterator<IntegerIndex> iter = GridIterator.compute(ds);
+			SamplingIterator<IntegerIndex> iter = GridIterator.compute(outputDims);
 			
 			while (iter.hasNext()) {
 
-				// find next input point
+				// find the next output point
 				
-				iter.next(idxI);
+				iter.next(idxO);
+				
+				// set the input point coords from the output point. remember numDims entry already set
+				
+				for (int d = 0; d < idxO.numDimensions(); d++) {
+					idxI.set(d, idxO.get(d));
+				}
 				
 				// get the value at the input point
 				
-				ds.get(idxI, value);
+				dataSource.get(idxI, value);
 				
-				// set the output point coords from the input point. remember dims+1 entry already set
-				
-				for (int d = 0; d < numDims; d++) {
-					idxO.set(d, idxI.get(d));
-				}
 
 				// set the value at output point
 				
-				output.set(idxO, value);
+				oneOutput.set(idxO, value);
 			}
+			
+			outputs.add(oneOutput);
 		}
 		
-		return output;
+		return outputs;
 	}
 }
