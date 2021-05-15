@@ -57,6 +57,13 @@ public class AdjacentFind {
 	}
 	
 	/**
+	 * AdjacentFind is inspired by the algorithm of the same name from the
+	 * C++ Standard Template Library. You can read a good summary at
+	 * https://www.cplusplus.com/reference/algorithm/adjacent_find/.
+	 * Searches a data source from "start" at most "count" elements for the
+	 * first occurrence of two consecutive elements that match. Returns
+	 * the index in the data source at which a match is found. If none is
+	 * found returns "start + count".
 	 * 
 	 * @param algebra
 	 * @param a

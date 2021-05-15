@@ -45,6 +45,14 @@ public class Clamp {
 	private Clamp() { }
 	
 	/**
+	 * Clamp takes a value and a bounding range (two values). It sets
+	 * the result to the left end of the bounding range if the input
+	 * value is less than the left end bounding marker. It sets
+	 * the result to the right end of the bounding range if the input
+	 * value is greater than the right end bounding marker. Otherwise
+	 * the input value is within the bounding range and it is returned
+	 * as the result. Clamp makes sure any value passed in will result
+	 * in a value clamped to within the bounding range.
 	 * 
 	 * @param algebra
 	 * @param min

@@ -46,6 +46,11 @@ public class BinarySearchLeft {
 	private BinarySearchLeft() { }
 	
 	/**
+	 * BinarySearchLeft does a {@link BinarySearch} to find the index of a
+	 * value of interest from within a sorted list. It then makes sure to
+	 * return the leftmost index of that value in case there are duplicate
+	 * entries. If the value is not found it returns the index of the spot
+	 * in the list where the value should be inserted if desired.
 	 * 
 	 * @param <T>
 	 * @param <U>

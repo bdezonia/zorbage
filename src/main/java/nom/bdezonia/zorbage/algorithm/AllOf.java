@@ -46,6 +46,11 @@ public class AllOf {
 	private AllOf() {}
 
 	/**
+	 * AllOf is inspired by the algorithm of the same name from the
+	 * C++ Standard Template Library. You can read a good summary at
+	 * https://www.cplusplus.com/reference/algorithm/all_of/.
+	 * Returns true if a "condition" is true for all the elements of
+	 * a data source. Returns false otherwise.
 	 * 
 	 * @param algebra
 	 * @param a

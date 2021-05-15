@@ -46,9 +46,18 @@ public class BinarySearch {
 	private BinarySearch() { }
 	
 	/**
+	 * BinarySearch is inspired by the algorithm of the same name from
+	 * the C++ Standard Template Library. You can read a good summary at
+	 * https://www.cplusplus.com/reference/algorithm/binary_search/.
+	 * 
 	 * Search a list that is sorted in ascending order for a given value.
 	 * Return the index within the list where the value is found. Return
 	 * -1 if the element is not found.
+	 * 
+	 * This algorithm does not care about duplicate values and will just
+	 * return the first hit it finds. If you need the leftmost or the
+	 * rightmost match use {@link BinarySearchLeft} or
+	 * {@link BinarySearchRightt}.
 	 * 
 	 * @param algebra
 	 * @param data

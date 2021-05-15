@@ -45,6 +45,11 @@ public class Conjugate {
 	private Conjugate() {}
 
 	/**
+	 * Conjugate takes a list of values and maps the list of inputs
+	 * into a list of outputs. Each output value is the conjugate
+	 * value of each input value. The two input lists can be the
+	 * same (i.e. the "a" values can be mapped back as the conjugates
+	 * of the "a" values and stored directly in "a").
 	 * 
 	 * @param algebra
 	 * @param a
