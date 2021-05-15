@@ -55,7 +55,7 @@ public class NdEqual {
 		boolean compute(T alg, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
 		
-		if (!SameDims.compute(a, b))
+		if (!ShapesMatch.compute(a, b))
 			return false;
 		
 		return Equal.compute(alg, a.rawData(), b.rawData());

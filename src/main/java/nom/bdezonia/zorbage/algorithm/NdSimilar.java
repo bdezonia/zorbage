@@ -59,7 +59,7 @@ public class NdSimilar {
 		boolean compute(T alg, W tol, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
 		
-		if (!SameDims.compute(a, b))
+		if (!ShapesMatch.compute(a, b))
 			return false;
 		
 		return SequencesSimilar.compute(alg, tol, a.rawData(), b.rawData());
