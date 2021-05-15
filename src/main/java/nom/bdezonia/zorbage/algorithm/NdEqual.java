@@ -55,15 +55,8 @@ public class NdEqual {
 		boolean compute(T alg, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
 		
-		// TODO: what about coord systems? Do we test that at this level?
-		
-		if (a.numDimensions() != b.numDimensions())
+		if (!SameDims.compute(a, b))
 			return false;
-	
-		for (int i = 0; i < a.numDimensions(); i++) {
-			if (a.dimension(i) != b.dimension(i))
-				return false;
-		}
 		
 		return Equal.compute(alg, a.rawData(), b.rawData());
 	}

@@ -30,38 +30,32 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Tolerance;
-import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.algebra.Dimensioned;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class NdSimilar {
+public class SameDims {
 
 	/**
-	 * Returns true if two n-d data sources have the same dimensions and their data
-	 * values are within a tolerance of each other. False otherwise. The tolerance
-	 * to use is passed in as an argument.
 	 * 
-	 * @param <T>
-	 * @param <U>
-	 * @param <W>
-	 * @param alg
-	 * @param tol
 	 * @param a
 	 * @param b
 	 * @return
 	 */
-	public static <T extends Algebra<T,U> & Tolerance<W,U>, U, W>
-		boolean compute(T alg, W tol, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
+	public static
+		boolean compute(Dimensioned a, Dimensioned b)
 	{
-		
-		if (!SameDims.compute(a, b))
+		if (a.numDimensions() != b.numDimensions())
 			return false;
 		
-		return SequencesSimilar.compute(alg, tol, a.rawData(), b.rawData());
+		for (int i = 0; i < a.numDimensions(); i++) {
+			if (a.dimension(i) != b.dimension(i))
+				return false;
+		}
+		
+		return true;
 	}
 }
