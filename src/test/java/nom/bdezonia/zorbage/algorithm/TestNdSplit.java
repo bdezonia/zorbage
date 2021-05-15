@@ -50,7 +50,7 @@ import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 public class TestNdSplit {
 
 	@Test
-	public void test() {
+	public void test1() {
 		
 		DimensionedDataSource<SignedInt32Member> ds;
 		SignedInt32Member value = G.INT32.construct();
@@ -249,6 +249,46 @@ public class TestNdSplit {
 		assertEquals(5, value.v());
 		view3.get(0, 2, 1, value);
 		assertEquals(6, value.v());
+	}
+	
+	@Test
+	public void test2() {
+		
+		DimensionedDataSource<SignedInt32Member> ds =
+			DimensionedStorage.allocate(G.INT32.construct(), new long[] {3,4,5,6});
+		
+		Fill.compute(G.INT32, G.INT32.random(), ds.rawData());
+		
+		List<DimensionedDataSource<SignedInt32Member>> unstack =
+				NdUnstacking.compute(G.INT32, ds);
+		
+		List<DimensionedDataSource<SignedInt32Member>> split =
+				NdSplit.compute(G.INT32, 3, 1, ds);
+		
+		assertEquals(6, unstack.size());
+		for (int i = 0; i < 6; i++) {
+			DimensionedDataSource<SignedInt32Member> u = unstack.get(i);
+			assertEquals(3, u.numDimensions());
+			assertEquals(3, u.dimension(0));
+			assertEquals(4, u.dimension(1));
+			assertEquals(5, u.dimension(2));
+		}
+		
+		assertEquals(6, split.size());
+		for (int i = 0; i < 6; i++) {
+			DimensionedDataSource<SignedInt32Member> s = split.get(i);
+			assertEquals(4, s.numDimensions());
+			assertEquals(3, s.dimension(0));
+			assertEquals(4, s.dimension(1));
+			assertEquals(5, s.dimension(2));
+			assertEquals(1, s.dimension(3));
+		}
+
+		for (int i = 0; i < 6; i++) {
+			DimensionedDataSource<SignedInt32Member> u = unstack.get(i);
+			DimensionedDataSource<SignedInt32Member> s = split.get(i);
+			assertTrue(Equal.compute(G.INT32, u.rawData(), s.rawData()));
+		}
 	}
 
 }
