@@ -50,7 +50,15 @@ public class CartesianProduct {
 	private CartesianProduct() { }
 	
 	/**
+	 * Calculates the cartesian product between two input lists and places
+	 * the values into an output list. The inputs are transformed by a
+	 * function before being placed in the output list.
 	 * 
+	 * An example might make things self evident.
+	 *   a = [s,t,u]
+	 *   b = [1,2,3]
+	 *   result = [f(s,1), f(s,2), f(s,3), f(t,1), f(t,2), f(t,3), f(u,1), f(u,2), f(u,3)]
+	 *   
 	 * @param algU
 	 * @param algW
 	 * @param algY
@@ -87,7 +95,19 @@ public class CartesianProduct {
 	}
 
 	/**
+	 * Calculates the cartesian product between two input vectors and places
+	 * the values into an output matrix. The inputs are transformed by a
+	 * function before being placed in the output matrix.
 	 * 
+	 * An example might make things self evident.
+	 *   a = [s,t,u]
+	 *   b = [1,2,3]
+	 *   result = [
+	 *     [f(s,1), f(s,2), f(s,3)]
+	 *     [f(t,1), f(t,2), f(t,3)]
+	 *     [f(u,1), f(u,2), f(u,3)]
+	 *   ]
+	 *   
 	 * @param algU
 	 * @param algW
 	 * @param algY

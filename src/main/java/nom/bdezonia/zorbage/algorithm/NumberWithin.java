@@ -46,6 +46,8 @@ public class NumberWithin {
 	private NumberWithin() { }
 	
 	/**
+	 * NumberWithin returns true if number "a" is within a "tolerance" of number "b".
+	 * The code is written to work safely at all boundary conditions.
 	 * 
 	 * @param algebra
 	 * @param a
@@ -60,7 +62,7 @@ public class NumberWithin {
 		U diff = algebra.construct();
 		U tol = algebra.construct(tolerance);
 		if (algebra.isLess().call(tol, zero))
-			throw new IllegalArgumentException("tolerance must be >= 0");
+			throw new IllegalArgumentException("negative tolerance error");
 		int sigA = algebra.signum().call(a);
 		int sigB = algebra.signum().call(b);
 		if (sigA < 0) {

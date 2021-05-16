@@ -41,11 +41,11 @@ import nom.bdezonia.zorbage.algebra.Unity;
  * @author Barry DeZonia
  *
  */
-public class AverageTwo {
+public class AverageOfTwo {
 
 	// do not instantiate
 	
-	private AverageTwo() { }
+	private AverageOfTwo() { }
 	
 	/**
 	 * Average two things quickly (avoiding division when possible and avoiding overflow conditions of a naive approach)

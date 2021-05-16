@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
  * @author Barry DeZonia
  *
  */
-public class TestAverageTwo {
+public class TestAverageOfTwo {
 
 	@Test
 	public void test1() {
@@ -55,7 +55,7 @@ public class TestAverageTwo {
 			aVal.setV(a);
 			for (int b = Byte.MIN_VALUE; b <= Byte.MAX_VALUE; b++) {
 				bVal.setV(b);
-				AverageTwo.compute(G.INT8, aVal, bVal, result);
+				AverageOfTwo.compute(G.INT8, aVal, bVal, result);
 				int testVal = (a >> 1) + (b >> 1) + (a&b&1);
 				assertEquals(testVal, result.v());
 			}
@@ -72,7 +72,7 @@ public class TestAverageTwo {
 			aVal.setV(a);
 			for (int b = 0; b <= 255; b++) {
 				bVal.setV(b);
-				AverageTwo.compute(G.UINT8, aVal, bVal, result);
+				AverageOfTwo.compute(G.UINT8, aVal, bVal, result);
 				int testVal = (a >> 1) + (b >> 1) + (a&b&1);
 				assertEquals(testVal, result.v());
 			}

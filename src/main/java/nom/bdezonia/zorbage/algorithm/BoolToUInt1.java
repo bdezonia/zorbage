@@ -49,6 +49,8 @@ public class BoolToUInt1 {
 	private BoolToUInt1() { }
 
 	/**
+	 * Take a list of {@link BooleanMember} values and place their
+	 * equivalent {@link UnsignedInt1Member} values in an output list.
 	 * 
 	 * @param bools
 	 * @param ints

@@ -48,6 +48,8 @@ public class NonNanValues {
 	private NonNanValues() { }
 
 	/**
+	 * NonNanValues takes a list of values and produces a (possibly
+	 * truncated) list of the elements that are not nan.
 	 * 
 	 * @param alg
 	 * @param storage

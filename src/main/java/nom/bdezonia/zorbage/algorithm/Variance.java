@@ -43,7 +43,13 @@ public class Variance {
 	private Variance() { }
 	
 	/**
-	 *
+	 * Compute the variance of a list of values. This algorithm uses
+	 * a naive approach that is mathematically correct but can result
+	 * in precision issues for some data sets. This method is quite
+	 * excellent for use with {@link HighPrecisionMember} numbers.
+	 * They do not exhibit any rounding/precision loss and provide
+	 * the most accurate results.
+	 * 
 	 * @param alg
 	 * @param source
 	 * @param result
