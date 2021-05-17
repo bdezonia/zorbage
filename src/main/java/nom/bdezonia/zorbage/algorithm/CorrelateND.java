@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexerND;
 import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
