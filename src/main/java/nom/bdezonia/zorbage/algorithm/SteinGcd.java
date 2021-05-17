@@ -44,7 +44,10 @@ import nom.bdezonia.zorbage.algebra.Unity;
 // Stepanov and Rose: Stein gcd algorithm
 
 /**
- * Greatest Common Divisor algorithm
+ * Calculate the greatest common divisor of two numbers (and number
+ * like constructions). Uses the Stein algorithm which is faster
+ * than other methods but requires more type constraints than other
+ * algorithms.
  * 
  * @author Barry DeZonia
  *

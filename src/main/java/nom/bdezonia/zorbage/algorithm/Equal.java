@@ -45,6 +45,8 @@ public class Equal {
 	private Equal() {}
 
 	/**
+	 * Return true if two IndexedDataSources are the same length
+	 * and have the same contents. Return false otherwise.
 	 * 
 	 * @param algebra
 	 * @param a

@@ -49,6 +49,8 @@ public class ConvolveND {
 	private ConvolveND() { }
 	
 	/**
+	 * Convolve an n-d {@link DimensionedDataSource} by a given filter.
+	 * The input is passed as "a" and the results are stored in "b".
 	 * 
 	 * @param alg
 	 * @param filter

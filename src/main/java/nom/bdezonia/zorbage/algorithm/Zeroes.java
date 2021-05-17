@@ -46,6 +46,7 @@ public class Zeroes {
 	private Zeroes() { }
 	
 	/**
+	 * Fill an IndexedDataSource with zeroes
 	 * 
 	 * @param algebra
 	 * @param data
@@ -58,6 +59,7 @@ public class Zeroes {
 	}
 
 	/**
+	 * Fill a data source supporting RawData interface with zeroes
 	 * 
 	 * @param algebra
 	 * @param numeric

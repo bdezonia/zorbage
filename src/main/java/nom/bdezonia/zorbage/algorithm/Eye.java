@@ -48,6 +48,7 @@ public class Eye {
 	private Eye() { }
 	
 	/**
+	 * Returns an identity matrix satisfying the given input parameters.
 	 * 
 	 * @param matAlg
 	 * @param s
@@ -69,6 +70,7 @@ public class Eye {
 	}
 
 	/**
+	 * Returns an identity matrix satisfying the given input parameters.
 	 * 
 	 * @param matAlg
 	 * @param rows
@@ -89,6 +91,7 @@ public class Eye {
 	}
 
 	/**
+	 * Returns an identity matrix satisfying the given input parameters.
 	 * 
 	 * @param matAlg
 	 * @param s
@@ -105,6 +108,7 @@ public class Eye {
 	}
 
 	/**
+	 * Returns an identity matrix satisfying the given input parameters.
 	 * 
 	 * @param matAlg
 	 * @param sqSz

@@ -50,6 +50,10 @@ public class EuclideanLcm {
 	private EuclideanLcm() { }
 	
 	/**
+	 * Calculate the least common multiple of two numbers (and number
+	 * like constructions). Uses the Euclidean algorithm which is simple
+	 * and quite fast but not optimal. But it works with fewer type
+	 * constraints than other algorithms.
 	 * 
 	 * @param uAlg
 	 * @param wAlg

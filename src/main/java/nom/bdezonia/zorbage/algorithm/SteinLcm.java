@@ -55,7 +55,10 @@ public class SteinLcm {
 	private SteinLcm() {}
 	
 	/**
-	 * Sets the result to the least common multiple of a and b. Result is always nonnegative.
+	 * Calculate the least common multiple of two numbers (and number
+	 * like constructions). Uses the Stein algorithm which is faster
+	 * than other methods but requires more type constraints than other
+	 * algorithms.
 	 * 
 	 * @param algebra
 	 * @param a

@@ -53,6 +53,18 @@ public class DimensionalPermutation {
 	private DimensionalPermutation() { }
 	
 	/**
+	 * Create a {@link DimensionedDataSource} whose data and axes are permuted
+	 * from an input source as specified as a permutation argument.
+	 * 
+	 * The permutation argument is an array of integers. It maps the positions
+	 * of the input axes to new positions in the output data source.
+	 * 
+	 * Example: [3,1,0,2] says:
+	 *   - the input is 4d
+	 *   - dimension 0 in the input should be dimension 3 in the output
+	 *   - dimension 1 in the input should be dimension 1 in the output
+	 *   - dimension 2 in the input should be dimension 0 in the output
+	 *   - dimension 3 in the input should be dimension 2 in the output
 	 * 
 	 * @param alg
 	 * @param permutation

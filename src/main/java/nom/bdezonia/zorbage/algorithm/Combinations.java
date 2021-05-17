@@ -48,6 +48,9 @@ public class Combinations {
 	private Combinations() { }
 	
 	/**
+	 * Return the number of combinations of n things taken k at a time.
+	 * 
+	 * Well known formula:  combinations = n! / ((k)! (n-k)!)
 	 * 
 	 * @param algebra
 	 * @param n

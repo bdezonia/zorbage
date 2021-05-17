@@ -46,23 +46,28 @@ public class Divide {
 	private Divide() { }
 	
 	/**
+	 * Divide is an algorithm that uses multiple division interfaces
+	 * to allow algorithms to divide numbers without needing to
+	 * define two versions: one for integers and one for reals. A
+	 * developer can call this method and get a division operation
+	 * most appropriate for a given number type.
 	 * 
 	 * @param alg
-	 * @param a
-	 * @param b
-	 * @param c
+	 * @param numer
+	 * @param denom
+	 * @param result
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Algebra<T,U>, U>
-		void compute(T alg, U a, U b, U c)
+		void compute(T alg, U numer, U denom, U result)
 	{
 		if (alg instanceof Invertible) {
 			Invertible<U> iAlg = (Invertible<U>) alg;
-			iAlg.divide().call(a, b, c);
+			iAlg.divide().call(numer, denom, result);
 		}
 		else if (alg instanceof ModularDivision) {
 			ModularDivision<U> mdAlg = (ModularDivision<U>) alg;
-			mdAlg.div().call(a, b, c);
+			mdAlg.div().call(numer, denom, result);
 		}
 		else {
 			throw new IllegalArgumentException("given algebra must support some kind of division operation");

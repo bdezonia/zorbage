@@ -47,6 +47,10 @@ public class DeepCopy {
 	private DeepCopy() { }
 	
 	/**
+	 * DeepCopy allocates an output list from an input list. The input
+	 * list values are fully copied into the output list. DeepCopy can
+	 * work around the fact that many IndexedDataSource implementations
+	 * have shallow copies of their underlying data.
 	 * 
 	 * @param alg
 	 * @param a

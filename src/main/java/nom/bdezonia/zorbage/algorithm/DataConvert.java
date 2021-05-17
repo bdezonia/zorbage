@@ -49,6 +49,10 @@ public class DataConvert {
 	private DataConvert() {}
 
 	/**
+	 * Convert a list of data of one type into a list of data of a different type.
+	 * The types use their support of {@link PrimitiveConversion} to do translations
+	 * with the minimum amount of data loss. The algorithm also uses primitive values
+	 * during conversion eliminating many thousands of objec allocations.
 	 * 
 	 * @param fromAlgebra
 	 * @param toAlgebra

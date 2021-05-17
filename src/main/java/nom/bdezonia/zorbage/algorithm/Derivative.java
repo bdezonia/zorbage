@@ -48,6 +48,8 @@ public class Derivative<T extends Algebra<T,U> & Addition<U> & Invertible<U>,U>
 	private final U delta;
 
 	/**
+	 * Define a derivative object that can compute the derivative of a passed
+	 * in function at a point.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -59,6 +61,9 @@ public class Derivative<T extends Algebra<T,U> & Addition<U> & Invertible<U>,U>
 		this.delta = alg.construct(delta);
 	}
 
+	/**
+	 * Calculate this derivative at a given point and return in the result.
+	 */
 	@Override
 	public void call(U point1, U result)
 	{

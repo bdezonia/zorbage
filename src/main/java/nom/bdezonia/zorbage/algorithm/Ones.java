@@ -47,6 +47,7 @@ public class Ones {
 	private Ones() { }
 	
 	/**
+	 * Fill an IndexedDataSource with ones
 	 * 
 	 * @param algebra
 	 * @param data
@@ -60,6 +61,7 @@ public class Ones {
 	}
 	
 	/**
+	 * Fill a data source supporting RawData interface with ones
 	 * 
 	 * @param algebra
 	 * @param numeric

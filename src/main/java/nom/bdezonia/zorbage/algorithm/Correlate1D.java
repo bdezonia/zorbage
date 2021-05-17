@@ -49,6 +49,8 @@ public class Correlate1D {
 	private Correlate1D() { }
 	
 	/**
+	 * Correlate a 1-d {@link IndexedDataSource} by a given filter. The input
+	 * is passed as "a" and the results are stored in "b".
 	 * 
 	 * @param alg
 	 * @param filter

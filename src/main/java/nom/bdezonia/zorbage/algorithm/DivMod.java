@@ -52,12 +52,13 @@ public class DivMod {
 	private DivMod() { }
 	
 	/**
+	 * Calculate both div and mod for a pair of numbers.
 	 * 
 	 * @param alg
-	 * @param a
-	 * @param b
-	 * @param d
-	 * @param m
+	 * @param a Numerator
+	 * @param b Denominator
+	 * @param d Div result
+	 * @param m Mod result
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U> & Unity<U> & Addition<U> & ScaleByOneHalf<U> & Bounded<U>,U>
 		void compute(T alg, U a, U b, U d, U m)
