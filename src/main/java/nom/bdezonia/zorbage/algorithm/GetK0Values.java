@@ -47,6 +47,8 @@ public class GetK0Values {
 	private GetK0Values() { }
 	
 	/**
+	 * Find the K0 plane values from a list of Octonion numbers
+	 * and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

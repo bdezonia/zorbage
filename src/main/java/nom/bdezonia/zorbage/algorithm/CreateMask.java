@@ -51,12 +51,14 @@ public class CreateMask {
 	private CreateMask() { }
 	
 	/**
+	 * Make and return a one dimensional mask by applying a boolean mapping function
+	 * across a list of values.
 	 * 
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param condition
-	 * @param a
+	 * @param condition A function that maps values to booleans
+	 * @param a The input list
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U>

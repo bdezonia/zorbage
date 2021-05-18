@@ -47,7 +47,11 @@ public class Factorial {
 	private Factorial() {}
 
 	/**
-	 * Factorial.compute()
+	 * Factorial will return the value of the factorial function for an integer value n.
+	 * One of the nice aspect of this method is that it works with all kinds of
+	 * types. You can use numbers that can't overflow. Or you can use complex numbers
+	 * so that you can get a complex value that equals n factorial (since your
+	 * equation might work best working with complex numbers).
 	 * 
 	 * @param algebra
 	 * @param n

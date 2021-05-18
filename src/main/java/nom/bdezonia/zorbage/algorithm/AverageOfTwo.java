@@ -48,7 +48,8 @@ public class AverageOfTwo {
 	private AverageOfTwo() { }
 	
 	/**
-	 * Average two things quickly (avoiding division when possible and avoiding overflow conditions of a naive approach)
+	 * Average two things quickly (avoiding division when possible and avoiding
+	 * the overflow conditions inherent in naive approaches).
 	 * 
 	 * @param alg
 	 * @param a

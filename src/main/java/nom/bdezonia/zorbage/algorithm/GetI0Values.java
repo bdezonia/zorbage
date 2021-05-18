@@ -47,6 +47,7 @@ public class GetI0Values {
 	private GetI0Values() { }
 	
 	/**
+	 * Find the I0 plane values from a list of Octonion numbers and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

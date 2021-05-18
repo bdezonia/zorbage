@@ -49,7 +49,12 @@ public class EstimateSpacing {
 	private EstimateSpacing() { }
 
 	/**
-	 * Note: for linear axis equations this spacing estimate is exact.
+	 * Calculate the average cell spacings of a {@link DimensionedDataSource}.
+	 * It works by calculating the min and max extents in coordinate space
+	 * (x,y,z,etc) from index space (i,j,k,etc.). Then it divides each extent
+	 * by the number of elements along these axes. This gives a linear estimate
+	 * of the scalings per cell of the possibly nonlinear space. If the space is
+	 * linear these scaling values are exactly equal to the actual spacings.
 	 * 
 	 * @param data
 	 * @param result

@@ -43,13 +43,15 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class HarmonicMean {
 
-	// https://mathworld.wolfram.com/HarmonicMean.html
-	
 	// do not instantiate
 	
 	private HarmonicMean() { }
 	
 	/**
+	 * Calculate the harmonic mean of a list of values.
+	 * 
+	 * See https://mathworld.wolfram.com/HarmonicMean.html for more information
+	 * about the geometric mean.
 	 * 
 	 * @param alg
 	 * @param list

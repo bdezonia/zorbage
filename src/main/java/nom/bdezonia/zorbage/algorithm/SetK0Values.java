@@ -47,6 +47,7 @@ public class SetK0Values {
 	private SetK0Values() { }
 	
 	/**
+	 * Set the values of an output list using the K0 values from a list of Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW

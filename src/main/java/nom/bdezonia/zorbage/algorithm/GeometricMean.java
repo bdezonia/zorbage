@@ -43,14 +43,16 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  */
 public class GeometricMean {
-
-	// https://www.wikihow.com/Calculate-the-Geometric-Mean
 	
 	// do not instantiate
 	
 	private GeometricMean() { }
 	
 	/**
+	 * Calculate the geometric mean of a list of values.
+	 * 
+	 * See https://www.wikihow.com/Calculate-the-Geometric-Mean for more information
+	 * about the geometric mean.
 	 * 
 	 * @param alg
 	 * @param list

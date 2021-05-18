@@ -47,6 +47,8 @@ public class GetJ0Values {
 	private GetJ0Values() { }
 	
 	/**
+	 * Find the J0 plane values from a list of Octonion numbers
+	 * and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

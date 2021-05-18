@@ -47,6 +47,8 @@ public class GetLValues {
 	private GetLValues() { }
 	
 	/**
+	 * Find the L plane values from a list of Quaternion, or Octonion numbers
+	 * and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

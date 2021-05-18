@@ -47,6 +47,8 @@ public class GetRValues {
 	private GetRValues() { }
 	
 	/**
+	 * Find the R plane values from a list of Real, Complex, Quaternion, or Octonion numbers
+	 * and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

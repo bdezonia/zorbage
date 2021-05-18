@@ -47,6 +47,8 @@ public class GetKValues {
 	private GetKValues() { }
 	
 	/**
+	 * Find the K plane values from a list of Quaternion, or Octonion numbers
+	 * and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

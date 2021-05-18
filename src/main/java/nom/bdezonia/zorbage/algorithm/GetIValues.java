@@ -47,6 +47,8 @@ public class GetIValues {
 	private GetIValues() { }
 	
 	/**
+	 * Find the I plane values from a list of Complex, Quaternion, or Octonion numbers
+	 * and place them in an output list.
 	 * 
 	 * @param algU
 	 * @param algW

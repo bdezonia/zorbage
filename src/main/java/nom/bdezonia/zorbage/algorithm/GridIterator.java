@@ -47,6 +47,8 @@ public class GridIterator {
 	private GridIterator() { }
 	
 	/**
+	 * Return a {@link SamplingIterator} that will iterate through all the
+	 * integer grid coordinates contained between minPt and maxPt (inclusive).
 	 * 
 	 * @param minPt
 	 * @param maxPt
@@ -59,6 +61,8 @@ public class GridIterator {
 	}
 		
 	/**
+	 * Return a {@link SamplingIterator} that will iterate through all the
+	 * integer grid coordinates contained between minPt and maxPt (inclusive).
 	 * 
 	 * @param minPt
 	 * @param maxPt
@@ -71,6 +75,9 @@ public class GridIterator {
 	}
 		
 	/**
+	 * Return a {@link SamplingIterator} that will iterate through all the
+	 * integer grid coordinates contained between zero and dims(i)-1 for all
+	 * i. dims are passed in as an argument.
 	 * 
 	 * @param dims
 	 * @return
@@ -88,6 +95,10 @@ public class GridIterator {
 	}
 		
 	/**
+	 * Return a {@link SamplingIterator} that will iterate through all the
+	 * integer grid coordinates contained between zero and dims(i)-1 for all
+	 * i. dims are taken from the {@link Dimensioned} entity passed in as an
+	 * argument.
 	 * 
 	 * @param entity
 	 * @return

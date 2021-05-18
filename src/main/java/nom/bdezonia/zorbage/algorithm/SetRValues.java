@@ -47,6 +47,8 @@ public class SetRValues {
 	private SetRValues() { }
 	
 	/**
+	 * Set the values of an output list using the R values from a list of Real,
+	 * Complex, Quaternion, or Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW

@@ -45,10 +45,11 @@ public class Copy {
 	private Copy() { }
 	
 	/**
+	 * Copy values from one {@link IndexedDataSource} list to another.
 	 * 
 	 * @param algebra
-	 * @param a
-	 * @param b
+	 * @param a Source list
+	 * @param b Destination list
 	 */
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)

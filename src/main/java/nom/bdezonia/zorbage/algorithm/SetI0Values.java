@@ -47,6 +47,7 @@ public class SetI0Values {
 	private SetI0Values() { }
 	
 	/**
+	 * Set the values of an output list using the I0 values from a list of Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW

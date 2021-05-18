@@ -44,7 +44,8 @@ public class GetV {
 	private GetV() { }
 
 	/**
-	 *
+	 * Get the last value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -59,7 +60,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the first value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -71,7 +73,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the second value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -83,7 +86,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the third value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -95,7 +99,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fourth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -107,7 +112,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fifth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -119,7 +125,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the sixth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -131,7 +138,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the seventh value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -143,7 +151,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the eighth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -155,7 +164,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the ninth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -167,7 +177,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the tenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -179,7 +190,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the eleventh value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -191,7 +203,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twelfth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -203,7 +216,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the thirteen value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -215,7 +229,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fourteenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -227,7 +242,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fifteenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -239,7 +255,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the sixteenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -251,7 +268,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the seventeenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -263,7 +281,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the eighteenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -275,7 +294,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the nineteenth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -287,7 +307,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twentieth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -299,7 +320,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty first value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -311,7 +333,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty second value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -323,7 +346,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty third value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -335,7 +359,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty fourth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -347,7 +372,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty fifth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -359,7 +385,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty sixth value from a list.
+	 * 
 	 * @param data
 	 * @param value
 	 * @param <U>
@@ -371,7 +398,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the first value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -384,7 +412,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the second value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -397,7 +426,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the third value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -410,7 +440,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fourth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -423,7 +454,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fifth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -436,7 +468,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the sixth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -449,7 +482,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the seventh value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -462,7 +496,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the eighth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -475,7 +510,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the ninth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -488,7 +524,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the tenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -501,7 +538,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the eleventh value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -514,7 +552,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twelfth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -527,7 +566,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the thirteenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -540,7 +580,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fourteenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -553,7 +594,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the fifteenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -566,7 +608,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the sixteenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -579,7 +622,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the seventeenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -592,7 +636,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the eighteenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -605,7 +650,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the nineteenth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -618,7 +664,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twentieth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -631,7 +678,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty first value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -644,7 +692,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty second value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -657,7 +706,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty third value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -670,7 +720,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty fourth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -683,7 +734,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty fifth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value
@@ -696,7 +748,8 @@ public class GetV {
 	}
 
 	/**
-	 *
+	 * Get the twenty sixth value from a tuple.
+	 * 
 	 * @param alg
 	 * @param data
 	 * @param value

@@ -49,6 +49,8 @@ public class FindMedianFraction {
 	private FindMedianFraction() {}
 
 	/**
+	 * Find the numerator and denominator of the median value of a list.
+	 * Used by other algorithms to calculate the median of a list.
 	 * 
 	 * @param numer
 	 * @param denom

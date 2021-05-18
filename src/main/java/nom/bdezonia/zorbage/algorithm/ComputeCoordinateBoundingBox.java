@@ -50,9 +50,9 @@ public class ComputeCoordinateBoundingBox {
 	private ComputeCoordinateBoundingBox() { }
 	
 	/**
-	 * Compute the bounding box of the coordinate space of a DimensionsDataSource. The
-	 * complete set of the data source's dimensions are transformed using its
-	 * CoordinateSpace and a bounding box in transformed coordinates is computed.
+	 * Compute the bounding box of the coordinate space of a {@link DimensionsDataSource}.
+	 * The complete set of the data source's dimensions are transformed using its
+	 * {@link CoordinateSpace} and a bounding box in transformed coordinates is computed.
 	 * 
 	 * @param data The data source of interest.
 	 * @param minPt The computed min point (as a rmodule/vector).

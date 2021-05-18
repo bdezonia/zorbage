@@ -47,6 +47,8 @@ public class SetJValues {
 	private SetJValues() { }
 	
 	/**
+	 * Set the values of an output list using the J values from a list of 
+	 * Quaternion or Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW

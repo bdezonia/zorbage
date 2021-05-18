@@ -43,13 +43,15 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class ContraharmonicMean {
 
-	// https://en.wikipedia.org/wiki/Contraharmonic_mean
-	
 	// do not instantiate
 	
 	private ContraharmonicMean() { }
 		
 	/**
+	 * Calculate the contraharmonic mean of a list of values.
+	 * 
+	 * See https://en.wikipedia.org/wiki/Contraharmonic_mean for more information
+	 * about the contraharmonic mean.
 	 * 
 	 * @param alg
 	 * @param list
