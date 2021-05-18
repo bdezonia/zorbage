@@ -45,6 +45,8 @@ public class MatrixConstantDiagonal {
 	private MatrixConstantDiagonal() { }
 	
 	/**
+	 * Fill a matrix with diagonal terms equal to a constant and all
+	 * other terms equal to zero.
 	 * 
 	 * @param alg
 	 * @param constant

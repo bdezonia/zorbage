@@ -46,6 +46,7 @@ public class MatrixIsUnity {
 	private MatrixIsUnity() { }
 	
 	/**
+	 * Return true if a given matrix matches the identity matrix defined for its shape.
 	 * 
 	 * @param alg
 	 * @param a

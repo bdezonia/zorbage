@@ -46,6 +46,8 @@ public class MatrixNegate {
 	private MatrixNegate() { }
 	
 	/**
+	 * Negate all the values in an input matrix and place in an output matrix.
+	 * It is okay for the input and output to be the same.
 	 * 
 	 * @param algebra
 	 * @param a

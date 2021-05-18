@@ -46,13 +46,14 @@ public class MatrixDirectProduct {
 	private MatrixDirectProduct() { }
 	
 	/**
+	 * Calculate the direct product between two matrices and put in an output matrix.
 	 * 
 	 * @param algebra
 	 * @param in1
 	 * @param in2
 	 * @param out
 	 */
-	public static <T extends Algebra<T,U> & Multiplication<U>,U,W extends MatrixMember<U>>
+	public static <T extends Algebra<T,U> & Multiplication<U>, U, W extends MatrixMember<U>>
 		void compute(T algebra, W in1, W in2, W out)
 	{
 		U tmp1 = algebra.construct();

@@ -46,6 +46,7 @@ public class MatrixAddition {
 	private MatrixAddition() { }
 	
 	/**
+	 * Add two matrices: c = a + b
 	 * 
 	 * @param algebra
 	 * @param a

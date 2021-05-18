@@ -45,6 +45,7 @@ public class MatrixAssign {
 	private MatrixAssign() { }
 	
 	/**
+	 * Assign a matrix's value from another matrix's values
 	 * 
 	 * @param algebra
 	 * @param from

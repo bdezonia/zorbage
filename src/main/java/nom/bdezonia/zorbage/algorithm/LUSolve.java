@@ -50,7 +50,7 @@ public class LUSolve {
 	
 	/**
 	 * LU solution. Sets the solution vector x given A and b from the matrix
-	 * equation Ax = b. A is already assumed to be in LU form.
+	 * equation Ax = b. A is already assumed to be in LU form (using {@link LUDecomp}).
 	 * @param a
 	 * @param b
 	 * @param x

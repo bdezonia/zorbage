@@ -46,6 +46,8 @@ public class MatrixTrace {
 	private MatrixTrace() { }
 	
 	/**
+	 * Calculate the trace of a matrix. Gets a sum of all the values
+	 * along the diagonal of a matrix.
 	 * 
 	 * @param algebra
 	 * @param matrix

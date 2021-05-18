@@ -51,6 +51,7 @@ public class MatrixPower {
 	private MatrixPower() { }
 
 	/**
+	 * Raise a matrix to an integer power. The power can be negative, zero, or positive.
 	 * 
 	 * @param power
 	 * @param numAlgebra

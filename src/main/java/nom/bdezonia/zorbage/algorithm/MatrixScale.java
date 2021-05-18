@@ -47,6 +47,7 @@ public class MatrixScale {
 	private MatrixScale() { }
 
 	/**
+	 * Scale a matrix by a value.
 	 * 
 	 * @param numAlgebra
 	 * @param scale

@@ -46,6 +46,9 @@ public class MatrixConjugate {
 	private MatrixConjugate() { }
 	
 	/**
+	 * Set an output matrix to the cell by cell application of a type's
+	 * conjugate method to an input matrix. Note that the input and output
+	 * matrices can be the same.
 	 * 
 	 * @param algebra
 	 * @param a

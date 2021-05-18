@@ -47,6 +47,7 @@ public class MatrixMultiply {
 	private MatrixMultiply() {}
 	
 	/**
+	 * Multiply matrices: c = a x b
 	 * 
 	 * @param algebra
 	 * @param a

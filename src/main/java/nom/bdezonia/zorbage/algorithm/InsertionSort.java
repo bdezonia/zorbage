@@ -47,6 +47,7 @@ public class InsertionSort {
 	private InsertionSort() { }
 	
 	/**
+	 * Sort a list using the insertion sort algorithm
 	 * 
 	 * @param alg
 	 * @param storage

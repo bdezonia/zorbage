@@ -46,6 +46,7 @@ public class MatrixScaleByDouble {
 	private MatrixScaleByDouble() { }
 	
 	/**
+	 * Scale a matrix by a double value.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

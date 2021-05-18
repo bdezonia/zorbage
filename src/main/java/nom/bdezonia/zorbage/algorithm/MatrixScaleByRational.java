@@ -47,6 +47,7 @@ public class MatrixScaleByRational {
 	private MatrixScaleByRational() { }
 	
 	/**
+	 * Scale a matrix by a {@link RationalMember} value.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

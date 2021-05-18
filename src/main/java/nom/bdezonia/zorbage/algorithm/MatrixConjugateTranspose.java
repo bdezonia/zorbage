@@ -46,6 +46,9 @@ public class MatrixConjugateTranspose {
 	private MatrixConjugateTranspose() { }
 	
 	/**
+	 * Set an output matrix to the cell by cell application of a type's
+	 * conjugate method to the transpose of an input matrix. Note that
+	 * the input and output matrices can be the same.
 	 * 
 	 * @param alg
 	 * @param a

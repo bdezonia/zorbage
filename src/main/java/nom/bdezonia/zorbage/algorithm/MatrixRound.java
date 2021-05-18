@@ -47,6 +47,7 @@ public class MatrixRound {
 	private MatrixRound() { }
 	
 	/**
+	 * Round all the values of a matrix. See {@link Round} for more info.
 	 * 
 	 * @param entityAlgebra
 	 * @param mode

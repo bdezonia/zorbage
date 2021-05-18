@@ -46,6 +46,7 @@ public class MatrixSubtraction {
 	private MatrixSubtraction() { }
 	
 	/**
+	 * Subtract two matrices. c = a - b
 	 * 
 	 * @param algebra
 	 * @param a

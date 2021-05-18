@@ -52,6 +52,7 @@ public class MatrixInvert {
 	private MatrixInvert() {}
 
 	/**
+	 * Invert a matrix
 	 * 
 	 * @param numAlgebra
 	 * @param rmodAlgebra

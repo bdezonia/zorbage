@@ -48,6 +48,9 @@ public class Map {
 	private Map() { }
 	
 	/**
+	 * Map takes an input list and returns an output list. The output list will
+	 * contain the results of applying a passed in function to each element of
+	 * the input list.
 	 * 
 	 * @param algU
 	 * @param algW

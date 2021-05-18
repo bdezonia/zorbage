@@ -47,6 +47,7 @@ public class MatrixSum {
 	private MatrixSum() { }
 	
 	/**
+	 * Get a sum of all the values in a matrix
 	 * 
 	 * @param algebra
 	 * @param matrix

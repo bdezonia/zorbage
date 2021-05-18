@@ -45,6 +45,7 @@ public class MatrixTranspose {
 	private MatrixTranspose() {}
 	
 	/**
+	 * Transpose a matrix. Change from m x n to n x m.
 	 * 
 	 * @param algebra
 	 * @param a

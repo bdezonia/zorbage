@@ -45,6 +45,8 @@ public class MatrixReshape {
 	private MatrixReshape() { }
 
 	/**
+	 * Change the shape of a given matrix. Old values of the matrix that fit
+	 * within the new shape are preserved.
 	 * 
 	 * @param matAlgebra
 	 * @param numberAlgebra

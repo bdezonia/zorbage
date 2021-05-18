@@ -46,6 +46,7 @@ public class MatrixUnity {
 	private MatrixUnity() { }
 	
 	/**
+	 * Make an identity matrix for a given matrix shape.
 	 * 
 	 * @param algebra
 	 * @param a

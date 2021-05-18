@@ -45,6 +45,8 @@ public class MatrixEqual {
 	private MatrixEqual() { }
 	
 	/**
+	 * Return true if two matrices have the same shape and the same values.
+	 * Return false otherwise.
 	 * 
 	 * @param algebra
 	 * @param a

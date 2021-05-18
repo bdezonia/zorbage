@@ -47,6 +47,7 @@ public class MatrixScaleByHighPrec {
 	private MatrixScaleByHighPrec() { }
 	
 	/**
+	 * Scale a matrix by a {@link HighPrecisionMember} value.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

@@ -44,6 +44,7 @@ public class MatrixZero {
 	private MatrixZero() { }
 	
 	/**
+	 * Set a matrix of a given shape to all zeroes.
 	 * 
 	 * @param a
 	 */

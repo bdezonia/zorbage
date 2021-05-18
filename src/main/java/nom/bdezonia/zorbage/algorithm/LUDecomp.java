@@ -48,6 +48,8 @@ public class LUDecomp {
 	private LUDecomp() {}
 	
 	/**
+	 * Take a matrix and transform it into one in LU form. This allows
+	 * one to solve a set of equations using {@link LUSolve},
 	 * 
 	 * @param numAlgebra The Algebra that can do primitive type math.
 	 * @param matAlgebra The Algebra that can do matrix type math.
