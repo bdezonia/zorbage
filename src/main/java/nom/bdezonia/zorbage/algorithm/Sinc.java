@@ -48,6 +48,7 @@ public class Sinc {
 	private Sinc() { }
 	
 	/**
+	 * Compute the value of sin(x) / x
 	 * 
 	 * @param algebra
 	 * @param x

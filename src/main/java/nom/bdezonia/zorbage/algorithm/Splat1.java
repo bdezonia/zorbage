@@ -46,6 +46,7 @@ public class Splat1 {
 	private Splat1() { }
 	
 	/**
+	 * Set the 1st component of a tuple to the r value of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -57,6 +58,7 @@ public class Splat1 {
 	}
 
 	/**
+	 * Set the r value of a number to the 1st component of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

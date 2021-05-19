@@ -45,6 +45,8 @@ public class ScaleByDoubleAndRound {
 	private ScaleByDoubleAndRound() {}
 	
 	/**
+	 * Scale a input list by a double constant, round the result, and place
+	 * the results in an output list.
 	 * 
 	 * @param algebra
 	 * @param scale

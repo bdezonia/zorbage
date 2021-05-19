@@ -51,6 +51,7 @@ public class TensorSemicolonDerivative {
 	// https://en.wikipedia.org/wiki/Christoffel_symbols
 		
 	/**
+	 * Calculate the semicolon derivative of a tensor and place results in an output tensor.
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>

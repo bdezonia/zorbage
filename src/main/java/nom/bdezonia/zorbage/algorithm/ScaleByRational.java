@@ -46,6 +46,8 @@ public class ScaleByRational {
 	private ScaleByRational() {}
 	
 	/**
+	 * Scale a input list by a {@link RationalMember} constant and place
+	 * the results in an output list.
 	 * 
 	 * @param algebra
 	 * @param scale

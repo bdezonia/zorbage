@@ -46,6 +46,8 @@ public class ScaleByHighPrecAndRound {
 	private ScaleByHighPrecAndRound() {}
 	
 	/**
+	 * Scale a input list by a {@link HighPrecisionMember} constant,
+	 * round the result, and place the results in an output list.
 	 * 
 	 * @param algebra
 	 * @param scale

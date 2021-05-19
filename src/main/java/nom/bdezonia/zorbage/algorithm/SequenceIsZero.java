@@ -45,6 +45,7 @@ public class SequenceIsZero {
 	private SequenceIsZero() {}
 
 	/**
+	 * Return true if all elements of a list are zero.
 	 * 
 	 * @param algebra
 	 * @param a

@@ -48,6 +48,7 @@ public class SplatRational {
 	private SplatRational() { }
 	
 	/**
+	 * Set the 1st two components of a tuple to the n/d values of a {@link RationalNumber}.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -60,6 +61,7 @@ public class SplatRational {
 	}
 
 	/**
+	 * Set the n/d values of a {@link RationalNumber} to the 1st two components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

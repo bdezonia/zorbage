@@ -49,6 +49,7 @@ public class TensorRound {
 	private TensorRound() { }
 	
 	/**
+	 * Round the elements of a tensor and place results in an output tensor
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>

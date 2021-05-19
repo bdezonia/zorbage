@@ -47,7 +47,9 @@ public class ScaleHelper {
 	private ScaleHelper() { }
 	
 	/**
-	 * 
+	 * ScaleHelper is a utility method that simplifies scaling a list
+	 * of values by a number raised to a power.
+	 *  
 	 * @param typeAlg
 	 * @param factorAlg
 	 * @param num
@@ -61,19 +63,27 @@ public class ScaleHelper {
 					W>
 		void compute(T typeAlg, V factorAlg, W num, int numTimes, U in, U out)
 	{
+		// cannot scale a negative number of times
+		
 		if (numTimes < 0)
 			throw new IllegalArgumentException("negative power count in ScaleHelper");
+		
+		// scale by power 0: scale by 1: copy input to output
 		
 		if (numTimes == 0) {
 			typeAlg.assign().call(in, out);
 			return;
 		}
 		
+		// compute the scale factor: factor = num ^ numTimes
+		
 		W factor = factorAlg.construct();
 		factorAlg.unity().call(factor);
 		for (int i = 0; i < numTimes; i++) {
 			factorAlg.multiply().call(factor, num, factor);
 		}
+		
+		// scale the input by the scale factor
 
 		typeAlg.scale().call(factor, in, out);
 	}

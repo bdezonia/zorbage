@@ -47,6 +47,7 @@ public class SequenceL1Norm {
 	private SequenceL1Norm() { }
 	
 	/**
+	 * Calculate the L1 norm of a list of values.
 	 * 
 	 * @param normAlgebra
 	 * @param numAlgebra

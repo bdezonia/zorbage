@@ -45,6 +45,7 @@ public class ScaleByDouble {
 	private ScaleByDouble() {}
 	
 	/**
+	 * Scale a input list by a double constant and place the results in an output list.
 	 * 
 	 * @param algebra
 	 * @param scale

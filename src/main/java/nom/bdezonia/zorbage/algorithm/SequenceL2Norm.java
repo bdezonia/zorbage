@@ -51,6 +51,7 @@ public class SequenceL2Norm {
 	private SequenceL2Norm() { }
 	
 	/**
+	 * Calculate the L2 norm of a list of values.
 	 * 
 	 * @param normAlgebra
 	 * @param numAlgebra

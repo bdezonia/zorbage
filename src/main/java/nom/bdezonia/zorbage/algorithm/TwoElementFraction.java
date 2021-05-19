@@ -46,6 +46,8 @@ public class TwoElementFraction {
 	private TwoElementFraction() { }
 	
 	/**
+	 * Calculate the fraction that is the average of the two inputs.
+	 * Care is taken to avoid roundoff error when possible.
 	 * 
 	 * @param alg
 	 * @param result1

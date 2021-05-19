@@ -46,6 +46,7 @@ public class SequenceIsNan {
 	private SequenceIsNan() {}
 
 	/**
+	 * Return true if any element of a list is NaN.
 	 * 
 	 * @param algebra
 	 * @param a

@@ -53,6 +53,8 @@ public class TensorCommaDerivative {
 	// but that is what seems most logical when I look at the math definition above.
 	
 	/**
+	 * Calculate the tensor comma derivative at a point of an input tensor
+	 * and store in an output tensor.
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>

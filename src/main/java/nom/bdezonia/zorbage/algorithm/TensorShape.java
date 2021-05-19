@@ -44,17 +44,18 @@ public class TensorShape {
 	private TensorShape() { }
 	
 	/**
+	 * Change the shape of an output tensor to match the shape of an input tensor
 	 * 
 	 * @param from
 	 * @param to
 	 */
 	public static
-		void compute(TensorMember<?> from, TensorMember<?> to)
+		void compute(TensorMember<?> input, TensorMember<?> output)
 	{
-		if (from == to) return;
-		long[] dims = new long[from.numDimensions()];
+		if (input == output) return;
+		long[] dims = new long[input.numDimensions()];
 		for (int i = 0; i < dims.length; i++) {
-			dims[i] = from.dimension(i);
+			dims[i] = input.dimension(i);
 		}
 		to.alloc(dims);
 	}

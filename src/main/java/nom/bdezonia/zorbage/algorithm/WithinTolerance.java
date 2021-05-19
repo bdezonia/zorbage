@@ -47,6 +47,7 @@ public class WithinTolerance<T extends Algebra<T,U> & Tolerance<W,U>, U, V exten
 	private final W tolerance;
 	
 	/**
+	 * Construct a class used to measure tolerances of numbers.
 	 * 
 	 * @param uAlgebra
 	 * @param tolAlgebra
@@ -59,6 +60,7 @@ public class WithinTolerance<T extends Algebra<T,U> & Tolerance<W,U>, U, V exten
 	}
 
 	/**
+	 * Set the tolerance sotred in this class
 	 * 
 	 * @param tol
 	 */
@@ -67,6 +69,7 @@ public class WithinTolerance<T extends Algebra<T,U> & Tolerance<W,U>, U, V exten
 	}
 	
 	/**
+	 * Get the tolerance stored in this class
 	 * 
 	 * @param tol
 	 */
@@ -74,6 +77,9 @@ public class WithinTolerance<T extends Algebra<T,U> & Tolerance<W,U>, U, V exten
 		tolAlgebra.assign().call(tolerance, tol);
 	}
 	
+	/**
+	 * Test whether a and b are within a tolerance of each other.
+	 */
 	@Override
 	public Boolean call(U a, U b) {
 		return uAlgebra.within().call(tolerance, a, b);

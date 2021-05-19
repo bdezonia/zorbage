@@ -50,6 +50,7 @@ public class TensorOuterProduct {
 	private TensorOuterProduct() { }
 	
 	/**
+	 * Calculate the outer product of two tensors and place result in an output tensor
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>

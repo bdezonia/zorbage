@@ -51,6 +51,7 @@ public class TensorNorm {
 	private TensorNorm() { }
 
 	/**
+	 * Calculate the norm of a tensor and put it in an output number
 	 * 
 	 * @param <M>
 	 * @param <NUMBER>

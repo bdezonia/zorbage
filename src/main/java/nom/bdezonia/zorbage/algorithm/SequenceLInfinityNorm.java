@@ -47,6 +47,7 @@ public class SequenceLInfinityNorm {
 	private SequenceLInfinityNorm() { }
 	
 	/**
+	 * Calculate the LInf norm of a list of values.
 	 * 
 	 * @param normAlgebra
 	 * @param numAlgebra

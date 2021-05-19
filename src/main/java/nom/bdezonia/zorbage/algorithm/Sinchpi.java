@@ -50,6 +50,7 @@ public class Sinchpi {
 	private Sinchpi() { }
 	
 	/**
+	 * Compute the value of sinh(pi*x) / (pi*x)
 	 * 
 	 * @param algebra
 	 * @param x

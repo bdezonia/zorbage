@@ -47,6 +47,7 @@ public class SumWithCount {
 	private SumWithCount() {}
 	
 	/**
+	 * Calculate the sum and count of the number of values of a list
 	 * 
 	 * @param alg
 	 * @param storage

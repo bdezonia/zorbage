@@ -48,6 +48,7 @@ public class Splat3 {
 	private Splat3() { }
 	
 	/**
+	 * Set the 1st three components of a tuple to the r/i/j values of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -63,6 +64,7 @@ public class Splat3 {
 	}
 
 	/**
+	 * Set the r/i/j values of a number to the 1st three components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

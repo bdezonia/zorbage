@@ -54,6 +54,7 @@ public class TensorContract {
 	private TensorContract() { }
 	
 	/**
+	 * Contract an input tensor and place results in an output tensor.
 	 * 
 	 * @param <M>
 	 * @param <NUMBER>

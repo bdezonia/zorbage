@@ -55,6 +55,7 @@ public class Zip {
 	private Zip() { }
 	
 	/**
+	 * Take a list of elements and fill a list of Tuple1 elements.
 	 * 
 	 * @param alg1
 	 * @param unzip1
@@ -77,6 +78,7 @@ public class Zip {
 	}
 		
 	/**
+	 * Take two lists of elements and fill a list of Tuple2 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -105,6 +107,7 @@ public class Zip {
 	}
 
 	/**
+	 * Take three lists of elements and fill a list of Tuple3 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -141,6 +144,7 @@ public class Zip {
 	}
 
 	/**
+	 * Take four lists of elements and fill a list of Tuple4 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -184,6 +188,7 @@ public class Zip {
 	}
 	
 	/**
+	 * Take five lists of elements and fill a list of Tuple5 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -234,6 +239,7 @@ public class Zip {
 	}
 
 	/**
+	 * Take six lists of elements and fill a list of Tuple6 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -291,6 +297,7 @@ public class Zip {
 	}
 
 	/**
+	 * Take seven lists of elements and fill a list of Tuple7 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -355,6 +362,7 @@ public class Zip {
 	}
 
 	/**
+	 * Take eight lists of elements and fill a list of Tuple8 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -426,6 +434,7 @@ public class Zip {
 	}
 
 	/**
+	 * Take nine lists of elements and fill a list of Tuple9 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -504,6 +513,7 @@ public class Zip {
 	}
 	
 	/**
+	 * Take ten lists of elements and fill a list of Tuple10 elements.
 	 * 
 	 * @param alg1
 	 * @param alg2

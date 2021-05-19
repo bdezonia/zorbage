@@ -44,6 +44,7 @@ public class ShapesMatch {
 	private ShapesMatch() { }
 	
 	/**
+	 * Return true if two {@link Dimensioned} items share the same dimensions.
 	 * 
 	 * @param a
 	 * @param b

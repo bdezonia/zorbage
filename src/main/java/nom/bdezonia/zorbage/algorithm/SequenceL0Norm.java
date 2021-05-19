@@ -47,6 +47,7 @@ public class SequenceL0Norm {
 	private SequenceL0Norm() { }
 	
 	/**
+	 * Calculate the L0 norm of a list of values.
 	 * 
 	 * @param normAlgebra
 	 * @param numAlgebra

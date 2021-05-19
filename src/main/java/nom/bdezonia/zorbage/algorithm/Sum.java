@@ -60,6 +60,7 @@ public class Sum {
 	private Sum() {}
 	
 	/**
+	 * Calculate the sum of a list of values
 	 * 
 	 * @param alg
 	 * @param storage

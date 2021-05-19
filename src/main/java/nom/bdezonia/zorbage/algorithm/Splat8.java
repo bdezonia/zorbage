@@ -53,6 +53,7 @@ public class Splat8 {
 	private Splat8() { }
 	
 	/**
+	 * Set the 1st eight components of a tuple to the r/i/j/k/l/i0/j0/k0 values of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -74,6 +75,7 @@ public class Splat8 {
 	}
 
 	/**
+	 * Set the r/i/j/k/l/i0/j0/k0 values of a number to the 1st eight components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

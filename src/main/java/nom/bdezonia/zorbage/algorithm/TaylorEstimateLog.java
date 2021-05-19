@@ -49,6 +49,8 @@ public class TaylorEstimateLog {
 	private TaylorEstimateLog() { }
 
 	/**
+	 * Use a taylor series to estimate the value of log(x)
+	 * using the specified number of terms in the expansion.
 	 * 
 	 * @param numTerms
 	 * @param elemAlgebra

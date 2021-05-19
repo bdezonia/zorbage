@@ -52,6 +52,7 @@ public class Splat7 {
 	private Splat7() { }
 	
 	/**
+	 * Set the 1st seven components of a tuple to the r/i/j/k/l/i0/j0 values of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -72,6 +73,7 @@ public class Splat7 {
 	}
 
 	/**
+	 * Set the r/i/j/k/l/i0/j0 values of a number to the 1st seven components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

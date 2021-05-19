@@ -49,6 +49,8 @@ public class TaylorEstimateTanh {
 	private TaylorEstimateTanh() { }
 	
 	/**
+	 * Use a taylor series to estimate the value of tanh(x)
+	 * using the specified number of terms in the expansion.
 	 * 
 	 * @param numTerms
 	 * @param elemAlgebra

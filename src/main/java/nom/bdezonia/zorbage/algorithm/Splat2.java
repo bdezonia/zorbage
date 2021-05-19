@@ -47,6 +47,7 @@ public class Splat2 {
 	private Splat2() { }
 	
 	/**
+	 * Set the 1st two components of a tuple to the r/i values of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -59,6 +60,7 @@ public class Splat2 {
 	}
 
 	/**
+	 * Set the r/i values of a number to the 1st two components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

@@ -55,6 +55,7 @@ public class Unzip {
 	private Unzip() { }
 	
 	/**
+	 * Take a list of Tuple1 elements and fill a list of elements.
 	 * 
 	 * @param alg1
 	 * @param zipped
@@ -77,6 +78,7 @@ public class Unzip {
 	}
 		
 	/**
+	 * Take a list of Tuple2 elements and fill two lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -105,6 +107,7 @@ public class Unzip {
 	}
 
 	/**
+	 * Take a list of Tuple3 elements and fill three lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -141,6 +144,7 @@ public class Unzip {
 	}
 
 	/**
+	 * Take a list of Tuple4 elements and fill four lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -184,6 +188,7 @@ public class Unzip {
 	}
 	
 	/**
+	 * Take a list of Tuple5 elements and fill five lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -234,6 +239,7 @@ public class Unzip {
 	}
 
 	/**
+	 * Take a list of Tuple6 elements and fill six lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -291,6 +297,7 @@ public class Unzip {
 	}
 
 	/**
+	 * Take a list of Tuple7 elements and fill seven lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -355,6 +362,7 @@ public class Unzip {
 	}
 
 	/**
+	 * Take a list of Tuple8 elements and fill eight lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -426,6 +434,7 @@ public class Unzip {
 	}
 
 	/**
+	 * Take a list of Tuple9 elements and fill nine lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2
@@ -504,6 +513,7 @@ public class Unzip {
 	}
 	
 	/**
+	 * Take a list of Tuple10 elements and fill ten lists of elements.
 	 * 
 	 * @param alg1
 	 * @param alg2

@@ -46,6 +46,8 @@ public class ScaleByHighPrec {
 	private ScaleByHighPrec() {}
 	
 	/**
+	 * Scale a input list by a {@link HighPrecisionMember} constant and place
+	 * the results in an output list.
 	 * 
 	 * @param algebra
 	 * @param scale

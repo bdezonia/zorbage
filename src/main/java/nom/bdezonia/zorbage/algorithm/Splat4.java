@@ -49,6 +49,7 @@ public class Splat4 {
 	private Splat4() { }
 	
 	/**
+	 * Set the 1st four components of a tuple to the r/i/j/k values of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -65,6 +66,7 @@ public class Splat4 {
 	}
 
 	/**
+	 * Set the r/i/j/k values of a number to the 1st four components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

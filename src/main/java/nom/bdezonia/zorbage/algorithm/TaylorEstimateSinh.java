@@ -49,6 +49,8 @@ public class TaylorEstimateSinh {
 	private TaylorEstimateSinh() { }
 
 	/**
+	 * Use a taylor series to estimate the value of sinh(x)
+	 * using the specified number of terms in the expansion.
 	 * 
 	 * @param numTerms
 	 * @param elemAlgebra

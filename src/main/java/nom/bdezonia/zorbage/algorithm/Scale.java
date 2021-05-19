@@ -46,6 +46,7 @@ public class Scale {
 	private Scale() {}
 	
 	/**
+	 * Scale a input list by a constant and place the results in an output list.
 	 * 
 	 * @param algebra
 	 * @param a

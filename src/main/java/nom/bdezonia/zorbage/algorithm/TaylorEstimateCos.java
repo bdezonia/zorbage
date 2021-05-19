@@ -49,6 +49,8 @@ public class TaylorEstimateCos {
 	private TaylorEstimateCos() { }
 
 	/**
+	 * Use a taylor series to estimate the value of the cos(x)
+	 * using the specified number of terms in the expansion.
 	 * 
 	 * @param numTerms
 	 * @param elemAlgebra

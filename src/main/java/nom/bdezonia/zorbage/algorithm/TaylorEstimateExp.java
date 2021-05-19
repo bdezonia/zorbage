@@ -49,6 +49,8 @@ public class TaylorEstimateExp {
 	private TaylorEstimateExp() { }
 
 	/**
+	 * Use a taylor series to estimate the value of e^x
+	 * using the specified number of terms in the expansion.
 	 * 
 	 * @param numTerms
 	 * @param elemAlgebra

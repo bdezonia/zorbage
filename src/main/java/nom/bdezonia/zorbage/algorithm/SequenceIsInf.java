@@ -47,6 +47,8 @@ public class SequenceIsInf {
 	private SequenceIsInf() {}
 
 	/**
+	 * Return true if any element of a list is infinite. Any list that
+	 * contains NaN returns false.
 	 * 
 	 * @param algebra
 	 * @param a

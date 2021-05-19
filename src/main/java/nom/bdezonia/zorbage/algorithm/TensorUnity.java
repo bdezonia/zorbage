@@ -47,6 +47,7 @@ public class TensorUnity {
 	private TensorUnity() { }
 	
 	/**
+	 * Set an output tensor to unity (all ones along its super diagonal).
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>

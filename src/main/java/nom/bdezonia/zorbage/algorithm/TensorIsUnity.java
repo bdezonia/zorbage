@@ -48,6 +48,7 @@ public class TensorIsUnity {
 	private TensorIsUnity() { }
 	
 	/**
+	 * Returns true if a given tensor has all ones along it's super diagonal
 	 * 
 	 * @param alg
 	 * @param a

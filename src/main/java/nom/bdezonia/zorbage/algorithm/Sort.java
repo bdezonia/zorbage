@@ -54,6 +54,8 @@ public class Sort {
 	private Sort() {}
 
 	/**
+	 * Sort a list of values into ascending order. Change the contents
+	 * of the list in the process.
 	 * 
 	 * @param <T>
 	 * @param <U>
@@ -67,6 +69,9 @@ public class Sort {
 	}
 
 	/**
+	 * Sort a list of values into an order defined by a comparison function
+	 * that is provided as an input. Change the contents of the list in the
+	 * process.
 	 * 
 	 * @param <T>
 	 * @param <U>

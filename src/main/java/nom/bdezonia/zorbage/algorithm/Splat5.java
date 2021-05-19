@@ -50,6 +50,7 @@ public class Splat5 {
 	private Splat5() { }
 	
 	/**
+	 * Set the 1st five components of a tuple to the r/i/j/k/l values of a number.
 	 * 
 	 * @param value
 	 * @param tuple
@@ -68,6 +69,7 @@ public class Splat5 {
 	}
 
 	/**
+	 * Set the r/i/j/k/l values of a number to the 1st five components of a tuple.
 	 * 
 	 * @param tuple
 	 * @param value

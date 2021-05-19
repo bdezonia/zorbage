@@ -46,6 +46,8 @@ public class SequencesSimilar {
 	private SequencesSimilar() { }
 	
 	/**
+	 * Returns true if two lists have the same size and every matching
+	 * point between them is within a tolerance of each other.
 	 * 
 	 * @param uAlg
 	 * @param tol

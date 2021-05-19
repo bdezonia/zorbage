@@ -47,6 +47,7 @@ public class TensorPower {
 	private TensorPower() { }
 	
 	/**
+	 * Raise a tensor to a power and return result in an output tensor.
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>

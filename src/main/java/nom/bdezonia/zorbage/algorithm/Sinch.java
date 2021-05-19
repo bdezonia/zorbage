@@ -48,6 +48,7 @@ public class Sinch {
 	private Sinch() { }
 	
 	/**
+	 * Compute the value of sinh(x) / x
 	 * 
 	 * @param algebra
 	 * @param x
