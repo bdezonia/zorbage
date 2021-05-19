@@ -46,6 +46,9 @@ public class Transform19 {
 	private Transform19() { }
 
 	/**
+	 * Transform eighteen lists into a nineteenth list using a function/procedure call at each point
+	 * in the eighteen lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -76,6 +79,9 @@ public class Transform19 {
 	}
 
 	/**
+	 * Transform eighteen lists into a nineteenth list using a function/procedure call at each point
+	 * in the eighteen lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

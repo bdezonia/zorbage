@@ -45,6 +45,7 @@ public class Max {
 	private Max() { }
 	
 	/**
+	 * Set a result to the maximum value of two inputs.
 	 * 
 	 * @param algebra
 	 * @param a

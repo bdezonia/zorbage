@@ -46,6 +46,9 @@ public class Transform24 {
 	private Transform24() { }
 
 	/**
+	 * Transform twenty three lists into a twenty fourth list using a function/procedure call at each point
+	 * in the twenty three lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -81,6 +84,9 @@ public class Transform24 {
 	}
 
 	/**
+	 * Transform twenty three lists into a twenty fourth list using a function/procedure call at each point
+	 * in the twenty three lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

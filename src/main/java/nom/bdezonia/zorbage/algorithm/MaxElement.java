@@ -46,6 +46,7 @@ public class MaxElement {
 	private MaxElement() {}
 
 	/**
+	 * Finds the maximum element in a list of values.
 	 * 
 	 * @param alg
 	 * @param storage

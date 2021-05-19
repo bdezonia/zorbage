@@ -51,6 +51,8 @@ public class SampleWithoutReplacement {
 	private SampleWithoutReplacement() { }
 	
 	/**
+	 * Sample an input set n times and place the results in an output set.
+	 * Never select the same input location more than once. 
 	 * 
 	 * @param algebra
 	 * @param n

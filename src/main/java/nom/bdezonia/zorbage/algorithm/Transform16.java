@@ -46,6 +46,9 @@ public class Transform16 {
 	private Transform16() { }
 
 	/**
+	 * Transform fifteen lists into a sixteenth list using a function/procedure call at each point
+	 * in the fifteen lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -73,6 +76,9 @@ public class Transform16 {
 	}
 
 	/**
+	 * Transform fifteen lists into a sixteenth list using a function/procedure call at each point
+	 * in the fifteen lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

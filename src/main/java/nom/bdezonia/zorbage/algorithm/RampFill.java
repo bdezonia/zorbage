@@ -47,6 +47,10 @@ public class RampFill {
 	private RampFill() { }
 	
 	/**
+	 * Fill a list with a steadily changing set of values. Start
+	 * at "startVal" and increment by "incBy". If "incBy" is positive
+	 * the ramp will be increasing and if "incBy" is negative the
+	 * ramp will be decreasing.
 	 * 
 	 * @param alg
 	 * @param startVal
@@ -67,6 +71,7 @@ public class RampFill {
 	}
 
 	/**
+	 * Fill a list with a steadily increasing set of values. Start at 0 and increment by one.
 	 * 
 	 * @param alg
 	 * @param data

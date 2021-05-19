@@ -47,6 +47,7 @@ public class NanMaxElement {
 	private NanMaxElement() {}
 
 	/**
+	 * Return the max element from a list while ignoring NaN values.
 	 * 
 	 * @param alg
 	 * @param storage

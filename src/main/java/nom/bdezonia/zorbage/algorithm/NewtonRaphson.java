@@ -54,6 +54,8 @@ public class NewtonRaphson<T extends Algebra<T,U> & Addition<U> & Invertible<U> 
 	private long maxIters;
 
 	/**
+	 * Construct a solver that uses the Newton Raphson method to quickly
+	 * find the root of a function given a guess of the value of the root.
 	 * 
 	 * @param alg
 	 * @param f
@@ -69,16 +71,26 @@ public class NewtonRaphson<T extends Algebra<T,U> & Addition<U> & Invertible<U> 
 			throw new IllegalArgumentException("number of iterations must be > 0");
 	}
 
+	/**
+	 * Return the max iterations that will run before this solver gives up.
+	 */
 	public long getMaxIters() {
 		return maxIters;
 	}
 	
+	/**
+	 * Set the max iterations that will run before this solver gives up.
+	 */
 	public void setMaxIters(long maxIters) {
 		this.maxIters = maxIters;
 		if (maxIters <= 0)
 			throw new IllegalArgumentException("number of iterations must be > 0");
 	}
 	
+	/**
+	 * Take a guess at a root and run this solver to compute an actual root.
+	 * Returns false if a root was not found.
+	 */
 	@Override
 	public Boolean call(U guess, U result) {
 		U tmp = alg.construct(guess);

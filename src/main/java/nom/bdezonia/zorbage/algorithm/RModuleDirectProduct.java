@@ -47,6 +47,7 @@ public class RModuleDirectProduct {
 	private RModuleDirectProduct() { }
 
 	/**
+	 * Compute a matrix from two input rmodule/vectors using a direct product approach.
 	 * 
 	 * @param algebra
 	 * @param a

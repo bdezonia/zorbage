@@ -46,6 +46,9 @@ public class Transform9 {
 	private Transform9() { }
 
 	/**
+	 * Transform eight lists into a ninth list using a function/procedure call at each point
+	 * in the eight lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -66,6 +69,9 @@ public class Transform9 {
 	}
 
 	/**
+	 * Transform eight lists into a ninth list using a function/procedure call at each point
+	 * in the eight lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

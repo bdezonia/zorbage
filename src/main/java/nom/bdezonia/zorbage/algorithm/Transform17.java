@@ -46,6 +46,9 @@ public class Transform17 {
 	private Transform17() { }
 
 	/**
+	 * Transform sixteen lists into a seventeenth list using a function/procedure call at each point
+	 * in the sixteen lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -74,6 +77,9 @@ public class Transform17 {
 	}
 
 	/**
+	 * Transform sixteen lists into a seventeenth list using a function/procedure call at each point
+	 * in the sixteen lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

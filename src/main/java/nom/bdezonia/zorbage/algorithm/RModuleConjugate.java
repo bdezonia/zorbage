@@ -46,6 +46,7 @@ public class RModuleConjugate {
 	private RModuleConjugate() { }
 
 	/**
+	 * Set an output rmodule/vector to the conjugation of an input rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param a

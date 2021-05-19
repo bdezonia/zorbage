@@ -45,6 +45,8 @@ public class MinMax {
 	private MinMax() { }
 	
 	/**
+	 * Take two values and return the min value and the max value
+	 * by comparing them.
 	 * 
 	 * @param algebra
 	 * @param a
@@ -55,6 +57,8 @@ public class MinMax {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T algebra, U a, U b, U min, U max)
 	{
+		// work in temps in case someone calls minmax(a,b,a,b)
+		
 		U tmpMin = algebra.construct();
 		U tmpMax = algebra.construct();
 		if (algebra.isGreater().call(a, b)) {

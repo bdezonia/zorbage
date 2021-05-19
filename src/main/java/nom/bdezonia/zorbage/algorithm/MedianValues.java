@@ -47,6 +47,10 @@ public class MedianValues {
 	private MedianValues() {}
 
 	/**
+	 * Finds the two middle values of a list for computing the median
+	 * of a list of values. If list length is odd the middle value
+	 * is returned twice. If the list length is even the two middle
+	 * values are returned.
 	 * 
 	 * @param alg
 	 * @param storage

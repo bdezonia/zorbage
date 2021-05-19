@@ -47,6 +47,11 @@ public class Mean {
 	private Mean() {}
 
 	/**
+	 * Find the mean of of a list of values. For floating point based numbers
+	 * the result is is accurate as possible. For integer based numbers the
+	 * result is truncated to the lowest mean value (i.e. if true mean is 14.6
+	 * the Mean algorithm will return 14).
+	 * 
 	 * @param alg
 	 * @param storage
 	 * @param result

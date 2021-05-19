@@ -46,6 +46,8 @@ public class RModuleSubtract {
 	private RModuleSubtract() { }
 	
 	/**
+	 * Subtract one rmodule/vector from another and place the results in an
+	 * output rmodule/vector. c = a - b
 	 * 
 	 * @param memberAlgebra
 	 * @param a

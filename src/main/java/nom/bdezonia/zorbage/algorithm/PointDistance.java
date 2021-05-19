@@ -50,6 +50,7 @@ public class PointDistance {
 	private PointDistance() { }
 	
 	/**
+	 * Compute the distance between two real n-dimensional {@link Point}s.
 	 * 
 	 * @param a
 	 * @param b

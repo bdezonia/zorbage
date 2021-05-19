@@ -46,6 +46,9 @@ public class Reduce {
 	private Reduce() { }
 	
 	/**
+	 * Reduce a list of values into one value using a reduction function.
+	 * A sum of a list is a reduction using an add function. A product of
+	 * a list is a reduction using a multiply function.
 	 * 
 	 * @param alg
 	 * @param reducer

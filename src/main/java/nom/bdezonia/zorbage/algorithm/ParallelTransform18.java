@@ -47,6 +47,8 @@ public class ParallelTransform18 {
 	private ParallelTransform18() { }
 	
 	/**
+	 * Transform seventeen lists into a eighteenth list using a function/procedure call at each point
+	 * in the seventeen lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -76,6 +78,8 @@ public class ParallelTransform18 {
 	}
 	
 	/**
+	 * Transform seventeen lists into a eighteenth list using a function/procedure call at each point
+	 * in the seventeen lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

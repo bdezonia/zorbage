@@ -45,6 +45,7 @@ public class Min {
 	private Min() { }
 	
 	/**
+	 * Set a result to the minimum value of two inputs.
 	 * 
 	 * @param algebra
 	 * @param a

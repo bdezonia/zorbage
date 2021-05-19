@@ -49,6 +49,9 @@ public class ParallelConvolveND {
 	private ParallelConvolveND() { }
 	
 	/**
+	 * Convolve an n-d {@link DimensionedDataSource} by a filter using
+	 * a parallel algorithm which provides improved performance over a
+	 * single threaded approach.
 	 * 
 	 * @param alg
 	 * @param filter

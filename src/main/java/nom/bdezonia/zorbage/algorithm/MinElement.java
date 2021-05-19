@@ -46,6 +46,7 @@ public class MinElement {
 	private MinElement() {}
 
 	/**
+	 * Finds the minimum element in a list of values.
 	 * 
 	 * @param alg
 	 * @param storage

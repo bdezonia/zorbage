@@ -44,6 +44,7 @@ public class RModuleZero {
 	private RModuleZero() { }
 	
 	/**
+	 * Set all the components of a rmodule/vector to zero.
 	 * 
 	 * @param a
 	 */

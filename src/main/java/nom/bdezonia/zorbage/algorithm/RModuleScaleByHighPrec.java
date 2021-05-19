@@ -47,6 +47,8 @@ public class RModuleScaleByHighPrec {
 	private RModuleScaleByHighPrec() { }
 	
 	/**
+	 * Scale the components of an input rmodule/vector by a {@link HighPrecisionMember} and
+	 * place them in an output rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

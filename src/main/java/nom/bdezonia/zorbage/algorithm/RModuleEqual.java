@@ -45,6 +45,7 @@ public class RModuleEqual {
 	private RModuleEqual() { }
 	
 	/**
+	 * Return true if two rmodule/vectors have same length and same contents.
 	 * 
 	 * @param memberAlgebra
 	 * @param a

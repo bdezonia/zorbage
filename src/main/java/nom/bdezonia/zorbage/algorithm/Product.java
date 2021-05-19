@@ -47,6 +47,7 @@ public class Product {
 	private Product() { }
 	
 	/**
+	 * Calculate the product of all the elements in a list of values.
 	 * 
 	 * @param alg
 	 * @param storage

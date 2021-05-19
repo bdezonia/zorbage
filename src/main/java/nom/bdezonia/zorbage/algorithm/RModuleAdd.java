@@ -46,6 +46,7 @@ public class RModuleAdd {
 	private RModuleAdd() { }
 	
 	/**
+	 * Add two rmodule/vectors into a third rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param a

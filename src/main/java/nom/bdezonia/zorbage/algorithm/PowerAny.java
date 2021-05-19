@@ -47,21 +47,22 @@ public class PowerAny {
 	private PowerAny() {}
 	
 	/**
+	 * Calculate the output value of any integral power of an input value.
 	 * 
 	 * @param algebra
 	 * @param power
-	 * @param a
-	 * @param b
+	 * @param in
+	 * @param out
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U> & Invertible<U>, U>
-		void compute(T algebra, int power, U a, U b)
+		void compute(T algebra, int power, U in, U out)
 	{
 		if (power < 0) {
-			U invA = algebra.construct();
-			algebra.invert().call(a, invA);
-			PowerNonNegative.compute(algebra, -power, invA, b);
+			U invIn = algebra.construct();
+			algebra.invert().call(in, invIn);
+			PowerNonNegative.compute(algebra, -power, invIn, out);
 		}
 		else
-			PowerNonNegative.compute(algebra, power, a, b);
+			PowerNonNegative.compute(algebra, power, in, out);
 	}
 }

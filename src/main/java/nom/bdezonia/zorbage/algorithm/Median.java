@@ -49,6 +49,11 @@ public class Median {
 	private Median() {}
 
 	/**
+	 * Find the median of a list of numbers. For floating point based numbers
+	 * the result is is accurate as possible. For integer based numbers the
+	 * result is truncated to the lowest average value (i.e. if true median
+	 * averages the two middle values and is 14.6 this routine will return
+	 * 14).
 	 * 
 	 * @param alg
 	 * @param storage

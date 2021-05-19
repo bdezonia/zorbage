@@ -47,6 +47,7 @@ public class NanSum {
 	private NanSum() {}
 	
 	/**
+	 * Calculate the sum of a list of numbers while ignoring NaNs.
 	 * 
 	 * @param alg
 	 * @param storage

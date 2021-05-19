@@ -47,6 +47,7 @@ public class Permutations {
 	private Permutations() { }
 	
 	/**
+	 * Return the number of permutations of n items.
 	 * 
 	 * @param algebra
 	 * @param n

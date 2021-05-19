@@ -46,6 +46,7 @@ public class MinMaxElement {
 	private MinMaxElement() {}
 
 	/**
+	 * Find both the min and max values of a list of values.
 	 * 
 	 * @param alg
 	 * @param storage

@@ -52,6 +52,7 @@ public class OdeSolveRK4 {
 	
 	/**
 	 * Solves ODEs (1-d or n-d) using a classic fourth order Runge Kutta algorithm.
+	 * 
 	 * @param uAlg
 	 * @param wAlg
 	 * @param proc

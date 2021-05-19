@@ -46,6 +46,7 @@ public class RModuleNegate {
 	private RModuleNegate() { }
 	
 	/**
+	 * Set an output rmodule/vector to the negation at each component of an input rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param a

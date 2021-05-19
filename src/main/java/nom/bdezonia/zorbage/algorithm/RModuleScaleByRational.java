@@ -47,6 +47,8 @@ public class RModuleScaleByRational {
 	private RModuleScaleByRational() { }
 	
 	/**
+	 * Scale the components of an input rmodule/vector by a {@link RationalMember} and
+	 * place them in an output rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

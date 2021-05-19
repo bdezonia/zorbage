@@ -47,6 +47,8 @@ public class ParallelTransform1 {
 	private ParallelTransform1() { }
 	
 	/**
+	 * Transform one list in place by a function/procedure. Use a parallel
+	 * algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param proc

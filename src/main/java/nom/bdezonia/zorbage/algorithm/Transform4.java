@@ -46,6 +46,9 @@ public class Transform4 {
 	private Transform4() { }
 
 	/**
+	 * Transform three lists into a fourth list using a function/procedure call at each point
+	 * in the three lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -61,6 +64,9 @@ public class Transform4 {
 	}
 
 	/**
+	 * Transform three lists into a fourth list using a function/procedure call at each point
+	 * in the three lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

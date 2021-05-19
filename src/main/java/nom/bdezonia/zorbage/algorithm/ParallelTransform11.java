@@ -47,6 +47,8 @@ public class ParallelTransform11 {
 	private ParallelTransform11() { }
 	
 	/**
+	 * Transform ten lists into a eleventh list using a function/procedure call at each point
+	 * in the ten lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -69,6 +71,8 @@ public class ParallelTransform11 {
 	}
 	
 	/**
+	 * Transform ten lists into a eleventh list using a function/procedure call at each point
+	 * in the ten lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

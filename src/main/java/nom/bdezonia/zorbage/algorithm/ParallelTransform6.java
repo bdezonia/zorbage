@@ -47,6 +47,8 @@ public class ParallelTransform6 {
 	private ParallelTransform6() { }
 	
 	/**
+	 * Transform five lists into a sixth list using a function/procedure call at each point
+	 * in the five lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -64,6 +66,8 @@ public class ParallelTransform6 {
 	}
 	
 	/**
+	 * Transform five lists into a sixth list using a function/procedure call at each point
+	 * in the five lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

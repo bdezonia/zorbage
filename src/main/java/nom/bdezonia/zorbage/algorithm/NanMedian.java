@@ -50,6 +50,7 @@ public class NanMedian {
 	private NanMedian() {}
 
 	/**
+	 * Computes the median of a list of values while ignoring NaNs.
 	 * 
 	 * @param alg
 	 * @param storage

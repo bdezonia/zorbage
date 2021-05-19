@@ -47,6 +47,8 @@ public class ParallelTransform9 {
 	private ParallelTransform9() { }
 	
 	/**
+	 * Transform eight lists into a ninth list using a function/procedure call at each point
+	 * in the eight lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -67,6 +69,8 @@ public class ParallelTransform9 {
 	}
 	
 	/**
+	 * Transform eight lists into a ninth list using a function/procedure call at each point
+	 * in the eight lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

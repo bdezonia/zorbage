@@ -46,6 +46,8 @@ public class RModuleScaleByDouble {
 	private RModuleScaleByDouble() { }
 	
 	/**
+	 * Scale the components of an input rmodule/vector by a double and place them in an output
+	 * rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

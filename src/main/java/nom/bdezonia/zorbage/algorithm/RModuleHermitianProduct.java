@@ -48,8 +48,10 @@ public class RModuleHermitianProduct {
 	private RModuleHermitianProduct() {}
 	
 	/**
+	 * Calculates the Hermitian product between two rmodule/vectors and sets the
+	 * result number for further processing.
 	 * 
-	 * @param <T>
+ 	 * @param <T>
 	 * @param <U>
 	 * @param <W>
 	 * @param algU

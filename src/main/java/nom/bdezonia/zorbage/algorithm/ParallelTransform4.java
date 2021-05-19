@@ -47,6 +47,8 @@ public class ParallelTransform4 {
 	private ParallelTransform4() { }
 	
 	/**
+	 * Transform three lists into a fourth list using a function/procedure call at each point
+	 * in the three lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -62,6 +64,8 @@ public class ParallelTransform4 {
 	}
 	
 	/**
+	 * Transform three lists into a fourth list using a function/procedure call at each point
+	 * in the three lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

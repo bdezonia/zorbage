@@ -46,41 +46,42 @@ public class PowerNonNegative {
 	private PowerNonNegative() {}
 	
 	/**
+	 * Calculate the output value of a nonnegative integral power of an input value.
 	 * 
 	 * @param algebra
 	 * @param power
-	 * @param a
-	 * @param b
+	 * @param in
+	 * @param out
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void compute(T algebra, int power, U a, U b)
+		void compute(T algebra, int power, U in, U out)
 	{
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
-			if (algebra.isZero().call(a))
+			if (algebra.isZero().call(in))
 				throw new IllegalArgumentException("0^0 is not a number");
 		}
-		pow(algebra, power, a, b);
+		pow(algebra, power, in, out);
 	}
 	
 	private static <T extends Algebra<T,U> & Multiplication<U> & Unity<U>, U>
-		void pow(T algebra, int pow, U a, U b)
+		void pow(T algebra, int pow, U in, U out)
 	{
 		if (pow == 0) {
-			algebra.unity().call(b);
+			algebra.unity().call(out);
 		}
 		else if (pow == 1) {
-			algebra.assign().call(a, b);
+			algebra.assign().call(in, out);
 		}
 		else {
 			U tmp = algebra.construct();
 			int halfPow = pow >>> 1;
-			pow(algebra, halfPow, a, tmp);
+			pow(algebra, halfPow, in, tmp);
 			algebra.multiply().call(tmp, tmp, tmp);
 			if (pow != (halfPow << 1))
-				algebra.multiply().call(tmp, a, tmp);
-			algebra.assign().call(tmp, b);
+				algebra.multiply().call(tmp, in, tmp);
+			algebra.assign().call(tmp, out);
 		}
 	}
 

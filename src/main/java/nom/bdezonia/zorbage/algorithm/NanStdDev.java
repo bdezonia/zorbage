@@ -51,6 +51,7 @@ public class NanStdDev {
 	private NanStdDev() {}
 	
 	/**
+	 * Return the standard deviation of a list of numbers while gnoring NaNs.
 	 * 
 	 * @param storage
 	 * @param result

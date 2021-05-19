@@ -56,6 +56,8 @@ public class RModuleDefaultNorm {
 	private RModuleDefaultNorm() { }
 
 	/**
+	 * Runs the default algorithm for calculating the norm of an input rmodule/vector
+	 * and placing it in an output real.
 	 * 
 	 * @param multicomponentAlg
 	 * @param componentAlg

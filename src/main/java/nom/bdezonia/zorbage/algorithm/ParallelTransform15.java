@@ -47,6 +47,8 @@ public class ParallelTransform15 {
 	private ParallelTransform15() { }
 	
 	/**
+	 * Transform fourteen lists into a fifteenth list using a function/procedure call at each point
+	 * in the fourteen lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -73,6 +75,8 @@ public class ParallelTransform15 {
 	}
 	
 	/**
+	 * Transform fourteen lists into a fifteenth list using a function/procedure call at each point
+	 * in the fourteen lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

@@ -46,6 +46,9 @@ public class Transform3 {
 	private Transform3() { }
 
 	/**
+	 * Transform two lists into a third list using a function/procedure call at each point
+	 * in the two lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -60,6 +63,9 @@ public class Transform3 {
 	}
 	
 	/**
+	 * Transform two lists into a third list using a function/procedure call at each point
+	 * in the two lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

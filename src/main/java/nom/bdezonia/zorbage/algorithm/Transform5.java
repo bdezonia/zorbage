@@ -46,6 +46,9 @@ public class Transform5 {
 	private Transform5() { }
 
 	/**
+	 * Transform four lists into a fifth list using a function/procedure call at each point
+	 * in the four lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -62,6 +65,9 @@ public class Transform5 {
 	}
 
 	/**
+	 * Transform four lists into a fifth list using a function/procedure call at each point
+	 * in the four lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

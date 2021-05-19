@@ -50,6 +50,7 @@ public class NanVariance {
 	private NanVariance() {}
 	
 	/**
+	 * Return the variance of a list of numbers while gnoring NaNs.
 	 * 
 	 * @param alg
 	 * @param storage

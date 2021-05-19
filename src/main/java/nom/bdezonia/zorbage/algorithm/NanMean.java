@@ -48,6 +48,8 @@ public class NanMean {
 	private NanMean() {}
 
 	/**
+	 * Computes the mean of a list of values while ignoring NaNs.
+	 * 
 	 * @param alg
 	 * @param storage
 	 * @param result

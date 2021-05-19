@@ -53,7 +53,9 @@ public class Multiply {
 	private Multiply() { }
 	
 	/**
-	 * 
+	 * Multiply is an algorithm for multiplying many kinds of types.
+	 * In this code z = x * y.
+	 *  
 	 * @param algebra
 	 * @param x
 	 * @param y

@@ -49,6 +49,8 @@ public class SampleWithReplacement {
 	private SampleWithReplacement() { }
 	
 	/**
+	 * Sample an input set n times and place the results in an output set.
+	 * Have no qualms when selecting an input location more than once. 
 	 * 
 	 * @param algebra
 	 * @param n

@@ -46,6 +46,9 @@ public class Transform21 {
 	private Transform21() { }
 
 	/**
+	 * Transform twenty lists into a twenty first list using a function/procedure call at each point
+	 * in the twenty lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -78,6 +81,9 @@ public class Transform21 {
 	}
 
 	/**
+	 * Transform twenty lists into a twenty first list using a function/procedure call at each point
+	 * in the twenty lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

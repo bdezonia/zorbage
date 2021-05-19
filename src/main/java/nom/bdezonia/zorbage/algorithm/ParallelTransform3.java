@@ -47,6 +47,8 @@ public class ParallelTransform3 {
 	private ParallelTransform3() { }
 	
 	/**
+	 * Transform two lists into a third list using a function/procedure call at each point
+	 * in the two lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -61,6 +63,8 @@ public class ParallelTransform3 {
 	}
 	
 	/**
+	 * Transform two lists into a third list using a function/procedure call at each point
+	 * in the two lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

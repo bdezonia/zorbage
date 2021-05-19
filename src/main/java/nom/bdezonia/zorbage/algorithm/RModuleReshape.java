@@ -45,6 +45,8 @@ public class RModuleReshape {
 	private RModuleReshape() { }
 
 	/**
+	 * Reshape an rmodule/vector by changing it's length. Preserve original data
+	 * values when possible.
 	 * 
 	 * @param rmodAlgebra
 	 * @param numberAlgebra

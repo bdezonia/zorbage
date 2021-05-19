@@ -46,7 +46,7 @@ import nom.bdezonia.zorbage.algebra.Unity;
 public class Round {
 
 	/**
-	 * 
+	 * The supported rounding modes for the Round algorithm.
 	 */
 	public enum Mode {
 		NONE, NEGATIVE, POSITIVE, TOWARDS_ORIGIN, AWAY_FROM_ORIGIN,
@@ -58,7 +58,9 @@ public class Round {
 	private Round() {}
 
 	/**
-	 * Round.compute()
+	 * Round an input number and place the result into an output number. The value
+	 * is rounded to the granularity of "delta" (whether that equals 4 or 0.125).
+	 * There are numerous modes supported.
 	 * 
 	 * @param algebra
 	 * @param mode

@@ -47,6 +47,8 @@ public class ParallelTransform8 {
 	private ParallelTransform8() { }
 	
 	/**
+	 * Transform seven lists into a eighth list using a function/procedure call at each point
+	 * in the seven lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -66,6 +68,8 @@ public class ParallelTransform8 {
 	}
 	
 	/**
+	 * Transform seven lists into a eighth list using a function/procedure call at each point
+	 * in the seven lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

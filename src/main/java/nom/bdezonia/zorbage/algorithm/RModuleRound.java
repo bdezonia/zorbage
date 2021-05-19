@@ -47,6 +47,7 @@ public class RModuleRound {
 	private RModuleRound() { }
 	
 	/**
+	 * Set an output rmodule/vector by rounding the values of an input rmodule/vector.
 	 * 
 	 * @param entityAlgebra
 	 * @param mode

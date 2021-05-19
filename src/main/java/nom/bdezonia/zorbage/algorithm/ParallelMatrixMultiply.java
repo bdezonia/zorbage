@@ -47,6 +47,8 @@ public class ParallelMatrixMultiply {
 	private ParallelMatrixMultiply() { }
 	
 	/**
+	 * Multiply two matrices into a third using a parallel algorithm to
+	 * improve speed over single threaded approaches.
 	 * 
 	 * @param algebra
 	 * @param a

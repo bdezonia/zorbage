@@ -47,6 +47,8 @@ public class ParallelFill {
 	private ParallelFill() {}
 	
 	/**
+	 * Fill a list of values with a constant. Use a parallel algorithm
+	 * to improve performance over a single threaded implementation.
 	 * 
 	 * @param algebra
 	 * @param storage
@@ -60,6 +62,9 @@ public class ParallelFill {
 	}
 	
 	/**
+	 * Fill a list of values with values from a Function/Procedure. Use
+	 * a parallel algorithm to improve performance over a single threaded
+	 * implementation.
 	 * 
 	 * @param algebra
 	 * @param storage

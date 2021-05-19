@@ -48,6 +48,7 @@ public class NanSumWithCount {
 	private NanSumWithCount() {}
 	
 	/**
+	 * Calculate the sum and count of non-NaN values in a list of numbers.
 	 * 
 	 * @param alg
 	 * @param storage

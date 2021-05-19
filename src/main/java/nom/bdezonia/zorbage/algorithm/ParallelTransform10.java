@@ -47,6 +47,8 @@ public class ParallelTransform10 {
 	private ParallelTransform10() { }
 	
 	/**
+	 * Transform nine lists into a tenth list using a function/procedure call at each point
+	 * in the nine lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -68,6 +70,8 @@ public class ParallelTransform10 {
 	}
 	
 	/**
+	 * Transform nine lists into a tenth list using a function/procedure call at each point
+	 * in the nine lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

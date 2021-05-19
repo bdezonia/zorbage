@@ -47,6 +47,7 @@ public class RModuleSum {
 	private RModuleSum() { }
 	
 	/**
+	 * Sum the components of an rmodule/vector and place in an output result number.
 	 * 
 	 * @param algebra
 	 * @param rmod

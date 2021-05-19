@@ -45,6 +45,7 @@ public class RModuleAssign {
 	private RModuleAssign() { }
 	
 	/**
+	 * Assign one rmodule/vector to another.
 	 * 
 	 * @param algebra
 	 * @param from

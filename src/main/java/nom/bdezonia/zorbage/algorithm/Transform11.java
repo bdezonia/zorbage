@@ -46,6 +46,9 @@ public class Transform11 {
 	private Transform11() { }
 
 	/**
+	 * Transform ten lists into a eleventh list using a function/procedure call at each point
+	 * in the ten lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -68,6 +71,9 @@ public class Transform11 {
 	}
 
 	/**
+	 * Transform ten lists into a eleventh list using a function/procedure call at each point
+	 * in the ten lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

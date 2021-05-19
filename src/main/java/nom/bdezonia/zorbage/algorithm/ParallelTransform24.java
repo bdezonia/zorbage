@@ -47,6 +47,8 @@ public class ParallelTransform24 {
 	private ParallelTransform24() { }
 	
 	/**
+	 * Transform twenty three lists into a twenty fourth list using a function/procedure call at each point
+	 * in the twenty three lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -82,6 +84,8 @@ public class ParallelTransform24 {
 	}
 	
 	/**
+	 * Transform twenty three lists into a twenty fourth list using a function/procedure call at each point
+	 * in the twenty three lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

@@ -47,6 +47,7 @@ public class NanMinElement {
 	private NanMinElement() {}
 
 	/**
+	 * Return the min element from a list while ignoring NaN values.
 	 * 
 	 * @param alg
 	 * @param storage

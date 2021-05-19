@@ -46,6 +46,7 @@ public class RModuleScale {
 	private RModuleScale() { }
 	
 	/**
+	 * Scale the components of an input rmodule/vector and place them in an output rmodule/vector.
 	 * 
 	 * @param memberAlgebra
 	 * @param scalar

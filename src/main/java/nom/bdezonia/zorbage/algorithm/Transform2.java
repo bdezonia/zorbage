@@ -46,6 +46,9 @@ public class Transform2 {
 	private Transform2() { }
 
 	/**
+	 * Transform one list into a second list using a function/procedure call at each point
+	 * in the one list. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -59,6 +62,9 @@ public class Transform2 {
 	}
 	
 	/**
+	 * Transform one list into a second list using a function/procedure call at each point
+	 * in the one list. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

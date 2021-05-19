@@ -47,6 +47,8 @@ public class ParallelTransform2 {
 	private ParallelTransform2() { }
 	
 	/**
+	 * Transform one list into a second list using a function/procedure call at each point
+	 * in the first list. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -60,6 +62,8 @@ public class ParallelTransform2 {
 	}
 	
 	/**
+	 * Transform one list into a second list using a function/procedure call at each point
+	 * in the first list. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

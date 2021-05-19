@@ -47,6 +47,8 @@ public class ParallelTransform22 {
 	private ParallelTransform22() { }
 	
 	/**
+	 * Transform twenty one lists into a twenty second list using a function/procedure call at each point
+	 * in the twenty one lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -80,6 +82,8 @@ public class ParallelTransform22 {
 	}
 	
 	/**
+	 * Transform twenty one lists into a twenty second list using a function/procedure call at each point
+	 * in the twenty one lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB

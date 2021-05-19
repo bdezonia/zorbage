@@ -46,6 +46,9 @@ public class Transform8 {
 	private Transform8() { }
 
 	/**
+	 * Transform seven lists into an eighth list using a function/procedure call at each point
+	 * in the seven lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -65,6 +68,9 @@ public class Transform8 {
 	}
 
 	/**
+	 * Transform seven lists into an eighth list using a function/procedure call at each point
+	 * in the seven lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB

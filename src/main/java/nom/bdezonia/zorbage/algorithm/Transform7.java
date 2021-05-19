@@ -46,6 +46,9 @@ public class Transform7 {
 	private Transform7() { }
 
 	/**
+	 * Transform six lists into a seventh list using a function/procedure call at each point
+	 * in the six lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -64,6 +67,9 @@ public class Transform7 {
 	}
 
 	/**
+	 * Transform six lists into a seventh list using a function/procedure call at each point
+	 * in the six lists. Uses a single threaded approach since certain data structures do not
+	 * handle parallel access very well.
 	 * 
 	 * @param algA
 	 * @param algB
