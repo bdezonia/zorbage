@@ -57,7 +57,7 @@ public class TensorShape {
 		for (int i = 0; i < dims.length; i++) {
 			dims[i] = input.dimension(i);
 		}
-		to.alloc(dims);
+		output.alloc(dims);
 	}
 
 }
