@@ -36,6 +36,7 @@ import java.math.MathContext;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Exponential;
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Hyperbolic;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.InverseHyperbolic;
@@ -62,6 +63,7 @@ import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
+import nom.bdezonia.zorbage.algorithm.PowerAny;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -575,10 +577,22 @@ public class Float128Algebra
 		return MUL;
 	}
 
+	private final Procedure3<Integer, Float128Member, Float128Member> POWER =
+			new Procedure3<Integer, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Integer p, Float128Member a, Float128Member b) {
+			if (a.classification == 3) {
+				b.setNan();
+			}
+			else
+				PowerAny.compute(G.QUAD, p, a, b);
+		}
+	};
+			
 	@Override
 	public Procedure3<Integer, Float128Member, Float128Member> power() {
-		// TODO Auto-generated method stub
-		return null;
+		return POWER;
 	}
 
 	private final Procedure1<Float128Member> UNITY =
