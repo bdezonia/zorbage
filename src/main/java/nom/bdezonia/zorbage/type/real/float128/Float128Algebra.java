@@ -727,11 +727,21 @@ public class Float128Algebra
 			new Procedure3<Double, Float128Member, Float128Member>()
 	{
 		@Override
-		public void call(Double a, Float128Member b, Float128Member c) {
+		public void call(Double s, Float128Member a, Float128Member b) {
 			Float128Member scale = new Float128Member();
-			// TODO make this routine smart so that it handles doubles that are nan or inf
-			scale.setV(BigDecimal.valueOf(a));
-			multiply().call(scale, b, c);
+			if (s.isInfinite()) {
+				double sign = Math.signum(s);
+				if (sign < 0)
+					scale.setNegInf();
+				else
+					scale.setPosInf();
+			} else if (s.isNaN()) {
+				scale.setNan();
+			} else {
+				// a is finite
+				scale.setV(BigDecimal.valueOf(s));
+			}
+			multiply().call(scale, a, b);
 		}
 	};
 	
@@ -744,10 +754,10 @@ public class Float128Algebra
 			new Procedure3<RationalMember, Float128Member, Float128Member>()
 	{
 		@Override
-		public void call(RationalMember a, Float128Member b, Float128Member c) {
+		public void call(RationalMember r, Float128Member a, Float128Member b) {
 			Float128Member scale = new Float128Member();
-			scale.setV(new BigDecimal(a.n()).divide(new BigDecimal(a.d()), CONTEXT));
-			multiply().call(scale, b, c);
+			scale.setV(new BigDecimal(r.n()).divide(new BigDecimal(r.d()), CONTEXT));
+			multiply().call(scale, a, b);
 		}
 	};
 	
@@ -760,10 +770,10 @@ public class Float128Algebra
 			new Procedure3<HighPrecisionMember, Float128Member, Float128Member>()
 	{
 		@Override
-		public void call(HighPrecisionMember a, Float128Member b, Float128Member c) {
+		public void call(HighPrecisionMember s, Float128Member a, Float128Member b) {
 			Float128Member scale = new Float128Member();
-			scale.setV(a.v());
-			multiply().call(scale, b, c);
+			scale.setV(s.v());
+			multiply().call(scale, a, b);
 		}
 	};
 	
