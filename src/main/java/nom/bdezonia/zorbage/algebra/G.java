@@ -129,6 +129,7 @@ import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionCart
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionRModule;
 import nom.bdezonia.zorbage.type.rational.RationalAlgebra;
+import nom.bdezonia.zorbage.type.real.float128.Float128Algebra;
 import nom.bdezonia.zorbage.type.real.float16.Float16Algebra;
 import nom.bdezonia.zorbage.type.real.float16.Float16CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.real.float16.Float16Matrix;
@@ -255,6 +256,8 @@ public class G {
 	public static final OctonionHighPrecisionRModule OHP_RMOD = new OctonionHighPrecisionRModule();
 	public static final OctonionHighPrecisionMatrix OHP_MAT = new OctonionHighPrecisionMatrix();
 	public static final OctonionHighPrecisionCartesianTensorProduct OHP_TEN = new OctonionHighPrecisionCartesianTensorProduct();
+
+	public static final Float128Algebra QUAD = new Float128Algebra();
 
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();
