@@ -51,8 +51,30 @@ public class TestFloat128Member {
 	@Test
 	public void test() {
 		
-		double d = Double.POSITIVE_INFINITY + Double.NEGATIVE_INFINITY;
-		System.out.println(d);
+		for (int i = 0; i < 7; i++) {
+			System.out.println();
+			System.out.println("Case of A");
+			double aNum = -50;
+			if (i == 0) aNum = 1;
+			if (i == 1) aNum = -1;
+			if (i == 2) aNum = 0.0;
+			if (i == 3) aNum = -0.0;
+			if (i == 4) aNum = Double.POSITIVE_INFINITY;
+			if (i == 5) aNum = Double.NEGATIVE_INFINITY;
+			if (i == 6) aNum = Double.NaN;
+			for (int j = 0; j < 7; j++) {
+				double bNum = 50;
+				if (j == 0) bNum = 1;
+				if (j == 1) bNum = -1;
+				if (j == 2) bNum = 0.0;
+				if (j == 3) bNum = -0.0;
+				if (j == 4) bNum = Double.POSITIVE_INFINITY;
+				if (j == 5) bNum = Double.NEGATIVE_INFINITY;
+				if (j == 6) bNum = Double.NaN;
+				
+				System.out.println(aNum + " * " + bNum + " = " + (aNum*bNum));
+			}
+		}
 		
 		byte[] arr = new byte[17];
 		

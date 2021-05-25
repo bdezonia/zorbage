@@ -63,7 +63,9 @@ import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
+import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerAny;
+import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -75,10 +77,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
-// TODO remember that I am tracking neg and pos zero separately.
-// So i should catch every calc that results in a bigd zero
-// and I should transform to neg/pos zero. This is slow but
-// maybe the best way to correctly handle zeroes.
+// TODO make sure CONTEXT used on all multiplies and all non 2-based divides
 
 /**
  * 
@@ -288,6 +287,8 @@ public class Float128Algebra
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member c) {
 			
+			// NOTE: the various special cases were derived from Java's behavior for doubles
+			
 			if (a.classification == 0) {
 				
 				if (b.classification == 0) {
@@ -324,7 +325,7 @@ public class Float128Algebra
 					c.setPosZero();
 				}
 				else if (b.classification == -1) {
-					c.setPosZero(); // tested; this is correct
+					c.setPosZero();
 				}
 				else if (b.classification == 2) {
 					c.setPosInf();
@@ -347,7 +348,7 @@ public class Float128Algebra
 					c.setPosZero();
 				}
 				else if (b.classification == -1) {
-					c.setNegZero(); // tested; this is correct
+					c.setNegZero();
 				}
 				else if (b.classification == 2) {
 					c.setPosInf();
@@ -376,7 +377,7 @@ public class Float128Algebra
 					c.setPosInf();
 				}
 				else if (b.classification == -2) {
-					c.setNan(); // tested; this is correct
+					c.setNan();
 				}
 				else if (b.classification == 3) {
 					c.setNan();
@@ -396,7 +397,7 @@ public class Float128Algebra
 					c.setNegInf();
 				}
 				else if (b.classification == 2) {
-					c.setNan(); // tested; this is correct
+					c.setNan();
 				}
 				else if (b.classification == -2) {
 					c.setNegInf();
@@ -426,6 +427,8 @@ public class Float128Algebra
 		
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member c) {
+			
+			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
 			if (a.classification == 0) {
 				
@@ -463,7 +466,7 @@ public class Float128Algebra
 					c.setPosZero();
 				}
 				else if (b.classification == -1) {
-					c.setPosZero(); // TODO test
+					c.setPosZero();
 				}
 				else if (b.classification == 2) {
 					c.setNegInf();
@@ -483,10 +486,10 @@ public class Float128Algebra
 					c.setV(b.v().negate());
 				}
 				else if (b.classification == 1) {
-					c.setPosZero(); // test
+					c.setNegZero();
 				}
 				else if (b.classification == -1) {
-					c.setPosZero(); // test
+					c.setPosZero();
 				}
 				else if (b.classification == 2) {
 					c.setNegInf();
@@ -512,10 +515,10 @@ public class Float128Algebra
 					c.setPosInf();
 				}
 				else if (b.classification == 2) {
-					c.setNan(); // test
+					c.setNan();
 				}
 				else if (b.classification == -2) {
-					c.setPosInf(); // test
+					c.setPosInf();
 				}
 				else if (b.classification == 3) {
 					c.setNan();
@@ -535,10 +538,10 @@ public class Float128Algebra
 					c.setNegInf();
 				}
 				else if (b.classification == 2) {
-					c.setNan(); // test
+					c.setNegInf();
 				}
 				else if (b.classification == -2) {
-					c.setNegInf();
+					c.setNan();
 				}
 				else if (b.classification == 3) {
 					c.setNan();
@@ -565,10 +568,152 @@ public class Float128Algebra
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member c) {
 			
-			// Make sure that this routine uses c.setV() which will deal with zeroes
-			//   correctly and will clamp as needed.
+			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			throw new IllegalArgumentException("implement me");
+			if (a.classification == 0) {
+				
+				if (b.classification == 0) {
+					c.setV(a.num.multiply(b.num, CONTEXT));
+				}
+				else if (b.classification == 1) {
+					if (a.num.signum() < 0)
+						c.setNegZero();
+					else
+						c.setPosZero();
+				}
+				else if (b.classification == -1) {
+					if (a.num.signum() < 0)
+						c.setPosZero();
+					else
+						c.setNegZero();
+				}
+				else if (b.classification == 2) {
+					if (a.num.signum() < 0)
+						c.setNegInf();
+					else
+						c.setPosInf();
+				}
+				else if (b.classification == -2) {
+					if (a.num.signum() < 0)
+						c.setPosInf();
+					else
+						c.setNegInf();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == 1) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setNegZero();
+					else
+						c.setPosZero();
+				}
+				else if (b.classification == 1) {
+					c.setPosZero();
+				}
+				else if (b.classification == -1) {
+					c.setNegZero();
+				}
+				else if (b.classification == 2) {
+					c.setNan();
+				}
+				else if (b.classification == -2) {
+					c.setNan();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == -1) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setPosZero();
+					else
+						c.setNegZero();
+				}
+				else if (b.classification == 1) {
+					c.setNegZero();
+				}
+				else if (b.classification == -1) {
+					c.setPosZero();
+				}
+				else if (b.classification == 2) {
+					c.setNan();
+				}
+				else if (b.classification == -2) {
+					c.setNan();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == 2) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setNegInf();
+					else
+						c.setPosInf();
+				}
+				else if (b.classification == 1) {
+					c.setNan();
+				}
+				else if (b.classification == -1) {
+					c.setNan();
+				}
+				else if (b.classification == 2) {
+					c.setPosInf();
+				}
+				else if (b.classification == -2) {
+					c.setNegInf();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == -2) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setPosInf();
+					else
+						c.setNegInf();
+				}
+				else if (b.classification == 1) {
+					c.setNan();
+				}
+				else if (b.classification == -1) {
+					c.setNan();
+				}
+				else if (b.classification == 2) {
+					c.setNegInf();
+				}
+				else if (b.classification == -2) {
+					c.setPosInf();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == 3) {
+				c.setNan();
+			}
+			else
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
 		}
 	};
 
@@ -623,22 +768,206 @@ public class Float128Algebra
 		return ISUNITY;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> INV =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			if (a.classification == 0)
+				b.setV(BigDecimal.ONE.divide(a.num, CONTEXT));
+			else if (a.classification == 1)
+				b.setPosInf();
+			else if (a.classification == -1)
+				b.setNegInf();
+			else if (a.classification == 2)
+				b.setPosZero();
+			else if (a.classification == -2)
+				b.setNegZero();
+			else if (a.classification == 3)
+				b.setNan();
+			else
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> invert() {
-		// TODO Auto-generated method stub
-		return null;
+		return INV;
 	}
+
+	private final Procedure3<Float128Member, Float128Member, Float128Member> DIVIDE =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member c) {
+
+			// NOTE: the various special cases were derived from Java's behavior for doubles
+			
+			if (a.classification == 0) {
+				
+				if (b.classification == 0) {
+					c.setV(a.num.divide(b.num, CONTEXT));
+				}
+				else if (b.classification == 1) {
+					if (a.num.signum() < 0)
+						c.setNegInf();
+					else
+						c.setPosInf();
+				}
+				else if (b.classification == -1) {
+					if (a.num.signum() < 0)
+						c.setPosInf();
+					else
+						c.setNegInf();
+				}
+				else if (b.classification == 2) {
+					if (a.num.signum() < 0)
+						c.setNegZero();
+					else
+						c.setPosZero();
+				}
+				else if (b.classification == -2) {
+					if (a.num.signum() < 0)
+						c.setPosZero();
+					else
+						c.setNegZero();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == 1) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setNegZero();
+					else
+						c.setPosZero();
+				}
+				else if (b.classification == 1) {
+					c.setNan();
+				}
+				else if (b.classification == -1) {
+					c.setNan();
+				}
+				else if (b.classification == 2) {
+					c.setPosZero();
+				}
+				else if (b.classification == -2) {
+					c.setNegZero();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == -1) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setPosZero();
+					else
+						c.setNegZero();
+				}
+				else if (b.classification == 1) {
+					c.setNan();
+				}
+				else if (b.classification == -1) {
+					c.setNan();
+				}
+				else if (b.classification == 2) {
+					c.setNegZero();
+				}
+				else if (b.classification == -2) {
+					c.setPosZero();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == 2) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setNegInf();
+					else
+						c.setPosInf();
+				}
+				else if (b.classification == 1) {
+					c.setPosInf();
+				}
+				else if (b.classification == -1) {
+					c.setNegInf();
+				}
+				else if (b.classification == 2) {
+					c.setNan();
+				}
+				else if (b.classification == -2) {
+					c.setNan();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == -2) {
+				
+				if (b.classification == 0) {
+					if (b.num.signum() < 0)
+						c.setPosInf();
+					else
+						c.setNegInf();
+				}
+				else if (b.classification == 1) {
+					c.setNegInf();
+				}
+				else if (b.classification == -1) {
+					c.setPosInf();
+				}
+				else if (b.classification == 2) {
+					c.setNan();
+				}
+				else if (b.classification == -2) {
+					c.setNan();
+				}
+				else if (b.classification == 3) {
+					c.setNan();
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			}
+			else if (a.classification == 3) {
+				c.setNan();
+			}
+			else
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
+		}
+	};
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> divide() {
-		// TODO Auto-generated method stub
-		return null;
+		return DIVIDE;
 	}
+
+	private final Function2<Boolean, Float128Member, Float128Member> LESS =
+			new Function2<Boolean, Float128Member, Float128Member>()
+	{
+		@Override
+		public Boolean call(Float128Member a, Float128Member b) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	};
 
 	@Override
 	public Function2<Boolean, Float128Member, Float128Member> isLess() {
-		// TODO Auto-generated method stub
-		return null;
+		return LESS;
 	}
 
 	@Override
@@ -714,22 +1043,48 @@ public class Float128Algebra
 		return ABS;
 	}
 
+	private final Procedure3<java.lang.Integer, Float128Member, Float128Member> STWO =
+			new Procedure3<java.lang.Integer, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(java.lang.Integer numTimes, Float128Member a, Float128Member b) {
+			Float128Member scale = new Float128Member(BigDecimal.valueOf(2));
+			ScaleHelper.compute(G.QUAD, G.QUAD, scale, numTimes, a, b);
+		}
+	};
+	
 	@Override
 	public Procedure3<Integer, Float128Member, Float128Member> scaleByTwo() {
-		// TODO Auto-generated method stub
-		return null;
+		return STWO;
 	}
 
+	private final Procedure3<java.lang.Integer, Float128Member, Float128Member> SHALF =
+			new Procedure3<java.lang.Integer, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(java.lang.Integer numTimes, Float128Member a, Float128Member b) {
+			Float128Member scale = new Float128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(2)));
+			ScaleHelper.compute(G.QUAD, G.QUAD, scale, numTimes, a, b);
+		}
+	};
+	
 	@Override
 	public Procedure3<Integer, Float128Member, Float128Member> scaleByOneHalf() {
-		// TODO Auto-generated method stub
-		return null;
+		return SHALF;
 	}
+
+	private final Function3<Boolean, Float128Member, Float128Member, Float128Member> WITHIN =
+			new Function3<Boolean, Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public Boolean call(Float128Member tol, Float128Member a, Float128Member b) {
+			return NumberWithin.compute(G.QUAD, tol, a, b);
+		}
+	};
 
 	@Override
 	public Function3<Boolean, Float128Member, Float128Member, Float128Member> within() {
-		// TODO Auto-generated method stub
-		return null;
+		return WITHIN;
 	}
 
 	@Override
@@ -744,15 +1099,14 @@ public class Float128Algebra
 		public void call(Double s, Float128Member a, Float128Member b) {
 			Float128Member scale = new Float128Member();
 			if (s.isInfinite()) {
-				double sign = Math.signum(s);
-				if (sign < 0)
+				if (Math.signum(s) < 0)
 					scale.setNegInf();
 				else
 					scale.setPosInf();
 			} else if (s.isNaN()) {
 				scale.setNan();
 			} else {
-				// a is finite
+				// s is finite
 				scale.setV(BigDecimal.valueOf(s));
 			}
 			multiply().call(scale, a, b);

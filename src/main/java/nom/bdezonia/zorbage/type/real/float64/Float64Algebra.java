@@ -1533,7 +1533,6 @@ public class Float64Algebra
 	private final Function3<Boolean, Float64Member, Float64Member, Float64Member> WITHIN =
 			new Function3<Boolean, Float64Member, Float64Member, Float64Member>()
 	{
-		
 		@Override
 		public Boolean call(Float64Member tol, Float64Member a, Float64Member b) {
 			return NumberWithin.compute(G.DBL, tol, a, b);

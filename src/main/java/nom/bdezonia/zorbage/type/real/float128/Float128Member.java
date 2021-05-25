@@ -93,6 +93,10 @@ public final class Float128Member
 		setV(val.r());
 	}
 
+	public Float128Member(BigDecimal v) {
+		setV(v);
+	}
+	
 	@Override
 	public long dimension(int d) {
 		return 0;
@@ -724,10 +728,10 @@ public final class Float128Member
 			return "-0";
 		}
 		else if (classification == 2) {
-			return "Inf";
+			return "Infinity";
 		}
 		else if (classification == -2) {
-			return "-Inf";
+			return "-Infinity";
 		}
 		else if (classification == 3) {
 			return "NaN";
