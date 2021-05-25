@@ -130,8 +130,7 @@ public final class Float128Member
 			setPosZero();
 		}
 		else {
-			num = v;
-			classification = 0;
+			setNormal(v);
 			clamp();
 		}
 	}
