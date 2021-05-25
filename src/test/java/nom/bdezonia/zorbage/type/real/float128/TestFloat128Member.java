@@ -76,6 +76,11 @@ public class TestFloat128Member {
 			}
 		}
 		
+		double b = 14;
+		double a = Double.NaN;
+		
+		System.out.print(Double.compare(a, b));
+		
 		byte[] arr = new byte[17];
 		
 		Float128Member val = G.QUAD.construct();

@@ -63,6 +63,8 @@ import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
+import nom.bdezonia.zorbage.algorithm.Max;
+import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerAny;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -955,43 +957,201 @@ public class Float128Algebra
 		return DIVIDE;
 	}
 
-	private final Function2<Boolean, Float128Member, Float128Member> LESS =
+	private final Function2<Boolean, Float128Member, Float128Member> LESSER =
 			new Function2<Boolean, Float128Member, Float128Member>()
 	{
 		@Override
 		public Boolean call(Float128Member a, Float128Member b) {
-			// TODO Auto-generated method stub
-			return null;
+			return compare().call(a, b) < 0;
+		}
+	};
+			
+	@Override
+	public Function2<Boolean, Float128Member, Float128Member> isLess() {
+		return LESSER;
+	}
+
+	private final Function2<Boolean, Float128Member, Float128Member> LE =
+			new Function2<Boolean, Float128Member, Float128Member>()
+	{
+		@Override
+		public Boolean call(Float128Member a, Float128Member b) {
+			return compare().call(a, b) <= 0;
+		}
+	};
+			
+	@Override
+	public Function2<Boolean, Float128Member, Float128Member> isLessEqual() {
+		return LE;
+	}
+
+	private final Function2<Boolean, Float128Member, Float128Member> GREATER =
+			new Function2<Boolean, Float128Member, Float128Member>()
+	{
+		@Override
+		public Boolean call(Float128Member a, Float128Member b) {
+			return compare().call(a, b) > 0;
+		}
+	};
+			
+	@Override
+	public Function2<Boolean, Float128Member, Float128Member> isGreater() {
+		return GREATER;
+	}
+
+	private final Function2<Boolean, Float128Member, Float128Member> GE =
+			new Function2<Boolean, Float128Member, Float128Member>()
+	{
+		@Override
+		public Boolean call(Float128Member a, Float128Member b) {
+			return compare().call(a, b) >= 0;
+		}
+	};
+			
+	@Override
+	public Function2<Boolean, Float128Member, Float128Member> isGreaterEqual() {
+		return GE;
+	}
+
+	private final Function2<Integer, Float128Member, Float128Member> CMP =
+			new Function2<Integer, Float128Member, Float128Member>()
+	{
+		@Override
+		public Integer call(Float128Member a, Float128Member b) {
+
+			if (a.classification == 0) {
+
+				if (b.classification == 0) {
+					return a.num.compareTo(b.num);
+				}
+				else if (b.classification == 1) {
+					return a.num.compareTo(BigDecimal.ZERO);
+				}
+				else if (b.classification == -1) {
+					return a.num.compareTo(BigDecimal.ZERO);
+				}
+				else if (b.classification == 2) {
+					return -1;
+				}
+				else if (b.classification == -2) {
+					return 1;
+				}
+				else if (b.classification == 3) {
+					return -1;
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+			else if (a.classification == 1) {
+
+				if (b.classification == 0) {
+					return BigDecimal.ZERO.compareTo(b.num);
+				}
+				else if (b.classification == 1) {
+					return 0;
+				}
+				else if (b.classification == -1) {
+					return 1;
+				}
+				else if (b.classification == 2) {
+					return -1;
+				}
+				else if (b.classification == -2) {
+					return 1;
+				}
+				else if (b.classification == 3) {
+					return -1;
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+			else if (a.classification == -1) {
+
+				if (b.classification == 0) {
+					return BigDecimal.ZERO.compareTo(b.num);
+				}
+				else if (b.classification == 1) {
+					return -1;
+				}
+				else if (b.classification == -1) {
+					return 0;
+				}
+				else if (b.classification == 2) {
+					return -1;
+				}
+				else if (b.classification == -2) {
+					return 1;
+				}
+				else if (b.classification == 3) {
+					return -1;
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+			else if (a.classification == 2) {
+
+				if (b.classification == 0) {
+					return 1;
+				}
+				else if (b.classification == 1) {
+					return 1;
+				}
+				else if (b.classification == -1) {
+					return 1;
+				}
+				else if (b.classification == 2) {
+					return 0;
+				}
+				else if (b.classification == -2) {
+					return 1;
+				}
+				else if (b.classification == 3) {
+					return -1;
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+			else if (a.classification == -2) {
+
+				if (b.classification == 0) {
+					return -1;
+				}
+				else if (b.classification == 1) {
+					return -1;
+				}
+				else if (b.classification == -1) {
+					return -1;
+				}
+				else if (b.classification == 2) {
+					return -1;
+				}
+				else if (b.classification == -2) {
+					return 0;
+				}
+				else if (b.classification == 3) {
+					return -1;
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+			else if (a.classification == 3) {
+
+				if (b.classification == 3) {
+					return 0;
+				}
+				else if (Math.abs(b.classification) < 3)
+					return -1;
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+			else
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
 		}
 	};
 
 	@Override
-	public Function2<Boolean, Float128Member, Float128Member> isLess() {
-		return LESS;
-	}
-
-	@Override
-	public Function2<Boolean, Float128Member, Float128Member> isLessEqual() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Function2<Boolean, Float128Member, Float128Member> isGreater() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Function2<Boolean, Float128Member, Float128Member> isGreaterEqual() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Function2<Integer, Float128Member, Float128Member> compare() {
-		// TODO Auto-generated method stub
-		return null;
+		return CMP;
 	}
 
 	@Override
@@ -1000,16 +1160,32 @@ public class Float128Algebra
 		return null;
 	}
 
+	private final Procedure3<Float128Member, Float128Member, Float128Member> MIN =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member c) {
+			Min.compute(G.QUAD, a, b, c);
+		}
+	};
+
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> min() {
-		// TODO Auto-generated method stub
-		return null;
+		return MIN;
 	}
+
+	private final Procedure3<Float128Member, Float128Member, Float128Member> MAX =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member c) {
+			Max.compute(G.QUAD, a, b, c);
+		}
+	};
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> max() {
-		// TODO Auto-generated method stub
-		return null;
+		return MAX;
 	}
 
 	private final Procedure2<Float128Member, Float128Member> ABS =
@@ -1169,22 +1345,88 @@ public class Float128Algebra
 		return CONJ;
 	}
 
+	private final Procedure3<Float128Member, Float128Member, Float128Member> DIV =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member d) {
+			Float128Member tmp = G.QUAD.construct();
+			divide().call(a, b, tmp);
+			if (tmp.classification == 0) {
+				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
+				// TODO test me
+				d.setV(val);
+			}
+			else {
+				// TODO: is this bulletproof?
+				d.set(tmp);
+			}
+		}
+	};
+	
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> div() {
-		// TODO Auto-generated method stub
-		return null;
+		return DIV;
 	}
 
+	private final Procedure3<Float128Member, Float128Member, Float128Member> MOD =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member m) {
+			Float128Member tmp = G.QUAD.construct();
+			divide().call(a, b, tmp);
+			if (tmp.classification == 0) {
+				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
+				BigDecimal remainder;
+				// TODO test me
+				if (val.compareTo(tmp.num) <= 0)
+					remainder = tmp.num.subtract(val);
+				else
+					remainder = val.subtract(tmp.num);
+				m.setV(remainder);
+			}
+			else {
+				// TODO: is this bulletproof?
+				m.setPosZero();
+			}
+		}
+	};
+	
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> mod() {
-		// TODO Auto-generated method stub
-		return null;
+		return MOD;
 	}
 
+	private final Procedure4<Float128Member, Float128Member, Float128Member, Float128Member> DIVMOD =
+			new Procedure4<Float128Member, Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member d, Float128Member m) {
+			Float128Member tmp = G.QUAD.construct();
+			divide().call(a, b, tmp);
+			if (tmp.classification == 0) {
+				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
+				BigDecimal remainder;
+				// TODO test me
+				if (val.compareTo(tmp.num) <= 0)
+					remainder = tmp.num.subtract(val);
+				else
+					remainder = val.subtract(tmp.num);
+				d.setV(val);
+				m.setV(remainder);
+			}
+			else {
+				// TODO: is this bulletproof?
+				d.set(tmp);
+				m.setPosZero();
+			}
+		}
+	};
+			
 	@Override
 	public Procedure4<Float128Member, Float128Member, Float128Member, Float128Member> divMod() {
-		// TODO Auto-generated method stub
-		return null;
+		return DIVMOD;
 	}
 
 	@Override
