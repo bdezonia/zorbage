@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.real.float128;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Exponential;
@@ -67,7 +68,12 @@ import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
 import nom.bdezonia.zorbage.algorithm.PowerAny;
+import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
+import nom.bdezonia.zorbage.algorithm.Sinc;
+import nom.bdezonia.zorbage.algorithm.Sinch;
+import nom.bdezonia.zorbage.algorithm.Sinchpi;
+import nom.bdezonia.zorbage.algorithm.Sincpi;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -1152,10 +1158,33 @@ public class Float128Algebra
 		return CMP;
 	}
 
+	private final Function1<Integer, Float128Member> SIG =
+			new Function1<Integer, Float128Member>()
+	{
+		@Override
+		public Integer call(Float128Member a) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					return a.num.signum();
+				case Float128Member.POSZERO:
+					return 0;
+				case Float128Member.NEGZERO:
+					return 0;
+				case Float128Member.POSINF:
+					return 1;
+				case Float128Member.NEGINF:
+					return -1;
+				case Float128Member.NAN:
+					throw new IllegalArgumentException("signum of a nan value is impossible");
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+	
 	@Override
 	public Function1<Integer, Float128Member> signum() {
-		// TODO Auto-generated method stub
-		return null;
+		return SIG;
 	}
 
 	private final Procedure3<Float128Member, Float128Member, Float128Member> MIN =
@@ -1429,38 +1458,56 @@ public class Float128Algebra
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> copySign() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("copySign() code not yet written for float128s");
 	}
 
+	private final Function1<Integer, Float128Member> GETEXP =
+			new Function1<Integer, Float128Member>()
+	{
+		@Override
+		public Integer call(Float128Member a) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					return BigDecimalMath.exponent(a.num);
+				case Float128Member.POSZERO:
+					return -16382 - 1;  // mirror java double behavior but adjusted for 128 bits
+				case Float128Member.NEGZERO:
+					return -16382 - 1;  // mirror java double behavior but adjusted for 128 bits
+				case Float128Member.POSINF:
+					return 16383 + 1;  // mirror java double behavior but adjusted for 128 bits
+				case Float128Member.NEGINF:
+					return 16383 + 1;  // mirror java double behavior but adjusted for 128 bits
+				case Float128Member.NAN:
+					return 16383 + 1;  // mirror java double behavior but adjusted for 128 bits
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+	
 	@Override
 	public Function1<Integer, Float128Member> getExponent() {
-		// TODO Auto-generated method stub
-		return null;
+		return GETEXP;
 	}
 
 	@Override
 	public Procedure3<Integer, Float128Member, Float128Member> scalb() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("scalb() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> ulp() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("ulp() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> pred() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("pred() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> succ() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("succ() code not yet written for float128s");
 	}
 
 	private final Procedure2<Float128Member, Float128Member> REAL =
@@ -1493,32 +1540,87 @@ public class Float128Algebra
 
 	@Override
 	public Procedure1<Float128Member> random() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("random() code not yet written for float128s");
 	}
 
+	private final Procedure4<Round.Mode,Float128Member,Float128Member,Float128Member> ROUND =
+			new Procedure4<Round.Mode, Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Mode mode, Float128Member delta, Float128Member a, Float128Member b) {
+			Round.compute(G.QUAD, mode, delta, a, b);
+		}
+	};
+	
 	@Override
 	public Procedure4<Mode, Float128Member, Float128Member, Float128Member> round() {
-		// TODO Auto-generated method stub
-		return null;
+		return ROUND;
 	}
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> pow() {
-		// TODO Auto-generated method stub
-		return null;
+		// should be able to do but Java Math's implementation has lots of special cases
+		throw new UnsupportedOperationException("pow() code not yet written for float128s");
 	}
 
+	private final Procedure2<Float128Member, Float128Member> SQRT =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.sqrt(a.num, CONTEXT));
+				case Float128Member.POSZERO:
+					b.setPosZero();
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+				case Float128Member.POSINF:
+					b.setPosInf();
+				case Float128Member.NEGINF:
+					b.setNegInf();
+				case Float128Member.NAN:
+					b.setNan();
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+	
 	@Override
 	public Procedure2<Float128Member, Float128Member> sqrt() {
-		// TODO Auto-generated method stub
-		return null;
+		return SQRT;
 	}
+
+	private final Procedure2<Float128Member, Float128Member> CBRT =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		private final BigDecimal ONE_THIRD = BigDecimal.ONE.divide(BigDecimal.valueOf(3), CONTEXT);
+		
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.pow(a.num, ONE_THIRD, CONTEXT));
+				case Float128Member.POSZERO:
+					b.setPosZero();
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+				case Float128Member.POSINF:
+					b.setPosInf();
+				case Float128Member.NEGINF:
+					b.setNegInf();
+				case Float128Member.NAN:
+					b.setNan();
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> cbrt() {
-		// TODO Auto-generated method stub
-		return null;
+		return CBRT;
 	}
 
 	private final Function1<Boolean, Float128Member> ISNAN =
@@ -1593,122 +1695,138 @@ public class Float128Algebra
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> asinh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("asinh() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> acosh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("acosh() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> atanh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("atanh() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sinh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("sinh() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> cosh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("cosh() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> sinhAndCosh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("sinhAndCosh() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> tanh() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("tanh() code not yet written for float128s");
 	}
+
+	private final Procedure2<Float128Member,Float128Member> SINCH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			Sinch.compute(G.QUAD, a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sinch() {
-		// TODO Auto-generated method stub
-		return null;
+		return SINCH;
 	}
+
+	private final Procedure2<Float128Member,Float128Member> SINCHPI =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			Sinchpi.compute(G.QUAD, a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sinchpi() {
-		// TODO Auto-generated method stub
-		return null;
+		return SINCHPI;
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> asin() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("asin() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> acos() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("acos() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> atan() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("atan() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sin() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("sin() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> cos() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("cos() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> tan() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("tan() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> sinAndCos() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("sinAndCos() code not yet written for float128s");
 	}
+
+	private final Procedure2<Float128Member,Float128Member> SINC =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			Sinc.compute(G.QUAD, a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sinc() {
-		// TODO Auto-generated method stub
-		return null;
+		return SINC;
 	}
+
+	private final Procedure2<Float128Member,Float128Member> SINCPI =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			Sincpi.compute(G.QUAD, a, b);
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sincpi() {
-		// TODO Auto-generated method stub
-		return null;
+		return SINCPI;
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> exp() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("exp() code not yet written for float128s");
 	}
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> log() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("log() code not yet written for float128s");
 	}
 
 	private final Procedure1<Float128Member> PI =
