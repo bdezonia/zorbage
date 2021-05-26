@@ -131,6 +131,10 @@ public class Float128Algebra
 	private static final BigDecimal _PHI   = new BigDecimal("0.577215664901532860606512090082402431042");
 	private static final BigDecimal _GAMMA = new BigDecimal("1.618033988749894848204586834365638117720");
 	
+	private static final BigDecimal TWO = BigDecimal.valueOf(2);
+	private static final BigDecimal PI_OVER_TWO = _PI.divide(TWO);
+	private static final BigDecimal MINUS_PI_OVER_TWO = _PI.negate().divide(TWO);
+	
 	@Override
 	public Float128Member construct() {
 		return new Float128Member();
@@ -1571,16 +1575,22 @@ public class Float128Algebra
 			switch (a.classification) {
 				case Float128Member.NORMAL:
 					b.setV(BigDecimalMath.sqrt(a.num, CONTEXT));
+					break;
 				case Float128Member.POSZERO:
 					b.setPosZero();
+					break;
 				case Float128Member.NEGZERO:
 					b.setNegZero();
+					break;
 				case Float128Member.POSINF:
 					b.setPosInf();
+					break;
 				case Float128Member.NEGINF:
 					b.setNegInf();
+					break;
 				case Float128Member.NAN:
 					b.setNan();
+					break;
 				default:
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
@@ -1602,16 +1612,22 @@ public class Float128Algebra
 			switch (a.classification) {
 				case Float128Member.NORMAL:
 					b.setV(BigDecimalMath.pow(a.num, ONE_THIRD, CONTEXT));
+					break;
 				case Float128Member.POSZERO:
 					b.setPosZero();
+					break;
 				case Float128Member.NEGZERO:
 					b.setNegZero();
+					break;
 				case Float128Member.POSINF:
 					b.setPosInf();
+					break;
 				case Float128Member.NEGINF:
 					b.setNegInf();
+					break;
 				case Float128Member.NAN:
 					b.setNan();
+					break;
 				default:
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
@@ -1693,39 +1709,239 @@ public class Float128Algebra
 		return INF;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ASINH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.asinh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setV(BigDecimalMath.asinh(a.num, CONTEXT));
+					break;
+				case Float128Member.NEGZERO:
+					b.setV(BigDecimalMath.asinh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setNegInf();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> asinh() {
-		throw new UnsupportedOperationException("asinh() code not yet written for float128s");
+		return ASINH;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ACOSH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					if (a.num.abs().compareTo(BigDecimal.ONE) < 0)
+						b.setNan();
+					else
+						b.setV(BigDecimalMath.acosh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setNan();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNan();
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> acosh() {
-		throw new UnsupportedOperationException("acosh() code not yet written for float128s");
+		return ACOSH;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ATANH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					if (a.num.abs().compareTo(BigDecimal.ONE) > 0)
+						b.setNan();
+					else if (a.num.compareTo(BigDecimal.ONE) == 0)
+						b.setPosInf();
+					else if (a.num.compareTo(BigDecimal.ONE.negate()) == 0)
+						b.setNegInf();
+					else
+						b.setV(BigDecimalMath.atanh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setV(BigDecimalMath.atanh(a.num, CONTEXT));
+					break;
+				case Float128Member.NEGZERO:
+					b.setV(BigDecimalMath.atanh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSINF:
+					b.setNan();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> atanh() {
-		throw new UnsupportedOperationException("atanh() code not yet written for float128s");
+		return ATANH;
 	}
+
+	private final Procedure2<Float128Member, Float128Member> SINH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.sinh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setNegInf();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> sinh() {
-		throw new UnsupportedOperationException("sinh() code not yet written for float128s");
+		return SINH;
 	}
+
+	private final Procedure2<Float128Member, Float128Member> COSH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.cosh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.NEGZERO:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> cosh() {
-		throw new UnsupportedOperationException("cosh() code not yet written for float128s");
+		return COSH;
 	}
+
+	private final Procedure3<Float128Member, Float128Member, Float128Member> SINHANDCOSH =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member s, Float128Member c) {
+			sinh().call(a, s);
+			cosh().call(a, c);
+		}
+	};
 
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> sinhAndCosh() {
-		throw new UnsupportedOperationException("sinhAndCosh() code not yet written for float128s");
+		return SINHANDCOSH;
 	}
+
+	private final Procedure2<Float128Member, Float128Member> TANH =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.tanh(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.NEGINF:
+					b.setV(BigDecimal.ONE.negate());
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> tanh() {
-		throw new UnsupportedOperationException("tanh() code not yet written for float128s");
+		return TANH;
 	}
 
 	private final Procedure2<Float128Member,Float128Member> SINCH =
@@ -1756,39 +1972,234 @@ public class Float128Algebra
 		return SINCHPI;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ASIN =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					if (a.num.abs().compareTo(BigDecimal.ONE) > 0)
+						b.setNan();
+					else
+						b.setV(BigDecimalMath.asin(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setNan();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> asin() {
-		throw new UnsupportedOperationException("asin() code not yet written for float128s");
+		return ASIN;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ACOS =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					if (a.num.abs().compareTo(BigDecimal.ONE) > 0)
+						b.setNan();
+					else
+						b.setV(BigDecimalMath.acos(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setV(BigDecimalMath.acos(a.num, CONTEXT));
+					break;
+				case Float128Member.NEGZERO:
+					b.setV(BigDecimalMath.acos(a.num, CONTEXT));
+					break;
+				case Float128Member.POSINF:
+					b.setNan();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> acos() {
-		throw new UnsupportedOperationException("acos() code not yet written for float128s");
+		return ACOS;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ATAN =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.atan(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setV(PI_OVER_TWO);
+					break;
+				case Float128Member.NEGINF:
+					b.setV(MINUS_PI_OVER_TWO);
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> atan() {
-		throw new UnsupportedOperationException("atan() code not yet written for float128s");
+		return ATAN;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> SIN =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.sin(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setNan();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+			
 	@Override
 	public Procedure2<Float128Member, Float128Member> sin() {
-		throw new UnsupportedOperationException("sin() code not yet written for float128s");
+		return SIN;
 	}
+
+	private final Procedure2<Float128Member, Float128Member> COS =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.cos(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.NEGZERO:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.POSINF:
+					b.setNan();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> cos() {
-		throw new UnsupportedOperationException("cos() code not yet written for float128s");
+		return COS;
 	}
+	
+	private final Procedure2<Float128Member, Float128Member> TAN =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.tan(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setNan();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> tan() {
-		throw new UnsupportedOperationException("tan() code not yet written for float128s");
+		return TAN;
 	}
 
+	private final Procedure3<Float128Member, Float128Member, Float128Member> SINANDCOS =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member s, Float128Member c) {
+			sin().call(a, s);
+			cos().call(a, c);
+		}
+	};
+	
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> sinAndCos() {
-		throw new UnsupportedOperationException("sinAndCos() code not yet written for float128s");
+		return SINANDCOS;
 	}
 
 	private final Procedure2<Float128Member,Float128Member> SINC =
@@ -1819,14 +2230,77 @@ public class Float128Algebra
 		return SINCPI;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> EXP =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(BigDecimalMath.exp(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.NEGZERO:
+					b.setV(BigDecimal.ONE);
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setPosZero();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+
 	@Override
 	public Procedure2<Float128Member, Float128Member> exp() {
-		throw new UnsupportedOperationException("exp() code not yet written for float128s");
+		return EXP;
 	}
+
+	private final Procedure2<Float128Member, Float128Member> LOG =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					if (a.num.signum() < 0)
+						b.setNan();
+					else
+						b.setV(BigDecimalMath.log(a.num, CONTEXT));
+					break;
+				case Float128Member.POSZERO:
+					b.setNegInf();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegInf();
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setNan();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> log() {
-		throw new UnsupportedOperationException("log() code not yet written for float128s");
+		return LOG;
 	}
 
 	private final Procedure1<Float128Member> PI =
