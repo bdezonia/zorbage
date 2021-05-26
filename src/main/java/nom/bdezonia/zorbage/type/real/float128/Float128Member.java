@@ -79,6 +79,13 @@ public final class Float128Member
 	static final BigDecimal MAX_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(BigDecimal.ONE.subtract(TWO.pow(-112, Float128Algebra.CONTEXT)));
 	static final BigDecimal MIN_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(TWO.pow(-112, Float128Algebra.CONTEXT));
 	
+	static final byte NORMAL = 0;
+	static final byte POSZERO = 1;
+	static final byte NEGZERO = -1;
+	static final byte POSINF = 2;
+	static final byte NEGINF = -2;
+	static final byte NAN = 3;
+
 	public Float128Member() {
 		primitiveInit();
 	}
@@ -118,7 +125,7 @@ public final class Float128Member
 	}
 
 	public BigDecimal v() {
-		if (Math.abs(classification) >= 2)
+		if (classification == POSINF || classification == NEGINF || classification == NAN)
 			throw new java.lang.NumberFormatException("nan/posinf/neginf cannot be converted to big decimal");
 		return num;
 	}
@@ -126,7 +133,7 @@ public final class Float128Member
 	public void setV(BigDecimal v) {
 		if (v == null)
 			throw new IllegalArgumentException("this class does not allow null values");
-		if (v.compareTo(BigDecimal.ZERO) == 0) {
+		if (v.signum() == 0) {
 			setPosZero();
 		}
 		else {
@@ -137,9 +144,10 @@ public final class Float128Member
 	
 	@Override
 	public void toHighPrec(HighPrecisionMember output) {
-		if (Math.abs(classification) >= 2)
+		if (classification == POSINF || classification == NEGINF || classification == NAN)
 			throw new java.lang.NumberFormatException("nan/posinf/neginf cannot encode as a high precision decimal");
-		output.setV(num); // this is a trick with classifications 0, 1, and -1
+		// can use num with classifications NORMAL, POSZERO, and NEGZERO because they are all accurate
+		output.setV(num);
 	}
 
 	@Override
@@ -717,22 +725,22 @@ public final class Float128Member
 	
 	@Override
 	public String toString() {
-		if (classification == 0) {
+		if (classification == NORMAL) {
 			return num.toString();
 		}
-		else if (classification == 1) {
+		else if (classification == POSZERO) {
 			return "0";
 		}
-		else if (classification == -1) {
+		else if (classification == NEGZERO) {
 			return "-0";
 		}
-		else if (classification == 2) {
+		else if (classification == POSINF) {
 			return "Infinity";
 		}
-		else if (classification == -2) {
+		else if (classification == NEGINF) {
 			return "-Infinity";
 		}
-		else if (classification == 3) {
+		else if (classification == NAN) {
 			return "NaN";
 		}
 		else
@@ -740,53 +748,53 @@ public final class Float128Member
 	}
 
 	boolean isPosZero() {
-		return classification == 1;
+		return classification == POSZERO;
 	}
 
 	boolean isNegZero() {
-		return classification == -1;
+		return classification == NEGZERO;
 	}
 
 	boolean isPosInf() {
-		return classification == 2;
+		return classification == POSINF;
 	}
 
 	boolean isNegInf() {
-		return classification == -2;
+		return classification == NEGINF;
 	}
 
 	boolean isNan() {
-		return classification == 3;
+		return classification == NAN;
 	}
 
 	void setNormal(BigDecimal value) {
 		num = value;
-		classification = 0;
+		classification = NORMAL;
 	}
 
 	void setPosZero() {
 		num = BigDecimal.ZERO;
-		classification = 1;
+		classification = POSZERO;
 	}
 
 	void setNegZero() {
 		num = BigDecimal.ZERO;
-		classification = -1;
+		classification = NEGZERO;
 	}
 
 	void setPosInf() {
-		num = BigDecimal.ONE;
-		classification = 2;
+		num = BigDecimal.ZERO;
+		classification = POSINF;
 	}
 
 	void setNegInf() {
-		num = BigDecimal.ONE;
-		classification = -2;
+		num = BigDecimal.ZERO;
+		classification = NEGINF;
 	}
 	
 	void setNan() {
 		num = BigDecimal.ZERO;
-		classification = 3;
+		classification = NAN;
 	}
 
 	// Take my denom and BigDecimal values and encode them as a denom and
@@ -794,7 +802,7 @@ public final class Float128Member
 	
 	void encode(byte[] arr, int offset) {
 		arr[offset] = classification;
-		if (classification == 0) {
+		if (classification == NORMAL) {
 			// regular number
 			int sign = (num.compareTo(BigDecimal.ZERO) < 0) ? 1 : 0;
 			BigDecimal absVal = num.abs();
@@ -933,20 +941,20 @@ public final class Float128Member
 				}
 			}
 		}
-		else if (classification == 1) {
+		else if (classification == POSZERO) {
 			// encode a regular (positive) 0
 			for (int i = 15; i >= 0; i--) {
 				arr[offset+1+i] = 0;
 			}
 		}
-		else if (classification == -1) {
+		else if (classification == NEGZERO) {
 			// encode a negative 0
 			arr[offset+1+15] = (byte) 0x80;
 			for (int i = 14; i >= 0; i--) {
 				arr[offset+1+i] = 0;
 			}
 		}
-		else if (classification == 2) {
+		else if (classification == POSINF) {
 			// +1 / 0
 			// encode a positive infinity in the remaining 16 bytes
 			arr[offset+1+15] = (byte) 0x7f;
@@ -955,7 +963,7 @@ public final class Float128Member
 				arr[offset+1+i] = 0;
 			}
 		}
-		else if (classification == -2) {
+		else if (classification == NEGINF) {
 			// -1 / 0
 			// encode a negative infinity in the remaining 16 bytes
 			arr[offset+1+15] = (byte) 0xff;
@@ -964,7 +972,7 @@ public final class Float128Member
 				arr[offset+1+i] = 0;
 			}
 		}
-		else if (classification == 3) {
+		else if (classification == NAN) {
 			// 0 / 0
 			// encode a NaN in the remaining 16 bytes
 			arr[offset+1+15] = (byte) 0x7f;
@@ -1077,7 +1085,7 @@ public final class Float128Member
 	}
 
 	private void clamp() {
-		if (classification == 0) {
+		if (classification == NORMAL) {
 			if (num.compareTo(MIN_NORMAL) < 0) {
 				setNegInf();
 			}

@@ -148,14 +148,17 @@ public class Float128Algebra
 
 			// neg zero == pos zero == zero
 			
-			if ((a.classification == 1 ||  a.classification == -1) &&
-					(b.classification == 1 || b.classification == -1)) {
+			if ((a.classification == Float128Member.POSZERO ||
+					a.classification == Float128Member.NEGZERO) &&
+				(b.classification == Float128Member.POSZERO ||
+					b.classification == Float128Member.NEGZERO))
+			{
 				return true;
 			}
 			
 			// nans never equal anything
 			
-			if (a.classification == 3 || b.classification == 3) {
+			if (a.classification == Float128Member.NAN || b.classification == Float128Member.NAN) {
 				return false;
 			}
 			
@@ -169,24 +172,27 @@ public class Float128Algebra
 
 			// two regular numbers
 			
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 				return a.num.compareTo(b.num) == 0;
 			}
 			
 			// neg and pos zeroes
 			
-			if (a.classification == 1 || a.classification == -1) {
-				return b.classification == 1 || b.classification == -1;
+			if (a.classification == Float128Member.POSZERO || a.classification == Float128Member.NEGZERO) {
+				return b.classification == Float128Member.POSZERO || b.classification == Float128Member.NEGZERO;
 			}
 			
 			// pos inf
 			
-			if (a.classification == 2) {
+			if (a.classification == Float128Member.POSINF) {
+				// we know by logic that b has the same type
 				return true;
 			}
 			
 			// neg inf
-			if (a.classification == -2) {
+			
+			if (a.classification == Float128Member.NEGINF) {
+				// we know by logic that b has the same type
 				return true;
 			}
 			
@@ -246,7 +252,7 @@ public class Float128Algebra
 	{
 		@Override
 		public Boolean call(Float128Member a) {
-			return a.classification == 1 || a.classification == -1;
+			return a.classification == Float128Member.POSZERO || a.classification == Float128Member.NEGZERO;
 		}
 	};
 			
@@ -260,17 +266,17 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b) {
-			if (a.classification == 0)
+			if (a.classification == Float128Member.NORMAL)
 				b.num = a.num.negate();
-			else if (a.classification == 1)
+			else if (a.classification == Float128Member.POSZERO)
 				b.setNegZero();
-			else if (a.classification == -1)
+			else if (a.classification == Float128Member.NEGZERO)
 				b.setPosZero();
-			else if (a.classification == 2)
+			else if (a.classification == Float128Member.POSINF)
 				b.setNegInf();
-			else if (a.classification == -2)
+			else if (a.classification == Float128Member.NEGINF)
 				b.setPosInf();
-			else if (a.classification == 3)
+			else if (a.classification == Float128Member.NAN)
 				b.setNan();
 			else
 				throw new IllegalArgumentException("unknown classification error");
@@ -291,126 +297,122 @@ public class Float128Algebra
 			
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 				
-				if (b.classification == 0) {
-					BigDecimal tmp = a.num.add(b.num);
-					if (tmp.compareTo(BigDecimal.ZERO) == 0)
-						c.setPosZero();
-					else
-						c.setV(tmp);
+				if (b.classification == Float128Member.NORMAL) {
+					c.setV(a.num.add(b.num));
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.set(a);
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.set(a);
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == 1) {
+			else if (a.classification == Float128Member.POSZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.set(b);
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == -1) {
+			else if (a.classification == Float128Member.NEGZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.set(b);
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNegZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == 2) {
+			else if (a.classification == Float128Member.POSINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setPosInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNan();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == -2) {
+			else if (a.classification == Float128Member.NEGINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setNegInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNegInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNegInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNan();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == 3) {
+			else if (a.classification == Float128Member.NAN) {
 				c.setNan();
 			}
 			else
@@ -432,126 +434,122 @@ public class Float128Algebra
 			
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 				
-				if (b.classification == 0) {
-					BigDecimal tmp = a.num.subtract(b.num);
-					if (tmp.compareTo(BigDecimal.ZERO) == 0)
-						c.setPosZero();
-					else
-						c.setV(tmp);
+				if (b.classification == Float128Member.NORMAL) {
+					c.setV(a.num.subtract(b.num));
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.set(a);
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.set(a);
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == 1) {
+			else if (a.classification == Float128Member.POSZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setV(b.v().negate());
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == -1) {
+			else if (a.classification == Float128Member.NEGZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setV(b.v().negate());
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNegZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == 2) {
+			else if (a.classification == Float128Member.POSINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setPosInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNan();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == -2) {
+			else if (a.classification == Float128Member.NEGINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setNegInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNegInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNegInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNan();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error");
 			}
-			else if (a.classification == 3) {
+			else if (a.classification == Float128Member.NAN) {
 				c.setNan();
 			}
 			else
@@ -572,146 +570,146 @@ public class Float128Algebra
 			
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setV(a.num.multiply(b.num, CONTEXT));
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					if (a.num.signum() < 0)
 						c.setNegZero();
 					else
 						c.setPosZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					if (a.num.signum() < 0)
 						c.setPosZero();
 					else
 						c.setNegZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					if (a.num.signum() < 0)
 						c.setNegInf();
 					else
 						c.setPosInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					if (a.num.signum() < 0)
 						c.setPosInf();
 					else
 						c.setNegInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == 1) {
+			else if (a.classification == Float128Member.POSZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setNegZero();
 					else
 						c.setPosZero();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNegZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNan();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNan();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == -1) {
+			else if (a.classification == Float128Member.NEGZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setPosZero();
 					else
 						c.setNegZero();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNegZero();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosZero();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNan();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNan();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == 2) {
+			else if (a.classification == Float128Member.POSINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setNegInf();
 					else
 						c.setPosInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNan();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNan();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == -2) {
+			else if (a.classification == Float128Member.NEGINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setPosInf();
 					else
 						c.setNegInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNan();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNan();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNegInf();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setPosInf();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == 3) {
+			else if (a.classification == Float128Member.NAN) {
 				c.setNan();
 			}
 			else
@@ -729,7 +727,7 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Integer p, Float128Member a, Float128Member b) {
-			if (a.classification == 3) {
+			if (a.classification == Float128Member.NAN) {
 				b.setNan();
 			}
 			else
@@ -761,7 +759,7 @@ public class Float128Algebra
 	{
 		@Override
 		public Boolean call(Float128Member a) {
-			return a.classification == 0 && a.num.compareTo(BigDecimal.ONE) == 0;
+			return a.classification == Float128Member.NORMAL && a.num.compareTo(BigDecimal.ONE) == 0;
 		}
 	};
 			
@@ -775,17 +773,17 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b) {
-			if (a.classification == 0)
+			if (a.classification == Float128Member.NORMAL)
 				b.setV(BigDecimal.ONE.divide(a.num, CONTEXT));
-			else if (a.classification == 1)
+			else if (a.classification == Float128Member.POSZERO)
 				b.setPosInf();
-			else if (a.classification == -1)
+			else if (a.classification == Float128Member.NEGZERO)
 				b.setNegInf();
-			else if (a.classification == 2)
+			else if (a.classification == Float128Member.POSINF)
 				b.setPosZero();
-			else if (a.classification == -2)
+			else if (a.classification == Float128Member.NEGINF)
 				b.setNegZero();
-			else if (a.classification == 3)
+			else if (a.classification == Float128Member.NAN)
 				b.setNan();
 			else
 				throw new IllegalArgumentException("unknown classification error "+a.classification);
@@ -805,146 +803,146 @@ public class Float128Algebra
 
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					c.setV(a.num.divide(b.num, CONTEXT));
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					if (a.num.signum() < 0)
 						c.setNegInf();
 					else
 						c.setPosInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					if (a.num.signum() < 0)
 						c.setPosInf();
 					else
 						c.setNegInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					if (a.num.signum() < 0)
 						c.setNegZero();
 					else
 						c.setPosZero();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					if (a.num.signum() < 0)
 						c.setPosZero();
 					else
 						c.setNegZero();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == 1) {
+			else if (a.classification == Float128Member.POSZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setNegZero();
 					else
 						c.setPosZero();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNan();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNan();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setPosZero();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNegZero();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == -1) {
+			else if (a.classification == Float128Member.NEGZERO) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setPosZero();
 					else
 						c.setNegZero();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNan();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNan();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNegZero();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setPosZero();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == 2) {
+			else if (a.classification == Float128Member.POSINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setNegInf();
 					else
 						c.setPosInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setNegInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNan();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNan();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == -2) {
+			else if (a.classification == Float128Member.NEGINF) {
 				
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
 						c.setPosInf();
 					else
 						c.setNegInf();
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					c.setNegInf();
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					c.setPosInf();
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					c.setNan();
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					c.setNan();
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					c.setNan();
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
 			}
-			else if (a.classification == 3) {
+			else if (a.classification == Float128Member.NAN) {
 				c.setNan();
 			}
 			else
@@ -1019,127 +1017,127 @@ public class Float128Algebra
 		@Override
 		public Integer call(Float128Member a, Float128Member b) {
 
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					return a.num.compareTo(b.num);
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					return a.num.compareTo(BigDecimal.ZERO);
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					return a.num.compareTo(BigDecimal.ZERO);
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					return -1;
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					return 1;
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					return -1;
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else if (a.classification == 1) {
+			else if (a.classification == Float128Member.POSZERO) {
 
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					return BigDecimal.ZERO.compareTo(b.num);
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					return 0;
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					return 1;
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					return -1;
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					return 1;
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					return -1;
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else if (a.classification == -1) {
+			else if (a.classification == Float128Member.NEGZERO) {
 
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					return BigDecimal.ZERO.compareTo(b.num);
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					return -1;
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					return 0;
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					return -1;
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					return 1;
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					return -1;
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else if (a.classification == 2) {
+			else if (a.classification == Float128Member.POSINF) {
 
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					return 1;
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					return 1;
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					return 1;
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					return 0;
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					return 1;
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					return -1;
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else if (a.classification == -2) {
+			else if (a.classification == Float128Member.NEGINF) {
 
-				if (b.classification == 0) {
+				if (b.classification == Float128Member.NORMAL) {
 					return -1;
 				}
-				else if (b.classification == 1) {
+				else if (b.classification == Float128Member.POSZERO) {
 					return -1;
 				}
-				else if (b.classification == -1) {
+				else if (b.classification == Float128Member.NEGZERO) {
 					return -1;
 				}
-				else if (b.classification == 2) {
+				else if (b.classification == Float128Member.POSINF) {
 					return -1;
 				}
-				else if (b.classification == -2) {
+				else if (b.classification == Float128Member.NEGINF) {
 					return 0;
 				}
-				else if (b.classification == 3) {
+				else if (b.classification == Float128Member.NAN) {
 					return -1;
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else if (a.classification == 3) {
+			else if (a.classification == Float128Member.NAN) {
 
-				if (b.classification == 3) {
+				if (b.classification == Float128Member.NAN) {
 					return 0;
 				}
-				else if (Math.abs(b.classification) < 3)
+				else if (Math.abs(b.classification) < Float128Member.NAN)
 					return -1;
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
@@ -1193,22 +1191,22 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b) {
-			if (a.classification == 0) {
+			if (a.classification == Float128Member.NORMAL) {
 				b.setV(a.v().abs());
 			}
-			else if (a.classification == 1) {
+			else if (a.classification == Float128Member.POSZERO) {
 				b.setPosZero();
 			}
-			else if (a.classification == -1) {
+			else if (a.classification == Float128Member.NEGZERO) {
 				b.setPosZero();
 			}
-			else if (a.classification == 2) {
+			else if (a.classification == Float128Member.POSINF) {
 				b.setPosInf();
 			}
-			else if (a.classification == -2) {
+			else if (a.classification == Float128Member.NEGINF) {
 				b.setPosInf();
 			}
-			else if (a.classification == 3) {
+			else if (a.classification == Float128Member.NAN) {
 				b.setNan();
 			}
 		}
@@ -1352,7 +1350,7 @@ public class Float128Algebra
 		public void call(Float128Member a, Float128Member b, Float128Member d) {
 			Float128Member tmp = G.QUAD.construct();
 			divide().call(a, b, tmp);
-			if (tmp.classification == 0) {
+			if (tmp.classification == Float128Member.NORMAL) {
 				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
 				// TODO test me
 				d.setV(val);
@@ -1376,7 +1374,7 @@ public class Float128Algebra
 		public void call(Float128Member a, Float128Member b, Float128Member m) {
 			Float128Member tmp = G.QUAD.construct();
 			divide().call(a, b, tmp);
-			if (tmp.classification == 0) {
+			if (tmp.classification == Float128Member.NORMAL) {
 				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
 				BigDecimal remainder;
 				// TODO test me
@@ -1405,7 +1403,7 @@ public class Float128Algebra
 		public void call(Float128Member a, Float128Member b, Float128Member d, Float128Member m) {
 			Float128Member tmp = G.QUAD.construct();
 			divide().call(a, b, tmp);
-			if (tmp.classification == 0) {
+			if (tmp.classification == Float128Member.NORMAL) {
 				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
 				BigDecimal remainder;
 				// TODO test me
@@ -1528,7 +1526,7 @@ public class Float128Algebra
 	{
 		@Override
 		public Boolean call(Float128Member a) {
-			return a.classification == 3;
+			return a.classification == Float128Member.NAN;
 		}
 	};
 	
@@ -1570,7 +1568,7 @@ public class Float128Algebra
 	{
 		@Override
 		public Boolean call(Float128Member a) {
-			return a.classification == 2 || a.classification == 3;
+			return a.classification == Float128Member.POSINF || a.classification == Float128Member.NEGINF;
 		}
 	};
 
