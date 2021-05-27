@@ -207,7 +207,7 @@ public class Float128Algebra
 				return true;
 			}
 			
-			throw new IllegalArgumentException("unknown classifications error");
+			throw new IllegalArgumentException("unknown classifications error "+a.classification);
 		}
 	};
 
@@ -277,20 +277,35 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b) {
-			if (a.classification == Float128Member.NORMAL)
-				b.num = a.num.negate();
-			else if (a.classification == Float128Member.POSZERO)
+			switch(a.classification) {
+			
+			case Float128Member.NORMAL:
+				b.setV(a.num.negate());
+				break;
+				
+			case Float128Member.POSZERO:
 				b.setNegZero();
-			else if (a.classification == Float128Member.NEGZERO)
+				break;
+				
+			case Float128Member.NEGZERO:
 				b.setPosZero();
-			else if (a.classification == Float128Member.POSINF)
+				break;
+				
+			case Float128Member.POSINF:
 				b.setNegInf();
-			else if (a.classification == Float128Member.NEGINF)
+				break;
+				
+			case Float128Member.NEGINF:
 				b.setPosInf();
-			else if (a.classification == Float128Member.NAN)
+				break;
+				
+			case Float128Member.NAN:
 				b.setNan();
-			else
-				throw new IllegalArgumentException("unknown classification error");
+				break;
+				
+			default:
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
 		}
 	};
 
@@ -308,7 +323,9 @@ public class Float128Algebra
 			
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == Float128Member.NORMAL) {
+			switch(a.classification) {
+			
+			case Float128Member.NORMAL:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setV(a.num.add(b.num));
@@ -329,9 +346,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.POSZERO) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.POSZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.set(b);
@@ -352,9 +370,9 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.NEGZERO) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+			
+			case Float128Member.NEGZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.set(b);
@@ -375,9 +393,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.POSINF) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+				
+			case Float128Member.POSINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setPosInf();
@@ -398,9 +417,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.NEGINF) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+				
+			case Float128Member.NEGINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setNegInf();
@@ -421,13 +441,16 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.NAN) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.NAN:
 				c.setNan();
+				break;
+			
+			default:
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else
-				throw new IllegalArgumentException("unknown classification error");
 		}
 	};
 	
@@ -445,7 +468,9 @@ public class Float128Algebra
 			
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == Float128Member.NORMAL) {
+			switch (a.classification) {
+			
+			case Float128Member.NORMAL:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setV(a.num.subtract(b.num));
@@ -466,9 +491,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.POSZERO) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.POSZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setV(b.v().negate());
@@ -489,9 +515,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.NEGZERO) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.NEGZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setV(b.v().negate());
@@ -512,9 +539,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.POSINF) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.POSINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setPosInf();
@@ -535,9 +563,10 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.NEGINF) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.NEGINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setNegInf();
@@ -558,13 +587,16 @@ public class Float128Algebra
 					c.setNan();
 				}
 				else
-					throw new IllegalArgumentException("unknown classification error");
-			}
-			else if (a.classification == Float128Member.NAN) {
+					throw new IllegalArgumentException("unknown classification error "+b.classification);
+				break;
+
+			case Float128Member.NAN:
 				c.setNan();
+				break;
+
+			default:
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
-			else
-				throw new IllegalArgumentException("unknown classification error");
 		}
 	};
 
@@ -581,8 +613,10 @@ public class Float128Algebra
 			
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == Float128Member.NORMAL) {
-				
+			switch (a.classification) {
+			
+			case Float128Member.NORMAL:
+
 				if (b.classification == Float128Member.NORMAL) {
 					c.setV(a.num.multiply(b.num, CONTEXT));
 				}
@@ -615,8 +649,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.POSZERO) {
+				break;
+
+			case Float128Member.POSZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -641,8 +676,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.NEGZERO) {
+				break;
+
+			case Float128Member.NEGZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -667,8 +703,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.POSINF) {
+				break;
+
+			case Float128Member.POSINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -693,8 +730,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.NEGINF) {
+				break;
+
+			case Float128Member.NEGINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -719,12 +757,15 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.NAN) {
+				break;
+
+			case Float128Member.NAN:
 				c.setNan();
-			}
-			else
+				break;
+
+			default:
 				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
 		}
 	};
 
@@ -784,20 +825,28 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b) {
-			if (a.classification == Float128Member.NORMAL)
+			switch (a.classification) {
+			case Float128Member.NORMAL:
 				b.setV(BigDecimal.ONE.divide(a.num, CONTEXT));
-			else if (a.classification == Float128Member.POSZERO)
+				break;
+			case Float128Member.POSZERO:
 				b.setPosInf();
-			else if (a.classification == Float128Member.NEGZERO)
+				break;
+			case Float128Member.NEGZERO:
 				b.setNegInf();
-			else if (a.classification == Float128Member.POSINF)
+				break;
+			case Float128Member.POSINF:
 				b.setPosZero();
-			else if (a.classification == Float128Member.NEGINF)
+				break;
+			case Float128Member.NEGINF:
 				b.setNegZero();
-			else if (a.classification == Float128Member.NAN)
+				break;
+			case Float128Member.NAN:
 				b.setNan();
-			else
+				break;
+			default:
 				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
 		}
 	};
 			
@@ -814,7 +863,9 @@ public class Float128Algebra
 
 			// NOTE: the various special cases were derived from Java's behavior for doubles
 			
-			if (a.classification == Float128Member.NORMAL) {
+			switch (a.classification) {
+			
+			case Float128Member.NORMAL:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					c.setV(a.num.divide(b.num, CONTEXT));
@@ -848,8 +899,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.POSZERO) {
+				break;
+
+			case Float128Member.POSZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -874,8 +926,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.NEGZERO) {
+				break;
+			
+			case Float128Member.NEGZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -900,8 +953,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.POSINF) {
+				break;
+			
+			case Float128Member.POSINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -926,8 +980,9 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.NEGINF) {
+				break;
+			
+			case Float128Member.NEGINF:
 				
 				if (b.classification == Float128Member.NORMAL) {
 					if (b.num.signum() < 0)
@@ -952,12 +1007,15 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+b.classification);
-			}
-			else if (a.classification == Float128Member.NAN) {
+				break;
+			
+			case Float128Member.NAN:
 				c.setNan();
-			}
-			else
+				break;
+
+			default:
 				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
 		}
 	};
 
@@ -1028,7 +1086,9 @@ public class Float128Algebra
 		@Override
 		public Integer call(Float128Member a, Float128Member b) {
 
-			if (a.classification == Float128Member.NORMAL) {
+			switch (a.classification) {
+			
+			case Float128Member.NORMAL:
 
 				if (b.classification == Float128Member.NORMAL) {
 					return a.num.compareTo(b.num);
@@ -1050,8 +1110,8 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
-			}
-			else if (a.classification == Float128Member.POSZERO) {
+				
+			case Float128Member.POSZERO:
 
 				if (b.classification == Float128Member.NORMAL) {
 					return BigDecimal.ZERO.compareTo(b.num);
@@ -1073,8 +1133,8 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
-			}
-			else if (a.classification == Float128Member.NEGZERO) {
+				
+			case Float128Member.NEGZERO:
 
 				if (b.classification == Float128Member.NORMAL) {
 					return BigDecimal.ZERO.compareTo(b.num);
@@ -1096,8 +1156,8 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
-			}
-			else if (a.classification == Float128Member.POSINF) {
+
+			case Float128Member.POSINF:
 
 				if (b.classification == Float128Member.NORMAL) {
 					return 1;
@@ -1119,8 +1179,8 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
-			}
-			else if (a.classification == Float128Member.NEGINF) {
+
+			case Float128Member.NEGINF:
 
 				if (b.classification == Float128Member.NORMAL) {
 					return -1;
@@ -1142,8 +1202,8 @@ public class Float128Algebra
 				}
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
-			}
-			else if (a.classification == Float128Member.NAN) {
+
+			case Float128Member.NAN:
 
 				if (b.classification == Float128Member.NAN) {
 					return 0;
@@ -1152,9 +1212,10 @@ public class Float128Algebra
 					return -1;
 				else
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
-			}
-			else
+
+			default:
 				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
 		}
 	};
 
@@ -1225,23 +1286,35 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b) {
-			if (a.classification == Float128Member.NORMAL) {
+			
+			switch(a.classification) {
+
+			case Float128Member.NORMAL:
 				b.setV(a.v().abs());
-			}
-			else if (a.classification == Float128Member.POSZERO) {
+				break;
+
+			case Float128Member.POSZERO:
 				b.setPosZero();
-			}
-			else if (a.classification == Float128Member.NEGZERO) {
+				break;
+
+			case Float128Member.NEGZERO:
 				b.setPosZero();
-			}
-			else if (a.classification == Float128Member.POSINF) {
+				break;
+
+			case Float128Member.POSINF:
 				b.setPosInf();
-			}
-			else if (a.classification == Float128Member.NEGINF) {
+				break;
+
+			case Float128Member.NEGINF:
 				b.setPosInf();
-			}
-			else if (a.classification == Float128Member.NAN) {
+				break;
+			
+			case Float128Member.NAN:
 				b.setNan();
+				break;
+			
+			default:
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
 		}
 	};
@@ -2191,6 +2264,7 @@ public class Float128Algebra
 					break;
 				case Float128Member.NAN:
 					b.setNan();
+					break;
 				default:
 					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
