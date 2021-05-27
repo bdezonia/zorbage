@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.float128;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.concurrent.ThreadLocalRandom;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Bounded;
@@ -1460,9 +1461,79 @@ public class Float128Algebra
 		return DIVMOD;
 	}
 
+	private final Procedure3<Float128Member, Float128Member, Float128Member> CSGN =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member magnitude, Float128Member sign, Float128Member result) {
+			BigDecimal mag;
+			boolean neg;
+			switch (sign.classification) {
+				case Float128Member.NORMAL:
+					neg = (sign.num.signum() >= 0);
+					break;
+				case Float128Member.POSZERO:
+					neg = false;
+					break;
+				case Float128Member.NEGZERO:
+					neg = true;
+					break;
+				case Float128Member.POSINF:
+					neg = false;
+					break;
+				case Float128Member.NEGINF:
+					neg = true;
+					break;
+				case Float128Member.NAN:
+					// copy java StrictMath's approach
+					neg = false;
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+magnitude.classification);
+			}
+			switch (magnitude.classification) {
+				case Float128Member.NORMAL:
+					mag = magnitude.num.abs();
+					if (neg)
+						mag = mag.negate();
+					result.setV(mag);
+					break;
+				case Float128Member.POSZERO:
+					if (neg)
+						result.setNegZero();
+					else
+						result.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					if (neg)
+						result.setNegZero();
+					else
+						result.setPosZero();
+					break;
+				case Float128Member.POSINF:
+					if (neg)
+						result.setNegInf();
+					else
+						result.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					if (neg)
+						result.setNegInf();
+					else
+						result.setPosInf();
+					break;
+				case Float128Member.NAN:
+					result.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+magnitude.classification);
+			}
+		}
+	};
+
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> copySign() {
-		throw new UnsupportedOperationException("copySign() code not yet written for float128s");
+		return CSGN;
 	}
 
 	private final Function1<Integer, Float128Member> GETEXP =
@@ -1494,9 +1565,39 @@ public class Float128Algebra
 		return GETEXP;
 	}
 
+	private final Procedure3<Integer, Float128Member, Float128Member> SCALB =
+			new Procedure3<Integer, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Integer scaleFactor, Float128Member a, Float128Member b) {
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					b.setV(a.num.multiply(TWO.pow(scaleFactor)));
+					break;
+				case Float128Member.POSZERO:
+					b.setPosZero();
+					break;
+				case Float128Member.NEGZERO:
+					b.setNegZero();
+					break;
+				case Float128Member.POSINF:
+					b.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					b.setNegInf();
+					break;
+				case Float128Member.NAN:
+					b.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+
 	@Override
 	public Procedure3<Integer, Float128Member, Float128Member> scalb() {
-		throw new UnsupportedOperationException("scalb() code not yet written for float128s");
+		return SCALB;
 	}
 
 	@Override
@@ -1542,9 +1643,28 @@ public class Float128Algebra
 		return UNREAL;
 	}
 
+	private final Procedure1<Float128Member> RAND = 
+			new Procedure1<Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a) {
+			ThreadLocalRandom rng = ThreadLocalRandom.current();
+			byte[] bytes = new byte[17];
+			bytes[0] = Float128Member.NORMAL;
+			bytes[16] = (byte) 0x3f;
+			bytes[15] = (byte) 0xff;
+			for (int i = 14; i <= 1; i++) {
+				bytes[i] = (byte) rng.nextInt(256);
+			}
+			Float128Member tmp = G.QUAD.construct();
+			tmp.fromByteArray(bytes, 0);
+			a.setV(tmp.num.subtract(BigDecimal.ONE));
+		}
+	};
+
 	@Override
 	public Procedure1<Float128Member> random() {
-		throw new UnsupportedOperationException("random() code not yet written for float128s");
+		return RAND;
 	}
 
 	private final Procedure4<Round.Mode,Float128Member,Float128Member,Float128Member> ROUND =
