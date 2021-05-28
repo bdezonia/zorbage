@@ -1676,6 +1676,11 @@ public class Float128Algebra
 	private final Procedure2<Float128Member, Float128Member> ULP =
 			new Procedure2<Float128Member, Float128Member>()
 	{
+		// For IEEE 64 power = 1024-53. Which is max exponent - bits in fraction.
+		// These can also be found for the 128 bit format by inspection.
+		
+		private BigDecimal MAX_ULP = TWO.pow(16384-112);
+		
 		@Override
 		public void call(Float128Member a, Float128Member ulp) {
 			Float128Member top = G.QUAD.construct();
@@ -1683,16 +1688,14 @@ public class Float128Algebra
 			switch (a.classification) {
 				case Float128Member.NORMAL:
 					if (a.num.compareTo(Float128Member.MAX_NORMAL) == 0) {
-						// special case. IEEE 64-bit floats don't use this approach.
-						//   Maybe I need to determine what they do and fix this.
-						G.QUAD.assign().call(a, top);
-						G.QUAD.pred().call(a, bottom);
+						// succ() of a is not finite
+						ulp.setV(MAX_ULP);    // see constant above
 					}
 					else {
 						G.QUAD.assign().call(a, bottom);
 						G.QUAD.succ().call(a, top);
+						subtract().call(top, bottom, ulp);
 					}
-					subtract().call(top, bottom, ulp);
 					break;
 				case Float128Member.POSZERO:
 					ulp.setV(Float128Member.MIN_SUBNORMAL);
@@ -2052,10 +2055,18 @@ public class Float128Algebra
 		return ROUND;
 	}
 
+	private final Procedure3<Float128Member, Float128Member, Float128Member> POW =
+			new Procedure3<Float128Member, Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b, Float128Member c) {
+			throw new UnsupportedOperationException("write me");
+		}
+	};
+
 	@Override
 	public Procedure3<Float128Member, Float128Member, Float128Member> pow() {
-		// should be able to do but Java Math's implementation has lots of special cases
-		throw new UnsupportedOperationException("pow() code not yet written for float128s");
+		return POW;
 	}
 
 	private final Procedure2<Float128Member, Float128Member> SQRT =
