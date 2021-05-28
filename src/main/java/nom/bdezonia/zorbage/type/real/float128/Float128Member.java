@@ -725,26 +725,33 @@ public final class Float128Member
 	
 	@Override
 	public String toString() {
-		if (classification == NORMAL) {
+		switch (classification) {
+		
+		case NORMAL:
 			return num.toString();
-		}
-		else if (classification == POSZERO) {
+		
+		case POSZERO:
 			return "0";
-		}
-		else if (classification == NEGZERO) {
+		
+		case NEGZERO:
 			return "-0";
-		}
-		else if (classification == POSINF) {
+		
+		case POSINF:
 			return "Infinity";
-		}
-		else if (classification == NEGINF) {
+		
+		case NEGINF:
 			return "-Infinity";
-		}
-		else if (classification == NAN) {
+		
+		case NAN:
 			return "NaN";
-		}
-		else
+		
+		default:
 			throw new IllegalArgumentException("unknown number classification "+classification);
+		}
+	}
+
+	boolean isNormal() {
+		return classification == NORMAL;
 	}
 
 	boolean isPosZero() {
@@ -767,6 +774,14 @@ public final class Float128Member
 		return classification == NAN;
 	}
 
+	boolean isFinite() {
+		return classification == NORMAL || classification == POSZERO || classification == NEGZERO;
+	}
+
+	boolean isInfinite() {
+		return classification == POSINF || classification == NEGINF;
+	}
+	
 	void setNormal(BigDecimal value) {
 		num = value;
 		classification = NORMAL;
@@ -802,7 +817,8 @@ public final class Float128Member
 	
 	void encode(byte[] arr, int offset) {
 		arr[offset] = classification;
-		if (classification == NORMAL) {
+		switch (classification) {
+		case NORMAL:
 			// regular number
 			int sign = (num.compareTo(BigDecimal.ZERO) < 0) ? 1 : 0;
 			BigDecimal absVal = num.abs();
@@ -940,21 +956,24 @@ public final class Float128Member
 					arr[offset + 1 + i] = (byte) v;
 				}
 			}
-		}
-		else if (classification == POSZERO) {
+			break;
+			
+		case POSZERO:
 			// encode a regular (positive) 0
 			for (int i = 15; i >= 0; i--) {
 				arr[offset+1+i] = 0;
 			}
-		}
-		else if (classification == NEGZERO) {
+			break;
+			
+		case NEGZERO:
 			// encode a negative 0
 			arr[offset+1+15] = (byte) 0x80;
 			for (int i = 14; i >= 0; i--) {
 				arr[offset+1+i] = 0;
 			}
-		}
-		else if (classification == POSINF) {
+			break;
+			
+		case POSINF:
 			// +1 / 0
 			// encode a positive infinity in the remaining 16 bytes
 			arr[offset+1+15] = (byte) 0x7f;
@@ -962,8 +981,9 @@ public final class Float128Member
 			for (int i = 13; i >= 0; i--) {
 				arr[offset+1+i] = 0;
 			}
-		}
-		else if (classification == NEGINF) {
+			break;
+			
+		case NEGINF:
 			// -1 / 0
 			// encode a negative infinity in the remaining 16 bytes
 			arr[offset+1+15] = (byte) 0xff;
@@ -971,24 +991,24 @@ public final class Float128Member
 			for (int i = 13; i >= 0; i--) {
 				arr[offset+1+i] = 0;
 			}
-		}
-		else if (classification == NAN) {
+			break;
+			
+		case NAN:
 			// 0 / 0
 			// encode a NaN in the remaining 16 bytes
 			arr[offset+1+15] = (byte) 0x7f;
 			arr[offset+1+14] = (byte) 0xff;
 			for (int i = 13; i >= 0; i--) {
 				// any non zero value tells the OS this is a nan rather than an inf
-				// TODO : do I have to deal with signaling versus nonsignaling or is that all done in hardware?
+				// TODO : do I have to deal with signaling versus nonsignaling or is
+				// that all done in hardware?
 				arr[offset+1+i] = 1;
 			}
-		}
-		else
+			break;
+			
+		default:
 			throw new IllegalArgumentException("unknown number classification "+classification);
-//		System.out.println("Encoded");
-//		for (int i = 0; i < 16; i++) {
-//			System.out.println(String.format("%x",arr[offset+1+i]));
-//		}
+		}
 	}
 	
 	// Take the 17 bytes stored in arr starting at offset and decode them
