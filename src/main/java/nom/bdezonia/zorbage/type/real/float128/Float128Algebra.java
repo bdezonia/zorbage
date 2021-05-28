@@ -1683,6 +1683,8 @@ public class Float128Algebra
 			switch (a.classification) {
 				case Float128Member.NORMAL:
 					if (a.num.compareTo(Float128Member.MAX_NORMAL) == 0) {
+						// special case. IEEE 64-bit floats don't use this approach.
+						//   Maybe I need to determine what they do and fix this.
 						G.QUAD.assign().call(a, top);
 						G.QUAD.pred().call(a, bottom);
 					}
@@ -1718,8 +1720,6 @@ public class Float128Algebra
 		return ULP;
 	}
 
-	// TODO: this code not done yet
-	
 	private final Procedure2<Float128Member, Float128Member> PRED =
 			new Procedure2<Float128Member, Float128Member>()
 	{
@@ -1729,8 +1729,94 @@ public class Float128Algebra
 			case Float128Member.NORMAL:
 				byte[] bytes = new byte[17];
 				a.toByteArray(bytes, 0);
-				//  TODO munge the bytes
-				b.fromByteArray(bytes, 0);
+				if (G.QUAD.signum().call(a) > 0) {
+					// number is positive
+					// move towards zero
+					// find a decrementable fraction byte
+					int spot = -1;
+					for (int i = 1; i <= 14; i++) {  // work from lsb to msb is correct here
+						if (bytes[i] != 0) {
+							spot = i;
+							i = 15;
+						}
+					}
+					// found a decrementable fraction byte
+					if (spot != -1) {
+						bytes[spot] = (byte) ((bytes[spot] & 0xff) - 1);
+						for (int i = spot-1; i >= 1; i++) {
+							bytes[i] = (byte) 0xff;
+						}
+						b.fromByteArray(bytes, 0);
+					}
+					else {
+						// did not find one. find a decremental exponent byte
+						if ((bytes[15] & 0xff) != 0) {
+							bytes[15] = (byte) ((bytes[15] & 0xff) - 1);
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = (byte) 0xff;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else if ((bytes[16] & 0x7f) != 0) {
+							bytes[16] = (byte) ((bytes[16] & 0xff) - 1);
+							bytes[15] = (byte) 0xff;
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = (byte) 0xff;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else {
+							b.setPosZero();
+						}
+					}
+				}
+				else {
+					// number is negative
+					// move away from zero
+					// find an incrementable fraction byte
+					int spot = -1;
+					for (int i = 1; i <= 14; i++) {  // work from lsb to msb is correct here
+						if (bytes[i] != 0xff) {
+							spot = i;
+							i = 15;
+						}
+					}
+					// found a incrementable fraction byte
+					if (spot != -1) {
+						bytes[spot] = (byte) ((bytes[spot] & 0xff) + 1);
+						for (int i = spot-1; i >= 1; i++) {
+							bytes[i] = 0;
+						}
+						b.fromByteArray(bytes, 0);
+					}
+					else {
+						// did not find one. find an incremental exponent byte
+						if (((bytes[16] & 0x7f) == 0x7f) && ((bytes[15] & 0xff) == 0xfe)) {
+							// we've reached the last normal exponent
+							// transition to infinity
+							b.setNegInf();
+						}
+						else if ((bytes[15] & 0xff) != 0xff) {
+							bytes[15] = (byte) ((bytes[15] & 0xff) + 1);
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = 0;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else if ((bytes[16] & 0x7f) != 0x7f) {
+							bytes[16] = (byte) ((bytes[16] & 0xff) + 1);
+							bytes[15] = 0;
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = 0;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else {
+							// this implies that a was some Infinity and the classification rules that out
+							throw new IllegalArgumentException("if we got here my code has a bug");
+						}
+					}
+				}
 				break;
 			case Float128Member.POSZERO:
 				b.setV(Float128Member.MIN_SUBNORMAL.negate());
@@ -1758,8 +1844,6 @@ public class Float128Algebra
 		return PRED;
 	}
 
-	// TODO: this code not done yet
-	
 	private final Procedure2<Float128Member, Float128Member> SUCC =
 			new Procedure2<Float128Member, Float128Member>()
 	{
@@ -1767,36 +1851,94 @@ public class Float128Algebra
 		public void call(Float128Member a, Float128Member b) {
 			switch (a.classification) {
 			case Float128Member.NORMAL:
-				// TODO: remember all the numbers have signed and unsigned versions.
-				// Inc bits correctly in the right direction at the right time.
 				byte[] bytes = new byte[17];
 				a.toByteArray(bytes, 0);
-				// find an incrementable byte
-				int spot = -1;
-				for (int i = 1; i < 14; i++) {
-					if (bytes[i] != 0xff) {
-						spot = i;
-						i = 15;
+				if (G.QUAD.signum().call(a) > 0) {
+					// number is positive
+					// move away from zero
+					// find an incrementable fraction byte
+					int spot = -1;
+					for (int i = 1; i <= 14; i++) {  // work from lsb to msb is correct here
+						if (bytes[i] != 0xff) {
+							spot = i;
+							i = 15;
+						}
 					}
-				}
-				// found an incrementable byte
-				if (spot != -1) {
-					bytes[spot] = (byte) ((bytes[spot] & 0xff) + 1);
-					b.fromByteArray(bytes, 0);
-				}
-				else {
-					// did not find one. find an incremental exponent
-					for (int i = 15; i < 17; i++) {
-						
-					}
-					
+					// found a incrementable fraction byte
 					if (spot != -1) {
-						// inc exponent
+						bytes[spot] = (byte) ((bytes[spot] & 0xff) + 1);
+						for (int i = spot-1; i >= 1; i++) {
+							bytes[i] = 0;
+						}
 						b.fromByteArray(bytes, 0);
 					}
 					else {
-						// else transition to pos inf
-						b.setPosInf();
+						// did not find one. find an incremental exponent byte
+						if (((bytes[16] & 0x7f) == 0x7f) && ((bytes[15] & 0xff) == 0xfe)) {
+							// we've reached the last normal exponent
+							// transition to infinity
+							b.setPosInf();
+						}
+						else if ((bytes[15] & 0xff) != 0xff) {
+							bytes[15] = (byte) ((bytes[15] & 0xff) + 1);
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = 0;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else if ((bytes[16] & 0x7f) != 0x7f) {
+							bytes[16] = (byte) ((bytes[16] & 0xff) + 1);
+							bytes[15] = 0;
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = 0;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else {
+							// this implies that a was some Infinity and the classification rules that out
+							throw new IllegalArgumentException("if we got here my code has a bug");
+						}
+					}
+				}
+				else {
+					// number is negative
+					// move towards from zero
+					// find a decrementable fraction byte
+					int spot = -1;
+					for (int i = 1; i <= 14; i++) {  // work from lsb to msb is correct here
+						if (bytes[i] != 0) {
+							spot = i;
+							i = 15;
+						}
+					}
+					// found a decrementable fraction byte
+					if (spot != -1) {
+						bytes[spot] = (byte) ((bytes[spot] & 0xff) - 1);
+						for (int i = spot-1; i >= 1; i++) {
+							bytes[i] = (byte) 0xff;
+						}
+						b.fromByteArray(bytes, 0);
+					}
+					else {
+						// did not find one. find a decremental exponent byte
+						if ((bytes[15] & 0xff) != 0) {
+							bytes[15] = (byte) ((bytes[15] & 0xff) - 1);
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = (byte) 0xff;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else if ((bytes[16] & 0x7f) != 0) {
+							bytes[16] = (byte) ((bytes[16] & 0xff) - 1);
+							bytes[15] = (byte) 0xff;
+							for (int i = 14; i >= 1; i--) {
+								bytes[i] = (byte) 0xff;
+							}
+							b.fromByteArray(bytes, 0);
+						}
+						else {
+							b.setNegZero();
+						}
 					}
 				}
 				break;
