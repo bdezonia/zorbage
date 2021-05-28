@@ -1673,19 +1673,157 @@ public class Float128Algebra
 		return SCALB;
 	}
 
+	private final Procedure2<Float128Member, Float128Member> ULP =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member ulp) {
+			Float128Member top = G.QUAD.construct();
+			Float128Member bottom = G.QUAD.construct();
+			switch (a.classification) {
+				case Float128Member.NORMAL:
+					if (a.num.compareTo(Float128Member.MAX_NORMAL) == 0) {
+						G.QUAD.assign().call(a, top);
+						G.QUAD.pred().call(a, bottom);
+					}
+					else {
+						G.QUAD.assign().call(a, bottom);
+						G.QUAD.succ().call(a, top);
+					}
+					subtract().call(top, bottom, ulp);
+					break;
+				case Float128Member.POSZERO:
+					ulp.setV(Float128Member.MIN_SUBNORMAL);
+					break;
+				case Float128Member.NEGZERO:
+					ulp.setV(Float128Member.MIN_SUBNORMAL);
+					break;
+				case Float128Member.POSINF:
+					ulp.setPosInf();
+					break;
+				case Float128Member.NEGINF:
+					ulp.setPosInf();
+					break;
+				case Float128Member.NAN:
+					ulp.setNan();
+					break;
+				default:
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
+	
 	@Override
 	public Procedure2<Float128Member, Float128Member> ulp() {
-		throw new UnsupportedOperationException("ulp() code not yet written for float128s");
+		return ULP;
 	}
+
+	// TODO: this code not done yet
+	
+	private final Procedure2<Float128Member, Float128Member> PRED =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+			case Float128Member.NORMAL:
+				byte[] bytes = new byte[17];
+				a.toByteArray(bytes, 0);
+				//  TODO munge the bytes
+				b.fromByteArray(bytes, 0);
+				break;
+			case Float128Member.POSZERO:
+				b.setV(Float128Member.MIN_SUBNORMAL.negate());
+				break;
+			case Float128Member.NEGZERO:
+				b.setV(Float128Member.MIN_SUBNORMAL.negate());
+				break;
+			case Float128Member.POSINF:
+				b.setV(Float128Member.MAX_NORMAL);
+				break;
+			case Float128Member.NEGINF:
+				b.setNegInf(); // trap here
+				break;
+			case Float128Member.NAN:
+				b.setNan();
+				break;
+			default:
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> pred() {
-		throw new UnsupportedOperationException("pred() code not yet written for float128s");
+		return PRED;
 	}
+
+	// TODO: this code not done yet
+	
+	private final Procedure2<Float128Member, Float128Member> SUCC =
+			new Procedure2<Float128Member, Float128Member>()
+	{
+		@Override
+		public void call(Float128Member a, Float128Member b) {
+			switch (a.classification) {
+			case Float128Member.NORMAL:
+				// TODO: remember all the numbers have signed and unsigned versions.
+				// Inc bits correctly in the right direction at the right time.
+				byte[] bytes = new byte[17];
+				a.toByteArray(bytes, 0);
+				// find an incrementable byte
+				int spot = -1;
+				for (int i = 1; i < 14; i++) {
+					if (bytes[i] != 0xff) {
+						spot = i;
+						i = 15;
+					}
+				}
+				// found an incrementable byte
+				if (spot != -1) {
+					bytes[spot] = (byte) ((bytes[spot] & 0xff) + 1);
+					b.fromByteArray(bytes, 0);
+				}
+				else {
+					// did not find one. find an incremental exponent
+					for (int i = 15; i < 17; i++) {
+						
+					}
+					
+					if (spot != -1) {
+						// inc exponent
+						b.fromByteArray(bytes, 0);
+					}
+					else {
+						// else transition to pos inf
+						b.setPosInf();
+					}
+				}
+				break;
+			case Float128Member.POSZERO:
+				b.setV(Float128Member.MIN_SUBNORMAL);
+				break;
+			case Float128Member.NEGZERO:
+				b.setV(Float128Member.MIN_SUBNORMAL);
+				break;
+			case Float128Member.POSINF:
+				b.setPosInf(); // trap here
+				break;
+			case Float128Member.NEGINF:
+				b.setV(Float128Member.MIN_NORMAL);
+				break;
+			case Float128Member.NAN:
+				b.setNan();
+				break;
+			default:
+				throw new IllegalArgumentException("unknown classification error "+a.classification);
+			}
+		}
+	};
 
 	@Override
 	public Procedure2<Float128Member, Float128Member> succ() {
-		throw new UnsupportedOperationException("succ() code not yet written for float128s");
+		return SUCC;
 	}
 
 	private final Procedure2<Float128Member, Float128Member> REAL =
