@@ -2299,7 +2299,7 @@ public class Float128Algebra
 			
 			if (a.isFinite() && a.num.compareTo(BigDecimal.ZERO) < 0) {
 				
-				if (bIsFiniteInteger == -1) {
+				if (b.isFinite() && bIsFiniteInteger == -1) {
 					b.setNan();
 				}
 				return;
