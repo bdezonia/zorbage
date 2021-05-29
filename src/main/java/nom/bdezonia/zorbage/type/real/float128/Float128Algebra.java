@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.real.float128;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -2058,9 +2059,253 @@ public class Float128Algebra
 	private final Procedure3<Float128Member, Float128Member, Float128Member> POW =
 			new Procedure3<Float128Member, Float128Member, Float128Member>()
 	{
+		/* 
+		
+		From the java api docs on how this behaves in math.pow():
+		 
+		Returns the value of the first argument raised to the power of the second argument.
+		Special cases:
+		1)
+		If the second argument is positive or negative zero, then the result is 1.0.
+		2)
+		If the second argument is 1.0, then the result is the same as the first argument.
+		3)
+		If the second argument is NaN, then the result is NaN.
+		4)
+		If the first argument is NaN and the second argument is nonzero, then the result is NaN.
+		5)
+		If
+		the absolute value of the first argument is greater than 1 and the second argument is positive infinity, or
+		the absolute value of the first argument is less than 1 and the second argument is negative infinity,
+		then the result is positive infinity.
+		6)
+		If
+		the absolute value of the first argument is greater than 1 and the second argument is negative infinity, or
+		the absolute value of the first argument is less than 1 and the second argument is positive infinity,
+		then the result is positive zero.
+		If the absolute value of the first argument equals 1 and the second argument is infinite, then the result is NaN.
+		7)
+		If
+		the first argument is positive zero and the second argument is greater than zero, or
+		the first argument is positive infinity and the second argument is less than zero,
+		then the result is positive zero.
+		8)
+		If
+		the first argument is positive zero and the second argument is less than zero, or
+		the first argument is positive infinity and the second argument is greater than zero,
+		then the result is positive infinity.
+		9)
+		If
+		the first argument is negative zero and the second argument is greater than zero but not a finite odd integer, or
+		the first argument is negative infinity and the second argument is less than zero but not a finite odd integer,
+		then the result is positive zero.
+		10)
+		If
+		the first argument is negative zero and the second argument is a positive finite odd integer, or
+		the first argument is negative infinity and the second argument is a negative finite odd integer,
+		then the result is negative zero.
+		11)
+		If
+		the first argument is negative zero and the second argument is less than zero but not a finite odd integer, or
+		the first argument is negative infinity and the second argument is greater than zero but not a finite odd integer,
+		then the result is positive infinity.
+		12)
+		If
+		the first argument is negative zero and the second argument is a negative finite odd integer, or
+		the first argument is negative infinity and the second argument is a positive finite odd integer,
+		then the result is negative infinity.
+		13)
+		If the first argument is finite and less than zero
+		if the second argument is a finite even integer, the result is equal to the result of raising the absolute value of the first argument to the power of the second argument
+		if the second argument is a finite odd integer, the result is equal to the negative of the result of raising the absolute value of the first argument to the power of the second argument
+		if the second argument is finite and not an integer, then the result is NaN.
+		If both arguments are integers, then the result is exactly equal to the mathematical result of raising the first argument to the power of the second argument if that result can in fact be represented exactly as a double value.
+		(In the foregoing descriptions, a floating-point value is considered to be an integer if and only if it is finite and a fixed point of the method ceil or, equivalently, a fixed point of the method floor. A value is a fixed point of a one-argument method if and only if the result of applying the method to the value is equal to the value.)
+
+		*/
+
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member c) {
-			throw new UnsupportedOperationException("write me");
+			
+			// 1) If the second argument is positive or negative zero, then the result is 1.0.
+			
+			if (b.isNegZero() || b.isPosZero()) {
+				c.setV(BigDecimal.ONE);
+				return;
+			}
+			
+			// 2) If the second argument is 1.0, then the result is the same as the first argument.
+			
+			if (b.num.compareTo(BigDecimal.ONE) == 0) {
+				c.set(a);
+				return;
+			}
+			
+			// 3) If the second argument is NaN, then the result is NaN.
+			
+			if (b.isNan()) {
+				c.setNan();
+				return;
+			}
+			
+			// 4) If the first argument is NaN and the second argument is nonzero, then the result is NaN.
+			
+			if (a.isNan() && !(b.isNegZero() || b.isPosZero())) {
+				c.setNan();
+				return;
+			}
+			
+			// 5)
+			// If
+			// the absolute value of the first argument is greater than 1 and the second argument is positive infinity, or
+			// the absolute value of the first argument is less than 1 and the second argument is negative infinity,
+			// then the result is positive infinity.
+			
+			if ((a.num.abs().compareTo(BigDecimal.ONE) > 0) && b.isPosInf()) {
+				c.setPosInf();
+				return;
+			}
+			
+			if ((a.num.abs().compareTo(BigDecimal.ONE) < 0) && b.isNegInf()) {
+				c.setPosInf();
+				return;
+			}
+
+			// 6) If the absolute value of the first argument equals 1 and the second argument is infinite, then the result is NaN.
+
+			if ((a.num.abs().compareTo(BigDecimal.ONE) == 0) && b.isInfinite()) {
+				c.setNan();
+				return;
+			}
+
+			// 7)
+			// If
+			// the first argument is positive zero and the second argument is greater than zero, or
+			// the first argument is positive infinity and the second argument is less than zero,
+			// then the result is positive zero.
+
+			if (a.isPosZero() && (b.num.compareTo(BigDecimal.ZERO) > 0)) {
+				c.setPosZero();
+				return;
+			}
+
+			if (a.isPosInf() && (b.num.compareTo(BigDecimal.ZERO) < 0)) {
+				c.setPosZero();
+				return;
+			}
+			
+			// 8)
+			// If
+			// the first argument is positive zero and the second argument is less than zero, or
+			// the first argument is positive infinity and the second argument is greater than zero,
+			// then the result is positive infinity.
+
+			if (a.isPosZero() && (b.num.compareTo(BigDecimal.ZERO) < 0)) {
+				c.setPosInf();
+				return;
+			}
+
+			if (a.isPosInf() && (b.num.compareTo(BigDecimal.ZERO) > 0)) {
+				c.setPosInf();
+				return;
+			}
+			
+			// 9)
+			// If
+			// the first argument is negative zero and the second argument is greater than zero but not a finite odd integer, or
+			// the first argument is negative infinity and the second argument is less than zero but not a finite odd integer,
+			// then the result is positive zero.
+			
+			BigDecimal intVersion = a.num.round(CONTEXT);
+			
+			int bIsFiniteInteger = -1;
+			if (b.isFinite()) {
+				// is integer
+				if (a.num.compareTo(intVersion) == 0) {
+					BigInteger num = intVersion.toBigInteger().abs();
+					if (num.remainder(BigInteger.valueOf(2)).compareTo(BigInteger.ONE) == 0) {
+						bIsFiniteInteger = 1;  // odd
+					}
+					else {
+						bIsFiniteInteger = 0;  // even
+					}
+				}
+			}
+			
+			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bIsFiniteInteger != 1) {
+				c.setPosZero();
+				return;
+			}
+			
+			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bIsFiniteInteger != 1) {
+				c.setPosZero();
+				return;
+			}
+
+			// 10)
+			// If
+			// the first argument is negative zero and the second argument is a positive finite odd integer, or
+			// the first argument is negative infinity and the second argument is a negative finite odd integer,
+			// then the result is negative zero.
+			
+			if (a.isNegZero() && bIsFiniteInteger == 1) {
+				c.setNegZero();
+				return;
+			}
+			
+			if (a.isNegInf() && bIsFiniteInteger == 1) {
+				c.setNegZero();
+				return;
+			}
+
+			// 11)
+			// If
+			// the first argument is negative zero and the second argument is less than zero but not a finite odd integer, or
+			// the first argument is negative infinity and the second argument is greater than zero but not a finite odd integer,
+			// then the result is positive infinity.
+
+			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bIsFiniteInteger != 1) {
+				c.setPosInf();
+				return;
+			}
+			
+			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bIsFiniteInteger != 1) {
+				c.setPosInf();
+				return;
+			}
+
+			// 12)
+			// If
+			// the first argument is negative zero and the second argument is a negative finite odd integer, or
+			// the first argument is negative infinity and the second argument is a positive finite odd integer,
+			// then the result is negative infinity.
+
+			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bIsFiniteInteger == 1) {
+				c.setNegInf();
+				return;
+			}
+			
+			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bIsFiniteInteger == 1) {
+				c.setNegInf();
+				return;
+			}
+
+			// 13)
+			// If the first argument is finite and less than zero
+			// if the second argument is a finite even integer, the result is equal to the result of raising the absolute value of the first argument to the power of the second argument
+			// if the second argument is a finite odd integer, the result is equal to the negative of the result of raising the absolute value of the first argument to the power of the second argument
+			// if the second argument is finite and not an integer, then the result is NaN.
+			// If both arguments are integers, then the result is exactly equal to the mathematical result of raising the first argument to the power of the second argument if that result can in fact be represented exactly as a double value.
+			
+			if (a.isFinite() && a.num.compareTo(BigDecimal.ZERO) < 0) {
+				
+				if (bIsFiniteInteger == -1) {
+					b.setNan();
+				}
+				return;
+			}
+			
+			b.setV(BigDecimalMath.pow(a.num, b.num, CONTEXT));
 		}
 	};
 
