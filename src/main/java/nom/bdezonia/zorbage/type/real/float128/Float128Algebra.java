@@ -2297,15 +2297,21 @@ public class Float128Algebra
 			// if the second argument is finite and not an integer, then the result is NaN.
 			// If both arguments are integers, then the result is exactly equal to the mathematical result of raising the first argument to the power of the second argument if that result can in fact be represented exactly as a double value.
 			
+			// If the first argument is finite and less than zero
+
 			if (a.isFinite() && a.num.compareTo(BigDecimal.ZERO) < 0) {
 				
+				// if the second argument is finite and not an integer, then the result is NaN.
+
 				if (b.isFinite() && bIsFiniteInteger == -1) {
-					b.setNan();
+					c.setNan();
 				}
 				return;
+				
+				// the other three cases should be handled fine by the code falling through to below
 			}
 			
-			b.setV(BigDecimalMath.pow(a.num, b.num, CONTEXT));
+			c.setV(BigDecimalMath.pow(a.num, b.num, CONTEXT));
 		}
 	};
 
