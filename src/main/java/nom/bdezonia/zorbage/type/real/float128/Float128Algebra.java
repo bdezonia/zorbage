@@ -2216,13 +2216,14 @@ public class Float128Algebra
 			// the first argument is negative infinity and the second argument is less than zero but not a finite odd integer,
 			// then the result is positive zero.
 			
-			BigDecimal intVersion = a.num.round(CONTEXT);
+			BigInteger intVersion = a.num.toBigInteger();
+			BigDecimal intAsBigDecimal = new BigDecimal(intVersion);
 			
 			int bIsFiniteInteger = -1;
 			if (b.isFinite()) {
 				// is integer
-				if (a.num.compareTo(intVersion) == 0) {
-					BigInteger num = intVersion.toBigInteger().abs();
+				if (a.num.compareTo(intAsBigDecimal) == 0) {
+					BigInteger num = intVersion.abs();
 					if (num.remainder(BigInteger.valueOf(2)).compareTo(BigInteger.ONE) == 0) {
 						bIsFiniteInteger = 1;  // odd
 					}
