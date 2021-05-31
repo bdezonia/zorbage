@@ -2219,26 +2219,30 @@ public class Float128Algebra
 			BigInteger intVersion = a.num.toBigInteger();
 			BigDecimal intAsBigDecimal = new BigDecimal(intVersion);
 			
-			int bIsFiniteInteger = -1;
+			int NOT_FINITE_INTEGER = -1;
+			int FINITE_ODD_INTEGER = 1;
+			int FINITE_EVEN_INTEGER = 0;
+			
+			int bDescription = NOT_FINITE_INTEGER;
 			if (b.isFinite()) {
 				// is integer
 				if (a.num.compareTo(intAsBigDecimal) == 0) {
 					BigInteger num = intVersion.abs();
 					if (num.remainder(BigInteger.valueOf(2)).compareTo(BigInteger.ONE) == 0) {
-						bIsFiniteInteger = 1;  // odd
+						bDescription = FINITE_ODD_INTEGER;
 					}
 					else {
-						bIsFiniteInteger = 0;  // even
+						bDescription = FINITE_EVEN_INTEGER;
 					}
 				}
 			}
 			
-			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bIsFiniteInteger != 1) {
+			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bDescription != FINITE_ODD_INTEGER) {
 				c.setPosZero();
 				return;
 			}
 			
-			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bIsFiniteInteger != 1) {
+			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bDescription != FINITE_ODD_INTEGER) {
 				c.setPosZero();
 				return;
 			}
@@ -2249,12 +2253,12 @@ public class Float128Algebra
 			// the first argument is negative infinity and the second argument is a negative finite odd integer,
 			// then the result is negative zero.
 			
-			if (a.isNegZero() && bIsFiniteInteger == 1) {
+			if (a.isNegZero() && bDescription == FINITE_ODD_INTEGER) {
 				c.setNegZero();
 				return;
 			}
 			
-			if (a.isNegInf() && bIsFiniteInteger == 1) {
+			if (a.isNegInf() && bDescription == FINITE_ODD_INTEGER) {
 				c.setNegZero();
 				return;
 			}
@@ -2265,12 +2269,12 @@ public class Float128Algebra
 			// the first argument is negative infinity and the second argument is greater than zero but not a finite odd integer,
 			// then the result is positive infinity.
 
-			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bIsFiniteInteger != 1) {
+			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bDescription != FINITE_ODD_INTEGER) {
 				c.setPosInf();
 				return;
 			}
 			
-			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bIsFiniteInteger != 1) {
+			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bDescription != FINITE_ODD_INTEGER) {
 				c.setPosInf();
 				return;
 			}
@@ -2281,12 +2285,12 @@ public class Float128Algebra
 			// the first argument is negative infinity and the second argument is a positive finite odd integer,
 			// then the result is negative infinity.
 
-			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bIsFiniteInteger == 1) {
+			if (a.isNegZero() && (b.num.compareTo(BigDecimal.ZERO) < 0) && bDescription == FINITE_ODD_INTEGER) {
 				c.setNegInf();
 				return;
 			}
 			
-			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bIsFiniteInteger == 1) {
+			if (a.isNegInf() && (b.num.compareTo(BigDecimal.ZERO) > 0) && bDescription == FINITE_ODD_INTEGER) {
 				c.setNegInf();
 				return;
 			}
@@ -2304,7 +2308,7 @@ public class Float128Algebra
 				
 				// if the second argument is finite and not an integer, then the result is NaN.
 
-				if (b.isFinite() && bIsFiniteInteger == -1) {
+				if (b.isFinite() && bDescription == NOT_FINITE_INTEGER) {
 					c.setNan();
 				}
 				return;
