@@ -781,7 +781,21 @@ public final class Float128Member
 	boolean isInfinite() {
 		return classification == POSINF || classification == NEGINF;
 	}
-	
+
+	boolean isPositive() {
+		return classification == POSZERO || classification == POSINF ||
+				(classification == NORMAL && num.signum() > 0);
+	}
+
+	boolean isNegative() {
+		return classification == NEGZERO || classification == NEGINF ||
+				(classification == NORMAL && num.signum() < 0);
+	}
+
+	boolean isZero() {
+		return classification == POSZERO || classification == NEGZERO;
+	}
+
 	void setNormal(BigDecimal value) {
 		num = value;
 		classification = NORMAL;

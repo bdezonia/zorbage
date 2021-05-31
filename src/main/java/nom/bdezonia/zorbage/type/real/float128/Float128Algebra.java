@@ -2129,7 +2129,7 @@ public class Float128Algebra
 			
 			// 1) If the second argument is positive or negative zero, then the result is 1.0.
 			
-			if (b.isNegZero() || b.isPosZero()) {
+			if (b.isZero()) {
 				c.setV(BigDecimal.ONE);
 				return;
 			}
@@ -2150,7 +2150,7 @@ public class Float128Algebra
 			
 			// 4) If the first argument is NaN and the second argument is nonzero, then the result is NaN.
 			
-			if (a.isNan() && !(b.isNegZero() || b.isPosZero())) {
+			if (a.isNan() && !(b.isZero())) {
 				c.setNan();
 				return;
 			}
@@ -2297,9 +2297,9 @@ public class Float128Algebra
 
 			// 13)
 			// If the first argument is finite and less than zero
+			// if the second argument is finite and not an integer, then the result is NaN.
 			// if the second argument is a finite even integer, the result is equal to the result of raising the absolute value of the first argument to the power of the second argument
 			// if the second argument is a finite odd integer, the result is equal to the negative of the result of raising the absolute value of the first argument to the power of the second argument
-			// if the second argument is finite and not an integer, then the result is NaN.
 			// If both arguments are integers, then the result is exactly equal to the mathematical result of raising the first argument to the power of the second argument if that result can in fact be represented exactly as a double value.
 			
 			// If the first argument is finite and less than zero
@@ -2316,7 +2316,31 @@ public class Float128Algebra
 				// the other three cases should be handled fine by the code falling through to below
 			}
 			
-			c.setV(BigDecimalMath.pow(a.num, b.num, CONTEXT));
+			BigDecimal x = a.num;
+			if (!a.isNormal()) {
+				if (a.isNan()) {
+					c.setNan();
+					return;
+				}
+				if (a.isZero())
+					x = BigDecimal.ZERO;
+				else
+					throw new IllegalArgumentException("infinity fell through in pow() for a");
+			}
+
+			BigDecimal y = b.num;
+			if (!b.isNormal()) {
+				if (b.isNan()) {
+					c.setNan();
+					return;
+				}
+				if (b.isZero())
+					y = BigDecimal.ZERO;
+				else
+					throw new IllegalArgumentException("infinity fell through in pow() for b");
+			}
+
+			c.setV(BigDecimalMath.pow(x, y, CONTEXT));
 		}
 	};
 
