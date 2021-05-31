@@ -2150,8 +2150,11 @@ public class Float128Algebra
 			
 			// 4) If the first argument is NaN and the second argument is nonzero, then the result is NaN.
 			
-			if (a.isNan() && !(b.isZero())) {
-				c.setNan();
+			if (a.isNan()) {
+				if (b.isZero())
+					c.setV(BigDecimal.ONE); // This is what Math.pow() does in this case
+				else
+					c.setNan();
 				return;
 			}
 			

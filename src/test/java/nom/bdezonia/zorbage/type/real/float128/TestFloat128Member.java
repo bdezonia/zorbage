@@ -51,6 +51,8 @@ public class TestFloat128Member {
 	@Test
 	public void test() {
 		
+		System.out.println(Math.pow(Double.NaN, 0));
+		
 		for (int i = 0; i < 7; i++) {
 			System.out.println();
 			System.out.println("Case of A");
