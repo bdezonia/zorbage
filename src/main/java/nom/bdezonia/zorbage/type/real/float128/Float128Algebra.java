@@ -2161,19 +2161,19 @@ public class Float128Algebra
 			// the absolute value of the first argument is less than 1 and the second argument is negative infinity,
 			// then the result is positive infinity.
 			
-			if ((a.num.abs().compareTo(BigDecimal.ONE) > 0) && b.isPosInf()) {
+			if ((a.isPosInf() || a.num.abs().compareTo(BigDecimal.ONE) > 0) && b.isPosInf()) {
 				c.setPosInf();
 				return;
 			}
 			
-			if ((a.num.abs().compareTo(BigDecimal.ONE) < 0) && b.isNegInf()) {
+			if ((a.isNegInf() || a.num.abs().compareTo(BigDecimal.ONE) < 0) && b.isNegInf()) {
 				c.setPosInf();
 				return;
 			}
 
 			// 6) If the absolute value of the first argument equals 1 and the second argument is infinite, then the result is NaN.
 
-			if ((a.num.abs().compareTo(BigDecimal.ONE) == 0) && b.isInfinite()) {
+			if ((a.isNormal() && a.num.abs().compareTo(BigDecimal.ONE) == 0) && b.isInfinite()) {
 				c.setNan();
 				return;
 			}
