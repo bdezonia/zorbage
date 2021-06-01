@@ -2151,10 +2151,7 @@ public class Float128Algebra
 			// 4) If the first argument is NaN and the second argument is nonzero, then the result is NaN.
 			
 			if (a.isNan()) {
-				if (b.isZero())
-					c.setV(BigDecimal.ONE); // This is what Math.pow() does in this case
-				else
-					c.setNan();
+				c.setNan();
 				return;
 			}
 			
@@ -2319,31 +2316,74 @@ public class Float128Algebra
 				// the other three cases should be handled fine by the code falling through to below
 			}
 			
-			BigDecimal x = a.num;
-			if (!a.isNormal()) {
-				if (a.isNan()) {
-					c.setNan();
-					return;
+			// one case I found was falling through
+			
+			if (a.isNormal() && b.isInfinite()) {
+				if (a.num.compareTo(BigDecimal.ONE.negate()) < 0) {
+					if (b.isPosInf())
+						c.setPosInf();
+					else // b is neg inf
+						c.setPosZero();
 				}
-				if (a.isZero())
-					x = BigDecimal.ZERO;
-				else
-					throw new IllegalArgumentException("infinity fell through in pow() for a");
+				else if (a.num.compareTo(BigDecimal.ONE.negate()) == 0) {
+					if (b.isPosInf())
+						c.setNan();
+					else // b is neg inf
+						c.setNan();
+				}
+				else if (a.num.compareTo(BigDecimal.ZERO) < 0) {
+					if (b.isPosInf())
+						c.setPosZero();
+					else // b is neg inf
+						c.setPosInf();
+				}
+				else if (a.num.compareTo(BigDecimal.ONE) < 0) {
+					if (b.isPosInf())
+						c.setPosZero();
+					else // b is neg inf
+						c.setPosInf();
+				}
+				else if (a.num.compareTo(BigDecimal.ONE) == 0) {
+					if (b.isPosInf())
+						c.setNan(); // makes no sense but that is what float64 does
+					else // b is neg inf
+						c.setNan(); // makes no sense but that is what float64 does
+				}
+				else { // a > 1
+					if (b.isPosInf())
+						c.setPosInf();
+					else // b is neg inf
+						c.setPosZero();
+				}
+				return;
+			}
+			
+			// one case I found was falling through
+			
+			if (a.isZero() && b.isInfinite()) {
+				if (b.isPosInf())
+					c.setPosZero();
+				else // b is neg inf
+					c.setPosInf();
+				return;
 			}
 
-			BigDecimal y = b.num;
-			if (!b.isNormal()) {
-				if (b.isNan()) {
-					c.setNan();
-					return;
-				}
-				if (b.isZero())
-					y = BigDecimal.ZERO;
-				else
-					throw new IllegalArgumentException("infinity fell through in pow() for b");
+			// one case I found was falling through
+			
+			if (a.isNegInf() && b.isPosInf()) {
+				c.setPosInf();
+				return;
+			}
+			
+			if (a.isInfinite() || b.isInfinite()) {
+				throw new IllegalArgumentException("infinity fell through in pow() for one of the arguments");
 			}
 
-			c.setV(BigDecimalMath.pow(x, y, CONTEXT));
+			// Tested exhaustively: at this point number is zero or finite/normal
+			// This allows us to use a.num and b.num since for zero types their
+			// value is zero. This is a convenient shortcut but must not be abused.
+
+			c.setV(BigDecimalMath.pow(a.num, b.num, CONTEXT));
 		}
 	};
 
