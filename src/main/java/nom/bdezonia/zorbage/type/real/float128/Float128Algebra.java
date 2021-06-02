@@ -2056,6 +2056,12 @@ public class Float128Algebra
 		return ROUND;
 	}
 
+	// TODO
+	//   I tested various cases of float64 code to glean correct behavior.
+	//   Some of the results returned 0.0 but maybe they were really -0.0s.
+	//   I should go over again by hand sometime and detect neg zeroes if
+	//   possible.
+	
 	private final Procedure3<Float128Member, Float128Member, Float128Member> POW =
 			new Procedure3<Float128Member, Float128Member, Float128Member>()
 	{

@@ -225,7 +225,7 @@ public class TestFloat128Member {
 
 		assertEquals(0, arr[0]);
 		assertEquals(0x3f, arr[16] & 0xff);
-		assertEquals(0xff, arr[15] & 0xff);
+		assertEquals(0xf0, arr[15] & 0xff);
 		assertEquals(0, arr[14]);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);
@@ -246,8 +246,8 @@ public class TestFloat128Member {
 		val.encode(arr, 0);
 
 		assertEquals(0, arr[0]);
-		assertEquals(0xff, arr[16] & 0xff);
-		assertEquals(0xff, arr[15] & 0xff);
+		assertEquals(0xbf, arr[16] & 0xff);
+		assertEquals(0xf0, arr[15] & 0xff);
 		assertEquals(0, arr[14]);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);
@@ -269,7 +269,7 @@ public class TestFloat128Member {
 
 		assertEquals(0, arr[0]);
 		assertEquals(0x3f, arr[16] & 0xff);
-		assertEquals(0xff, arr[15] & 0xff);
+		assertEquals(0xf8, arr[15] & 0xff);
 		assertEquals(0, arr[14]);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);

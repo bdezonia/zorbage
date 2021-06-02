@@ -78,7 +78,8 @@ public final class Float128Member
 	static final BigDecimal MIN_NORMAL = MAX_NORMAL.negate();
 	static final BigDecimal MAX_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(BigDecimal.ONE.subtract(TWO.pow(-112, Float128Algebra.CONTEXT)));
 	static final BigDecimal MIN_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(TWO.pow(-112, Float128Algebra.CONTEXT));
-	
+	static final BigInteger FULL_RANGE = new BigInteger("ffffffffffffffffffffffffffff",16);
+
 	static final byte NORMAL = 0;
 	static final byte POSZERO = 1;
 	static final byte NEGZERO = -1;
@@ -833,141 +834,93 @@ public final class Float128Member
 		arr[offset] = classification;
 		switch (classification) {
 		case NORMAL:
-			// regular number
-			int sign = (num.compareTo(BigDecimal.ZERO) < 0) ? 1 : 0;
-			BigDecimal absVal = num.abs();
-			if (absVal.compareTo(MAX_SUBNORMAL) <= 0) {
-				if (absVal.compareTo(MIN_SUBNORMAL) < 0) {
-					// too small: write the data as pos or neg zero
-					if (sign != 0) {
-						arr[offset + 1 + 15] = (byte) 0x80;
-					}
-					else {
-						arr[offset + 1 + 15] = 0;
-					}
-					for (int i = 14; i >= 0; i--) {
-						arr[offset + 1 + i] = 0;
-					}
+			BigDecimal tmp = num.abs();
+			int signBit = (num.signum() < 0) ? 0x80 : 0;
+			// is it a sub normal?
+			if (tmp.compareTo(BigDecimal.ONE) == 0) {
+				arr[offset + 1 + 15] = (byte) (signBit | 0x3f);
+				arr[offset + 1 + 14] = (byte) 0xf0;
+				for (int i = 13; i >= 0; i--) {
+					arr[offset + 1 + i] = 0;
 				}
-				else {
-					// a number in the valid subnormal range
-					// make a subnormal number
-					// a real value in the normal range
-					BigDecimal tmp = absVal;
-					BigDecimal bound = MAX_SUBNORMAL;
-					int exponent = 0;
-					BigDecimal leftovers;
-					while (tmp.compareTo(bound) < 0) {
-						exponent--;
-						bound = bound.divide(TWO);
+			}
+			// is it a subnormal?
+			else if (tmp.compareTo(MIN_SUBNORMAL) >= 0 && tmp.compareTo(MAX_SUBNORMAL) <= 0) {
+				BigDecimal numer = tmp.subtract(MIN_SUBNORMAL);
+				BigDecimal denom = MAX_SUBNORMAL.subtract(MIN_SUBNORMAL);
+				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
+				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
+				arr[offset + 1 + 15] = (byte) signBit;
+				arr[offset + 1 + 14] = 0;
+				int bitNum = 111;
+				for (int i = 13; i >= 0; i--) {
+					byte b = 0;
+					for (int bitMask = 0x80; bitMask > 0; bitMask >>= 1) {
+						if (fraction.testBit(bitNum))
+							b |= bitMask;
+						bitNum--;
 					}
-					BigDecimal left = bound;
-					BigDecimal right = bound.multiply(TWO);
-					BigDecimal partialInterval = tmp.subtract(left);
-					BigDecimal fullInterval = right.subtract(left);
-					leftovers = partialInterval.divide(fullInterval, Float128Algebra.CONTEXT);
-					BigInteger twoi = BigInteger.valueOf(2);
-					BigInteger fraction = BigInteger.ZERO;
-					BigDecimal divisor = BigDecimal.ONE.divide(TWO);
-					for (int i = 0; i < 112; i++) {
-						if (leftovers.compareTo(divisor) >= 0) {
-							fraction = fraction.add(BigInteger.ONE);
-							fraction = fraction.multiply(twoi);
-							leftovers = leftovers.subtract(divisor);
-						}
-						divisor = divisor.divide(TWO);
+					arr[offset + 1 + i] = b;
+				}
+			}
+			// is it between zero and one?
+			else if (tmp.compareTo(BigDecimal.ZERO) >= 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
+				// it's a number > 0 and < 1
+				int exponent = 0;
+				BigDecimal upperBound = BigDecimal.ONE;
+				BigDecimal lowerBound = upperBound;
+				while (tmp.compareTo(lowerBound) > 0) {
+					upperBound = lowerBound;
+					lowerBound = lowerBound.divide(TWO);
+					exponent++;
+				}
+				BigDecimal numer = tmp.subtract(lowerBound);
+				BigDecimal denom = upperBound.subtract(lowerBound);
+				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
+				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
+				exponent += 0x3fff;
+				int ehi = (exponent & 0xff00) >> 8;
+				int elo = (exponent & 0x00ff) >> 0;
+				arr[offset + 1 + 15] = (byte) (signBit | ehi);
+				arr[offset + 1 + 14] = (byte) (elo);
+				int bitNum = 111;
+				for (int i = 13; i >= 0; i--) {
+					byte b = 0;
+					for (int bitMask = 0x80; bitMask > 0; bitMask >>= 1) {
+						if (fraction.testBit(bitNum))
+							b |= bitMask;
+						bitNum--;
 					}
-					for (int i = 15; i >= 0; i--) {
-						arr[offset + 1 + i] = 0;
-					}
-					if (sign != 0) {
-						arr[offset + 1 + 15] = (byte) 0x80;
-					}
-					int upper7 = exponent >> 8;
-					for (int i = 0x40; i <= 1; i >>= 1) {
-						arr[offset + 1 + 15] |= (((i & upper7) != 0) ? i : 0);
-					}
-					int lower8 = exponent & 0xff;
-					for (int i = 0x80; i <= 1; i >>= 1) {
-						arr[offset + 1 + 14] |= (((i & lower8) != 0) ? i : 0);
-					}
-					for (int i = 13; i >= 0; i--) {
-						int delta = i * 8;
-						int v = 0;
-						for (int b = 7; b >= 0; b--) {
-							v <<= 1;
-							if (fraction.testBit(delta+b)) {
-								v += 1;
-							}
-						}
-						arr[offset + 1 + i] = (byte) v;
-					}
+					arr[offset + 1 + i] = b;
 				}
 			}
 			else {
-				// a real value in the normal range
-				BigDecimal tmp = absVal;
-				BigDecimal bound = BigDecimal.ONE;
+				// it's a number > 1 and <= MAXBOUND
 				int exponent = 0;
-				BigDecimal leftovers;
-				// is num between 0 and 1?
-				if (tmp.compareTo(BigDecimal.ONE) < 0) {
-					while (tmp.compareTo(bound) < 0) {
-						exponent--;
-						bound = bound.divide(TWO);
-					}
-					BigDecimal left = bound;
-					BigDecimal right = bound.multiply(TWO);
-					BigDecimal partialInterval = tmp.subtract(left);
-					BigDecimal fullInterval = right.subtract(left);
-					leftovers = partialInterval.divide(fullInterval, Float128Algebra.CONTEXT);
+				BigDecimal upperBound = BigDecimal.ONE;
+				while (tmp.compareTo(upperBound) > 0) {
+					upperBound = upperBound.multiply(TWO);
+					exponent++;
 				}
-				else { // num is > 1
-					while (tmp.compareTo(bound) > 0) {
-						exponent++;
-						bound = bound.multiply(TWO);
-					}
-					BigDecimal left = bound.divide(TWO);
-					BigDecimal right = bound;
-					BigDecimal partialInterval = tmp.subtract(left);
-					BigDecimal fullInterval = right.subtract(left);
-					leftovers = partialInterval.divide(fullInterval, Float128Algebra.CONTEXT);
-				}
-				BigInteger twoi = BigInteger.valueOf(2);
-				BigInteger fraction = BigInteger.ZERO;
-				BigDecimal divisor = BigDecimal.ONE.divide(TWO);
-				for (int i = 0; i < 112; i++) {
-					if (leftovers.compareTo(divisor) >= 0) {
-						fraction = fraction.add(BigInteger.ONE);
-						fraction = fraction.multiply(twoi);
-						leftovers = leftovers.subtract(divisor);
-					}
-					divisor = divisor.divide(TWO);
-				}
-				for (int i = 15; i >= 0; i--) {
-					arr[offset + 1 + i] = 0;
-				}
-				if (sign != 0) {
-					arr[offset + 1 + 15] = (byte) 0x80;
-				}
-				int upper7 = exponent >> 8;
-				for (int i = 0x40; i <= 1; i >>= 1) {
-					arr[offset + 1 + 15] |= (((i & upper7) != 0) ? i : 0);
-				}
-				int lower8 = exponent & 0xff;
-				for (int i = 0x80; i <= 1; i >>= 1) {
-					arr[offset + 1 + 14] |= (((i & lower8) != 0) ? i : 0);
-				}
+				BigDecimal lowerBound = upperBound.divide(TWO);
+				BigDecimal numer = tmp.subtract(lowerBound);
+				BigDecimal denom = upperBound.subtract(lowerBound);
+				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
+				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
+				exponent += 0x3fff;
+				int ehi = (exponent & 0xff00) >> 8;
+				int elo = (exponent & 0x00ff) >> 0;
+				arr[offset + 1 + 15] = (byte) (signBit | ehi);
+				arr[offset + 1 + 14] = (byte) (elo);
+				int bitNum = 111;
 				for (int i = 13; i >= 0; i--) {
-					int delta = i * 8;
-					int v = 0;
-					for (int b = 7; b >= 0; b--) {
-						v <<= 1;
-						if (fraction.testBit(delta+b)) {
-							v += 1;
-						}
+					byte b = 0;
+					for (int bitMask = 0x80; bitMask > 0; bitMask >>= 1) {
+						if (fraction.testBit(bitNum))
+							b |= bitMask;
+						bitNum--;
 					}
-					arr[offset + 1 + i] = (byte) v;
+					arr[offset + 1 + i] = b;
 				}
 			}
 			break;
