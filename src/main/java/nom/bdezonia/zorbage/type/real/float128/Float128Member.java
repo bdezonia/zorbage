@@ -686,7 +686,7 @@ public final class Float128Member
 
 	@Override
 	public int byteCount() {
-		return 17;
+		return 16;
 	}
 
 	@Override
@@ -828,21 +828,20 @@ public final class Float128Member
 		classification = NAN;
 	}
 
-	// Take my denom and BigDecimal values and encode them as a denom and
-	//   IEEE128 in the 17 bytes of arr starting at offset
+	// Take my classifcation and BigDecimal values and encode them as
+	//   an IEEE128 in the 16 bytes of arr starting at offset
 	
 	void encode(byte[] arr, int offset) {
-		arr[offset] = classification;
 		switch (classification) {
 		case NORMAL:
 			BigDecimal tmp = num.abs();
 			int signBit = (num.signum() < 0) ? 0x80 : 0;
 			// is it a sub normal?
 			if (tmp.compareTo(BigDecimal.ONE) == 0) {
-				arr[offset + 1 + 15] = (byte) (signBit | 0x3f);
-				arr[offset + 1 + 14] = (byte) 0xf0;
+				arr[offset + 15] = (byte) (signBit | 0x3f);
+				arr[offset + 14] = (byte) 0xf0;
 				for (int i = 13; i >= 0; i--) {
-					arr[offset + 1 + i] = 0;
+					arr[offset + i] = 0;
 				}
 			}
 			// is it a subnormal?
@@ -851,8 +850,8 @@ public final class Float128Member
 				BigDecimal denom = MAX_SUBNORMAL.subtract(MIN_SUBNORMAL);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
-				arr[offset + 1 + 15] = (byte) signBit;
-				arr[offset + 1 + 14] = 0;
+				arr[offset + 15] = (byte) signBit;
+				arr[offset + 14] = 0;
 				int bitNum = 111;
 				for (int i = 13; i >= 0; i--) {
 					byte b = 0;
@@ -861,7 +860,7 @@ public final class Float128Member
 							b |= bitMask;
 						bitNum--;
 					}
-					arr[offset + 1 + i] = b;
+					arr[offset + i] = b;
 				}
 			}
 			// is it between zero and one?
@@ -879,11 +878,11 @@ public final class Float128Member
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
-				exponent += 0x3ffe;
+				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
-				arr[offset + 1 + 15] = (byte) (signBit | ehi);
-				arr[offset + 1 + 14] = (byte) (elo);
+				arr[offset + 15] = (byte) (signBit | ehi);
+				arr[offset + 14] = (byte) (elo);
 				int bitNum = 111;
 				for (int i = 13; i >= 0; i--) {
 					byte b = 0;
@@ -892,7 +891,7 @@ public final class Float128Member
 							b |= bitMask;
 						bitNum--;
 					}
-					arr[offset + 1 + i] = b;
+					arr[offset + i] = b;
 				}
 			}
 			else {
@@ -909,11 +908,11 @@ public final class Float128Member
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
-				exponent += 0x3ffe;
+				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
-				arr[offset + 1 + 15] = (byte) (signBit | ehi);
-				arr[offset + 1 + 14] = (byte) (elo);
+				arr[offset + 15] = (byte) (signBit | ehi);
+				arr[offset + 14] = (byte) (elo);
 				int bitNum = 111;
 				for (int i = 13; i >= 0; i--) {
 					byte b = 0;
@@ -922,7 +921,7 @@ public final class Float128Member
 							b |= bitMask;
 						bitNum--;
 					}
-					arr[offset + 1 + i] = b;
+					arr[offset + i] = b;
 				}
 			}
 			break;
@@ -930,48 +929,48 @@ public final class Float128Member
 		case POSZERO:
 			// encode a regular (positive) 0
 			for (int i = 15; i >= 0; i--) {
-				arr[offset+1+i] = 0;
+				arr[offset + i] = 0;
 			}
 			break;
 			
 		case NEGZERO:
 			// encode a negative 0
-			arr[offset+1+15] = (byte) 0x80;
+			arr[offset + 15] = (byte) 0x80;
 			for (int i = 14; i >= 0; i--) {
-				arr[offset+1+i] = 0;
+				arr[offset + i] = 0;
 			}
 			break;
 			
 		case POSINF:
 			// +1 / 0
 			// encode a positive infinity in the remaining 16 bytes
-			arr[offset+1+15] = (byte) 0x7f;
-			arr[offset+1+14] = (byte) 0xff;
+			arr[offset + 15] = (byte) 0x7f;
+			arr[offset + 14] = (byte) 0xff;
 			for (int i = 13; i >= 0; i--) {
-				arr[offset+1+i] = 0;
+				arr[offset + i] = 0;
 			}
 			break;
 			
 		case NEGINF:
 			// -1 / 0
 			// encode a negative infinity in the remaining 16 bytes
-			arr[offset+1+15] = (byte) 0xff;
-			arr[offset+1+14] = (byte) 0xff;
+			arr[offset + 15] = (byte) 0xff;
+			arr[offset + 14] = (byte) 0xff;
 			for (int i = 13; i >= 0; i--) {
-				arr[offset+1+i] = 0;
+				arr[offset + i] = 0;
 			}
 			break;
 			
 		case NAN:
 			// 0 / 0
 			// encode a NaN in the remaining 16 bytes
-			arr[offset+1+15] = (byte) 0x7f;
-			arr[offset+1+14] = (byte) 0xff;
+			arr[offset + 15] = (byte) 0x7f;
+			arr[offset + 14] = (byte) 0xff;
 			for (int i = 13; i >= 0; i--) {
 				// any non zero value tells the OS this is a nan rather than an inf
 				// TODO : do I have to deal with signaling versus nonsignaling or is
 				// that all done in hardware?
-				arr[offset+1+i] = 1;
+				arr[offset + i] = 1;
 			}
 			break;
 			
@@ -980,23 +979,19 @@ public final class Float128Member
 		}
 	}
 	
-	// Take the 17 bytes stored in arr starting at offset and decode them
-	//   into my denom and BigDecimal values. Really just decode the last
-	//   16 bytes. Assume the 1st byte (the zorbage code) is irrelevant
-	//   for decoding purposes.
+	// Take the 16 bytes stored in arr starting at offset and decode them
+	//   into my denom and BigDecimal values.
 	
 	void decode(byte[] buffer, int offset) {
 		
-		int sign = 0;
-		int exponent = 0;
+		int sign = (buffer[offset + 15] & 0x80);
+		
+		int exponent = ((buffer[offset + 15] & 0x7f) << 8) + (buffer[offset + 14] & 0xff);
+		
 		BigInteger fraction = BigInteger.ZERO;
 		
-		sign = (buffer[offset + 1 + 15] & 0x80);
-		
-		exponent = ((buffer[offset + 1 + 15] & 0x7f) << 8) + (buffer[offset + 1 + 14] & 0xff);
-		
 		for (int i = 13; i <= 0; i--) {
-			fraction = fraction.shiftLeft(8).add(BigInteger.valueOf(buffer[offset + 1 + i] & 0xff));
+			fraction = fraction.shiftLeft(8).add(BigInteger.valueOf(buffer[offset + i] & 0xff));
 		}
 		
 		if (exponent > 0 || exponent < 0x7fff) {
