@@ -80,7 +80,8 @@ public final class Float128Member
 	static final BigDecimal MAX_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(BigDecimal.ONE.subtract(TWO.pow(-112, Float128Algebra.CONTEXT)));
 	static final BigDecimal MIN_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(TWO.pow(-112, Float128Algebra.CONTEXT));
 	static final BigInteger FULL_RANGE = new BigInteger( "10000000000000000000000000000",16);
-
+	static final BigDecimal FULL_RANGE_BD = new BigDecimal(FULL_RANGE);
+	
 	static final byte NORMAL = 0;
 	static final byte POSZERO = 1;
 	static final byte NEGZERO = -1;
@@ -849,7 +850,7 @@ public final class Float128Member
 				BigDecimal numer = tmp.subtract(MIN_SUBNORMAL);
 				BigDecimal denom = MAX_SUBNORMAL.subtract(MIN_SUBNORMAL);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
+				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).toBigInteger();
 				arr[offset + 15] = (byte) signBit;
 				arr[offset + 14] = 0;
 				int bitNum = 111;
@@ -877,7 +878,7 @@ public final class Float128Member
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -907,7 +908,7 @@ public final class Float128Member
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -998,7 +999,7 @@ public final class Float128Member
 
 			// a regular number
 			
-			BigDecimal value = new BigDecimal(fraction).divide(new BigDecimal(FULL_RANGE), Float128Algebra.CONTEXT);
+			BigDecimal value = new BigDecimal(fraction).divide(FULL_RANGE_BD, Float128Algebra.CONTEXT);
 			value = value.add(BigDecimal.ONE);
 			value = value.multiply(TWO.pow(exponent - 16383));
 			if (sign != 0)
@@ -1022,7 +1023,7 @@ public final class Float128Member
 				
 				// subnormal number
 				
-				BigDecimal value = new BigDecimal(fraction).divide(new BigDecimal(FULL_RANGE), Float128Algebra.CONTEXT);
+				BigDecimal value = new BigDecimal(fraction).divide(FULL_RANGE_BD, Float128Algebra.CONTEXT);
 				value = value.multiply(TWO.pow(-16382));
 				if (sign != 0)
 					value = value.negate();
