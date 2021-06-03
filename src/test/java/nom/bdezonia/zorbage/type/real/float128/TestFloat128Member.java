@@ -269,8 +269,8 @@ public class TestFloat128Member {
 
 		assertEquals(0, arr[0]);
 		assertEquals(0x3f, arr[16] & 0xff);
-		assertEquals(0xf8, arr[15] & 0xff);
-		assertEquals(0, arr[14]);
+		assertEquals(0xff, arr[15] & 0xff);
+		assertEquals(0x80, arr[14] & 0xff);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);
 		assertEquals(0, arr[11]);
@@ -283,7 +283,7 @@ public class TestFloat128Member {
 		assertEquals(0, arr[4]);
 		assertEquals(0, arr[3]);
 		assertEquals(0, arr[2]);
-		assertEquals(1, arr[1]);
+		assertEquals(0, arr[1]);
 		
 		val.setV(BigDecimal.valueOf(-1.5));
 
@@ -292,7 +292,7 @@ public class TestFloat128Member {
 		assertEquals(0, arr[0]);
 		assertEquals(0xbf, arr[16] & 0xff);
 		assertEquals(0xff, arr[15] & 0xff);
-		assertEquals(0, arr[14]);
+		assertEquals(0x80, arr[14] & 0xff);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);
 		assertEquals(0, arr[11]);
@@ -305,7 +305,29 @@ public class TestFloat128Member {
 		assertEquals(0, arr[4]);
 		assertEquals(0, arr[3]);
 		assertEquals(0, arr[2]);
-		assertEquals(1, arr[1]);
+		assertEquals(0, arr[1]);
+		
+		val.setV(BigDecimal.valueOf(28.6333302));  // 0x403CA221ED9091B3
+
+		val.encode(arr, 0);
+
+		assertEquals(0, arr[0]);
+		assertEquals(0x40, arr[16] & 0xff);
+		assertEquals(0x3c, arr[15] & 0xff);
+		assertEquals(0xa2, arr[14] & 0xff);
+		assertEquals(0x21, arr[13] & 0xff);
+		assertEquals(0xed, arr[12] & 0xff);
+		assertEquals(0x90, arr[11] & 0xff);
+		assertEquals(0x91, arr[10] & 0xff);
+		assertEquals(0xb3, arr[9] & 0xff);
+		assertEquals(0, arr[8]);
+		assertEquals(0, arr[7]);
+		assertEquals(0, arr[6]);
+		assertEquals(0, arr[5]);
+		assertEquals(0, arr[4]);
+		assertEquals(0, arr[3]);
+		assertEquals(0, arr[2]);
+		assertEquals(0, arr[1]);
 		
 		/*
 		IndexedDataSource<Float128Member> storage = Storage.allocate(val, 1);

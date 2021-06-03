@@ -78,7 +78,8 @@ public final class Float128Member
 	static final BigDecimal MIN_NORMAL = MAX_NORMAL.negate();
 	static final BigDecimal MAX_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(BigDecimal.ONE.subtract(TWO.pow(-112, Float128Algebra.CONTEXT)));
 	static final BigDecimal MIN_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(TWO.pow(-112, Float128Algebra.CONTEXT));
-	static final BigInteger FULL_RANGE = new BigInteger("ffffffffffffffffffffffffffff",16);
+	//static final BigInteger FULL_RANGE = new BigInteger("ffffffffffffffffffffffffffff",16);
+	static final BigInteger FULL_RANGE = new BigInteger( "10000000000000000000000000000",16);
 
 	static final byte NORMAL = 0;
 	static final byte POSZERO = 1;
@@ -867,8 +868,8 @@ public final class Float128Member
 			else if (tmp.compareTo(BigDecimal.ZERO) >= 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
 				// it's a number > 0 and < 1
 				int exponent = 0;
-				BigDecimal upperBound = BigDecimal.ONE;
-				BigDecimal lowerBound = upperBound;
+				BigDecimal lowerBound = BigDecimal.ONE;
+				BigDecimal upperBound = lowerBound;
 				while (tmp.compareTo(lowerBound) > 0) {
 					upperBound = lowerBound;
 					lowerBound = lowerBound.divide(TWO);
@@ -878,7 +879,7 @@ public final class Float128Member
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
-				exponent += 0x3fff;
+				exponent += 0x3ffe;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 1 + 15] = (byte) (signBit | ehi);
@@ -897,17 +898,18 @@ public final class Float128Member
 			else {
 				// it's a number > 1 and <= MAXBOUND
 				int exponent = 0;
-				BigDecimal upperBound = BigDecimal.ONE;
+				BigDecimal lowerBound = BigDecimal.ONE;
+				BigDecimal upperBound = lowerBound;
 				while (tmp.compareTo(upperBound) > 0) {
+					lowerBound = upperBound;
 					upperBound = upperBound.multiply(TWO);
 					exponent++;
 				}
-				BigDecimal lowerBound = upperBound.divide(TWO);
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
-				exponent += 0x3fff;
+				exponent += 0x3ffe;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 1 + 15] = (byte) (signBit | ehi);
@@ -979,7 +981,9 @@ public final class Float128Member
 	}
 	
 	// Take the 17 bytes stored in arr starting at offset and decode them
-	//   into my denom and BigDecimal values.
+	//   into my denom and BigDecimal values. Really just decode the last
+	//   16 bytes. Assume the 1st byte (the zorbage code) is irrelevant
+	//   for decoding purposes.
 	
 	void decode(byte[] buffer, int offset) {
 		
@@ -994,81 +998,64 @@ public final class Float128Member
 		for (int i = 13; i <= 0; i--) {
 			fraction = fraction.shiftLeft(8).add(BigInteger.valueOf(buffer[offset + 1 + i] & 0xff));
 		}
+		
+		if (exponent > 0 || exponent < 0x7fff) {
 
-		if (buffer[offset] == 1) { // denominator == 1
+			// a regular number
 			
-			// encoded as a real value: decode it and if out of bounds reclassify it
+			BigDecimal value = new BigDecimal(fraction).divide(new BigDecimal(FULL_RANGE), Float128Algebra.CONTEXT);
+			value = value.add(BigDecimal.ONE);
+			value = value.multiply(TWO.pow(exponent - 16383));
+			if (sign != 0)
+				value = value.negate();
+			setNormal(value);
+		}
+		else if (exponent == 0) {
 			
-			if ((exponent > 0) && (exponent < 0x7fff)) {
-				// a regular number
-				//   (−1)signbit × 2exponentbits2 − 16383 × 1.significandbits2
-				BigDecimal value = BigDecimal.ONE;
-				BigDecimal inc = BigDecimal.valueOf(0.5);
-				for (int i = 111; i >= 0; i--) {
-					if (fraction.testBit(i))
-						value.add(inc);
-					inc = inc.divide(TWO);
-				}
-				BigDecimal scale = TWO.pow(exponent - 16383, Float128Algebra.CONTEXT);
-				value = value.multiply(scale);
-				if (sign != 0) {
-					value = value.negate();
-				}
-				setNormal(value);
-			}
-			else if (exponent == 0) {
-				if (fraction.compareTo(BigInteger.ZERO) == 0) {
-					if (sign != 0) {
-						setNegZero();
-					}
-					else {
-						setPosZero();
-					}
-				}
-				else { // fraction does not equal zero
-					// subnormal number
-					//   (−1)signbit × 2−16382 × 0.significandbits2
-					BigDecimal value = BigDecimal.ZERO;
-					BigDecimal inc = BigDecimal.valueOf(0.5);
-					for (int i = 111; i >= 0; i--) {
-						if (fraction.testBit(i))
-							value.add(inc);
-						inc = inc.divide(TWO);
-					}
-					BigDecimal scale = TWO.pow(-16382, Float128Algebra.CONTEXT);
-					value = value.multiply(scale);
-					if (sign != 0) {
-						value = value.negate();
-					}
-					setNormal(value);
-				}
+			// a special number : zeroes and subnormals
+			
+			if (fraction.compareTo(BigInteger.ZERO) == 0) {
+				
+				// a zero
+				
+				if (sign != 0)
+					setNegZero();
+				else
+					setPosZero();
 			}
 			else {
-				// exponent == 0x7fff
-				if (fraction.compareTo(BigInteger.ZERO) == 0) {
-					// an infinity
-					if (sign != 0)
-						setNegInf();
-					else
-						setPosInf();
-				}
-				else { // fraction does not equal zero
-					// a nan
-					setNan();
-				}
+				
+				// subnormal number
+				
+				BigDecimal value = new BigDecimal(fraction).divide(new BigDecimal(FULL_RANGE), Float128Algebra.CONTEXT);
+				value = value.multiply(TWO.pow(-16382));
+				if (sign != 0)
+					value = value.negate();
+				setNormal(value);
 			}
 		}
-		else {
-			// buffer[offset] == 0; denom == 0. we encoded a nan or pos inf or neg inf
+		else if (exponent == 0x7fff) {
+			
+			// a special number; infinities and nan
+			
 			if (fraction.compareTo(BigInteger.ZERO) == 0) {
+				
+				// an infinity
+				
 				if (sign != 0)
 					setNegInf();
 				else
 					setPosInf();
 			}
-			else
+			else {
+				
+				// a nan
+				
 				setNan();
+			}
 		}
+		else
+			throw new IllegalArgumentException("illegal exponent "+exponent);
 	}
 
 	private void clamp() {
