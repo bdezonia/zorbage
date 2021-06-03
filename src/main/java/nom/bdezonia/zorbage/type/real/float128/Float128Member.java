@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -78,7 +79,6 @@ public final class Float128Member
 	static final BigDecimal MIN_NORMAL = MAX_NORMAL.negate();
 	static final BigDecimal MAX_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(BigDecimal.ONE.subtract(TWO.pow(-112, Float128Algebra.CONTEXT)));
 	static final BigDecimal MIN_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(TWO.pow(-112, Float128Algebra.CONTEXT));
-	//static final BigInteger FULL_RANGE = new BigInteger("ffffffffffffffffffffffffffff",16);
 	static final BigInteger FULL_RANGE = new BigInteger( "10000000000000000000000000000",16);
 
 	static final byte NORMAL = 0;
@@ -877,7 +877,7 @@ public final class Float128Member
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
+				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -907,7 +907,7 @@ public final class Float128Member
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).toBigInteger();
+				BigInteger fraction = new BigDecimal(FULL_RANGE).multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -990,7 +990,7 @@ public final class Float128Member
 		
 		BigInteger fraction = BigInteger.ZERO;
 		
-		for (int i = 13; i <= 0; i--) {
+		for (int i = 13; i >= 0; i--) {
 			fraction = fraction.shiftLeft(8).add(BigInteger.valueOf(buffer[offset + i] & 0xff));
 		}
 		
