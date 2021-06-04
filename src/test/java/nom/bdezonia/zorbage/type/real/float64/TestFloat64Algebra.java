@@ -261,183 +261,183 @@ public class TestFloat64Algebra {
 		Float64Member c = G.DBL.construct();
 		Float64Member d = G.DBL.construct();
 
-		// G.CDBL.acos();
+		// G.DBL.acos();
 		a.setV(Math.PI/2);
 		G.DBL.acos().call(a, b);
 		assertEquals(Math.acos(Math.PI/2), b.v(), 0);
 		
-		// G.CDBL.acosh();
+		// G.DBL.acosh();
 		
-		// G.CDBL.acot();
+		// G.DBL.acot();
 		
-		// G.CDBL.acoth();
+		// G.DBL.acoth();
 		
-		// G.CDBL.acsc();
+		// G.DBL.acsc();
 		
-		// G.CDBL.acsch();
+		// G.DBL.acsch();
 		
-		// G.CDBL.add();
+		// G.DBL.add();
 		a.setV(1);
 		b.setV(4);
 		G.DBL.add().call(a, b, c);
 		assertEquals(5, c.v(), 0);
 		
-		// G.CDBL.asec();
+		// G.DBL.asec();
 		
-		// G.CDBL.asech();
+		// G.DBL.asech();
 		
-		// G.CDBL.asin();
+		// G.DBL.asin();
 		a.setV(Math.PI/2);
 		G.DBL.asin().call(a, b);
 		assertEquals(Math.asin(Math.PI/2), b.v(), 0);
 		
-		// G.CDBL.asinh();
+		// G.DBL.asinh();
 		
-		// G.CDBL.assign();
+		// G.DBL.assign();
 		a.setV(66);
 		G.DBL.assign().call(a, b);
 		assertEquals(66,b.v(),0);
 		
-		// G.CDBL.atan();
+		// G.DBL.atan();
 		a.setV(Math.PI/2);
 		G.DBL.atan().call(a, b);
 		assertEquals(Math.atan(Math.PI/2), b.v(), 0);
 		
-		// G.CDBL.atanh();
+		// G.DBL.atanh();
 		
-		// G.CDBL.cbrt();
+		// G.DBL.cbrt();
 		a.setV(8);
 		G.DBL.cbrt().call(a, b);
 		assertEquals(2, b.v(), tol);
 		
-		// G.CDBL.conjugate();
+		// G.DBL.conjugate();
 		a.setV(66);
 		G.DBL.conjugate().call(a, b);
 		assertEquals(66,b.v(),0);
 		
-		// G.CDBL.construct();
+		// G.DBL.construct();
 		a = G.DBL.construct();
 		assertEquals(0, a.v(), 0);
 
-		// G.CDBL.construct("{14}");
+		// G.DBL.construct("{14}");
 		a = G.DBL.construct("{14}");
 		assertEquals(14, a.v(), 0);
 		
-		// G.CDBL.construct(other);
+		// G.DBL.construct(other);
 		b = G.DBL.construct(a);
 		assertEquals(14, b.v(), 0);
 		
-		// G.CDBL.cos();
+		// G.DBL.cos();
 		a.setV(Math.PI/2);
 		G.DBL.cos().call(a, b);
 		assertEquals(Math.cos(Math.PI/2), b.v(), tol);
 		
-		// G.CDBL.cosh();
+		// G.DBL.cosh();
 		a.setV(Math.PI/2);
 		G.DBL.cosh().call(a, b);
 		assertEquals(Math.cosh(Math.PI/2), b.v(), tol);
 		
-		// G.CDBL.cot();
+		// G.DBL.cot();
 		
-		// G.CDBL.coth();
+		// G.DBL.coth();
 		
-		// G.CDBL.csc();
+		// G.DBL.csc();
 		
-		// G.CDBL.csch();
+		// G.DBL.csch();
 		
-		// G.CDBL.divide();
+		// G.DBL.divide();
 		a = new Float64Member(7);
 		b = new Float64Member(3);
 		G.DBL.divide().call(a, b, c);
 		assertEquals(7.0/3, c.v(), 0);
 
-		// G.CDBL.E();
+		// G.DBL.E();
 		G.DBL.E().call(a);
 		assertEquals(Math.E, a.v(), 0);
 		
-		// G.CDBL.exp();
+		// G.DBL.exp();
 		a.setV(4);
 		G.DBL.exp().call(a, b);
 		assertEquals(Math.exp(4), b.v(), tol);
 		
-		// G.CDBL.expm1();
+		// G.DBL.expm1();
 		a.setV(4);
 		G.DBL.expm1().call(a, b);
 		assertEquals(Math.expm1(4), b.v(), tol);
 		
-		// G.CDBL.infinite();
+		// G.DBL.infinite();
 		a = G.DBL.construct();
 		assertFalse(G.DBL.isInfinite().call(a));
 		G.DBL.infinite().call(a);
 		assertTrue(G.DBL.isInfinite().call(a));
 		
-		// G.CDBL.invert();
+		// G.DBL.invert();
 		a.setV(14);
 		G.DBL.invert().call(a, b);
 		G.DBL.unity().call(c);
 		G.DBL.divide().call(c, a, c);
 		assertEquals(c.v(), b.v(), tol);
 		
-		// G.CDBL.isEqual();
+		// G.DBL.isEqual();
 		a = new Float64Member(44);
 		b = new Float64Member(12);
 		assertFalse(G.DBL.isEqual().call(a, b));
 		b = G.DBL.construct(a);
 		assertTrue(G.DBL.isEqual().call(a, b));
 		
-		// G.CDBL.isInfinite();
+		// G.DBL.isInfinite();
 		// tested by infinite() test above
 		
-		// G.CDBL.isNaN();
+		// G.DBL.isNaN();
 		// tested by nan() test below
 		
-		// G.CDBL.isNotEqual();
+		// G.DBL.isNotEqual();
 		a = new Float64Member(44);
 		b = new Float64Member(12);
 		assertTrue(G.DBL.isNotEqual().call(a, b));
 		b = G.DBL.construct(a);
 		assertFalse(G.DBL.isNotEqual().call(a, b));
 		
-		// G.CDBL.isZero();
+		// G.DBL.isZero();
 		// tested by zero() test below
 		
-		// G.CDBL.log();
+		// G.DBL.log();
 		a.setV(Math.PI/2);
 		G.DBL.log().call(a, b);
 		assertEquals(Math.log(Math.PI/2), b.v(), tol);
 		
-		// G.CDBL.log1p();
+		// G.DBL.log1p();
 		a.setV(Math.PI/2);
 		G.DBL.log1p().call(a, b);
 		assertEquals(Math.log1p(Math.PI/2), b.v(), tol);
 		
-		// G.CDBL.multiply();
+		// G.DBL.multiply();
 		a = new Float64Member(-8);
 		b = new Float64Member(-2);
 		G.DBL.multiply().call(a, b, c);
 		assertEquals(16, c.v(), 0);
 		
-		// G.CDBL.nan();
+		// G.DBL.nan();
 		a = new Float64Member(44);
 		assertFalse(G.DBL.isNaN().call(a));
 		G.DBL.nan().call(a);
 		assertTrue(G.DBL.isNaN().call(a));
 		
-		// G.CDBL.negate();
+		// G.DBL.negate();
 		a = new Float64Member(44);
 		G.DBL.negate().call(a, b);
 		assertEquals(-44, b.v(), 0);
 		
-		// G.CDBL.norm();
+		// G.DBL.norm();
 		a = new Float64Member(3);
 		G.DBL.norm().call(a, d);
 		assertEquals(3,d.v(),0);
 		
-		// G.CDBL.PI();
+		// G.DBL.PI();
 		G.DBL.PI().call(a);
 		assertEquals(Math.PI, a.v(), 0);
 		
-		// G.CDBL.pow();
+		// G.DBL.pow();
 		a = new Float64Member(-7);
 		b = new Float64Member(2);
 		G.DBL.pow().call(a, b, c);
@@ -445,91 +445,91 @@ public class TestFloat64Algebra {
 		G.DBL.multiply().call(a, a, t);
 		assertEquals(t.v(), c.v(), tol);
 		
-		// G.CDBL.power();
+		// G.DBL.power();
 		a = new Float64Member(-7);
 		G.DBL.power().call(2, a, b);
 		G.DBL.multiply().call(a, a, t);
 		assertEquals(t.v(), b.v(), tol);
 		
-		// G.CDBL.random();
+		// G.DBL.random();
 		// TODO: not sure how to test
 		G.DBL.random().call(a);
 		
-		// G.CDBL.real();
+		// G.DBL.real();
 		a = new Float64Member(0.1);
 		G.DBL.real().call(a, d);
 		assertEquals(0.1, d.v(), 0);
 		
-		// G.CDBL.round();
+		// G.DBL.round();
 		d = new Float64Member(1);
 		a = new Float64Member(3.3);
 		G.DBL.round().call(Mode.TOWARDS_ORIGIN, d, a, b);
 		assertEquals(3, b.v(), 0);
 		
-		// G.CDBL.scale();
+		// G.DBL.scale();
 		a = new Float64Member(3);
 		b = new Float64Member(3);
 		G.DBL.scale().call(a, b, c);
 		assertEquals(9, c.v(), 0);
 		
-		// G.CDBL.sec();
+		// G.DBL.sec();
 		
-		// G.CDBL.sech();
+		// G.DBL.sech();
 		
-		// G.CDBL.sin();
+		// G.DBL.sin();
 		a.setV(Math.PI/2);
 		G.DBL.sin().call(a, b);
 		assertEquals(Math.sin(Math.PI/2), b.v(), tol);
 		
-		// G.CDBL.sinAndCos();
+		// G.DBL.sinAndCos();
 		
-		// G.CDBL.sinc();
+		// G.DBL.sinc();
 		
-		// G.CDBL.sinch();
+		// G.DBL.sinch();
 		
-		// G.CDBL.sinchpi();
+		// G.DBL.sinchpi();
 		
-		// G.CDBL.sincpi();
+		// G.DBL.sincpi();
 		
-		// G.CDBL.sinh();
+		// G.DBL.sinh();
 		a.setV(Math.PI/2);
 		G.DBL.sinh().call(a, b);
 		assertEquals(Math.sinh(Math.PI/2), b.v(), tol);
 		
-		// G.CDBL.sinhAndCosh();
+		// G.DBL.sinhAndCosh();
 		
-		// G.CDBL.sqrt();
+		// G.DBL.sqrt();
 		a.setV(8);
 		G.DBL.sqrt().call(a, b);
 		assertEquals(Math.sqrt(8), b.v(), tol);
 		
-		// G.CDBL.subtract();
+		// G.DBL.subtract();
 		a.setV(1);
 		b.setV(4);
 		G.DBL.subtract().call(a, b, c);
 		assertEquals(-3, c.v(), 0);
 		
-		// G.CDBL.tan();
+		// G.DBL.tan();
 		a.setV(Math.PI/2);
 		G.DBL.tan().call(a, b);
 		assertEquals(Math.tan(Math.PI/2), b.v(), tol);
 
-		// G.CDBL.tanh();
+		// G.DBL.tanh();
 		a.setV(Math.PI/2);
 		G.DBL.tanh().call(a, b);
 		assertEquals(Math.tanh(Math.PI/2), b.v(), tol);
 
-		// G.CDBL.unity();
+		// G.DBL.unity();
 		a = new Float64Member(0.1);
 		G.DBL.unity().call(a);
 		assertEquals(1, a.v(), 0);
 		
-		// G.CDBL.unreal();
+		// G.DBL.unreal();
 		a = new Float64Member(0.1);
 		G.DBL.unreal().call(a, b);
 		assertEquals(0, b.v(), 0);
 		
-		// G.CDBL.zero();
+		// G.DBL.zero();
 		a = new Float64Member(0.1);
 		assertFalse(G.DBL.isZero().call(a));
 		G.DBL.zero().call(a);
