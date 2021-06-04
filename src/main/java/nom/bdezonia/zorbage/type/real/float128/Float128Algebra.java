@@ -2026,11 +2026,15 @@ public class Float128Algebra
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
 			byte[] bytes = new byte[16];
 			bytes[15] = (byte) 0x3f;
-			bytes[14] = (byte) 0xfe;
+			bytes[14] = (byte) 0xff;
 			for (int i = 13; i >= 0; i--) {
 				bytes[i] = (byte) rng.nextInt(256);
 			}
-			a.fromByteArray(bytes, 0);
+			// so at this point bytes encode something in range [1.0, 2.0)
+			Float128Member tmp = G.QUAD.construct();
+			tmp.fromByteArray(bytes, 0);
+			// now take that num and correct into [0.0, 1.0)
+			a.setV(tmp.num.subtract(BigDecimal.ONE));
 		}
 	};
 
