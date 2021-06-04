@@ -159,9 +159,10 @@ class Algebras {
 	 * Zorbage ships with many different algebras stored in the G class:
 	 * 
 	 * signed ints from 1 bit to 128 bit
-	 * unsigned ints from 1 bit to 64 bit
+	 * unsigned ints from 1 bit to 128 bit
 	 * unbounded ints
-	 * floats (16 bit, 32 bit, 64 bit, and unbounded)
+	 * floats (16 bit, 32 bit, 64 bit, 128 bit, and unbounded)
+	 * gaussian integers (8 bit, 16 bit, 32 bit, 64 bit, and unbounded)
 	 * booleans
 	 * n-dimensional real Points
 	 * ARGB and RGB pixels

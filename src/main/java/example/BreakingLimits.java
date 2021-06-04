@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Member;
 import nom.bdezonia.zorbage.type.integer.int12.SignedInt12Member;
 import nom.bdezonia.zorbage.type.integer.int128.SignedInt128Member;
 import nom.bdezonia.zorbage.type.integer.int128.UnsignedInt128Member;
@@ -146,7 +147,7 @@ class BreakingLimits {
 	/*
 	 * Many floating point types
 	 *   Java supports 32 bit and 64 bit floating types
-	 *   Zorbage supports 16 bit, 32 bit, 64 bit, and seemingly limitless precision floating bit numbers.
+	 *   Zorbage supports 16 bit, 32 bit, 64 bit, 128 bit, and seemingly limitless precision floating bit numbers.
 	 *   
 	 *     One nice thing about floating point in Zorbage is that you can write one algorithm and by
 	 *     passing it different parameters you can compute a result with 3 places precision or 7 places
@@ -274,6 +275,7 @@ class BreakingLimits {
 	 *   - rational numbers (RationalMember)
 	 *       Rational numbers are great for safely scaling lists of integers while avoiding overflow and
 	 *       underflow and double precision math and rounding.
+	 *   - gaussian integers
 	 */
 
 	void example7() {
@@ -307,6 +309,14 @@ class BreakingLimits {
 		System.out.println(value.v()); // prints 179
 		
 		// notice how the number did not overflow even though 128 * 7 / 5 does temporarily exceed 255
+		
+		// gaussian integers
+		
+		GaussianInt16Member g16 = G.GAUSS16.construct("{4,3}");
+		
+		G.GAUSS16.scaleByRational().call(rationalScale, g16, g16);
+		
+		System.out.println(g16);  // prints {5,4}
 	}
 	
 }
