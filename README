@@ -54,7 +54,7 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
     - unsigned integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128)
 
-    - floats (bits: 16, 32, 64, unbounded)
+    - floats (bits: 16, 32, 64, 128, unbounded)
 
     - rational numbers (unbounded)
     
@@ -170,9 +170,11 @@ Zorbage breaks Java barriers
     
   - supports 128-bit signed and unsigned integers
     
-  - supports 16-bit floating numbers
+  - supports 128-bit floating point numbers
     
-  - supports high precision floating numbers
+  - supports 16-bit floating point numbers
+    
+  - supports high precision floating point numbers
     
   - supports unbounded ints
     
@@ -180,8 +182,8 @@ Zorbage breaks Java barriers
     
   - builds reals, complexes, quaternions, and octonions from any
       of the floating types. You can write one algorithm and substitute
-      one runtime parameter to calculate in 16 bit, 32 bit, 64 bit, or
-      seemingly unbounded accuracy.
+      one runtime parameter to calculate in 16 bit, 32 bit, 64 bit, 128
+      bit or seemingly unbounded accuracy.
     
 Zorbage is fast
   
