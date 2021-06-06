@@ -38,7 +38,6 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
@@ -241,7 +240,7 @@ public class TestFloat128Algebra {
 		// G.QUAD.asech();
 		
 		// G.QUAD.asin();
-		a.setV(BigDecimal.valueOf(Math.cos(Math.PI/2)));
+		a.setV(BigDecimal.valueOf(Math.sin(Math.PI/2)));
 		G.QUAD.asin().call(a, b);
 		assertTrue(isNear(Math.asin(a.v().doubleValue()), b.v(), TOL));
 		
@@ -253,9 +252,9 @@ public class TestFloat128Algebra {
 		assertTrue(isNear(66,b.v(),TOL));
 		
 		// G.QUAD.atan();
-		a.setV(BigDecimal.valueOf(Math.PI/2));
+		a.setV(BigDecimal.valueOf(Math.PI/16));
 		G.QUAD.atan().call(a, b);
-		assertTrue(isNear(Math.atan(Math.PI/2), b.v(), TOL));
+		assertTrue(isNear(Math.atan(Math.PI/16), b.v(), TOL));
 		
 		// G.QUAD.atanh();
 		
@@ -503,10 +502,6 @@ public class TestFloat128Algebra {
 		
 		// G.QUAD.getExponent();
 		a.setV(BigDecimal.valueOf(4.712345677532));
-		
-		System.out.println(Math.getExponent(a.v().doubleValue()));
-		System.out.println(G.QUAD.getExponent().call(a));
-		
 		assertTrue(Math.getExponent(a.v().doubleValue()) == G.QUAD.getExponent().call(a));
 
 		// G.QUAD.isGreater();

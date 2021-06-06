@@ -271,9 +271,9 @@ public class TestFloat16Algebra {
 		Float16Member d = G.HLF.construct();
 
 		// G.CDBL.acos();
-		a.setV((float)Math.PI/2);
+		a.setV((float)Math.PI/16);
 		G.HLF.acos().call(a, b);
-		assertEquals(Math.acos(Math.PI/2), b.v(), 0);
+		assertEquals(Math.acos(Math.PI/16), b.v(), 0.0002);
 		
 		// G.CDBL.acosh();
 		
@@ -296,9 +296,9 @@ public class TestFloat16Algebra {
 		// G.CDBL.asech();
 		
 		// G.CDBL.asin();
-		a.setV((float)Math.PI/2);
+		a.setV((float)Math.PI/16);
 		G.HLF.asin().call(a, b);
-		assertEquals(Math.asin(Math.PI/2), b.v(), 0);
+		assertEquals(Math.asin(Math.PI/16), b.v(), 0.0001);
 		
 		// G.CDBL.asinh();
 		
@@ -308,9 +308,9 @@ public class TestFloat16Algebra {
 		assertEquals(66,b.v(),0);
 		
 		// G.CDBL.atan();
-		a.setV((float)Math.PI/2);
+		a.setV((float)Math.PI/16);
 		G.HLF.atan().call(a, b);
-		assertEquals(Math.atan(Math.PI/2), b.v(), 0.0005);
+		assertEquals(Math.atan(Math.PI/16), b.v(), 0.0005);
 		
 		// G.CDBL.atanh();
 		

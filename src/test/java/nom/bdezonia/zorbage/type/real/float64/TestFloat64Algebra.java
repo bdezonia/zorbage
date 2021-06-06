@@ -262,9 +262,9 @@ public class TestFloat64Algebra {
 		Float64Member d = G.DBL.construct();
 
 		// G.DBL.acos();
-		a.setV(Math.PI/2);
+		a.setV(Math.PI/16);
 		G.DBL.acos().call(a, b);
-		assertEquals(Math.acos(Math.PI/2), b.v(), 0);
+		assertEquals(Math.acos(Math.PI/16), b.v(), 0);
 		
 		// G.DBL.acosh();
 		
@@ -287,9 +287,9 @@ public class TestFloat64Algebra {
 		// G.DBL.asech();
 		
 		// G.DBL.asin();
-		a.setV(Math.PI/2);
+		a.setV(Math.PI/16);
 		G.DBL.asin().call(a, b);
-		assertEquals(Math.asin(Math.PI/2), b.v(), 0);
+		assertEquals(Math.asin(Math.PI/16), b.v(), 0);
 		
 		// G.DBL.asinh();
 		
@@ -299,9 +299,9 @@ public class TestFloat64Algebra {
 		assertEquals(66,b.v(),0);
 		
 		// G.DBL.atan();
-		a.setV(Math.PI/2);
+		a.setV(Math.PI/16);
 		G.DBL.atan().call(a, b);
-		assertEquals(Math.atan(Math.PI/2), b.v(), 0);
+		assertEquals(Math.atan(Math.PI/16), b.v(), 0);
 		
 		// G.DBL.atanh();
 		
@@ -510,14 +510,14 @@ public class TestFloat64Algebra {
 		assertEquals(-3, c.v(), 0);
 		
 		// G.DBL.tan();
-		a.setV(Math.PI/2);
+		a.setV(Math.PI/16);
 		G.DBL.tan().call(a, b);
-		assertEquals(Math.tan(Math.PI/2), b.v(), tol);
+		assertEquals(Math.tan(Math.PI/16), b.v(), tol);
 
 		// G.DBL.tanh();
-		a.setV(Math.PI/2);
+		a.setV(Math.PI/16);
 		G.DBL.tanh().call(a, b);
-		assertEquals(Math.tanh(Math.PI/2), b.v(), tol);
+		assertEquals(Math.tanh(Math.PI/16), b.v(), tol);
 
 		// G.DBL.unity();
 		a = new Float64Member(0.1);

@@ -256,9 +256,9 @@ public class TestFloat32Algebra {
 		Float32Member d = G.FLT.construct();
 
 		// G.CDBL.acos();
-		a.setV((float)Math.PI/2);
+		a.setV((float)Math.PI/16);
 		G.FLT.acos().call(a, b);
-		assertEquals(Math.acos(Math.PI/2), b.v(), 0);
+		assertEquals(Math.acos(Math.PI/16), b.v(), 0.000001);
 		
 		// G.CDBL.acosh();
 		
@@ -281,9 +281,9 @@ public class TestFloat32Algebra {
 		// G.CDBL.asech();
 		
 		// G.CDBL.asin();
-		a.setV((float)Math.PI/2);
+		a.setV((float)Math.PI/16);
 		G.FLT.asin().call(a, b);
-		assertEquals(Math.asin(Math.PI/2), b.v(), 0);
+		assertEquals(Math.asin(Math.PI/16), b.v(), 0.000001);
 		
 		// G.CDBL.asinh();
 		
@@ -293,9 +293,9 @@ public class TestFloat32Algebra {
 		assertEquals(66,b.v(),0);
 		
 		// G.CDBL.atan();
-		a.setV((float)Math.PI/2);
+		a.setV((float)Math.PI/16);
 		G.FLT.atan().call(a, b);
-		assertEquals(Math.atan(Math.PI/2), b.v(), tol);
+		assertEquals(Math.atan(Math.PI/16), b.v(), tol);
 		
 		// G.CDBL.atanh();
 		
