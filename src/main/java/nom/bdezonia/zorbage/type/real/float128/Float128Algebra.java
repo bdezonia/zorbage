@@ -1457,16 +1457,7 @@ public class Float128Algebra
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member d) {
 			Float128Member tmp = G.QUAD.construct();
-			divide().call(a, b, tmp);
-			if (tmp.classification == Float128Member.NORMAL) {
-				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
-				// TODO test me
-				d.setV(val);
-			}
-			else {
-				// TODO: is this bulletproof?
-				d.set(tmp);
-			}
+			divMod().call(a, b, d, tmp);
 		}
 	};
 	
@@ -1481,21 +1472,7 @@ public class Float128Algebra
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member m) {
 			Float128Member tmp = G.QUAD.construct();
-			divide().call(a, b, tmp);
-			if (tmp.classification == Float128Member.NORMAL) {
-				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
-				BigDecimal remainder;
-				// TODO test me
-				if (val.compareTo(tmp.num) <= 0)
-					remainder = tmp.num.subtract(val);
-				else
-					remainder = val.subtract(tmp.num);
-				m.setV(remainder);
-			}
-			else {
-				// TODO: is this bulletproof?
-				m.setPosZero();
-			}
+			divMod().call(a, b, tmp, m);
 		}
 	};
 	
@@ -1509,23 +1486,83 @@ public class Float128Algebra
 	{
 		@Override
 		public void call(Float128Member a, Float128Member b, Float128Member d, Float128Member m) {
-			Float128Member tmp = G.QUAD.construct();
-			divide().call(a, b, tmp);
-			if (tmp.classification == Float128Member.NORMAL) {
-				BigDecimal val = tmp.num.divideToIntegralValue(BigDecimal.ONE);
-				BigDecimal remainder;
-				// TODO test me
-				if (val.compareTo(tmp.num) <= 0)
-					remainder = tmp.num.subtract(val);
-				else
-					remainder = val.subtract(tmp.num);
-				d.setV(val);
+			if (a.isFinite() && b.isFinite()) {
+				BigDecimal divI = a.num.divideToIntegralValue(b.num);
+				BigDecimal integral = divI.multiply(b.v());
+				BigDecimal remainder = a.num.subtract(integral);
+				d.setV(divI);
 				m.setV(remainder);
 			}
 			else {
-				// TODO: is this bulletproof?
-				d.set(tmp);
-				m.setPosZero();
+				if (a.isNan() || b.isNan()) {
+					d.setNan();
+					m.setNan();
+				}
+				else if (a.isInfinite()) {
+					switch (b.classification) {
+						case Float128Member.NORMAL:
+							break;
+						case Float128Member.POSZERO:
+							d.set(a);
+							m.setPosZero();
+							break;
+						case Float128Member.NEGZERO:
+							if (a.isPosInf())
+								d.setNegInf();
+							else
+								d.setPosInf();
+							m.setPosZero();
+							break;
+						case Float128Member.POSINF:
+							d.setNan();
+							m.setPosZero();
+							break;
+						case Float128Member.NEGINF:
+							d.setNan();
+							m.setPosZero();
+							break;
+						default:
+							throw new IllegalArgumentException("unknown classification error "+a.classification);
+					}
+				}
+				else if (b.isInfinite()) {
+					switch (a.classification) {
+						case Float128Member.NORMAL:
+							if (b.isPosInf()) {
+								if (a.num.signum() < 0)
+									d.setNegZero();
+								else
+									d.setPosZero();
+								m.setPosZero();
+							}
+							else { // b is neg inf
+								if (a.num.signum() < 0)
+									d.setPosZero();
+								else
+									d.setNegZero();
+								m.setPosZero();
+							}
+							break;
+						case Float128Member.POSZERO:
+							if (b.isPosInf())
+								d.setPosZero();
+							else // b is neg inf
+								d.setNegZero();
+							m.setPosZero();
+							break;
+						case Float128Member.NEGZERO:
+							if (b.isPosInf())
+								d.setNegZero();
+							else // b is neg inf
+								d.setPosZero();
+							m.setPosZero();
+							break;
+						default:
+							throw new IllegalArgumentException("unknown classification error "+a.classification);
+					}
+				}
+				else
+					throw new IllegalArgumentException("unknown classification error "+a.classification);
 			}
 		}
 	};
@@ -1544,7 +1581,7 @@ public class Float128Algebra
 			boolean neg;
 			switch (sign.classification) {
 				case Float128Member.NORMAL:
-					neg = (sign.num.signum() >= 0);
+					neg = (sign.num.signum() < 0);
 					break;
 				case Float128Member.POSZERO:
 					neg = false;
@@ -1677,10 +1714,11 @@ public class Float128Algebra
 	private final Procedure2<Float128Member, Float128Member> ULP =
 			new Procedure2<Float128Member, Float128Member>()
 	{
-		// For IEEE 64 power = 1024-53. Which is max exponent - bits in fraction.
+		// For IEEE 64 power = 1024-53. Which is:
+		//   2^(exponent bit count - 1) - (bits in fraction + 1).
 		// These can also be found for the 128 bit format by inspection.
 		
-		private BigDecimal MAX_ULP = TWO.pow(16384-112);
+		private BigDecimal MAX_ULP = TWO.pow(16384-113);
 		
 		@Override
 		public void call(Float128Member a, Float128Member ulp) {
@@ -2168,20 +2206,20 @@ public class Float128Algebra
 			// the absolute value of the first argument is less than 1 and the second argument is negative infinity,
 			// then the result is positive infinity.
 			
-			if ((a.isPosInf() || a.num.abs().compareTo(BigDecimal.ONE) > 0) && b.isPosInf()) {
+			if ((a.isPosInf() || (a.num.abs().compareTo(BigDecimal.ONE) > 0)) && b.isPosInf()) {
 				c.setPosInf();
 				return;
 			}
 			
-			if ((a.isNegInf() || a.num.abs().compareTo(BigDecimal.ONE) < 0) && b.isNegInf()) {
+			if ((a.isNegInf() || (a.num.abs().compareTo(BigDecimal.ONE) < 0)) && b.isNegInf()) {
 				c.setPosInf();
 				return;
 			}
 
 			// 6) If the absolute value of the first argument equals 1 and the second argument is infinite, then the result is NaN.
 
-			if ((a.isNormal() && a.num.abs().compareTo(BigDecimal.ONE) == 0) && b.isInfinite()) {
-				c.setNan();
+			if ((a.num.abs().compareTo(BigDecimal.ONE) == 0) && b.isInfinite()) {
+				c.setNan();  // Note: tested w/flt64s: 1^Inf really is NaN.
 				return;
 			}
 
@@ -2317,8 +2355,8 @@ public class Float128Algebra
 
 				if (b.isFinite() && bDescription == NOT_FINITE_INTEGER) {
 					c.setNan();
+					return;
 				}
-				return;
 				
 				// the other three cases should be handled fine by the code falling through to below
 			}
@@ -2382,8 +2420,12 @@ public class Float128Algebra
 				return;
 			}
 			
-			if (a.isInfinite() || b.isInfinite()) {
-				throw new IllegalArgumentException("infinity fell through in pow() for one of the arguments");
+			if (a.isInfinite() || a.isNan()) {
+				throw new IllegalArgumentException("special value fell through in pow() for the first argument");
+			}
+			
+			if (b.isInfinite() || b.isNan()) {
+				throw new IllegalArgumentException("special value fell through in pow() for the second argument");
 			}
 
 			// Tested exhaustively: at this point number is zero or finite/normal
