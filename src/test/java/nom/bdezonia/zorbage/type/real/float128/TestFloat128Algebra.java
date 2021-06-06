@@ -215,7 +215,7 @@ public class TestFloat128Algebra {
 		Float128Member d = G.QUAD.construct();
 
 		// G.QUAD.acos();
-		a.setV(BigDecimal.valueOf(Math.cos(Math.PI/2)));
+		a.setV(BigDecimal.valueOf(Math.PI/16));
 		G.QUAD.acos().call(a, b);
 		assertTrue(isNear(Math.acos(a.v().doubleValue()), b.v(), TOL));
 		
@@ -240,7 +240,7 @@ public class TestFloat128Algebra {
 		// G.QUAD.asech();
 		
 		// G.QUAD.asin();
-		a.setV(BigDecimal.valueOf(Math.sin(Math.PI/2)));
+		a.setV(BigDecimal.valueOf(Math.PI/16));
 		G.QUAD.asin().call(a, b);
 		assertTrue(isNear(Math.asin(a.v().doubleValue()), b.v(), TOL));
 		
