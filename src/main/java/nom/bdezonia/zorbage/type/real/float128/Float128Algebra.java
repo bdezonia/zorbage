@@ -1522,7 +1522,7 @@ public class Float128Algebra
 							m.setPosZero();
 							break;
 						default:
-							throw new IllegalArgumentException("unknown classification error "+a.classification);
+							throw new IllegalArgumentException("unknown classification error "+b.classification);
 					}
 				}
 				else if (b.isInfinite()) {
@@ -1654,7 +1654,10 @@ public class Float128Algebra
 		public Integer call(Float128Member a) {
 			switch (a.classification) {
 				case Float128Member.NORMAL:
-					return BigDecimalMath.exponent(a.num);
+					byte[] byteRep = new byte[16];
+					a.toByteArray(byteRep, 0);
+					int biasedExponent = ((byteRep[15] & 0x7f) << 8) | (byteRep[14] & 0xff);
+					return biasedExponent - 16383;
 				case Float128Member.POSZERO:
 					return -16382 - 1;  // mirror java double behavior but adjusted for 128 bits
 				case Float128Member.NEGZERO:
