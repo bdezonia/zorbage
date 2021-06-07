@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.color.ArgbMember;
 import nom.bdezonia.zorbage.type.color.RgbMember;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Member;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Member;
@@ -135,6 +136,7 @@ import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMatr
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionRModuleMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16MatrixMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
@@ -160,6 +162,8 @@ import nom.bdezonia.zorbage.type.string.StringMember;
 public class DataBundle {
 	public List<DimensionedDataSource<ArgbMember>> argbs = new ArrayList<>();
 	public List<DimensionedDataSource<BooleanMember>> bools = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat128Member>> cquads = new ArrayList<>();
+	public List<DimensionedDataSource<Float128Member>> quads = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat64Member>> cdbls = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat64VectorMember>> cdbl_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat64MatrixMember>> cdbl_mats = new ArrayList<>();
@@ -286,6 +290,11 @@ public class DataBundle {
 			bools.add(ds);
 	}
 	
+	public void mergeComplexFlt128(DimensionedDataSource<ComplexFloat128Member> ds) {
+		if (ds != null)
+			cquads.add(ds);
+	}
+	
 	public void mergeComplexFlt64(DimensionedDataSource<ComplexFloat64Member> ds) {
 		if (ds != null)
 			cdbls.add(ds);
@@ -369,6 +378,11 @@ public class DataBundle {
 	public void mergeComplexHPTens(DimensionedDataSource<ComplexHighPrecisionCartesianTensorProductMember> ds) {
 		if (ds != null)
 			chp_tens.add(ds);
+	}
+	
+	public void mergeFlt128(DimensionedDataSource<Float128Member> ds) {
+		if (ds != null)
+			quads.add(ds);
 	}
 	
 	public void mergeFlt64(DimensionedDataSource<Float64Member> ds) {
@@ -861,6 +875,7 @@ public class DataBundle {
 
 		argbs.addAll(other.argbs);
 		bools.addAll(other.bools);
+		cquads.addAll(other.cquads);
 		cdbls.addAll(other.cdbls);
 		cdbl_vecs.addAll(other.cdbl_vecs);
 		cdbl_mats.addAll(other.cdbl_mats);
@@ -936,6 +951,7 @@ public class DataBundle {
 		ohp_mats.addAll(other.ohp_mats);
 		ohp_tens.addAll(other.ohp_tens);
 		points.addAll(other.points);
+		quads.addAll(other.quads);
 		qdbls.addAll(other.qdbls);
 		qdbl_rmods.addAll(other.qdbl_rmods);
 		qdbl_mats.addAll(other.qdbl_mats);
