@@ -156,6 +156,8 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVectorMember;
 import nom.bdezonia.zorbage.type.string.FixedStringMember;
 import nom.bdezonia.zorbage.type.string.StringMember;
 
+// TODO : many edits needed when zorbage supports full range of flt 128 types
+
 /**
  * @author Barry DeZonia
  */
@@ -876,6 +878,10 @@ public class DataBundle {
 		argbs.addAll(other.argbs);
 		bools.addAll(other.bools);
 		cquads.addAll(other.cquads);
+// TODO
+//		cquad_vecs.addAll(other.cquad_vecs);
+//		cquad_mats.addAll(other.cquad_mats);
+//		cquad_tens.addAll(other.cquad_tens);
 		cdbls.addAll(other.cdbls);
 		cdbl_vecs.addAll(other.cdbl_vecs);
 		cdbl_mats.addAll(other.cdbl_mats);
@@ -934,6 +940,11 @@ public class DataBundle {
 		int32s.addAll(other.int32s);
 		int64s.addAll(other.int64s);
 		int128s.addAll(other.int128s);
+// TODO
+//		oquads.addAll(other.oquads);
+//		oquad_rmods.addAll(other.oquad_rmods);
+//		oquad_mats.addAll(other.oquad_mats);
+//		oquad_tens.addAll(other.oquad_tens);
 		odbls.addAll(other.odbls);
 		odbl_rmods.addAll(other.odbl_rmods);
 		odbl_mats.addAll(other.odbl_mats);
@@ -952,6 +963,15 @@ public class DataBundle {
 		ohp_tens.addAll(other.ohp_tens);
 		points.addAll(other.points);
 		quads.addAll(other.quads);
+// TODO		
+//		quad_vecs.addAll(other.quad_vecs);
+//		quad_mats.addAll(other.quad_mats);
+//		quad_tens.addAll(other.quad_tens);
+// TODO
+//		qquads.addAll(other.qquads);
+//		qquad_rmods.addAll(other.qquad_rmods);
+//		qquad_mats.addAll(other.qquad_mats);
+//		qquad_tens.addAll(other.qquad_tens);
 		qdbls.addAll(other.qdbls);
 		qdbl_rmods.addAll(other.qdbl_rmods);
 		qdbl_mats.addAll(other.qdbl_mats);
