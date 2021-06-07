@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.type.character.CharAlgebra;
 import nom.bdezonia.zorbage.type.color.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.color.CieLabAlgebra;
 import nom.bdezonia.zorbage.type.color.RgbAlgebra;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Algebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Matrix;
@@ -258,6 +259,7 @@ public class G {
 	public static final OctonionHighPrecisionCartesianTensorProduct OHP_TEN = new OctonionHighPrecisionCartesianTensorProduct();
 
 	public static final Float128Algebra QUAD = new Float128Algebra();
+	public static final ComplexFloat128Algebra CQUAD = new ComplexFloat128Algebra();
 
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();

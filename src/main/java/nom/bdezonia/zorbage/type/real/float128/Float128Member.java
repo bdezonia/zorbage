@@ -753,78 +753,78 @@ public final class Float128Member
 		}
 	}
 
-	boolean isNormal() {
+	public boolean isNormal() {
 		return classification == NORMAL;
 	}
 
-	boolean isPosZero() {
+	public boolean isPosZero() {
 		return classification == POSZERO;
 	}
 
-	boolean isNegZero() {
+	public boolean isNegZero() {
 		return classification == NEGZERO;
 	}
 
-	boolean isPosInf() {
+	public boolean isPosInf() {
 		return classification == POSINF;
 	}
 
-	boolean isNegInf() {
+	public boolean isNegInf() {
 		return classification == NEGINF;
 	}
 
-	boolean isNan() {
+	public boolean isNan() {
 		return classification == NAN;
 	}
 
-	boolean isFinite() {
+	public boolean isFinite() {
 		return classification == NORMAL || classification == POSZERO || classification == NEGZERO;
 	}
 
-	boolean isInfinite() {
+	public boolean isInfinite() {
 		return classification == POSINF || classification == NEGINF;
 	}
 
-	boolean isPositive() {
+	public boolean isPositive() {
 		return classification == POSZERO || classification == POSINF ||
 				(classification == NORMAL && num.signum() > 0);
 	}
 
-	boolean isNegative() {
+	public boolean isNegative() {
 		return classification == NEGZERO || classification == NEGINF ||
 				(classification == NORMAL && num.signum() < 0);
 	}
 
-	boolean isZero() {
+	public boolean isZero() {
 		return classification == POSZERO || classification == NEGZERO;
 	}
 
-	void setNormal(BigDecimal value) {
+	public void setNormal(BigDecimal value) {
 		num = value;
 		classification = NORMAL;
 	}
 
-	void setPosZero() {
+	public void setPosZero() {
 		num = BigDecimal.ZERO;
 		classification = POSZERO;
 	}
 
-	void setNegZero() {
+	public void setNegZero() {
 		num = BigDecimal.ZERO;
 		classification = NEGZERO;
 	}
 
-	void setPosInf() {
+	public void setPosInf() {
 		num = BigDecimal.ZERO;
 		classification = POSINF;
 	}
 
-	void setNegInf() {
+	public void setNegInf() {
 		num = BigDecimal.ZERO;
 		classification = NEGINF;
 	}
 	
-	void setNan() {
+	public void setNan() {
 		num = BigDecimal.ZERO;
 		classification = NAN;
 	}

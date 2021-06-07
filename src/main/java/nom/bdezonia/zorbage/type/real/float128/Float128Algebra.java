@@ -85,6 +85,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 // TODO make sure CONTEXT used on all multiplies and all non 2-based divides
@@ -128,10 +129,10 @@ public class Float128Algebra
 {
 	public static final MathContext CONTEXT = new MathContext(38);
 
-	private static final BigDecimal _PI    = new BigDecimal("3.141592653589793238462643383279502884197");
-	private static final BigDecimal _E     = new BigDecimal("2.718281828459045235360287471352662497757");
-	private static final BigDecimal _PHI   = new BigDecimal("0.577215664901532860606512090082402431042");
-	private static final BigDecimal _GAMMA = new BigDecimal("1.618033988749894848204586834365638117720");
+	private static final BigDecimal _PI    = new BigDecimal(HighPrecisionAlgebra.PI_STR.substring(0, 40));
+	private static final BigDecimal _E     = new BigDecimal(HighPrecisionAlgebra.E_STR.substring(0, 40));
+	private static final BigDecimal _PHI   = new BigDecimal(HighPrecisionAlgebra.PHI_STR.substring(0, 40));
+	private static final BigDecimal _GAMMA = new BigDecimal(HighPrecisionAlgebra.GAMMA_STR.substring(0, 40));
 	
 	private static final BigDecimal TWO = BigDecimal.valueOf(2);
 	private static final BigDecimal PI_OVER_TWO = _PI.divide(TWO);
