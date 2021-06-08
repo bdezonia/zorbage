@@ -785,21 +785,36 @@ public final class Float128Member
 		return classification == POSINF || classification == NEGINF;
 	}
 
-	public boolean isPositive() {
-		return classification == POSZERO || classification == POSINF ||
-				(classification == NORMAL && num.signum() > 0);
-	}
-
-	public boolean isNegative() {
-		return classification == NEGZERO || classification == NEGINF ||
-				(classification == NORMAL && num.signum() < 0);
-	}
-
 	public boolean isZero() {
 		return classification == POSZERO || classification == NEGZERO;
 	}
 
-	public void setNormal(BigDecimal value) {
+	public boolean isPositive() {
+		return classification == POSINF ||
+				(classification == NORMAL && num.signum() > 0);
+	}
+
+	public boolean isNegative() {
+		return classification == NEGINF ||
+				(classification == NORMAL && num.signum() < 0);
+	}
+
+	public boolean hasPositiveSign() {
+		return classification == POSZERO || isPositive();
+	}
+	
+	public boolean hasNegativeSign() {
+		return classification == NEGZERO || isNegative();
+	}
+
+	// DO NOT MAKE THIS ONE PUBLIC: use num.setV(BigDecimal)
+	// because it does some data classification and clamping.
+	// If people started using this method arbitrarily they
+	// could violate the internal consistency of how the
+	// numbers are handled and bad numerical results could
+	// sneak in.
+	
+	void setNormal(BigDecimal value) {
 		num = value;
 		classification = NORMAL;
 	}
@@ -865,16 +880,16 @@ public final class Float128Member
 				}
 			}
 			// is it between zero and one?
-			else if (tmp.compareTo(BigDecimal.ZERO) >= 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
+			else if (tmp.compareTo(BigDecimal.ZERO) > 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
 				// it's a number > 0 and < 1
+				BigDecimal upperBound = BigDecimal.ONE;
 				int exponent = 0;
-				BigDecimal lowerBound = BigDecimal.ONE;
-				BigDecimal upperBound = lowerBound;
-				while (tmp.compareTo(lowerBound) > 0) {
-					upperBound = lowerBound;
-					lowerBound = lowerBound.divide(TWO);
-					exponent++;
+				while (upperBound.compareTo(tmp) > 0) {
+					upperBound = upperBound.divide(TWO);
+					exponent--;
 				}
+				BigDecimal lowerBound = upperBound;
+				upperBound = lowerBound.multiply(TWO);
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
@@ -968,9 +983,10 @@ public final class Float128Member
 			arr[offset + 15] = (byte) 0x7f;
 			arr[offset + 14] = (byte) 0xff;
 			for (int i = 13; i >= 0; i--) {
-				// any non zero value tells the OS this is a nan rather than an inf
-				// TODO : do I have to deal with signaling versus nonsignaling or is
-				// that all done in hardware?
+				// Any non zero value tells the OS this is a nan rather than
+				// an inf.
+				// TODO : do I have to deal with signaling versus nonsignaling
+				// or is that only applicable to hardware implementations?
 				arr[offset + i] = 1;
 			}
 			break;

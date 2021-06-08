@@ -74,10 +74,14 @@ public final class ComplexFloat128Member
 	}
 	
 	public ComplexFloat128Member(ComplexFloat128Member value) {
+		r = new Float128Member();
+		i = new Float128Member();
 		set(value);
 	}
 
 	public ComplexFloat128Member(String value) {
+		r = new Float128Member();
+		i = new Float128Member();
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r());
