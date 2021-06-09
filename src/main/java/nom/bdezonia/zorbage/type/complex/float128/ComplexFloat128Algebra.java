@@ -406,20 +406,28 @@ public class ComplexFloat128Algebra
 	{
 		@Override
 		public void call(ComplexFloat128Member a, Float128Member b) {
-			
-			Float128Member x = a.r();
-			Float128Member y = a.i();
-
-			Float128Member sum = new Float128Member();
-			Float128Member tmp = new Float128Member();
-			
-			G.QUAD.multiply().call(x, x, tmp);
-			G.QUAD.add().call(sum, tmp, sum);
-			
-			G.QUAD.multiply().call(y, y, tmp);
-			G.QUAD.add().call(sum, tmp, sum);
-			
-			G.QUAD.sqrt().call(sum, b);
+			// a hypot()-like implementation that avoids overflow
+			Float128Member max = new Float128Member();
+			Float128Member abs1 = new Float128Member();
+			Float128Member abs2 = new Float128Member();
+			G.QUAD.abs().call(a.r(), abs1);
+			G.QUAD.abs().call(a.i(), abs2);
+			G.QUAD.max().call(abs1, abs2, max);
+			if (G.QUAD.isZero().call(max)) {
+				b.setPosZero();
+			}
+			else {
+				Float128Member sum = new Float128Member();
+				Float128Member tmp = new Float128Member();
+				G.QUAD.divide().call(a.r(), max, tmp);
+				G.QUAD.multiply().call(tmp, tmp, tmp);
+				G.QUAD.add().call(sum, tmp, sum);
+				G.QUAD.divide().call(a.i(), max, tmp);
+				G.QUAD.multiply().call(tmp, tmp, tmp);
+				G.QUAD.add().call(sum, tmp, sum);
+				G.QUAD.sqrt().call(sum, tmp);
+				G.QUAD.scale().call(max, tmp, b);
+			}
 		}
 	};
 

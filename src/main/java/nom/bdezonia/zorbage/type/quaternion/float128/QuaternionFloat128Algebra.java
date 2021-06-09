@@ -393,12 +393,16 @@ public class QuaternionFloat128Algebra
 				Float128Member sum = new Float128Member();
 				Float128Member tmp = new Float128Member();
 				G.QUAD.divide().call(a.r(), max, tmp);
+				G.QUAD.multiply().call(tmp, tmp, tmp);
 				G.QUAD.add().call(sum, tmp, sum);
 				G.QUAD.divide().call(a.i(), max, tmp);
+				G.QUAD.multiply().call(tmp, tmp, tmp);
 				G.QUAD.add().call(sum, tmp, sum);
 				G.QUAD.divide().call(a.j(), max, tmp);
+				G.QUAD.multiply().call(tmp, tmp, tmp);
 				G.QUAD.add().call(sum, tmp, sum);
 				G.QUAD.divide().call(a.k(), max, tmp);
+				G.QUAD.multiply().call(tmp, tmp, tmp);
 				G.QUAD.add().call(sum, tmp, sum);
 				G.QUAD.sqrt().call(sum, tmp);
 				G.QUAD.scale().call(max, tmp, b);
