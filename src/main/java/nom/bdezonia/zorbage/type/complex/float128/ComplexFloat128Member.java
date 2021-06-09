@@ -63,7 +63,6 @@ public final class ComplexFloat128Member
 	public ComplexFloat128Member() {
 		r = new Float128Member();
 		i = new Float128Member();
-		primitiveInit();
 	}
 	
 	public ComplexFloat128Member(Float128Member rvalue, Float128Member ivalue) {
@@ -750,8 +749,8 @@ public final class ComplexFloat128Member
 
 	@Override
 	public void primitiveInit() {
-		r.setV(BigDecimal.ZERO);
-		i.setV(BigDecimal.ZERO);
+		r.setPosZero();
+		i.setPosZero();
 	}
 
 	@Override

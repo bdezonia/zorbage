@@ -30,7 +30,6 @@
  */
 package nom.bdezonia.zorbage.type.complex.float128;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -44,7 +43,6 @@ import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.storage.array.ArrayStorageSignedInt32;
 
 /**
  * 

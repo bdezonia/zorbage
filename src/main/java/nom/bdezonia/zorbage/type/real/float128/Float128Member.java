@@ -844,7 +844,7 @@ public final class Float128Member
 		classification = NAN;
 	}
 
-	// Take my classifcation and BigDecimal values and encode them as
+	// Take my classification and BigDecimal values and encode them as
 	//   an IEEE128 in the 16 bytes of arr starting at offset
 	
 	void encode(byte[] arr, int offset) {
