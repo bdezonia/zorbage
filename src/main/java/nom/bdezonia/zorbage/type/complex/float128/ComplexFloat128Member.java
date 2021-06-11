@@ -58,7 +58,7 @@ public final class ComplexFloat128Member
 		NumberMember<ComplexFloat128Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float128Member>, GetComplex<Float128Member>
 {
-	private Float128Member r, i;
+	private final Float128Member r, i;
 	
 	public ComplexFloat128Member() {
 		r = new Float128Member();
@@ -66,21 +66,18 @@ public final class ComplexFloat128Member
 	}
 	
 	public ComplexFloat128Member(Float128Member rvalue, Float128Member ivalue) {
-		r = new Float128Member();
-		i = new Float128Member();
+		this();
 		setR(rvalue);
 		setI(ivalue);
 	}
 	
 	public ComplexFloat128Member(ComplexFloat128Member value) {
-		r = new Float128Member();
-		i = new Float128Member();
+		this();
 		set(value);
 	}
 
 	public ComplexFloat128Member(String value) {
-		r = new Float128Member();
-		i = new Float128Member();
+		this();
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r());
@@ -88,8 +85,7 @@ public final class ComplexFloat128Member
 	}
 
 	public ComplexFloat128Member(BigDecimal rvalue, BigDecimal ivalue) {
-		r = new Float128Member();
-		i = new Float128Member();
+		this();
 		setR(rvalue);
 		setI(ivalue);
 	}

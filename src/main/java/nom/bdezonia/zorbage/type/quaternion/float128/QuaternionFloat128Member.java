@@ -67,17 +67,13 @@ public final class QuaternionFloat128Member
 		this.i = new Float128Member();
 		this.j = new Float128Member();
 		this.k = new Float128Member();
-		primitiveInit();
 	}
 	
 	// Prefer this ctor over the BugDecimal based one since it can propagate
 	// nan, inf, etc.
 	
 	public QuaternionFloat128Member(Float128Member r, Float128Member i, Float128Member j, Float128Member k) {
-		this.r = new Float128Member();
-		this.i = new Float128Member();
-		this.j = new Float128Member();
-		this.k = new Float128Member();
+		this();
 		setR(r);
 		setI(i);
 		setJ(j);
@@ -88,10 +84,7 @@ public final class QuaternionFloat128Member
 	// nan, inf, etc.
 	
 	public QuaternionFloat128Member(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k) {
-		this.r = new Float128Member();
-		this.i = new Float128Member();
-		this.j = new Float128Member();
-		this.k = new Float128Member();
+		this();
 		setR(r);
 		setI(i);
 		setJ(j);
@@ -99,18 +92,12 @@ public final class QuaternionFloat128Member
 	}
 	
 	public QuaternionFloat128Member(QuaternionFloat128Member value) {
-		this.r = new Float128Member();
-		this.i = new Float128Member();
-		this.j = new Float128Member();
-		this.k = new Float128Member();
+		this();
 		set(value);
 	}
 
 	public QuaternionFloat128Member(String value) {
-		this.r = new Float128Member();
-		this.i = new Float128Member();
-		this.j = new Float128Member();
-		this.k = new Float128Member();
+		this();
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r());
