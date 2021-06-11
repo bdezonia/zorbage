@@ -93,20 +93,28 @@ public final class Float128Member
 		primitiveInit();
 	}
 	
+	// Prefer this ctor over the BigDecimal based one since it can propagate
+	// nan, inf, etc.
+
 	public Float128Member(Float128Member other) {
+		this();
 		set(other);
 	}
 
+	// Prefer the previous ctor over this one since this cannot represent
+	// nan, inf, etc.
+	
+	public Float128Member(BigDecimal v) {
+		this();
+		setV(v);
+	}
+	
 	public Float128Member(String str) {
+		this();
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		OctonionRepresentation val = rep.firstValue();
 		setV(val.r());
 	}
-
-	public Float128Member(BigDecimal v) {
-		setV(v);
-	}
-	
 	@Override
 	public long dimension(int d) {
 		return 0;

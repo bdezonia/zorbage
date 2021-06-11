@@ -69,7 +69,7 @@ public final class QuaternionFloat128Member
 		this.k = new Float128Member();
 	}
 	
-	// Prefer this ctor over the BugDecimal based one since it can propagate
+	// Prefer this ctor over the BigDecimal based one since it can propagate
 	// nan, inf, etc.
 	
 	public QuaternionFloat128Member(Float128Member r, Float128Member i, Float128Member j, Float128Member k) {

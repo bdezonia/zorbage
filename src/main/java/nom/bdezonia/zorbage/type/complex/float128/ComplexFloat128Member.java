@@ -65,7 +65,19 @@ public final class ComplexFloat128Member
 		i = new Float128Member();
 	}
 	
+	// Prefer this ctor over the BigDecimal based one since it can propagate
+	// nan, inf, etc.
+	
 	public ComplexFloat128Member(Float128Member rvalue, Float128Member ivalue) {
+		this();
+		setR(rvalue);
+		setI(ivalue);
+	}
+
+	// Prefer the previous ctor over this one since this cannot represent
+	// nan, inf, etc.
+	
+	public ComplexFloat128Member(BigDecimal rvalue, BigDecimal ivalue) {
 		this();
 		setR(rvalue);
 		setI(ivalue);
@@ -82,12 +94,6 @@ public final class ComplexFloat128Member
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r());
 		setI(val.i());
-	}
-
-	public ComplexFloat128Member(BigDecimal rvalue, BigDecimal ivalue) {
-		this();
-		setR(rvalue);
-		setI(ivalue);
 	}
 	
 	public Float128Member r() { return r; }
