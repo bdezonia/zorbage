@@ -297,7 +297,7 @@ public class QuaternionFloat16Algebra
 		@Override
 		public void call(QuaternionFloat16Member a, QuaternionFloat16Member b, QuaternionFloat16Member c) {
 			QuaternionFloat16Member tmp = new QuaternionFloat16Member();
-			invert().call(b,tmp);
+			invert().call(b, tmp);
 			multiply().call(a, tmp, c);
 		}
 	};

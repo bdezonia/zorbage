@@ -296,7 +296,7 @@ public class QuaternionHighPrecisionAlgebra
 		@Override
 		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b, QuaternionHighPrecisionMember c) {
 			QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-			invert().call(b,tmp);
+			invert().call(b, tmp);
 			multiply().call(a, tmp, c);
 		}
 	};

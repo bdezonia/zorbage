@@ -297,7 +297,7 @@ public class QuaternionFloat32Algebra
 		@Override
 		public void call(QuaternionFloat32Member a, QuaternionFloat32Member b, QuaternionFloat32Member c) {
 			QuaternionFloat32Member tmp = new QuaternionFloat32Member();
-			invert().call(b,tmp);
+			invert().call(b, tmp);
 			multiply().call(a, tmp, c);
 		}
 	};
