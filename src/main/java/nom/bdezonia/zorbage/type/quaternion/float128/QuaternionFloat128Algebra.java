@@ -318,15 +318,14 @@ public class QuaternionFloat128Algebra
 	{
 		@Override
 		public void call(QuaternionFloat128Member a, QuaternionFloat128Member b) {
-			QuaternionFloat128Member c = new QuaternionFloat128Member();
+			QuaternionFloat128Member conjA = new QuaternionFloat128Member();
 			QuaternionFloat128Member scale = new QuaternionFloat128Member();
 			Float128Member nval = new Float128Member();
 			norm().call(a, nval);
 			G.QUAD.multiply().call(nval, nval, nval);
-			G.QUAD.invert().call(nval, nval);
-			scale.setR(nval);
-			conjugate().call(a, c);
-			multiply().call(scale, c, b);
+			G.QUAD.invert().call(nval, scale.r());
+			conjugate().call(a, conjA);
+			multiply().call(scale, conjA, b);
 		}
 	};
 	
@@ -341,7 +340,7 @@ public class QuaternionFloat128Algebra
 		@Override
 		public void call(QuaternionFloat128Member a, QuaternionFloat128Member b, QuaternionFloat128Member c) {
 			QuaternionFloat128Member tmp = new QuaternionFloat128Member();
-			invert().call(b,tmp);
+			invert().call(b, tmp);
 			multiply().call(a, tmp, c);
 		}
 	};
@@ -405,7 +404,7 @@ public class QuaternionFloat128Algebra
 				G.QUAD.multiply().call(tmp, tmp, tmp);
 				G.QUAD.add().call(sum, tmp, sum);
 				G.QUAD.sqrt().call(sum, tmp);
-				G.QUAD.scale().call(max, tmp, b);
+				G.QUAD.multiply().call(max, tmp, b);
 			}
 		}
 	};
@@ -615,15 +614,16 @@ public class QuaternionFloat128Algebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.QUAD.sinc().call(z, z2);
+			Float128Member w = new Float128Member();
 			Float128Member cos = new Float128Member();
+			Float128Member uw = new Float128Member();
+			w.set(z2);
+			G.QUAD.multiply().call(u, w, uw);
 			G.QUAD.cos().call(z, cos);
-			G.QUAD.multiply().call(z2, a.i(), b.i());
-			G.QUAD.multiply().call(z2, a.j(), b.j());
-			G.QUAD.multiply().call(z2, a.k(), b.k());
-			G.QUAD.scale().call(u, b.r(), b.r());
-			G.QUAD.scale().call(u, b.i(), b.i());
-			G.QUAD.scale().call(u, b.j(), b.j());
-			G.QUAD.scale().call(u, b.k(), b.k());
+			G.QUAD.scale().call(u, cos, b.r());
+			G.QUAD.multiply().call(uw, a.i(), b.i());
+			G.QUAD.multiply().call(uw, a.j(), b.j());
+			G.QUAD.multiply().call(uw, a.k(), b.k());
 		}
 	};
 	
@@ -852,17 +852,18 @@ public class QuaternionFloat128Algebra
 			Float128Member sin = new Float128Member();
 			Float128Member sinhc_pi = new Float128Member();
 			Float128Member cosh = new Float128Member();
-			Float128Member ws = new Float128Member();
+			Float128Member wc = new Float128Member();
 			G.QUAD.cos().call(a.r(), cos);
 			G.QUAD.sin().call(a.r(), sin);
 			sinhc_pi.set(z2);
 			G.QUAD.cosh().call(z, cosh);
-			G.QUAD.multiply().call(cos, sinhc_pi, ws);
+			G.QUAD.negate().call(sin, wc);
+			G.QUAD.multiply().call(wc, sinhc_pi, wc);
 			
-			G.QUAD.multiply().call(sin, cosh, s.r());
-			G.QUAD.scale().call(ws, a.i(), s.i());
-			G.QUAD.scale().call(ws, a.j(), s.j());
-			G.QUAD.scale().call(ws, a.k(), s.k());
+			G.QUAD.multiply().call(cos, cosh, s.r());
+			G.QUAD.scale().call(wc, a.i(), s.i());
+			G.QUAD.scale().call(wc, a.j(), s.j());
+			G.QUAD.scale().call(wc, a.k(), s.k());
 		}
 	};
 	

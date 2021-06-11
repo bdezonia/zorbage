@@ -593,6 +593,6 @@ public class TestFloat128Algebra {
 	}
 	
 	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return BigDecimal.valueOf(a).subtract(b).abs().compareTo(tol) < 0;
+		return BigDecimal.valueOf(a).subtract(b).abs().compareTo(tol) <= 0;
 	}
 }

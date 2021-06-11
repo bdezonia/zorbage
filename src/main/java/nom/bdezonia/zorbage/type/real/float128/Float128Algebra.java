@@ -499,7 +499,7 @@ public class Float128Algebra
 			case Float128Member.POSZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
-					c.setV(b.v().negate());
+					c.setV(b.num.negate());
 				}
 				else if (b.classification == Float128Member.POSZERO) {
 					c.setPosZero();
@@ -523,7 +523,7 @@ public class Float128Algebra
 			case Float128Member.NEGZERO:
 				
 				if (b.classification == Float128Member.NORMAL) {
-					c.setV(b.v().negate());
+					c.setV(b.num.negate());
 				}
 				else if (b.classification == Float128Member.POSZERO) {
 					c.setNegZero();
@@ -1292,7 +1292,7 @@ public class Float128Algebra
 			switch(a.classification) {
 
 			case Float128Member.NORMAL:
-				b.setV(a.v().abs());
+				b.setV(a.num.abs());
 				break;
 
 			case Float128Member.POSZERO:
@@ -1489,7 +1489,7 @@ public class Float128Algebra
 		public void call(Float128Member a, Float128Member b, Float128Member d, Float128Member m) {
 			if (a.isFinite() && b.isFinite()) {
 				BigDecimal divI = a.num.divideToIntegralValue(b.num);
-				BigDecimal integral = divI.multiply(b.v());
+				BigDecimal integral = divI.multiply(b.num);
 				BigDecimal remainder = a.num.subtract(integral);
 				d.setV(divI);
 				m.setV(remainder);

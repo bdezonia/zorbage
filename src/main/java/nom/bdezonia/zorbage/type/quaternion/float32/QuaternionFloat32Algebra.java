@@ -276,13 +276,13 @@ public class QuaternionFloat32Algebra
 	{
 		@Override
 		public void call(QuaternionFloat32Member a, QuaternionFloat32Member b) {
-			QuaternionFloat32Member c = new QuaternionFloat32Member();
+			QuaternionFloat32Member conjA = new QuaternionFloat32Member();
 			QuaternionFloat32Member scale = new QuaternionFloat32Member();
 			Float32Member nval = new Float32Member();
 			norm().call(a, nval);
 			scale.setR( (float) (1.0 / (nval.v() * nval.v())) );
-			conjugate().call(a, c);
-			multiply().call(scale, c, b);
+			conjugate().call(a, conjA);
+			multiply().call(scale, conjA, b);
 		}
 	};
 	

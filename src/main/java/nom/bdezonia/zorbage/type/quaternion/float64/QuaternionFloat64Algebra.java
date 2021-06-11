@@ -276,13 +276,13 @@ public class QuaternionFloat64Algebra
 	{
 		@Override
 		public void call(QuaternionFloat64Member a, QuaternionFloat64Member b) {
-			QuaternionFloat64Member c = new QuaternionFloat64Member();
+			QuaternionFloat64Member conjA = new QuaternionFloat64Member();
 			QuaternionFloat64Member scale = new QuaternionFloat64Member();
 			Float64Member nval = new Float64Member();
 			norm().call(a, nval);
 			scale.setR( (1.0 / (nval.v() * nval.v())) );
-			conjugate().call(a, c);
-			multiply().call(scale, c, b);
+			conjugate().call(a, conjA);
+			multiply().call(scale, conjA, b);
 		}
 	};
 	
@@ -297,7 +297,7 @@ public class QuaternionFloat64Algebra
 		@Override
 		public void call(QuaternionFloat64Member a, QuaternionFloat64Member b, QuaternionFloat64Member c) {
 			QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-			invert().call(b,tmp);
+			invert().call(b, tmp);
 			multiply().call(a, tmp, c);
 		}
 	};

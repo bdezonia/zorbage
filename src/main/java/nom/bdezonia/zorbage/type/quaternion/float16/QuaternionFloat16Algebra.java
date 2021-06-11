@@ -276,13 +276,13 @@ public class QuaternionFloat16Algebra
 	{
 		@Override
 		public void call(QuaternionFloat16Member a, QuaternionFloat16Member b) {
-			QuaternionFloat16Member c = new QuaternionFloat16Member();
+			QuaternionFloat16Member conjA = new QuaternionFloat16Member();
 			QuaternionFloat16Member scale = new QuaternionFloat16Member();
 			Float16Member nval = new Float16Member();
 			norm().call(a, nval);
 			scale.setR( (float) (1.0 / (nval.v() * nval.v())) );
-			conjugate().call(a, c);
-			multiply().call(scale, c, b);
+			conjugate().call(a, conjA);
+			multiply().call(scale, conjA, b);
 		}
 	};
 	

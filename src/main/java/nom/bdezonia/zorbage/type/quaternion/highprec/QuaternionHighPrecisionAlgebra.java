@@ -275,13 +275,13 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
-			QuaternionHighPrecisionMember c = new QuaternionHighPrecisionMember();
+			QuaternionHighPrecisionMember conjA = new QuaternionHighPrecisionMember();
 			QuaternionHighPrecisionMember scale = new QuaternionHighPrecisionMember();
 			HighPrecisionMember nval = new HighPrecisionMember();
 			norm().call(a, nval);
 			scale.setR( BigDecimal.ONE.divide((nval.v().multiply(nval.v())), HighPrecisionAlgebra.getContext()) );
-			conjugate().call(a, c);
-			multiply().call(scale, c, b);
+			conjugate().call(a, conjA);
+			multiply().call(scale, conjA, b);
 		}
 	};
 	
