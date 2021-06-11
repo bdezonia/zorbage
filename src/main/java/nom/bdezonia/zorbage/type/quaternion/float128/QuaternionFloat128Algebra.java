@@ -122,52 +122,56 @@ public class QuaternionFloat128Algebra
 		@Override
 		public void call(QuaternionFloat128Member a, QuaternionFloat128Member b, QuaternionFloat128Member c) {
 			// for safety must use tmps
-			Float128Member sum = new Float128Member();
+			Float128Member sumR = new Float128Member();
+			Float128Member sumI = new Float128Member();
+			Float128Member sumJ = new Float128Member();
+			Float128Member sumK = new Float128Member();
 			Float128Member tmp = new Float128Member();
 			
-			sum.setPosZero();
+			sumR.setPosZero();
 			G.QUAD.multiply().call(a.r(), b.r(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumR, tmp, sumR);
 			G.QUAD.multiply().call(a.i(), b.i(), tmp);
-			G.QUAD.subtract().call(sum, tmp, sum);
+			G.QUAD.subtract().call(sumR, tmp, sumR);
 			G.QUAD.multiply().call(a.j(), b.j(), tmp);
-			G.QUAD.subtract().call(sum, tmp, sum);
+			G.QUAD.subtract().call(sumR, tmp, sumR);
 			G.QUAD.multiply().call(a.k(), b.k(), tmp);
-			G.QUAD.subtract().call(sum, tmp, sum);
-			c.setR(sum);
+			G.QUAD.subtract().call(sumR, tmp, sumR);
 			
-			sum.setPosZero();
+			sumI.setPosZero();
 			G.QUAD.multiply().call(a.r(), b.i(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumI, tmp, sumI);
 			G.QUAD.multiply().call(a.i(), b.r(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumI, tmp, sumI);
 			G.QUAD.multiply().call(a.j(), b.k(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumI, tmp, sumI);
 			G.QUAD.multiply().call(a.k(), b.j(), tmp);
-			G.QUAD.subtract().call(sum, tmp, sum);
-			c.setI(sum);
+			G.QUAD.subtract().call(sumI, tmp, sumI);
 			
-			sum.setPosZero();
+			sumJ.setPosZero();
 			G.QUAD.multiply().call(a.r(), b.j(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumJ, tmp, sumJ);
 			G.QUAD.multiply().call(a.i(), b.k(), tmp);
-			G.QUAD.subtract().call(sum, tmp, sum);
+			G.QUAD.subtract().call(sumJ, tmp, sumJ);
 			G.QUAD.multiply().call(a.j(), b.r(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumJ, tmp, sumJ);
 			G.QUAD.multiply().call(a.k(), b.i(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
-			c.setJ(sum);
+			G.QUAD.add().call(sumJ, tmp, sumJ);
 			
-			sum.setPosZero();
+			sumK.setPosZero();
 			G.QUAD.multiply().call(a.r(), b.k(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumK, tmp, sumK);
 			G.QUAD.multiply().call(a.i(), b.j(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
+			G.QUAD.add().call(sumK, tmp, sumK);
 			G.QUAD.multiply().call(a.j(), b.i(), tmp);
-			G.QUAD.subtract().call(sum, tmp, sum);
+			G.QUAD.subtract().call(sumK, tmp, sumK);
 			G.QUAD.multiply().call(a.k(), b.r(), tmp);
-			G.QUAD.add().call(sum, tmp, sum);
-			c.setK(sum);
+			G.QUAD.add().call(sumK, tmp, sumK);
+
+			c.setR(sumR);
+			c.setI(sumI);
+			c.setJ(sumJ);
+			c.setK(sumK);
 		}
 	};
 	
