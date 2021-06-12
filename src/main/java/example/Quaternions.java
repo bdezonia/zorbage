@@ -34,10 +34,12 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetQuaternion;
+import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Member;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Member;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMember;
+import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -68,6 +70,10 @@ class Quaternions {
 		
 		QuaternionFloat64Member q64 = new QuaternionFloat64Member(Math.E, Math.PI, -3, -7);
 		
+		// 128-bit float based
+		
+		QuaternionFloat128Member q128 = new QuaternionFloat128Member(BigDecimal.TEN, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.TEN.negate());
+		
 		// unbounded high precision float based
 		
 		QuaternionHighPrecisionMember qBig =
@@ -83,6 +89,8 @@ class Quaternions {
 		
 		Float64Member r64 = getK(G.DBL, q64);
 		
+		Float128Member r128 = getK(G.QUAD, q128);
+		
 		HighPrecisionMember rBig = getK(G.HP, qBig);
 		
 		// an alternative way to get this data without a reusable approach
@@ -90,6 +98,7 @@ class Quaternions {
 		q16.getK(r16);
 		q32.getK(r32);
 		q64.getK(r64);
+		q128.getK(r128);
 		qBig.getK(rBig);
 	}
 	

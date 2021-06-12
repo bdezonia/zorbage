@@ -144,7 +144,7 @@ class ProceduralProgramming {
 	// separately calling sin() and cos(). These two calcs use a lot of the
 	// same intermediate data. A combined method can reuse information to speed
 	// up the overall calculation. Another example where this feature might be
-	// useful is the SUmmaryStats algorithm. It makes minimal passes over data
+	// useful is the SummaryStats algorithm. It makes minimal passes over data
 	// while calculating many statistics of interest.
 	//   e.g.
 	//

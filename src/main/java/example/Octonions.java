@@ -34,10 +34,12 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetOctonion;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Member;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Member;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Member;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMember;
+import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -68,6 +70,13 @@ class Octonions {
 		
 		OctonionFloat64Member o64 = new OctonionFloat64Member(Math.E, Math.PI, -3, -7, 0, 0, 1, 2);
 		
+		// 128-bit float based
+		
+		OctonionFloat128Member o128 = new OctonionFloat128Member(BigDecimal.valueOf(-6712),BigDecimal.valueOf(1033),
+																	BigDecimal.TEN, BigDecimal.ONE,
+																	BigDecimal.TEN, BigDecimal.ONE,
+																	BigDecimal.TEN, BigDecimal.ONE);
+		
 		// unbounded high precision float based
 		
 		OctonionHighPrecisionMember oBig =
@@ -85,6 +94,8 @@ class Octonions {
 		
 		Float64Member r64 = getK0(G.DBL, o64);
 		
+		Float128Member r128 = getK0(G.QUAD, o128);
+		
 		HighPrecisionMember rBig = getK0(G.HP, oBig);
 		
 		// an alternative way to get this data without a reusable approach
@@ -92,6 +103,7 @@ class Octonions {
 		o16.getK0(r16);
 		o32.getK0(r32);
 		o64.getK0(r64);
+		o128.getK0(r128);
 		oBig.getK0(rBig);
 	}
 	

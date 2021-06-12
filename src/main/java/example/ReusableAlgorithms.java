@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.integer.int32.UnsignedInt32Member;
 import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
+import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
@@ -102,6 +103,9 @@ class ReusableAlgorithms {
 		IndexedDataSource<Float64Member> f64s =
 				nom.bdezonia.zorbage.storage.Storage.allocate(G.DBL.construct(), 100);
 		
+		IndexedDataSource<Float128Member> f128s =
+				nom.bdezonia.zorbage.storage.Storage.allocate(G.QUAD.construct(), 100);
+		
 		// fill each of them with random values. reuse the Fill algorithm over and over
 		
 		Fill.compute(G.HLF, G.HLF.random(), f16s);
@@ -109,6 +113,8 @@ class ReusableAlgorithms {
 		Fill.compute(G.FLT, G.FLT.random(), f32s);
 		
 		Fill.compute(G.DBL, G.DBL.random(), f64s);
+		
+		Fill.compute(G.QUAD, G.QUAD.random(), f128s);
 		
 		// now compute the means for all those arrays. reuse the Mean algorithm over and over
 		
@@ -118,11 +124,15 @@ class ReusableAlgorithms {
 		
 		Float64Member f64Result = G.DBL.construct();
 		
+		Float128Member f128Result = G.QUAD.construct();
+		
 		Mean.compute(G.HLF, f16s, f16Result);
 		
 		Mean.compute(G.FLT, f32s, f32Result);
 		
 		Mean.compute(G.DBL, f64s, f64Result);
+		
+		Mean.compute(G.QUAD, f128s, f128Result);
 	}
 	
 	// integer numeric types

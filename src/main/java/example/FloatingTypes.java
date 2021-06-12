@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
+import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -47,7 +48,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 class FloatingTypes
 {
 	/*
-	 * Currently Zorbage supports four different floating number types:
+	 * Currently Zorbage supports five different floating number types:
 	 * 
 	 *   16-bit floating point numbers (supported in software): the half type in the IEEE-754 standard
 	 *   
@@ -61,6 +62,10 @@ class FloatingTypes
 	 *     
 	 *     Float64Member: approximately 16 decimal places of precision
 	 *   
+	 *   128-bit floating point numbers (supported in software): the quad type in the IEEE-754 standard
+	 *   
+	 *     Float128Member: approximately 33-36 decimal places of precision
+	 * 
 	 *   High precision floating point numbers (supported in software):
 	 *     
 	 *     HighPrecisionMember: 1 to 4000 decimal places of precision (user configurable)
@@ -103,7 +108,7 @@ class FloatingTypes
 	
 	void example1() {
 		
-		// Calculate e * pi * phi * gamma for four different accuracies using one algorithm
+		// Calculate e * pi * phi * gamma for five different accuracies using one algorithm
 		
 		// Let's push the high precision accuracy to a 100 decimal places. Ideally this method is called
 		// once at your program's startup.
@@ -122,6 +127,10 @@ class FloatingTypes
 		
 		Float64Member dblVal = calcConstant(G.DBL);
 		
+		// Calculate the constant in 128 bit float precision
+		
+		Float128Member quadVal = calcConstant(G.QUAD);
+		
 		// Calculate the constant in 100 place float precision
 		
 		HighPrecisionMember hpVal = calcConstant(G.HP);
@@ -131,6 +140,7 @@ class FloatingTypes
 		System.out.println(hlfVal);
 		System.out.println(fltVal);
 		System.out.println(dblVal);
+		System.out.println(quadVal);
 		System.out.println(hpVal);
 	}
 	
@@ -507,10 +517,111 @@ class FloatingTypes
 		G.DBL.unreal();
 	}
 	
-	// Here are the supported methods for highprecs
+	// Here are the supported methods for float64s
 	
 	@SuppressWarnings("unused")
 	void example5() {
+		
+		Float128Member a = G.QUAD.construct();
+		Float128Member b = G.QUAD.construct("53.777");
+		Float128Member c = G.QUAD.construct(b);
+		Float128Member d = new Float128Member(BigDecimal.valueOf(101.321));
+		
+		G.QUAD.maxBound();
+		G.QUAD.minBound();
+
+		G.QUAD.compare();
+		G.QUAD.signum();
+		G.QUAD.isEqual();
+		G.QUAD.isNotEqual();
+		G.QUAD.isGreater();
+		G.QUAD.isGreaterEqual();
+		G.QUAD.isLess();
+		G.QUAD.isLessEqual();
+		G.QUAD.isNaN();
+		G.QUAD.isInfinite();
+		G.QUAD.isUnity();
+		G.QUAD.isZero();
+		G.QUAD.max();
+		G.QUAD.min();
+		
+		G.QUAD.acos();
+		G.QUAD.acosh();
+		G.QUAD.asin();
+		G.QUAD.asinh();
+		G.QUAD.atan();
+		G.QUAD.atanh();
+		G.QUAD.cos();
+		G.QUAD.sin();
+		G.QUAD.sinAndCos();
+		G.QUAD.cosh();
+		G.QUAD.sinh();
+		G.QUAD.sinhAndCosh();
+
+		G.QUAD.sinc();
+		G.QUAD.sinch();
+		G.QUAD.sincpi();
+		G.QUAD.sinchpi();
+		
+		G.QUAD.assign();
+		G.QUAD.unity();
+		G.QUAD.zero();
+		G.QUAD.infinite();
+		G.QUAD.negInfinite();
+		G.QUAD.nan();
+		G.QUAD.add();
+		G.QUAD.subtract();
+		G.QUAD.multiply();
+		G.QUAD.divide();
+		G.QUAD.div();
+		G.QUAD.mod();
+		G.QUAD.divMod();
+		G.QUAD.pow();
+		G.QUAD.power();
+		G.QUAD.invert();
+		G.QUAD.negate();
+		G.QUAD.abs();
+		G.QUAD.norm();
+		G.QUAD.cbrt();
+		G.QUAD.sqrt();
+		G.QUAD.conjugate();
+		G.QUAD.within();
+		
+		G.QUAD.copySign();
+		G.QUAD.getExponent();
+		G.QUAD.round();
+		G.QUAD.scalb();
+		G.QUAD.ulp();
+
+		G.QUAD.E();
+		G.QUAD.GAMMA();
+		G.QUAD.PHI();
+		G.QUAD.PI();
+
+		G.QUAD.exp();
+		G.QUAD.log();
+
+		G.QUAD.scale();
+		G.QUAD.scaleByDouble();
+		G.QUAD.scaleByHighPrec();
+		G.QUAD.scaleByRational();
+		G.QUAD.scaleByOneHalf();
+		G.QUAD.scaleByTwo();
+		G.QUAD.scaleComponents();
+
+		G.QUAD.pred();
+		G.QUAD.succ();
+
+		G.QUAD.random();
+		
+		G.QUAD.real();
+		G.QUAD.unreal();
+	}
+	
+	// Here are the supported methods for highprecs
+	
+	@SuppressWarnings("unused")
+	void example6() {
 		
 		HighPrecisionMember a = G.HP.construct();
 		HighPrecisionMember b = G.HP.construct("53.777");
