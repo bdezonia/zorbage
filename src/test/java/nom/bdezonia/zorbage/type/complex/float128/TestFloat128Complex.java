@@ -355,10 +355,10 @@ public class TestFloat128Complex {
 		assertTrue(isNear(0, b.i().v(), tol));
 
 		// G.CQUAD.tanh();
-		a.setR(BigDecimal.valueOf(Math.PI/2));
+		a.setR(BigDecimal.valueOf(Math.PI/16));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.tanh().call(a, b);
-		assertTrue(isNear(Math.tanh(Math.PI/2), b.r().v(), tol));
+		assertTrue(isNear(Math.tanh(Math.PI/16), b.r().v(), tol));
 		assertTrue(isNear(0, b.i().v(), tol));
 
 		// G.CQUAD.unity();

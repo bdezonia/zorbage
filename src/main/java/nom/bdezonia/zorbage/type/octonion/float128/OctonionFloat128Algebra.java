@@ -1148,8 +1148,6 @@ public class OctonionFloat128Algebra
 			sinhc_pi.set(z2);
 			G.QUAD.cosh().call(z, cosh);
 			G.QUAD.multiply().call(cos, sinhc_pi, ws);
-			G.QUAD.negate().call(sin, sin);
-			G.QUAD.multiply().call(sin, sinhc_pi, wc);
 
 			G.QUAD.multiply().call(sin, cosh, s.r());
 			G.QUAD.multiply().call(ws, a.i(), s.i());
@@ -1160,6 +1158,9 @@ public class OctonionFloat128Algebra
 			G.QUAD.multiply().call(ws, a.j0(), s.j0());
 			G.QUAD.multiply().call(ws, a.k0(), s.k0());
 			
+			G.QUAD.negate().call(sin, sin);
+			G.QUAD.multiply().call(sin, sinhc_pi, wc);
+
 			G.QUAD.multiply().call(cos, cosh, c.r());
 			G.QUAD.multiply().call(wc, a.i(), c.i());
 			G.QUAD.multiply().call(wc, a.j(), c.j());
