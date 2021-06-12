@@ -426,7 +426,7 @@ public class ComplexFloat128Algebra
 				G.QUAD.multiply().call(tmp, tmp, tmp);
 				G.QUAD.add().call(sum, tmp, sum);
 				G.QUAD.sqrt().call(sum, tmp);
-				G.QUAD.scale().call(max, tmp, b);
+				G.QUAD.multiply().call(max, tmp, b);
 			}
 		}
 	};
@@ -1530,8 +1530,8 @@ public class ComplexFloat128Algebra
 		@Override
 		public void call(Float128Member factor, ComplexFloat128Member a, ComplexFloat128Member b) {
 			
-			G.QUAD.scale().call(factor, a.r(), b.r());
-			G.QUAD.scale().call(factor, a.i(), b.i());
+			G.QUAD.multiply().call(factor, a.r(), b.r());
+			G.QUAD.multiply().call(factor, a.i(), b.i());
 		}
 	};
 

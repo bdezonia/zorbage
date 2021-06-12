@@ -624,7 +624,7 @@ public class QuaternionFloat128Algebra
 			w.set(z2);
 			G.QUAD.multiply().call(u, w, uw);
 			G.QUAD.cos().call(z, cos);
-			G.QUAD.scale().call(u, cos, b.r());
+			G.QUAD.multiply().call(u, cos, b.r());
 			G.QUAD.multiply().call(uw, a.i(), b.i());
 			G.QUAD.multiply().call(uw, a.j(), b.j());
 			G.QUAD.multiply().call(uw, a.k(), b.k());
@@ -830,9 +830,9 @@ public class QuaternionFloat128Algebra
 			G.QUAD.multiply().call(cos, sinhc_pi, ws);
 			
 			G.QUAD.multiply().call(sin, cosh, s.r());
-			G.QUAD.scale().call(ws, a.i(), s.i());
-			G.QUAD.scale().call(ws, a.j(), s.j());
-			G.QUAD.scale().call(ws, a.k(), s.k());
+			G.QUAD.multiply().call(ws, a.i(), s.i());
+			G.QUAD.multiply().call(ws, a.j(), s.j());
+			G.QUAD.multiply().call(ws, a.k(), s.k());
 		}
 	};
 	
@@ -865,9 +865,9 @@ public class QuaternionFloat128Algebra
 			G.QUAD.multiply().call(wc, sinhc_pi, wc);
 			
 			G.QUAD.multiply().call(cos, cosh, s.r());
-			G.QUAD.scale().call(wc, a.i(), s.i());
-			G.QUAD.scale().call(wc, a.j(), s.j());
-			G.QUAD.scale().call(wc, a.k(), s.k());
+			G.QUAD.multiply().call(wc, a.i(), s.i());
+			G.QUAD.multiply().call(wc, a.j(), s.j());
+			G.QUAD.multiply().call(wc, a.k(), s.k());
 		}
 	};
 	
@@ -902,14 +902,14 @@ public class QuaternionFloat128Algebra
 			G.QUAD.negate().call(wc, wc);
 			
 			G.QUAD.multiply().call(sin, cosh, s.r());
-			G.QUAD.scale().call(ws, a.i(), s.i());
-			G.QUAD.scale().call(ws, a.j(), s.j());
-			G.QUAD.scale().call(ws, a.k(), s.k());
+			G.QUAD.multiply().call(ws, a.i(), s.i());
+			G.QUAD.multiply().call(ws, a.j(), s.j());
+			G.QUAD.multiply().call(ws, a.k(), s.k());
 
 			G.QUAD.multiply().call(cos, cosh, c.r());
-			G.QUAD.scale().call(wc, a.i(), c.i());
-			G.QUAD.scale().call(wc, a.j(), c.j());
-			G.QUAD.scale().call(wc, a.k(), c.k());
+			G.QUAD.multiply().call(wc, a.i(), c.i());
+			G.QUAD.multiply().call(wc, a.j(), c.j());
+			G.QUAD.multiply().call(wc, a.k(), c.k());
 		}
 	};
 	
@@ -1112,10 +1112,10 @@ public class QuaternionFloat128Algebra
 	{
 		@Override
 		public void call(Float128Member factor, QuaternionFloat128Member a, QuaternionFloat128Member b) {
-			G.QUAD.scale().call(factor, a.r(), b.r());
-			G.QUAD.scale().call(factor, a.i(), b.i());
-			G.QUAD.scale().call(factor, a.j(), b.j());
-			G.QUAD.scale().call(factor, a.k(), b.k());
+			G.QUAD.multiply().call(factor, a.r(), b.r());
+			G.QUAD.multiply().call(factor, a.i(), b.i());
+			G.QUAD.multiply().call(factor, a.j(), b.j());
+			G.QUAD.multiply().call(factor, a.k(), b.k());
 		}
 	};
 
