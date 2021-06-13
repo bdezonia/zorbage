@@ -80,17 +80,17 @@ public class TestQuaternionFloat128Algebra {
 
 		G.QQUAD.add().call(q1, q2, q3);
 
-		assertTrue(isNear(q1.r().v().doubleValue()+q2.r().v().doubleValue(), q3.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(q1.i().v().doubleValue()+q2.i().v().doubleValue(), q3.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(q1.j().v().doubleValue()+q2.j().v().doubleValue(), q3.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(q1.k().v().doubleValue()+q2.k().v().doubleValue(), q3.k().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.r().v().add(q2.r().v()), q3.r().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.i().v().add(q2.i().v()), q3.i().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.j().v().add(q2.j().v()), q3.j().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.k().v().add(q2.k().v()), q3.k().v(), BigDecimal.ZERO));
 		
 		G.QQUAD.subtract().call(q1, q2, q3);
 
-		assertTrue(isNear(q1.r().v().doubleValue()-q2.r().v().doubleValue(), q3.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(q1.i().v().doubleValue()-q2.i().v().doubleValue(), q3.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(q1.j().v().doubleValue()-q2.j().v().doubleValue(), q3.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(q1.k().v().doubleValue()-q2.k().v().doubleValue(), q3.k().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.r().v().subtract(q2.r().v()), q3.r().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.i().v().subtract(q2.i().v()), q3.i().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.j().v().subtract(q2.j().v()), q3.j().v(), BigDecimal.ZERO));
+		assertTrue(isNear(q1.k().v().subtract(q2.k().v()), q3.k().v(), BigDecimal.ZERO));
 		
 		G.QQUAD.multiply().call(q1, q2, q3);
 
@@ -548,6 +548,10 @@ public class TestQuaternionFloat128Algebra {
 	}
 
 	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return BigDecimal.valueOf(a).subtract(b).abs().compareTo(tol) <= 0;
+		return isNear(BigDecimal.valueOf(a), b, tol);
+	}
+
+	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
+		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
 }

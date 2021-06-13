@@ -190,8 +190,8 @@ public class TestFloat128Complex {
 		G.CQUAD.invert().call(a, b);
 		G.CQUAD.unity().call(c);
 		G.CQUAD.divide().call(c, a, c);
-		assertTrue(isNear(c.r().v().doubleValue(), b.r().v(), tol));
-		assertTrue(isNear(c.i().v().doubleValue(), b.i().v(), tol));
+		assertTrue(isNear(c.r().v(), b.r().v(), tol));
+		assertTrue(isNear(c.i().v(), b.i().v(), tol));
 		
 		// G.CQUAD.isEqual();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(44),BigDecimal.valueOf(7));
@@ -265,15 +265,15 @@ public class TestFloat128Complex {
 		G.CQUAD.pow().call(a, b, c);
 		ComplexFloat128Member t = G.CQUAD.construct();
 		G.CQUAD.multiply().call(a, a, t);
-		assertTrue(isNear(t.r().v().doubleValue(), c.r().v(), tol));
-		assertTrue(isNear(t.i().v().doubleValue(), c.i().v(), tol));
+		assertTrue(isNear(t.r().v(), c.r().v(), tol));
+		assertTrue(isNear(t.i().v(), c.i().v(), tol));
 		
 		// G.CQUAD.power();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(-7),BigDecimal.valueOf(-4));
 		G.CQUAD.power().call(2, a, b);
 		G.CQUAD.multiply().call(a, a, t);
-		assertTrue(isNear(t.r().v().doubleValue(), b.r().v(), tol));
-		assertTrue(isNear(t.i().v().doubleValue(), b.i().v(), tol));
+		assertTrue(isNear(t.r().v(), b.r().v(), tol));
+		assertTrue(isNear(t.i().v(), b.i().v(), tol));
 		
 		// G.CQUAD.random();
 		G.CQUAD.random().call(a);
@@ -467,6 +467,10 @@ public class TestFloat128Complex {
 	}
 
 	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return BigDecimal.valueOf(a).subtract(b).abs().compareTo(tol) <= 0;
+		return isNear(BigDecimal.valueOf(a), b, tol);
+	}
+
+	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
+		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
 }
