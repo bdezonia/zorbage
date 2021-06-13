@@ -111,7 +111,7 @@ public class LUDecomp {
 				lu.setV(j, i, term);
 			}
 		}
-		
+
 		matAlgebra.assign().call(lu, a);
 	}
 }

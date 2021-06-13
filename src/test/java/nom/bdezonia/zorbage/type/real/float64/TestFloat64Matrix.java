@@ -32,13 +32,11 @@ package nom.bdezonia.zorbage.type.real.float64;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.LUSolve;
-import nom.bdezonia.zorbage.type.real.float16.Float16MatrixMember;
-import nom.bdezonia.zorbage.type.real.float16.Float16Member;
-import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * 
@@ -47,45 +45,6 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
  */
 public class TestFloat64Matrix {
 
-	// toggle true/false if want to run this big slow test
-	private static final boolean RUN = false;
-	
-	@Test
-	public void testHugeMatrix() {
-		if (RUN) {
-			System.out.println("Making a huge virtual matrix > 2 gig entries");
-			Float16MatrixMember m = G.HLF_MAT.construct(StorageConstruction.MEM_VIRTUAL, 49321, 51131);
-			System.out.println("Setting it's values to an identity matrix");
-			G.HLF_MAT.unity().call(m);
-			System.out.println("Walking through it's values and asserting they are correct");
-			Float16Member value = G.HLF.construct();
-			Float16Member zero = G.HLF.construct();
-			Float16Member one = G.HLF.construct();
-			G.HLF.unity().call(one);
-			long errs = 0;
-			for (long r = 0; r < m.rows(); r++) {
-				if (r % 1000 == 0)
-					System.out.println(r);
-				for (long c = 0; c < m.cols(); c++) {
-					m.getV(r, c, value);
-					if (r == c) {
-						if (value.v() != one.v()) {
-							//System.out.println(r+" == "+c+" and v = "+value.v());
-							errs++;
-						}
-					}
-					else {
-						if (value.v() != zero.v()) {
-							//System.out.println(r+" != "+c+" and v = "+value.v());
-							errs++;
-						}
-					}
-				}
-			}
-			assertEquals(0, errs);
-		}
-	}
-	
 	@Test
 	public void testMatrixInverse() {
 		double tol = 0.00000000000001;

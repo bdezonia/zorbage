@@ -863,7 +863,7 @@ public final class Float128Member
 			// is it a sub normal?
 			if (tmp.compareTo(BigDecimal.ONE) == 0) {
 				arr[offset + 15] = (byte) (signBit | 0x3f);
-				arr[offset + 14] = (byte) 0xf0;
+				arr[offset + 14] = (byte) 0xff;
 				for (int i = 13; i >= 0; i--) {
 					arr[offset + i] = 0;
 				}
@@ -923,7 +923,7 @@ public final class Float128Member
 				int exponent = 0;
 				BigDecimal lowerBound = BigDecimal.ONE;
 				BigDecimal upperBound = lowerBound;
-				while (tmp.compareTo(upperBound) > 0) {
+				while (tmp.compareTo(upperBound) >= 0) {
 					lowerBound = upperBound;
 					upperBound = upperBound.multiply(TWO);
 					exponent++;
@@ -1025,7 +1025,7 @@ public final class Float128Member
 			
 			BigDecimal value = new BigDecimal(fraction).divide(FULL_RANGE_BD, Float128Algebra.CONTEXT);
 			value = value.add(BigDecimal.ONE);
-			value = value.multiply(TWO.pow(exponent - 16383));
+			value = value.multiply(TWO.pow(exponent - 16383, Float128Algebra.CONTEXT));
 			if (sign != 0)
 				value = value.negate();
 			setNormal(value);
@@ -1048,7 +1048,7 @@ public final class Float128Member
 				// subnormal number
 				
 				BigDecimal value = new BigDecimal(fraction).divide(FULL_RANGE_BD, Float128Algebra.CONTEXT);
-				value = value.multiply(TWO.pow(-16382));
+				value = value.multiply(TWO.pow(-16382, Float128Algebra.CONTEXT));
 				if (sign != 0)
 					value = value.negate();
 				setNormal(value);

@@ -74,8 +74,11 @@ public class MatrixInvert {
 			throw new IllegalArgumentException("can only invert square matrices");
 		if (a.rows() != b.rows() || a.cols() != b.cols())
 			b.alloc(a.rows(), a.cols());
+
 		MATRIX_MEMBER lu = matAlgebra.construct(a);
+
 		LUDecomp.compute(numAlgebra, matAlgebra, lu);
+		
 		RMODULE_MEMBER bCol =
 				rmodAlgebra.construct(b.storageType(), b.rows());
 		MatrixColumnRModuleBridge<BASETYPE> xBridge =

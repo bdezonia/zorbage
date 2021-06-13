@@ -33,8 +33,9 @@ package nom.bdezonia.zorbage.type.real.float16;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.LUSolve;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;

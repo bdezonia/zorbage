@@ -104,7 +104,6 @@ public class LUSolve {
 			numAlgebra.multiply().call(value1, value2, term);
 			x.setV(i, term);
 		}
-
 	}
 	
 }

@@ -591,6 +591,35 @@ public class TestFloat128Algebra {
 		// G.QUAD.ulp();
 		// TODO can't test this one yet
 	}
+	
+	@Test
+	public void testBasics() {
+	
+		Float128Member a = new Float128Member();
+		Float128Member b = new Float128Member();
+		Float128Member result = new Float128Member();
+		
+		for (double i = -25; i <= 25; i += 0.012) {
+			a.setV(BigDecimal.valueOf(i));
+			for (double j = -25; j <= 25; j += 0.012) {
+				b.setV(BigDecimal.valueOf(j));
+				
+				G.QUAD.add().call(a, b, result);
+				assertTrue(isNear(i+j, result.v(), TOL));
+				
+				G.QUAD.subtract().call(a, b, result);
+				assertTrue(isNear(i-j, result.v(), TOL));
+				
+				G.QUAD.multiply().call(a, b, result);
+				assertTrue(isNear(i*j, result.v(), TOL));
+
+				if (j != 0) {
+					G.QUAD.divide().call(a, b, result);
+					assertTrue(isNear(i/j, result.v(), TOL));
+				}
+			}
+		}
+	}
 
 	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
 		return isNear(BigDecimal.valueOf(a), b, tol);

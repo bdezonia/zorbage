@@ -31,13 +31,12 @@
 package nom.bdezonia.zorbage.type.real.float32;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.LUSolve;
-import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * 
@@ -46,35 +45,6 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
  */
 public class TestFloat32Matrix {
 
-	// toggle true/false if want to run this big slow test
-	private static final boolean RUN = false;
-	
-	@Test
-	public void testHugeMatrix() {
-		if (RUN) {
-			System.out.println("Making a huge virtual matrix > 2 gig entries");
-			Float32MatrixMember m = G.FLT_MAT.construct(StorageConstruction.MEM_VIRTUAL, 50000, 50000);
-			System.out.println("Setting it's values to an identity matrix");
-			G.FLT_MAT.unity().call(m);
-			System.out.println("Walking through it's values and asserting they are correct");
-			Float32Member value = G.FLT.construct();
-			Float32Member zero = G.FLT.construct();
-			Float32Member one = G.FLT.construct();
-			G.FLT.unity().call(one);
-			for (long r = 0; r < m.rows(); r++) {
-				for (long c = 0; c < m.cols(); c++) {
-					m.getV(r, c, value);
-					if (r == c) {
-						assertTrue(G.FLT.isEqual().call(value, one));
-					}
-					else {
-						assertTrue(G.FLT.isEqual().call(value, zero));
-					}
-				}
-			}
-		}
-	}
-	
 	@Test
 	public void testMatrixInverse() {
 		double tol = 0.000001;

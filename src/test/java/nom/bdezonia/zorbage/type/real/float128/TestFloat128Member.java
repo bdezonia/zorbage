@@ -219,7 +219,7 @@ public class TestFloat128Member {
 		val.encode(arr, 0);  // 0x3FFF0000000000000000000000000000
 
 		assertEquals(0x3f, arr[15] & 0xff);
-		assertEquals(0xf0, arr[14] & 0xff);
+		assertEquals(0xff, arr[14] & 0xff);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);
 		assertEquals(0, arr[11]);
@@ -240,7 +240,7 @@ public class TestFloat128Member {
 		val.encode(arr, 0);
 
 		assertEquals(0xbf, arr[15] & 0xff);
-		assertEquals(0xf0, arr[14] & 0xff);
+		assertEquals(0xff, arr[14] & 0xff);
 		assertEquals(0, arr[13]);
 		assertEquals(0, arr[12]);
 		assertEquals(0, arr[11]);
@@ -418,5 +418,30 @@ public class TestFloat128Member {
 		}
 		
 	}
+	
+	@Test
+	public void testPossibleFailures() {
 
+		Float128Member tol = new Float128Member(BigDecimal.valueOf(0.00000000000001));
+		
+		Float128Member num = new Float128Member();
+		
+		int[] ints = new int[]{1,7,4,1,2,4,8,3,3};
+
+		byte[] arr = new byte[16];
+		for (int i = 0; i < ints.length; i++) {
+			
+			BigDecimal input = BigDecimal.valueOf(ints[i]); 
+			
+			num.setV(input);
+			
+			num.encode(arr, 0);
+			
+			num.decode(arr, 0);
+			
+			System.out.println(input);
+			
+			assertTrue(num.v().subtract(input).abs().compareTo(tol.v()) <= 0);
+		}
+	}
 }
