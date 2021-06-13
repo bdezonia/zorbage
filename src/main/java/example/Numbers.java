@@ -244,29 +244,29 @@ class Numbers {
 	 * Float16Member
 	 *   1 component
 	 *     Min: -65504
-	 *     Max: 65504
+	 *     Max: +65504
 	 *     Precision: 3 digits
 	 *   Memory size: 2 bytes
 	 *   
 	 * Float32Member
 	 *   1 component
-	 *     Min: -3.40282347 x 10^38
-	 *     Max: 3.40282347 x 10^38
+	 *     Min: -3.40282347 * 10^38
+	 *     Max: +3.40282347 * 10^38
 	 *     Precision: 7 digits
 	 *   Memory size: 4 bytes
 	 *   
 	 * Float64Member
 	 *   1 component
-	 *     Min: -1.7*10^308
-	 *     Max: 1.7*10^308
+	 *     Min: -1.7 * 10^308
+	 *     Max: +1.7 * 10^308
 	 *     Precision: 16 digits
 	 *   Memory size: 8 bytes
 	 *   
 	 * Float128Member
 	 *   1 component
-	 *     Min: <TODO>
-	 *     Max: <TODO>
-	 *     Precision: 33-35 digits
+	 *     Min: -1.1897 * 10^4932
+	 *     Max: +1.1897 * 10^4932
+	 *     Precision: ~34 digits
 	 *   Memory size: 16 bytes
 	 *   
 	 * HighPrecisionMember
@@ -279,29 +279,29 @@ class Numbers {
 	 * ComplexFloat16Member
 	 *   Each (of 2) components
 	 *     Min: -65504
-	 *     Max: 65504
+	 *     Max: +65504
 	 *     Precision: 3 digits
 	 *   Memory size: 4 bytes
 	 *   
 	 * ComplexFloat32Member
 	 *   Each (of 2) components
-	 *     Min: -3.40282347 x 10^38
-	 *     Max: 3.40282347 x 10^38
+	 *     Min: -3.40282347 * 10^38
+	 *     Max: +3.40282347 * 10^38
 	 *     Precision: 7 digits
 	 *   Memory size: 8 bytes
 	 *   
 	 * ComplexFloat64Member
 	 *   Each (of 2) components
-	 *     Min: -1.7*10^308
-	 *     Max: 1.7*10^308
+	 *     Min: -1.7 * 10^308
+	 *     Max: +1.7 * 10^308
 	 *     Precision: 16 digits
 	 *   Memory size: 16 bytes
 	 *   
 	 * ComplexFloat128Member
 	 *   Each (of 2) components
-	 *     Min: <TODO>
-	 *     Max: <TODO>
-	 *     Precision: 33-35 digits
+	 *     Min: -1.1897 * 10^4932
+	 *     Max: +1.1897 * 10^4932
+	 *     Precision: ~34 digits
 	 *   Memory size: 32 bytes
 	 *   
 	 * ComplexHighPrecisionMember
@@ -314,29 +314,29 @@ class Numbers {
 	 * QuaternionFloat16Member
 	 *   Each (of 4) components
 	 *     Min: -65504
-	 *     Max: 65504
+	 *     Max: +65504
 	 *     Precision: 3 digits
 	 *   Memory size: 8 bytes
 	 *   
 	 * QuaternionFloat32Member
 	 *   Each (of 4) components
-	 *     Min: -3.40282347 x 10^38
-	 *     Max: 3.40282347 x 10^38
+	 *     Min: -3.40282347 * 10^38
+	 *     Max: +3.40282347 * 10^38
 	 *     Precision: 7 digits
 	 *   Memory size: 16 bytes
 	 *   
 	 * QuaternionFloat64Member
 	 *   Each (of 4) components
-	 *     Min: -1.7*10^308
-	 *     Max: 1.7*10^308
+	 *     Min: -1.7 * 10^308
+	 *     Max: +1.7 * 10^308
 	 *     Precision: 16 digits
 	 *   Memory size: 32 bytes
 	 *   
 	 * QuaternionFloat128Member
 	 *   Each (of 4) components
-	 *     Min: <TODO>
-	 *     Max: <TODO>
-	 *     Precision: 33-35 digits
+	 *     Min: -1.1897 * 10^4932
+	 *     Max: +1.1897 * 10^4932
+	 *     Precision: ~34 digits
 	 *   Memory size: 64 bytes
 	 *   
 	 * QuaternionHighPrecisionMember
@@ -349,29 +349,29 @@ class Numbers {
 	 * OctonionFloat16Member
 	 *   Each (of 8) components
 	 *     Min: -65504
-	 *     Max: 65504
+	 *     Max: +65504
 	 *     Precision: 3 digits
 	 *   Memory size: 16 bytes
 	 *   
 	 * OctonionFloat32Member
 	 *   Each (of 8) components
-	 *     Min: -3.40282347 x 10^38
-	 *     Max: 3.40282347 x 10^38
+	 *     Min: -3.40282347 * 10^38
+	 *     Max: +3.40282347 * 10^38
 	 *     Precision: 7 digits
 	 *   Memory size: 32 bytes
 	 *   
 	 * OctonionFloat64Member
 	 *   Each (of 8) components
-	 *     Min: -1.7*10^308
-	 *     Max: 1.7*10^308
+	 *     Min: -1.7 * 10^308
+	 *     Max: +1.7 * 10^308
 	 *     Precision: 16 digits
 	 *   Memory size: 64 bytes
 	 *   
 	 * OctonionFloat128Member
 	 *   Each (of 8) components
-	 *     Min: <TODO>
-	 *     Max: <TODO>
-	 *     Precision: 33-35 digits
+	 *     Min: -1.1897 * 10^4932
+	 *     Max: +1.1897 * 10^4932
+	 *     Precision: ~34 digits
 	 *   Memory size: 128 bytes
 	 *   
 	 * OctonionHighPrecisionMember

@@ -64,7 +64,7 @@ class FloatingTypes
 	 *   
 	 *   128-bit floating point numbers (supported in software): the quad type in the IEEE-754 standard
 	 *   
-	 *     Float128Member: approximately 33-36 decimal places of precision
+	 *     Float128Member: approximately 34 decimal places of precision
 	 * 
 	 *   High precision floating point numbers (supported in software):
 	 *     
