@@ -79,8 +79,9 @@ public final class Float128Member
 	static final BigDecimal MIN_NORMAL = MAX_NORMAL.negate();
 	static final BigDecimal MAX_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(BigDecimal.ONE.subtract(TWO.pow(-112, Float128Algebra.CONTEXT)));
 	static final BigDecimal MIN_SUBNORMAL = TWO.pow(-16382, Float128Algebra.CONTEXT).multiply(TWO.pow(-112, Float128Algebra.CONTEXT));
-	static final BigInteger FULL_RANGE = new BigInteger( "10000000000000000000000000000",16);
+	static final BigInteger FULL_RANGE = new BigInteger("10000000000000000000000000000",16);
 	static final BigDecimal FULL_RANGE_BD = new BigDecimal(FULL_RANGE);
+	static final BigInteger FULL_FRACTION = new BigInteger("ffffffffffffffffffffffffffff", 16);
 	
 	static final byte NORMAL = 0;
 	static final byte POSZERO = 1;
@@ -875,19 +876,14 @@ public final class Float128Member
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction;
 				if (ratio.compareTo(BigDecimal.ONE) >= 0)
-					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
+					fraction = FULL_FRACTION;
 				else
 					fraction = FULL_RANGE_BD.multiply(ratio).toBigInteger();
 				arr[offset + 15] = (byte) signBit;
 				arr[offset + 14] = 0;
-				int bitNum = 111;
-				for (int i = 13; i >= 0; i--) {
-					byte b = 0;
-					for (int bitMask = 0x80; bitMask > 0; bitMask >>= 1) {
-						if (fraction.testBit(bitNum))
-							b |= bitMask;
-						bitNum--;
-					}
+				for (int i = 0; i < 13; i++) {
+					byte b = fraction.and(BigInteger.valueOf(255)).byteValue();
+					fraction = fraction.shiftRight(8);
 					arr[offset + i] = b;
 				}
 			}
@@ -908,7 +904,7 @@ public final class Float128Member
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction;
 				if (ratio.compareTo(BigDecimal.ONE) >= 0)
-					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
+					fraction = FULL_FRACTION;
 				else
 					fraction = FULL_RANGE_BD.multiply(ratio).toBigInteger();
 				exponent += 16383;
@@ -943,7 +939,7 @@ public final class Float128Member
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction;
 				if (ratio.compareTo(BigDecimal.ONE) >= 0)
-					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
+					fraction = FULL_FRACTION;
 				else
 					fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16383;
