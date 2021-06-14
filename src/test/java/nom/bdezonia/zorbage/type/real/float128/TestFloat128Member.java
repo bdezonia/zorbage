@@ -420,9 +420,9 @@ public class TestFloat128Member {
 	}
 	
 	@Test
-	public void testPossibleFailures() {
+	public void testEncodeInts() {
 
-		Float128Member tol = new Float128Member(BigDecimal.valueOf(0.00000000000001));
+		Float128Member tol = new Float128Member(new BigDecimal("0.00000000000000000000000000000000000001"));
 		
 		Float128Member num = new Float128Member();
 		
@@ -439,9 +439,33 @@ public class TestFloat128Member {
 			
 			num.decode(arr, 0);
 			
-			System.out.println(input);
+			// System.out.println(input + " " + num);
 			
 			assertTrue(num.v().subtract(input).abs().compareTo(tol.v()) <= 0);
+		}
+	}
+	
+	@Test
+	public void testEncodeFractions() {
+
+		Float128Member tol = new Float128Member(new BigDecimal("0.00000000000000000000000000000000000001"));
+		
+		Float128Member num = new Float128Member();
+
+		byte[] arr = new byte[16];
+		for (int i = 0; i < 100; i++) {
+			
+			G.QUAD.random().call(num);
+
+			BigDecimal before = num.v();
+			
+			num.encode(arr, 0);
+			
+			num.decode(arr, 0);
+			
+			// System.out.println(before + " " + num);
+			
+			assertTrue(num.v().subtract(before).abs().compareTo(tol.v()) <= 0);
 		}
 	}
 }

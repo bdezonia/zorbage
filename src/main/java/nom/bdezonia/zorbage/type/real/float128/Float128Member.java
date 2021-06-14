@@ -892,7 +892,7 @@ public final class Float128Member
 				// it's a number > 0 and < 1
 				BigDecimal upperBound = BigDecimal.ONE;
 				int exponent = 0;
-				while (upperBound.compareTo(tmp) > 0) {
+				while (upperBound.compareTo(tmp) > 0) { // TODO should this be >= 0 instead? no I think.
 					upperBound = upperBound.divide(TWO);
 					exponent--;
 				}
@@ -902,7 +902,7 @@ public final class Float128Member
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
-				exponent += 16382;
+				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 15] = (byte) (signBit | ehi);
@@ -920,7 +920,7 @@ public final class Float128Member
 			}
 			else {
 				// it's a number > 1 and <= MAXBOUND
-				int exponent = 0;
+				int exponent = -1;
 				BigDecimal lowerBound = BigDecimal.ONE;
 				BigDecimal upperBound = lowerBound;
 				while (tmp.compareTo(upperBound) >= 0) {
@@ -932,7 +932,7 @@ public final class Float128Member
 				BigDecimal denom = upperBound.subtract(lowerBound);
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
 				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
-				exponent += 16382;
+				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 15] = (byte) (signBit | ehi);
