@@ -860,7 +860,6 @@ public final class Float128Member
 		case NORMAL:
 			BigDecimal tmp = num.abs();
 			int signBit = (num.signum() < 0) ? 0x80 : 0;
-			// is it a sub normal?
 			if (tmp.compareTo(BigDecimal.ONE) == 0) {
 				arr[offset + 15] = (byte) (signBit | 0x3f);
 				arr[offset + 14] = (byte) 0xff;
@@ -872,8 +871,13 @@ public final class Float128Member
 			else if (tmp.compareTo(MIN_SUBNORMAL) >= 0 && tmp.compareTo(MAX_SUBNORMAL) <= 0) {
 				BigDecimal numer = tmp.subtract(MIN_SUBNORMAL);
 				BigDecimal denom = MAX_SUBNORMAL.subtract(MIN_SUBNORMAL);
+				// due to rounding quirks with java you might actually reach or surpass 1.0
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).toBigInteger();
+				BigInteger fraction;
+				if (ratio.compareTo(BigDecimal.ONE) >= 0)
+					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
+				else
+					fraction = FULL_RANGE_BD.multiply(ratio).toBigInteger();
 				arr[offset + 15] = (byte) signBit;
 				arr[offset + 14] = 0;
 				int bitNum = 111;
@@ -900,8 +904,13 @@ public final class Float128Member
 				upperBound = lowerBound.multiply(TWO);
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
+				// due to rounding quirks with java you might actually reach or surpass 1.0
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+				BigInteger fraction;
+				if (ratio.compareTo(BigDecimal.ONE) >= 0)
+					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
+				else
+					fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -930,8 +939,13 @@ public final class Float128Member
 				}
 				BigDecimal numer = tmp.subtract(lowerBound);
 				BigDecimal denom = upperBound.subtract(lowerBound);
+				// due to rounding quirks with java you might actually reach or surpass 1.0
 				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+				BigInteger fraction;
+				if (ratio.compareTo(BigDecimal.ONE) >= 0)
+					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
+				else
+					fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
 				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -1085,6 +1099,12 @@ public final class Float128Member
 			}
 			else if (num.compareTo(MAX_NORMAL) > 0) {
 				setPosInf();
+			}
+			else if (num.abs().compareTo(MIN_SUBNORMAL) < 0) {
+				if (num.signum() < 0)
+					setNegZero();
+				else
+					setPosZero();
 			}
 		}
 	}

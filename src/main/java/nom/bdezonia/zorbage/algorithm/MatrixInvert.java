@@ -86,6 +86,7 @@ public class MatrixInvert {
 		BASETYPE zero = numAlgebra.construct();
 		BASETYPE one = numAlgebra.construct();
 		numAlgebra.unity().call(one);
+
 		for (long c = 0; c < b.cols(); c++) {
 			xBridge.setCol(c);
 			bCol.setV(c, one);
