@@ -1489,7 +1489,7 @@ public class Float128Algebra
 		public void call(Float128Member a, Float128Member b, Float128Member d, Float128Member m) {
 			if (a.isFinite() && b.isFinite()) {
 				BigDecimal divI = a.num.divideToIntegralValue(b.num);
-				BigDecimal integral = divI.multiply(b.num);
+				BigDecimal integral = divI.multiply(b.num, CONTEXT);
 				BigDecimal remainder = a.num.subtract(integral);
 				d.setV(divI);
 				m.setV(remainder);
@@ -1687,7 +1687,7 @@ public class Float128Algebra
 		public void call(Integer scaleFactor, Float128Member a, Float128Member b) {
 			switch (a.classification) {
 				case Float128Member.NORMAL:
-					b.setV(a.num.multiply(TWO.pow(scaleFactor)));
+					b.setV(a.num.multiply(TWO.pow(scaleFactor, CONTEXT)));
 					break;
 				case Float128Member.POSZERO:
 					b.setPosZero();
