@@ -1687,7 +1687,7 @@ public class Float128Algebra
 		public void call(Integer scaleFactor, Float128Member a, Float128Member b) {
 			switch (a.classification) {
 				case Float128Member.NORMAL:
-					b.setV(a.num.multiply(TWO.pow(scaleFactor, CONTEXT)));
+					b.setV(a.num.multiply(TWO.pow(scaleFactor, CONTEXT), CONTEXT));
 					break;
 				case Float128Member.POSZERO:
 					b.setPosZero();

@@ -910,7 +910,7 @@ public final class Float128Member
 				if (ratio.compareTo(BigDecimal.ONE) >= 0)
 					fraction = new BigInteger("ffffffffffffffffffffffffffff", 16);
 				else
-					fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+					fraction = FULL_RANGE_BD.multiply(ratio).toBigInteger();
 				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
