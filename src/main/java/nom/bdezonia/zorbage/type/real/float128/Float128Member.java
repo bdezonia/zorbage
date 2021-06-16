@@ -32,7 +32,6 @@ package nom.bdezonia.zorbage.type.real.float128;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
