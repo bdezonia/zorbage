@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.float128;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
@@ -859,6 +860,7 @@ public final class Float128Member
 	void encode(byte[] arr, int offset) {
 		switch (classification) {
 		case NORMAL:
+			BigInteger ff = BigInteger.valueOf(255);
 			BigDecimal tmp = num.abs();
 			int signBit = (num.signum() < 0) ? 0x80 : 0;
 			if (tmp.compareTo(BigDecimal.ONE) == 0) {
@@ -873,8 +875,8 @@ public final class Float128Member
 				BigInteger fraction = findFraction(MIN_SUBNORMAL, MAX_SUBNORMAL, tmp);
 				arr[offset + 15] = (byte) signBit;
 				arr[offset + 14] = 0;
-				for (int i = 0; i < 13; i++) {
-					byte b = fraction.and(BigInteger.valueOf(255)).byteValue();
+				for (int i = 0; i < 14; i++) {
+					byte b = fraction.and(ff).byteValue();
 					fraction = fraction.shiftRight(8);
 					arr[offset + i] = b;
 				}
@@ -896,14 +898,9 @@ public final class Float128Member
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 15] = (byte) (signBit | ehi);
 				arr[offset + 14] = (byte) (elo);
-				int bitNum = 111;
-				for (int i = 13; i >= 0; i--) {
-					byte b = 0;
-					for (int bitMask = 0x80; bitMask > 0; bitMask >>= 1) {
-						if (fraction.testBit(bitNum))
-							b |= bitMask;
-						bitNum--;
-					}
+				for (int i = 0; i < 14; i++) {
+					byte b = fraction.and(ff).byteValue();
+					fraction = fraction.shiftRight(8);
 					arr[offset + i] = b;
 				}
 			}
@@ -923,14 +920,9 @@ public final class Float128Member
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 15] = (byte) (signBit | ehi);
 				arr[offset + 14] = (byte) (elo);
-				int bitNum = 111;
-				for (int i = 13; i >= 0; i--) {
-					byte b = 0;
-					for (int bitMask = 0x80; bitMask > 0; bitMask >>= 1) {
-						if (fraction.testBit(bitNum))
-							b |= bitMask;
-						bitNum--;
-					}
+				for (int i = 0; i < 14; i++) {
+					byte b = fraction.and(ff).byteValue();
+					fraction = fraction.shiftRight(8);
 					arr[offset + i] = b;
 				}
 			}
