@@ -395,7 +395,7 @@ public class TestFloat128Member {
 	@Test
 	public void testEncodeFractions() {
 
-		Float128Member tol = new Float128Member(new BigDecimal("0.0000000000000000000000000000000001"));
+		Float128Member tol = new Float128Member(new BigDecimal("0.00000000000000000000000000000000000001"));
 		
 		Float128Member num = new Float128Member();
 
