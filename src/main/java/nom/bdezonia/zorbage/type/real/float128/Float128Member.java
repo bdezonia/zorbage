@@ -870,13 +870,7 @@ public final class Float128Member
 			}
 			// is it a subnormal?
 			else if (tmp.compareTo(MIN_SUBNORMAL) >= 0 && tmp.compareTo(MAX_SUBNORMAL) <= 0) {
-				BigDecimal numer = tmp.subtract(MIN_SUBNORMAL);
-				BigDecimal denom = MAX_SUBNORMAL.subtract(MIN_SUBNORMAL);
-				// due to rounding quirks with java you might actually reach or surpass 1.0
-				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
-				if (fraction.compareTo(FULL_FRACTION) > 0)
-					fraction = FULL_FRACTION;
+				BigInteger fraction = findFraction(MIN_SUBNORMAL, MAX_SUBNORMAL, tmp);
 				arr[offset + 15] = (byte) signBit;
 				arr[offset + 14] = 0;
 				for (int i = 0; i < 13; i++) {
@@ -896,13 +890,7 @@ public final class Float128Member
 				}
 				BigDecimal lowerBound = upperBound;
 				upperBound = lowerBound.multiply(TWO);
-				BigDecimal numer = tmp.subtract(lowerBound);
-				BigDecimal denom = upperBound.subtract(lowerBound);
-				// due to rounding quirks with java you might actually reach or surpass 1.0
-				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
-				if (fraction.compareTo(FULL_FRACTION) > 0)
-					fraction = FULL_FRACTION;
+				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);
 				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -929,13 +917,7 @@ public final class Float128Member
 					upperBound = upperBound.multiply(TWO);
 					exponent++;
 				}
-				BigDecimal numer = tmp.subtract(lowerBound);
-				BigDecimal denom = upperBound.subtract(lowerBound);
-				// due to rounding quirks with java you might actually reach or surpass 1.0
-				BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
-				BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
-				if (fraction.compareTo(FULL_FRACTION) > 0)
-					fraction = FULL_FRACTION;
+				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);
 				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
@@ -1082,6 +1064,17 @@ public final class Float128Member
 			throw new IllegalArgumentException("illegal exponent "+exponent);
 	}
 
+	private BigInteger findFraction(BigDecimal lowerBound, BigDecimal upperBound, BigDecimal value) {
+		BigDecimal numer = value.subtract(lowerBound);
+		BigDecimal denom = upperBound.subtract(lowerBound);
+		// due to rounding quirks with java you might actually reach or surpass 1.0
+		BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
+		BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+		if (fraction.compareTo(FULL_FRACTION) > 0)
+			fraction = FULL_FRACTION;
+		return fraction;
+	}
+	
 	private void clamp() {
 		if (classification == NORMAL) {
 			if (num.compareTo(MIN_NORMAL) < 0) {
