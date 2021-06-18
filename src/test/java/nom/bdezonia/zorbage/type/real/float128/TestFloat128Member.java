@@ -373,12 +373,10 @@ public class TestFloat128Member {
 		
 		Float128Member num = new Float128Member();
 		
-		int[] ints = new int[]{1,7,4,1,2,4,8,3,3};
-
 		byte[] arr = new byte[16];
-		for (int i = 0; i < ints.length; i++) {
+		for (int i = -2000; i <= 2000; i++) {
 			
-			BigDecimal input = BigDecimal.valueOf(ints[i]); 
+			BigDecimal input = BigDecimal.valueOf(i); 
 			
 			num.setV(input);
 			
@@ -400,9 +398,14 @@ public class TestFloat128Member {
 		Float128Member num = new Float128Member();
 
 		byte[] arr = new byte[16];
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1000; i++) {
 			
 			G.QUAD.random().call(num);
+
+			// test half the numbers as negative
+			
+			if ((i & 1) == 1)
+				G.QUAD.negate().call(num, num);
 
 			BigDecimal before = num.v();
 			
