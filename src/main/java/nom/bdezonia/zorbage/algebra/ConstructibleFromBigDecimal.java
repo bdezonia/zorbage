@@ -40,5 +40,5 @@ import java.math.BigDecimal;
  */
 public interface ConstructibleFromBigDecimal<U> {
 
-	U construct(BigDecimal value);
+	U construct(BigDecimal val);
 }

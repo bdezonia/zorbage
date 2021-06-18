@@ -37,10 +37,19 @@ import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimal;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.algebra.NumberMember;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromByte;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
+import nom.bdezonia.zorbage.algebra.SetFromInt;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromShort;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
@@ -67,7 +76,10 @@ public final class Float128Member
 		Allocatable<Float128Member>, Duplicatable<Float128Member>,
 		Settable<Float128Member>, Gettable<Float128Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<Float128Member>, GetReal<Float128Member>
+		HighPrecRepresentation, SetReal<Float128Member>, GetReal<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromByte, SetFromDouble,
+		SetFromFloat, SetFromInt, SetFromLong, SetFromShort,
+		GetAsBigDecimal
 {
 	BigDecimal num;
 	byte classification;
@@ -108,6 +120,10 @@ public final class Float128Member
 		setV(v);
 	}
 	
+	public Float128Member(BigInteger v) {
+		this(new BigDecimal(v));
+	}
+	
 	public Float128Member(byte v) {
 		this(BigDecimal.valueOf(v));
 	}
@@ -126,10 +142,6 @@ public final class Float128Member
 	
 	public Float128Member(double v) {
 		this(BigDecimal.valueOf(v));
-	}
-	
-	public Float128Member(BigInteger v) {
-		this(new BigDecimal(v));
 	}
 	
 	public Float128Member(String str) {
@@ -176,32 +188,49 @@ public final class Float128Member
 		}
 	}
 	
-	public void setV(byte v) {
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return v();
+	}
+	
+	@Override
+	public void setFromByte(byte v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
-	public void setV(short v) {
+	@Override
+	public void setFromShort(short v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
-	public void setV(int v) {
+	@Override
+	public void setFromInt(int v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
-	public void setV(long v) {
+	@Override
+	public void setFromLong(long v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
-	public void setV(float v) {
+	@Override
+	public void setFromFloat(float v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
-	public void setV(double v) {
+	@Override
+	public void setFromDouble(double v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
-	public void setV(BigInteger v) {
+	@Override
+	public void setFromBigInteger(BigInteger v) {
 		setV(new BigDecimal(v));
+	}
+	
+	@Override
+	public void setFromBigDecimal(BigDecimal v) {
+		setV(v);
 	}
 
 	@Override
@@ -229,42 +258,42 @@ public final class Float128Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setV(v);
+		setFromByte(v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV(v);
+		setFromShort(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV(v);
+		setFromInt(v);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setV(v);
+		setFromLong(v);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(v);
+		setFromFloat(v);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(v);
+		setFromDouble(v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(v);
+		setFromBigInteger(v);
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setV(v);
+		setFromBigDecimal(v);
 	}
 
 	@Override
@@ -287,7 +316,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromByte(v);
 		}
 	}
 
@@ -311,7 +340,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromShort(v);
 		}
 	}
 
@@ -335,7 +364,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromInt(v);
 		}
 	}
 
@@ -359,7 +388,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromLong(v);
 		}
 	}
 
@@ -383,7 +412,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromFloat(v);
 		}
 	}
 
@@ -407,7 +436,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromDouble(v);
 		}
 	}
 
@@ -431,7 +460,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromBigInteger(v);
 		}
 	}
 
@@ -455,7 +484,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(v);
+			setFromBigDecimal(v);
 		}
 	}
 

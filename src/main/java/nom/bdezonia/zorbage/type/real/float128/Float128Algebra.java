@@ -38,6 +38,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromByte;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDouble;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloat;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInt;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLong;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShort;
 import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Hyperbolic;
@@ -125,7 +133,11 @@ public class Float128Algebra
 		ScaleComponents<Float128Member, Float128Member>,
 		Tolerance<Float128Member,Float128Member>,
 		ScaleByOneHalf<Float128Member>,
-		ScaleByTwo<Float128Member>
+		ScaleByTwo<Float128Member>,
+		ConstructibleFromBigDecimal<Float128Member>, ConstructibleFromBigInteger<Float128Member>,
+		ConstructibleFromByte<Float128Member>, ConstructibleFromDouble<Float128Member>,
+		ConstructibleFromFloat<Float128Member>, ConstructibleFromInt<Float128Member>,
+		ConstructibleFromLong<Float128Member>, ConstructibleFromShort<Float128Member>
 {
 	public static final MathContext CONTEXT = new MathContext(38);
 
@@ -3269,5 +3281,45 @@ public class Float128Algebra
 	@Override
 	public Procedure1<Float128Member> minBound() {
 		return MINB;
+	}
+
+	@Override
+	public Float128Member construct(short val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(long val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(int val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(float val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(double val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(byte val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(BigInteger val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(BigDecimal val) {
+		return new Float128Member(val);
 	}
 }
