@@ -55,9 +55,6 @@ import nom.bdezonia.zorbage.type.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
 
-// TODO: I will need to write a bunch of tests and translate known values back and
-// forth and expect no drift.
-
 /**
  * 
  * @author Barry DeZonia
@@ -111,6 +108,30 @@ public final class Float128Member
 		setV(v);
 	}
 	
+	public Float128Member(byte v) {
+		this(BigDecimal.valueOf(v));
+	}
+	
+	public Float128Member(short v) {
+		this(BigDecimal.valueOf(v));
+	}
+	
+	public Float128Member(int v) {
+		this(BigDecimal.valueOf(v));
+	}
+	
+	public Float128Member(long v) {
+		this(BigDecimal.valueOf(v));
+	}
+	
+	public Float128Member(double v) {
+		this(BigDecimal.valueOf(v));
+	}
+	
+	public Float128Member(BigInteger v) {
+		this(new BigDecimal(v));
+	}
+	
 	public Float128Member(String str) {
 		this();
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
@@ -155,6 +176,34 @@ public final class Float128Member
 		}
 	}
 	
+	public void setV(byte v) {
+		setV(BigDecimal.valueOf(v));
+	}
+	
+	public void setV(short v) {
+		setV(BigDecimal.valueOf(v));
+	}
+	
+	public void setV(int v) {
+		setV(BigDecimal.valueOf(v));
+	}
+	
+	public void setV(long v) {
+		setV(BigDecimal.valueOf(v));
+	}
+	
+	public void setV(float v) {
+		setV(BigDecimal.valueOf(v));
+	}
+	
+	public void setV(double v) {
+		setV(BigDecimal.valueOf(v));
+	}
+	
+	public void setV(BigInteger v) {
+		setV(new BigDecimal(v));
+	}
+
 	@Override
 	public void toHighPrec(HighPrecisionMember output) {
 		if (classification == POSINF || classification == NEGINF || classification == NAN)
@@ -1016,6 +1065,8 @@ public final class Float128Member
 			else {
 				
 				// subnormal number
+
+				// TODO: I'm not adding one_half here. Is that a bug?
 				
 				BigDecimal value = new BigDecimal(fraction).divide(FULL_RANGE_BD, Float128Algebra.CONTEXT);
 				value = value.multiply(TWO.pow(-16382, Float128Algebra.CONTEXT));
