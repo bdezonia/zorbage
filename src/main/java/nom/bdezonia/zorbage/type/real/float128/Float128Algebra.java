@@ -165,6 +165,46 @@ public class Float128Algebra
 		return new Float128Member(str);
 	}
 
+	@Override
+	public Float128Member construct(byte val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(short val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(int val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(long val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(float val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(double val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(BigInteger val) {
+		return new Float128Member(val);
+	}
+
+	@Override
+	public Float128Member construct(BigDecimal val) {
+		return new Float128Member(val);
+	}
+
 	private final Function2<Boolean, Float128Member, Float128Member> EQ =
 			new Function2<Boolean, Float128Member, Float128Member>()
 	{
@@ -3281,45 +3321,5 @@ public class Float128Algebra
 	@Override
 	public Procedure1<Float128Member> minBound() {
 		return MINB;
-	}
-
-	@Override
-	public Float128Member construct(short val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(long val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(int val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(float val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(double val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(byte val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(BigInteger val) {
-		return new Float128Member(val);
-	}
-
-	@Override
-	public Float128Member construct(BigDecimal val) {
-		return new Float128Member(val);
 	}
 }
