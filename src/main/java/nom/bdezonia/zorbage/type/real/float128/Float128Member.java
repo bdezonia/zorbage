@@ -1066,13 +1066,11 @@ public final class Float128Member
 				
 				// subnormal number
 
-				// TODO: I'm not adding one_half here. Is that a bug?
-				
 				BigDecimal value = new BigDecimal(fraction).divide(FULL_RANGE_BD, Float128Algebra.CONTEXT);
 				value = value.multiply(TWO.pow(-16382, Float128Algebra.CONTEXT));
 				if (sign != 0)
 					value = value.negate();
-				setNormal(value);
+				setNormal(value);     // TODO: should I do setV() instead due to roundoff issues?
 			}
 		}
 		else if (exponent == 0x7fff) {
