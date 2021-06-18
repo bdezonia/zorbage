@@ -133,6 +133,7 @@ import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMatr
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionRModule;
 import nom.bdezonia.zorbage.type.rational.RationalAlgebra;
 import nom.bdezonia.zorbage.type.real.float128.Float128Algebra;
+import nom.bdezonia.zorbage.type.real.float128.Float128CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.real.float128.Float128Matrix;
 import nom.bdezonia.zorbage.type.real.float128.Float128Vector;
 import nom.bdezonia.zorbage.type.real.float16.Float16Algebra;
@@ -265,8 +266,7 @@ public class G {
 	public static final Float128Algebra QUAD = new Float128Algebra();
 	public static final Float128Vector QUAD_VEC = new Float128Vector();
 	public static final Float128Matrix QUAD_MAT = new Float128Matrix();
-	// TODO
-	//public static final Float128CartesianTensorProduct QUAD_TEN = new Float128CartesianTensorProduct();
+	public static final Float128CartesianTensorProduct QUAD_TEN = new Float128CartesianTensorProduct();
 
 	public static final ComplexFloat128Algebra CQUAD = new ComplexFloat128Algebra();
 	// TODO
