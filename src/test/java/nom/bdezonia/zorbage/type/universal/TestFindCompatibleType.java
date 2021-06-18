@@ -51,7 +51,7 @@ public class TestFindCompatibleType {
 	// values from strings or from unity and zero via operations.
 	
 	@Test
-	public <T extends Constructable<U> & Equality<U> & Addition<U> & Multiplication<U> &
+	public <T extends Constructible<U> & Equality<U> & Addition<U> & Multiplication<U> &
 				Scale<U,U> & ScaleByDouble<U> & ScaleByHighPrec<U> & ScaleByRational<U> & Unity<U>,
 			U> 
 		void test1()

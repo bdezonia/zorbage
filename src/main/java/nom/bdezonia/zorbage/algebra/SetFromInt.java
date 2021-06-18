@@ -34,9 +34,8 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface Constructable<U>
-	extends Constructible0d<U>, ConstructibleU<U>, ConstructibleString<U>
-{
+public interface SetFromInt {
+
+	void setFromInt(int v);
 }

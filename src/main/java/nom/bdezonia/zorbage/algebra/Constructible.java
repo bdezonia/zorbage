@@ -34,10 +34,9 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public interface Algebra<T extends Algebra<T,U>, U>
-	extends
-		Constructible<U>,
-		Equality<U>
+public interface Constructible<U>
+	extends Constructible0d<U>, ConstructibleU<U>, ConstructibleString<U>
 {
 }
