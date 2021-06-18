@@ -229,37 +229,37 @@ public final class Float128Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setV(BigDecimal.valueOf(v));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setV(BigDecimal.valueOf(v));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setV(BigDecimal.valueOf(v));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setV(BigDecimal.valueOf(v));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setV(BigDecimal.valueOf(v));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setV(BigDecimal.valueOf(v));
+		setV(v);
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setV(new BigDecimal(v));
+		setV(v);
 	}
 
 	@Override
@@ -287,7 +287,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			setV(v);
 		}
 	}
 
@@ -311,7 +311,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			setV(v);
 		}
 	}
 
@@ -335,7 +335,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			setV(v);
 		}
 	}
 
@@ -359,7 +359,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			setV(v);
 		}
 	}
 
@@ -383,7 +383,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			setV(v);
 		}
 	}
 
@@ -407,7 +407,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(BigDecimal.valueOf(v));
+			setV(v);
 		}
 	}
 
@@ -431,7 +431,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setV(new BigDecimal(v));
+			setV(v);
 		}
 	}
 
