@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.real.float128;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
@@ -883,16 +884,12 @@ public final class Float128Member
 			// is it between zero and one?
 			else if (tmp.compareTo(BigDecimal.ZERO) > 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
 				// it's a number > 0 and < 1
-				BigDecimal upperBound = BigDecimal.ONE;
-				int exponent = 0;
-				while (upperBound.compareTo(tmp) > 0) { // TODO should this be >= 0 instead? no I think.
-					upperBound = upperBound.divide(TWO);
-					exponent--;
-				}
-				BigDecimal lowerBound = upperBound;
-				upperBound = lowerBound.multiply(TWO);
+				BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
+				int exponent = lg2.intValue();
+				BigDecimal lowerBound = TWO.pow(exponent-1, Float128Algebra.CONTEXT);
+				BigDecimal upperBound = TWO.pow(exponent, Float128Algebra.CONTEXT);
 				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);
-				exponent += 16383;
+				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
 				int elo = (exponent & 0x00ff) >> 0;
 				arr[offset + 15] = (byte) (signBit | ehi);
@@ -905,14 +902,10 @@ public final class Float128Member
 			}
 			else {
 				// it's a number > 1 and <= MAXBOUND
-				int exponent = -1;
-				BigDecimal lowerBound = BigDecimal.ONE;
-				BigDecimal upperBound = lowerBound;
-				while (tmp.compareTo(upperBound) >= 0) {
-					lowerBound = upperBound;
-					upperBound = upperBound.multiply(TWO);
-					exponent++;
-				}
+				BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
+				int exponent = lg2.intValue();
+				BigDecimal lowerBound = TWO.pow(exponent, Float128Algebra.CONTEXT);
+				BigDecimal upperBound = TWO.pow(exponent+1, Float128Algebra.CONTEXT);
 				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);
 				exponent += 16383;
 				int ehi = (exponent & 0xff00) >> 8;
@@ -996,7 +989,7 @@ public final class Float128Member
 			fraction = fraction.shiftLeft(8).add(BigInteger.valueOf(buffer[offset + i] & 0xff));
 		}
 		
-		if (exponent > 0 || exponent < 0x7fff) {
+		if (exponent > 0 && exponent < 0x7fff) {
 
 			// a regular number
 			
@@ -1058,9 +1051,10 @@ public final class Float128Member
 	private BigInteger findFraction(BigDecimal lowerBound, BigDecimal upperBound, BigDecimal value) {
 		BigDecimal numer = value.subtract(lowerBound);
 		BigDecimal denom = upperBound.subtract(lowerBound);
-		// due to rounding quirks with java you might actually reach or surpass 1.0
 		BigDecimal ratio = numer.divide(denom, Float128Algebra.CONTEXT);
+		// adding half to make sure we are correctly rounding
 		BigInteger fraction = FULL_RANGE_BD.multiply(ratio).add(BigDecimalUtils.ONE_HALF).toBigInteger();
+		// due to rounding quirks with java you might actually reach or surpass 1.0 so clamp it
 		if (fraction.compareTo(FULL_FRACTION) > 0)
 			fraction = FULL_FRACTION;
 		return fraction;
