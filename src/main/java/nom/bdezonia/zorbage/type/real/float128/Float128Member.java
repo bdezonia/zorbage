@@ -108,7 +108,6 @@ public final class Float128Member
 	// nan, inf, etc.
 
 	public Float128Member(Float128Member other) {
-		this();
 		set(other);
 	}
 
@@ -116,7 +115,6 @@ public final class Float128Member
 	// nan, inf, etc.
 	
 	public Float128Member(BigDecimal v) {
-		this();
 		setV(v);
 	}
 	
@@ -145,7 +143,6 @@ public final class Float128Member
 	}
 	
 	public Float128Member(String str) {
-		this();
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		OctonionRepresentation val = rep.firstValue();
 		setV(val.r());
