@@ -57,7 +57,9 @@ public final class Float64Member
 		Allocatable<Float64Member>, Duplicatable<Float64Member>,
 		Settable<Float64Member>, Gettable<Float64Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<Float64Member>, GetReal<Float64Member>
+		HighPrecRepresentation, SetReal<Float64Member>, GetReal<Float64Member>,
+		SetFromByte, SetFromShort, SetFromInt, SetFromFloat, SetFromDouble,
+		GetAsBigDecimal, GetAsDouble
 {
 	private double v;
 	
@@ -79,6 +81,22 @@ public final class Float64Member
 		setV(val.r().doubleValue());
 	}
 
+	public Float64Member(byte value) {
+		setV(value);
+	}
+
+	public Float64Member(short value) {
+		setV(value);
+	}
+
+	public Float64Member(int value) {
+		setV(value);
+	}
+
+	public Float64Member(float value) {
+		setV(value);
+	}
+	
 	public double v() { return v; }
 
 	public void setV(double val) { v = val; }
@@ -681,5 +699,40 @@ public final class Float64Member
 			return G.DBL.isEqual().call(this, (Float64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v);
+	}
+
+	@Override
+	public void setFromDouble(double v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromFloat(float v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromInt(int v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromShort(short v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromByte(byte v) {
+		setV(v);
 	}
 }

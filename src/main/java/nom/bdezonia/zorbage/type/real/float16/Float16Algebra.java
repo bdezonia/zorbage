@@ -91,7 +91,8 @@ public class Float16Algebra
 		ScaleByOneHalf<Float16Member>,
 		ScaleByTwo<Float16Member>,
 		MiscFloat<Float16Member>,
-		PredSucc<Float16Member>
+		PredSucc<Float16Member>,
+		ConstructibleFromByte<Float16Member>, ConstructibleFromFloat<Float16Member>, ConstructibleFromShort<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
@@ -141,6 +142,21 @@ public class Float16Algebra
 	@Override
 	public Float16Member construct(String s) {
 		return new Float16Member(s);
+	}
+
+	@Override
+	public Float16Member construct(byte val) {
+		return new Float16Member(val);
+	}
+
+	@Override
+	public Float16Member construct(short val) {
+		return new Float16Member(val);
+	}
+
+	@Override
+	public Float16Member construct(float val) {
+		return new Float16Member(val);
 	}
 
 	private final Procedure2<Float16Member,Float16Member> ASSIGN =

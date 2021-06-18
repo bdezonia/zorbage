@@ -91,7 +91,12 @@ public class Float64Algebra
 		ScaleComponents<Float64Member, Float64Member>,
 		Tolerance<Float64Member,Float64Member>,
 		ScaleByOneHalf<Float64Member>,
-		ScaleByTwo<Float64Member>
+		ScaleByTwo<Float64Member>,
+		ConstructibleFromByte<Float64Member>,
+		ConstructibleFromFloat<Float64Member>,
+		ConstructibleFromShort<Float64Member>,
+		ConstructibleFromDouble<Float64Member>,
+		ConstructibleFromInt<Float64Member>
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
@@ -1584,6 +1589,31 @@ public class Float64Algebra
 	@Override
 	public Function1<Boolean, Float64Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public Float64Member construct(byte val) {
+		return new Float64Member(val);
+	}
+
+	@Override
+	public Float64Member construct(short val) {
+		return new Float64Member(val);
+	}
+
+	@Override
+	public Float64Member construct(float val) {
+		return new Float64Member(val);
+	}
+
+	@Override
+	public Float64Member construct(int val) {
+		return new Float64Member(val);
+	}
+
+	@Override
+	public Float64Member construct(double val) {
+		return new Float64Member(val);
 	}
 
 }

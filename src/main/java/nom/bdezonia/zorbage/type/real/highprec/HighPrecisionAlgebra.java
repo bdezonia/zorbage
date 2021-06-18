@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
@@ -76,7 +77,15 @@ public class HighPrecisionAlgebra
 		Exponential<HighPrecisionMember>,
 		ScaleByOneHalf<HighPrecisionMember>,
 		ScaleByTwo<HighPrecisionMember>,
-		MiscFloat<HighPrecisionMember>
+		MiscFloat<HighPrecisionMember>,
+		ConstructibleFromByte<HighPrecisionMember>,
+		ConstructibleFromShort<HighPrecisionMember>,
+		ConstructibleFromInt<HighPrecisionMember>,
+		ConstructibleFromLong<HighPrecisionMember>,
+		ConstructibleFromFloat<HighPrecisionMember>,
+		ConstructibleFromDouble<HighPrecisionMember>,
+		ConstructibleFromBigInteger<HighPrecisionMember>,
+		ConstructibleFromBigDecimal<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
@@ -1059,6 +1068,46 @@ public class HighPrecisionAlgebra
 	@Override
 	public Function1<Boolean, HighPrecisionMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public HighPrecisionMember construct(BigDecimal val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(BigInteger val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(double val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(float val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(long val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(int val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(short val) {
+		return new HighPrecisionMember(val);
+	}
+
+	@Override
+	public HighPrecisionMember construct(byte val) {
+		return new HighPrecisionMember(val);
 	}
 
 }

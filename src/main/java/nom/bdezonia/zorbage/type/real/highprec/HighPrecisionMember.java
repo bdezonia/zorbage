@@ -56,7 +56,10 @@ public final class HighPrecisionMember
 		Settable<HighPrecisionMember>, Gettable<HighPrecisionMember>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<HighPrecisionMember>, GetReal<HighPrecisionMember>,
-		BigDecimalCoder
+		BigDecimalCoder,
+		SetFromByte, SetFromShort, SetFromInt, SetFromLong,
+		SetFromFloat, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
+		GetAsBigDecimal
 {
 	private BigDecimal v;
 	
@@ -78,6 +81,34 @@ public final class HighPrecisionMember
 		setV(val.r());
 	}
 
+	public HighPrecisionMember(byte val) {
+		setV(BigDecimal.valueOf(val));
+	}
+
+	public HighPrecisionMember(short val) {
+		setV(BigDecimal.valueOf(val));
+	}
+
+	public HighPrecisionMember(int val) {
+		setV(BigDecimal.valueOf(val));
+	}
+
+	public HighPrecisionMember(long val) {
+		setV(BigDecimal.valueOf(val));
+	}
+
+	public HighPrecisionMember(float val) {
+		setV(BigDecimal.valueOf(val));
+	}
+
+	public HighPrecisionMember(double val) {
+		setV(BigDecimal.valueOf(val));
+	}
+
+	public HighPrecisionMember(BigInteger val) {
+		setV(new BigDecimal(val));
+	}
+	
 	public BigDecimal v() { return v; }
 
 	public void setV(BigDecimal val) { v = val; }
@@ -680,5 +711,50 @@ public final class HighPrecisionMember
 			return G.HP.isEqual().call(this, (HighPrecisionMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return v;
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger v) {
+		setV(new BigDecimal(v));
+	}
+
+	@Override
+	public void setFromDouble(double v) {
+		setV(BigDecimal.valueOf(v));
+	}
+
+	@Override
+	public void setFromFloat(float v) {
+		setV(BigDecimal.valueOf(v));
+	}
+
+	@Override
+	public void setFromLong(long v) {
+		setV(BigDecimal.valueOf(v));
+	}
+
+	@Override
+	public void setFromInt(int v) {
+		setV(BigDecimal.valueOf(v));
+	}
+
+	@Override
+	public void setFromShort(short v) {
+		setV(BigDecimal.valueOf(v));
+	}
+
+	@Override
+	public void setFromByte(byte v) {
+		setV(BigDecimal.valueOf(v));
 	}
 }

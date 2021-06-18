@@ -91,7 +91,10 @@ public class Float32Algebra
 		ScaleComponents<Float32Member, Float32Member>,
 		Tolerance<Float32Member,Float32Member>,
 		ScaleByOneHalf<Float32Member>,
-		ScaleByTwo<Float32Member>
+		ScaleByTwo<Float32Member>,
+		ConstructibleFromByte<Float32Member>,
+		ConstructibleFromFloat<Float32Member>,
+		ConstructibleFromShort<Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);
@@ -1550,6 +1553,21 @@ public class Float32Algebra
 	@Override
 	public Function1<Boolean, Float32Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public Float32Member construct(short val) {
+		return new Float32Member(val);
+	}
+
+	@Override
+	public Float32Member construct(float val) {
+		return new Float32Member(val);
+	}
+
+	@Override
+	public Float32Member construct(byte val) {
+		return new Float32Member(val);
 	}
 
 }

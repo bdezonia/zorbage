@@ -57,7 +57,9 @@ public final class Float32Member
 		Allocatable<Float32Member>, Duplicatable<Float32Member>,
 		Settable<Float32Member>, Gettable<Float32Member>,
 		UniversalRepresentation, PrimitiveConversion,
-		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>
+		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>,
+		SetFromByte, SetFromFloat, SetFromShort,
+		GetAsBigDecimal, GetAsDouble, GetAsFloat
 {
 	private float v;
 	
@@ -78,7 +80,15 @@ public final class Float32Member
 		OctonionRepresentation val = rep.firstValue();
 		setV(val.r().floatValue());
 	}
-
+	
+	public Float32Member(byte value) {
+		setV(value);
+	}
+	
+	public Float32Member(short value) {
+		setV(value);
+	}
+	
 	public float v() { return v; }
 
 	public void setV(float val) { v = val; }
@@ -681,5 +691,35 @@ public final class Float32Member
 			return G.FLT.isEqual().call(this, (Float32Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v();
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v();
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v);
+	}
+
+	@Override
+	public void setFromByte(byte v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromShort(short v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromFloat(float v) {
+		setV(v);
 	}
 }
