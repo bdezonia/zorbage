@@ -64,7 +64,8 @@ public class SignedInt1Algebra
 		ScaleByHighPrecAndRound<SignedInt1Member>,
 		ScaleByRational<SignedInt1Member>,
 		ScaleByDouble<SignedInt1Member>,
-		ScaleByDoubleAndRound<SignedInt1Member>
+		ScaleByDoubleAndRound<SignedInt1Member>,
+		ConstructibleFromInt<SignedInt1Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class SignedInt1Algebra
 	@Override
 	public SignedInt1Member construct(String str) {
 		return new SignedInt1Member(str);
+	}
+
+	@Override
+	public SignedInt1Member construct(int val) {
+		return new SignedInt1Member(val);
 	}
 
 	private final Function2<Boolean, SignedInt1Member, SignedInt1Member> EQ =

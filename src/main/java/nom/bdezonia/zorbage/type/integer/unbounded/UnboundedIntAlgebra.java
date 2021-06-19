@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.BitOperations;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Integer;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
@@ -64,13 +65,34 @@ public class UnboundedIntAlgebra
 		BitOperations<UnboundedIntMember>,
 		Tolerance<UnboundedIntMember,UnboundedIntMember>,
 		ScaleByOneHalf<UnboundedIntMember>,
-		ScaleByTwo<UnboundedIntMember>
+		ScaleByTwo<UnboundedIntMember>,
+		ConstructibleFromBigInteger<UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
 	private static final BigInteger TWO = BigInteger.valueOf(2);
 	
 	public UnboundedIntAlgebra() { }
+
+	@Override
+	public UnboundedIntMember construct() {
+		return new UnboundedIntMember();
+	}
+
+	@Override
+	public UnboundedIntMember construct(UnboundedIntMember other) {
+		return new UnboundedIntMember(other);
+	}
+
+	@Override
+	public UnboundedIntMember construct(String s) {
+		return new UnboundedIntMember(s);
+	}
+
+	@Override
+	public UnboundedIntMember construct(BigInteger val) {
+		return new UnboundedIntMember(val);
+	}
 
 	private final Procedure2<UnboundedIntMember,UnboundedIntMember> ABS =
 			new Procedure2<UnboundedIntMember,UnboundedIntMember>()
@@ -200,21 +222,6 @@ public class UnboundedIntAlgebra
 	@Override
 	public Function2<Boolean,UnboundedIntMember,UnboundedIntMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public UnboundedIntMember construct() {
-		return new UnboundedIntMember();
-	}
-
-	@Override
-	public UnboundedIntMember construct(UnboundedIntMember other) {
-		return new UnboundedIntMember(other);
-	}
-
-	@Override
-	public UnboundedIntMember construct(String s) {
-		return new UnboundedIntMember(s);
 	}
 
 	private final Procedure2<UnboundedIntMember,UnboundedIntMember> ASSIGN =

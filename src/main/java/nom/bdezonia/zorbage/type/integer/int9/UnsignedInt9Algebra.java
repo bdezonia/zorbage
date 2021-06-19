@@ -64,7 +64,8 @@ public class UnsignedInt9Algebra
 		Random<UnsignedInt9Member>,
 		Tolerance<UnsignedInt9Member,UnsignedInt9Member>,
 		ScaleByOneHalf<UnsignedInt9Member>,
-		ScaleByTwo<UnsignedInt9Member>
+		ScaleByTwo<UnsignedInt9Member>,
+		ConstructibleFromInt<UnsignedInt9Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class UnsignedInt9Algebra
 	@Override
 	public UnsignedInt9Member construct(String str) {
 		return new UnsignedInt9Member(str);
+	}
+
+	@Override
+	public UnsignedInt9Member construct(int val) {
+		return new UnsignedInt9Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt9Member, UnsignedInt9Member> EQ =

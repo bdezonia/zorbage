@@ -64,7 +64,8 @@ public class SignedInt13Algebra
 		Random<SignedInt13Member>,
 		Tolerance<SignedInt13Member,SignedInt13Member>,
 		ScaleByOneHalf<SignedInt13Member>,
-		ScaleByTwo<SignedInt13Member>
+		ScaleByTwo<SignedInt13Member>,
+		ConstructibleFromInt<SignedInt13Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class SignedInt13Algebra
 	@Override
 	public SignedInt13Member construct(String str) {
 		return new SignedInt13Member(str);
+	}
+
+	@Override
+	public SignedInt13Member construct(int val) {
+		return new SignedInt13Member(val);
 	}
 
 	private final Function2<Boolean, SignedInt13Member, SignedInt13Member> EQ =

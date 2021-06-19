@@ -66,12 +66,33 @@ public class SignedInt64Algebra
 		Random<SignedInt64Member>,
 		Tolerance<SignedInt64Member,SignedInt64Member>,
 		ScaleByOneHalf<SignedInt64Member>,
-		ScaleByTwo<SignedInt64Member>
+		ScaleByTwo<SignedInt64Member>,
+		ConstructibleFromLong<SignedInt64Member>
 {
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);
 	
 	public SignedInt64Algebra() { }
+
+	@Override
+	public SignedInt64Member construct() {
+		return new SignedInt64Member();
+	}
+
+	@Override
+	public SignedInt64Member construct(SignedInt64Member other) {
+		return new SignedInt64Member(other);
+	}
+
+	@Override
+	public SignedInt64Member construct(String s) {
+		return new SignedInt64Member(s);
+	}
+
+	@Override
+	public SignedInt64Member construct(long val) {
+		return new SignedInt64Member(val);
+	}
 	
 	private final Function2<Boolean,SignedInt64Member,SignedInt64Member> EQ =
 			new Function2<Boolean, SignedInt64Member, SignedInt64Member>()
@@ -99,21 +120,6 @@ public class SignedInt64Algebra
 	@Override
 	public Function2<Boolean,SignedInt64Member,SignedInt64Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public SignedInt64Member construct() {
-		return new SignedInt64Member();
-	}
-
-	@Override
-	public SignedInt64Member construct(SignedInt64Member other) {
-		return new SignedInt64Member(other);
-	}
-
-	@Override
-	public SignedInt64Member construct(String s) {
-		return new SignedInt64Member(s);
 	}
 
 	private final Procedure2<SignedInt64Member,SignedInt64Member> ASSIGN =

@@ -58,7 +58,9 @@ public final class UnsignedInt128Member
 		Settable<UnsignedInt128Member>, Gettable<UnsignedInt128Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt128Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>, GetReal<UnboundedIntMember>
+		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
+		SetFromBigInteger,
+		GetAsBigInteger, GetAsBigDecimal
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);
@@ -718,5 +720,20 @@ public final class UnsignedInt128Member
 			return G.UINT128.isEqual().call(this, (UnsignedInt128Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return v();
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return new BigDecimal(v());
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger v) {
+		setV(v);
 	}
 }

@@ -66,10 +66,31 @@ public class SignedInt32Algebra
 		Random<SignedInt32Member>,
 		Tolerance<SignedInt32Member,SignedInt32Member>,
 		ScaleByOneHalf<SignedInt32Member>,
-		ScaleByTwo<SignedInt32Member>
+		ScaleByTwo<SignedInt32Member>,
+		ConstructibleFromInt<SignedInt32Member>
 {
 
 	public SignedInt32Algebra() { }
+
+	@Override
+	public SignedInt32Member construct() {
+		return new SignedInt32Member();
+	}
+
+	@Override
+	public SignedInt32Member construct(SignedInt32Member other) {
+		return new SignedInt32Member(other);
+	}
+
+	@Override
+	public SignedInt32Member construct(String s) {
+		return new SignedInt32Member(s);
+	}
+
+	@Override
+	public SignedInt32Member construct(int val) {
+		return new SignedInt32Member(val);
+	}
 	
 	private final Function2<Boolean,SignedInt32Member,SignedInt32Member> EQ =
 			new Function2<Boolean, SignedInt32Member, SignedInt32Member>()
@@ -97,21 +118,6 @@ public class SignedInt32Algebra
 	@Override
 	public Function2<Boolean,SignedInt32Member,SignedInt32Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public SignedInt32Member construct() {
-		return new SignedInt32Member();
-	}
-
-	@Override
-	public SignedInt32Member construct(SignedInt32Member other) {
-		return new SignedInt32Member(other);
-	}
-
-	@Override
-	public SignedInt32Member construct(String s) {
-		return new SignedInt32Member(s);
 	}
 
 	private final Procedure2<SignedInt32Member,SignedInt32Member> ASSIGN =

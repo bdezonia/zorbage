@@ -60,7 +60,9 @@ public final class SignedInt12Member
 		Settable<SignedInt12Member>, Gettable<SignedInt12Member>,
 		UniversalRepresentation, NumberMember<SignedInt12Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt16Member>
+		SetReal<Integer>, GetReal<SignedInt16Member>,
+		SetFromInt,
+		GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
 {
 	short v;
 
@@ -739,5 +741,45 @@ public final class SignedInt12Member
 			return G.INT12.isEqual().call(this, (SignedInt12Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return BigInteger.valueOf(v());
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v();
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v();
+	}
+
+	@Override
+	public long getAsLong() {
+		return v();
+	}
+
+	@Override
+	public int getAsInt() {
+		return v();
+	}
+
+	@Override
+	public short getAsShort() {
+		return v();
+	}
+
+	@Override
+	public void setFromInt(int v) {
+		setV(v);
 	}
 }

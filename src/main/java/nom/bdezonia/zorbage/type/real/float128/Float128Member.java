@@ -44,12 +44,8 @@ import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
 import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
-import nom.bdezonia.zorbage.algebra.SetFromByte;
 import nom.bdezonia.zorbage.algebra.SetFromDouble;
-import nom.bdezonia.zorbage.algebra.SetFromFloat;
-import nom.bdezonia.zorbage.algebra.SetFromInt;
 import nom.bdezonia.zorbage.algebra.SetFromLong;
-import nom.bdezonia.zorbage.algebra.SetFromShort;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
@@ -77,8 +73,7 @@ public final class Float128Member
 		Settable<Float128Member>, Gettable<Float128Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float128Member>, GetReal<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromByte, SetFromDouble,
-		SetFromFloat, SetFromInt, SetFromLong, SetFromShort,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
 		GetAsBigDecimal
 {
 	BigDecimal num;
@@ -118,20 +113,14 @@ public final class Float128Member
 		setV(v);
 	}
 	
+	public Float128Member(String str) {
+		TensorStringRepresentation rep = new TensorStringRepresentation(str);
+		OctonionRepresentation val = rep.firstValue();
+		setV(val.r());
+	}
+
 	public Float128Member(BigInteger v) {
 		this(new BigDecimal(v));
-	}
-	
-	public Float128Member(byte v) {
-		this(BigDecimal.valueOf(v));
-	}
-	
-	public Float128Member(short v) {
-		this(BigDecimal.valueOf(v));
-	}
-	
-	public Float128Member(int v) {
-		this(BigDecimal.valueOf(v));
 	}
 	
 	public Float128Member(long v) {
@@ -142,11 +131,6 @@ public final class Float128Member
 		this(BigDecimal.valueOf(v));
 	}
 	
-	public Float128Member(String str) {
-		TensorStringRepresentation rep = new TensorStringRepresentation(str);
-		OctonionRepresentation val = rep.firstValue();
-		setV(val.r());
-	}
 	@Override
 	public long dimension(int d) {
 		return 0;
@@ -191,27 +175,7 @@ public final class Float128Member
 	}
 	
 	@Override
-	public void setFromByte(byte v) {
-		setV(BigDecimal.valueOf(v));
-	}
-	
-	@Override
-	public void setFromShort(short v) {
-		setV(BigDecimal.valueOf(v));
-	}
-	
-	@Override
-	public void setFromInt(int v) {
-		setV(BigDecimal.valueOf(v));
-	}
-	
-	@Override
 	public void setFromLong(long v) {
-		setV(BigDecimal.valueOf(v));
-	}
-	
-	@Override
-	public void setFromFloat(float v) {
 		setV(BigDecimal.valueOf(v));
 	}
 	
@@ -255,17 +219,17 @@ public final class Float128Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setFromByte(v);
+		setFromLong(v);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setFromShort(v);
+		setFromLong(v);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setFromInt(v);
+		setFromLong(v);
 	}
 
 	@Override
@@ -275,7 +239,7 @@ public final class Float128Member
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setFromFloat(v);
+		setFromDouble(v);
 	}
 
 	@Override
@@ -313,7 +277,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromByte(v);
+			setFromLong(v);
 		}
 	}
 
@@ -337,7 +301,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromShort(v);
+			setFromLong(v);
 		}
 	}
 
@@ -361,7 +325,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromInt(v);
+			setFromLong(v);
 		}
 	}
 
@@ -409,7 +373,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromFloat(v);
+			setFromDouble(v);
 		}
 	}
 

@@ -66,10 +66,31 @@ public class UnsignedInt8Algebra
 		Random<UnsignedInt8Member>,
 		Tolerance<UnsignedInt8Member,UnsignedInt8Member>,
 		ScaleByOneHalf<UnsignedInt8Member>,
-		ScaleByTwo<UnsignedInt8Member>
+		ScaleByTwo<UnsignedInt8Member>,
+		ConstructibleFromInt<UnsignedInt8Member>
 {
 
 	public UnsignedInt8Algebra() { }
+
+	@Override
+	public UnsignedInt8Member construct() {
+		return new UnsignedInt8Member();
+	}
+
+	@Override
+	public UnsignedInt8Member construct(UnsignedInt8Member other) {
+		return new UnsignedInt8Member(other);
+	}
+
+	@Override
+	public UnsignedInt8Member construct(String s) {
+		return new UnsignedInt8Member(s);
+	}
+
+	@Override
+	public UnsignedInt8Member construct(int val) {
+		return new UnsignedInt8Member(val);
+	}
 	
 	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> EQ =
 			new Function2<Boolean, UnsignedInt8Member, UnsignedInt8Member>()
@@ -97,21 +118,6 @@ public class UnsignedInt8Algebra
 	@Override
 	public Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public UnsignedInt8Member construct() {
-		return new UnsignedInt8Member();
-	}
-
-	@Override
-	public UnsignedInt8Member construct(UnsignedInt8Member other) {
-		return new UnsignedInt8Member(other);
-	}
-
-	@Override
-	public UnsignedInt8Member construct(String s) {
-		return new UnsignedInt8Member(s);
 	}
 	
 	private final Procedure2<UnsignedInt8Member,UnsignedInt8Member> ASSIGN =

@@ -62,7 +62,7 @@ public final class Float16Member
 		Settable<Float16Member>, Gettable<Float16Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>,
-		SetFromByte, SetFromFloat, SetFromShort,
+		SetFromFloat,
 		GetAsBigDecimal, GetAsDouble, GetAsFloat
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
@@ -85,14 +85,6 @@ public final class Float16Member
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		setV(val.r().floatValue());
-	}
-	
-	public Float16Member(byte value) {
-		setV(value);
-	}
-	
-	public Float16Member(short value) {
-		setV(value);
 	}
 	
 	public float v() { return Float16Util.convertHFloatToFloat(v); }
@@ -704,18 +696,8 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setFromShort(short v) {
-		setV((float) v);
-	}
-
-	@Override
 	public void setFromFloat(float v) {
 		setV(v);
-	}
-
-	@Override
-	public void setFromByte(byte v) {
-		setV((float) v);
 	}
 
 	@Override

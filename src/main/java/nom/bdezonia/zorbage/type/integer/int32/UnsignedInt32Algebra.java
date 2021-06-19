@@ -66,12 +66,33 @@ public class UnsignedInt32Algebra
 		Random<UnsignedInt32Member>,
 		Tolerance<UnsignedInt32Member,UnsignedInt32Member>,
 		ScaleByOneHalf<UnsignedInt32Member>,
-		ScaleByTwo<UnsignedInt32Member>
+		ScaleByTwo<UnsignedInt32Member>,
+		ConstructibleFromLong<UnsignedInt32Member>
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();
 	
 	public UnsignedInt32Algebra() { }
+
+	@Override
+	public UnsignedInt32Member construct() {
+		return new UnsignedInt32Member();
+	}
+
+	@Override
+	public UnsignedInt32Member construct(UnsignedInt32Member other) {
+		return new UnsignedInt32Member(other);
+	}
+
+	@Override
+	public UnsignedInt32Member construct(String s) {
+		return new UnsignedInt32Member(s);
+	}
+
+	@Override
+	public UnsignedInt32Member construct(long val) {
+		return new UnsignedInt32Member(val);
+	}
 	
 	private final Function2<Boolean,UnsignedInt32Member,UnsignedInt32Member> EQ =
 			new Function2<Boolean, UnsignedInt32Member, UnsignedInt32Member>()
@@ -99,21 +120,6 @@ public class UnsignedInt32Algebra
 	@Override
 	public Function2<Boolean,UnsignedInt32Member,UnsignedInt32Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public UnsignedInt32Member construct() {
-		return new UnsignedInt32Member();
-	}
-
-	@Override
-	public UnsignedInt32Member construct(UnsignedInt32Member other) {
-		return new UnsignedInt32Member(other);
-	}
-
-	@Override
-	public UnsignedInt32Member construct(String s) {
-		return new UnsignedInt32Member(s);
 	}
 
 	private final Procedure2<UnsignedInt32Member,UnsignedInt32Member> ASSIGN =

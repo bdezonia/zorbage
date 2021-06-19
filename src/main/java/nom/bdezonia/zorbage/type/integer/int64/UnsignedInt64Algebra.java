@@ -67,13 +67,34 @@ public class UnsignedInt64Algebra
 		Random<UnsignedInt64Member>,
 		Tolerance<UnsignedInt64Member,UnsignedInt64Member>,
 		ScaleByOneHalf<UnsignedInt64Member>,
-		ScaleByTwo<UnsignedInt64Member>
+		ScaleByTwo<UnsignedInt64Member>,
+		ConstructibleFromBigInteger<UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);
 	
 	public UnsignedInt64Algebra() { }
-	
+
+	@Override
+	public UnsignedInt64Member construct() {
+		return new UnsignedInt64Member();
+	}
+
+	@Override
+	public UnsignedInt64Member construct(UnsignedInt64Member other) {
+		return new UnsignedInt64Member(other);
+	}
+
+	@Override
+	public UnsignedInt64Member construct(String s) {
+		return new UnsignedInt64Member(s);
+	}
+
+	@Override
+	public UnsignedInt64Member construct(BigInteger val) {
+		return new UnsignedInt64Member(val);
+	}
+
 	private final Function2<Boolean,UnsignedInt64Member,UnsignedInt64Member> EQ =
 			new Function2<Boolean, UnsignedInt64Member, UnsignedInt64Member>()
 	{
@@ -100,21 +121,6 @@ public class UnsignedInt64Algebra
 	@Override
 	public Function2<Boolean,UnsignedInt64Member,UnsignedInt64Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public UnsignedInt64Member construct() {
-		return new UnsignedInt64Member();
-	}
-
-	@Override
-	public UnsignedInt64Member construct(UnsignedInt64Member other) {
-		return new UnsignedInt64Member(other);
-	}
-
-	@Override
-	public UnsignedInt64Member construct(String s) {
-		return new UnsignedInt64Member(s);
 	}
 
 	private final Procedure2<UnsignedInt64Member,UnsignedInt64Member> ASSIGN =

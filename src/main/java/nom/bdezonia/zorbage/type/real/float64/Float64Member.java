@@ -58,7 +58,7 @@ public final class Float64Member
 		Settable<Float64Member>, Gettable<Float64Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float64Member>, GetReal<Float64Member>,
-		SetFromByte, SetFromShort, SetFromInt, SetFromFloat, SetFromDouble,
+		SetFromDouble,
 		GetAsBigDecimal, GetAsDouble
 {
 	private double v;
@@ -716,23 +716,4 @@ public final class Float64Member
 		setV(v);
 	}
 
-	@Override
-	public void setFromFloat(float v) {
-		setV(v);
-	}
-
-	@Override
-	public void setFromInt(int v) {
-		setV(v);
-	}
-
-	@Override
-	public void setFromShort(short v) {
-		setV(v);
-	}
-
-	@Override
-	public void setFromByte(byte v) {
-		setV(v);
-	}
 }

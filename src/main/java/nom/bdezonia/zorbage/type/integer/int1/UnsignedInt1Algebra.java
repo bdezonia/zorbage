@@ -61,7 +61,8 @@ public class UnsignedInt1Algebra
 		BitOperations<UnsignedInt1Member>,
 		Random<UnsignedInt1Member>,
 		LogicalOperations<UnsignedInt1Member>,
-		Tolerance<UnsignedInt1Member,UnsignedInt1Member>
+		Tolerance<UnsignedInt1Member,UnsignedInt1Member>,
+		ConstructibleFromInt<UnsignedInt1Member>
 {
 
 	@Override
@@ -77,6 +78,11 @@ public class UnsignedInt1Algebra
 	@Override
 	public UnsignedInt1Member construct(String str) {
 		return new UnsignedInt1Member(str);
+	}
+
+	@Override
+	public UnsignedInt1Member construct(int val) {
+		return new UnsignedInt1Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt1Member, UnsignedInt1Member> EQ =

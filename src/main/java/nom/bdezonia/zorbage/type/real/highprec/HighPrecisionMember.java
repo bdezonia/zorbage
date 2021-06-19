@@ -57,8 +57,7 @@ public final class HighPrecisionMember
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<HighPrecisionMember>, GetReal<HighPrecisionMember>,
 		BigDecimalCoder,
-		SetFromByte, SetFromShort, SetFromInt, SetFromLong,
-		SetFromFloat, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
+		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
 		GetAsBigDecimal
 {
 	private BigDecimal v;
@@ -81,23 +80,7 @@ public final class HighPrecisionMember
 		setV(val.r());
 	}
 
-	public HighPrecisionMember(byte val) {
-		setV(BigDecimal.valueOf(val));
-	}
-
-	public HighPrecisionMember(short val) {
-		setV(BigDecimal.valueOf(val));
-	}
-
-	public HighPrecisionMember(int val) {
-		setV(BigDecimal.valueOf(val));
-	}
-
 	public HighPrecisionMember(long val) {
-		setV(BigDecimal.valueOf(val));
-	}
-
-	public HighPrecisionMember(float val) {
 		setV(BigDecimal.valueOf(val));
 	}
 
@@ -734,27 +717,8 @@ public final class HighPrecisionMember
 	}
 
 	@Override
-	public void setFromFloat(float v) {
-		setV(BigDecimal.valueOf(v));
-	}
-
-	@Override
 	public void setFromLong(long v) {
 		setV(BigDecimal.valueOf(v));
 	}
 
-	@Override
-	public void setFromInt(int v) {
-		setV(BigDecimal.valueOf(v));
-	}
-
-	@Override
-	public void setFromShort(short v) {
-		setV(BigDecimal.valueOf(v));
-	}
-
-	@Override
-	public void setFromByte(byte v) {
-		setV(BigDecimal.valueOf(v));
-	}
 }

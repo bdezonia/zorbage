@@ -64,7 +64,8 @@ public class UnsignedInt5Algebra
 		Random<UnsignedInt5Member>,
 		Tolerance<UnsignedInt5Member,UnsignedInt5Member>,
 		ScaleByOneHalf<UnsignedInt5Member>,
-		ScaleByTwo<UnsignedInt5Member>
+		ScaleByTwo<UnsignedInt5Member>,
+		ConstructibleFromInt<UnsignedInt5Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class UnsignedInt5Algebra
 	@Override
 	public UnsignedInt5Member construct(String str) {
 		return new UnsignedInt5Member(str);
+	}
+
+	@Override
+	public UnsignedInt5Member construct(int val) {
+		return new UnsignedInt5Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt5Member, UnsignedInt5Member> EQ =

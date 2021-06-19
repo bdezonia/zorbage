@@ -59,7 +59,9 @@ public final class UnsignedInt8Member
 		Settable<UnsignedInt8Member>, Gettable<UnsignedInt8Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt8Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt16Member>
+		SetReal<Integer>, GetReal<SignedInt16Member>,
+		SetFromInt,
+		GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
 {
 
 	byte v;
@@ -688,5 +690,46 @@ public final class UnsignedInt8Member
 			return G.UINT8.isEqual().call(this, (UnsignedInt8Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return BigInteger.valueOf(v());
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v();
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v();
+	}
+
+	@Override
+	public long getAsLong() {
+		return v();
+	}
+
+	@Override
+	public int getAsInt() {
+		return v();
+	}
+
+	@Override
+	public short getAsShort() {
+		// normally a cast is a no-no but I am sure the range fits with no data loss
+		return (short) v();
+	}
+
+	@Override
+	public void setFromInt(int v) {
+		setV(v);
 	}
 }

@@ -57,7 +57,9 @@ public final class SignedInt64Member
 		Settable<SignedInt64Member>, Gettable<SignedInt64Member>,
 		UniversalRepresentation, NumberMember<SignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Long>, GetReal<SignedInt64Member>
+		SetReal<Long>, GetReal<SignedInt64Member>,
+		SetFromLong,
+		GetAsLong, GetAsBigInteger, GetAsBigDecimal
 {
 
 	long v;
@@ -681,5 +683,25 @@ public final class SignedInt64Member
 			return G.INT64.isEqual().call(this, (SignedInt64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return BigInteger.valueOf(v());
+	}
+
+	@Override
+	public long getAsLong() {
+		return v();
+	}
+
+	@Override
+	public void setFromLong(long val) {
+		setV(v);
 	}
 }

@@ -66,11 +66,32 @@ public class UnsignedInt16Algebra
 		Random<UnsignedInt16Member>,
 		Tolerance<UnsignedInt16Member,UnsignedInt16Member>,
 		ScaleByOneHalf<UnsignedInt16Member>,
-		ScaleByTwo<UnsignedInt16Member>
+		ScaleByTwo<UnsignedInt16Member>,
+		ConstructibleFromInt<UnsignedInt16Member>
 {
 	
 	public UnsignedInt16Algebra() { }
-	
+
+	@Override
+	public UnsignedInt16Member construct() {
+		return new UnsignedInt16Member();
+	}
+
+	@Override
+	public UnsignedInt16Member construct(UnsignedInt16Member other) {
+		return new UnsignedInt16Member(other);
+	}
+
+	@Override
+	public UnsignedInt16Member construct(String s) {
+		return new UnsignedInt16Member(s);
+	}
+
+	@Override
+	public UnsignedInt16Member construct(int val) {
+		return new UnsignedInt16Member(val);
+	}
+
 	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> EQ =
 			new Function2<Boolean, UnsignedInt16Member, UnsignedInt16Member>()
 	{
@@ -98,22 +119,6 @@ public class UnsignedInt16Algebra
 	public Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> isNotEqual() {
 		return NEQ;
 	}
-
-	@Override
-	public UnsignedInt16Member construct() {
-		return new UnsignedInt16Member();
-	}
-
-	@Override
-	public UnsignedInt16Member construct(UnsignedInt16Member other) {
-		return new UnsignedInt16Member(other);
-	}
-
-	@Override
-	public UnsignedInt16Member construct(String s) {
-		return new UnsignedInt16Member(s);
-	}
-
 	private final Procedure2<UnsignedInt16Member,UnsignedInt16Member> ASSIGN =
 			new Procedure2<UnsignedInt16Member, UnsignedInt16Member>()
 	{

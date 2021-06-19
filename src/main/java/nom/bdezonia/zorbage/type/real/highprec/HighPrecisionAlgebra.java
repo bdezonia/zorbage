@@ -78,11 +78,7 @@ public class HighPrecisionAlgebra
 		ScaleByOneHalf<HighPrecisionMember>,
 		ScaleByTwo<HighPrecisionMember>,
 		MiscFloat<HighPrecisionMember>,
-		ConstructibleFromByte<HighPrecisionMember>,
-		ConstructibleFromShort<HighPrecisionMember>,
-		ConstructibleFromInt<HighPrecisionMember>,
 		ConstructibleFromLong<HighPrecisionMember>,
-		ConstructibleFromFloat<HighPrecisionMember>,
 		ConstructibleFromDouble<HighPrecisionMember>,
 		ConstructibleFromBigInteger<HighPrecisionMember>,
 		ConstructibleFromBigDecimal<HighPrecisionMember>
@@ -1086,27 +1082,7 @@ public class HighPrecisionAlgebra
 	}
 
 	@Override
-	public HighPrecisionMember construct(float val) {
-		return new HighPrecisionMember(val);
-	}
-
-	@Override
 	public HighPrecisionMember construct(long val) {
-		return new HighPrecisionMember(val);
-	}
-
-	@Override
-	public HighPrecisionMember construct(int val) {
-		return new HighPrecisionMember(val);
-	}
-
-	@Override
-	public HighPrecisionMember construct(short val) {
-		return new HighPrecisionMember(val);
-	}
-
-	@Override
-	public HighPrecisionMember construct(byte val) {
 		return new HighPrecisionMember(val);
 	}
 

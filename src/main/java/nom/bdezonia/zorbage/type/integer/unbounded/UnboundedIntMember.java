@@ -57,7 +57,9 @@ public final class UnboundedIntMember
 		UniversalRepresentation, NumberMember<UnboundedIntMember>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
-		BigIntegerCoder
+		BigIntegerCoder,
+		SetFromBigInteger,
+		GetAsBigInteger, GetAsBigDecimal
 {
 	private BigInteger v;
 	
@@ -683,5 +685,20 @@ public final class UnboundedIntMember
 			return G.UNBOUND.isEqual().call(this, (UnboundedIntMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return new BigDecimal(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return v();
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger v) {
+		setV(v);
 	}
 }

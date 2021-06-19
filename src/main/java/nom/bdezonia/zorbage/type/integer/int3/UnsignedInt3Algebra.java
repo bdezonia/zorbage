@@ -64,7 +64,8 @@ public class UnsignedInt3Algebra
 		Random<UnsignedInt3Member>,
 		Tolerance<UnsignedInt3Member,UnsignedInt3Member>,
 		ScaleByOneHalf<UnsignedInt3Member>,
-		ScaleByTwo<UnsignedInt3Member>
+		ScaleByTwo<UnsignedInt3Member>,
+		ConstructibleFromInt<UnsignedInt3Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class UnsignedInt3Algebra
 	@Override
 	public UnsignedInt3Member construct(String str) {
 		return new UnsignedInt3Member(str);
+	}
+
+	@Override
+	public UnsignedInt3Member construct(int val) {
+		return new UnsignedInt3Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt3Member, UnsignedInt3Member> EQ =

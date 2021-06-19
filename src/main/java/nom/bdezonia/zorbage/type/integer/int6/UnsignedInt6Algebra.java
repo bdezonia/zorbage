@@ -64,7 +64,8 @@ public class UnsignedInt6Algebra
 		Random<UnsignedInt6Member>,
 		Tolerance<UnsignedInt6Member,UnsignedInt6Member>,
 		ScaleByOneHalf<UnsignedInt6Member>,
-		ScaleByTwo<UnsignedInt6Member>
+		ScaleByTwo<UnsignedInt6Member>,
+		ConstructibleFromInt<UnsignedInt6Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class UnsignedInt6Algebra
 	@Override
 	public UnsignedInt6Member construct(String str) {
 		return new UnsignedInt6Member(str);
+	}
+
+	@Override
+	public UnsignedInt6Member construct(int val) {
+		return new UnsignedInt6Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt6Member, UnsignedInt6Member> EQ =

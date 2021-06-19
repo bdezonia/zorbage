@@ -60,7 +60,9 @@ public final class UnsignedInt7Member
 		Settable<UnsignedInt7Member>, Gettable<UnsignedInt7Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt7Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt8Member>
+		SetReal<Integer>, GetReal<SignedInt8Member>,
+		SetFromInt,
+		GetAsByte, GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
 {
 	byte v;
 
@@ -798,5 +800,50 @@ public final class UnsignedInt7Member
 			return G.UINT7.isEqual().call(this, (UnsignedInt7Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return BigInteger.valueOf(v());
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v();
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v();
+	}
+
+	@Override
+	public long getAsLong() {
+		return v();
+	}
+
+	@Override
+	public int getAsInt() {
+		return v();
+	}
+
+	@Override
+	public short getAsShort() {
+		return v();
+	}
+
+	@Override
+	public byte getAsByte() {
+		return v();
+	}
+
+	@Override
+	public void setFromInt(int v) {
+		setV(v);
 	}
 }

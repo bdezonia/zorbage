@@ -58,7 +58,9 @@ public final class UnsignedInt64Member
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>, GetReal<UnboundedIntMember>
+		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
+		SetFromBigInteger,
+		GetAsBigInteger, GetAsBigDecimal
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -701,5 +703,20 @@ public final class UnsignedInt64Member
 			return G.UINT64.isEqual().call(this, (UnsignedInt64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return new BigDecimal(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return v();
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger v) {
+		setV(v);
 	}
 }

@@ -66,11 +66,32 @@ public class SignedInt8Algebra
 		Random<SignedInt8Member>,
 		Tolerance<SignedInt8Member,SignedInt8Member>,
 		ScaleByOneHalf<SignedInt8Member>,
-		ScaleByTwo<SignedInt8Member>
+		ScaleByTwo<SignedInt8Member>,
+		ConstructibleFromInt<SignedInt8Member>
 {
 
 	public SignedInt8Algebra() { }
 	
+	@Override
+	public SignedInt8Member construct() {
+		return new SignedInt8Member();
+	}
+
+	@Override
+	public SignedInt8Member construct(SignedInt8Member other) {
+		return new SignedInt8Member(other);
+	}
+
+	@Override
+	public SignedInt8Member construct(String s) {
+		return new SignedInt8Member(s);
+	}
+
+	@Override
+	public SignedInt8Member construct(int val) {
+		return new SignedInt8Member(val);
+	}
+
 	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> EQ =
 			new Function2<Boolean, SignedInt8Member, SignedInt8Member>()
 	{
@@ -97,21 +118,6 @@ public class SignedInt8Algebra
 	@Override
 	public Function2<Boolean,SignedInt8Member,SignedInt8Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public SignedInt8Member construct() {
-		return new SignedInt8Member();
-	}
-
-	@Override
-	public SignedInt8Member construct(SignedInt8Member other) {
-		return new SignedInt8Member(other);
-	}
-
-	@Override
-	public SignedInt8Member construct(String s) {
-		return new SignedInt8Member(s);
 	}
 
 	private final Procedure2<SignedInt8Member,SignedInt8Member> ASSIGN =

@@ -58,7 +58,7 @@ public final class Float32Member
 		Settable<Float32Member>, Gettable<Float32Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>,
-		SetFromByte, SetFromFloat, SetFromShort,
+		SetFromFloat,
 		GetAsBigDecimal, GetAsDouble, GetAsFloat
 {
 	private float v;
@@ -79,14 +79,6 @@ public final class Float32Member
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		OctonionRepresentation val = rep.firstValue();
 		setV(val.r().floatValue());
-	}
-	
-	public Float32Member(byte value) {
-		setV(value);
-	}
-	
-	public Float32Member(short value) {
-		setV(value);
 	}
 	
 	public float v() { return v; }
@@ -706,16 +698,6 @@ public final class Float32Member
 	@Override
 	public BigDecimal getAsBigDecimal() {
 		return BigDecimal.valueOf(v);
-	}
-
-	@Override
-	public void setFromByte(byte v) {
-		setV(v);
-	}
-
-	@Override
-	public void setFromShort(short v) {
-		setV(v);
 	}
 
 	@Override

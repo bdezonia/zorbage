@@ -61,7 +61,9 @@ public final class UnsignedInt1Member
 		Settable<UnsignedInt1Member>, Gettable<UnsignedInt1Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt1Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt8Member>
+		SetReal<Integer>, GetReal<SignedInt8Member>,
+		SetFromInt,
+		GetAsByte, GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
 {
 	byte v;
 
@@ -710,5 +712,50 @@ public final class UnsignedInt1Member
 			return G.UINT1.isEqual().call(this, (UnsignedInt1Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v());
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return BigInteger.valueOf(v());
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v();
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v();
+	}
+
+	@Override
+	public long getAsLong() {
+		return v();
+	}
+
+	@Override
+	public int getAsInt() {
+		return v();
+	}
+
+	@Override
+	public short getAsShort() {
+		return v();
+	}
+
+	@Override
+	public byte getAsByte() {
+		return v();
+	}
+
+	@Override
+	public void setFromInt(int v) {
+		setV(v);
 	}
 }

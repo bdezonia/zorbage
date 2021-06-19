@@ -64,7 +64,8 @@ public class UnsignedInt2Algebra
 		Random<UnsignedInt2Member>,
 		Tolerance<UnsignedInt2Member,UnsignedInt2Member>,
 		ScaleByOneHalf<UnsignedInt2Member>,
-		ScaleByTwo<UnsignedInt2Member>
+		ScaleByTwo<UnsignedInt2Member>,
+		ConstructibleFromInt<UnsignedInt2Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class UnsignedInt2Algebra
 	@Override
 	public UnsignedInt2Member construct(String str) {
 		return new UnsignedInt2Member(str);
+	}
+
+	@Override
+	public UnsignedInt2Member construct(int val) {
+		return new UnsignedInt2Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt2Member, UnsignedInt2Member> EQ =

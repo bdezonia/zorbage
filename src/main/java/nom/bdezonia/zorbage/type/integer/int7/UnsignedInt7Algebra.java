@@ -64,7 +64,8 @@ public class UnsignedInt7Algebra
 		Random<UnsignedInt7Member>,
 		Tolerance<UnsignedInt7Member,UnsignedInt7Member>,
 		ScaleByOneHalf<UnsignedInt7Member>,
-		ScaleByTwo<UnsignedInt7Member>
+		ScaleByTwo<UnsignedInt7Member>,
+		ConstructibleFromInt<UnsignedInt7Member>
 {
 
 	@Override
@@ -80,6 +81,11 @@ public class UnsignedInt7Algebra
 	@Override
 	public UnsignedInt7Member construct(String str) {
 		return new UnsignedInt7Member(str);
+	}
+
+	@Override
+	public UnsignedInt7Member construct(int val) {
+		return new UnsignedInt7Member(val);
 	}
 
 	private final Function2<Boolean, UnsignedInt7Member, UnsignedInt7Member> EQ =

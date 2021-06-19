@@ -66,10 +66,31 @@ public class SignedInt16Algebra
 		Random<SignedInt16Member>,
 		Tolerance<SignedInt16Member,SignedInt16Member>,
 		ScaleByOneHalf<SignedInt16Member>,
-		ScaleByTwo<SignedInt16Member>
+		ScaleByTwo<SignedInt16Member>,
+		ConstructibleFromInt<SignedInt16Member>
 {
 
 	public SignedInt16Algebra() { }
+
+	@Override
+	public SignedInt16Member construct() {
+		return new SignedInt16Member();
+	}
+
+	@Override
+	public SignedInt16Member construct(SignedInt16Member other) {
+		return new SignedInt16Member(other);
+	}
+
+	@Override
+	public SignedInt16Member construct(String s) {
+		return new SignedInt16Member(s);
+	}
+
+	@Override
+	public SignedInt16Member construct(int val) {
+		return new SignedInt16Member(val);
+	}
 
 	private final Function2<Boolean,SignedInt16Member,SignedInt16Member> EQ =
 			new Function2<Boolean, SignedInt16Member, SignedInt16Member>()
@@ -97,21 +118,6 @@ public class SignedInt16Algebra
 	@Override
 	public Function2<Boolean,SignedInt16Member,SignedInt16Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public SignedInt16Member construct() {
-		return new SignedInt16Member();
-	}
-
-	@Override
-	public SignedInt16Member construct(SignedInt16Member other) {
-		return new SignedInt16Member(other);
-	}
-
-	@Override
-	public SignedInt16Member construct(String s) {
-		return new SignedInt16Member(s);
 	}
 
 	private final Procedure2<SignedInt16Member,SignedInt16Member> ASSIGN =
