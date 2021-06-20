@@ -52,6 +52,9 @@ public class TestSignedInt8Algebra {
 		SignedInt8Member z = G.INT8.construct(y);
 		assertEquals(99, z.v());
 		
+		z = G.INT8.construct(123);
+		assertEquals(123, z.v());
+		
 		G.INT8.unity().call(z);
 		assertEquals(1, z.v());
 		

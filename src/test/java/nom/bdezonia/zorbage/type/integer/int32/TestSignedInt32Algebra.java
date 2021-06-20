@@ -55,6 +55,14 @@ public class TestSignedInt32Algebra {
 		G.INT32.add().call(a, b, sum);
 		
 		assertEquals(5, sum.v());
+		
+		a = G.INT32.construct(14);
+		b = G.INT32.construct(-3);
+		sum = G.INT32.construct(100);
+
+		G.INT32.add().call(a, b, sum);
+		
+		assertEquals(11, sum.v());
 	}
 	
 	@Test
@@ -97,6 +105,9 @@ public class TestSignedInt32Algebra {
 		
 		SignedInt32Member z = G.INT32.construct(y);
 		assertEquals(4431, z.v());
+		
+		z = G.INT32.construct(1234);
+		assertEquals(1234, z.v);
 		
 		G.INT32.unity().call(z);
 		assertEquals(1, z.v());

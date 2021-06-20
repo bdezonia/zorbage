@@ -54,6 +54,9 @@ public class TestSignedInt64Algebra {
 		SignedInt64Member z = G.INT64.construct(y);
 		assertEquals(4431, z.v());
 		
+		z = G.INT64.construct(1234);
+		assertEquals(1234, z.v());
+		
 		G.INT64.unity().call(z);
 		assertEquals(1, z.v());
 		

@@ -120,6 +120,9 @@ public class TestUnsignedInt16Algebra {
 		UnsignedInt16Member z = G.UINT16.construct(y);
 		assertEquals(4431, z.v);
 		
+		z = G.UINT16.construct(1234);
+		assertEquals(1234, z.v());
+		
 		G.UINT16.unity().call(z);
 		assertEquals(1, z.v);
 		

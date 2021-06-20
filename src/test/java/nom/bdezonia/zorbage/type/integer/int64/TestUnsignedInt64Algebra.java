@@ -131,6 +131,9 @@ public class TestUnsignedInt64Algebra {
 		
 		UnsignedInt64Member z = G.UINT64.construct(y);
 		assertEquals(4431, z.v);
+
+		z = G.UINT64.construct(BigInteger.valueOf(1234));
+		assertEquals(1234, z.v().intValue());
 		
 		G.UINT64.unity().call(z);
 		assertEquals(1, z.v);

@@ -120,6 +120,9 @@ public class TestSignedInt16Algebra {
 		SignedInt16Member z = G.INT16.construct(y);
 		assertEquals(4431, z.v());
 		
+		z = G.INT16.construct(1234);
+		assertEquals(1234, z.v());
+		
 		G.INT16.unity().call(z);
 		assertEquals(1, z.v());
 		

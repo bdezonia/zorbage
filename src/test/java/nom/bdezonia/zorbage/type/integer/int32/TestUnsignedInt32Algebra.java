@@ -121,6 +121,9 @@ public class TestUnsignedInt32Algebra {
 		UnsignedInt32Member z = G.UINT32.construct(y);
 		assertEquals(4431, z.v);
 		
+		z = G.UINT32.construct(1234);
+		assertEquals(1234, z.v);
+
 		G.UINT32.unity().call(z);
 		assertEquals(1, z.v);
 		

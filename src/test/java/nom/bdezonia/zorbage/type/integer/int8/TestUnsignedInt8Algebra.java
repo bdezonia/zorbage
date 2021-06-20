@@ -119,6 +119,9 @@ public class TestUnsignedInt8Algebra {
 		UnsignedInt8Member z = G.UINT8.construct(y);
 		assertEquals(99, z.v);
 		
+		z = G.UINT8.construct(123);
+		assertEquals(123, z.v());
+		
 		G.UINT8.unity().call(z);
 		assertEquals(1, z.v);
 		
