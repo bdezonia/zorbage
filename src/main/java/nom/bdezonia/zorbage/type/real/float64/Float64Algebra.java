@@ -145,8 +145,8 @@ public class Float64Algebra
 	}
 
 	@Override
-	public Float64Member construct(double val) {
-		return new Float64Member(val);
+	public Float64Member construct(double... val) {
+		return new Float64Member(val[0]);
 	}
 
 	private final Procedure2<Float64Member,Float64Member> ASSIGN =

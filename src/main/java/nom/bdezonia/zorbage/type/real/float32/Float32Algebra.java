@@ -1553,8 +1553,8 @@ public class Float32Algebra
 		return ISUNITY;
 	}
 	@Override
-	public Float32Member construct(float val) {
-		return new Float32Member(val);
+	public Float32Member construct(float... val) {
+		return new Float32Member(val[0]);
 	}
 
 }

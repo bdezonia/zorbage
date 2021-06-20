@@ -41,5 +41,5 @@ import java.math.BigInteger;
  */
 public interface ConstructibleFromBigInteger<U> {
 
-	U construct(BigInteger val);
+	U construct(BigInteger... val);
 }

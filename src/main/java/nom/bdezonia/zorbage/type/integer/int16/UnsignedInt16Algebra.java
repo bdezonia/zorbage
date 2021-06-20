@@ -88,8 +88,8 @@ public class UnsignedInt16Algebra
 	}
 
 	@Override
-	public UnsignedInt16Member construct(int val) {
-		return new UnsignedInt16Member(val);
+	public UnsignedInt16Member construct(int... val) {
+		return new UnsignedInt16Member(val[0]);
 	}
 
 	private final Function2<Boolean,UnsignedInt16Member,UnsignedInt16Member> EQ =

@@ -38,5 +38,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleFromFloat<U> {
 
-	U construct(float val);
+	U construct(float... val);
 }

@@ -100,13 +100,13 @@ public class SignedInt128Algebra
 	}
 
 	@Override
-	public SignedInt128Member construct(BigInteger val) {
-		return new SignedInt128Member(val);
+	public SignedInt128Member construct(BigInteger... val) {
+		return new SignedInt128Member(val[0]);
 	}
 
 	@Override
-	public SignedInt128Member construct(long val) {
-		return new SignedInt128Member(val);
+	public SignedInt128Member construct(long... val) {
+		return new SignedInt128Member(val[0]);
 	}
 
 	private final Function2<Boolean,SignedInt128Member,SignedInt128Member> EQ =
