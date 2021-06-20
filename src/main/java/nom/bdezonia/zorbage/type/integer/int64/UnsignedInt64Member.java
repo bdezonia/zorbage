@@ -716,12 +716,12 @@ public final class UnsignedInt64Member
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger v) {
-		setV(v);
+	public void setFromBigInteger(BigInteger... v) {
+		setV(v[0]);
 	}
 
 	@Override
-	public void setFromLong(long v) {
-		setV(v);
+	public void setFromLong(long... v) {
+		setV(v[0]);
 	}
 }

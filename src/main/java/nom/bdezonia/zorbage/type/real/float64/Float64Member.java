@@ -712,8 +712,8 @@ public final class Float64Member
 	}
 
 	@Override
-	public void setFromDouble(double v) {
-		setV(v);
+	public void setFromDouble(double... v) {
+		setV(v[0]);
 	}
 
 }

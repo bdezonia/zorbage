@@ -696,8 +696,8 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setFromFloat(float v) {
-		setV(v);
+	public void setFromFloat(float... v) {
+		setV(v[0]);
 	}
 
 	@Override
