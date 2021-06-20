@@ -57,16 +57,16 @@ public class TestDataviews {
 		DimensionedDataSource<Float64Member> dataset3d =
 				DimensionedStorage.allocate(G.DBL.construct(), new long[] {50, 40, 16});
 		
-		ThreeDView<Float64Member> vw3 = new ThreeDView<>(dataset3d);
-		
 		DimensionedDataSource<Float64Member> plane =
-				DimensionedStorage.allocate(G.DBL.construct(), new long[] {vw3.d0(), vw3.d1()});
-		
-		TwoDView<Float64Member> vw2 = new TwoDView<>(plane);
+				DimensionedStorage.allocate(G.DBL.construct(), new long[] {50, 40});
 		
 		Float64Member value = G.DBL.construct();
 		
-		// grab a plane of data using views
+		// grab a plane of data using views ------------------------------------------------
+		
+		ThreeDView<Float64Member> vw3 = new ThreeDView<>(dataset3d);
+		
+		TwoDView<Float64Member> vw2 = new TwoDView<>(plane);
 		
 		long planeNum = 7;
 		
@@ -77,14 +77,14 @@ public class TestDataviews {
 			}
 		}
 		
-		// alternate approach: use GridIterator
+		// alternate approach: use GridIterator --------------------------------------------
 		
 		long[] minPt = new long[dataset3d.numDimensions()];
 		minPt[2] = planeNum;
 
 		long[] maxPt = new long[dataset3d.numDimensions()];
 		for (int i = 0; i < maxPt.length; i++) {
-			maxPt[i] = plane.dimension(i) - 1;
+			maxPt[i] = dataset3d.dimension(i) - 1;
 		}
 		maxPt[2] = planeNum;
 
@@ -105,6 +105,7 @@ public class TestDataviews {
 	public void test2() {
 		
 		// take a 5d 3 channel image and make a 4d rgb image
+		//   Again we'll show two approaches
 
 		// x = 50, y = 40, z planes = 15, channels = 3, time points = 33
 		
@@ -112,12 +113,8 @@ public class TestDataviews {
 		
 		// construct that 5d data set of uint8 data
 		
-		DimensionedDataSource<UnsignedInt8Member> ds =
+		DimensionedDataSource<UnsignedInt8Member> ds5d =
 			DimensionedStorage.allocate(G.UINT8.construct(), dims5d);
-
-		// make a useful accessor for it
-		
-		FiveDView<UnsignedInt8Member> vw5 = new FiveDView<>(ds);
 
 		// dims of a compatible color dataset
 		
@@ -128,15 +125,22 @@ public class TestDataviews {
 		DimensionedDataSource<RgbMember> colorDs =
 			DimensionedStorage.allocate(G.RGB.construct(), dims4d);
 
-		// make a useful accessor for it
+		UnsignedInt8Member num = G.UINT8.construct();
+
+		RgbMember rgb = G.RGB.construct();
+
+		// translate 3 channel data to rgb data using views --------------------------------
+		
+		// make a 5d view of original 3 channel data
+		
+		FiveDView<UnsignedInt8Member> vw5 = new FiveDView<>(ds5d);
+
+		// make a 4d view of output rgb data
 		
 		FourDView<RgbMember> vw4 = new FourDView<>(colorDs);
 
 		// copy all the pixel data
 		
-		UnsignedInt8Member num = G.UINT8.construct();
-		RgbMember rgb = G.RGB.construct();
-
 		for (long t = 0; t < vw5.d4(); t++) {
 			for (long z = 0; z < vw5.d2(); z++) {
 				for (long y = 0; y < vw5.d1(); y++) {
@@ -165,6 +169,52 @@ public class TestDataviews {
 					}
 				}
 			}			
+		}
+		
+		// alternate approach: use GridIterator --------------------------------------------
+		
+		long[] minPt = new long[ds5d.numDimensions()];
+		minPt[3] = 0; // we're going to iterate ignoring planes
+
+		long[] maxPt = new long[ds5d.numDimensions()];
+		for (int i = 0; i < maxPt.length; i++) {
+			maxPt[i] = ds5d.dimension(i) - 1;
+		}
+		maxPt[3] = 0; // we're going to iterate ignoring planes
+
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(minPt, maxPt);
+		IntegerIndex fiveDIdx = new IntegerIndex(ds5d.numDimensions());
+		IntegerIndex fourDIdx = new IntegerIndex(colorDs.numDimensions());
+		
+		while (iter.hasNext()) {
+			iter.next(fiveDIdx); // visits al indices in 5d set but channel 0 only
+			
+			// grab channel 0 and store as part of rgb
+			fiveDIdx.set(3, 0);
+			ds5d.get(fiveDIdx, num);
+			rgb.setR(num.v());
+			
+			// grab channel 1 and store as part of rgb
+			fiveDIdx.set(3, 1);
+			ds5d.get(fiveDIdx, num);
+			rgb.setG(num.v());
+
+			// grab channel 2 and store as part of rgb
+			fiveDIdx.set(3, 2);
+			ds5d.get(fiveDIdx, num);
+			rgb.setB(num.v());
+			
+			// reset to channel 0 so iter.next() does not get confused
+			fiveDIdx.set(3, 0);
+			
+			// set the 4d index values from the 5d coords ignoring the channel dim
+			fourDIdx.set(0, fiveDIdx.get(0));
+			fourDIdx.set(1, fiveDIdx.get(1));
+			fourDIdx.set(2, fiveDIdx.get(2));
+			fourDIdx.set(3, fiveDIdx.get(4));
+			
+			// store the value in the color ds
+			colorDs.set(fourDIdx, rgb);
 		}
 	}
 }
