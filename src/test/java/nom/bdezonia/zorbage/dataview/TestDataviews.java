@@ -33,8 +33,11 @@ package nom.bdezonia.zorbage.dataview;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.color.RgbMember;
 import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -49,10 +52,12 @@ public class TestDataviews {
 	@Test
 	public void test1() {
 
-		DimensionedDataSource<Float64Member> ds =
+		// let's show two ways to grab a plane of data from a data source
+		
+		DimensionedDataSource<Float64Member> dataset3d =
 				DimensionedStorage.allocate(G.DBL.construct(), new long[] {50, 40, 16});
 		
-		ThreeDView<Float64Member> vw3 = new ThreeDView<Float64Member>(ds);
+		ThreeDView<Float64Member> vw3 = new ThreeDView<Float64Member>(dataset3d);
 		
 		DimensionedDataSource<Float64Member> plane =
 				DimensionedStorage.allocate(G.DBL.construct(), new long[] {vw3.d0(), vw3.d1()});
@@ -61,7 +66,7 @@ public class TestDataviews {
 		
 		Float64Member value = G.DBL.construct();
 		
-		// grab a plane of data
+		// grab a plane of data using views
 		
 		long planeNum = 7;
 		
@@ -72,6 +77,28 @@ public class TestDataviews {
 			}
 		}
 		
+		// alternate approach: use GridIterator
+		
+		long[] minPt = new long[dataset3d.numDimensions()];
+		minPt[2] = planeNum;
+
+		long[] maxPt = new long[dataset3d.numDimensions()];
+		for (int i = 0; i < maxPt.length; i++) {
+			maxPt[i] = plane.dimension(i) - 1;
+		}
+		maxPt[2] = planeNum;
+
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(minPt, maxPt);
+		IntegerIndex threeDIdx = new IntegerIndex(dataset3d.numDimensions());
+		IntegerIndex twoDIdx = new IntegerIndex(plane.numDimensions());
+		
+		while (iter.hasNext()) {
+			iter.next(threeDIdx);
+			dataset3d.get(threeDIdx, value);
+			twoDIdx.set(0, threeDIdx.get(0));
+			twoDIdx.set(1, threeDIdx.get(1));
+			plane.set(twoDIdx, value);
+		}
 	}
 
 	@Test
