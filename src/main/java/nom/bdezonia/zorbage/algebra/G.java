@@ -36,6 +36,9 @@ import nom.bdezonia.zorbage.type.color.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.color.CieLabAlgebra;
 import nom.bdezonia.zorbage.type.color.RgbAlgebra;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Algebra;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Matrix;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Vector;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Algebra;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Matrix;
@@ -243,6 +246,29 @@ public class G {
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
 	public static final OctonionFloat64CartesianTensorProduct ODBL_TEN = new OctonionFloat64CartesianTensorProduct();
 
+
+	public static final Float128Algebra QUAD = new Float128Algebra();
+	public static final Float128Vector QUAD_VEC = new Float128Vector();
+	public static final Float128Matrix QUAD_MAT = new Float128Matrix();
+	public static final Float128CartesianTensorProduct QUAD_TEN = new Float128CartesianTensorProduct();
+
+	public static final ComplexFloat128Algebra CQUAD = new ComplexFloat128Algebra();
+	public static final ComplexFloat128Vector CQUAD_VEC = new ComplexFloat128Vector();
+	public static final ComplexFloat128Matrix CQUAD_MAT = new ComplexFloat128Matrix();
+	public static final ComplexFloat128CartesianTensorProduct CQUAD_TEN = new ComplexFloat128CartesianTensorProduct();
+
+	public static final QuaternionFloat128Algebra QQUAD = new QuaternionFloat128Algebra();
+	// TODO
+	//public static final QuaternionFloat128RModule QQUAD_RMOD = new QuaternionFloat128RModule();
+	//public static final QuaternionFloat128Matrix QQUAD_MAT = new QuaternionFloat128Matrix();
+	//public static final QuaternionFloat128CartesianTensorProduct QQUAD_TEN = new QuaternionFloat128CartesianTensorProduct();
+	
+	public static final OctonionFloat128Algebra OQUAD = new OctonionFloat128Algebra();
+	// TODO
+	//public static final OctonionFloat128RModule OQUAD_RMOD = new OctonionFloat128RModule();
+	//public static final OctonionFloat128Matrix OQUAD_MAT = new OctonionFloat128Matrix();
+	//public static final OctonionFloat128CartesianTensorProduct OQUAD_TEN = new OctonionFloat128CartesianTensorProduct();
+
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
 	public static final HighPrecisionMatrix HP_MAT = new HighPrecisionMatrix();
@@ -262,29 +288,6 @@ public class G {
 	public static final OctonionHighPrecisionRModule OHP_RMOD = new OctonionHighPrecisionRModule();
 	public static final OctonionHighPrecisionMatrix OHP_MAT = new OctonionHighPrecisionMatrix();
 	public static final OctonionHighPrecisionCartesianTensorProduct OHP_TEN = new OctonionHighPrecisionCartesianTensorProduct();
-
-	public static final Float128Algebra QUAD = new Float128Algebra();
-	public static final Float128Vector QUAD_VEC = new Float128Vector();
-	public static final Float128Matrix QUAD_MAT = new Float128Matrix();
-	public static final Float128CartesianTensorProduct QUAD_TEN = new Float128CartesianTensorProduct();
-
-	public static final ComplexFloat128Algebra CQUAD = new ComplexFloat128Algebra();
-	// TODO
-	//public static final ComplexFloat128Vector CQUAD_VEC = new ComplexFloat128Vector();
-	//public static final ComplexFloat128Matrix CQUAD_MAT = new ComplexFloat128Matrix();
-	//public static final ComplexFloat128CartesianTensorProduct CQUAD_TEN = new ComplexFloat128CartesianTensorProduct();
-
-	public static final QuaternionFloat128Algebra QQUAD = new QuaternionFloat128Algebra();
-	// TODO
-	//public static final QuaternionFloat128RModule QQUAD_RMOD = new QuaternionFloat128RModule();
-	//public static final QuaternionFloat128Matrix QQUAD_MAT = new QuaternionFloat128Matrix();
-	//public static final QuaternionFloat128CartesianTensorProduct QQUAD_TEN = new QuaternionFloat128CartesianTensorProduct();
-	
-	public static final OctonionFloat128Algebra OQUAD = new OctonionFloat128Algebra();
-	// TODO
-	//public static final OctonionFloat128RModule OQUAD_RMOD = new OctonionFloat128RModule();
-	//public static final OctonionFloat128Matrix OQUAD_MAT = new OctonionFloat128Matrix();
-	//public static final OctonionFloat128CartesianTensorProduct OQUAD_TEN = new OctonionFloat128CartesianTensorProduct();
 
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();
