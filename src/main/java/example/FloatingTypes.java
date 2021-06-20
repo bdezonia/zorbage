@@ -30,8 +30,6 @@
  */
 package example;
 
-import java.math.BigDecimal;
-
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
@@ -174,7 +172,7 @@ class FloatingTypes
 		Float16Member a = G.HLF.construct();
 		Float16Member b = G.HLF.construct("53.777");
 		Float16Member c = G.HLF.construct(b);
-		Float16Member d = new Float16Member(101.321f);
+		Float16Member d = G.HLF.construct(101.321f);
 		
 		G.HLF.maxBound();
 		G.HLF.minBound();
@@ -291,7 +289,7 @@ class FloatingTypes
 		Float32Member a = G.FLT.construct();
 		Float32Member b = G.FLT.construct("53.777");
 		Float32Member c = G.FLT.construct(b);
-		Float32Member d = new Float32Member(101.321f);
+		Float32Member d = G.FLT.construct(101.321f);
 		
 		G.FLT.maxBound();
 		G.FLT.minBound();
@@ -408,7 +406,7 @@ class FloatingTypes
 		Float64Member a = G.DBL.construct();
 		Float64Member b = G.DBL.construct("53.777");
 		Float64Member c = G.DBL.construct(b);
-		Float64Member d = new Float64Member(101.321);
+		Float64Member d = G.DBL.construct(101.321);
 		
 		G.DBL.maxBound();
 		G.DBL.minBound();
@@ -525,7 +523,7 @@ class FloatingTypes
 		Float128Member a = G.QUAD.construct();
 		Float128Member b = G.QUAD.construct("53.777");
 		Float128Member c = G.QUAD.construct(b);
-		Float128Member d = new Float128Member(BigDecimal.valueOf(101.321));
+		Float128Member d = G.QUAD.construct(101.321);
 		
 		G.QUAD.maxBound();
 		G.QUAD.minBound();
@@ -626,7 +624,7 @@ class FloatingTypes
 		HighPrecisionMember a = G.HP.construct();
 		HighPrecisionMember b = G.HP.construct("53.777");
 		HighPrecisionMember c = G.HP.construct(b);
-		HighPrecisionMember d = new HighPrecisionMember(BigDecimal.valueOf(101.321));
+		HighPrecisionMember d = G.HP.construct(101.321);
 		
 		G.HP.compare();
 		G.HP.signum();
