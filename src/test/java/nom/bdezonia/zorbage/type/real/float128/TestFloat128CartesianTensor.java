@@ -46,6 +46,8 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
@@ -56,7 +58,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class TestFloat128CartesianTensor {
 
-	private final BigDecimal TOL = BigDecimal.valueOf(0.00000000000000000001);
+	private final BigDecimal TOL = BigDecimal.valueOf(0.000000000000001);
 
 	@Test
 	public void test1() {
@@ -267,7 +269,7 @@ public class TestFloat128CartesianTensor {
 		
 		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
 		G.QUAD_TEN.norm().call(value1, tmp1);
-		assertTrue(isNear(Math.sqrt(30), tmp1.v(), BigDecimal.ZERO));
+		assertTrue(isNear(Math.sqrt(30), tmp1.v(), TOL));
 		
 		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
@@ -418,9 +420,6 @@ public class TestFloat128CartesianTensor {
 		G.QUAD_TEN.round().call(Mode.HALF_EVEN, tmp1, value1, value2);
 		assertTrue(G.QUAD_TEN.isEqual().call(value1, value2));
 
-/*
- * TODO bring me back when the complex classes are implemented
- * 
 		// test with complex numbers where it makes sense
 		
 		IntegerIndex index = new IntegerIndex(2);
@@ -429,29 +428,30 @@ public class TestFloat128CartesianTensor {
 		ComplexFloat128CartesianTensorProductMember cvalue1 = new ComplexFloat128CartesianTensorProductMember(2,2);
 		index.set(0, 0);
 		index.set(1, 0);
-		ctmp1.setR(1);
-		ctmp1.setI(2);
+		ctmp1.setR(BigDecimal.valueOf(1));
+		ctmp1.setI(BigDecimal.valueOf(2));
 		cvalue1.setV(index, ctmp1);
 		index.set(0, 1);
 		index.set(1, 0);
-		ctmp1.setR(3);
-		ctmp1.setI(4);
+		ctmp1.setR(BigDecimal.valueOf(3));
+		ctmp1.setI(BigDecimal.valueOf(4));
 		cvalue1.setV(index, ctmp1);
 		index.set(0, 0);
 		index.set(1, 1);
-		ctmp1.setR(5);
-		ctmp1.setI(6);
+		ctmp1.setR(BigDecimal.valueOf(5));
+		ctmp1.setI(BigDecimal.valueOf(6));
 		cvalue1.setV(index, ctmp1);
 		index.set(0, 1);
 		index.set(1, 0);
-		ctmp1.setR(7);
-		ctmp1.setI(8);
+		ctmp1.setR(BigDecimal.valueOf(7));
+		ctmp1.setI(BigDecimal.valueOf(8));
 		cvalue1.setV(index, ctmp1);
-		ComplexFloat128CartesianTensorProductMember cvalue2 = new ComplexFloat128CartesianTensorProductMember();
+		ComplexFloat128CartesianTensorProductMember cvalue2 =
+				new ComplexFloat128CartesianTensorProductMember();
 		
 		G.CQUAD_TEN.conjugate().call(cvalue1, cvalue2);
-		assertTrue(isNear(cvalue1.rank(), cvalue2.rank());
-		assertTrue(isNear(cvalue1.dimension(), cvalue2.dimension());
+		assertEquals(cvalue1.rank(), cvalue2.rank());
+		assertEquals(cvalue1.dimension(), cvalue2.dimension());
 		index.set(0, 0);
 		index.set(1, 0);
 		cvalue1.getV(index, ctmp1);
@@ -496,7 +496,7 @@ public class TestFloat128CartesianTensor {
 		ctmp1.getI(tmp1);
 		ctmp2.getI(tmp2);
 		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
-*/		
+
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
 		value1 = new Float128CartesianTensorProductMember(0,3);
