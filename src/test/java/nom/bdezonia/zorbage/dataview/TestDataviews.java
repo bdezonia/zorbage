@@ -57,12 +57,12 @@ public class TestDataviews {
 		DimensionedDataSource<Float64Member> dataset3d =
 				DimensionedStorage.allocate(G.DBL.construct(), new long[] {50, 40, 16});
 		
-		ThreeDView<Float64Member> vw3 = new ThreeDView<Float64Member>(dataset3d);
+		ThreeDView<Float64Member> vw3 = new ThreeDView<>(dataset3d);
 		
 		DimensionedDataSource<Float64Member> plane =
 				DimensionedStorage.allocate(G.DBL.construct(), new long[] {vw3.d0(), vw3.d1()});
 		
-		TwoDView<Float64Member> vw2 = new TwoDView<Float64Member>(plane);
+		TwoDView<Float64Member> vw2 = new TwoDView<>(plane);
 		
 		Float64Member value = G.DBL.construct();
 		
