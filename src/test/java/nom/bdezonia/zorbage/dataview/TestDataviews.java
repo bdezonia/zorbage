@@ -125,7 +125,7 @@ public class TestDataviews {
 		DimensionedDataSource<RgbMember> colorDs =
 			DimensionedStorage.allocate(G.RGB.construct(), dims4d);
 
-		UnsignedInt8Member num = G.UINT8.construct();
+		UnsignedInt8Member uint8 = G.UINT8.construct();
 
 		RgbMember rgb = G.RGB.construct();
 
@@ -147,22 +147,22 @@ public class TestDataviews {
 					for (long x = 0; x < vw5.d0(); x++) {
 						
 						// get channel 0
-						vw5.get(x, y, z, 0, t, num);
+						vw5.get(x, y, z, 0, t, uint8);
 
 						// save the value in a component of an rgb
-						rgb.setR(num.v());
+						rgb.setR(uint8.v());
 						
 						// get channel 1
-						vw5.get(x, y, z, 1, t, num);
+						vw5.get(x, y, z, 1, t, uint8);
 						
 						// save the value in a component of an rgb
-						rgb.setG(num.v());
+						rgb.setG(uint8.v());
 						
 						// get channel 2
-						vw5.get(x, y, z, 2, t, num);
+						vw5.get(x, y, z, 2, t, uint8);
 						
 						// save the value in a component of an rgb
-						rgb.setB(num.v());
+						rgb.setB(uint8.v());
 						
 						// save the data into the 4d data set
 						vw4.set(x, y, z, t, rgb);
@@ -191,18 +191,18 @@ public class TestDataviews {
 			
 			// grab channel 0 and store as part of rgb
 			fiveDIdx.set(3, 0);
-			ds5d.get(fiveDIdx, num);
-			rgb.setR(num.v());
+			ds5d.get(fiveDIdx, uint8);
+			rgb.setR(uint8.v());
 			
 			// grab channel 1 and store as part of rgb
 			fiveDIdx.set(3, 1);
-			ds5d.get(fiveDIdx, num);
-			rgb.setG(num.v());
+			ds5d.get(fiveDIdx, uint8);
+			rgb.setG(uint8.v());
 
 			// grab channel 2 and store as part of rgb
 			fiveDIdx.set(3, 2);
-			ds5d.get(fiveDIdx, num);
-			rgb.setB(num.v());
+			ds5d.get(fiveDIdx, uint8);
+			rgb.setB(uint8.v());
 			
 			// reset to channel 0 so iter.next() does not get confused
 			fiveDIdx.set(3, 0);

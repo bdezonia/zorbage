@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -52,7 +53,9 @@ public class NineDView<U> implements Dimensioned {
 	private final long d7;
 	private final long d8;
 	private final IndexedDataSource<U> list;
-	
+	private final DimensionedDataSource<U> ds;
+	private final ThreadLocal<IntegerIndex> idx;
+
 	public NineDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, IndexedDataSource<U> data) {
 		if (d0*d1*d2*d3*d4*d5*d6*d7*d8 != data.size())
 			throw new IllegalArgumentException("view dimensions do not match underlying data source dimensions");
@@ -66,21 +69,30 @@ public class NineDView<U> implements Dimensioned {
 		this.d7 = d7;
 		this.d8 = d8;
 		this.list = data;
+		this.ds = null;
+		this.idx = null;
 	}
 	
 	public NineDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 9)
 			throw new IllegalArgumentException("9-d view passed a data source that is "+ds.numDimensions()+"-d");
-		d0 = ds.dimension(0);
-		d1 = ds.dimension(1);
-		d2 = ds.dimension(2);
-		d3 = ds.dimension(3);
-		d4 = ds.dimension(4);
-		d5 = ds.dimension(5);
-		d6 = ds.dimension(6);
-		d7 = ds.dimension(7);
-		d8 = ds.dimension(8);
-		list = ds.rawData();
+		this.d0 = ds.dimension(0);
+		this.d1 = ds.dimension(1);
+		this.d2 = ds.dimension(2);
+		this.d3 = ds.dimension(3);
+		this.d4 = ds.dimension(4);
+		this.d5 = ds.dimension(5);
+		this.d6 = ds.dimension(6);
+		this.d7 = ds.dimension(7);
+		this.d8 = ds.dimension(8);
+		this.list = ds.rawData();
+		this.ds = ds;
+		this.idx = new ThreadLocal<IntegerIndex>() {
+			@Override
+			protected IntegerIndex initialValue() {
+				return new IntegerIndex(ds.numDimensions());
+			}
+		};
 	}
 	
 	public long d0() { return d0; }
@@ -128,15 +140,43 @@ public class NineDView<U> implements Dimensioned {
 	}
 	
 	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, U val) {
-		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8))
-			throw new IllegalArgumentException("view index out of bounds");
-		get(i0,i1,i2,i3,i4,i5,i6,i7,i8,val);
+		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8)) {
+			if (ds == null)
+				throw new IllegalArgumentException("view index out of bounds");
+			IntegerIndex index = idx.get();
+			index.set(0, i0);
+			index.set(1, i1);
+			index.set(2, i2);
+			index.set(3, i3);
+			index.set(4, i4);
+			index.set(5, i5);
+			index.set(6, i6);
+			index.set(7, i7);
+			index.set(8, i8);
+			ds.safeGet(index, val);
+		}
+		else
+			get(i0,i1,i2,i3,i4,i5,i6,i7,i8,val);
 	}
 	
 	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, U val) {
-		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8))
-			throw new IllegalArgumentException("view index out of bounds");
-		set(i0,i1,i2,i3,i4,i5,i6,i7,i8,val);
+		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8)) {
+			if (ds == null)
+				throw new IllegalArgumentException("view index out of bounds");
+			IntegerIndex index = idx.get();
+			index.set(0, i0);
+			index.set(1, i1);
+			index.set(2, i2);
+			index.set(3, i3);
+			index.set(4, i4);
+			index.set(5, i5);
+			index.set(6, i6);
+			index.set(7, i7);
+			index.set(8, i8);
+			ds.safeSet(index, val);
+		}
+		else
+			set(i0,i1,i2,i3,i4,i5,i6,i7,i8,val);
 	}
 	
 	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8) {

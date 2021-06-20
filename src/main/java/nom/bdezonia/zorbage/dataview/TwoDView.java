@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -45,6 +46,8 @@ public class TwoDView<U> implements Dimensioned {
 	private final long d0;
 	private final long d1;
 	private final IndexedDataSource<U> list;
+	private final DimensionedDataSource<U> ds;
+	private final ThreadLocal<IntegerIndex> idx;
 	
 	public TwoDView(long d0, long d1, IndexedDataSource<U> data) {
 		if (d0*d1 != data.size())
@@ -52,14 +55,23 @@ public class TwoDView<U> implements Dimensioned {
 		this.d0 = d0;
 		this.d1 = d1;
 		this.list = data;
+		this.ds = null;
+		this.idx = null;
 	}
 	
 	public TwoDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 2)
 			throw new IllegalArgumentException("2-d view passed a data source that is "+ds.numDimensions()+"-d");
-		d0 = ds.dimension(0);
-		d1 = ds.dimension(1);
-		list = ds.rawData();
+		this.d0 = ds.dimension(0);
+		this.d1 = ds.dimension(1);
+		this.list = ds.rawData();
+		this.ds = ds;
+		this.idx = new ThreadLocal<IntegerIndex>() {
+			@Override
+			protected IntegerIndex initialValue() {
+				return new IntegerIndex(ds.numDimensions());
+			}
+		};
 	}
 	
 	public long d0() { return d0; }
@@ -79,15 +91,29 @@ public class TwoDView<U> implements Dimensioned {
 	}
 	
 	public void safeGet(long i0, long i1, U val) {
-		if (outOfBounds(i0,i1))
-			throw new IllegalArgumentException("view index out of bounds");
-		get(i0,i1,val);
+		if (outOfBounds(i0,i1)) {
+			if (ds == null)
+				throw new IllegalArgumentException("view index out of bounds");
+			IntegerIndex index = idx.get();
+			index.set(0, i0);
+			index.set(1, i1);
+			ds.safeGet(index, val);
+		}
+		else
+			get(i0,i1,val);
 	}
 	
 	public void safeSet(long i0, long i1, U val) {
-		if (outOfBounds(i0,i1))
-			throw new IllegalArgumentException("view index out of bounds");
-		set(i0,i1,val);
+		if (outOfBounds(i0,i1)) {
+			if (ds == null)
+				throw new IllegalArgumentException("view index out of bounds");
+			IntegerIndex index = idx.get();
+			index.set(0, i0);
+			index.set(1, i1);
+			ds.safeSet(index, val);
+		}
+		else
+			set(i0,i1,val);
 	}
 	
 	private boolean outOfBounds(long i0, long i1) {
