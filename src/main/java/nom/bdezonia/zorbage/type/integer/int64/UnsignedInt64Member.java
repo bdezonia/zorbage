@@ -59,7 +59,7 @@ public final class UnsignedInt64Member
 		UniversalRepresentation, NumberMember<UnsignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
-		SetFromBigInteger,
+		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigDecimal
 {
 
@@ -717,6 +717,11 @@ public final class UnsignedInt64Member
 
 	@Override
 	public void setFromBigInteger(BigInteger v) {
+		setV(v);
+	}
+
+	@Override
+	public void setFromLong(long v) {
 		setV(v);
 	}
 }

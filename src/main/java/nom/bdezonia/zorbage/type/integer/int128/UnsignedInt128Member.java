@@ -59,7 +59,7 @@ public final class UnsignedInt128Member
 		UniversalRepresentation, NumberMember<UnsignedInt128Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
-		SetFromBigInteger,
+		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigDecimal
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
@@ -80,6 +80,10 @@ public final class UnsignedInt128Member
 	
 	public UnsignedInt128Member(UnsignedInt128Member value) {
 		set(value);
+	}
+	
+	public UnsignedInt128Member(long v) {
+		this(BigInteger.valueOf(v));
 	}
 	
 	public UnsignedInt128Member(String value) {
@@ -735,5 +739,10 @@ public final class UnsignedInt128Member
 	@Override
 	public void setFromBigInteger(BigInteger v) {
 		setV(v);
+	}
+
+	@Override
+	public void setFromLong(long v) {
+		setV(BigInteger.valueOf(v));
 	}
 }

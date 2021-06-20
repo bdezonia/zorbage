@@ -78,7 +78,8 @@ public class UnsignedInt128Algebra
 		Tolerance<UnsignedInt128Member,UnsignedInt128Member>,
 		ScaleByOneHalf<UnsignedInt128Member>,
 		ScaleByTwo<UnsignedInt128Member>,
-		ConstructibleFromBigInteger<UnsignedInt128Member>
+		ConstructibleFromBigInteger<UnsignedInt128Member>,
+		ConstructibleFromLong<UnsignedInt128Member>
 {
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
 	private static final UnsignedInt128Member ONE = new UnsignedInt128Member(0,1);
@@ -100,6 +101,11 @@ public class UnsignedInt128Algebra
 
 	@Override
 	public UnsignedInt128Member construct(BigInteger val) {
+		return new UnsignedInt128Member(val);
+	}
+
+	@Override
+	public UnsignedInt128Member construct(long val) {
 		return new UnsignedInt128Member(val);
 	}
 

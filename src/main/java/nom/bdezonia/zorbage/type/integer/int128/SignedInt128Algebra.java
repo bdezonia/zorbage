@@ -78,7 +78,8 @@ public class SignedInt128Algebra
 		Tolerance<SignedInt128Member,SignedInt128Member>,
 		ScaleByOneHalf<SignedInt128Member>,
 		ScaleByTwo<SignedInt128Member>,
-		ConstructibleFromBigInteger<SignedInt128Member>
+		ConstructibleFromBigInteger<SignedInt128Member>,
+		ConstructibleFromLong<SignedInt128Member>
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
@@ -100,6 +101,11 @@ public class SignedInt128Algebra
 
 	@Override
 	public SignedInt128Member construct(BigInteger val) {
+		return new SignedInt128Member(val);
+	}
+
+	@Override
+	public SignedInt128Member construct(long val) {
 		return new SignedInt128Member(val);
 	}
 

@@ -59,7 +59,7 @@ public final class SignedInt128Member
 		UniversalRepresentation, NumberMember<SignedInt128Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
-		SetFromBigInteger,
+		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigDecimal
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
@@ -88,6 +88,10 @@ public final class SignedInt128Member
 		setV(r);
 	}
 
+	public SignedInt128Member(long val) {
+		this(BigInteger.valueOf(val));
+	}
+	
 	SignedInt128Member(long hi, long lo) {
 		this.lo = lo;
 		this.hi = hi;
@@ -731,5 +735,10 @@ public final class SignedInt128Member
 	@Override
 	public void setFromBigInteger(BigInteger v) {
 		setV(v);
+	}
+
+	@Override
+	public void setFromLong(long v) {
+		setV(BigInteger.valueOf(v));
 	}
 }

@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLong;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Integer;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
@@ -66,7 +67,8 @@ public class UnboundedIntAlgebra
 		Tolerance<UnboundedIntMember,UnboundedIntMember>,
 		ScaleByOneHalf<UnboundedIntMember>,
 		ScaleByTwo<UnboundedIntMember>,
-		ConstructibleFromBigInteger<UnboundedIntMember>
+		ConstructibleFromBigInteger<UnboundedIntMember>,
+		ConstructibleFromLong<UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
@@ -91,6 +93,11 @@ public class UnboundedIntAlgebra
 
 	@Override
 	public UnboundedIntMember construct(BigInteger val) {
+		return new UnboundedIntMember(val);
+	}
+
+	@Override
+	public UnboundedIntMember construct(long val) {
 		return new UnboundedIntMember(val);
 	}
 

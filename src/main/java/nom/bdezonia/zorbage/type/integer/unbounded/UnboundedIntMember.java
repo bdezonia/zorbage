@@ -58,7 +58,7 @@ public final class UnboundedIntMember
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		BigIntegerCoder,
-		SetFromBigInteger,
+		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigDecimal
 {
 	private BigInteger v;
@@ -700,5 +700,10 @@ public final class UnboundedIntMember
 	@Override
 	public void setFromBigInteger(BigInteger v) {
 		setV(v);
+	}
+
+	@Override
+	public void setFromLong(long v) {
+		setV(BigInteger.valueOf(v));
 	}
 }
