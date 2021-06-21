@@ -37,6 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInt;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -87,7 +88,8 @@ public class GaussianInt16Algebra
 		ScaleByHighPrec<GaussianInt16Member>,
 		ScaleByHighPrecAndRound<GaussianInt16Member>,
 		ScaleByRational<GaussianInt16Member>,
-		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>
+		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>,
+		ConstructibleFromInt<GaussianInt16Member>
 {
 	@Override
 	public GaussianInt16Member construct() {
@@ -102,6 +104,11 @@ public class GaussianInt16Algebra
 	@Override
 	public GaussianInt16Member construct(String str) {
 		return new GaussianInt16Member(str);
+	}
+	
+	@Override
+	public GaussianInt16Member construct(int... v) {
+		return new GaussianInt16Member(v);
 	}
 	
 	private final Function2<Boolean, GaussianInt16Member, GaussianInt16Member> EQ =

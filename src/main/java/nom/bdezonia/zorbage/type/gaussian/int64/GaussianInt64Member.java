@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -67,7 +68,8 @@ public class GaussianInt64Member
 		UniversalRepresentation, NumberMember<GaussianInt64Member>,
 		PrimitiveConversion,
 		SetReal<Long>, GetReal<SignedInt64Member>,
-		SetComplex<Long>, GetComplex<SignedInt64Member>
+		SetComplex<Long>, GetComplex<SignedInt64Member>,
+		SetFromLong
 {
 	long r;
 	long i;
@@ -90,6 +92,10 @@ public class GaussianInt64Member
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().longValue());
 		setI(val.i().longValue());
+	}
+	
+	public GaussianInt64Member(long ... v) {
+		setFromLong(v);
 	}
 	
 	@Override
@@ -776,5 +782,11 @@ public class GaussianInt64Member
 			return G.GAUSS64.isEqual().call(this, (GaussianInt64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }

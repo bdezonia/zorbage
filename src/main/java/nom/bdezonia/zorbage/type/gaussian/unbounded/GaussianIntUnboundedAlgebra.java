@@ -36,6 +36,8 @@ import java.math.BigInteger;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLong;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -84,7 +86,9 @@ public class GaussianIntUnboundedAlgebra
 		ScaleByHighPrec<GaussianIntUnboundedMember>,
 		ScaleByHighPrecAndRound<GaussianIntUnboundedMember>,
 		ScaleByRational<GaussianIntUnboundedMember>,
-		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>
+		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>,
+		ConstructibleFromLong<GaussianIntUnboundedMember>,
+		ConstructibleFromBigInteger<GaussianIntUnboundedMember>
 {
 	@Override
 	public GaussianIntUnboundedMember construct() {
@@ -99,6 +103,16 @@ public class GaussianIntUnboundedAlgebra
 	@Override
 	public GaussianIntUnboundedMember construct(String str) {
 		return new GaussianIntUnboundedMember(str);
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(BigInteger... val) {
+		return new GaussianIntUnboundedMember(val);
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(long... val) {
+		return new GaussianIntUnboundedMember(val);
 	}
 	
 	private final Function2<Boolean, GaussianIntUnboundedMember, GaussianIntUnboundedMember> EQ =

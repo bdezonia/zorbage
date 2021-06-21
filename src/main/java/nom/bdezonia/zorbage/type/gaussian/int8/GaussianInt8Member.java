@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromInt;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -67,7 +68,8 @@ public class GaussianInt8Member
 		UniversalRepresentation, NumberMember<GaussianInt8Member>,
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
-		SetComplex<Integer>, GetComplex<SignedInt8Member>
+		SetComplex<Integer>, GetComplex<SignedInt8Member>,
+		SetFromInt
 {
 	byte r;
 	byte i;
@@ -90,6 +92,10 @@ public class GaussianInt8Member
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().intValue());
 		setI(val.i().intValue());
+	}
+	
+	public GaussianInt8Member(int... v) {
+		setFromInt(v);
 	}
 	
 	@Override
@@ -776,5 +782,11 @@ public class GaussianInt8Member
 			return G.GAUSS8.isEqual().call(this, (GaussianInt8Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromInt(int... v) {
+		setR(v[0]);
+		setI(v[0]);
 	}
 }

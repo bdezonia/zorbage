@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromInt;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -67,7 +68,8 @@ public class GaussianInt32Member
 		UniversalRepresentation, NumberMember<GaussianInt32Member>,
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt32Member>,
-		SetComplex<Integer>, GetComplex<SignedInt32Member>
+		SetComplex<Integer>, GetComplex<SignedInt32Member>,
+		SetFromInt
 {
 	int r;
 	int i;
@@ -90,6 +92,10 @@ public class GaussianInt32Member
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().intValue());
 		setI(val.i().intValue());
+	}
+	
+	public GaussianInt32Member(int...v) {
+		setFromInt(v);
 	}
 	
 	@Override
@@ -776,5 +782,11 @@ public class GaussianInt32Member
 			return G.GAUSS32.isEqual().call(this, (GaussianInt32Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromInt(int... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }

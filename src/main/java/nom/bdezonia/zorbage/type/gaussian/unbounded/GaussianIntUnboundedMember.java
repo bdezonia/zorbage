@@ -41,6 +41,8 @@ import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -67,7 +69,8 @@ public class GaussianIntUnboundedMember
 		UniversalRepresentation, NumberMember<GaussianIntUnboundedMember>,
 		PrimitiveConversion,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
-		SetComplex<BigInteger>, GetComplex<UnboundedIntMember>
+		SetComplex<BigInteger>, GetComplex<UnboundedIntMember>,
+		SetFromBigInteger, SetFromLong
 {
 	BigInteger r;
 	BigInteger i;
@@ -90,6 +93,16 @@ public class GaussianIntUnboundedMember
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().toBigInteger());
 		setI(val.i().toBigInteger());
+	}
+	
+	public GaussianIntUnboundedMember(BigInteger... v) {
+		setR(v[0]);
+		setI(v[1]);
+	}
+	
+	public GaussianIntUnboundedMember(long... v) {
+		setR(BigInteger.valueOf(v[0]));
+		setI(BigInteger.valueOf(v[1]));
 	}
 	
 	@Override
@@ -776,5 +789,17 @@ public class GaussianIntUnboundedMember
 			return G.GAUSSU.isEqual().call(this, (GaussianIntUnboundedMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		// TODO Auto-generated method stub
+		
 	}
 }

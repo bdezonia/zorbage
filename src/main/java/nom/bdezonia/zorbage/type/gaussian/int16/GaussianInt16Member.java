@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromInt;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -67,7 +68,8 @@ public class GaussianInt16Member
 		UniversalRepresentation, NumberMember<GaussianInt16Member>,
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
-		SetComplex<Integer>, GetComplex<SignedInt16Member>
+		SetComplex<Integer>, GetComplex<SignedInt16Member>,
+		SetFromInt
 {
 	short r;
 	short i;
@@ -90,6 +92,10 @@ public class GaussianInt16Member
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().intValue());
 		setI(val.i().intValue());
+	}
+	
+	public GaussianInt16Member(int... v) {
+		setFromInt(v);
 	}
 	
 	@Override
@@ -776,5 +782,11 @@ public class GaussianInt16Member
 			return G.GAUSS16.isEqual().call(this, (GaussianInt16Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromInt(int... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }
