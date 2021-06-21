@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDouble;
 import nom.bdezonia.zorbage.algebra.Random;
 
 /**
@@ -45,9 +46,13 @@ import nom.bdezonia.zorbage.algebra.Random;
  *
  */
 public class CieLabAlgebra
-	implements Algebra<CieLabAlgebra, CieLabMember>, Random<CieLabMember>
+	implements
+		Algebra<CieLabAlgebra, CieLabMember>,
+		Random<CieLabMember>,
+		ConstructibleFromDouble<CieLabMember>
 {
-
+	public CieLabAlgebra() { }
+	
 	@Override
 	public CieLabMember construct() {
 		return new CieLabMember();
@@ -61,6 +66,11 @@ public class CieLabAlgebra
 	@Override
 	public CieLabMember construct(String str) {
 		return new CieLabMember(str);
+	}
+	
+	@Override
+	public CieLabMember construct(double... val) {
+		return new CieLabMember(val[0], val[1], val[2]);
 	}
 
 	private final Function2<Boolean, CieLabMember, CieLabMember> EQ =

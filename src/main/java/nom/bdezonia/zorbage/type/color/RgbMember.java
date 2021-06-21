@@ -43,8 +43,10 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
  *
  */
 public class RgbMember
-	implements ByteCoder, Allocatable<RgbMember>, Duplicatable<RgbMember>,
-				Settable<RgbMember>, Gettable<RgbMember>, NumberMember<RgbMember>
+	implements
+		ByteCoder, Allocatable<RgbMember>, Duplicatable<RgbMember>,
+		Settable<RgbMember>, Gettable<RgbMember>, NumberMember<RgbMember>,
+		SetFromInt
 {
 	private byte r, g, b;
 	
@@ -177,5 +179,12 @@ public class RgbMember
 			return G.RGB.isEqual().call(this, (RgbMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromInt(int... v) {
+		setR(v[0]);
+		setG(v[1]);
+		setB(v[2]);
 	}
 }

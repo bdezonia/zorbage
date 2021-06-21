@@ -59,7 +59,8 @@ public final class ComplexFloat64VectorMember
 		Gettable<ComplexFloat64VectorMember>,
 		Settable<ComplexFloat64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat64Member>
+		RawData<ComplexFloat64Member>,
+		SetFromDouble
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
@@ -1015,5 +1016,18 @@ public final class ComplexFloat64VectorMember
 			return G.CDBL_VEC.isEqual().call(this, (ComplexFloat64VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		ComplexFloat64Member val = G.CDBL.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(v[i]);
+			val.setI(v[i+1]);
+			setV(i, val);
+		}
 	}
 }

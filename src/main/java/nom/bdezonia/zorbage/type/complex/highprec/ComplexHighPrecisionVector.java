@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.complex.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -83,9 +84,53 @@ public class ComplexHighPrecisionVector
 		ScaleByOneHalf<ComplexHighPrecisionVectorMember>,
 		ScaleByTwo<ComplexHighPrecisionVectorMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>,
-		ArrayLikeMethods<ComplexHighPrecisionVectorMember,ComplexHighPrecisionMember>
+		ArrayLikeMethods<ComplexHighPrecisionVectorMember,ComplexHighPrecisionMember>,
+		ConstructibleFromBigDecimal<ComplexHighPrecisionVectorMember>,
+		ConstructibleFromBigInteger<ComplexHighPrecisionVectorMember>,
+		ConstructibleFromDouble<ComplexHighPrecisionVectorMember>,
+		ConstructibleFromLong<ComplexHighPrecisionVectorMember>
 {
 	public ComplexHighPrecisionVector() { }
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct() {
+		return new ComplexHighPrecisionVectorMember();
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(ComplexHighPrecisionVectorMember other) {
+		return new ComplexHighPrecisionVectorMember(other);
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(String s) {
+		return new ComplexHighPrecisionVectorMember(s);
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(StorageConstruction s, long d1) {
+		return new ComplexHighPrecisionVectorMember(s, d1);
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(BigDecimal... v) {
+		return new ComplexHighPrecisionVectorMember(v);
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(BigInteger... v) {
+		return new ComplexHighPrecisionVectorMember(v);
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(double... v) {
+		return new ComplexHighPrecisionVectorMember(v);
+	}
+
+	@Override
+	public ComplexHighPrecisionVectorMember construct(long... v) {
+		return new ComplexHighPrecisionVectorMember(v);
+	}
 	
 	private final Procedure1<ComplexHighPrecisionVectorMember> ZER =
 			new Procedure1<ComplexHighPrecisionVectorMember>()
@@ -169,26 +214,6 @@ public class ComplexHighPrecisionVector
 	@Override
 	public Function2<Boolean,ComplexHighPrecisionVectorMember,ComplexHighPrecisionVectorMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexHighPrecisionVectorMember construct() {
-		return new ComplexHighPrecisionVectorMember();
-	}
-
-	@Override
-	public ComplexHighPrecisionVectorMember construct(ComplexHighPrecisionVectorMember other) {
-		return new ComplexHighPrecisionVectorMember(other);
-	}
-
-	@Override
-	public ComplexHighPrecisionVectorMember construct(String s) {
-		return new ComplexHighPrecisionVectorMember(s);
-	}
-
-	@Override
-	public ComplexHighPrecisionVectorMember construct(StorageConstruction s, long d1) {
-		return new ComplexHighPrecisionVectorMember(s, d1);
 	}
 
 	private final Procedure2<ComplexHighPrecisionVectorMember,ComplexHighPrecisionVectorMember> ASSIGN =

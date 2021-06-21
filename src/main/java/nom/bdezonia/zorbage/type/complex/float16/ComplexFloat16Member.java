@@ -57,7 +57,8 @@ public final class ComplexFloat16Member
 		Allocatable<ComplexFloat16Member>, Duplicatable<ComplexFloat16Member>,
 		Settable<ComplexFloat16Member>, Gettable<ComplexFloat16Member>,
 		NumberMember<ComplexFloat16Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float16Member>, GetComplex<Float16Member>
+		UniversalRepresentation, SetComplex<Float16Member>, GetComplex<Float16Member>,
+		SetFromFloat
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -771,5 +772,11 @@ public final class ComplexFloat16Member
 			return G.CHLF.isEqual().call(this, (ComplexFloat16Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }

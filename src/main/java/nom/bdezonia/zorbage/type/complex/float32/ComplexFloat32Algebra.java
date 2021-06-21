@@ -96,7 +96,8 @@ public class ComplexFloat32Algebra
 		ScaleComponents<ComplexFloat32Member, Float32Member>,
 		Tolerance<Float32Member,ComplexFloat32Member>,
 		ScaleByOneHalf<ComplexFloat32Member>,
-		ScaleByTwo<ComplexFloat32Member>
+		ScaleByTwo<ComplexFloat32Member>,
+		ConstructibleFromFloat<ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ONE = new ComplexFloat32Member(1,0);
 	private static final ComplexFloat32Member TWO = new ComplexFloat32Member(2,0);
@@ -115,6 +116,26 @@ public class ComplexFloat32Algebra
 	private static final ComplexFloat32Member NaN_ = new ComplexFloat32Member(Float.NaN,Float.NaN);
 
 	public ComplexFloat32Algebra() { }
+
+	@Override
+	public ComplexFloat32Member construct() {
+		return new ComplexFloat32Member();
+	}
+
+	@Override
+	public ComplexFloat32Member construct(ComplexFloat32Member other) {
+		return new ComplexFloat32Member(other);
+	}
+
+	@Override
+	public ComplexFloat32Member construct(String s) {
+		return new ComplexFloat32Member(s);
+	}
+
+	@Override
+	public ComplexFloat32Member construct(float... v) {
+		return new ComplexFloat32Member(v[0], v[1]);
+	}
 	
 	private final Procedure3<ComplexFloat32Member,ComplexFloat32Member,ComplexFloat32Member> MUL =
 			new Procedure3<ComplexFloat32Member, ComplexFloat32Member, ComplexFloat32Member>()
@@ -240,21 +261,6 @@ public class ComplexFloat32Algebra
 	@Override
 	public Function2<Boolean,ComplexFloat32Member,ComplexFloat32Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexFloat32Member construct() {
-		return new ComplexFloat32Member();
-	}
-
-	@Override
-	public ComplexFloat32Member construct(ComplexFloat32Member other) {
-		return new ComplexFloat32Member(other);
-	}
-
-	@Override
-	public ComplexFloat32Member construct(String s) {
-		return new ComplexFloat32Member(s);
 	}
 
 	private final Procedure2<ComplexFloat32Member,ComplexFloat32Member> ASSIGN =

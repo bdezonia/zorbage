@@ -44,7 +44,8 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
  */
 public class CieLabMember
 	implements DoubleCoder, Allocatable<CieLabMember>, Duplicatable<CieLabMember>,
-		Settable<CieLabMember>, Gettable<CieLabMember>, NumberMember<CieLabMember>
+		Settable<CieLabMember>, Gettable<CieLabMember>, NumberMember<CieLabMember>,
+		SetFromDouble
 {
 	private double l, a, b;
 	
@@ -184,5 +185,12 @@ public class CieLabMember
 			return G.LAB.isEqual().call(this, (CieLabMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setL(v[0]);
+		setA(v[1]);
+		setB(v[2]);
 	}
 }

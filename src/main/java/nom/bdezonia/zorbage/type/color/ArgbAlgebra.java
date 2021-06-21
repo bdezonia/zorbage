@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.ColorMethods;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInt;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
 
@@ -49,7 +50,10 @@ import nom.bdezonia.zorbage.algebra.Random;
  *
  */
 public class ArgbAlgebra
-	implements Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>, PredSucc<ArgbMember>, ColorMethods<Double, ArgbMember>
+	implements
+		Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>,
+		PredSucc<ArgbMember>, ColorMethods<Double, ArgbMember>,
+		ConstructibleFromInt<ArgbMember>
 {
 
 	@Override
@@ -65,6 +69,11 @@ public class ArgbAlgebra
 	@Override
 	public ArgbMember construct(String str) {
 		return new ArgbMember(str);
+	}
+
+	@Override
+	public ArgbMember construct(int... v) {
+		return new ArgbMember(v[0], v[1], v[2], v[3]);
 	}
 
 	private final Function2<Boolean, ArgbMember, ArgbMember> EQ =

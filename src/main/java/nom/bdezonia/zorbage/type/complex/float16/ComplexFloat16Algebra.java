@@ -96,7 +96,8 @@ public class ComplexFloat16Algebra
 		ScaleComponents<ComplexFloat16Member, Float16Member>,
 		Tolerance<Float16Member,ComplexFloat16Member>,
 		ScaleByOneHalf<ComplexFloat16Member>,
-		ScaleByTwo<ComplexFloat16Member>
+		ScaleByTwo<ComplexFloat16Member>,
+		ConstructibleFromFloat<ComplexFloat16Member>
 {
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);
@@ -115,6 +116,26 @@ public class ComplexFloat16Algebra
 	private static final ComplexFloat16Member NaN_ = new ComplexFloat16Member(Float.NaN,Float.NaN);
 
 	public ComplexFloat16Algebra() { }
+
+	@Override
+	public ComplexFloat16Member construct() {
+		return new ComplexFloat16Member();
+	}
+
+	@Override
+	public ComplexFloat16Member construct(ComplexFloat16Member other) {
+		return new ComplexFloat16Member(other);
+	}
+
+	@Override
+	public ComplexFloat16Member construct(String s) {
+		return new ComplexFloat16Member(s);
+	}
+
+	@Override
+	public ComplexFloat16Member construct(float... v) {
+		return new ComplexFloat16Member(v[0], v[1]);
+	}
 	
 	private final Procedure3<ComplexFloat16Member,ComplexFloat16Member,ComplexFloat16Member> MUL =
 			new Procedure3<ComplexFloat16Member, ComplexFloat16Member, ComplexFloat16Member>()
@@ -240,21 +261,6 @@ public class ComplexFloat16Algebra
 	@Override
 	public Function2<Boolean,ComplexFloat16Member,ComplexFloat16Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexFloat16Member construct() {
-		return new ComplexFloat16Member();
-	}
-
-	@Override
-	public ComplexFloat16Member construct(ComplexFloat16Member other) {
-		return new ComplexFloat16Member(other);
-	}
-
-	@Override
-	public ComplexFloat16Member construct(String s) {
-		return new ComplexFloat16Member(s);
 	}
 
 	private final Procedure2<ComplexFloat16Member,ComplexFloat16Member> ASSIGN =

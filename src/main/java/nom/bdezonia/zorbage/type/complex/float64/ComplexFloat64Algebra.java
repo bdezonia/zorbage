@@ -96,7 +96,8 @@ public class ComplexFloat64Algebra
 		ScaleComponents<ComplexFloat64Member, Float64Member>,
 		Tolerance<Float64Member,ComplexFloat64Member>,
 		ScaleByOneHalf<ComplexFloat64Member>,
-		ScaleByTwo<ComplexFloat64Member>
+		ScaleByTwo<ComplexFloat64Member>,
+		ConstructibleFromDouble<ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
@@ -115,6 +116,26 @@ public class ComplexFloat64Algebra
 	private static final ComplexFloat64Member NaN_ = new ComplexFloat64Member(Double.NaN,Double.NaN);
 
 	public ComplexFloat64Algebra() { }
+
+	@Override
+	public ComplexFloat64Member construct() {
+		return new ComplexFloat64Member();
+	}
+
+	@Override
+	public ComplexFloat64Member construct(ComplexFloat64Member other) {
+		return new ComplexFloat64Member(other);
+	}
+
+	@Override
+	public ComplexFloat64Member construct(String s) {
+		return new ComplexFloat64Member(s);
+	}
+
+	@Override
+	public ComplexFloat64Member construct(double... v) {
+		return new ComplexFloat64Member(v[0], v[1]);
+	}
 	
 	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> MUL =
 			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
@@ -240,21 +261,6 @@ public class ComplexFloat64Algebra
 	@Override
 	public Function2<Boolean,ComplexFloat64Member,ComplexFloat64Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexFloat64Member construct() {
-		return new ComplexFloat64Member();
-	}
-
-	@Override
-	public ComplexFloat64Member construct(ComplexFloat64Member other) {
-		return new ComplexFloat64Member(other);
-	}
-
-	@Override
-	public ComplexFloat64Member construct(String s) {
-		return new ComplexFloat64Member(s);
 	}
 
 	private final Procedure2<ComplexFloat64Member,ComplexFloat64Member> ASSIGN =

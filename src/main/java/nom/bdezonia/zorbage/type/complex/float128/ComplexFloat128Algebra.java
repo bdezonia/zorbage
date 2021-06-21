@@ -97,7 +97,8 @@ public class ComplexFloat128Algebra
 		ScaleComponents<ComplexFloat128Member, Float128Member>,
 		Tolerance<Float128Member,ComplexFloat128Member>,
 		ScaleByOneHalf<ComplexFloat128Member>,
-		ScaleByTwo<ComplexFloat128Member>
+		ScaleByTwo<ComplexFloat128Member>,
+		ConstructibleFromBigDecimal<ComplexFloat128Member>
 {
 	private static final ComplexFloat128Member ONE = new ComplexFloat128Member(BigDecimal.valueOf(1),BigDecimal.ZERO);
 	private static final ComplexFloat128Member TWO = new ComplexFloat128Member(BigDecimal.valueOf(2),BigDecimal.ZERO);
@@ -121,6 +122,30 @@ public class ComplexFloat128Algebra
 	private static final Float128Member REAL_MINUS_PI_OVER_TWO = new Float128Member(new BigDecimal(HighPrecisionAlgebra.PI_STR.substring(0,40)).multiply(BigDecimal.valueOf(-1)).divide(BigDecimal.valueOf(2)));
 
 	public ComplexFloat128Algebra() { }
+
+	@Override
+	public ComplexFloat128Member construct() {
+		
+		return new ComplexFloat128Member();
+	}
+
+	@Override
+	public ComplexFloat128Member construct(ComplexFloat128Member other) {
+		
+		return new ComplexFloat128Member(other);
+	}
+
+	@Override
+	public ComplexFloat128Member construct(String s) {
+		
+		return new ComplexFloat128Member(s);
+	}
+
+	@Override
+	public ComplexFloat128Member construct(BigDecimal... v) {
+		
+		return new ComplexFloat128Member(v[0], v[1]);
+	}
 	
 	private final Procedure3<ComplexFloat128Member,ComplexFloat128Member,ComplexFloat128Member> MUL =
 			new Procedure3<ComplexFloat128Member, ComplexFloat128Member, ComplexFloat128Member>()
@@ -284,24 +309,6 @@ public class ComplexFloat128Algebra
 	@Override
 	public Function2<Boolean,ComplexFloat128Member,ComplexFloat128Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexFloat128Member construct() {
-		
-		return new ComplexFloat128Member();
-	}
-
-	@Override
-	public ComplexFloat128Member construct(ComplexFloat128Member other) {
-		
-		return new ComplexFloat128Member(other);
-	}
-
-	@Override
-	public ComplexFloat128Member construct(String s) {
-		
-		return new ComplexFloat128Member(s);
 	}
 
 	private final Procedure2<ComplexFloat128Member,ComplexFloat128Member> ASSIGN =

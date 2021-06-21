@@ -59,7 +59,8 @@ public final class ComplexFloat32VectorMember
 		Gettable<ComplexFloat32VectorMember>,
 		Settable<ComplexFloat32VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat32Member>
+		RawData<ComplexFloat32Member>,
+		SetFromFloat
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0); 
 
@@ -1015,5 +1016,18 @@ public final class ComplexFloat32VectorMember
 			return G.CFLT_VEC.isEqual().call(this, (ComplexFloat32VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		ComplexFloat32Member val = G.CFLT.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(v[i]);
+			val.setI(v[i+1]);
+			setV(i, val);
+		}
 	}
 }

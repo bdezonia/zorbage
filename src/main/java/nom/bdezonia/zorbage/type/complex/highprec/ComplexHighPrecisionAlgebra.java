@@ -42,6 +42,7 @@ package nom.bdezonia.zorbage.type.complex.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
@@ -88,7 +89,11 @@ public class ComplexHighPrecisionAlgebra
 		ScaleComponents<ComplexHighPrecisionMember, HighPrecisionMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>,
 		ScaleByOneHalf<ComplexHighPrecisionMember>,
-		ScaleByTwo<ComplexHighPrecisionMember>
+		ScaleByTwo<ComplexHighPrecisionMember>,
+		ConstructibleFromBigDecimal<ComplexHighPrecisionMember>,
+		ConstructibleFromBigInteger<ComplexHighPrecisionMember>,
+		ConstructibleFromDouble<ComplexHighPrecisionMember>,
+		ConstructibleFromLong<ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);
@@ -98,6 +103,41 @@ public class ComplexHighPrecisionAlgebra
 	private static final ComplexHighPrecisionMember MINUS_I = new ComplexHighPrecisionMember(BigDecimal.ZERO,BigDecimal.valueOf(-1));
 
 	public ComplexHighPrecisionAlgebra() { }
+
+	@Override
+	public ComplexHighPrecisionMember construct() {
+		return new ComplexHighPrecisionMember();
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(ComplexHighPrecisionMember other) {
+		return new ComplexHighPrecisionMember(other);
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(String s) {
+		return new ComplexHighPrecisionMember(s);
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(BigDecimal... v) {
+		return new ComplexHighPrecisionMember(v);
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(BigInteger... v) {
+		return new ComplexHighPrecisionMember(v);
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(double... v) {
+		return new ComplexHighPrecisionMember(v);
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(long... v) {
+		return new ComplexHighPrecisionMember(v);
+	}
 	
 	private final Procedure3<ComplexHighPrecisionMember,ComplexHighPrecisionMember,ComplexHighPrecisionMember> MUL =
 			new Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionMember, ComplexHighPrecisionMember>()
@@ -223,21 +263,6 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public Function2<Boolean,ComplexHighPrecisionMember,ComplexHighPrecisionMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct() {
-		return new ComplexHighPrecisionMember();
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct(ComplexHighPrecisionMember other) {
-		return new ComplexHighPrecisionMember(other);
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct(String s) {
-		return new ComplexHighPrecisionMember(s);
 	}
 
 	private final Procedure2<ComplexHighPrecisionMember,ComplexHighPrecisionMember> ASSIGN =

@@ -56,10 +56,31 @@ public class BooleanAlgebra
 		Ordered<BooleanMember>,
 		LogicalOperations<BooleanMember>,
 		PredSucc<BooleanMember>,
-		Random<BooleanMember>
+		Random<BooleanMember>,
+		ConstructibleFromBoolean<BooleanMember>
 {
 	
 	public BooleanAlgebra() { }
+	
+	@Override
+	public BooleanMember construct() {
+		return new BooleanMember();
+	}
+
+	@Override
+	public BooleanMember construct(BooleanMember other) {
+		return new BooleanMember(other);
+	}
+
+	@Override
+	public BooleanMember construct(String s) {
+		return new BooleanMember(s);
+	}
+	
+	@Override
+	public BooleanMember construct(boolean... v) {
+		return new BooleanMember(v[0]);
+	}
 
 	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> AND =
 			new Procedure3<BooleanMember, BooleanMember, BooleanMember>()
@@ -297,21 +318,6 @@ public class BooleanAlgebra
 	@Override
 	public Function2<Boolean,BooleanMember,BooleanMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public BooleanMember construct() {
-		return new BooleanMember();
-	}
-
-	@Override
-	public BooleanMember construct(BooleanMember other) {
-		return new BooleanMember(other);
-	}
-
-	@Override
-	public BooleanMember construct(String s) {
-		return new BooleanMember(s);
 	}
 
 	private final Procedure2<BooleanMember,BooleanMember> ASSIGN =

@@ -90,10 +90,36 @@ public class ComplexFloat16Vector
 		ScaleByOneHalf<ComplexFloat16VectorMember>,
 		ScaleByTwo<ComplexFloat16VectorMember>,
 		Tolerance<Float16Member,ComplexFloat16VectorMember>,
-		ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>
+		ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>,
+		ConstructibleFromFloat<ComplexFloat16VectorMember>
 {
 	public ComplexFloat16Vector() { }
 	
+	@Override
+	public ComplexFloat16VectorMember construct() {
+		return new ComplexFloat16VectorMember();
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(ComplexFloat16VectorMember other) {
+		return new ComplexFloat16VectorMember(other);
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(String s) {
+		return new ComplexFloat16VectorMember(s);
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(StorageConstruction s, long d1) {
+		return new ComplexFloat16VectorMember(s, d1);
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(float... v) {
+		return new ComplexFloat16VectorMember(v);
+	}
+
 	private final Procedure1<ComplexFloat16VectorMember> ZER =
 			new Procedure1<ComplexFloat16VectorMember>()
 	{
@@ -176,26 +202,6 @@ public class ComplexFloat16Vector
 	@Override
 	public Function2<Boolean,ComplexFloat16VectorMember,ComplexFloat16VectorMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexFloat16VectorMember construct() {
-		return new ComplexFloat16VectorMember();
-	}
-
-	@Override
-	public ComplexFloat16VectorMember construct(ComplexFloat16VectorMember other) {
-		return new ComplexFloat16VectorMember(other);
-	}
-
-	@Override
-	public ComplexFloat16VectorMember construct(String s) {
-		return new ComplexFloat16VectorMember(s);
-	}
-
-	@Override
-	public ComplexFloat16VectorMember construct(StorageConstruction s, long d1) {
-		return new ComplexFloat16VectorMember(s, d1);
 	}
 
 	private final Procedure2<ComplexFloat16VectorMember,ComplexFloat16VectorMember> ASSIGN =

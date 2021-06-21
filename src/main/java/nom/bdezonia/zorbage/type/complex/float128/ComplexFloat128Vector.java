@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.complex.float128;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -91,10 +92,67 @@ public class ComplexFloat128Vector
 		ScaleByOneHalf<ComplexFloat128VectorMember>,
 		ScaleByTwo<ComplexFloat128VectorMember>,
 		Tolerance<Float128Member,ComplexFloat128VectorMember>,
-		ArrayLikeMethods<ComplexFloat128VectorMember,ComplexFloat128Member>
+		ArrayLikeMethods<ComplexFloat128VectorMember,ComplexFloat128Member>,
+		ConstructibleFromBigDecimal<ComplexFloat128VectorMember>,
+		ConstructibleFromBigInteger<ComplexFloat128VectorMember>,
+		ConstructibleFromDouble<ComplexFloat128VectorMember>,
+		ConstructibleFromLong<ComplexFloat128VectorMember>
 {
 	public ComplexFloat128Vector() { }
+
+	@Override
+	public ComplexFloat128VectorMember construct() {
+		return new ComplexFloat128VectorMember();
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(ComplexFloat128VectorMember other) {
+		return new ComplexFloat128VectorMember(other);
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(String s) {
+		return new ComplexFloat128VectorMember(s);
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(StorageConstruction s, long d1) {
+		return new ComplexFloat128VectorMember(s, d1);
+	}
 	
+
+	@Override
+	public ComplexFloat128VectorMember construct(long... val) {
+		BigDecimal[] bigds = new BigDecimal[val.length];
+		for (int i = 0; i < val.length; i++) {
+			bigds[i] = BigDecimal.valueOf(val[i]);
+		}
+		return new ComplexFloat128VectorMember(bigds);
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(double... val) {
+		BigDecimal[] bigds = new BigDecimal[val.length];
+		for (int i = 0; i < val.length; i++) {
+			bigds[i] = BigDecimal.valueOf(val[i]);
+		}
+		return new ComplexFloat128VectorMember(bigds);
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(BigInteger... val) {
+		BigDecimal[] bigds = new BigDecimal[val.length];
+		for (int i = 0; i < val.length; i++) {
+			bigds[i] = new BigDecimal(val[i]);
+		}
+		return new ComplexFloat128VectorMember(bigds);
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(BigDecimal... val) {
+		return new ComplexFloat128VectorMember(val);
+	}
+
 	private final Procedure1<ComplexFloat128VectorMember> ZER =
 			new Procedure1<ComplexFloat128VectorMember>()
 	{
@@ -177,26 +235,6 @@ public class ComplexFloat128Vector
 	@Override
 	public Function2<Boolean,ComplexFloat128VectorMember,ComplexFloat128VectorMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct() {
-		return new ComplexFloat128VectorMember();
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct(ComplexFloat128VectorMember other) {
-		return new ComplexFloat128VectorMember(other);
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct(String s) {
-		return new ComplexFloat128VectorMember(s);
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct(StorageConstruction s, long d1) {
-		return new ComplexFloat128VectorMember(s, d1);
 	}
 
 	private final Procedure2<ComplexFloat128VectorMember,ComplexFloat128VectorMember> ASSIGN =
@@ -615,5 +653,4 @@ public class ComplexFloat128Vector
 	public Procedure3<Integer, ComplexFloat128VectorMember, ComplexFloat128VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
 }

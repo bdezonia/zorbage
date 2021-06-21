@@ -59,7 +59,8 @@ public final class ComplexFloat16VectorMember
 		Gettable<ComplexFloat16VectorMember>,
 		Settable<ComplexFloat16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat16Member>
+		RawData<ComplexFloat16Member>,
+		SetFromFloat
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0); 
 
@@ -1015,5 +1016,18 @@ public final class ComplexFloat16VectorMember
 			return G.CHLF_VEC.isEqual().call(this, (ComplexFloat16VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		ComplexFloat16Member val = G.CHLF.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(v[i]);
+			val.setI(v[i+1]);
+			setV(i, val);
+		}
 	}
 }

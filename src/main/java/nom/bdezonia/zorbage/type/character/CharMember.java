@@ -33,7 +33,9 @@ package nom.bdezonia.zorbage.type.character;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromChar;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
@@ -45,7 +47,9 @@ import nom.bdezonia.zorbage.storage.coder.CharCoder;
  */
 public class CharMember
 	implements
-		CharCoder, Gettable<CharMember>, Settable<CharMember>, Allocatable<CharMember>, Duplicatable<CharMember>
+		CharCoder, Gettable<CharMember>, Settable<CharMember>,
+		Allocatable<CharMember>, Duplicatable<CharMember>,
+		SetFromChar, GetAsChar
 {
 	private char v;
 	
@@ -129,5 +133,15 @@ public class CharMember
 			return G.CHAR.isEqual().call(this, (CharMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public char getAsChar() {
+		return v();
+	}
+
+	@Override
+	public void setFromChar(char... v) {
+		setV(v[0]);
 	}
 }

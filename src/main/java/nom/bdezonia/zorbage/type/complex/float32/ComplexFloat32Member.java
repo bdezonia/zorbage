@@ -56,7 +56,8 @@ public final class ComplexFloat32Member
 		Allocatable<ComplexFloat32Member>, Duplicatable<ComplexFloat32Member>,
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>
+		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>,
+		SetFromFloat
 {
 	private float r, i;
 	
@@ -768,5 +769,11 @@ public final class ComplexFloat32Member
 			return G.CFLT.isEqual().call(this, (ComplexFloat32Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }

@@ -59,7 +59,8 @@ public final class ComplexHighPrecisionVectorMember
 		Gettable<ComplexHighPrecisionVectorMember>,
 		Settable<ComplexHighPrecisionVectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexHighPrecisionMember>
+		RawData<ComplexHighPrecisionMember>,
+		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember(); 
 
@@ -110,6 +111,21 @@ public final class ComplexHighPrecisionVectorMember
 
 	public ComplexHighPrecisionVectorMember(long d1) {
 		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+
+	public ComplexHighPrecisionVectorMember(BigInteger... v) {
+		this();
+		setFromBigInteger(v);
+	}
+
+	public ComplexHighPrecisionVectorMember(double... v) {
+		this();
+		setFromDouble(v);
+	}
+
+	public ComplexHighPrecisionVectorMember(long... v) {
+		this();
+		setFromLong(v);
 	}
 
 	@Override
@@ -1015,5 +1031,57 @@ public final class ComplexHighPrecisionVectorMember
 			return G.CHP_VEC.isEqual().call(this, (ComplexHighPrecisionVectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		ComplexHighPrecisionMember val = G.CHP.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(BigDecimal.valueOf(v[i]));
+			val.setI(BigDecimal.valueOf(v[i+1]));
+			setV(i, val);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		ComplexHighPrecisionMember val = G.CHP.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(BigDecimal.valueOf(v[i]));
+			val.setI(BigDecimal.valueOf(v[i+1]));
+			setV(i, val);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		ComplexHighPrecisionMember val = G.CHP.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(new BigDecimal(v[i]));
+			val.setI(new BigDecimal(v[i+1]));
+			setV(i, val);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		ComplexHighPrecisionMember val = G.CHP.construct();
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		for (int i = 0; i < v.length; i += 2) {
+			val.setR(v[i]);
+			val.setI(v[i+1]);
+			setV(i, val);
+		}
 	}
 }

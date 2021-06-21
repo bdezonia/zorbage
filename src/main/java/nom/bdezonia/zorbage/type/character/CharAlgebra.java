@@ -34,6 +34,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromChar;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
@@ -54,7 +55,8 @@ public class CharAlgebra
 		Ordered<CharMember>,
 		PredSucc<CharMember>,
 		Random<CharMember>,
-		Bounded<CharMember>
+		Bounded<CharMember>,
+		ConstructibleFromChar<CharMember>
 {
 	@Override
 	public CharMember construct() {
@@ -69,6 +71,11 @@ public class CharAlgebra
 	@Override
 	public CharMember construct(String str) {
 		return new CharMember(str);
+	}
+
+	@Override
+	public CharMember construct(char... val) {
+		return new CharMember(val[0]);
 	}
 
 	private final Function2<Boolean, CharMember, CharMember> EQ =

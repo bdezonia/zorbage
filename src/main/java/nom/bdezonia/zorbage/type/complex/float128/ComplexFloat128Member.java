@@ -56,7 +56,8 @@ public final class ComplexFloat128Member
 		Allocatable<ComplexFloat128Member>, Duplicatable<ComplexFloat128Member>,
 		Settable<ComplexFloat128Member>, Gettable<ComplexFloat128Member>,
 		NumberMember<ComplexFloat128Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float128Member>, GetComplex<Float128Member>
+		UniversalRepresentation, SetComplex<Float128Member>, GetComplex<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private final Float128Member r, i;
 	
@@ -789,5 +790,29 @@ public final class ComplexFloat128Member
 			return G.CQUAD.isEqual().call(this, (ComplexFloat128Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setR(new BigDecimal(v[0]));
+		setI(new BigDecimal(v[1]));
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }

@@ -56,7 +56,8 @@ public final class ComplexHighPrecisionMember
 		Allocatable<ComplexHighPrecisionMember>, Duplicatable<ComplexHighPrecisionMember>,
 		Settable<ComplexHighPrecisionMember>, Gettable<ComplexHighPrecisionMember>,
 		NumberMember<ComplexHighPrecisionMember>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<HighPrecisionMember>, GetComplex<HighPrecisionMember>
+		UniversalRepresentation, SetComplex<HighPrecisionMember>, GetComplex<HighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private BigDecimal r, i;
 	
@@ -78,6 +79,22 @@ public final class ComplexHighPrecisionMember
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r());
 		setI(val.i());
+	}
+
+	public ComplexHighPrecisionMember(BigDecimal... v) {
+		setFromBigDecimal(v);
+	}
+	
+	public ComplexHighPrecisionMember(BigInteger... v) {
+		setFromBigInteger(v);
+	}
+	
+	public ComplexHighPrecisionMember(double... v) {
+		setFromDouble(v);
+	}
+	
+	public ComplexHighPrecisionMember(long... v) {
+		setFromLong(v);
 	}
 
 	public BigDecimal r() { return r; }
@@ -768,5 +785,29 @@ public final class ComplexHighPrecisionMember
 			return G.CHP.isEqual().call(this, (ComplexHighPrecisionMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setR(new BigDecimal(v[0]));
+		setI(new BigDecimal(v[1]));
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }

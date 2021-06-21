@@ -57,7 +57,7 @@ public final class BooleanMember
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
-		PrimitiveConversion
+		PrimitiveConversion, SetFromBoolean, GetAsBoolean
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -717,5 +717,15 @@ public final class BooleanMember
 			return G.BOOL.isEqual().call(this, (BooleanMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public boolean getAsBoolean() {
+		return v();
+	}
+
+	@Override
+	public void setFromBoolean(boolean... v) {
+		setV(v[0]);
 	}
 }

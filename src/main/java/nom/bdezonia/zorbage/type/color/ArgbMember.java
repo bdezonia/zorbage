@@ -44,12 +44,12 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
  */
 public class ArgbMember
 	implements ByteCoder, Allocatable<ArgbMember>, Duplicatable<ArgbMember>,
-		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>
+		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>,
+		SetFromInt
 {
 	private byte a, r, g, b;
 	
-	public ArgbMember() {
-	}
+	public ArgbMember() { }
 	
 	public ArgbMember(int a, int r, int g, int b) {
 		setA(a);
@@ -57,7 +57,6 @@ public class ArgbMember
 		setG(g);
 		setB(b);
 	}
-	
 	
 	public ArgbMember(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
@@ -76,6 +75,7 @@ public class ArgbMember
 		setG(g);
 		setB(b);
 	}
+
 	public void setA(int a) {
 		this.a = (byte) (a & 0xff);
 	}
@@ -194,5 +194,13 @@ public class ArgbMember
 			return G.ARGB.isEqual().call(this, (ArgbMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromInt(int... v) {
+		setA(v[0]);
+		setR(v[1]);
+		setG(v[2]);
+		setB(v[3]);
 	}
 }

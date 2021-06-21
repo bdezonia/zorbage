@@ -56,7 +56,8 @@ public final class ComplexFloat64Member
 		Allocatable<ComplexFloat64Member>, Duplicatable<ComplexFloat64Member>,
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
-		UniversalRepresentation, SetComplex<Float64Member>, GetComplex<Float64Member>
+		UniversalRepresentation, SetComplex<Float64Member>, GetComplex<Float64Member>,
+		SetFromDouble
 {
 	private double r, i;
 	
@@ -768,5 +769,11 @@ public final class ComplexFloat64Member
 			return G.CDBL.isEqual().call(this, (ComplexFloat64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(v[0]);
+		setI(v[1]);
 	}
 }
