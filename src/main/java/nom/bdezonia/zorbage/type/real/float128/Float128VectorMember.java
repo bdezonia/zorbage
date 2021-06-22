@@ -59,7 +59,8 @@ public final class Float128VectorMember
 		Gettable<Float128VectorMember>,
 		Settable<Float128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float128Member>
+		RawData<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final Float128Member ZERO = new Float128Member(); 
 
@@ -71,14 +72,28 @@ public final class Float128VectorMember
 		storage = Storage.allocate(s, new Float128Member(), 0);
 	}
 	
-	public Float128VectorMember(BigDecimal[] vals) {
+	public Float128VectorMember(BigDecimal... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new Float128Member(), vals.length);
-		Float128Member value = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i,  value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public Float128VectorMember(BigInteger... vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new Float128Member(), vals.length);
+		setFromBigInteger(vals);
+	}
+	
+	public Float128VectorMember(double... vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new Float128Member(), vals.length);
+		setFromDouble(vals);
+	}
+	
+	public Float128VectorMember(long... vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new Float128Member(), vals.length);
+		setFromLong(vals);
 	}
 	
 	public Float128VectorMember(Float128VectorMember other) {
@@ -947,5 +962,53 @@ public final class Float128VectorMember
 			return G.QUAD_VEC.isEqual().call(this, (Float128VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(new BigDecimal(vals[i]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(vals[i]);
+			storage.set(i,  value);
+		}
 	}
 }

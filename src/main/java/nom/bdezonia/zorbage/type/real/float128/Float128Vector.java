@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.float128;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -89,10 +90,54 @@ public class Float128Vector
 		ScaleByOneHalf<Float128VectorMember>,
 		ScaleByTwo<Float128VectorMember>,
 		Tolerance<Float128Member,Float128VectorMember>,
-		ArrayLikeMethods<Float128VectorMember,Float128Member>
+		ArrayLikeMethods<Float128VectorMember,Float128Member>,
+		ConstructibleFromBigDecimal<Float128VectorMember>,
+		ConstructibleFromBigInteger<Float128VectorMember>,
+		ConstructibleFromDouble<Float128VectorMember>,
+		ConstructibleFromLong<Float128VectorMember>
 {
 	public Float128Vector() { }
-	
+
+	@Override
+	public Float128VectorMember construct() {
+		return new Float128VectorMember();
+	}
+
+	@Override
+	public Float128VectorMember construct(Float128VectorMember other) {
+		return new Float128VectorMember(other);
+	}
+
+	@Override
+	public Float128VectorMember construct(String s) {
+		return new Float128VectorMember(s);
+	}
+
+	@Override
+	public Float128VectorMember construct(StorageConstruction s, long d1) {
+		return new Float128VectorMember(s, d1);
+	}
+
+	@Override
+	public Float128VectorMember construct(BigDecimal... v) {
+		return new Float128VectorMember(v);
+	}
+
+	@Override
+	public Float128VectorMember construct(BigInteger... v) {
+		return new Float128VectorMember(v);
+	}
+
+	@Override
+	public Float128VectorMember construct(double... v) {
+		return new Float128VectorMember(v);
+	}
+
+	@Override
+	public Float128VectorMember construct(long... v) {
+		return new Float128VectorMember(v);
+	}
+
 	private final Procedure1<Float128VectorMember> ZER =
 			new Procedure1<Float128VectorMember>()
 	{
@@ -175,26 +220,6 @@ public class Float128Vector
 	@Override
 	public Function2<Boolean,Float128VectorMember,Float128VectorMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public Float128VectorMember construct() {
-		return new Float128VectorMember();
-	}
-
-	@Override
-	public Float128VectorMember construct(Float128VectorMember other) {
-		return new Float128VectorMember(other);
-	}
-
-	@Override
-	public Float128VectorMember construct(String s) {
-		return new Float128VectorMember(s);
-	}
-
-	@Override
-	public Float128VectorMember construct(StorageConstruction s, long d1) {
-		return new Float128VectorMember(s, d1);
 	}
 
 	private final Procedure2<Float128VectorMember,Float128VectorMember> ASSIGN =
@@ -599,5 +624,4 @@ public class Float128Vector
 	public Procedure3<Integer, Float128VectorMember, Float128VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
 }
