@@ -78,11 +78,6 @@ public class GaussianInt64Member
 		r = i = 0;
 	}
 	
-	public GaussianInt64Member(long r, long i) {
-		this.r = r;
-		this.i = i;
-	}
-	
 	public GaussianInt64Member(GaussianInt64Member other) {
 		set(other);
 	}

@@ -88,7 +88,8 @@ public class OctonionFloat16Algebra
 		ScaleComponents<OctonionFloat16Member, Float16Member>,
 		Tolerance<Float16Member,OctonionFloat16Member>,
 		ScaleByOneHalf<OctonionFloat16Member>,
-		ScaleByTwo<OctonionFloat16Member>
+		ScaleByTwo<OctonionFloat16Member>,
+		ConstructibleFromFloat<OctonionFloat16Member>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member ONE_THIRD = new OctonionFloat16Member((float)1.0/3, 0, 0, 0, 0, 0, 0, 0);
@@ -108,7 +109,27 @@ public class OctonionFloat16Algebra
 	private static final OctonionFloat16Member K0 = new OctonionFloat16Member(0,0,0,0,0,0,0,1);
 
 	public OctonionFloat16Algebra() { }
-	
+
+	@Override
+	public OctonionFloat16Member construct() {
+		return new OctonionFloat16Member();
+	}
+
+	@Override
+	public OctonionFloat16Member construct(OctonionFloat16Member other) {
+		return new OctonionFloat16Member(other);
+	}
+
+	@Override
+	public OctonionFloat16Member construct(String s) {
+		return new OctonionFloat16Member(s);
+	}
+
+	@Override
+	public OctonionFloat16Member construct(float... val) {
+		return new OctonionFloat16Member(val);
+	}
+
 	private final Procedure1<OctonionFloat16Member> UNITY =
 			new Procedure1<OctonionFloat16Member>()
 	{
@@ -400,21 +421,6 @@ public class OctonionFloat16Algebra
 	@Override
 	public Function2<Boolean,OctonionFloat16Member,OctonionFloat16Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionFloat16Member construct() {
-		return new OctonionFloat16Member();
-	}
-
-	@Override
-	public OctonionFloat16Member construct(OctonionFloat16Member other) {
-		return new OctonionFloat16Member(other);
-	}
-
-	@Override
-	public OctonionFloat16Member construct(String s) {
-		return new OctonionFloat16Member(s);
 	}
 
 	private final Procedure2<OctonionFloat16Member,OctonionFloat16Member> ASSIGN =

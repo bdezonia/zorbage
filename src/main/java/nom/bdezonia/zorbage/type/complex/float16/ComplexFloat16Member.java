@@ -68,11 +68,6 @@ public final class ComplexFloat16Member
 		primitiveInit();
 	}
 	
-	public ComplexFloat16Member(float rvalue, float ivalue) {
-		setR(rvalue);
-		setI(ivalue);
-	}
-	
 	public ComplexFloat16Member(ComplexFloat16Member value) {
 		set(value);
 	}
@@ -84,6 +79,10 @@ public final class ComplexFloat16Member
 		setI(val.i().floatValue());
 	}
 
+	public ComplexFloat16Member(float... val) {
+		setFromFloat(val);
+	}
+	
 	public float r() { return Float16Util.convertHFloatToFloat(r); }
 	
 	public float i() { return Float16Util.convertHFloatToFloat(i); }

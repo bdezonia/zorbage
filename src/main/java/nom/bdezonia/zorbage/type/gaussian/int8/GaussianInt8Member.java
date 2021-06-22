@@ -78,11 +78,6 @@ public class GaussianInt8Member
 		r = i = 0;
 	}
 	
-	public GaussianInt8Member(int r, int i) {
-		this.r = (byte) r;
-		this.i = (byte) i;
-	}
-	
 	public GaussianInt8Member(GaussianInt8Member other) {
 		set(other);
 	}

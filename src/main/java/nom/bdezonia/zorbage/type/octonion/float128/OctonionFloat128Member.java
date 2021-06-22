@@ -57,7 +57,8 @@ public final class OctonionFloat128Member
 		Allocatable<OctonionFloat128Member>, Duplicatable<OctonionFloat128Member>,
 		Settable<OctonionFloat128Member>, Gettable<OctonionFloat128Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<Float128Member>, GetOctonion<Float128Member>
+		UniversalRepresentation, SetOctonion<Float128Member>, GetOctonion<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 
 	private final Float128Member r, i, j, k, l, i0, j0, k0;
@@ -88,21 +89,6 @@ public final class OctonionFloat128Member
 		setK0(k0);
 	}
 
-	// Prefer the previous ctor over this one since this cannot represent
-	// nan, inf, etc.
-	
-	public OctonionFloat128Member(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k, BigDecimal l, BigDecimal i0, BigDecimal j0, BigDecimal k0) {
-		this();
-		setR(r);
-		setI(i);
-		setJ(j);
-		setK(k);
-		setL(l);
-		setI0(i0);
-		setJ0(j0);
-		setK0(k0);
-	}
-	
 	public OctonionFloat128Member(OctonionFloat128Member value) {
 		this();
 		set(value);
@@ -120,6 +106,26 @@ public final class OctonionFloat128Member
 		setI0(val.i0());
 		setJ0(val.j0());
 		setK0(val.k0());
+	}
+	
+	public OctonionFloat128Member(BigDecimal... v) {
+		this();
+		setFromBigDecimal(v);
+	}
+	
+	public OctonionFloat128Member(BigInteger... v) {
+		this();
+		setFromBigInteger(v);
+	}
+	
+	public OctonionFloat128Member(double... v) {
+		this();
+		setFromDouble(v);
+	}
+	
+	public OctonionFloat128Member(long... v) {
+		this();
+		setFromLong(v);
 	}
 
 	public Float128Member r() { return r; }
@@ -1877,5 +1883,53 @@ public final class OctonionFloat128Member
 			return G.OQUAD.isEqual().call(this, (OctonionFloat128Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+		setL(BigDecimal.valueOf(v[4]));
+		setI0(BigDecimal.valueOf(v[5]));
+		setJ0(BigDecimal.valueOf(v[6]));
+		setK0(BigDecimal.valueOf(v[7]));
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+		setL(BigDecimal.valueOf(v[4]));
+		setI0(BigDecimal.valueOf(v[5]));
+		setJ0(BigDecimal.valueOf(v[6]));
+		setK0(BigDecimal.valueOf(v[7]));
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setR(new BigDecimal(v[0]));
+		setI(new BigDecimal(v[1]));
+		setJ(new BigDecimal(v[2]));
+		setK(new BigDecimal(v[3]));
+		setL(new BigDecimal(v[4]));
+		setI0(new BigDecimal(v[5]));
+		setJ0(new BigDecimal(v[6]));
+		setK0(new BigDecimal(v[7]));
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
+		setL(v[4]);
+		setI0(v[5]);
+		setJ0(v[6]);
+		setK0(v[7]);
 	}
 }

@@ -88,7 +88,8 @@ public class OctonionFloat64Algebra
 		ScaleComponents<OctonionFloat64Member, Float64Member>,
 		Tolerance<Float64Member,OctonionFloat64Member>,
 		ScaleByOneHalf<OctonionFloat64Member>,
-		ScaleByTwo<OctonionFloat64Member>
+		ScaleByTwo<OctonionFloat64Member>,
+		ConstructibleFromDouble<OctonionFloat64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1472,5 +1473,10 @@ public class OctonionFloat64Algebra
 	@Override
 	public Function1<Boolean, OctonionFloat64Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(double... val) {
+		return new OctonionFloat64Member(val);
 	}
 }

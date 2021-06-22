@@ -65,11 +65,6 @@ public final class ComplexHighPrecisionMember
 		primitiveInit();
 	}
 	
-	public ComplexHighPrecisionMember(BigDecimal rvalue, BigDecimal ivalue) {
-		setR(rvalue);
-		setI(ivalue);
-	}
-	
 	public ComplexHighPrecisionMember(ComplexHighPrecisionMember value) {
 		set(value);
 	}

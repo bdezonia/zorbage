@@ -57,24 +57,14 @@ public final class OctonionFloat32Member
 		Allocatable<OctonionFloat32Member>, Duplicatable<OctonionFloat32Member>,
 		Settable<OctonionFloat32Member>, Gettable<OctonionFloat32Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<Float32Member>, GetOctonion<Float32Member>
+		UniversalRepresentation, SetOctonion<Float32Member>, GetOctonion<Float32Member>,
+		SetFromFloat
 {
 
 	private float r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat32Member() {
 		primitiveInit();
-	}
-	
-	public OctonionFloat32Member(float r, float i, float j, float k, float l, float i0, float j0, float k0) {
-		setR(r);
-		setI(i);
-		setJ(j);
-		setK(k);
-		setL(l);
-		setI0(i0);
-		setJ0(j0);
-		setK0(k0);
 	}
 	
 	public OctonionFloat32Member(OctonionFloat32Member value) {
@@ -92,6 +82,10 @@ public final class OctonionFloat32Member
 		setI0(val.i0().floatValue());
 		setJ0(val.j0().floatValue());
 		setK0(val.k0().floatValue());
+	}
+	
+	public OctonionFloat32Member(float... v) {
+		setFromFloat(v);
 	}
 
 	public float r() { return r; }
@@ -1842,5 +1836,17 @@ public final class OctonionFloat32Member
 			return G.OFLT.isEqual().call(this, (OctonionFloat32Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
+		setL(v[4]);
+		setI0(v[5]);
+		setJ0(v[6]);
+		setK0(v[7]);
 	}
 }

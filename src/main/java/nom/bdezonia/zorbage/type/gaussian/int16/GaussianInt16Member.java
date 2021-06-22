@@ -78,11 +78,6 @@ public class GaussianInt16Member
 		r = i = 0;
 	}
 	
-	public GaussianInt16Member(short r, short i) {
-		this.r = r;
-		this.i = i;
-	}
-	
 	public GaussianInt16Member(GaussianInt16Member other) {
 		set(other);
 	}

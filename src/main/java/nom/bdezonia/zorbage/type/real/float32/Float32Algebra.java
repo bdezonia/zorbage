@@ -100,7 +100,27 @@ public class Float32Algebra
 	private static final Float32Member PHI = new Float32Member((float)1.61803398874989484820);
 	
 	public Float32Algebra() { }
+
+	@Override
+	public Float32Member construct() {
+		return new Float32Member();
+	}
+
+	@Override
+	public Float32Member construct(Float32Member other) {
+		return new Float32Member(other);
+	}
+
+	@Override
+	public Float32Member construct(String s) {
+		return new Float32Member(s);
+	}
 	
+	@Override
+	public Float32Member construct(float... val) {
+		return new Float32Member(val[0]);
+	}
+
 	private final Function2<Boolean,Float32Member,Float32Member> EQ =
 		new Function2<Boolean,Float32Member,Float32Member>()
 	{
@@ -109,7 +129,7 @@ public class Float32Algebra
 			return a.v() == b.v();
 		}
 	};
-	
+
 	@Override
 	public Function2<Boolean,Float32Member,Float32Member> isEqual() {
 		return EQ;
@@ -127,21 +147,6 @@ public class Float32Algebra
 	@Override
 	public Function2<Boolean,Float32Member,Float32Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public Float32Member construct() {
-		return new Float32Member();
-	}
-
-	@Override
-	public Float32Member construct(Float32Member other) {
-		return new Float32Member(other);
-	}
-
-	@Override
-	public Float32Member construct(String s) {
-		return new Float32Member(s);
 	}
 
 	private final Procedure2<Float32Member,Float32Member> ASSIGN =
@@ -1552,9 +1557,4 @@ public class Float32Algebra
 	public Function1<Boolean, Float32Member> isUnity() {
 		return ISUNITY;
 	}
-	@Override
-	public Float32Member construct(float... val) {
-		return new Float32Member(val[0]);
-	}
-
 }

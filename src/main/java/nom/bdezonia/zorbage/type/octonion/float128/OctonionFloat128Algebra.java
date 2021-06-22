@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.octonion.float128;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.OctonionNumberWithin;
@@ -88,7 +89,11 @@ public class OctonionFloat128Algebra
 		ScaleComponents<OctonionFloat128Member, Float128Member>,
 		Tolerance<Float128Member,OctonionFloat128Member>,
 		ScaleByOneHalf<OctonionFloat128Member>,
-		ScaleByTwo<OctonionFloat128Member>
+		ScaleByTwo<OctonionFloat128Member>,
+		ConstructibleFromBigDecimal<OctonionFloat128Member>,
+		ConstructibleFromBigInteger<OctonionFloat128Member>,
+		ConstructibleFromDouble<OctonionFloat128Member>,
+		ConstructibleFromLong<OctonionFloat128Member>
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 	private static final OctonionFloat128Member ONE_THIRD = new OctonionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -108,7 +113,42 @@ public class OctonionFloat128Algebra
 	private static final OctonionFloat128Member K0 = new OctonionFloat128Member(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE);
 
 	public OctonionFloat128Algebra() { }
-	
+
+	@Override
+	public OctonionFloat128Member construct() {
+		return new OctonionFloat128Member();
+	}
+
+	@Override
+	public OctonionFloat128Member construct(OctonionFloat128Member other) {
+		return new OctonionFloat128Member(other);
+	}
+
+	@Override
+	public OctonionFloat128Member construct(String s) {
+		return new OctonionFloat128Member(s);
+	}
+
+	@Override
+	public OctonionFloat128Member construct(long... val) {
+		return new OctonionFloat128Member(val);
+	}
+
+	@Override
+	public OctonionFloat128Member construct(double... val) {
+		return new OctonionFloat128Member(val);
+	}
+
+	@Override
+	public OctonionFloat128Member construct(BigInteger... val) {
+		return new OctonionFloat128Member(val);
+	}
+
+	@Override
+	public OctonionFloat128Member construct(BigDecimal... val) {
+		return new OctonionFloat128Member(val);
+	}
+
 	private final Procedure1<OctonionFloat128Member> UNITY =
 			new Procedure1<OctonionFloat128Member>()
 	{
@@ -464,21 +504,6 @@ public class OctonionFloat128Algebra
 	@Override
 	public Function2<Boolean,OctonionFloat128Member,OctonionFloat128Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionFloat128Member construct() {
-		return new OctonionFloat128Member();
-	}
-
-	@Override
-	public OctonionFloat128Member construct(OctonionFloat128Member other) {
-		return new OctonionFloat128Member(other);
-	}
-
-	@Override
-	public OctonionFloat128Member construct(String s) {
-		return new OctonionFloat128Member(s);
 	}
 
 	private final Procedure2<OctonionFloat128Member,OctonionFloat128Member> ASSIGN =

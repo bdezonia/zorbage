@@ -59,7 +59,8 @@ public final class OctonionFloat32RModuleMember
 		Gettable<OctonionFloat32RModuleMember>,
 		Settable<OctonionFloat32RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionFloat32Member>
+		RawData<OctonionFloat32Member>,
+		SetFromFloat
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(); 
 
@@ -69,25 +70,6 @@ public final class OctonionFloat32RModuleMember
 	public OctonionFloat32RModuleMember() {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionFloat32Member(), 0);
-	}
-	
-	public OctonionFloat32RModuleMember(float[] vals) {
-		final int count = vals.length / 8;
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionFloat32Member(), count);
-		OctonionFloat32Member value = new OctonionFloat32Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 8*i;
-			value.setR(vals[index]);
-			value.setI(vals[index + 1]);
-			value.setJ(vals[index + 2]);
-			value.setK(vals[index + 3]);
-			value.setL(vals[index + 4]);
-			value.setI0(vals[index + 5]);
-			value.setJ0(vals[index + 6]);
-			value.setK0(vals[index + 7]);
-			storage.set(i,  value);
-		}
 	}
 	
 	public OctonionFloat32RModuleMember(OctonionFloat32RModuleMember other) {
@@ -122,6 +104,13 @@ public final class OctonionFloat32RModuleMember
 
 	public OctonionFloat32RModuleMember(long d1) {
 		this(StorageConstruction.MEM_ARRAY, d1);
+	}
+	
+	public OctonionFloat32RModuleMember(float... vals) {
+		final int count = vals.length / 8;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionFloat32Member(), count);
+		setFromFloat(vals);
 	}
 
 	@Override
@@ -1968,5 +1957,22 @@ public final class OctonionFloat32RModuleMember
 			return G.OFLT_RMOD.isEqual().call(this, (OctonionFloat32RModuleMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		OctonionFloat32Member value = new OctonionFloat32Member();
+		for (int i = 0; i < vals.length/8; i++) {
+			final int index = 8*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			value.setL(vals[index + 4]);
+			value.setI0(vals[index + 5]);
+			value.setJ0(vals[index + 6]);
+			value.setK0(vals[index + 7]);
+			storage.set(i,  value);
+		}
 	}
 }

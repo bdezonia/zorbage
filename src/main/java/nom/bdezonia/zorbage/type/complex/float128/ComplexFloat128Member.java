@@ -78,10 +78,9 @@ public final class ComplexFloat128Member
 	// Prefer the previous ctor over this one since this cannot represent
 	// nan, inf, etc.
 	
-	public ComplexFloat128Member(BigDecimal rvalue, BigDecimal ivalue) {
+	public ComplexFloat128Member(BigDecimal... val) {
 		this();
-		setR(rvalue);
-		setI(ivalue);
+		setFromBigDecimal(val);
 	}
 	
 	public ComplexFloat128Member(ComplexFloat128Member value) {

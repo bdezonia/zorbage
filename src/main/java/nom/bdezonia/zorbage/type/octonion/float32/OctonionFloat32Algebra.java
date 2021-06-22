@@ -88,7 +88,8 @@ public class OctonionFloat32Algebra
 		ScaleComponents<OctonionFloat32Member, Float32Member>,
 		Tolerance<Float32Member,OctonionFloat32Member>,
 		ScaleByOneHalf<OctonionFloat32Member>,
-		ScaleByTwo<OctonionFloat32Member>
+		ScaleByTwo<OctonionFloat32Member>,
+		ConstructibleFromFloat<OctonionFloat32Member>
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member ONE_THIRD = new OctonionFloat32Member(1.0f/3, 0, 0, 0, 0, 0, 0, 0);
@@ -109,6 +110,26 @@ public class OctonionFloat32Algebra
 
 	public OctonionFloat32Algebra() { }
 	
+	@Override
+	public OctonionFloat32Member construct() {
+		return new OctonionFloat32Member();
+	}
+
+	@Override
+	public OctonionFloat32Member construct(OctonionFloat32Member other) {
+		return new OctonionFloat32Member(other);
+	}
+
+	@Override
+	public OctonionFloat32Member construct(String s) {
+		return new OctonionFloat32Member(s);
+	}
+
+	@Override
+	public OctonionFloat32Member construct(float... val) {
+		return new OctonionFloat32Member(val);
+	}
+
 	private final Procedure1<OctonionFloat32Member> UNITY =
 			new Procedure1<OctonionFloat32Member>()
 	{
@@ -400,21 +421,6 @@ public class OctonionFloat32Algebra
 	@Override
 	public Function2<Boolean,OctonionFloat32Member,OctonionFloat32Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionFloat32Member construct() {
-		return new OctonionFloat32Member();
-	}
-
-	@Override
-	public OctonionFloat32Member construct(OctonionFloat32Member other) {
-		return new OctonionFloat32Member(other);
-	}
-
-	@Override
-	public OctonionFloat32Member construct(String s) {
-		return new OctonionFloat32Member(s);
 	}
 
 	private final Procedure2<OctonionFloat32Member,OctonionFloat32Member> ASSIGN =

@@ -57,24 +57,14 @@ public final class OctonionHighPrecisionMember
 		Allocatable<OctonionHighPrecisionMember>, Duplicatable<OctonionHighPrecisionMember>,
 		Settable<OctonionHighPrecisionMember>, Gettable<OctonionHighPrecisionMember>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<HighPrecisionMember>, GetOctonion<HighPrecisionMember>
+		UniversalRepresentation, SetOctonion<HighPrecisionMember>, GetOctonion<HighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionHighPrecisionMember() {
 		primitiveInit();
-	}
-	
-	public OctonionHighPrecisionMember(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k, BigDecimal l, BigDecimal i0, BigDecimal j0, BigDecimal k0) {
-		setR(r);
-		setI(i);
-		setJ(j);
-		setK(k);
-		setL(l);
-		setI0(i0);
-		setJ0(j0);
-		setK0(k0);
 	}
 	
 	public OctonionHighPrecisionMember(OctonionHighPrecisionMember value) {
@@ -92,6 +82,22 @@ public final class OctonionHighPrecisionMember
 		setI0(val.i0());
 		setJ0(val.j0());
 		setK0(val.k0());
+	}
+	
+	public OctonionHighPrecisionMember(BigDecimal ... v) {
+		setFromBigDecimal(v);
+	}
+	
+	public OctonionHighPrecisionMember(BigInteger ... v) {
+		setFromBigInteger(v);
+	}
+	
+	public OctonionHighPrecisionMember(double ... v) {
+		setFromDouble(v);
+	}
+	
+	public OctonionHighPrecisionMember(long ... v) {
+		setFromLong(v);
 	}
 
 	public BigDecimal r() { return r; }
@@ -1842,5 +1848,53 @@ public final class OctonionHighPrecisionMember
 			return G.OHP.isEqual().call(this, (OctonionHighPrecisionMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+		setL(BigDecimal.valueOf(v[4]));
+		setI0(BigDecimal.valueOf(v[5]));
+		setJ0(BigDecimal.valueOf(v[6]));
+		setK0(BigDecimal.valueOf(v[7]));
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+		setL(BigDecimal.valueOf(v[4]));
+		setI0(BigDecimal.valueOf(v[5]));
+		setJ0(BigDecimal.valueOf(v[6]));
+		setK0(BigDecimal.valueOf(v[7]));
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setR(new BigDecimal(v[0]));
+		setI(new BigDecimal(v[1]));
+		setJ(new BigDecimal(v[2]));
+		setK(new BigDecimal(v[3]));
+		setL(new BigDecimal(v[4]));
+		setI0(new BigDecimal(v[5]));
+		setJ0(new BigDecimal(v[6]));
+		setK0(new BigDecimal(v[7]));
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
+		setL(v[4]);
+		setI0(v[5]);
+		setJ0(v[6]);
+		setK0(v[7]);
 	}
 }

@@ -65,11 +65,6 @@ public final class ComplexFloat64Member
 		primitiveInit();
 	}
 	
-	public ComplexFloat64Member(double rvalue, double ivalue) {
-		setR(rvalue);
-		setI(ivalue);
-	}
-	
 	public ComplexFloat64Member(ComplexFloat64Member value) {
 		set(value);
 	}
@@ -79,6 +74,10 @@ public final class ComplexFloat64Member
 		OctonionRepresentation val = rep.firstValue();
 		setR(val.r().doubleValue());
 		setI(val.i().doubleValue());
+	}
+	
+	public ComplexFloat64Member(double... val) {
+		setFromDouble(val);
 	}
 
 	public double r() { return r; }

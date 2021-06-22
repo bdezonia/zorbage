@@ -90,10 +90,36 @@ public class OctonionFloat16RModule
 		ScaleByOneHalf<OctonionFloat16RModuleMember>,
 		ScaleByTwo<OctonionFloat16RModuleMember>,
 		Tolerance<Float16Member,OctonionFloat16RModuleMember>,
-		ArrayLikeMethods<OctonionFloat16RModuleMember,OctonionFloat16Member>
+		ArrayLikeMethods<OctonionFloat16RModuleMember,OctonionFloat16Member>,
+		ConstructibleFromFloat<OctonionFloat16RModuleMember>
 {
 	public OctonionFloat16RModule() { }
-	
+
+	@Override
+	public OctonionFloat16RModuleMember construct() {
+		return new OctonionFloat16RModuleMember();
+	}
+
+	@Override
+	public OctonionFloat16RModuleMember construct(OctonionFloat16RModuleMember other) {
+		return new OctonionFloat16RModuleMember(other);
+	}
+
+	@Override
+	public OctonionFloat16RModuleMember construct(String s) {
+		return new OctonionFloat16RModuleMember(s);
+	}
+
+	@Override
+	public OctonionFloat16RModuleMember construct(StorageConstruction s, long d1) {
+		return new OctonionFloat16RModuleMember(s, d1);
+	}
+
+	@Override
+	public OctonionFloat16RModuleMember construct(float... val) {
+		return new OctonionFloat16RModuleMember(val);
+	}
+
 	private final Procedure1<OctonionFloat16RModuleMember> ZER =
 			new Procedure1<OctonionFloat16RModuleMember>()
 	{
@@ -176,26 +202,6 @@ public class OctonionFloat16RModule
 	@Override
 	public Function2<Boolean,OctonionFloat16RModuleMember,OctonionFloat16RModuleMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionFloat16RModuleMember construct() {
-		return new OctonionFloat16RModuleMember();
-	}
-
-	@Override
-	public OctonionFloat16RModuleMember construct(OctonionFloat16RModuleMember other) {
-		return new OctonionFloat16RModuleMember(other);
-	}
-
-	@Override
-	public OctonionFloat16RModuleMember construct(String s) {
-		return new OctonionFloat16RModuleMember(s);
-	}
-
-	@Override
-	public OctonionFloat16RModuleMember construct(StorageConstruction s, long d1) {
-		return new OctonionFloat16RModuleMember(s, d1);
 	}
 
 	private final Procedure2<OctonionFloat16RModuleMember,OctonionFloat16RModuleMember> ASSIGN =

@@ -53,12 +53,6 @@ public class RgbMember
 	public RgbMember() {
 	}
 	
-	public RgbMember(int r, int g, int b) {
-		setR(r);
-		setG(g);
-		setB(b);
-	}
-	
 	public RgbMember(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		long valueCount = rep.firstVectorDimension();
@@ -72,6 +66,10 @@ public class RgbMember
 		setR(r);
 		setG(g);
 		setB(b);
+	}
+	
+	public RgbMember(int... val) {
+		setFromInt(val);
 	}
 	
 	public void setR(int r) {

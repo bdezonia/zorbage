@@ -90,9 +90,35 @@ public class OctonionFloat64RModule
 		ScaleByOneHalf<OctonionFloat64RModuleMember>,
 		ScaleByTwo<OctonionFloat64RModuleMember>,
 		Tolerance<Float64Member,OctonionFloat64RModuleMember>,
-		ArrayLikeMethods<OctonionFloat64RModuleMember,OctonionFloat64Member>
+		ArrayLikeMethods<OctonionFloat64RModuleMember,OctonionFloat64Member>,
+		ConstructibleFromDouble<OctonionFloat64RModuleMember>
 {
 	public OctonionFloat64RModule() { }
+
+	@Override
+	public OctonionFloat64RModuleMember construct() {
+		return new OctonionFloat64RModuleMember();
+	}
+
+	@Override
+	public OctonionFloat64RModuleMember construct(OctonionFloat64RModuleMember other) {
+		return new OctonionFloat64RModuleMember(other);
+	}
+
+	@Override
+	public OctonionFloat64RModuleMember construct(String s) {
+		return new OctonionFloat64RModuleMember(s);
+	}
+
+	@Override
+	public OctonionFloat64RModuleMember construct(StorageConstruction s, long d1) {
+		return new OctonionFloat64RModuleMember(s, d1);
+	}
+
+	@Override
+	public OctonionFloat64RModuleMember construct(double... v) {
+		return new OctonionFloat64RModuleMember(v);
+	}
 	
 	private final Procedure1<OctonionFloat64RModuleMember> ZER =
 			new Procedure1<OctonionFloat64RModuleMember>()
@@ -176,26 +202,6 @@ public class OctonionFloat64RModule
 	@Override
 	public Function2<Boolean,OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionFloat64RModuleMember construct() {
-		return new OctonionFloat64RModuleMember();
-	}
-
-	@Override
-	public OctonionFloat64RModuleMember construct(OctonionFloat64RModuleMember other) {
-		return new OctonionFloat64RModuleMember(other);
-	}
-
-	@Override
-	public OctonionFloat64RModuleMember construct(String s) {
-		return new OctonionFloat64RModuleMember(s);
-	}
-
-	@Override
-	public OctonionFloat64RModuleMember construct(StorageConstruction s, long d1) {
-		return new OctonionFloat64RModuleMember(s, d1);
 	}
 
 	private final Procedure2<OctonionFloat64RModuleMember,OctonionFloat64RModuleMember> ASSIGN =

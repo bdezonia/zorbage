@@ -58,7 +58,8 @@ public final class OctonionFloat16Member
 		Allocatable<OctonionFloat16Member>, Duplicatable<OctonionFloat16Member>,
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>
+		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>,
+		SetFromFloat
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -66,17 +67,6 @@ public final class OctonionFloat16Member
 	
 	public OctonionFloat16Member() {
 		primitiveInit();
-	}
-	
-	public OctonionFloat16Member(float r, float i, float j, float k, float l, float i0, float j0, float k0) {
-		setR(r);
-		setI(i);
-		setJ(j);
-		setK(k);
-		setL(l);
-		setI0(i0);
-		setJ0(j0);
-		setK0(k0);
 	}
 	
 	public OctonionFloat16Member(OctonionFloat16Member value) {
@@ -94,6 +84,11 @@ public final class OctonionFloat16Member
 		setI0(val.i0().floatValue());
 		setJ0(val.j0().floatValue());
 		setK0(val.k0().floatValue());
+	}
+	
+	public OctonionFloat16Member(float... v) {
+		this();
+		setFromFloat(v);
 	}
 
 	public float r() { return Float16Util.convertHFloatToFloat(r); }
@@ -1844,5 +1839,17 @@ public final class OctonionFloat16Member
 			return G.OHLF.isEqual().call(this, (OctonionFloat16Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
+		setL(v[4]);
+		setI0(v[5]);
+		setJ0(v[6]);
+		setK0(v[7]);
 	}
 }

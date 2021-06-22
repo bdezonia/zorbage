@@ -49,15 +49,11 @@ public class CieLabMember
 {
 	private double l, a, b;
 	
-	public CieLabMember() {
-	}
+	public CieLabMember() { }
 	
-	public CieLabMember(double l, double a, double b) {
-		setL(l);
-		setA(a);
-		setB(b);
+	public CieLabMember(double... val) {
+		setFromDouble(val);
 	}
-	
 	
 	public CieLabMember(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);

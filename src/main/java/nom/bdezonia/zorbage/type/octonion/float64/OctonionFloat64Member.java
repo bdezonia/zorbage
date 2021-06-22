@@ -57,24 +57,14 @@ public final class OctonionFloat64Member
 		Allocatable<OctonionFloat64Member>, Duplicatable<OctonionFloat64Member>,
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion,
-		UniversalRepresentation, SetOctonion<Float64Member>, GetOctonion<Float64Member>
+		UniversalRepresentation, SetOctonion<Float64Member>, GetOctonion<Float64Member>,
+		SetFromDouble
 {
 
 	private double r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat64Member() {
 		primitiveInit();
-	}
-	
-	public OctonionFloat64Member(double r, double i, double j, double k, double l, double i0, double j0, double k0) {
-		setR(r);
-		setI(i);
-		setJ(j);
-		setK(k);
-		setL(l);
-		setI0(i0);
-		setJ0(j0);
-		setK0(k0);
 	}
 	
 	public OctonionFloat64Member(OctonionFloat64Member value) {
@@ -94,6 +84,10 @@ public final class OctonionFloat64Member
 		setK0(val.k0().doubleValue());
 	}
 
+	public OctonionFloat64Member(double... vals) {
+		setFromDouble(vals);
+	}
+	
 	public double r() { return r; }
 	
 	public double i() { return i; }
@@ -1842,5 +1836,17 @@ public final class OctonionFloat64Member
 			return G.ODBL.isEqual().call(this, (OctonionFloat64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
+		setL(v[4]);
+		setI0(v[5]);
+		setJ0(v[6]);
+		setK0(v[7]);
 	}
 }

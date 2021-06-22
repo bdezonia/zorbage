@@ -78,11 +78,6 @@ public class GaussianInt32Member
 		r = i = 0;
 	}
 	
-	public GaussianInt32Member(int r, int i) {
-		this.r = r;
-		this.i = i;
-	}
-	
 	public GaussianInt32Member(GaussianInt32Member other) {
 		set(other);
 	}

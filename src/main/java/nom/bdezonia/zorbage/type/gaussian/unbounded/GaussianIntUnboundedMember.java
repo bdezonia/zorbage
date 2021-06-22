@@ -79,11 +79,6 @@ public class GaussianIntUnboundedMember
 		r = i = BigInteger.ZERO;
 	}
 	
-	public GaussianIntUnboundedMember(BigInteger r, BigInteger i) {
-		this.r = r;
-		this.i = i;
-	}
-	
 	public GaussianIntUnboundedMember(GaussianIntUnboundedMember other) {
 		set(other);
 	}

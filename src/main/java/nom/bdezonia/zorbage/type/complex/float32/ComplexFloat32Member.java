@@ -65,11 +65,6 @@ public final class ComplexFloat32Member
 		primitiveInit();
 	}
 	
-	public ComplexFloat32Member(float rvalue, float ivalue) {
-		setR(rvalue);
-		setI(ivalue);
-	}
-	
 	public ComplexFloat32Member(ComplexFloat32Member value) {
 		set(value);
 	}
@@ -81,6 +76,10 @@ public final class ComplexFloat32Member
 		setI(val.i().floatValue());
 	}
 
+	public ComplexFloat32Member(float... val) {
+		setFromFloat(val);
+	}
+	
 	public float r() { return r; }
 	
 	public float i() { return i; }

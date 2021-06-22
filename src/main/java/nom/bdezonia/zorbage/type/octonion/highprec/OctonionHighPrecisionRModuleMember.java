@@ -59,7 +59,8 @@ public final class OctonionHighPrecisionRModuleMember
 		Gettable<OctonionHighPrecisionRModuleMember>,
 		Settable<OctonionHighPrecisionRModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionHighPrecisionMember>
+		RawData<OctonionHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember(); 
 
@@ -71,23 +72,32 @@ public final class OctonionHighPrecisionRModuleMember
 		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), 0);
 	}
 	
-	public OctonionHighPrecisionRModuleMember(BigDecimal[] vals) {
+	public OctonionHighPrecisionRModuleMember(BigDecimal... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
-		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
-		for (int i = 0; i < count; i++) {
-			final int index = 8*i;
-			value.setR(vals[index]);
-			value.setI(vals[index + 1]);
-			value.setJ(vals[index + 2]);
-			value.setK(vals[index + 3]);
-			value.setL(vals[index + 4]);
-			value.setI0(vals[index + 5]);
-			value.setJ0(vals[index + 6]);
-			value.setK0(vals[index + 7]);
-			storage.set(i,  value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public OctonionHighPrecisionRModuleMember(BigInteger... vals) {
+		final int count = vals.length / 8;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
+		setFromBigInteger(vals);
+	}
+	
+	public OctonionHighPrecisionRModuleMember(double... vals) {
+		final int count = vals.length / 8;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
+		setFromDouble(vals);
+	}
+	
+	public OctonionHighPrecisionRModuleMember(long... vals) {
+		final int count = vals.length / 8;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
+		setFromLong(vals);
 	}
 	
 	public OctonionHighPrecisionRModuleMember(OctonionHighPrecisionRModuleMember other) {
@@ -1969,5 +1979,73 @@ public final class OctonionHighPrecisionRModuleMember
 			return G.OHP_RMOD.isEqual().call(this, (OctonionHighPrecisionRModuleMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length/8; i++) {
+			final int index = 8*i;
+			value.setR(BigDecimal.valueOf(vals[index]));
+			value.setI(BigDecimal.valueOf(vals[index + 1]));
+			value.setJ(BigDecimal.valueOf(vals[index + 2]));
+			value.setK(BigDecimal.valueOf(vals[index + 3]));
+			value.setL(BigDecimal.valueOf(vals[index + 4]));
+			value.setI0(BigDecimal.valueOf(vals[index + 5]));
+			value.setJ0(BigDecimal.valueOf(vals[index + 6]));
+			value.setK0(BigDecimal.valueOf(vals[index + 7]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length/8; i++) {
+			final int index = 8*i;
+			value.setR(BigDecimal.valueOf(vals[index]));
+			value.setI(BigDecimal.valueOf(vals[index + 1]));
+			value.setJ(BigDecimal.valueOf(vals[index + 2]));
+			value.setK(BigDecimal.valueOf(vals[index + 3]));
+			value.setL(BigDecimal.valueOf(vals[index + 4]));
+			value.setI0(BigDecimal.valueOf(vals[index + 5]));
+			value.setJ0(BigDecimal.valueOf(vals[index + 6]));
+			value.setK0(BigDecimal.valueOf(vals[index + 7]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length/8; i++) {
+			final int index = 8*i;
+			value.setR(new BigDecimal(vals[index]));
+			value.setI(new BigDecimal(vals[index + 1]));
+			value.setJ(new BigDecimal(vals[index + 2]));
+			value.setK(new BigDecimal(vals[index + 3]));
+			value.setL(new BigDecimal(vals[index + 4]));
+			value.setI0(new BigDecimal(vals[index + 5]));
+			value.setJ0(new BigDecimal(vals[index + 6]));
+			value.setK0(new BigDecimal(vals[index + 7]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length/8; i++) {
+			final int index = 8*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			value.setL(vals[index + 4]);
+			value.setI0(vals[index + 5]);
+			value.setJ0(vals[index + 6]);
+			value.setK0(vals[index + 7]);
+			storage.set(i,  value);
+		}
 	}
 }

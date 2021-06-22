@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.octonion.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -83,10 +84,54 @@ public class OctonionHighPrecisionRModule
 		ScaleByOneHalf<OctonionHighPrecisionRModuleMember>,
 		ScaleByTwo<OctonionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
-		ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>
+		ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>,
+		ConstructibleFromBigDecimal<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromBigInteger<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromDouble<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromLong<OctonionHighPrecisionRModuleMember>
 {
 	public OctonionHighPrecisionRModule() { }
-	
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct() {
+		return new OctonionHighPrecisionRModuleMember();
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(OctonionHighPrecisionRModuleMember other) {
+		return new OctonionHighPrecisionRModuleMember(other);
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(String s) {
+		return new OctonionHighPrecisionRModuleMember(s);
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(StorageConstruction s, long d1) {
+		return new OctonionHighPrecisionRModuleMember(s, d1);
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(BigDecimal... v) {
+		return new OctonionHighPrecisionRModuleMember(v);
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(BigInteger... v) {
+		return new OctonionHighPrecisionRModuleMember(v);
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(double... v ) {
+		return new OctonionHighPrecisionRModuleMember(v);
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(long... v) {
+		return new OctonionHighPrecisionRModuleMember(v);
+	}
+
 	private final Procedure1<OctonionHighPrecisionRModuleMember> ZER =
 			new Procedure1<OctonionHighPrecisionRModuleMember>()
 	{
@@ -169,26 +214,6 @@ public class OctonionHighPrecisionRModule
 	@Override
 	public Function2<Boolean,OctonionHighPrecisionRModuleMember,OctonionHighPrecisionRModuleMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionHighPrecisionRModuleMember construct() {
-		return new OctonionHighPrecisionRModuleMember();
-	}
-
-	@Override
-	public OctonionHighPrecisionRModuleMember construct(OctonionHighPrecisionRModuleMember other) {
-		return new OctonionHighPrecisionRModuleMember(other);
-	}
-
-	@Override
-	public OctonionHighPrecisionRModuleMember construct(String s) {
-		return new OctonionHighPrecisionRModuleMember(s);
-	}
-
-	@Override
-	public OctonionHighPrecisionRModuleMember construct(StorageConstruction s, long d1) {
-		return new OctonionHighPrecisionRModuleMember(s, d1);
 	}
 
 	private final Procedure2<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionRModuleMember> ASSIGN =

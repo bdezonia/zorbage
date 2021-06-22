@@ -57,8 +57,8 @@ public class CharMember
 		v = 0;
 	}
 	
-	public CharMember(char ch) {
-		v = ch;
+	public CharMember(char... val) {
+		setFromChar(val);
 	}
 	
 	public CharMember(CharMember other) {

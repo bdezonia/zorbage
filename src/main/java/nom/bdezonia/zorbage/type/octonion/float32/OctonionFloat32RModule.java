@@ -90,9 +90,35 @@ public class OctonionFloat32RModule
 		ScaleByOneHalf<OctonionFloat32RModuleMember>,
 		ScaleByTwo<OctonionFloat32RModuleMember>,
 		Tolerance<Float32Member,OctonionFloat32RModuleMember>,
-		ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>
+		ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>,
+		ConstructibleFromFloat<OctonionFloat32RModuleMember>
 {
 	public OctonionFloat32RModule() { }
+
+	@Override
+	public OctonionFloat32RModuleMember construct() {
+		return new OctonionFloat32RModuleMember();
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(OctonionFloat32RModuleMember other) {
+		return new OctonionFloat32RModuleMember(other);
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(String s) {
+		return new OctonionFloat32RModuleMember(s);
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(StorageConstruction s, long d1) {
+		return new OctonionFloat32RModuleMember(s, d1);
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(float... vals) {
+		return new OctonionFloat32RModuleMember(vals);
+	}
 	
 	private final Procedure1<OctonionFloat32RModuleMember> ZER =
 			new Procedure1<OctonionFloat32RModuleMember>()
@@ -176,26 +202,6 @@ public class OctonionFloat32RModule
 	@Override
 	public Function2<Boolean,OctonionFloat32RModuleMember,OctonionFloat32RModuleMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionFloat32RModuleMember construct() {
-		return new OctonionFloat32RModuleMember();
-	}
-
-	@Override
-	public OctonionFloat32RModuleMember construct(OctonionFloat32RModuleMember other) {
-		return new OctonionFloat32RModuleMember(other);
-	}
-
-	@Override
-	public OctonionFloat32RModuleMember construct(String s) {
-		return new OctonionFloat32RModuleMember(s);
-	}
-
-	@Override
-	public OctonionFloat32RModuleMember construct(StorageConstruction s, long d1) {
-		return new OctonionFloat32RModuleMember(s, d1);
 	}
 
 	private final Procedure2<OctonionFloat32RModuleMember,OctonionFloat32RModuleMember> ASSIGN =

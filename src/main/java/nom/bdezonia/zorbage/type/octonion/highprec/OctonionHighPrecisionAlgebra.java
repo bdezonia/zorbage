@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.octonion.highprec;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
@@ -79,7 +80,11 @@ public class OctonionHighPrecisionAlgebra
 		ScaleComponents<OctonionHighPrecisionMember, HighPrecisionMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>,
 		ScaleByOneHalf<OctonionHighPrecisionMember>,
-		ScaleByTwo<OctonionHighPrecisionMember>
+		ScaleByTwo<OctonionHighPrecisionMember>,
+		ConstructibleFromBigDecimal<OctonionHighPrecisionMember>,
+		ConstructibleFromBigInteger<OctonionHighPrecisionMember>,
+		ConstructibleFromDouble<OctonionHighPrecisionMember>,
+		ConstructibleFromLong<OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -93,6 +98,41 @@ public class OctonionHighPrecisionAlgebra
 	private static final OctonionHighPrecisionMember K0 = new OctonionHighPrecisionMember(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE);
 
 	public OctonionHighPrecisionAlgebra() { }
+
+	@Override
+	public OctonionHighPrecisionMember construct() {
+		return new OctonionHighPrecisionMember();
+	}
+
+	@Override
+	public OctonionHighPrecisionMember construct(OctonionHighPrecisionMember other) {
+		return new OctonionHighPrecisionMember(other);
+	}
+
+	@Override
+	public OctonionHighPrecisionMember construct(String s) {
+		return new OctonionHighPrecisionMember(s);
+	}
+
+	@Override
+	public OctonionHighPrecisionMember construct(BigDecimal ... v) {
+		return new OctonionHighPrecisionMember(v);
+	}
+
+	@Override
+	public OctonionHighPrecisionMember construct(BigInteger ... v) {
+		return new OctonionHighPrecisionMember(v);
+	}
+
+	@Override
+	public OctonionHighPrecisionMember construct(double ... v) {
+		return new OctonionHighPrecisionMember(v);
+	}
+
+	@Override
+	public OctonionHighPrecisionMember construct(long ... v) {
+		return new OctonionHighPrecisionMember(v);
+	}
 	
 	private final Procedure1<OctonionHighPrecisionMember> UNITY =
 			new Procedure1<OctonionHighPrecisionMember>()
@@ -385,21 +425,6 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Function2<Boolean,OctonionHighPrecisionMember,OctonionHighPrecisionMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public OctonionHighPrecisionMember construct() {
-		return new OctonionHighPrecisionMember();
-	}
-
-	@Override
-	public OctonionHighPrecisionMember construct(OctonionHighPrecisionMember other) {
-		return new OctonionHighPrecisionMember(other);
-	}
-
-	@Override
-	public OctonionHighPrecisionMember construct(String s) {
-		return new OctonionHighPrecisionMember(s);
 	}
 
 	private final Procedure2<OctonionHighPrecisionMember,OctonionHighPrecisionMember> ASSIGN =
