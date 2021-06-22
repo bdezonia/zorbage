@@ -59,7 +59,8 @@ public final class QuaternionHighPrecisionRModuleMember
 		Gettable<QuaternionHighPrecisionRModuleMember>,
 		Settable<QuaternionHighPrecisionRModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionHighPrecisionMember>
+		RawData<QuaternionHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 
@@ -71,19 +72,32 @@ public final class QuaternionHighPrecisionRModuleMember
 		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), 0);
 	}
 	
-	public QuaternionHighPrecisionRModuleMember(BigDecimal[] vals) {
+	public QuaternionHighPrecisionRModuleMember(BigDecimal... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
-		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
-		for (int i = 0; i < count; i++) {
-			final int index = 4*i;
-			value.setR(vals[index]);
-			value.setI(vals[index + 1]);
-			value.setJ(vals[index + 2]);
-			value.setK(vals[index + 3]);
-			storage.set(i,  value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public QuaternionHighPrecisionRModuleMember(BigInteger... vals) {
+		final int count = vals.length / 4;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
+		setFromBigInteger(vals);
+	}
+	
+	public QuaternionHighPrecisionRModuleMember(double... vals) {
+		final int count = vals.length / 4;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
+		setFromDouble(vals);
+	}
+	
+	public QuaternionHighPrecisionRModuleMember(long... vals) {
+		final int count = vals.length / 4;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
+		setFromLong(vals);
 	}
 	
 	public QuaternionHighPrecisionRModuleMember(QuaternionHighPrecisionRModuleMember other) {
@@ -1376,5 +1390,69 @@ public final class QuaternionHighPrecisionRModuleMember
 			return G.QHP_RMOD.isEqual().call(this, (QuaternionHighPrecisionRModuleMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/4 != length()) {
+			reshape(vals.length/4);
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length/4; i++) {
+			final int index = 4*i;
+			value.setR(BigDecimal.valueOf(vals[index]));
+			value.setI(BigDecimal.valueOf(vals[index + 1]));
+			value.setJ(BigDecimal.valueOf(vals[index + 2]));
+			value.setK(BigDecimal.valueOf(vals[index + 3]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/4 != length()) {
+			reshape(vals.length/4);
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length/4; i++) {
+			final int index = 4*i;
+			value.setR(BigDecimal.valueOf(vals[index]));
+			value.setI(BigDecimal.valueOf(vals[index + 1]));
+			value.setJ(BigDecimal.valueOf(vals[index + 2]));
+			value.setK(BigDecimal.valueOf(vals[index + 3]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/4 != length()) {
+			reshape(vals.length/4);
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length/4; i++) {
+			final int index = 4*i;
+			value.setR(new BigDecimal(vals[index]));
+			value.setI(new BigDecimal(vals[index + 1]));
+			value.setJ(new BigDecimal(vals[index + 2]));
+			value.setK(new BigDecimal(vals[index + 3]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/4 != length()) {
+			reshape(vals.length/4);
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length/4; i++) {
+			final int index = 4*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			storage.set(i,  value);
+		}
 	}
 }

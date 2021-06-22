@@ -56,7 +56,7 @@ public class RationalMember
 		Allocatable<RationalMember>, Duplicatable<RationalMember>,
 		Settable<RationalMember>, Gettable<RationalMember>,
 		UniversalRepresentation, NumberMember<RationalMember>,
-		PrimitiveConversion
+		PrimitiveConversion, SetFromBigInteger, SetFromLong
 {
 	private static final int PLACES = 24;
 	private static final MathContext MC = new MathContext(PLACES);
@@ -93,6 +93,14 @@ public class RationalMember
 
 	public RationalMember(long n, long d) {
 		setV(BigInteger.valueOf(n), BigInteger.valueOf(d));
+	}
+
+	public RationalMember(BigInteger... v) {
+		setFromBigInteger(v);
+	}
+
+	public RationalMember(long... v) {
+		setFromLong(v);
 	}
 
 	@Override
@@ -717,5 +725,15 @@ public class RationalMember
 			return G.RAT.isEqual().call(this, (RationalMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setV(v[0], v[1]);
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setV(BigInteger.valueOf(v[0]), BigInteger.valueOf(v[1]));
 	}
 }

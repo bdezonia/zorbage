@@ -85,7 +85,8 @@ public class QuaternionFloat64Algebra
 		ScaleComponents<QuaternionFloat64Member, Float64Member>,
 		Tolerance<Float64Member,QuaternionFloat64Member>,
 		ScaleByOneHalf<QuaternionFloat64Member>,
-		ScaleByTwo<QuaternionFloat64Member>
+		ScaleByTwo<QuaternionFloat64Member>,
+		ConstructibleFromDouble<QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE_THIRD = new QuaternionFloat64Member(1.0/3,0,0,0);
@@ -101,6 +102,26 @@ public class QuaternionFloat64Algebra
 	private static final QuaternionFloat64Member K = new QuaternionFloat64Member(0,0,0,1);
 	
 	public QuaternionFloat64Algebra() { }
+
+	@Override
+	public QuaternionFloat64Member construct() {
+		return new QuaternionFloat64Member();
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(QuaternionFloat64Member other) {
+		return new QuaternionFloat64Member(other);
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(String s) {
+		return new QuaternionFloat64Member(s);
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(double... v) {
+		return new QuaternionFloat64Member(v);
+	}
 	
 	private final Procedure1<QuaternionFloat64Member> UNITY =
 			new Procedure1<QuaternionFloat64Member>()
@@ -240,21 +261,6 @@ public class QuaternionFloat64Algebra
 	@Override
 	public Function2<Boolean,QuaternionFloat64Member,QuaternionFloat64Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public QuaternionFloat64Member construct() {
-		return new QuaternionFloat64Member();
-	}
-
-	@Override
-	public QuaternionFloat64Member construct(QuaternionFloat64Member other) {
-		return new QuaternionFloat64Member(other);
-	}
-
-	@Override
-	public QuaternionFloat64Member construct(String s) {
-		return new QuaternionFloat64Member(s);
 	}
 
 	private final Procedure2<QuaternionFloat64Member,QuaternionFloat64Member> ASSIGN =

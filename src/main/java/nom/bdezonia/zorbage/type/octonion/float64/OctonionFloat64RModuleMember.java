@@ -1961,6 +1961,9 @@ public final class OctonionFloat64RModuleMember
 
 	@Override
 	public void setFromDouble(double... vals) {
+		if (vals.length/8 != length()) {
+			reshape(vals.length/8);
+		}
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		for (int i = 0; i < vals.length/8; i++) {
 			final int index = 8*i;

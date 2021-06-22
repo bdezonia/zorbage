@@ -90,10 +90,36 @@ public class QuaternionFloat32RModule
 		ScaleByOneHalf<QuaternionFloat32RModuleMember>,
 		ScaleByTwo<QuaternionFloat32RModuleMember>,
 		Tolerance<Float32Member,QuaternionFloat32RModuleMember>,
-		ArrayLikeMethods<QuaternionFloat32RModuleMember, QuaternionFloat32Member>
+		ArrayLikeMethods<QuaternionFloat32RModuleMember, QuaternionFloat32Member>,
+		ConstructibleFromFloat<QuaternionFloat32RModuleMember>
 {
 	public QuaternionFloat32RModule() { }
-	
+
+	@Override
+	public QuaternionFloat32RModuleMember construct() {
+		return new QuaternionFloat32RModuleMember();
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(QuaternionFloat32RModuleMember other) {
+		return new QuaternionFloat32RModuleMember(other);
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(String s) {
+		return new QuaternionFloat32RModuleMember(s);
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(StorageConstruction s, long d1) {
+		return new QuaternionFloat32RModuleMember(s, d1);
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(float... v) {
+		return new QuaternionFloat32RModuleMember(v);
+	}
+
 	private final Procedure1<QuaternionFloat32RModuleMember> ZER = 
 			new Procedure1<QuaternionFloat32RModuleMember>()
 	{
@@ -181,26 +207,6 @@ public class QuaternionFloat32RModule
 	@Override
 	public Function2<Boolean,QuaternionFloat32RModuleMember,QuaternionFloat32RModuleMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public QuaternionFloat32RModuleMember construct() {
-		return new QuaternionFloat32RModuleMember();
-	}
-
-	@Override
-	public QuaternionFloat32RModuleMember construct(QuaternionFloat32RModuleMember other) {
-		return new QuaternionFloat32RModuleMember(other);
-	}
-
-	@Override
-	public QuaternionFloat32RModuleMember construct(String s) {
-		return new QuaternionFloat32RModuleMember(s);
-	}
-
-	@Override
-	public QuaternionFloat32RModuleMember construct(StorageConstruction s, long d1) {
-		return new QuaternionFloat32RModuleMember(s, d1);
 	}
 
 	private final Procedure2<QuaternionFloat32RModuleMember,QuaternionFloat32RModuleMember> ASSIGN = 

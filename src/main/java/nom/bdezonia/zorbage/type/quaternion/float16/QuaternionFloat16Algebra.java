@@ -85,7 +85,8 @@ public class QuaternionFloat16Algebra
 		ScaleComponents<QuaternionFloat16Member, Float16Member>,
 		Tolerance<Float16Member,QuaternionFloat16Member>,
 		ScaleByOneHalf<QuaternionFloat16Member>,
-		ScaleByTwo<QuaternionFloat16Member>
+		ScaleByTwo<QuaternionFloat16Member>,
+		ConstructibleFromFloat<QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
 	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member((float)1.0/3,0,0,0);
@@ -101,6 +102,26 @@ public class QuaternionFloat16Algebra
 	private static final QuaternionFloat16Member K = new QuaternionFloat16Member(0,0,0,1);
 	
 	public QuaternionFloat16Algebra() { }
+
+	@Override
+	public QuaternionFloat16Member construct() {
+		return new QuaternionFloat16Member();
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(QuaternionFloat16Member other) {
+		return new QuaternionFloat16Member(other);
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(String s) {
+		return new QuaternionFloat16Member(s);
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(float... v) {
+		return new QuaternionFloat16Member(v);
+	}
 	
 	private final Procedure1<QuaternionFloat16Member> UNITY =
 			new Procedure1<QuaternionFloat16Member>()
@@ -240,21 +261,6 @@ public class QuaternionFloat16Algebra
 	@Override
 	public Function2<Boolean,QuaternionFloat16Member,QuaternionFloat16Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public QuaternionFloat16Member construct() {
-		return new QuaternionFloat16Member();
-	}
-
-	@Override
-	public QuaternionFloat16Member construct(QuaternionFloat16Member other) {
-		return new QuaternionFloat16Member(other);
-	}
-
-	@Override
-	public QuaternionFloat16Member construct(String s) {
-		return new QuaternionFloat16Member(s);
 	}
 
 	private final Procedure2<QuaternionFloat16Member,QuaternionFloat16Member> ASSIGN =

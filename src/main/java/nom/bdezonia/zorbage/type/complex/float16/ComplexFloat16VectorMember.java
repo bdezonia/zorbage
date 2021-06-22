@@ -1020,6 +1020,9 @@ public final class ComplexFloat16VectorMember
 
 	@Override
 	public void setFromFloat(float... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexFloat16Member val = G.CHLF.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(v[i]);

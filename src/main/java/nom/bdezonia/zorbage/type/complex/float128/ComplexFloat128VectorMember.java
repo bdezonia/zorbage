@@ -1014,6 +1014,9 @@ public final class ComplexFloat128VectorMember
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexFloat128Member value = new ComplexFloat128Member();
 		for (int i = 0; i < v.length; i += 2) {
 			final int index = 2*i;

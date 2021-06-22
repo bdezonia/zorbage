@@ -57,7 +57,8 @@ public final class QuaternionHighPrecisionMember
 		Allocatable<QuaternionHighPrecisionMember>, Duplicatable<QuaternionHighPrecisionMember>,
 		Settable<QuaternionHighPrecisionMember>, Gettable<QuaternionHighPrecisionMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		SetQuaternion<HighPrecisionMember>, GetQuaternion<HighPrecisionMember>
+		SetQuaternion<HighPrecisionMember>, GetQuaternion<HighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private BigDecimal r, i, j, k;
 	
@@ -85,6 +86,22 @@ public final class QuaternionHighPrecisionMember
 		setK(val.k());
 	}
 
+	public QuaternionHighPrecisionMember(BigDecimal... v) {
+		setFromBigDecimal(v);
+	}
+
+	public QuaternionHighPrecisionMember(BigInteger... v) {
+		setFromBigInteger(v);
+	}
+
+	public QuaternionHighPrecisionMember(double... v) {
+		setFromDouble(v);
+	}
+
+	public QuaternionHighPrecisionMember(long... v) {
+		setFromLong(v);
+	}
+	
 	public BigDecimal r() { return r; }
 	
 	public BigDecimal i() { return i; }
@@ -1165,5 +1182,37 @@ public final class QuaternionHighPrecisionMember
 			return G.QHP.isEqual().call(this, (QuaternionHighPrecisionMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setR(new BigDecimal(v[0]));
+		setI(new BigDecimal(v[1]));
+		setJ(new BigDecimal(v[2]));
+		setK(new BigDecimal(v[3]));
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
 	}
 }

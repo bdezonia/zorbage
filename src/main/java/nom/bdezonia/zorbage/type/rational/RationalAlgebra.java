@@ -64,7 +64,9 @@ public class RationalAlgebra
 		ModularDivision<RationalMember>,
 		Tolerance<RationalMember,RationalMember>,
 		ScaleByOneHalf<RationalMember>,
-		ScaleByTwo<RationalMember>
+		ScaleByTwo<RationalMember>,
+		ConstructibleFromBigInteger<RationalMember>,
+		ConstructibleFromLong<RationalMember>
 {
 	@Override
 	public RationalMember construct() {
@@ -79,6 +81,16 @@ public class RationalAlgebra
 	@Override
 	public RationalMember construct(String str) {
 		return new RationalMember(str);
+	}
+
+	@Override
+	public RationalMember construct(BigInteger... v) {
+		return new RationalMember(v);
+	}
+
+	@Override
+	public RationalMember construct(long... v) {
+		return new RationalMember(v);
 	}
 
 	private final Function2<Boolean, RationalMember, RationalMember> EQ =

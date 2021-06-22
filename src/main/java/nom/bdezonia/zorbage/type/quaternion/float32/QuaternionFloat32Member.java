@@ -57,7 +57,8 @@ public final class QuaternionFloat32Member
 		Allocatable<QuaternionFloat32Member>, Duplicatable<QuaternionFloat32Member>,
 		Settable<QuaternionFloat32Member>, Gettable<QuaternionFloat32Member>,
 		PrimitiveConversion, UniversalRepresentation,
-		SetQuaternion<Float32Member>, GetQuaternion<Float32Member>
+		SetQuaternion<Float32Member>, GetQuaternion<Float32Member>,
+		SetFromFloat
 {
 
 	private float r, i, j, k;
@@ -86,6 +87,10 @@ public final class QuaternionFloat32Member
 		setK(val.k().floatValue());
 	}
 
+	public QuaternionFloat32Member(float... v) {
+		setFromFloat(v);
+	}
+	
 	public float r() { return r; }
 	
 	public float i() { return i; }
@@ -1166,5 +1171,13 @@ public final class QuaternionFloat32Member
 			return G.QFLT.isEqual().call(this, (QuaternionFloat32Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
 	}
 }

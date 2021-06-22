@@ -1983,6 +1983,9 @@ public final class OctonionHighPrecisionRModuleMember
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length/8 != length()) {
+			reshape(vals.length/8);
+		}
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
 		for (int i = 0; i < vals.length/8; i++) {
 			final int index = 8*i;
@@ -2000,6 +2003,9 @@ public final class OctonionHighPrecisionRModuleMember
 
 	@Override
 	public void setFromDouble(double... vals) {
+		if (vals.length/8 != length()) {
+			reshape(vals.length/8);
+		}
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
 		for (int i = 0; i < vals.length/8; i++) {
 			final int index = 8*i;
@@ -2017,6 +2023,9 @@ public final class OctonionHighPrecisionRModuleMember
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/8 != length()) {
+			reshape(vals.length/8);
+		}
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
 		for (int i = 0; i < vals.length/8; i++) {
 			final int index = 8*i;
@@ -2034,6 +2043,9 @@ public final class OctonionHighPrecisionRModuleMember
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/8 != length()) {
+			reshape(vals.length/8);
+		}
 		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
 		for (int i = 0; i < vals.length/8; i++) {
 			final int index = 8*i;

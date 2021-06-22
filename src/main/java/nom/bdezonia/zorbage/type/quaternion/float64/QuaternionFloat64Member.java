@@ -57,7 +57,8 @@ public final class QuaternionFloat64Member
 		Allocatable<QuaternionFloat64Member>, Duplicatable<QuaternionFloat64Member>,
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion, UniversalRepresentation,
-		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>
+		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>,
+		SetFromDouble
 {
 
 	private double r, i, j, k;
@@ -84,6 +85,10 @@ public final class QuaternionFloat64Member
 		setI(val.i().doubleValue());
 		setJ(val.j().doubleValue());
 		setK(val.k().doubleValue());
+	}
+
+	public QuaternionFloat64Member(double... v) {
+		setFromDouble(v);
 	}
 
 	public double r() { return r; }
@@ -1166,5 +1171,13 @@ public final class QuaternionFloat64Member
 			return G.QDBL.isEqual().call(this, (QuaternionFloat64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
 	}
 }

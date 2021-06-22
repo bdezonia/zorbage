@@ -1029,6 +1029,9 @@ public final class ComplexHighPrecisionVectorMember
 
 	@Override
 	public void setFromLong(long... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexHighPrecisionMember val = G.CHP.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(BigDecimal.valueOf(v[i]));
@@ -1039,6 +1042,9 @@ public final class ComplexHighPrecisionVectorMember
 
 	@Override
 	public void setFromDouble(double... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexHighPrecisionMember val = G.CHP.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(BigDecimal.valueOf(v[i]));
@@ -1049,6 +1055,9 @@ public final class ComplexHighPrecisionVectorMember
 
 	@Override
 	public void setFromBigInteger(BigInteger... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexHighPrecisionMember val = G.CHP.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(new BigDecimal(v[i]));
@@ -1059,6 +1068,9 @@ public final class ComplexHighPrecisionVectorMember
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
 		for (int i = 0; i < v.length; i += 2) {
 			final int index = 2*i;

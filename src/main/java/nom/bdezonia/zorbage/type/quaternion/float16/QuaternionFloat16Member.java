@@ -58,7 +58,8 @@ public final class QuaternionFloat16Member
 		Allocatable<QuaternionFloat16Member>, Duplicatable<QuaternionFloat16Member>,
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
 		PrimitiveConversion, UniversalRepresentation,
-		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>
+		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
+		SetFromFloat
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -88,6 +89,10 @@ public final class QuaternionFloat16Member
 		setK(val.k().floatValue());
 	}
 
+	public QuaternionFloat16Member(float... v) {
+		setFromFloat(v);
+	}
+	
 	public float r() { return Float16Util.convertHFloatToFloat(r); }
 	
 	public float i() { return Float16Util.convertHFloatToFloat(i); }
@@ -1168,5 +1173,13 @@ public final class QuaternionFloat16Member
 			return G.QHLF.isEqual().call(this, (QuaternionFloat16Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
 	}
 }

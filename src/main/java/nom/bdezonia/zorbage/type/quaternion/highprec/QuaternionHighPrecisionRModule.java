@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.quaternion.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -83,10 +84,54 @@ public class QuaternionHighPrecisionRModule
 		ScaleByOneHalf<QuaternionHighPrecisionRModuleMember>,
 		ScaleByTwo<QuaternionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>,
-		ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>
+		ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>,
+		ConstructibleFromBigDecimal<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromBigInteger<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromDouble<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromLong<QuaternionHighPrecisionRModuleMember>
 {
 	public QuaternionHighPrecisionRModule() { }
-	
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct() {
+		return new QuaternionHighPrecisionRModuleMember();
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(QuaternionHighPrecisionRModuleMember other) {
+		return new QuaternionHighPrecisionRModuleMember(other);
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(String s) {
+		return new QuaternionHighPrecisionRModuleMember(s);
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(StorageConstruction s, long d1) {
+		return new QuaternionHighPrecisionRModuleMember(s, d1);
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(BigDecimal... v) {
+		return new QuaternionHighPrecisionRModuleMember(v);
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(BigInteger... v) {
+		return new QuaternionHighPrecisionRModuleMember(v);
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(double... v) {
+		return new QuaternionHighPrecisionRModuleMember(v);
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(long... v) {
+		return new QuaternionHighPrecisionRModuleMember(v);
+	}
+
 	private final Procedure1<QuaternionHighPrecisionRModuleMember> ZER = 
 			new Procedure1<QuaternionHighPrecisionRModuleMember>()
 	{
@@ -109,7 +154,6 @@ public class QuaternionHighPrecisionRModule
 			RModuleNegate.compute(G.QHP, a, b);
 		}
 	};
-	
 
 	@Override
 	public Procedure2<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionRModuleMember> negate() {
@@ -174,26 +218,6 @@ public class QuaternionHighPrecisionRModule
 	@Override
 	public Function2<Boolean,QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionRModuleMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public QuaternionHighPrecisionRModuleMember construct() {
-		return new QuaternionHighPrecisionRModuleMember();
-	}
-
-	@Override
-	public QuaternionHighPrecisionRModuleMember construct(QuaternionHighPrecisionRModuleMember other) {
-		return new QuaternionHighPrecisionRModuleMember(other);
-	}
-
-	@Override
-	public QuaternionHighPrecisionRModuleMember construct(String s) {
-		return new QuaternionHighPrecisionRModuleMember(s);
-	}
-
-	@Override
-	public QuaternionHighPrecisionRModuleMember construct(StorageConstruction s, long d1) {
-		return new QuaternionHighPrecisionRModuleMember(s, d1);
 	}
 
 	private final Procedure2<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionRModuleMember> ASSIGN = 

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.quaternion.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
@@ -77,7 +78,11 @@ public class QuaternionHighPrecisionAlgebra
 		ScaleComponents<QuaternionHighPrecisionMember, HighPrecisionMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>,
 		ScaleByOneHalf<QuaternionHighPrecisionMember>,
-		ScaleByTwo<QuaternionHighPrecisionMember>
+		ScaleByTwo<QuaternionHighPrecisionMember>,
+		ConstructibleFromBigDecimal<QuaternionHighPrecisionMember>,
+		ConstructibleFromBigInteger<QuaternionHighPrecisionMember>,
+		ConstructibleFromDouble<QuaternionHighPrecisionMember>,
+		ConstructibleFromLong<QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
@@ -88,6 +93,41 @@ public class QuaternionHighPrecisionAlgebra
 	private static final QuaternionHighPrecisionMember K = new QuaternionHighPrecisionMember(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE);
 	
 	public QuaternionHighPrecisionAlgebra() { }
+
+	@Override
+	public QuaternionHighPrecisionMember construct() {
+		return new QuaternionHighPrecisionMember();
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(QuaternionHighPrecisionMember other) {
+		return new QuaternionHighPrecisionMember(other);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(String s) {
+		return new QuaternionHighPrecisionMember(s);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(BigDecimal... v) {
+		return new QuaternionHighPrecisionMember(v);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(BigInteger... v) {
+		return new QuaternionHighPrecisionMember(v);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(double... v) {
+		return new QuaternionHighPrecisionMember(v);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(long... v) {
+		return new QuaternionHighPrecisionMember(v);
+	}
 	
 	private final Procedure1<QuaternionHighPrecisionMember> UNITY =
 			new Procedure1<QuaternionHighPrecisionMember>()
@@ -239,21 +279,6 @@ public class QuaternionHighPrecisionAlgebra
 	@Override
 	public Function2<Boolean,QuaternionHighPrecisionMember,QuaternionHighPrecisionMember> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct() {
-		return new QuaternionHighPrecisionMember();
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct(QuaternionHighPrecisionMember other) {
-		return new QuaternionHighPrecisionMember(other);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct(String s) {
-		return new QuaternionHighPrecisionMember(s);
 	}
 
 	private final Procedure2<QuaternionHighPrecisionMember,QuaternionHighPrecisionMember> ASSIGN =

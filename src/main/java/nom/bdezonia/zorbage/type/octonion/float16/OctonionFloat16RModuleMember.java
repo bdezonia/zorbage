@@ -1961,6 +1961,9 @@ public final class OctonionFloat16RModuleMember
 
 	@Override
 	public void setFromFloat(float... vals) {
+		if (vals.length/8 != length()) {
+			reshape(vals.length/8);
+		}
 		OctonionFloat16Member value = new OctonionFloat16Member();
 		for (int i = 0; i < vals.length/8; i++) {
 			final int index = 8*i;

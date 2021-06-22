@@ -1020,6 +1020,9 @@ public final class ComplexFloat32VectorMember
 
 	@Override
 	public void setFromFloat(float... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
 		ComplexFloat32Member val = G.CFLT.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(v[i]);

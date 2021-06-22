@@ -59,7 +59,8 @@ public final class QuaternionFloat16RModuleMember
 		Gettable<QuaternionFloat16RModuleMember>,
 		Settable<QuaternionFloat16RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat16Member>
+		RawData<QuaternionFloat16Member>,
+		SetFromFloat
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(); 
 
@@ -71,19 +72,11 @@ public final class QuaternionFloat16RModuleMember
 		storage = Storage.allocate(s, new QuaternionFloat16Member(), 0);
 	}
 	
-	public QuaternionFloat16RModuleMember(float[] vals) {
+	public QuaternionFloat16RModuleMember(float... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat16Member(), count);
-		QuaternionFloat16Member value = new QuaternionFloat16Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 4*i;
-			value.setR(vals[index]);
-			value.setI(vals[index + 1]);
-			value.setJ(vals[index + 2]);
-			value.setK(vals[index + 3]);
-			storage.set(i,  value);
-		}
+		setFromFloat(vals);
 	}
 	
 	public QuaternionFloat16RModuleMember(QuaternionFloat16RModuleMember other) {
@@ -1376,5 +1369,21 @@ public final class QuaternionFloat16RModuleMember
 			return G.QHLF_RMOD.isEqual().call(this, (QuaternionFloat16RModuleMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/4 != length()) {
+			reshape(vals.length/4);
+		}
+		QuaternionFloat16Member value = new QuaternionFloat16Member();
+		for (int i = 0; i < vals.length/4; i++) {
+			final int index = 4*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			storage.set(i,  value);
+		}
 	}
 }

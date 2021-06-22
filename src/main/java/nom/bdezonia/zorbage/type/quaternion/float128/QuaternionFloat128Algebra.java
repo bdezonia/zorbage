@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.quaternion.float128;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
@@ -85,7 +86,11 @@ public class QuaternionFloat128Algebra
 		ScaleComponents<QuaternionFloat128Member, Float128Member>,
 		Tolerance<Float128Member,QuaternionFloat128Member>,
 		ScaleByOneHalf<QuaternionFloat128Member>,
-		ScaleByTwo<QuaternionFloat128Member>
+		ScaleByTwo<QuaternionFloat128Member>,
+		ConstructibleFromBigDecimal<QuaternionFloat128Member>,
+		ConstructibleFromBigInteger<QuaternionFloat128Member>,
+		ConstructibleFromDouble<QuaternionFloat128Member>,
+		ConstructibleFromLong<QuaternionFloat128Member>
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member();
 	private static final QuaternionFloat128Member ONE_THIRD = new QuaternionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
@@ -101,6 +106,41 @@ public class QuaternionFloat128Algebra
 	private static final QuaternionFloat128Member K = new QuaternionFloat128Member(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE);
 	
 	public QuaternionFloat128Algebra() { }
+
+	@Override
+	public QuaternionFloat128Member construct() {
+		return new QuaternionFloat128Member();
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(QuaternionFloat128Member other) {
+		return new QuaternionFloat128Member(other);
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(String s) {
+		return new QuaternionFloat128Member(s);
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(long... val) {
+		return new QuaternionFloat128Member(val);
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(double... val) {
+		return new QuaternionFloat128Member(val);
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(BigInteger... val) {
+		return new QuaternionFloat128Member(val);
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(BigDecimal... val) {
+		return new QuaternionFloat128Member(val);
+	}
 	
 	private final Procedure1<QuaternionFloat128Member> UNITY =
 			new Procedure1<QuaternionFloat128Member>()
@@ -286,21 +326,6 @@ public class QuaternionFloat128Algebra
 	@Override
 	public Function2<Boolean,QuaternionFloat128Member,QuaternionFloat128Member> isNotEqual() {
 		return NEQ;
-	}
-
-	@Override
-	public QuaternionFloat128Member construct() {
-		return new QuaternionFloat128Member();
-	}
-
-	@Override
-	public QuaternionFloat128Member construct(QuaternionFloat128Member other) {
-		return new QuaternionFloat128Member(other);
-	}
-
-	@Override
-	public QuaternionFloat128Member construct(String s) {
-		return new QuaternionFloat128Member(s);
 	}
 
 	private final Procedure2<QuaternionFloat128Member,QuaternionFloat128Member> ASSIGN =

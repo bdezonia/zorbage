@@ -59,7 +59,8 @@ public final class QuaternionFloat64RModuleMember
 		Gettable<QuaternionFloat64RModuleMember>,
 		Settable<QuaternionFloat64RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat64Member>
+		RawData<QuaternionFloat64Member>,
+		SetFromDouble
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
@@ -71,19 +72,11 @@ public final class QuaternionFloat64RModuleMember
 		storage = Storage.allocate(s, new QuaternionFloat64Member(), 0);
 	}
 	
-	public QuaternionFloat64RModuleMember(double[] vals) {
+	public QuaternionFloat64RModuleMember(double... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat64Member(), count);
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 4*i;
-			value.setR(vals[index]);
-			value.setI(vals[index + 1]);
-			value.setJ(vals[index + 2]);
-			value.setK(vals[index + 3]);
-			storage.set(i,  value);
-		}
+		setFromDouble(vals);
 	}
 	
 	public QuaternionFloat64RModuleMember(QuaternionFloat64RModuleMember other) {
@@ -1376,5 +1369,21 @@ public final class QuaternionFloat64RModuleMember
 			return G.QDBL_RMOD.isEqual().call(this, (QuaternionFloat64RModuleMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/4 != length()) {
+			reshape(vals.length/4);
+		}
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		for (int i = 0; i < vals.length/4; i++) {
+			final int index = 4*i;
+			value.setR(vals[index]);
+			value.setI(vals[index + 1]);
+			value.setJ(vals[index + 2]);
+			value.setK(vals[index + 3]);
+			storage.set(i,  value);
+		}
 	}
 }

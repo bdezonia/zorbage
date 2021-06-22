@@ -57,9 +57,9 @@ public final class QuaternionFloat128Member
 		Allocatable<QuaternionFloat128Member>, Duplicatable<QuaternionFloat128Member>,
 		Settable<QuaternionFloat128Member>, Gettable<QuaternionFloat128Member>,
 		PrimitiveConversion, UniversalRepresentation,
-		SetQuaternion<Float128Member>, GetQuaternion<Float128Member>
+		SetQuaternion<Float128Member>, GetQuaternion<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
-
 	private final Float128Member r, i, j, k;
 	
 	public QuaternionFloat128Member() {
@@ -83,12 +83,24 @@ public final class QuaternionFloat128Member
 	// Prefer the previous ctor over this one since this cannot represent
 	// nan, inf, etc.
 	
-	public QuaternionFloat128Member(BigDecimal r, BigDecimal i, BigDecimal j, BigDecimal k) {
+	public QuaternionFloat128Member(BigDecimal... v) {
 		this();
-		setR(r);
-		setI(i);
-		setJ(j);
-		setK(k);
+		setFromBigDecimal(v);
+	}
+	
+	public QuaternionFloat128Member(BigInteger... v) {
+		this();
+		setFromBigInteger(v);
+	}
+	
+	public QuaternionFloat128Member(double... v) {
+		this();
+		setFromDouble(v);
+	}
+	
+	public QuaternionFloat128Member(long... v) {
+		this();
+		setFromLong(v);
 	}
 	
 	public QuaternionFloat128Member(QuaternionFloat128Member value) {
@@ -1189,5 +1201,37 @@ public final class QuaternionFloat128Member
 			return G.QQUAD.isEqual().call(this, (QuaternionFloat128Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		setR(BigDecimal.valueOf(v[0]));
+		setI(BigDecimal.valueOf(v[1]));
+		setJ(BigDecimal.valueOf(v[2]));
+		setK(BigDecimal.valueOf(v[3]));
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		setR(new BigDecimal(v[0]));
+		setI(new BigDecimal(v[1]));
+		setJ(new BigDecimal(v[2]));
+		setK(new BigDecimal(v[3]));
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		setR(v[0]);
+		setI(v[1]);
+		setJ(v[2]);
+		setK(v[3]);
 	}
 }
