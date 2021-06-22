@@ -59,7 +59,8 @@ public final class ComplexFloat128VectorMember
 		Gettable<ComplexFloat128VectorMember>,
 		Settable<ComplexFloat128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat128Member>
+		RawData<ComplexFloat128Member>,
+		SetFromBigDecimal
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member(); 
 
@@ -71,17 +72,11 @@ public final class ComplexFloat128VectorMember
 		storage = Storage.allocate(s, new ComplexFloat128Member(), 0);
 	}
 	
-	public ComplexFloat128VectorMember(BigDecimal[] vals) {
+	public ComplexFloat128VectorMember(BigDecimal... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 2*i;
-			value.setR(vals[index]);
-			value.setI(vals[index+1]);
-			storage.set(i,  value);
-		}
+		setFromBigDecimal(vals);
 	}
 	
 	public ComplexFloat128VectorMember(ComplexFloat128VectorMember other) {
@@ -1015,5 +1010,16 @@ public final class ComplexFloat128VectorMember
 			return G.CQUAD_VEC.isEqual().call(this, (ComplexFloat128VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(v[index]);
+			value.setI(v[index+1]);
+			storage.set(i,  value);
+		}
 	}
 }

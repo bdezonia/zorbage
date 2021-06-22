@@ -72,17 +72,11 @@ public final class ComplexHighPrecisionVectorMember
 		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), 0);
 	}
 	
-	public ComplexHighPrecisionVectorMember(BigDecimal[] vals) {
+	public ComplexHighPrecisionVectorMember(BigDecimal... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), count);
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		for (int i = 0; i < count; i++) {
-			final int index = 2*i;
-			value.setR(vals[index]);
-			value.setI(vals[index+1]);
-			storage.set(i,  value);
-		}
+		setFromBigDecimal(vals);
 	}
 	
 	public ComplexHighPrecisionVectorMember(ComplexHighPrecisionVectorMember other) {
@@ -1036,9 +1030,6 @@ public final class ComplexHighPrecisionVectorMember
 	@Override
 	public void setFromLong(long... v) {
 		ComplexHighPrecisionMember val = G.CHP.construct();
-		if (v.length != length()) {
-			reshape(v.length);
-		}
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(BigDecimal.valueOf(v[i]));
 			val.setI(BigDecimal.valueOf(v[i+1]));
@@ -1049,9 +1040,6 @@ public final class ComplexHighPrecisionVectorMember
 	@Override
 	public void setFromDouble(double... v) {
 		ComplexHighPrecisionMember val = G.CHP.construct();
-		if (v.length != length()) {
-			reshape(v.length);
-		}
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(BigDecimal.valueOf(v[i]));
 			val.setI(BigDecimal.valueOf(v[i+1]));
@@ -1062,9 +1050,6 @@ public final class ComplexHighPrecisionVectorMember
 	@Override
 	public void setFromBigInteger(BigInteger... v) {
 		ComplexHighPrecisionMember val = G.CHP.construct();
-		if (v.length != length()) {
-			reshape(v.length);
-		}
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(new BigDecimal(v[i]));
 			val.setI(new BigDecimal(v[i+1]));
@@ -1074,14 +1059,12 @@ public final class ComplexHighPrecisionVectorMember
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... v) {
-		ComplexHighPrecisionMember val = G.CHP.construct();
-		if (v.length != length()) {
-			reshape(v.length);
-		}
+		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
 		for (int i = 0; i < v.length; i += 2) {
-			val.setR(v[i]);
-			val.setI(v[i+1]);
-			setV(i, val);
+			final int index = 2*i;
+			value.setR(v[index]);
+			value.setI(v[index+1]);
+			storage.set(i,  value);
 		}
 	}
 }

@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDouble;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NegInfinite;
 import nom.bdezonia.zorbage.algebra.NaN;
@@ -78,7 +79,8 @@ public class PointAlgebra
 		Infinite<Point>,
 		NegInfinite<Point>,
 		NaN<Point>,
-		Random<Point>
+		Random<Point>,
+		ConstructibleFromDouble<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	
@@ -95,6 +97,11 @@ public class PointAlgebra
 	@Override
 	public Point construct(String str) {
 		return new Point(str);
+	}
+
+	@Override
+	public Point construct(double... val) {
+		return new Point(val);
 	}
 
 	private final Function2<Boolean, Point, Point> EQ =

@@ -1021,9 +1021,6 @@ public final class ComplexFloat64VectorMember
 	@Override
 	public void setFromDouble(double... v) {
 		ComplexFloat64Member val = G.CDBL.construct();
-		if (v.length != length()) {
-			reshape(v.length);
-		}
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(v[i]);
 			val.setI(v[i+1]);
