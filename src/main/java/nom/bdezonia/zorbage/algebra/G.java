@@ -100,6 +100,9 @@ import nom.bdezonia.zorbage.type.integer.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.integer.int9.UnsignedInt9Algebra;
 import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Algebra;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Matrix;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128RModule;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Algebra;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Matrix;
@@ -246,7 +249,6 @@ public class G {
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
 	public static final OctonionFloat64CartesianTensorProduct ODBL_TEN = new OctonionFloat64CartesianTensorProduct();
 
-
 	public static final Float128Algebra QUAD = new Float128Algebra();
 	public static final Float128Vector QUAD_VEC = new Float128Vector();
 	public static final Float128Matrix QUAD_MAT = new Float128Matrix();
@@ -264,10 +266,9 @@ public class G {
 	//public static final QuaternionFloat128CartesianTensorProduct QQUAD_TEN = new QuaternionFloat128CartesianTensorProduct();
 	
 	public static final OctonionFloat128Algebra OQUAD = new OctonionFloat128Algebra();
-	// TODO
-	//public static final OctonionFloat128RModule OQUAD_RMOD = new OctonionFloat128RModule();
-	//public static final OctonionFloat128Matrix OQUAD_MAT = new OctonionFloat128Matrix();
-	//public static final OctonionFloat128CartesianTensorProduct OQUAD_TEN = new OctonionFloat128CartesianTensorProduct();
+	public static final OctonionFloat128RModule OQUAD_RMOD = new OctonionFloat128RModule();
+	public static final OctonionFloat128Matrix OQUAD_MAT = new OctonionFloat128Matrix();
+	public static final OctonionFloat128CartesianTensorProduct OQUAD_TEN = new OctonionFloat128CartesianTensorProduct();
 
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
