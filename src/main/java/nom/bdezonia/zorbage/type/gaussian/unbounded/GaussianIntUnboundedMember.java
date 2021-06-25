@@ -91,13 +91,11 @@ public class GaussianIntUnboundedMember
 	}
 	
 	public GaussianIntUnboundedMember(BigInteger... v) {
-		setR(v[0]);
-		setI(v[1]);
+		setFromBigInteger(v);
 	}
 	
 	public GaussianIntUnboundedMember(long... v) {
-		setR(BigInteger.valueOf(v[0]));
-		setI(BigInteger.valueOf(v[1]));
+		setFromLong(v);
 	}
 	
 	@Override
@@ -788,13 +786,13 @@ public class GaussianIntUnboundedMember
 
 	@Override
 	public void setFromLong(long... v) {
-		// TODO Auto-generated method stub
-		
+		setR(BigInteger.valueOf(v[0]));
+		setI(BigInteger.valueOf(v[1]));
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... v) {
-		// TODO Auto-generated method stub
-		
+		setR(v[0]);
+		setI(v[1]);
 	}
 }
