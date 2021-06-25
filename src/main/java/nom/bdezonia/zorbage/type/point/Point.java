@@ -76,7 +76,7 @@ public class Point
 		}
 	}
 
-	public Point(double[] vals) {
+	public Point(double... vals) {
 		this(vals.length);
 		setFromDouble(vals);
 	}

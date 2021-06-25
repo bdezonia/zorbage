@@ -72,17 +72,11 @@ public final class ComplexFloat64VectorMember
 		storage = Storage.allocate(s, new ComplexFloat64Member(), 0);
 	}
 	
-	public ComplexFloat64VectorMember(double[] vals) {
+	public ComplexFloat64VectorMember(double... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat64Member(), count);
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 2*i;
-			value.setR(vals[index]);
-			value.setI(vals[index+1]);
-			storage.set(i,  value);
-		}
+		setFromDouble(vals);
 	}
 	
 	public ComplexFloat64VectorMember(ComplexFloat64VectorMember other) {

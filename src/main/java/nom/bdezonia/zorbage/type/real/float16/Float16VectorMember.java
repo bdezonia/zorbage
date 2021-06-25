@@ -59,7 +59,8 @@ public final class Float16VectorMember
 		Gettable<Float16VectorMember>,
 		Settable<Float16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float16Member>
+		RawData<Float16Member>,
+		SetFromFloat
 {
 	private static final Float16Member ZERO = new Float16Member(0); 
 
@@ -71,14 +72,10 @@ public final class Float16VectorMember
 		storage = Storage.allocate(s, new Float16Member(), 0);
 	}
 	
-	public Float16VectorMember(float[] vals) {
+	public Float16VectorMember(float... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new Float16Member(), vals.length);
-		Float16Member value = new Float16Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i,  value);
-		}
+		setFromFloat(vals);
 	}
 	
 	public Float16VectorMember(Float16VectorMember other) {
@@ -947,5 +944,17 @@ public final class Float16VectorMember
 			return G.HLF_VEC.isEqual().call(this, (Float16VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		Float16Member val = G.HLF.construct();
+		for (int i = 0; i < v.length; i++) {
+			val.setV(v[i]);
+			setV(i, val);
+		}
 	}
 }

@@ -72,17 +72,11 @@ public final class ComplexFloat32VectorMember
 		storage = Storage.allocate(s, new ComplexFloat32Member(), 0);
 	}
 	
-	public ComplexFloat32VectorMember(float[] vals) {
+	public ComplexFloat32VectorMember(float... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat32Member(), count);
-		ComplexFloat32Member value = new ComplexFloat32Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 2*i;
-			value.setR(vals[index]);
-			value.setI(vals[index+1]);
-			storage.set(i,  value);
-		}
+		setFromFloat(vals);
 	}
 	
 	public ComplexFloat32VectorMember(ComplexFloat32VectorMember other) {

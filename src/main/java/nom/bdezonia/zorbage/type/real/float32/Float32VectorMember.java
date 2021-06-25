@@ -59,7 +59,8 @@ public final class Float32VectorMember
 		Gettable<Float32VectorMember>,
 		Settable<Float32VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float32Member>
+		RawData<Float32Member>,
+		SetFromFloat
 {
 	private static final Float32Member ZERO = new Float32Member(0); 
 
@@ -71,14 +72,10 @@ public final class Float32VectorMember
 		storage = Storage.allocate(s, new Float32Member(), 0);
 	}
 	
-	public Float32VectorMember(float[] vals) {
+	public Float32VectorMember(float... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new Float32Member(), vals.length);
-		Float32Member value = new Float32Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i,  value);
-		}
+		setFromFloat(vals);
 	}
 	
 	public Float32VectorMember(Float32VectorMember other) {
@@ -947,5 +944,17 @@ public final class Float32VectorMember
 			return G.FLT_VEC.isEqual().call(this, (Float32VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... v) {
+		if (v.length != length()) {
+			reshape(v.length);
+		}
+		Float32Member val = G.FLT.construct();
+		for (int i = 0; i < v.length; i++) {
+			val.setV(v[i]);
+			setV(i, val);
+		}
 	}
 }

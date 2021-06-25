@@ -59,7 +59,8 @@ public final class HighPrecisionVectorMember
 		Gettable<HighPrecisionVectorMember>,
 		Settable<HighPrecisionVectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<HighPrecisionMember>
+		RawData<HighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember(); 
 
@@ -71,14 +72,28 @@ public final class HighPrecisionVectorMember
 		storage = Storage.allocate(s, new HighPrecisionMember(), 0);
 	}
 	
-	public HighPrecisionVectorMember(BigDecimal[] vals) {
+	public HighPrecisionVectorMember(BigDecimal... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
-		HighPrecisionMember value = new HighPrecisionMember();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i,  value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public HighPrecisionVectorMember(BigInteger... vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
+		setFromBigInteger(vals);
+	}
+	
+	public HighPrecisionVectorMember(double... vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
+		setFromDouble(vals);
+	}
+	
+	public HighPrecisionVectorMember(long... vals) {
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
+		setFromLong(vals);
 	}
 	
 	public HighPrecisionVectorMember(HighPrecisionVectorMember other) {
@@ -947,5 +962,53 @@ public final class HighPrecisionVectorMember
 			return G.HP_VEC.isEqual().call(this, (HighPrecisionVectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		HighPrecisionMember val = G.HP.construct();
+		for (int i = 0; i < vals.length; i++) {
+			val.setV(BigDecimal.valueOf(vals[i]));
+			setV(i, val);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		HighPrecisionMember val = G.HP.construct();
+		for (int i = 0; i < vals.length; i++) {
+			val.setV(BigDecimal.valueOf(vals[i]));
+			setV(i, val);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		HighPrecisionMember val = G.HP.construct();
+		for (int i = 0; i < vals.length; i++) {
+			val.setV(new BigDecimal(vals[i]));
+			setV(i, val);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != length()) {
+			reshape(vals.length);
+		}
+		HighPrecisionMember val = G.HP.construct();
+		for (int i = 0; i < vals.length; i++) {
+			val.setV(vals[i]);
+			setV(i, val);
+		}
 	}
 }

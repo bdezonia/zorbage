@@ -144,7 +144,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public QuaternionFloat64CartesianTensorProductMember(int rank, long dimCount, double[] vals) {
+	public QuaternionFloat64CartesianTensorProductMember(int rank, long dimCount, double... vals) {
 		this(rank, dimCount);
 		setFromDouble(vals);
 	}

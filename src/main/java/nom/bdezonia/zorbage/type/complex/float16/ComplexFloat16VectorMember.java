@@ -72,17 +72,11 @@ public final class ComplexFloat16VectorMember
 		storage = Storage.allocate(s, new ComplexFloat16Member(), 0);
 	}
 	
-	public ComplexFloat16VectorMember(float[] vals) {
+	public ComplexFloat16VectorMember(float...vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat16Member(), count);
-		ComplexFloat16Member value = new ComplexFloat16Member();
-		for (int i = 0; i < count; i++) {
-			final int index = 2*i;
-			value.setR(vals[index]);
-			value.setI(vals[index+1]);
-			storage.set(i,  value);
-		}
+		setFromFloat(vals);
 	}
 	
 	public ComplexFloat16VectorMember(ComplexFloat16VectorMember other) {
