@@ -102,6 +102,26 @@ public class HighPrecisionMatrix
 {
 	public HighPrecisionMatrix() { }
 
+	@Override
+	public HighPrecisionMatrixMember construct() {
+		return new HighPrecisionMatrixMember();
+	}
+
+	@Override
+	public HighPrecisionMatrixMember construct(HighPrecisionMatrixMember other) {
+		return new HighPrecisionMatrixMember(other);
+	}
+
+	@Override
+	public HighPrecisionMatrixMember construct(String s) {
+		return new HighPrecisionMatrixMember(s);
+	}
+
+	@Override
+	public HighPrecisionMatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new HighPrecisionMatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<HighPrecisionMatrixMember,HighPrecisionMatrixMember,HighPrecisionMatrixMember> MUL =
 			new Procedure3<HighPrecisionMatrixMember, HighPrecisionMatrixMember, HighPrecisionMatrixMember>()
 	{
@@ -226,26 +246,6 @@ public class HighPrecisionMatrix
 	@Override
 	public Procedure2<HighPrecisionMatrixMember,HighPrecisionMatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public HighPrecisionMatrixMember construct() {
-		return new HighPrecisionMatrixMember();
-	}
-
-	@Override
-	public HighPrecisionMatrixMember construct(HighPrecisionMatrixMember other) {
-		return new HighPrecisionMatrixMember(other);
-	}
-
-	@Override
-	public HighPrecisionMatrixMember construct(String s) {
-		return new HighPrecisionMatrixMember(s);
-	}
-
-	@Override
-	public HighPrecisionMatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new HighPrecisionMatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<HighPrecisionMatrixMember,HighPrecisionMember> NORM =

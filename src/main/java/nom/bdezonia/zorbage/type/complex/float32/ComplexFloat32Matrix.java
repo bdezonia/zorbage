@@ -116,6 +116,26 @@ public class ComplexFloat32Matrix
 {
 	public ComplexFloat32Matrix() { }
 
+	@Override
+	public ComplexFloat32MatrixMember construct() {
+		return new ComplexFloat32MatrixMember();
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct(ComplexFloat32MatrixMember other) {
+		return new ComplexFloat32MatrixMember(other);
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct(String s) {
+		return new ComplexFloat32MatrixMember(s);
+	}
+
+	@Override
+	public ComplexFloat32MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new ComplexFloat32MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> MUL =
 			new Procedure3<ComplexFloat32MatrixMember, ComplexFloat32MatrixMember, ComplexFloat32MatrixMember>()
 	{
@@ -241,26 +261,6 @@ public class ComplexFloat32Matrix
 	@Override
 	public Procedure2<ComplexFloat32MatrixMember,ComplexFloat32MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public ComplexFloat32MatrixMember construct() {
-		return new ComplexFloat32MatrixMember();
-	}
-
-	@Override
-	public ComplexFloat32MatrixMember construct(ComplexFloat32MatrixMember other) {
-		return new ComplexFloat32MatrixMember(other);
-	}
-
-	@Override
-	public ComplexFloat32MatrixMember construct(String s) {
-		return new ComplexFloat32MatrixMember(s);
-	}
-
-	@Override
-	public ComplexFloat32MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new ComplexFloat32MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<ComplexFloat32MatrixMember,Float32Member> NORM =

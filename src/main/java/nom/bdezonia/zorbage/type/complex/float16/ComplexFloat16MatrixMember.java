@@ -59,7 +59,8 @@ public final class ComplexFloat16MatrixMember
 		Gettable<ComplexFloat16MatrixMember>,
 		Settable<ComplexFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat16Member>
+		RawData<ComplexFloat16Member>,
+		SetFromFloat
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
 	
@@ -79,20 +80,12 @@ public final class ComplexFloat16MatrixMember
 		set(other);
 	}
 	
-	public ComplexFloat16MatrixMember(int r, int c, float[] vals) {
-		if (vals.length != r*c*2)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public ComplexFloat16MatrixMember(int r, int c, float... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		ComplexFloat16Member tmp = new ComplexFloat16Member();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
-		}
+		setFromFloat(vals);
 	}
 
 	public ComplexFloat16MatrixMember(String s) {
@@ -1165,5 +1158,19 @@ public final class ComplexFloat16MatrixMember
 			return G.CHLF_MAT.isEqual().call(this, (ComplexFloat16MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat16Member tmp = new ComplexFloat16Member();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(vals[2*i]);
+			tmp.setI(vals[2*i+1]);
+			storage.set(i, tmp);
+		}
 	}
 }

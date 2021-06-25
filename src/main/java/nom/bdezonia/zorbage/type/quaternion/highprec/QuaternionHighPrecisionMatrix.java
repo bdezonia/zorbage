@@ -105,6 +105,26 @@ public class QuaternionHighPrecisionMatrix
 {
 	public QuaternionHighPrecisionMatrix() { }
 
+	@Override
+	public QuaternionHighPrecisionMatrixMember construct() {
+		return new QuaternionHighPrecisionMatrixMember();
+	}
+
+	@Override
+	public QuaternionHighPrecisionMatrixMember construct(QuaternionHighPrecisionMatrixMember other) {
+		return new QuaternionHighPrecisionMatrixMember(other);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMatrixMember construct(String s) {
+		return new QuaternionHighPrecisionMatrixMember(s);
+	}
+
+	@Override
+	public QuaternionHighPrecisionMatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new QuaternionHighPrecisionMatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMatrixMember> MUL =
 			new Procedure3<QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember, QuaternionHighPrecisionMatrixMember>()
 	{
@@ -237,26 +257,6 @@ public class QuaternionHighPrecisionMatrix
 	@Override
 	public Procedure2<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public QuaternionHighPrecisionMatrixMember construct() {
-		return new QuaternionHighPrecisionMatrixMember();
-	}
-
-	@Override
-	public QuaternionHighPrecisionMatrixMember construct(QuaternionHighPrecisionMatrixMember other) {
-		return new QuaternionHighPrecisionMatrixMember(other);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMatrixMember construct(String s) {
-		return new QuaternionHighPrecisionMatrixMember(s);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new QuaternionHighPrecisionMatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<QuaternionHighPrecisionMatrixMember,HighPrecisionMember> NORM =

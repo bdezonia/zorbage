@@ -105,6 +105,26 @@ public class OctonionHighPrecisionMatrix
 {
 	public OctonionHighPrecisionMatrix() { }
 
+	@Override
+	public OctonionHighPrecisionMatrixMember construct() {
+		return new OctonionHighPrecisionMatrixMember();
+	}
+
+	@Override
+	public OctonionHighPrecisionMatrixMember construct(OctonionHighPrecisionMatrixMember other) {
+		return new OctonionHighPrecisionMatrixMember(other);
+	}
+
+	@Override
+	public OctonionHighPrecisionMatrixMember construct(String s) {
+		return new OctonionHighPrecisionMatrixMember(s);
+	}
+
+	@Override
+	public OctonionHighPrecisionMatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new OctonionHighPrecisionMatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMatrixMember> MUL =
 			new Procedure3<OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember, OctonionHighPrecisionMatrixMember>()
 	{
@@ -229,26 +249,6 @@ public class OctonionHighPrecisionMatrix
 	@Override
 	public Procedure2<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public OctonionHighPrecisionMatrixMember construct() {
-		return new OctonionHighPrecisionMatrixMember();
-	}
-
-	@Override
-	public OctonionHighPrecisionMatrixMember construct(OctonionHighPrecisionMatrixMember other) {
-		return new OctonionHighPrecisionMatrixMember(other);
-	}
-
-	@Override
-	public OctonionHighPrecisionMatrixMember construct(String s) {
-		return new OctonionHighPrecisionMatrixMember(s);
-	}
-
-	@Override
-	public OctonionHighPrecisionMatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new OctonionHighPrecisionMatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<OctonionHighPrecisionMatrixMember,HighPrecisionMember> NORM =

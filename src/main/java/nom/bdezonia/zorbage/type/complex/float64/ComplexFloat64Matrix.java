@@ -116,6 +116,26 @@ public class ComplexFloat64Matrix
 {
 	public ComplexFloat64Matrix() { }
 
+	@Override
+	public ComplexFloat64MatrixMember construct() {
+		return new ComplexFloat64MatrixMember();
+	}
+
+	@Override
+	public ComplexFloat64MatrixMember construct(ComplexFloat64MatrixMember other) {
+		return new ComplexFloat64MatrixMember(other);
+	}
+
+	@Override
+	public ComplexFloat64MatrixMember construct(String s) {
+		return new ComplexFloat64MatrixMember(s);
+	}
+
+	@Override
+	public ComplexFloat64MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new ComplexFloat64MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<ComplexFloat64MatrixMember,ComplexFloat64MatrixMember,ComplexFloat64MatrixMember> MUL =
 			new Procedure3<ComplexFloat64MatrixMember, ComplexFloat64MatrixMember, ComplexFloat64MatrixMember>()
 	{
@@ -241,26 +261,6 @@ public class ComplexFloat64Matrix
 	@Override
 	public Procedure2<ComplexFloat64MatrixMember,ComplexFloat64MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public ComplexFloat64MatrixMember construct() {
-		return new ComplexFloat64MatrixMember();
-	}
-
-	@Override
-	public ComplexFloat64MatrixMember construct(ComplexFloat64MatrixMember other) {
-		return new ComplexFloat64MatrixMember(other);
-	}
-
-	@Override
-	public ComplexFloat64MatrixMember construct(String s) {
-		return new ComplexFloat64MatrixMember(s);
-	}
-
-	@Override
-	public ComplexFloat64MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new ComplexFloat64MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<ComplexFloat64MatrixMember,Float64Member> NORM =

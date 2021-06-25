@@ -117,6 +117,26 @@ public class ComplexFloat128Matrix
 {
 	public ComplexFloat128Matrix() { }
 
+	@Override
+	public ComplexFloat128MatrixMember construct() {
+		return new ComplexFloat128MatrixMember();
+	}
+
+	@Override
+	public ComplexFloat128MatrixMember construct(ComplexFloat128MatrixMember other) {
+		return new ComplexFloat128MatrixMember(other);
+	}
+
+	@Override
+	public ComplexFloat128MatrixMember construct(String s) {
+		return new ComplexFloat128MatrixMember(s);
+	}
+
+	@Override
+	public ComplexFloat128MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new ComplexFloat128MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<ComplexFloat128MatrixMember,ComplexFloat128MatrixMember,ComplexFloat128MatrixMember> MUL =
 			new Procedure3<ComplexFloat128MatrixMember, ComplexFloat128MatrixMember, ComplexFloat128MatrixMember>()
 	{
@@ -242,26 +262,6 @@ public class ComplexFloat128Matrix
 	@Override
 	public Procedure2<ComplexFloat128MatrixMember,ComplexFloat128MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public ComplexFloat128MatrixMember construct() {
-		return new ComplexFloat128MatrixMember();
-	}
-
-	@Override
-	public ComplexFloat128MatrixMember construct(ComplexFloat128MatrixMember other) {
-		return new ComplexFloat128MatrixMember(other);
-	}
-
-	@Override
-	public ComplexFloat128MatrixMember construct(String s) {
-		return new ComplexFloat128MatrixMember(s);
-	}
-
-	@Override
-	public ComplexFloat128MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new ComplexFloat128MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<ComplexFloat128MatrixMember,Float128Member> NORM =

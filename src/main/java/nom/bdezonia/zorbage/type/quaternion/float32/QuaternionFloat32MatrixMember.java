@@ -59,7 +59,8 @@ public final class QuaternionFloat32MatrixMember
 		Gettable<QuaternionFloat32MatrixMember>,
 		Settable<QuaternionFloat32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat32Member>
+		RawData<QuaternionFloat32Member>,
+		SetFromFloat
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member();
 
@@ -75,22 +76,12 @@ public final class QuaternionFloat32MatrixMember
 		init(0,0);
 	}
 	
-	public QuaternionFloat32MatrixMember(int r, int c, float[] vals) {
-		if (vals.length != r*c*4)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public QuaternionFloat32MatrixMember(int r, int c, float... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		QuaternionFloat32Member tmp = new QuaternionFloat32Member();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(vals[4*i]);
-			tmp.setI(vals[4*i+1]);
-			tmp.setJ(vals[4*i+2]);
-			tmp.setK(vals[4*i+3]);
-			storage.set(i, tmp);
-		}
+		setFromFloat(vals);
 	}
 	
 	public QuaternionFloat32MatrixMember(QuaternionFloat32MatrixMember other) {
@@ -1525,5 +1516,21 @@ public final class QuaternionFloat32MatrixMember
 			return G.QFLT_MAT.isEqual().call(this, (QuaternionFloat32MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat32Member tmp = new QuaternionFloat32Member();
+		int quatCount = vals.length / 4;
+		for (int i = 0; i < quatCount; i++) {
+			tmp.setR(vals[4*i]);
+			tmp.setI(vals[4*i+1]);
+			tmp.setJ(vals[4*i+2]);
+			tmp.setK(vals[4*i+3]);
+			storage.set(i, tmp);
+		}
 	}
 }

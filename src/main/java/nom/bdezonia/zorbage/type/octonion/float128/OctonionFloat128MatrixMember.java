@@ -59,7 +59,8 @@ public final class OctonionFloat128MatrixMember
 		Gettable<OctonionFloat128MatrixMember>,
 		Settable<OctonionFloat128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionFloat128Member>
+		RawData<OctonionFloat128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 
@@ -75,26 +76,36 @@ public final class OctonionFloat128MatrixMember
 		init(0,0);
 	}
 	
-	public OctonionFloat128MatrixMember(int r, int c, BigDecimal[] vals) {
-		if (vals.length != r*c*8)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public OctonionFloat128MatrixMember(int r, int c, BigDecimal... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		OctonionFloat128Member tmp = new OctonionFloat128Member();
-		int octCount = vals.length / 8;
-		for (int i = 0; i < octCount; i++) {
-			tmp.setR(vals[8*i]);
-			tmp.setI(vals[8*i+1]);
-			tmp.setJ(vals[8*i+2]);
-			tmp.setK(vals[8*i+3]);
-			tmp.setL(vals[8*i+4]);
-			tmp.setI0(vals[8*i+5]);
-			tmp.setJ0(vals[8*i+6]);
-			tmp.setK0(vals[8*i+7]);
-			storage.set(i, tmp);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public OctonionFloat128MatrixMember(int r, int c, BigInteger... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromBigInteger(vals);
+	}
+	
+	public OctonionFloat128MatrixMember(int r, int c, double... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromDouble(vals);
+	}
+	
+	public OctonionFloat128MatrixMember(int r, int c, long... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromLong(vals);
 	}
 	
 	public OctonionFloat128MatrixMember(OctonionFloat128MatrixMember other) {
@@ -300,7 +311,7 @@ public final class OctonionFloat128MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override
@@ -2117,5 +2128,85 @@ public final class OctonionFloat128MatrixMember
 			return G.OQUAD_MAT.isEqual().call(this, (OctonionFloat128MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member tmp = new OctonionFloat128Member();
+		int octCount = vals.length / 8;
+		for (int i = 0; i < octCount; i++) {
+			tmp.setR(BigDecimal.valueOf(vals[8*i]));
+			tmp.setI(BigDecimal.valueOf(vals[8*i+1]));
+			tmp.setJ(BigDecimal.valueOf(vals[8*i+2]));
+			tmp.setK(BigDecimal.valueOf(vals[8*i+3]));
+			tmp.setL(BigDecimal.valueOf(vals[8*i+4]));
+			tmp.setI0(BigDecimal.valueOf(vals[8*i+5]));
+			tmp.setJ0(BigDecimal.valueOf(vals[8*i+6]));
+			tmp.setK0(BigDecimal.valueOf(vals[8*i+7]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member tmp = new OctonionFloat128Member();
+		int octCount = vals.length / 8;
+		for (int i = 0; i < octCount; i++) {
+			tmp.setR(BigDecimal.valueOf(vals[8*i]));
+			tmp.setI(BigDecimal.valueOf(vals[8*i+1]));
+			tmp.setJ(BigDecimal.valueOf(vals[8*i+2]));
+			tmp.setK(BigDecimal.valueOf(vals[8*i+3]));
+			tmp.setL(BigDecimal.valueOf(vals[8*i+4]));
+			tmp.setI0(BigDecimal.valueOf(vals[8*i+5]));
+			tmp.setJ0(BigDecimal.valueOf(vals[8*i+6]));
+			tmp.setK0(BigDecimal.valueOf(vals[8*i+7]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member tmp = new OctonionFloat128Member();
+		int octCount = vals.length / 8;
+		for (int i = 0; i < octCount; i++) {
+			tmp.setR(new BigDecimal(vals[8*i]));
+			tmp.setI(new BigDecimal(vals[8*i+1]));
+			tmp.setJ(new BigDecimal(vals[8*i+2]));
+			tmp.setK(new BigDecimal(vals[8*i+3]));
+			tmp.setL(new BigDecimal(vals[8*i+4]));
+			tmp.setI0(new BigDecimal(vals[8*i+5]));
+			tmp.setJ0(new BigDecimal(vals[8*i+6]));
+			tmp.setK0(new BigDecimal(vals[8*i+7]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member tmp = new OctonionFloat128Member();
+		int octCount = vals.length / 8;
+		for (int i = 0; i < octCount; i++) {
+			tmp.setR(vals[8*i]);
+			tmp.setI(vals[8*i+1]);
+			tmp.setJ(vals[8*i+2]);
+			tmp.setK(vals[8*i+3]);
+			tmp.setL(vals[8*i+4]);
+			tmp.setI0(vals[8*i+5]);
+			tmp.setJ0(vals[8*i+6]);
+			tmp.setK0(vals[8*i+7]);
+			storage.set(i, tmp);
+		}
 	}
 }

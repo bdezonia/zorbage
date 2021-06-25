@@ -59,7 +59,8 @@ public final class ComplexFloat64MatrixMember
 		Gettable<ComplexFloat64MatrixMember>,
 		Settable<ComplexFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat64Member>
+		RawData<ComplexFloat64Member>,
+		SetFromDouble
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -79,20 +80,12 @@ public final class ComplexFloat64MatrixMember
 		set(other);
 	}
 	
-	public ComplexFloat64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length != r*c*2)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public ComplexFloat64MatrixMember(int r, int c, double... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
-		}
+		setFromDouble(vals);
 	}
 
 	public ComplexFloat64MatrixMember(String s) {
@@ -1165,5 +1158,19 @@ public final class ComplexFloat64MatrixMember
 			return G.CDBL_MAT.isEqual().call(this, (ComplexFloat64MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(vals[2*i]);
+			tmp.setI(vals[2*i+1]);
+			storage.set(i, tmp);
+		}
 	}
 }

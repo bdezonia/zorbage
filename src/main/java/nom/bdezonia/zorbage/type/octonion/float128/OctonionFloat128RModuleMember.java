@@ -275,7 +275,7 @@ public final class OctonionFloat128RModuleMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override

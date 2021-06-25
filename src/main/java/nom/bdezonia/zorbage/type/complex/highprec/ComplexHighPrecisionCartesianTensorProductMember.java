@@ -41,6 +41,10 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +76,8 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		Gettable<ComplexHighPrecisionCartesianTensorProductMember>,
 		Settable<ComplexHighPrecisionCartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexHighPrecisionMember>
+		RawData<ComplexHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
 
@@ -138,16 +143,24 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal[] vals) {
+	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*2)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			storage.set(i/2, value);
-		}
+		setFromBigDecimal(vals);
+	}
+
+	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
+		this(rank, dimCount);
+		setFromBigInteger(vals);
+	}
+
+	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, double... vals) {
+		this(rank, dimCount);
+		setFromDouble(vals);
+	}
+
+	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, long... vals) {
+		this(rank, dimCount);
+		setFromLong(vals);
 	}
 
 	public ComplexHighPrecisionCartesianTensorProductMember(ComplexHighPrecisionCartesianTensorProductMember other) {
@@ -916,5 +929,57 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return G.CHP_TEN.isEqual().call(this, (ComplexHighPrecisionCartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=2) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			storage.set(i/2, value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=2) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			storage.set(i/2, value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=2) {
+			value.setR(new BigDecimal(vals[i]));
+			value.setI(new BigDecimal(vals[i+1]));
+			storage.set(i/2, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=2) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			storage.set(i/2, value);
+		}
 	}
 }

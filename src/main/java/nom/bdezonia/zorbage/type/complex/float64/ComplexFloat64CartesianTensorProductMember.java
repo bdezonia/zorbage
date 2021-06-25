@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class ComplexFloat64CartesianTensorProductMember
 		Gettable<ComplexFloat64CartesianTensorProductMember>,
 		Settable<ComplexFloat64CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat64Member>
+		RawData<ComplexFloat64Member>,
+		SetFromDouble
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member();
 
@@ -138,16 +140,9 @@ public final class ComplexFloat64CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public ComplexFloat64CartesianTensorProductMember(int rank, long dimCount, double[] vals) {
+	public ComplexFloat64CartesianTensorProductMember(int rank, long dimCount, double... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*2)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		ComplexFloat64Member value = new ComplexFloat64Member();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			storage.set(i/2, value);
-		}
+		setFromDouble(vals);
 	}
 
 	public ComplexFloat64CartesianTensorProductMember(ComplexFloat64CartesianTensorProductMember other) {
@@ -916,5 +911,18 @@ public final class ComplexFloat64CartesianTensorProductMember
 			return G.CDBL_TEN.isEqual().call(this, (ComplexFloat64CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat64Member value = new ComplexFloat64Member();
+		for (int i = 0; i < vals.length; i+=2) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			storage.set(i/2, value);
+		}
 	}
 }

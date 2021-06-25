@@ -41,6 +41,10 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +76,8 @@ public final class Float128CartesianTensorProductMember
 		Gettable<Float128CartesianTensorProductMember>,
 		Settable<Float128CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float128Member>
+		RawData<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final Float128Member ZERO = new Float128Member();
 
@@ -138,15 +143,24 @@ public final class Float128CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public Float128CartesianTensorProductMember(int rank, long dimCount, BigDecimal[] vals) {
+	public Float128CartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size())
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		Float128Member value = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i/1, value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public Float128CartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
+		this(rank, dimCount);
+		setFromBigInteger(vals);
+	}
+	
+	public Float128CartesianTensorProductMember(int rank, long dimCount, double... vals) {
+		this(rank, dimCount);
+		setFromDouble(vals);
+	}
+	
+	public Float128CartesianTensorProductMember(int rank, long dimCount, long... vals) {
+		this(rank, dimCount);
+		setFromLong(vals);
 	}
 
 	public Float128CartesianTensorProductMember(Float128CartesianTensorProductMember other) {
@@ -811,5 +825,53 @@ public final class Float128CartesianTensorProductMember
 			return G.QUAD_TEN.isEqual().call(this, (Float128CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i/1, value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i/1, value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(new BigDecimal(vals[i]));
+			storage.set(i/1, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member value = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(vals[i]);
+			storage.set(i/1, value);
+		}
 	}
 }

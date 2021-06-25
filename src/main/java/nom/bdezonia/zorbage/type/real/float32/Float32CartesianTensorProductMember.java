@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class Float32CartesianTensorProductMember
 		Gettable<Float32CartesianTensorProductMember>,
 		Settable<Float32CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float32Member>
+		RawData<Float32Member>,
+		SetFromFloat
 {
 	private static final Float32Member ZERO = new Float32Member();
 
@@ -138,15 +140,9 @@ public final class Float32CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public Float32CartesianTensorProductMember(int rank, long dimCount, float[] vals) {
+	public Float32CartesianTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size())
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		Float32Member value = new Float32Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i/1, value);
-		}
+		setFromFloat(vals);
 	}
 
 	public Float32CartesianTensorProductMember(Float32CartesianTensorProductMember other) {
@@ -811,5 +807,17 @@ public final class Float32CartesianTensorProductMember
 			return G.FLT_TEN.isEqual().call(this, (Float32CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float32Member value = new Float32Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(vals[i]);
+			storage.set(i/1, value);
+		}
 	}
 }

@@ -59,7 +59,8 @@ public final class OctonionFloat16MatrixMember
 		Gettable<OctonionFloat16MatrixMember>,
 		Settable<OctonionFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionFloat16Member>
+		RawData<OctonionFloat16Member>,
+		SetFromFloat
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
 
@@ -75,26 +76,12 @@ public final class OctonionFloat16MatrixMember
 		init(0,0);
 	}
 	
-	public OctonionFloat16MatrixMember(int r, int c, float[] vals) {
-		if (vals.length != r*c*8)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public OctonionFloat16MatrixMember(int r, int c, float... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		OctonionFloat16Member tmp = new OctonionFloat16Member();
-		int octCount = vals.length / 8;
-		for (int i = 0; i < octCount; i++) {
-			tmp.setR(vals[8*i]);
-			tmp.setI(vals[8*i+1]);
-			tmp.setJ(vals[8*i+2]);
-			tmp.setK(vals[8*i+3]);
-			tmp.setL(vals[8*i+4]);
-			tmp.setI0(vals[8*i+5]);
-			tmp.setJ0(vals[8*i+6]);
-			tmp.setK0(vals[8*i+7]);
-			storage.set(i, tmp);
-		}
+		setFromFloat(vals);
 	}
 	
 	public OctonionFloat16MatrixMember(OctonionFloat16MatrixMember other) {
@@ -2117,5 +2104,25 @@ public final class OctonionFloat16MatrixMember
 			return G.OHLF_MAT.isEqual().call(this, (OctonionFloat16MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat16Member tmp = new OctonionFloat16Member();
+		int octCount = vals.length / 8;
+		for (int i = 0; i < octCount; i++) {
+			tmp.setR(vals[8*i]);
+			tmp.setI(vals[8*i+1]);
+			tmp.setJ(vals[8*i+2]);
+			tmp.setK(vals[8*i+3]);
+			tmp.setL(vals[8*i+4]);
+			tmp.setI0(vals[8*i+5]);
+			tmp.setJ0(vals[8*i+6]);
+			tmp.setK0(vals[8*i+7]);
+			storage.set(i, tmp);
+		}
 	}
 }

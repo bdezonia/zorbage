@@ -59,7 +59,8 @@ public final class QuaternionFloat64MatrixMember
 		Gettable<QuaternionFloat64MatrixMember>,
 		Settable<QuaternionFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat64Member>
+		RawData<QuaternionFloat64Member>,
+		SetFromDouble
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
@@ -75,22 +76,12 @@ public final class QuaternionFloat64MatrixMember
 		init(0,0);
 	}
 	
-	public QuaternionFloat64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length != r*c*4)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public QuaternionFloat64MatrixMember(int r, int c, double... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(vals[4*i]);
-			tmp.setI(vals[4*i+1]);
-			tmp.setJ(vals[4*i+2]);
-			tmp.setK(vals[4*i+3]);
-			storage.set(i, tmp);
-		}
+		setFromDouble(vals);
 	}
 	
 	public QuaternionFloat64MatrixMember(QuaternionFloat64MatrixMember other) {
@@ -1525,5 +1516,21 @@ public final class QuaternionFloat64MatrixMember
 			return G.QDBL_MAT.isEqual().call(this, (QuaternionFloat64MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat64Member tmp = new QuaternionFloat64Member();
+		int quatCount = vals.length / 4;
+		for (int i = 0; i < quatCount; i++) {
+			tmp.setR(vals[4*i]);
+			tmp.setI(vals[4*i+1]);
+			tmp.setJ(vals[4*i+2]);
+			tmp.setK(vals[4*i+3]);
+			storage.set(i, tmp);
+		}
 	}
 }

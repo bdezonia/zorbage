@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class ComplexFloat16CartesianTensorProductMember
 		Gettable<ComplexFloat16CartesianTensorProductMember>,
 		Settable<ComplexFloat16CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat16Member>
+		RawData<ComplexFloat16Member>,
+		SetFromFloat
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member();
 
@@ -138,16 +140,9 @@ public final class ComplexFloat16CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public ComplexFloat16CartesianTensorProductMember(int rank, long dimCount, float[] vals) {
+	public ComplexFloat16CartesianTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*2)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		ComplexFloat16Member value = new ComplexFloat16Member();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			storage.set(i/2, value);
-		}
+		setFromFloat(vals);
 	}
 
 	public ComplexFloat16CartesianTensorProductMember(ComplexFloat16CartesianTensorProductMember other) {
@@ -916,5 +911,18 @@ public final class ComplexFloat16CartesianTensorProductMember
 			return G.CHLF_TEN.isEqual().call(this, (ComplexFloat16CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat16Member value = new ComplexFloat16Member();
+		for (int i = 0; i < vals.length; i+=2) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			storage.set(i/2, value);
+		}
 	}
 }

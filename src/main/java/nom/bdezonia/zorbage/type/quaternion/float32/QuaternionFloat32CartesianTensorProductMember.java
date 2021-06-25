@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		Gettable<QuaternionFloat32CartesianTensorProductMember>,
 		Settable<QuaternionFloat32CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat32Member>
+		RawData<QuaternionFloat32Member>,
+		SetFromFloat
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member();
 
@@ -142,18 +144,9 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public QuaternionFloat32CartesianTensorProductMember(int rank, long dimCount, float[] vals) {
+	public QuaternionFloat32CartesianTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*4)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		QuaternionFloat32Member value = new QuaternionFloat32Member();
-		for (int i = 0; i < vals.length; i+=4) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			storage.set(i/4, value);
-		}
+		setFromFloat(vals);
 	}
 
 	public QuaternionFloat32CartesianTensorProductMember(QuaternionFloat32CartesianTensorProductMember other) {
@@ -1181,5 +1174,20 @@ public final class QuaternionFloat32CartesianTensorProductMember
 			return G.QFLT_TEN.isEqual().call(this, (QuaternionFloat32CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat32Member value = new QuaternionFloat32Member();
+		for (int i = 0; i < vals.length; i+=4) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			value.setJ(vals[i+2]);
+			value.setK(vals[i+3]);
+			storage.set(i/4, value);
+		}
 	}
 }

@@ -59,7 +59,8 @@ public final class HighPrecisionMatrixMember
 		Settable<HighPrecisionMatrixMember>,
 		Gettable<HighPrecisionMatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<HighPrecisionMember>
+		RawData<HighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember();
 
@@ -75,18 +76,12 @@ public final class HighPrecisionMatrixMember
 		init(0,0);
 	}
 	
-	public HighPrecisionMatrixMember(int r, int c, BigDecimal[] vals) {
-		if (vals.length != r*c*1)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public HighPrecisionMatrixMember(int r, int c, BigDecimal... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		HighPrecisionMember tmp = new HighPrecisionMember();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
-		}
+		setFromBigDecimal(vals);
 	}
 	
 	public HighPrecisionMatrixMember(HighPrecisionMatrixMember other) {
@@ -1096,5 +1091,53 @@ public final class HighPrecisionMatrixMember
 			return G.HP_MAT.isEqual().call(this, (HighPrecisionMatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		HighPrecisionMember tmp = new HighPrecisionMember();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		HighPrecisionMember tmp = new HighPrecisionMember();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		HighPrecisionMember tmp = new HighPrecisionMember();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(new BigDecimal(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		HighPrecisionMember tmp = new HighPrecisionMember();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
+		}
 	}
 }

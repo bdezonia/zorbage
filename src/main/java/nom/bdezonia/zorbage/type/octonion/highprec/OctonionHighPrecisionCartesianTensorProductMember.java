@@ -41,6 +41,10 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +76,8 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		Gettable<OctonionHighPrecisionCartesianTensorProductMember>,
 		Settable<OctonionHighPrecisionCartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionHighPrecisionMember>
+		RawData<OctonionHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 
@@ -142,22 +147,24 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal[] vals) {
+	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*8)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=8) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			value.setL(vals[i+4]);
-			value.setI0(vals[i+5]);
-			value.setJ0(vals[i+6]);
-			value.setK0(vals[i+7]);
-			storage.set(i/8, value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
+		this(rank, dimCount);
+		setFromBigInteger(vals);
+	}
+	
+	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, double... vals) {
+		this(rank, dimCount);
+		setFromDouble(vals);
+	}
+	
+	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, long... vals) {
+		this(rank, dimCount);
+		setFromLong(vals);
 	}
 
 	public OctonionHighPrecisionCartesianTensorProductMember(OctonionHighPrecisionCartesianTensorProductMember other) {
@@ -1721,5 +1728,81 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			return G.OHP_TEN.isEqual().call(this, (OctonionHighPrecisionCartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=8) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			value.setJ(BigDecimal.valueOf(vals[i+2]));
+			value.setK(BigDecimal.valueOf(vals[i+3]));
+			value.setL(BigDecimal.valueOf(vals[i+4]));
+			value.setI0(BigDecimal.valueOf(vals[i+5]));
+			value.setJ0(BigDecimal.valueOf(vals[i+6]));
+			value.setK0(BigDecimal.valueOf(vals[i+7]));
+			storage.set(i/8, value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=8) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			value.setJ(BigDecimal.valueOf(vals[i+2]));
+			value.setK(BigDecimal.valueOf(vals[i+3]));
+			value.setL(BigDecimal.valueOf(vals[i+4]));
+			value.setI0(BigDecimal.valueOf(vals[i+5]));
+			value.setJ0(BigDecimal.valueOf(vals[i+6]));
+			value.setK0(BigDecimal.valueOf(vals[i+7]));
+			storage.set(i/8, value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=8) {
+			value.setR(new BigDecimal(vals[i]));
+			value.setI(new BigDecimal(vals[i+1]));
+			value.setJ(new BigDecimal(vals[i+2]));
+			value.setK(new BigDecimal(vals[i+3]));
+			value.setL(new BigDecimal(vals[i+4]));
+			value.setI0(new BigDecimal(vals[i+5]));
+			value.setJ0(new BigDecimal(vals[i+6]));
+			value.setK0(new BigDecimal(vals[i+7]));
+			storage.set(i/8, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=8) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			value.setJ(vals[i+2]);
+			value.setK(vals[i+3]);
+			value.setL(vals[i+4]);
+			value.setI0(vals[i+5]);
+			value.setJ0(vals[i+6]);
+			value.setK0(vals[i+7]);
+			storage.set(i/8, value);
+		}
 	}
 }

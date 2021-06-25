@@ -59,7 +59,8 @@ public final class Float64MatrixMember
 		Settable<Float64MatrixMember>,
 		Gettable<Float64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float64Member>
+		RawData<Float64Member>,
+		SetFromDouble
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -75,18 +76,12 @@ public final class Float64MatrixMember
 		init(0,0);
 	}
 	
-	public Float64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length != r*c*1)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public Float64MatrixMember(int r, int c, double... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		Float64Member tmp = new Float64Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
-		}
+		setFromDouble(vals);
 	}
 	
 	public Float64MatrixMember(Float64MatrixMember other) {
@@ -1096,5 +1091,17 @@ public final class Float64MatrixMember
 			return G.DBL_MAT.isEqual().call(this, (Float64MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float64Member tmp = new Float64Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
+		}
 	}
 }

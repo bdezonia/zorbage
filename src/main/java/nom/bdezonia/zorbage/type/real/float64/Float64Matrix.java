@@ -113,6 +113,26 @@ public class Float64Matrix
 {
 	public Float64Matrix() { }
 
+	@Override
+	public Float64MatrixMember construct() {
+		return new Float64MatrixMember();
+	}
+
+	@Override
+	public Float64MatrixMember construct(Float64MatrixMember other) {
+		return new Float64MatrixMember(other);
+	}
+
+	@Override
+	public Float64MatrixMember construct(String s) {
+		return new Float64MatrixMember(s);
+	}
+
+	@Override
+	public Float64MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new Float64MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<Float64MatrixMember,Float64MatrixMember,Float64MatrixMember> MUL =
 			new Procedure3<Float64MatrixMember, Float64MatrixMember, Float64MatrixMember>()
 	{
@@ -237,26 +257,6 @@ public class Float64Matrix
 	@Override
 	public Procedure2<Float64MatrixMember,Float64MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public Float64MatrixMember construct() {
-		return new Float64MatrixMember();
-	}
-
-	@Override
-	public Float64MatrixMember construct(Float64MatrixMember other) {
-		return new Float64MatrixMember(other);
-	}
-
-	@Override
-	public Float64MatrixMember construct(String s) {
-		return new Float64MatrixMember(s);
-	}
-
-	@Override
-	public Float64MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new Float64MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<Float64MatrixMember,Float64Member> NORM =

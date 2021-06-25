@@ -59,7 +59,8 @@ public final class ComplexHighPrecisionMatrixMember
 		Gettable<ComplexHighPrecisionMatrixMember>,
 		Settable<ComplexHighPrecisionMatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexHighPrecisionMember>
+		RawData<ComplexHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
 	
@@ -79,20 +80,36 @@ public final class ComplexHighPrecisionMatrixMember
 		set(other);
 	}
 	
-	public ComplexHighPrecisionMatrixMember(int r, int c, BigDecimal[] vals) {
-		if (vals.length != r*c*2)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public ComplexHighPrecisionMatrixMember(int r, int c, BigDecimal... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public ComplexHighPrecisionMatrixMember(int r, int c, BigInteger... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromBigInteger(vals);
+	}
+	
+	public ComplexHighPrecisionMatrixMember(int r, int c, double... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromDouble(vals);
+	}
+	
+	public ComplexHighPrecisionMatrixMember(int r, int c, long... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromLong(vals);
 	}
 
 	public ComplexHighPrecisionMatrixMember(String s) {
@@ -1165,5 +1182,61 @@ public final class ComplexHighPrecisionMatrixMember
 			return G.CHP_MAT.isEqual().call(this, (ComplexHighPrecisionMatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(BigDecimal.valueOf(vals[2*i]));
+			tmp.setI(BigDecimal.valueOf(vals[2*i+1]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(BigDecimal.valueOf(vals[2*i]));
+			tmp.setI(BigDecimal.valueOf(vals[2*i+1]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(new BigDecimal(vals[2*i]));
+			tmp.setI(new BigDecimal(vals[2*i+1]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
+		int compCount = vals.length / 2;
+		for (int i = 0; i < compCount; i++) {
+			tmp.setR(vals[2*i]);
+			tmp.setI(vals[2*i+1]);
+			storage.set(i, tmp);
+		}
 	}
 }

@@ -59,7 +59,8 @@ public final class Float32MatrixMember
 		Settable<Float32MatrixMember>,
 		Gettable<Float32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float32Member>
+		RawData<Float32Member>,
+		SetFromFloat
 {
 	private static final Float32Member ZERO = new Float32Member(0);
 
@@ -75,18 +76,12 @@ public final class Float32MatrixMember
 		init(0,0);
 	}
 	
-	public Float32MatrixMember(int r, int c, float[] vals) {
-		if (vals.length != r*c*1)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public Float32MatrixMember(int r, int c, float... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		Float32Member tmp = new Float32Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
-		}
+		setFromFloat(vals);
 	}
 	
 	public Float32MatrixMember(Float32MatrixMember other) {
@@ -1096,5 +1091,17 @@ public final class Float32MatrixMember
 			return G.FLT_MAT.isEqual().call(this, (Float32MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float32Member tmp = new Float32Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
+		}
 	}
 }

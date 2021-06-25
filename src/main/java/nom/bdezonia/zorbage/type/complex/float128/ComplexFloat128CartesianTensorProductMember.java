@@ -41,6 +41,10 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +76,8 @@ public final class ComplexFloat128CartesianTensorProductMember
 		Gettable<ComplexFloat128CartesianTensorProductMember>,
 		Settable<ComplexFloat128CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat128Member>
+		RawData<ComplexFloat128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member();
 
@@ -138,16 +143,24 @@ public final class ComplexFloat128CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, BigDecimal[] vals) {
+	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*2)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			storage.set(i/2, value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
+		this(rank, dimCount);
+		setFromBigInteger(vals);
+	}
+	
+	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, double... vals) {
+		this(rank, dimCount);
+		setFromDouble(vals);
+	}
+	
+	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, long... vals) {
+		this(rank, dimCount);
+		setFromLong(vals);
 	}
 
 	public ComplexFloat128CartesianTensorProductMember(ComplexFloat128CartesianTensorProductMember other) {
@@ -413,7 +426,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override
@@ -916,5 +929,61 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return G.CQUAD_TEN.isEqual().call(this, (ComplexFloat128CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(BigDecimal.valueOf(v[index]));
+			value.setI(BigDecimal.valueOf(v[index+1]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(BigDecimal.valueOf(v[index]));
+			value.setI(BigDecimal.valueOf(v[index+1]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(new BigDecimal(v[index]));
+			value.setI(new BigDecimal(v[index+1]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(v[index]);
+			value.setI(v[index+1]);
+			storage.set(i,  value);
+		}
 	}
 }

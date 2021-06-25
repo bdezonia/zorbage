@@ -41,6 +41,10 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +76,8 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		Gettable<QuaternionHighPrecisionCartesianTensorProductMember>,
 		Settable<QuaternionHighPrecisionCartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionHighPrecisionMember>
+		RawData<QuaternionHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 
@@ -142,18 +147,24 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal[] vals) {
+	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*4)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=4) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			storage.set(i/4, value);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
+		this(rank, dimCount);
+		setFromBigInteger(vals);
+	}
+	
+	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, double... vals) {
+		this(rank, dimCount);
+		setFromDouble(vals);
+	}
+	
+	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, long... vals) {
+		this(rank, dimCount);
+		setFromLong(vals);
 	}
 
 	public QuaternionHighPrecisionCartesianTensorProductMember(QuaternionHighPrecisionCartesianTensorProductMember other) {
@@ -1181,5 +1192,65 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 			return G.QHP_TEN.isEqual().call(this, (QuaternionHighPrecisionCartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=4) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			value.setJ(BigDecimal.valueOf(vals[i+2]));
+			value.setK(BigDecimal.valueOf(vals[i+3]));
+			storage.set(i/4, value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=4) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			value.setJ(BigDecimal.valueOf(vals[i+2]));
+			value.setK(BigDecimal.valueOf(vals[i+3]));
+			storage.set(i/4, value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=4) {
+			value.setR(new BigDecimal(vals[i]));
+			value.setI(new BigDecimal(vals[i+1]));
+			value.setJ(new BigDecimal(vals[i+2]));
+			value.setK(new BigDecimal(vals[i+3]));
+			storage.set(i/4, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
+		for (int i = 0; i < vals.length; i+=4) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			value.setJ(vals[i+2]);
+			value.setK(vals[i+3]);
+			storage.set(i/4, value);
+		}
 	}
 }

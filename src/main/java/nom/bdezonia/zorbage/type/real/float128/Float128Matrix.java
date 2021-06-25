@@ -114,6 +114,26 @@ public class Float128Matrix
 {
 	public Float128Matrix() { }
 
+	@Override
+	public Float128MatrixMember construct() {
+		return new Float128MatrixMember();
+	}
+
+	@Override
+	public Float128MatrixMember construct(Float128MatrixMember other) {
+		return new Float128MatrixMember(other);
+	}
+
+	@Override
+	public Float128MatrixMember construct(String s) {
+		return new Float128MatrixMember(s);
+	}
+
+	@Override
+	public Float128MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new Float128MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<Float128MatrixMember,Float128MatrixMember,Float128MatrixMember> MUL =
 			new Procedure3<Float128MatrixMember, Float128MatrixMember, Float128MatrixMember>()
 	{
@@ -239,27 +259,7 @@ public class Float128Matrix
 	public Procedure2<Float128MatrixMember,Float128MatrixMember> assign() {
 		return ASSIGN;
 	}
-
-	@Override
-	public Float128MatrixMember construct() {
-		return new Float128MatrixMember();
-	}
-
-	@Override
-	public Float128MatrixMember construct(Float128MatrixMember other) {
-		return new Float128MatrixMember(other);
-	}
-
-	@Override
-	public Float128MatrixMember construct(String s) {
-		return new Float128MatrixMember(s);
-	}
-
-	@Override
-	public Float128MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new Float128MatrixMember(s, d1, d2);
-	}
-
+	
 	private final Procedure2<Float128MatrixMember,Float128Member> NORM =
 			new Procedure2<Float128MatrixMember, Float128Member>()
 	{

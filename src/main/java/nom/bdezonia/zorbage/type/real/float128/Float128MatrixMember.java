@@ -59,7 +59,8 @@ public final class Float128MatrixMember
 		Settable<Float128MatrixMember>,
 		Gettable<Float128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float128Member>
+		RawData<Float128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final Float128Member ZERO = new Float128Member();
 
@@ -75,18 +76,12 @@ public final class Float128MatrixMember
 		init(0,0);
 	}
 	
-	public Float128MatrixMember(int r, int c, BigDecimal[] vals) {
-		if (vals.length != r*c*1)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public Float128MatrixMember(int r, int c, BigDecimal... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
-		}
+		setFromBigDecimal(vals);
 	}
 	
 	public Float128MatrixMember(Float128MatrixMember other) {
@@ -1096,5 +1091,53 @@ public final class Float128MatrixMember
 			return G.QUAD_MAT.isEqual().call(this, (Float128MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(new BigDecimal(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
+		}
 	}
 }

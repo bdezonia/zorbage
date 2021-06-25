@@ -116,6 +116,26 @@ public class QuaternionFloat32Matrix
 {
 	public QuaternionFloat32Matrix() { }
 
+	@Override
+	public QuaternionFloat32MatrixMember construct() {
+		return new QuaternionFloat32MatrixMember();
+	}
+
+	@Override
+	public QuaternionFloat32MatrixMember construct(QuaternionFloat32MatrixMember other) {
+		return new QuaternionFloat32MatrixMember(other);
+	}
+
+	@Override
+	public QuaternionFloat32MatrixMember construct(String s) {
+		return new QuaternionFloat32MatrixMember(s);
+	}
+
+	@Override
+	public QuaternionFloat32MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new QuaternionFloat32MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<QuaternionFloat32MatrixMember,QuaternionFloat32MatrixMember,QuaternionFloat32MatrixMember> MUL =
 			new Procedure3<QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember, QuaternionFloat32MatrixMember>()
 	{
@@ -248,26 +268,6 @@ public class QuaternionFloat32Matrix
 	@Override
 	public Procedure2<QuaternionFloat32MatrixMember,QuaternionFloat32MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public QuaternionFloat32MatrixMember construct() {
-		return new QuaternionFloat32MatrixMember();
-	}
-
-	@Override
-	public QuaternionFloat32MatrixMember construct(QuaternionFloat32MatrixMember other) {
-		return new QuaternionFloat32MatrixMember(other);
-	}
-
-	@Override
-	public QuaternionFloat32MatrixMember construct(String s) {
-		return new QuaternionFloat32MatrixMember(s);
-	}
-
-	@Override
-	public QuaternionFloat32MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new QuaternionFloat32MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<QuaternionFloat32MatrixMember,Float32Member> NORM =

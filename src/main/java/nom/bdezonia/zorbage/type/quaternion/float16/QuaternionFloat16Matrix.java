@@ -116,6 +116,26 @@ public class QuaternionFloat16Matrix
 {
 	public QuaternionFloat16Matrix() { }
 
+	@Override
+	public QuaternionFloat16MatrixMember construct() {
+		return new QuaternionFloat16MatrixMember();
+	}
+
+	@Override
+	public QuaternionFloat16MatrixMember construct(QuaternionFloat16MatrixMember other) {
+		return new QuaternionFloat16MatrixMember(other);
+	}
+
+	@Override
+	public QuaternionFloat16MatrixMember construct(String s) {
+		return new QuaternionFloat16MatrixMember(s);
+	}
+
+	@Override
+	public QuaternionFloat16MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new QuaternionFloat16MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<QuaternionFloat16MatrixMember,QuaternionFloat16MatrixMember,QuaternionFloat16MatrixMember> MUL =
 			new Procedure3<QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember, QuaternionFloat16MatrixMember>()
 	{
@@ -248,26 +268,6 @@ public class QuaternionFloat16Matrix
 	@Override
 	public Procedure2<QuaternionFloat16MatrixMember,QuaternionFloat16MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public QuaternionFloat16MatrixMember construct() {
-		return new QuaternionFloat16MatrixMember();
-	}
-
-	@Override
-	public QuaternionFloat16MatrixMember construct(QuaternionFloat16MatrixMember other) {
-		return new QuaternionFloat16MatrixMember(other);
-	}
-
-	@Override
-	public QuaternionFloat16MatrixMember construct(String s) {
-		return new QuaternionFloat16MatrixMember(s);
-	}
-
-	@Override
-	public QuaternionFloat16MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new QuaternionFloat16MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<QuaternionFloat16MatrixMember,Float16Member> NORM =

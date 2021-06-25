@@ -59,7 +59,8 @@ public final class Float16MatrixMember
 		Settable<Float16MatrixMember>,
 		Gettable<Float16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float16Member>
+		RawData<Float16Member>,
+		SetFromFloat
 {
 	private static final Float16Member ZERO = new Float16Member(0);
 
@@ -75,18 +76,12 @@ public final class Float16MatrixMember
 		init(0,0);
 	}
 	
-	public Float16MatrixMember(int r, int c, float[] vals) {
-		if (vals.length != r*c*1)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public Float16MatrixMember(int r, int c, float... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		Float16Member tmp = new Float16Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
-		}
+		setFromFloat(vals);
 	}
 	
 	public Float16MatrixMember(Float16MatrixMember other) {
@@ -1096,5 +1091,17 @@ public final class Float16MatrixMember
 			return G.HLF_MAT.isEqual().call(this, (Float16MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float16Member tmp = new Float16Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
+		}
 	}
 }

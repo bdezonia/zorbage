@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class QuaternionFloat64CartesianTensorProductMember
 		Gettable<QuaternionFloat64CartesianTensorProductMember>,
 		Settable<QuaternionFloat64CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat64Member>
+		RawData<QuaternionFloat64Member>,
+		SetFromDouble
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
 
@@ -144,16 +146,7 @@ public final class QuaternionFloat64CartesianTensorProductMember
 	
 	public QuaternionFloat64CartesianTensorProductMember(int rank, long dimCount, double[] vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*4)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (int i = 0; i < vals.length; i+=4) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			storage.set(i/4, value);
-		}
+		setFromDouble(vals);
 	}
 
 	public QuaternionFloat64CartesianTensorProductMember(QuaternionFloat64CartesianTensorProductMember other) {
@@ -1181,5 +1174,20 @@ public final class QuaternionFloat64CartesianTensorProductMember
 			return G.QDBL_TEN.isEqual().call(this, (QuaternionFloat64CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat64Member value = new QuaternionFloat64Member();
+		for (int i = 0; i < vals.length; i+=4) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			value.setJ(vals[i+2]);
+			value.setK(vals[i+3]);
+			storage.set(i/4, value);
+		}
 	}
 }

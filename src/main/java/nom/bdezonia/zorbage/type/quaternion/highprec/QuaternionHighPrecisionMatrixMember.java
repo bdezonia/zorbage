@@ -59,7 +59,8 @@ public final class QuaternionHighPrecisionMatrixMember
 		Gettable<QuaternionHighPrecisionMatrixMember>,
 		Settable<QuaternionHighPrecisionMatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionHighPrecisionMember>
+		RawData<QuaternionHighPrecisionMember>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 
@@ -75,22 +76,36 @@ public final class QuaternionHighPrecisionMatrixMember
 		init(0,0);
 	}
 	
-	public QuaternionHighPrecisionMatrixMember(int r, int c, BigDecimal[] vals) {
-		if (vals.length != r*c*4)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public QuaternionHighPrecisionMatrixMember(int r, int c, BigDecimal... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(vals[4*i]);
-			tmp.setI(vals[4*i+1]);
-			tmp.setJ(vals[4*i+2]);
-			tmp.setK(vals[4*i+3]);
-			storage.set(i, tmp);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public QuaternionHighPrecisionMatrixMember(int r, int c, BigInteger... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromBigInteger(vals);
+	}
+	
+	public QuaternionHighPrecisionMatrixMember(int r, int c, double... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromDouble(vals);
+	}
+	
+	public QuaternionHighPrecisionMatrixMember(int r, int c, long... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromLong(vals);
 	}
 	
 	public QuaternionHighPrecisionMatrixMember(QuaternionHighPrecisionMatrixMember other) {
@@ -1525,5 +1540,69 @@ public final class QuaternionHighPrecisionMatrixMember
 			return G.QHP_MAT.isEqual().call(this, (QuaternionHighPrecisionMatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
+		int quatCount = vals.length / 4;
+		for (int i = 0; i < quatCount; i++) {
+			tmp.setR(BigDecimal.valueOf(vals[4*i]));
+			tmp.setI(BigDecimal.valueOf(vals[4*i+1]));
+			tmp.setJ(BigDecimal.valueOf(vals[4*i+2]));
+			tmp.setK(BigDecimal.valueOf(vals[4*i+3]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
+		int quatCount = vals.length / 4;
+		for (int i = 0; i < quatCount; i++) {
+			tmp.setR(BigDecimal.valueOf(vals[4*i]));
+			tmp.setI(BigDecimal.valueOf(vals[4*i+1]));
+			tmp.setJ(BigDecimal.valueOf(vals[4*i+2]));
+			tmp.setK(BigDecimal.valueOf(vals[4*i+3]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
+		int quatCount = vals.length / 4;
+		for (int i = 0; i < quatCount; i++) {
+			tmp.setR(new BigDecimal(vals[4*i]));
+			tmp.setI(new BigDecimal(vals[4*i+1]));
+			tmp.setJ(new BigDecimal(vals[4*i+2]));
+			tmp.setK(new BigDecimal(vals[4*i+3]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length/4 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
+		int quatCount = vals.length / 4;
+		for (int i = 0; i < quatCount; i++) {
+			tmp.setR(vals[4*i]);
+			tmp.setI(vals[4*i+1]);
+			tmp.setJ(vals[4*i+2]);
+			tmp.setK(vals[4*i+3]);
+			storage.set(i, tmp);
+		}
 	}
 }

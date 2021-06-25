@@ -116,6 +116,26 @@ public class OctonionFloat64Matrix
 {
 	public OctonionFloat64Matrix() { }
 
+	@Override
+	public OctonionFloat64MatrixMember construct() {
+		return new OctonionFloat64MatrixMember();
+	}
+
+	@Override
+	public OctonionFloat64MatrixMember construct(OctonionFloat64MatrixMember other) {
+		return new OctonionFloat64MatrixMember(other);
+	}
+
+	@Override
+	public OctonionFloat64MatrixMember construct(String s) {
+		return new OctonionFloat64MatrixMember(s);
+	}
+
+	@Override
+	public OctonionFloat64MatrixMember construct(StorageConstruction s, long d1, long d2) {
+		return new OctonionFloat64MatrixMember(s, d1, d2);
+	}
+
 	private final Procedure3<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> MUL =
 			new Procedure3<OctonionFloat64MatrixMember, OctonionFloat64MatrixMember, OctonionFloat64MatrixMember>()
 	{
@@ -240,26 +260,6 @@ public class OctonionFloat64Matrix
 	@Override
 	public Procedure2<OctonionFloat64MatrixMember,OctonionFloat64MatrixMember> assign() {
 		return ASSIGN;
-	}
-
-	@Override
-	public OctonionFloat64MatrixMember construct() {
-		return new OctonionFloat64MatrixMember();
-	}
-
-	@Override
-	public OctonionFloat64MatrixMember construct(OctonionFloat64MatrixMember other) {
-		return new OctonionFloat64MatrixMember(other);
-	}
-
-	@Override
-	public OctonionFloat64MatrixMember construct(String s) {
-		return new OctonionFloat64MatrixMember(s);
-	}
-
-	@Override
-	public OctonionFloat64MatrixMember construct(StorageConstruction s, long d1, long d2) {
-		return new OctonionFloat64MatrixMember(s, d1, d2);
 	}
 
 	private final Procedure2<OctonionFloat64MatrixMember,Float64Member> NORM =

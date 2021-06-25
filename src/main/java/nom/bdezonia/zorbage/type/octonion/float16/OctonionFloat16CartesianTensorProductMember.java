@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class OctonionFloat16CartesianTensorProductMember
 		Gettable<OctonionFloat16CartesianTensorProductMember>,
 		Settable<OctonionFloat16CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionFloat16Member>
+		RawData<OctonionFloat16Member>,
+		SetFromFloat
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
 
@@ -138,22 +140,9 @@ public final class OctonionFloat16CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public OctonionFloat16CartesianTensorProductMember(int rank, long dimCount, float[] vals) {
+	public OctonionFloat16CartesianTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size()*8)
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		OctonionFloat16Member value = new OctonionFloat16Member();
-		for (int i = 0; i < vals.length; i+=8) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			value.setL(vals[i+4]);
-			value.setI0(vals[i+5]);
-			value.setJ0(vals[i+6]);
-			value.setK0(vals[i+7]);
-			storage.set(i/8, value);
-		}
+		setFromFloat(vals);
 	}
 
 	public OctonionFloat16CartesianTensorProductMember(OctonionFloat16CartesianTensorProductMember other) {
@@ -1717,5 +1706,24 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return G.OHLF_TEN.isEqual().call(this, (OctonionFloat16CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat16Member value = new OctonionFloat16Member();
+		for (int i = 0; i < vals.length; i+=8) {
+			value.setR(vals[i]);
+			value.setI(vals[i+1]);
+			value.setJ(vals[i+2]);
+			value.setK(vals[i+3]);
+			value.setL(vals[i+4]);
+			value.setI0(vals[i+5]);
+			value.setJ0(vals[i+6]);
+			value.setK0(vals[i+7]);
+			storage.set(i/8, value);
+		}
 	}
 }

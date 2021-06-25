@@ -59,7 +59,8 @@ public final class ComplexFloat128MatrixMember
 		Gettable<ComplexFloat128MatrixMember>,
 		Settable<ComplexFloat128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat128Member>
+		RawData<ComplexFloat128Member>,
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member();
 	
@@ -79,20 +80,36 @@ public final class ComplexFloat128MatrixMember
 		set(other);
 	}
 	
-	public ComplexFloat128MatrixMember(int r, int c, BigDecimal[] vals) {
-		if (vals.length != r*c*2)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public ComplexFloat128MatrixMember(int r, int c, BigDecimal... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		ComplexFloat128Member tmp = new ComplexFloat128Member();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
-		}
+		setFromBigDecimal(vals);
+	}
+	
+	public ComplexFloat128MatrixMember(int r, int c, BigInteger... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromBigInteger(vals);
+	}
+	
+	public ComplexFloat128MatrixMember(int r, int c, double... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromDouble(vals);
+	}
+	
+	public ComplexFloat128MatrixMember(int r, int c, long... vals) {
+		rows = -1;
+		cols = -1;
+		s = StorageConstruction.MEM_ARRAY;
+		init(r,c);
+		setFromLong(vals);
 	}
 
 	public ComplexFloat128MatrixMember(String s) {
@@ -276,7 +293,7 @@ public final class ComplexFloat128MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override
@@ -1165,5 +1182,61 @@ public final class ComplexFloat128MatrixMember
 			return G.CQUAD_MAT.isEqual().call(this, (ComplexFloat128MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(BigDecimal.valueOf(v[index]));
+			value.setI(BigDecimal.valueOf(v[index+1]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(BigDecimal.valueOf(v[index]));
+			value.setI(BigDecimal.valueOf(v[index+1]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(new BigDecimal(v[index]));
+			value.setI(new BigDecimal(v[index+1]));
+			storage.set(i,  value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... v) {
+		if (v.length/2 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(v[index]);
+			value.setI(v[index+1]);
+			storage.set(i,  value);
+		}
 	}
 }

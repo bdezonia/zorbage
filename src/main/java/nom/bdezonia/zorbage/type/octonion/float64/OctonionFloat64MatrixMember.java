@@ -59,7 +59,8 @@ public final class OctonionFloat64MatrixMember
 		Gettable<OctonionFloat64MatrixMember>,
 		Settable<OctonionFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionFloat64Member>
+		RawData<OctonionFloat64Member>,
+		SetFromDouble
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
@@ -75,26 +76,12 @@ public final class OctonionFloat64MatrixMember
 		init(0,0);
 	}
 	
-	public OctonionFloat64MatrixMember(int r, int c, double[] vals) {
-		if (vals.length != r*c*8)
-			throw new IllegalArgumentException("input values do not match declared shape");
+	public OctonionFloat64MatrixMember(int r, int c, double... vals) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		int octCount = vals.length / 8;
-		for (int i = 0; i < octCount; i++) {
-			tmp.setR(vals[8*i]);
-			tmp.setI(vals[8*i+1]);
-			tmp.setJ(vals[8*i+2]);
-			tmp.setK(vals[8*i+3]);
-			tmp.setL(vals[8*i+4]);
-			tmp.setI0(vals[8*i+5]);
-			tmp.setJ0(vals[8*i+6]);
-			tmp.setK0(vals[8*i+7]);
-			storage.set(i, tmp);
-		}
+		setFromDouble(vals);
 	}
 	
 	public OctonionFloat64MatrixMember(OctonionFloat64MatrixMember other) {
@@ -2117,5 +2104,25 @@ public final class OctonionFloat64MatrixMember
 			return G.ODBL_MAT.isEqual().call(this, (OctonionFloat64MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member tmp = new OctonionFloat64Member();
+		int octCount = vals.length / 8;
+		for (int i = 0; i < octCount; i++) {
+			tmp.setR(vals[8*i]);
+			tmp.setI(vals[8*i+1]);
+			tmp.setJ(vals[8*i+2]);
+			tmp.setK(vals[8*i+3]);
+			tmp.setL(vals[8*i+4]);
+			tmp.setI0(vals[8*i+5]);
+			tmp.setJ0(vals[8*i+6]);
+			tmp.setK0(vals[8*i+7]);
+			storage.set(i, tmp);
+		}
 	}
 }

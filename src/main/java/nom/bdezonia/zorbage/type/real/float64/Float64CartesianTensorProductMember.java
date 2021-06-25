@@ -41,6 +41,7 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -72,7 +73,8 @@ public final class Float64CartesianTensorProductMember
 		Gettable<Float64CartesianTensorProductMember>,
 		Settable<Float64CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<Float64Member>
+		RawData<Float64Member>,
+		SetFromDouble
 {
 	private static final Float64Member ZERO = new Float64Member();
 
@@ -138,15 +140,9 @@ public final class Float64CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public Float64CartesianTensorProductMember(int rank, long dimCount, double[] vals) {
+	public Float64CartesianTensorProductMember(int rank, long dimCount, double... vals) {
 		this(rank, dimCount);
-		if (vals.length != storage.size())
-			throw new IllegalArgumentException("incorrect number of values given in tensor constructor");
-		Float64Member value = new Float64Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i/1, value);
-		}
+		setFromDouble(vals);
 	}
 
 	public Float64CartesianTensorProductMember(Float64CartesianTensorProductMember other) {
@@ -811,5 +807,17 @@ public final class Float64CartesianTensorProductMember
 			return G.DBL_TEN.isEqual().call(this, (Float64CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float64Member value = new Float64Member();
+		for (int i = 0; i < vals.length; i++) {
+			value.setV(vals[i]);
+			storage.set(i/1, value);
+		}
 	}
 }
