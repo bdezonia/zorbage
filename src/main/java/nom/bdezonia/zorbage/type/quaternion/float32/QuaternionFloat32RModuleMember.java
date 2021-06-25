@@ -1383,7 +1383,7 @@ public final class QuaternionFloat32RModuleMember
 			value.setI(vals[index + 1]);
 			value.setJ(vals[index + 2]);
 			value.setK(vals[index + 3]);
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 }

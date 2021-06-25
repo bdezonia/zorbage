@@ -1036,7 +1036,7 @@ public final class ComplexHighPrecisionVectorMember
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(BigDecimal.valueOf(v[i]));
 			val.setI(BigDecimal.valueOf(v[i+1]));
-			setV(i, val);
+			setV(i/2, val);
 		}
 	}
 
@@ -1049,7 +1049,7 @@ public final class ComplexHighPrecisionVectorMember
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(BigDecimal.valueOf(v[i]));
 			val.setI(BigDecimal.valueOf(v[i+1]));
-			setV(i, val);
+			setV(i/2, val);
 		}
 	}
 
@@ -1062,7 +1062,7 @@ public final class ComplexHighPrecisionVectorMember
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(new BigDecimal(v[i]));
 			val.setI(new BigDecimal(v[i+1]));
-			setV(i, val);
+			setV(i/2, val);
 		}
 	}
 
@@ -1071,12 +1071,11 @@ public final class ComplexHighPrecisionVectorMember
 		if (v.length/2 != length()) {
 			reshape(v.length/2);
 		}
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		ComplexHighPrecisionMember val = G.CHP.construct();
 		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(v[index]);
-			value.setI(v[index+1]);
-			storage.set(i,  value);
+			val.setR(v[i]);
+			val.setI(v[i+1]);
+			setV(i/2, val);
 		}
 	}
 }

@@ -60,7 +60,7 @@ public final class ComplexFloat128VectorMember
 		Settable<ComplexFloat128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
-		SetFromBigDecimal
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member(); 
 
@@ -77,6 +77,27 @@ public final class ComplexFloat128VectorMember
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
 		setFromBigDecimal(vals);
+	}
+	
+	public ComplexFloat128VectorMember(BigInteger... vals) {
+		final int count = vals.length / 2;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
+		setFromBigInteger(vals);
+	}
+	
+	public ComplexFloat128VectorMember(double... vals) {
+		final int count = vals.length / 2;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
+		setFromDouble(vals);
+	}
+	
+	public ComplexFloat128VectorMember(long... vals) {
+		final int count = vals.length / 2;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
+		setFromLong(vals);
 	}
 	
 	public ComplexFloat128VectorMember(ComplexFloat128VectorMember other) {
@@ -1013,6 +1034,48 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
+	public void setFromLong(long... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(BigDecimal.valueOf(v[index]));
+			value.setI(BigDecimal.valueOf(v[index+1]));
+			storage.set(i/2, value);
+		}
+	}
+
+	@Override
+	public void setFromDouble(double... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(BigDecimal.valueOf(v[index]));
+			value.setI(BigDecimal.valueOf(v[index+1]));
+			storage.set(i/2, value);
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... v) {
+		if (v.length/2 != length()) {
+			reshape(v.length/2);
+		}
+		ComplexFloat128Member value = new ComplexFloat128Member();
+		for (int i = 0; i < v.length; i += 2) {
+			final int index = 2*i;
+			value.setR(new BigDecimal(v[index]));
+			value.setI(new BigDecimal(v[index+1]));
+			storage.set(i/2, value);
+		}
+	}
+
+	@Override
 	public void setFromBigDecimal(BigDecimal... v) {
 		if (v.length/2 != length()) {
 			reshape(v.length/2);
@@ -1022,7 +1085,7 @@ public final class ComplexFloat128VectorMember
 			final int index = 2*i;
 			value.setR(v[index]);
 			value.setI(v[index+1]);
-			storage.set(i,  value);
+			storage.set(i/2, value);
 		}
 	}
 }

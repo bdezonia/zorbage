@@ -817,7 +817,7 @@ public final class Float16CartesianTensorProductMember
 		Float16Member value = new Float16Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(vals[i]);
-			storage.set(i/1, value);
+			storage.set(i, value);
 		}
 	}
 }

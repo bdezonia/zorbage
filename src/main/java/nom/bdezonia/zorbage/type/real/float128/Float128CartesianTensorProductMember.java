@@ -835,7 +835,7 @@ public final class Float128CartesianTensorProductMember
 		Float128Member value = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i/1, value);
+			storage.set(i, value);
 		}
 	}
 
@@ -847,7 +847,7 @@ public final class Float128CartesianTensorProductMember
 		Float128Member value = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i/1, value);
+			storage.set(i, value);
 		}
 	}
 
@@ -859,7 +859,7 @@ public final class Float128CartesianTensorProductMember
 		Float128Member value = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(new BigDecimal(vals[i]));
-			storage.set(i/1, value);
+			storage.set(i, value);
 		}
 	}
 
@@ -871,7 +871,7 @@ public final class Float128CartesianTensorProductMember
 		Float128Member value = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(vals[i]);
-			storage.set(i/1, value);
+			storage.set(i, value);
 		}
 	}
 }

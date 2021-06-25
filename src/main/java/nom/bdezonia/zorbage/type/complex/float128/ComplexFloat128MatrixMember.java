@@ -1194,7 +1194,7 @@ public final class ComplexFloat128MatrixMember
 			final int index = 2*i;
 			value.setR(BigDecimal.valueOf(v[index]));
 			value.setI(BigDecimal.valueOf(v[index+1]));
-			storage.set(i,  value);
+			storage.set(i/2, value);
 		}
 	}
 
@@ -1208,7 +1208,7 @@ public final class ComplexFloat128MatrixMember
 			final int index = 2*i;
 			value.setR(BigDecimal.valueOf(v[index]));
 			value.setI(BigDecimal.valueOf(v[index+1]));
-			storage.set(i,  value);
+			storage.set(i/2, value);
 		}
 	}
 
@@ -1222,7 +1222,7 @@ public final class ComplexFloat128MatrixMember
 			final int index = 2*i;
 			value.setR(new BigDecimal(v[index]));
 			value.setI(new BigDecimal(v[index+1]));
-			storage.set(i,  value);
+			storage.set(i/2, value);
 		}
 	}
 
@@ -1236,7 +1236,7 @@ public final class ComplexFloat128MatrixMember
 			final int index = 2*i;
 			value.setR(v[index]);
 			value.setI(v[index+1]);
-			storage.set(i,  value);
+			storage.set(i/2, value);
 		}
 	}
 }

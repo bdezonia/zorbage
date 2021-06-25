@@ -1404,7 +1404,7 @@ public final class QuaternionHighPrecisionRModuleMember
 			value.setI(BigDecimal.valueOf(vals[index + 1]));
 			value.setJ(BigDecimal.valueOf(vals[index + 2]));
 			value.setK(BigDecimal.valueOf(vals[index + 3]));
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 
@@ -1420,7 +1420,7 @@ public final class QuaternionHighPrecisionRModuleMember
 			value.setI(BigDecimal.valueOf(vals[index + 1]));
 			value.setJ(BigDecimal.valueOf(vals[index + 2]));
 			value.setK(BigDecimal.valueOf(vals[index + 3]));
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 
@@ -1436,7 +1436,7 @@ public final class QuaternionHighPrecisionRModuleMember
 			value.setI(new BigDecimal(vals[index + 1]));
 			value.setJ(new BigDecimal(vals[index + 2]));
 			value.setK(new BigDecimal(vals[index + 3]));
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 
@@ -1452,7 +1452,7 @@ public final class QuaternionHighPrecisionRModuleMember
 			value.setI(vals[index + 1]);
 			value.setJ(vals[index + 2]);
 			value.setK(vals[index + 3]);
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 }

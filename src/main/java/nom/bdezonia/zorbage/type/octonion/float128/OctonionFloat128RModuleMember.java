@@ -1996,7 +1996,7 @@ public final class OctonionFloat128RModuleMember
 			value.setI0(BigDecimal.valueOf(vals[index + 5]));
 			value.setJ0(BigDecimal.valueOf(vals[index + 6]));
 			value.setK0(BigDecimal.valueOf(vals[index + 7]));
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 
@@ -2016,7 +2016,7 @@ public final class OctonionFloat128RModuleMember
 			value.setI0(BigDecimal.valueOf(vals[index + 5]));
 			value.setJ0(BigDecimal.valueOf(vals[index + 6]));
 			value.setK0(BigDecimal.valueOf(vals[index + 7]));
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 
@@ -2036,7 +2036,7 @@ public final class OctonionFloat128RModuleMember
 			value.setI0(new BigDecimal(vals[index + 5]));
 			value.setJ0(new BigDecimal(vals[index + 6]));
 			value.setK0(new BigDecimal(vals[index + 7]));
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 
@@ -2056,7 +2056,7 @@ public final class OctonionFloat128RModuleMember
 			value.setI0(vals[index + 5]);
 			value.setJ0(vals[index + 6]);
 			value.setK0(vals[index + 7]);
-			storage.set(i,  value);
+			storage.set(i, value);
 		}
 	}
 }

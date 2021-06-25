@@ -1021,7 +1021,7 @@ public final class ComplexFloat64VectorMember
 		for (int i = 0; i < v.length; i += 2) {
 			val.setR(v[i]);
 			val.setI(v[i+1]);
-			setV(i, val);
+			setV(i/2, val);
 		}
 	}
 }

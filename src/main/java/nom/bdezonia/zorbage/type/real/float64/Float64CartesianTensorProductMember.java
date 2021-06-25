@@ -817,7 +817,7 @@ public final class Float64CartesianTensorProductMember
 		Float64Member value = new Float64Member();
 		for (int i = 0; i < vals.length; i++) {
 			value.setV(vals[i]);
-			storage.set(i/1, value);
+			storage.set(i, value);
 		}
 	}
 }
