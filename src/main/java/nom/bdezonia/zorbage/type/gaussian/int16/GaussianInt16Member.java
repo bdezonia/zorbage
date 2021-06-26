@@ -89,8 +89,8 @@ public class GaussianInt16Member
 		setI(val.i().intValue());
 	}
 	
-	public GaussianInt16Member(int... v) {
-		setFromInt(v);
+	public GaussianInt16Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	@Override
@@ -780,8 +780,8 @@ public class GaussianInt16Member
 	}
 
 	@Override
-	public void setFromInt(int... v) {
-		setR(v[0]);
-		setI(v[1]);
+	public void setFromInt(int... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

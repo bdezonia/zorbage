@@ -107,8 +107,8 @@ public class GaussianInt64Algebra
 	}
 	
 	@Override
-	public GaussianInt64Member construct(long... v) {
-		return new GaussianInt64Member(v);
+	public GaussianInt64Member construct(long... vals) {
+		return new GaussianInt64Member(vals);
 	}
 	
 	private final Function2<Boolean, GaussianInt64Member, GaussianInt64Member> EQ =

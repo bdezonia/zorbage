@@ -248,13 +248,13 @@ public class Point
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		if (v.length != vector.length) {
-			vector = v.clone();
+	public void setFromDouble(double... vals) {
+		if (vals.length != vector.length) {
+			vector = vals.clone();
 		}
 		else {
-			for (int i = 0; i < v.length; i++) {
-				vector[i] = v[i];
+			for (int i = 0; i < vals.length; i++) {
+				vector[i] = vals[i];
 			}
 		}
 	}

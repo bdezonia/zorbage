@@ -119,8 +119,8 @@ public class QuaternionFloat64Algebra
 	}
 
 	@Override
-	public QuaternionFloat64Member construct(double... v) {
-		return new QuaternionFloat64Member(v);
+	public QuaternionFloat64Member construct(double... vals) {
+		return new QuaternionFloat64Member(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat64Member> UNITY =

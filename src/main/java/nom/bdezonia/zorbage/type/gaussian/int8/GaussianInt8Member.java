@@ -89,8 +89,8 @@ public class GaussianInt8Member
 		setI(val.i().intValue());
 	}
 	
-	public GaussianInt8Member(int... v) {
-		setFromInt(v);
+	public GaussianInt8Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	@Override
@@ -780,8 +780,8 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromInt(int... v) {
-		setR(v[0]);
-		setI(v[0]);
+	public void setFromInt(int... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

@@ -72,8 +72,8 @@ public class ArgbAlgebra
 	}
 
 	@Override
-	public ArgbMember construct(int... v) {
-		return new ArgbMember(v[0], v[1], v[2], v[3]);
+	public ArgbMember construct(int... vals) {
+		return new ArgbMember(vals[0], vals[1], vals[2], vals[3]);
 	}
 
 	private final Function2<Boolean, ArgbMember, ArgbMember> EQ =

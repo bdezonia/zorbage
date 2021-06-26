@@ -141,7 +141,7 @@ public class CharMember
 	}
 
 	@Override
-	public void setFromChar(char... v) {
-		setV(v[0]);
+	public void setFromChar(char... vals) {
+		setV(vals[0]);
 	}
 }

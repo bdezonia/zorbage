@@ -116,8 +116,8 @@ public class ComplexFloat64Vector
 	}
 
 	@Override
-	public ComplexFloat64VectorMember construct(double... v) {
-		return new ComplexFloat64VectorMember(v);
+	public ComplexFloat64VectorMember construct(double... vals) {
+		return new ComplexFloat64VectorMember(vals);
 	}
 	
 	private final Procedure1<ComplexFloat64VectorMember> ZER =

@@ -133,8 +133,8 @@ public class ComplexFloat32Algebra
 	}
 
 	@Override
-	public ComplexFloat32Member construct(float... v) {
-		return new ComplexFloat32Member(v[0], v[1]);
+	public ComplexFloat32Member construct(float... vals) {
+		return new ComplexFloat32Member(vals[0], vals[1]);
 	}
 	
 	private final Procedure3<ComplexFloat32Member,ComplexFloat32Member,ComplexFloat32Member> MUL =

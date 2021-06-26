@@ -701,7 +701,7 @@ public final class Float32Member
 	}
 
 	@Override
-	public void setFromFloat(float... v) {
-		setV(v[0]);
+	public void setFromFloat(float... vals) {
+		setV(vals[0]);
 	}
 }

@@ -78,8 +78,8 @@ public class BooleanAlgebra
 	}
 	
 	@Override
-	public BooleanMember construct(boolean... v) {
-		return new BooleanMember(v[0]);
+	public BooleanMember construct(boolean... vals) {
+		return new BooleanMember(vals[0]);
 	}
 
 	private final Procedure3<BooleanMember, BooleanMember, BooleanMember> AND =

@@ -116,8 +116,8 @@ public class ComplexFloat16Vector
 	}
 
 	@Override
-	public ComplexFloat16VectorMember construct(float... v) {
-		return new ComplexFloat16VectorMember(v);
+	public ComplexFloat16VectorMember construct(float... vals) {
+		return new ComplexFloat16VectorMember(vals);
 	}
 
 	private final Procedure1<ComplexFloat16VectorMember> ZER =

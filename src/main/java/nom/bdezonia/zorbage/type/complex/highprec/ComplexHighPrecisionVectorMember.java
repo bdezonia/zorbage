@@ -107,19 +107,19 @@ public final class ComplexHighPrecisionVectorMember
 		this(StorageConstruction.MEM_ARRAY, d1);
 	}
 
-	public ComplexHighPrecisionVectorMember(BigInteger... v) {
+	public ComplexHighPrecisionVectorMember(BigInteger... vals) {
 		this();
-		setFromBigInteger(v);
+		setFromBigInteger(vals);
 	}
 
-	public ComplexHighPrecisionVectorMember(double... v) {
+	public ComplexHighPrecisionVectorMember(double... vals) {
 		this();
-		setFromDouble(v);
+		setFromDouble(vals);
 	}
 
-	public ComplexHighPrecisionVectorMember(long... v) {
+	public ComplexHighPrecisionVectorMember(long... vals) {
 		this();
-		setFromLong(v);
+		setFromLong(vals);
 	}
 
 	@Override

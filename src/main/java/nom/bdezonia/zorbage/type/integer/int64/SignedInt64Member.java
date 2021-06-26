@@ -701,7 +701,7 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setV(v[0]);
+	public void setFromLong(long... vals) {
+		setV(vals[0]);
 	}
 }

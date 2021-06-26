@@ -771,8 +771,8 @@ public final class ComplexFloat64Member
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(v[0]);
-		setI(v[1]);
+	public void setFromDouble(double... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

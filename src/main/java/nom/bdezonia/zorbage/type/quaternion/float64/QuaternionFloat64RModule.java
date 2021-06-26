@@ -116,8 +116,8 @@ public class QuaternionFloat64RModule
 	}
 
 	@Override
-	public QuaternionFloat64RModuleMember construct(double... v) {
-		return new QuaternionFloat64RModuleMember(v);
+	public QuaternionFloat64RModuleMember construct(double... vals) {
+		return new QuaternionFloat64RModuleMember(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat64RModuleMember> ZER = 

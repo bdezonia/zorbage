@@ -116,8 +116,8 @@ public class OctonionFloat64RModule
 	}
 
 	@Override
-	public OctonionFloat64RModuleMember construct(double... v) {
-		return new OctonionFloat64RModuleMember(v);
+	public OctonionFloat64RModuleMember construct(double... vals) {
+		return new OctonionFloat64RModuleMember(vals);
 	}
 	
 	private final Procedure1<OctonionFloat64RModuleMember> ZER =

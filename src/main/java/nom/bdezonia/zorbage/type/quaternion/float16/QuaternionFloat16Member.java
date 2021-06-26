@@ -89,8 +89,8 @@ public final class QuaternionFloat16Member
 		setK(val.k().floatValue());
 	}
 
-	public QuaternionFloat16Member(float... v) {
-		setFromFloat(v);
+	public QuaternionFloat16Member(float... vals) {
+		setFromFloat(vals);
 	}
 	
 	public float r() { return Float16Util.convertHFloatToFloat(r); }
@@ -1176,10 +1176,10 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromFloat(float... v) {
-		setR(v[0]);
-		setI(v[1]);
-		setJ(v[2]);
-		setK(v[3]);
+	public void setFromFloat(float... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
 	}
 }

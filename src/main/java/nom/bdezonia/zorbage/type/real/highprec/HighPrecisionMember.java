@@ -702,23 +702,23 @@ public final class HighPrecisionMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		setV(v[0]);
+	public void setFromBigDecimal(BigDecimal... vals) {
+		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setV(new BigDecimal(v[0]));
+	public void setFromBigInteger(BigInteger... vals) {
+		setV(new BigDecimal(vals[0]));
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setV(BigDecimal.valueOf(v[0]));
+	public void setFromDouble(double... vals) {
+		setV(BigDecimal.valueOf(vals[0]));
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setV(BigDecimal.valueOf(v[0]));
+	public void setFromLong(long... vals) {
+		setV(BigDecimal.valueOf(vals[0]));
 	}
 
 }

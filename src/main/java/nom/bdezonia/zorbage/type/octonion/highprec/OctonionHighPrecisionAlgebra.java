@@ -115,23 +115,23 @@ public class OctonionHighPrecisionAlgebra
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(BigDecimal ... v) {
-		return new OctonionHighPrecisionMember(v);
+	public OctonionHighPrecisionMember construct(BigDecimal ... vals) {
+		return new OctonionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(BigInteger ... v) {
-		return new OctonionHighPrecisionMember(v);
+	public OctonionHighPrecisionMember construct(BigInteger ... vals) {
+		return new OctonionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(double ... v) {
-		return new OctonionHighPrecisionMember(v);
+	public OctonionHighPrecisionMember construct(double ... vals) {
+		return new OctonionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(long ... v) {
-		return new OctonionHighPrecisionMember(v);
+	public OctonionHighPrecisionMember construct(long ... vals) {
+		return new OctonionHighPrecisionMember(vals);
 	}
 	
 	private final Procedure1<OctonionHighPrecisionMember> UNITY =

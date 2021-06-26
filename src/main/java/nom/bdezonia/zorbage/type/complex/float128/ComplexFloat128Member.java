@@ -792,26 +792,26 @@ public final class ComplexFloat128Member
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
+	public void setFromLong(long... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
+	public void setFromDouble(double... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setR(new BigDecimal(v[0]));
-		setI(new BigDecimal(v[1]));
+	public void setFromBigInteger(BigInteger... vals) {
+		setR(new BigDecimal(vals[0]));
+		setI(new BigDecimal(vals[1]));
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		setR(v[0]);
-		setI(v[1]);
+	public void setFromBigDecimal(BigDecimal... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

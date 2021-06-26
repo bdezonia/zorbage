@@ -86,9 +86,9 @@ public final class OctonionFloat16Member
 		setK0(val.k0().floatValue());
 	}
 	
-	public OctonionFloat16Member(float... v) {
+	public OctonionFloat16Member(float... vals) {
 		this();
-		setFromFloat(v);
+		setFromFloat(vals);
 	}
 
 	public float r() { return Float16Util.convertHFloatToFloat(r); }

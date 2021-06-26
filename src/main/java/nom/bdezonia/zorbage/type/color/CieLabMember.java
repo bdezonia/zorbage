@@ -184,9 +184,9 @@ public class CieLabMember
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setL(v[0]);
-		setA(v[1]);
-		setB(v[2]);
+	public void setFromDouble(double... vals) {
+		setL(vals[0]);
+		setA(vals[1]);
+		setB(vals[2]);
 	}
 }

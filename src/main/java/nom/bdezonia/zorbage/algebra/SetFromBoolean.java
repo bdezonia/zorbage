@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface SetFromBoolean {
 
-	void setFromBoolean(boolean... v);
+	void setFromBoolean(boolean... vals);
 }

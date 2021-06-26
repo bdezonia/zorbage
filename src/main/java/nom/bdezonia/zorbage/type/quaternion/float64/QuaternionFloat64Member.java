@@ -87,8 +87,8 @@ public final class QuaternionFloat64Member
 		setK(val.k().doubleValue());
 	}
 
-	public QuaternionFloat64Member(double... v) {
-		setFromDouble(v);
+	public QuaternionFloat64Member(double... vals) {
+		setFromDouble(vals);
 	}
 
 	public double r() { return r; }
@@ -1174,10 +1174,10 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(v[0]);
-		setI(v[1]);
-		setJ(v[2]);
-		setK(v[3]);
+	public void setFromDouble(double... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
 	}
 }

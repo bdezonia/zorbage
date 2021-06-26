@@ -110,23 +110,23 @@ public class QuaternionHighPrecisionAlgebra
 	}
 
 	@Override
-	public QuaternionHighPrecisionMember construct(BigDecimal... v) {
-		return new QuaternionHighPrecisionMember(v);
+	public QuaternionHighPrecisionMember construct(BigDecimal... vals) {
+		return new QuaternionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public QuaternionHighPrecisionMember construct(BigInteger... v) {
-		return new QuaternionHighPrecisionMember(v);
+	public QuaternionHighPrecisionMember construct(BigInteger... vals) {
+		return new QuaternionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public QuaternionHighPrecisionMember construct(double... v) {
-		return new QuaternionHighPrecisionMember(v);
+	public QuaternionHighPrecisionMember construct(double... vals) {
+		return new QuaternionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public QuaternionHighPrecisionMember construct(long... v) {
-		return new QuaternionHighPrecisionMember(v);
+	public QuaternionHighPrecisionMember construct(long... vals) {
+		return new QuaternionHighPrecisionMember(vals);
 	}
 	
 	private final Procedure1<QuaternionHighPrecisionMember> UNITY =

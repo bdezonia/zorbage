@@ -774,8 +774,8 @@ public final class ComplexFloat16Member
 	}
 
 	@Override
-	public void setFromFloat(float... v) {
-		setR(v[0]);
-		setI(v[1]);
+	public void setFromFloat(float... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

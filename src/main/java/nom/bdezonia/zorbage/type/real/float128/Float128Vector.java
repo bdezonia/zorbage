@@ -119,23 +119,23 @@ public class Float128Vector
 	}
 
 	@Override
-	public Float128VectorMember construct(BigDecimal... v) {
-		return new Float128VectorMember(v);
+	public Float128VectorMember construct(BigDecimal... vals) {
+		return new Float128VectorMember(vals);
 	}
 
 	@Override
-	public Float128VectorMember construct(BigInteger... v) {
-		return new Float128VectorMember(v);
+	public Float128VectorMember construct(BigInteger... vals) {
+		return new Float128VectorMember(vals);
 	}
 
 	@Override
-	public Float128VectorMember construct(double... v) {
-		return new Float128VectorMember(v);
+	public Float128VectorMember construct(double... vals) {
+		return new Float128VectorMember(vals);
 	}
 
 	@Override
-	public Float128VectorMember construct(long... v) {
-		return new Float128VectorMember(v);
+	public Float128VectorMember construct(long... vals) {
+		return new Float128VectorMember(vals);
 	}
 
 	private final Procedure1<Float128VectorMember> ZER =

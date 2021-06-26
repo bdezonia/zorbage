@@ -89,8 +89,8 @@ public class GaussianInt64Member
 		setI(val.i().longValue());
 	}
 	
-	public GaussianInt64Member(long ... v) {
-		setFromLong(v);
+	public GaussianInt64Member(long ... vals) {
+		setFromLong(vals);
 	}
 	
 	@Override
@@ -780,8 +780,8 @@ public class GaussianInt64Member
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setR(v[0]);
-		setI(v[1]);
+	public void setFromLong(long... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

@@ -76,20 +76,20 @@ public final class ComplexHighPrecisionMember
 		setI(val.i());
 	}
 
-	public ComplexHighPrecisionMember(BigDecimal... v) {
-		setFromBigDecimal(v);
+	public ComplexHighPrecisionMember(BigDecimal... vals) {
+		setFromBigDecimal(vals);
 	}
 	
-	public ComplexHighPrecisionMember(BigInteger... v) {
-		setFromBigInteger(v);
+	public ComplexHighPrecisionMember(BigInteger... vals) {
+		setFromBigInteger(vals);
 	}
 	
-	public ComplexHighPrecisionMember(double... v) {
-		setFromDouble(v);
+	public ComplexHighPrecisionMember(double... vals) {
+		setFromDouble(vals);
 	}
 	
-	public ComplexHighPrecisionMember(long... v) {
-		setFromLong(v);
+	public ComplexHighPrecisionMember(long... vals) {
+		setFromLong(vals);
 	}
 
 	public BigDecimal r() { return r; }
@@ -783,26 +783,26 @@ public final class ComplexHighPrecisionMember
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
+	public void setFromDouble(double... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
+	public void setFromLong(long... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setR(new BigDecimal(v[0]));
-		setI(new BigDecimal(v[1]));
+	public void setFromBigInteger(BigInteger... vals) {
+		setR(new BigDecimal(vals[0]));
+		setI(new BigDecimal(vals[1]));
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		setR(v[0]);
-		setI(v[1]);
+	public void setFromBigDecimal(BigDecimal... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 }

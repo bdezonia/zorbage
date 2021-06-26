@@ -119,8 +119,8 @@ public class QuaternionFloat32Algebra
 	}
 
 	@Override
-	public QuaternionFloat32Member construct(float... v) {
-		return new QuaternionFloat32Member(v);
+	public QuaternionFloat32Member construct(float... vals) {
+		return new QuaternionFloat32Member(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat32Member> UNITY =

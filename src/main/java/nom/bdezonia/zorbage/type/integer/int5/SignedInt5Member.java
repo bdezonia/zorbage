@@ -811,7 +811,7 @@ public final class SignedInt5Member
 	}
 
 	@Override
-	public void setFromInt(int... v) {
-		setV(v[0]);
+	public void setFromInt(int... vals) {
+		setV(vals[0]);
 	}
 }

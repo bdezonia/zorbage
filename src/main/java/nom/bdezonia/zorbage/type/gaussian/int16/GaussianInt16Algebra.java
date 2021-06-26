@@ -107,8 +107,8 @@ public class GaussianInt16Algebra
 	}
 	
 	@Override
-	public GaussianInt16Member construct(int... v) {
-		return new GaussianInt16Member(v);
+	public GaussianInt16Member construct(int... vals) {
+		return new GaussianInt16Member(vals);
 	}
 	
 	private final Function2<Boolean, GaussianInt16Member, GaussianInt16Member> EQ =

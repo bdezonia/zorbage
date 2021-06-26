@@ -116,8 +116,8 @@ public class ComplexFloat32Vector
 	}
 
 	@Override
-	public ComplexFloat32VectorMember construct(float... v) {
-		return new ComplexFloat32VectorMember(v);
+	public ComplexFloat32VectorMember construct(float... vals) {
+		return new ComplexFloat32VectorMember(vals);
 	}
 	
 	private final Procedure1<ComplexFloat32VectorMember> ZER =

@@ -86,20 +86,20 @@ public final class QuaternionHighPrecisionMember
 		setK(val.k());
 	}
 
-	public QuaternionHighPrecisionMember(BigDecimal... v) {
-		setFromBigDecimal(v);
+	public QuaternionHighPrecisionMember(BigDecimal... vals) {
+		setFromBigDecimal(vals);
 	}
 
-	public QuaternionHighPrecisionMember(BigInteger... v) {
-		setFromBigInteger(v);
+	public QuaternionHighPrecisionMember(BigInteger... vals) {
+		setFromBigInteger(vals);
 	}
 
-	public QuaternionHighPrecisionMember(double... v) {
-		setFromDouble(v);
+	public QuaternionHighPrecisionMember(double... vals) {
+		setFromDouble(vals);
 	}
 
-	public QuaternionHighPrecisionMember(long... v) {
-		setFromLong(v);
+	public QuaternionHighPrecisionMember(long... vals) {
+		setFromLong(vals);
 	}
 	
 	public BigDecimal r() { return r; }
@@ -1185,34 +1185,34 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		setR(v[0]);
-		setI(v[1]);
-		setJ(v[2]);
-		setK(v[3]);
+	public void setFromBigDecimal(BigDecimal... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setR(new BigDecimal(v[0]));
-		setI(new BigDecimal(v[1]));
-		setJ(new BigDecimal(v[2]));
-		setK(new BigDecimal(v[3]));
+	public void setFromBigInteger(BigInteger... vals) {
+		setR(new BigDecimal(vals[0]));
+		setI(new BigDecimal(vals[1]));
+		setJ(new BigDecimal(vals[2]));
+		setK(new BigDecimal(vals[3]));
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
-		setJ(BigDecimal.valueOf(v[2]));
-		setK(BigDecimal.valueOf(v[3]));
+	public void setFromDouble(double... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
+		setJ(BigDecimal.valueOf(vals[2]));
+		setK(BigDecimal.valueOf(vals[3]));
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
-		setJ(BigDecimal.valueOf(v[2]));
-		setK(BigDecimal.valueOf(v[3]));
+	public void setFromLong(long... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
+		setJ(BigDecimal.valueOf(vals[2]));
+		setK(BigDecimal.valueOf(vals[3]));
 	}
 }

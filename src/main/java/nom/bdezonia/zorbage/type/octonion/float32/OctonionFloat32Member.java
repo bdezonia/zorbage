@@ -84,8 +84,8 @@ public final class OctonionFloat32Member
 		setK0(val.k0().floatValue());
 	}
 	
-	public OctonionFloat32Member(float... v) {
-		setFromFloat(v);
+	public OctonionFloat32Member(float... vals) {
+		setFromFloat(vals);
 	}
 
 	public float r() { return r; }

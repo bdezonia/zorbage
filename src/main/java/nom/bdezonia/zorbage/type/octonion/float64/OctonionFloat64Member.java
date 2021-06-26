@@ -1839,14 +1839,14 @@ public final class OctonionFloat64Member
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(v[0]);
-		setI(v[1]);
-		setJ(v[2]);
-		setK(v[3]);
-		setL(v[4]);
-		setI0(v[5]);
-		setJ0(v[6]);
-		setK0(v[7]);
+	public void setFromDouble(double... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
+		setL(vals[4]);
+		setI0(vals[5]);
+		setJ0(vals[6]);
+		setK0(vals[7]);
 	}
 }

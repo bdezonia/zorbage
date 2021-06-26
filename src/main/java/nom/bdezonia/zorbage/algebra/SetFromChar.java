@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface SetFromChar {
 
-	void setFromChar(char... v);
+	void setFromChar(char... vals);
 }

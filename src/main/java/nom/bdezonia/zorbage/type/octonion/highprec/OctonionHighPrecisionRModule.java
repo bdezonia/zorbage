@@ -113,23 +113,23 @@ public class OctonionHighPrecisionRModule
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(BigDecimal... v) {
-		return new OctonionHighPrecisionRModuleMember(v);
+	public OctonionHighPrecisionRModuleMember construct(BigDecimal... vals) {
+		return new OctonionHighPrecisionRModuleMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(BigInteger... v) {
-		return new OctonionHighPrecisionRModuleMember(v);
+	public OctonionHighPrecisionRModuleMember construct(BigInteger... vals) {
+		return new OctonionHighPrecisionRModuleMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(double... v ) {
-		return new OctonionHighPrecisionRModuleMember(v);
+	public OctonionHighPrecisionRModuleMember construct(double... vals) {
+		return new OctonionHighPrecisionRModuleMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(long... v) {
-		return new OctonionHighPrecisionRModuleMember(v);
+	public OctonionHighPrecisionRModuleMember construct(long... vals) {
+		return new OctonionHighPrecisionRModuleMember(vals);
 	}
 
 	private final Procedure1<OctonionHighPrecisionRModuleMember> ZER =

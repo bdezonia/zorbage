@@ -180,9 +180,9 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromInt(int... v) {
-		setR(v[0]);
-		setG(v[1]);
-		setB(v[2]);
+	public void setFromInt(int... vals) {
+		setR(vals[0]);
+		setG(vals[1]);
+		setB(vals[2]);
 	}
 }

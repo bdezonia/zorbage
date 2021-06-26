@@ -120,23 +120,23 @@ public class ComplexHighPrecisionAlgebra
 	}
 
 	@Override
-	public ComplexHighPrecisionMember construct(BigDecimal... v) {
-		return new ComplexHighPrecisionMember(v);
+	public ComplexHighPrecisionMember construct(BigDecimal... vals) {
+		return new ComplexHighPrecisionMember(vals);
 	}
 
 	@Override
-	public ComplexHighPrecisionMember construct(BigInteger... v) {
-		return new ComplexHighPrecisionMember(v);
+	public ComplexHighPrecisionMember construct(BigInteger... vals) {
+		return new ComplexHighPrecisionMember(vals);
 	}
 
 	@Override
-	public ComplexHighPrecisionMember construct(double... v) {
-		return new ComplexHighPrecisionMember(v);
+	public ComplexHighPrecisionMember construct(double... vals) {
+		return new ComplexHighPrecisionMember(vals);
 	}
 
 	@Override
-	public ComplexHighPrecisionMember construct(long... v) {
-		return new ComplexHighPrecisionMember(v);
+	public ComplexHighPrecisionMember construct(long... vals) {
+		return new ComplexHighPrecisionMember(vals);
 	}
 	
 	private final Procedure3<ComplexHighPrecisionMember,ComplexHighPrecisionMember,ComplexHighPrecisionMember> MUL =

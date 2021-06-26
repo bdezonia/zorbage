@@ -725,7 +725,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setFromBoolean(boolean... v) {
-		setV(v[0]);
+	public void setFromBoolean(boolean... vals) {
+		setV(vals[0]);
 	}
 }

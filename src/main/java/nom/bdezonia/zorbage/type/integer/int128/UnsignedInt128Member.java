@@ -737,12 +737,12 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setV(v[0]);
+	public void setFromBigInteger(BigInteger... vals) {
+		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setV(BigInteger.valueOf(v[0]));
+	public void setFromLong(long... vals) {
+		setV(BigInteger.valueOf(vals[0]));
 	}
 }

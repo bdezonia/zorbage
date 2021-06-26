@@ -72,7 +72,7 @@ public final class ComplexFloat16VectorMember
 		storage = Storage.allocate(s, new ComplexFloat16Member(), 0);
 	}
 	
-	public ComplexFloat16VectorMember(float...vals) {
+	public ComplexFloat16VectorMember(float... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat16Member(), count);

@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface SetFromByte {
 
-	void setFromByte(byte... v);
+	void setFromByte(byte... vals);
 }

@@ -121,23 +121,23 @@ public class QuaternionFloat128RModule
 	}
 
 	@Override
-	public QuaternionFloat128RModuleMember construct(long... v) {
-		return new QuaternionFloat128RModuleMember(v);
+	public QuaternionFloat128RModuleMember construct(long... vals) {
+		return new QuaternionFloat128RModuleMember(vals);
 	}
 
 	@Override
-	public QuaternionFloat128RModuleMember construct(double... v) {
-		return new QuaternionFloat128RModuleMember(v);
+	public QuaternionFloat128RModuleMember construct(double... vals) {
+		return new QuaternionFloat128RModuleMember(vals);
 	}
 
 	@Override
-	public QuaternionFloat128RModuleMember construct(BigInteger... v) {
-		return new QuaternionFloat128RModuleMember(v);
+	public QuaternionFloat128RModuleMember construct(BigInteger... vals) {
+		return new QuaternionFloat128RModuleMember(vals);
 	}
 
 	@Override
-	public QuaternionFloat128RModuleMember construct(BigDecimal... v) {
-		return new QuaternionFloat128RModuleMember(v);
+	public QuaternionFloat128RModuleMember construct(BigDecimal... vals) {
+		return new QuaternionFloat128RModuleMember(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat128RModuleMember> ZER = 

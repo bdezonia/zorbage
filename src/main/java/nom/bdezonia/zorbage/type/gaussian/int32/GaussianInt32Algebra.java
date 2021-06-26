@@ -107,8 +107,8 @@ public class GaussianInt32Algebra
 	}
 	
 	@Override
-	public GaussianInt32Member construct(int... v) {
-		return new GaussianInt32Member(v);
+	public GaussianInt32Member construct(int... vals) {
+		return new GaussianInt32Member(vals);
 	}
 	
 	private final Function2<Boolean, GaussianInt32Member, GaussianInt32Member> EQ =

@@ -194,10 +194,10 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromInt(int... v) {
-		setA(v[0]);
-		setR(v[1]);
-		setG(v[2]);
-		setB(v[3]);
+	public void setFromInt(int... vals) {
+		setA(vals[0]);
+		setR(vals[1]);
+		setG(vals[2]);
+		setB(vals[3]);
 	}
 }

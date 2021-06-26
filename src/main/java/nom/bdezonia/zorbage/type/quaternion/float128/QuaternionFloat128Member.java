@@ -83,24 +83,24 @@ public final class QuaternionFloat128Member
 	// Prefer the previous ctor over this one since this cannot represent
 	// nan, inf, etc.
 	
-	public QuaternionFloat128Member(BigDecimal... v) {
+	public QuaternionFloat128Member(BigDecimal... vals) {
 		this();
-		setFromBigDecimal(v);
+		setFromBigDecimal(vals);
 	}
 	
-	public QuaternionFloat128Member(BigInteger... v) {
+	public QuaternionFloat128Member(BigInteger... vals) {
 		this();
-		setFromBigInteger(v);
+		setFromBigInteger(vals);
 	}
 	
-	public QuaternionFloat128Member(double... v) {
+	public QuaternionFloat128Member(double... vals) {
 		this();
-		setFromDouble(v);
+		setFromDouble(vals);
 	}
 	
-	public QuaternionFloat128Member(long... v) {
+	public QuaternionFloat128Member(long... vals) {
 		this();
-		setFromLong(v);
+		setFromLong(vals);
 	}
 	
 	public QuaternionFloat128Member(QuaternionFloat128Member value) {
@@ -1204,34 +1204,34 @@ public final class QuaternionFloat128Member
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
-		setJ(BigDecimal.valueOf(v[2]));
-		setK(BigDecimal.valueOf(v[3]));
+	public void setFromLong(long... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
+		setJ(BigDecimal.valueOf(vals[2]));
+		setK(BigDecimal.valueOf(vals[3]));
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		setR(BigDecimal.valueOf(v[0]));
-		setI(BigDecimal.valueOf(v[1]));
-		setJ(BigDecimal.valueOf(v[2]));
-		setK(BigDecimal.valueOf(v[3]));
+	public void setFromDouble(double... vals) {
+		setR(BigDecimal.valueOf(vals[0]));
+		setI(BigDecimal.valueOf(vals[1]));
+		setJ(BigDecimal.valueOf(vals[2]));
+		setK(BigDecimal.valueOf(vals[3]));
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setR(new BigDecimal(v[0]));
-		setI(new BigDecimal(v[1]));
-		setJ(new BigDecimal(v[2]));
-		setK(new BigDecimal(v[3]));
+	public void setFromBigInteger(BigInteger... vals) {
+		setR(new BigDecimal(vals[0]));
+		setI(new BigDecimal(vals[1]));
+		setJ(new BigDecimal(vals[2]));
+		setK(new BigDecimal(vals[3]));
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		setR(v[0]);
-		setI(v[1]);
-		setJ(v[2]);
-		setK(v[3]);
+	public void setFromBigDecimal(BigDecimal... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
 	}
 }

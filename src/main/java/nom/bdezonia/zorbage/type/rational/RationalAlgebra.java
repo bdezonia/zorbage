@@ -84,13 +84,13 @@ public class RationalAlgebra
 	}
 
 	@Override
-	public RationalMember construct(BigInteger... v) {
-		return new RationalMember(v);
+	public RationalMember construct(BigInteger... vals) {
+		return new RationalMember(vals);
 	}
 
 	@Override
-	public RationalMember construct(long... v) {
-		return new RationalMember(v);
+	public RationalMember construct(long... vals) {
+		return new RationalMember(vals);
 	}
 
 	private final Function2<Boolean, RationalMember, RationalMember> EQ =

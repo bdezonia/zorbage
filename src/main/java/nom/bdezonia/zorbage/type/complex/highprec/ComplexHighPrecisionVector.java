@@ -113,23 +113,23 @@ public class ComplexHighPrecisionVector
 	}
 
 	@Override
-	public ComplexHighPrecisionVectorMember construct(BigDecimal... v) {
-		return new ComplexHighPrecisionVectorMember(v);
+	public ComplexHighPrecisionVectorMember construct(BigDecimal... vals) {
+		return new ComplexHighPrecisionVectorMember(vals);
 	}
 
 	@Override
-	public ComplexHighPrecisionVectorMember construct(BigInteger... v) {
-		return new ComplexHighPrecisionVectorMember(v);
+	public ComplexHighPrecisionVectorMember construct(BigInteger... vals) {
+		return new ComplexHighPrecisionVectorMember(vals);
 	}
 
 	@Override
-	public ComplexHighPrecisionVectorMember construct(double... v) {
-		return new ComplexHighPrecisionVectorMember(v);
+	public ComplexHighPrecisionVectorMember construct(double... vals) {
+		return new ComplexHighPrecisionVectorMember(vals);
 	}
 
 	@Override
-	public ComplexHighPrecisionVectorMember construct(long... v) {
-		return new ComplexHighPrecisionVectorMember(v);
+	public ComplexHighPrecisionVectorMember construct(long... vals) {
+		return new ComplexHighPrecisionVectorMember(vals);
 	}
 	
 	private final Procedure1<ComplexHighPrecisionVectorMember> ZER =

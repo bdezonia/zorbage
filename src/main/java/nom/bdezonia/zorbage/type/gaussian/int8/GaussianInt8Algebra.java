@@ -107,8 +107,8 @@ public class GaussianInt8Algebra
 	}
 	
 	@Override
-	public GaussianInt8Member construct(int... v) {
-		return new GaussianInt8Member(v);
+	public GaussianInt8Member construct(int... vals) {
+		return new GaussianInt8Member(vals);
 	}
 	
 	private final Function2<Boolean, GaussianInt8Member, GaussianInt8Member> EQ =

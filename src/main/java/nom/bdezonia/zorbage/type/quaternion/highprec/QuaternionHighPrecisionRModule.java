@@ -113,23 +113,23 @@ public class QuaternionHighPrecisionRModule
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(BigDecimal... v) {
-		return new QuaternionHighPrecisionRModuleMember(v);
+	public QuaternionHighPrecisionRModuleMember construct(BigDecimal... vals) {
+		return new QuaternionHighPrecisionRModuleMember(vals);
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(BigInteger... v) {
-		return new QuaternionHighPrecisionRModuleMember(v);
+	public QuaternionHighPrecisionRModuleMember construct(BigInteger... vals) {
+		return new QuaternionHighPrecisionRModuleMember(vals);
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(double... v) {
-		return new QuaternionHighPrecisionRModuleMember(v);
+	public QuaternionHighPrecisionRModuleMember construct(double... vals) {
+		return new QuaternionHighPrecisionRModuleMember(vals);
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(long... v) {
-		return new QuaternionHighPrecisionRModuleMember(v);
+	public QuaternionHighPrecisionRModuleMember construct(long... vals) {
+		return new QuaternionHighPrecisionRModuleMember(vals);
 	}
 
 	private final Procedure1<QuaternionHighPrecisionRModuleMember> ZER = 

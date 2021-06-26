@@ -133,8 +133,8 @@ public class ComplexFloat16Algebra
 	}
 
 	@Override
-	public ComplexFloat16Member construct(float... v) {
-		return new ComplexFloat16Member(v[0], v[1]);
+	public ComplexFloat16Member construct(float... vals) {
+		return new ComplexFloat16Member(vals[0], vals[1]);
 	}
 	
 	private final Procedure3<ComplexFloat16Member,ComplexFloat16Member,ComplexFloat16Member> MUL =

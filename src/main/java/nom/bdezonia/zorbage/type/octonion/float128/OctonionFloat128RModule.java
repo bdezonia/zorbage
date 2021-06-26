@@ -121,23 +121,23 @@ public class OctonionFloat128RModule
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(double... v) {
-		return new OctonionFloat128RModuleMember(v);
+	public OctonionFloat128RModuleMember construct(double... vals) {
+		return new OctonionFloat128RModuleMember(vals);
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(long... v) {
-		return new OctonionFloat128RModuleMember(v);
+	public OctonionFloat128RModuleMember construct(long... vals) {
+		return new OctonionFloat128RModuleMember(vals);
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(BigInteger... v) {
-		return new OctonionFloat128RModuleMember(v);
+	public OctonionFloat128RModuleMember construct(BigInteger... vals) {
+		return new OctonionFloat128RModuleMember(vals);
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(BigDecimal... v) {
-		return new OctonionFloat128RModuleMember(v);
+	public OctonionFloat128RModuleMember construct(BigDecimal... vals) {
+		return new OctonionFloat128RModuleMember(vals);
 	}
 	
 	private final Procedure1<OctonionFloat128RModuleMember> ZER =

@@ -39,5 +39,5 @@ import java.math.BigDecimal;
  */
 public interface SetFromBigDecimal {
 
-	void setFromBigDecimal(BigDecimal... v);
+	void setFromBigDecimal(BigDecimal... vals);
 }

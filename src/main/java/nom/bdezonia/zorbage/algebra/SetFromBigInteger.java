@@ -39,5 +39,5 @@ import java.math.BigInteger;
  */
 public interface SetFromBigInteger {
 
-	void setFromBigInteger(BigInteger... v);
+	void setFromBigInteger(BigInteger... vals);
 }
