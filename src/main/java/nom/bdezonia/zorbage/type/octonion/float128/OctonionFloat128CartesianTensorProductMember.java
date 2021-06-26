@@ -192,7 +192,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 		this.s = StorageConstruction.MEM_ARRAY;
 		this.storage = Storage.allocate(this.s, new OctonionFloat128Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
@@ -333,7 +333,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -360,7 +360,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
@@ -1731,7 +1731,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 		if (vals.length/8 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		for (int i = 0; i < vals.length; i+=8) {
 			value.setR(BigDecimal.valueOf(vals[i]));
 			value.setI(BigDecimal.valueOf(vals[i+1]));
@@ -1750,7 +1750,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 		if (vals.length/8 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		for (int i = 0; i < vals.length; i+=8) {
 			value.setR(BigDecimal.valueOf(vals[i]));
 			value.setI(BigDecimal.valueOf(vals[i+1]));
@@ -1769,7 +1769,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 		if (vals.length/8 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		for (int i = 0; i < vals.length; i+=8) {
 			value.setR(new BigDecimal(vals[i]));
 			value.setI(new BigDecimal(vals[i+1]));
@@ -1788,7 +1788,7 @@ public final class OctonionFloat128CartesianTensorProductMember
 		if (vals.length/8 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat128Member value = new OctonionFloat128Member();
+		OctonionFloat128Member value = G.OQUAD.construct();
 		for (int i = 0; i < vals.length; i+=8) {
 			value.setR(vals[i]);
 			value.setI(vals[i+1]);
