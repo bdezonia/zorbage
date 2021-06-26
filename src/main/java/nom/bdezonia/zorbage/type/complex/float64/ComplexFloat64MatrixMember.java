@@ -187,7 +187,7 @@ public final class ComplexFloat64MatrixMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat64Member value = new ComplexFloat64Member();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -208,7 +208,7 @@ public final class ComplexFloat64MatrixMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		long matSize = mat.size();
@@ -1162,15 +1162,16 @@ public final class ComplexFloat64MatrixMember
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat64Member tmp = new ComplexFloat64Member();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

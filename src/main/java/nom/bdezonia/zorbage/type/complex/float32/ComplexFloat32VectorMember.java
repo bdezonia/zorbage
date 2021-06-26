@@ -138,7 +138,7 @@ public final class ComplexFloat32VectorMember
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		ComplexFloat32Member value = new ComplexFloat32Member();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length(), new OctonionRepresentation());
 		for (long i = 0; i < length(); i++) {
 			storage.get(i, value);
@@ -159,7 +159,7 @@ public final class ComplexFloat32VectorMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat32Member value = new ComplexFloat32Member();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
 		long rmodSize = rmod.size();
 		init(rmodSize);
@@ -1013,15 +1013,16 @@ public final class ComplexFloat32VectorMember
 	}
 
 	@Override
-	public void setFromFloat(float... v) {
-		if (v.length/2 != length()) {
-			reshape(v.length/2);
+	public void setFromFloat(float... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		ComplexFloat32Member val = G.CFLT.construct();
-		for (int i = 0; i < v.length; i += 2) {
-			val.setR(v[i]);
-			val.setI(v[i+1]);
-			setV(i/2, val);
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

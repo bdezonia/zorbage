@@ -138,7 +138,7 @@ public final class ComplexFloat64VectorMember
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length(), new OctonionRepresentation());
 		for (long i = 0; i < length(); i++) {
 			storage.get(i, value);
@@ -159,7 +159,7 @@ public final class ComplexFloat64VectorMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat64Member value = new ComplexFloat64Member();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
 		long rmodSize = rmod.size();
 		init(rmodSize);
@@ -1013,15 +1013,16 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
-	public void setFromDouble(double... v) {
-		if (v.length/2 != length()) {
-			reshape(v.length/2);
+	public void setFromDouble(double... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		ComplexFloat64Member val = G.CDBL.construct();
-		for (int i = 0; i < v.length; i += 2) {
-			val.setR(v[i]);
-			val.setI(v[i+1]);
-			setV(i/2, val);
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

@@ -947,14 +947,15 @@ public final class Float32VectorMember
 	}
 
 	@Override
-	public void setFromFloat(float... v) {
-		if (v.length != length()) {
-			reshape(v.length);
+	public void setFromFloat(float... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		Float32Member val = G.FLT.construct();
-		for (int i = 0; i < v.length; i++) {
-			val.setV(v[i]);
-			setV(i, val);
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

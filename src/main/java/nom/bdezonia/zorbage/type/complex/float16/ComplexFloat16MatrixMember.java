@@ -187,7 +187,7 @@ public final class ComplexFloat16MatrixMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat16Member value = new ComplexFloat16Member();
+		ComplexFloat16Member value = G.CHLF.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -208,7 +208,7 @@ public final class ComplexFloat16MatrixMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat16Member value = new ComplexFloat16Member();
+		ComplexFloat16Member value = G.CHLF.construct();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		long matSize = mat.size();
@@ -222,7 +222,7 @@ public final class ComplexFloat16MatrixMember
 
 	@Override
 	public String toString() {
-		ComplexFloat16Member tmp = new ComplexFloat16Member();
+		ComplexFloat16Member tmp = G.CHLF.construct();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
 		for (long r = 0; r < rows; r++) {
@@ -1162,15 +1162,16 @@ public final class ComplexFloat16MatrixMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat16Member tmp = new ComplexFloat16Member();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

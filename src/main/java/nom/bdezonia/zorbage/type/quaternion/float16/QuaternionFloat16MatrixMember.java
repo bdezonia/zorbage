@@ -1520,17 +1520,18 @@ public final class QuaternionFloat16MatrixMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length/4 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member tmp = new QuaternionFloat16Member();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(vals[4*i]);
-			tmp.setI(vals[4*i+1]);
-			tmp.setJ(vals[4*i+2]);
-			tmp.setK(vals[4*i+3]);
-			storage.set(i, tmp);
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

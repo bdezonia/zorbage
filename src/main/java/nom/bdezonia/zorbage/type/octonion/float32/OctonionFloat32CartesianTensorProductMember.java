@@ -1710,20 +1710,22 @@ public final class OctonionFloat32CartesianTensorProductMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length/8 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat32Member value = new OctonionFloat32Member();
-		for (int i = 0; i < vals.length; i+=8) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			value.setL(vals[i+4]);
-			value.setI0(vals[i+5]);
-			value.setJ0(vals[i+6]);
-			value.setK0(vals[i+7]);
-			storage.set(i/8, value);
+		OctonionFloat32Member value = G.OFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

@@ -811,13 +811,15 @@ public final class Float64CartesianTensorProductMember
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float64Member value = new Float64Member();
-		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i, value);
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

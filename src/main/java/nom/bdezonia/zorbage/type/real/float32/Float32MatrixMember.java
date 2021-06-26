@@ -1095,13 +1095,15 @@ public final class Float32MatrixMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float32Member tmp = new Float32Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

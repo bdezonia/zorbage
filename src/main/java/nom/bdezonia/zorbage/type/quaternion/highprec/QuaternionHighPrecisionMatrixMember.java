@@ -1544,65 +1544,69 @@ public final class QuaternionHighPrecisionMatrixMember
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length/4 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(BigDecimal.valueOf(vals[4*i]));
-			tmp.setI(BigDecimal.valueOf(vals[4*i+1]));
-			tmp.setJ(BigDecimal.valueOf(vals[4*i+2]));
-			tmp.setK(BigDecimal.valueOf(vals[4*i+3]));
-			storage.set(i, tmp);
+		QuaternionHighPrecisionMember value = G.QHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length/4 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(BigDecimal.valueOf(vals[4*i]));
-			tmp.setI(BigDecimal.valueOf(vals[4*i+1]));
-			tmp.setJ(BigDecimal.valueOf(vals[4*i+2]));
-			tmp.setK(BigDecimal.valueOf(vals[4*i+3]));
-			storage.set(i, tmp);
+		QuaternionHighPrecisionMember value = G.QHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
-		if (vals.length/4 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(new BigDecimal(vals[4*i]));
-			tmp.setI(new BigDecimal(vals[4*i+1]));
-			tmp.setJ(new BigDecimal(vals[4*i+2]));
-			tmp.setK(new BigDecimal(vals[4*i+3]));
-			storage.set(i, tmp);
+		QuaternionHighPrecisionMember value = G.QHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  new BigDecimal(vals[i + 0]) );
+			value.setI(  new BigDecimal(vals[i + 1]) );
+			value.setJ(  new BigDecimal(vals[i + 2]) );
+			value.setK(  new BigDecimal(vals[i + 3]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
-		if (vals.length/4 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-		int quatCount = vals.length / 4;
-		for (int i = 0; i < quatCount; i++) {
-			tmp.setR(vals[4*i]);
-			tmp.setI(vals[4*i+1]);
-			tmp.setJ(vals[4*i+2]);
-			tmp.setK(vals[4*i+3]);
-			storage.set(i, tmp);
+		QuaternionHighPrecisionMember value = G.QHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

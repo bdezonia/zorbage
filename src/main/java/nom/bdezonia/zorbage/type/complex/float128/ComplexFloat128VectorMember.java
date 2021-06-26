@@ -159,7 +159,7 @@ public final class ComplexFloat128VectorMember
 
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(length(), new OctonionRepresentation());
 		for (long i = 0; i < length(); i++) {
 			storage.get(i, value);
@@ -180,7 +180,7 @@ public final class ComplexFloat128VectorMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		BigList<OctonionRepresentation> rmod = rep.getRModule();
 		long rmodSize = rmod.size();
 		init(rmodSize);
@@ -1034,58 +1034,58 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		if (v.length/2 != length()) {
-			reshape(v.length/2);
+	public void setFromLong(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(BigDecimal.valueOf(v[index]));
-			value.setI(BigDecimal.valueOf(v[index+1]));
-			storage.set(i/2, value);
-		}
-	}
-
-	@Override
-	public void setFromDouble(double... v) {
-		if (v.length/2 != length()) {
-			reshape(v.length/2);
-		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(BigDecimal.valueOf(v[index]));
-			value.setI(BigDecimal.valueOf(v[index+1]));
-			storage.set(i/2, value);
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		if (v.length/2 != length()) {
-			reshape(v.length/2);
+	public void setFromDouble(double... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(new BigDecimal(v[index]));
-			value.setI(new BigDecimal(v[index+1]));
-			storage.set(i/2, value);
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		if (v.length/2 != length()) {
-			reshape(v.length/2);
+	public void setFromBigInteger(BigInteger... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(v[index]);
-			value.setI(v[index+1]);
-			storage.set(i/2, value);
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  new BigDecimal(vals[i + 0]) );
+			value.setI(  new BigDecimal(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

@@ -192,7 +192,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		this.s = StorageConstruction.MEM_ARRAY;
 		this.storage = Storage.allocate(this.s, new ComplexHighPrecisionMember(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		ComplexHighPrecisionMember value = G.CHP.construct();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
@@ -321,7 +321,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		ComplexHighPrecisionMember value = G.CHP.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -342,7 +342,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		ComplexHighPrecisionMember value = G.CHP.construct();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
@@ -933,53 +933,61 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(BigDecimal.valueOf(vals[i]));
-			value.setI(BigDecimal.valueOf(vals[i+1]));
-			storage.set(i/2, value);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(BigDecimal.valueOf(vals[i]));
-			value.setI(BigDecimal.valueOf(vals[i+1]));
-			storage.set(i/2, value);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(new BigDecimal(vals[i]));
-			value.setI(new BigDecimal(vals[i+1]));
-			storage.set(i/2, value);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  new BigDecimal(vals[i + 0]) );
+			value.setI(  new BigDecimal(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			storage.set(i/2, value);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

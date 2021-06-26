@@ -211,7 +211,7 @@ public final class ComplexHighPrecisionMatrixMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		ComplexHighPrecisionMember value = G.CHP.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -232,7 +232,7 @@ public final class ComplexHighPrecisionMatrixMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexHighPrecisionMember value = new ComplexHighPrecisionMember();
+		ComplexHighPrecisionMember value = G.CHP.construct();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		long matSize = mat.size();
@@ -1186,57 +1186,61 @@ public final class ComplexHighPrecisionMatrixMember
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(BigDecimal.valueOf(vals[2*i]));
-			tmp.setI(BigDecimal.valueOf(vals[2*i+1]));
-			storage.set(i, tmp);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(BigDecimal.valueOf(vals[2*i]));
-			tmp.setI(BigDecimal.valueOf(vals[2*i+1]));
-			storage.set(i, tmp);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(new BigDecimal(vals[2*i]));
-			tmp.setI(new BigDecimal(vals[2*i+1]));
-			storage.set(i, tmp);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  new BigDecimal(vals[i + 0]) );
+			value.setI(  new BigDecimal(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
-		int compCount = vals.length / 2;
-		for (int i = 0; i < compCount; i++) {
-			tmp.setR(vals[2*i]);
-			tmp.setI(vals[2*i+1]);
-			storage.set(i, tmp);
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

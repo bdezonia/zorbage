@@ -966,49 +966,53 @@ public final class HighPrecisionVectorMember
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length != length()) {
-			reshape(vals.length);
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		HighPrecisionMember val = G.HP.construct();
-		for (int i = 0; i < vals.length; i++) {
-			val.setV(BigDecimal.valueOf(vals[i]));
-			setV(i, val);
+		HighPrecisionMember value = G.HP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length != length()) {
-			reshape(vals.length);
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		HighPrecisionMember val = G.HP.construct();
-		for (int i = 0; i < vals.length; i++) {
-			val.setV(BigDecimal.valueOf(vals[i]));
-			setV(i, val);
+		HighPrecisionMember value = G.HP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
-		if (vals.length != length()) {
-			reshape(vals.length);
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		HighPrecisionMember val = G.HP.construct();
-		for (int i = 0; i < vals.length; i++) {
-			val.setV(new BigDecimal(vals[i]));
-			setV(i, val);
+		HighPrecisionMember value = G.HP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  new BigDecimal(vals[i + 0]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
-		if (vals.length != length()) {
-			reshape(vals.length);
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		HighPrecisionMember val = G.HP.construct();
-		for (int i = 0; i < vals.length; i++) {
-			val.setV(vals[i]);
-			setV(i, val);
+		HighPrecisionMember value = G.HP.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

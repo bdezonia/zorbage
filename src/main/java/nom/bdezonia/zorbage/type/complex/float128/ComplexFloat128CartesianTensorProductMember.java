@@ -192,7 +192,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		this.s = StorageConstruction.MEM_ARRAY;
 		this.storage = Storage.allocate(this.s, new ComplexFloat128Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
@@ -321,7 +321,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -342,7 +342,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
@@ -936,7 +936,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (v.length/2 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			final int index = 2*i;
 			value.setR(BigDecimal.valueOf(v[index]));
@@ -950,7 +950,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (v.length/2 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			final int index = 2*i;
 			value.setR(BigDecimal.valueOf(v[index]));
@@ -964,7 +964,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (v.length/2 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			final int index = 2*i;
 			value.setR(new BigDecimal(v[index]));
@@ -978,7 +978,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (v.length/2 != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		for (int i = 0; i < v.length; i += 2) {
 			final int index = 2*i;
 			value.setR(v[index]);

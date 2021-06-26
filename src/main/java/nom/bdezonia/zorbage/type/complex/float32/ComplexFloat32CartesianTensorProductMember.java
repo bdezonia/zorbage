@@ -174,7 +174,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 		this.s = StorageConstruction.MEM_ARRAY;
 		this.storage = Storage.allocate(this.s, new ComplexFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		ComplexFloat32Member value = new ComplexFloat32Member();
+		ComplexFloat32Member value = G.CFLT.construct();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
@@ -303,7 +303,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat32Member value = new ComplexFloat32Member();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -324,7 +324,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat32Member value = new ComplexFloat32Member();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
@@ -915,14 +915,16 @@ public final class ComplexFloat32CartesianTensorProductMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat32Member value = new ComplexFloat32Member();
-		for (int i = 0; i < vals.length; i+=2) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			storage.set(i/2, value);
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

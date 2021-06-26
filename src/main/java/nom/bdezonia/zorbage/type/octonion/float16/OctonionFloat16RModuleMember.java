@@ -1961,21 +1961,21 @@ public final class OctonionFloat16RModuleMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length/8 != length()) {
-			reshape(vals.length/8);
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		OctonionFloat16Member value = new OctonionFloat16Member();
-		for (int i = 0; i < vals.length/8; i++) {
-			final int index = 8*i;
-			value.setR(  vals[index + 0]  );
-			value.setI(  vals[index + 1]  );
-			value.setJ(  vals[index + 2]  );
-			value.setK(  vals[index + 3]  );
-			value.setL(  vals[index + 4]  );
-			value.setI0( vals[index + 5]  );
-			value.setJ0( vals[index + 6]  );
-			value.setK0( vals[index + 7]  );
-			storage.set(i, value);
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

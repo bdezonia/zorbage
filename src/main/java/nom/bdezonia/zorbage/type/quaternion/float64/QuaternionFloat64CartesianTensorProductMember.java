@@ -1178,16 +1178,18 @@ public final class QuaternionFloat64CartesianTensorProductMember
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length/4 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat64Member value = new QuaternionFloat64Member();
-		for (int i = 0; i < vals.length; i+=4) {
-			value.setR(vals[i]);
-			value.setI(vals[i+1]);
-			value.setJ(vals[i+2]);
-			value.setK(vals[i+3]);
-			storage.set(i/4, value);
+		QuaternionFloat64Member value = G.QDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

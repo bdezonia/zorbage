@@ -211,7 +211,7 @@ public final class ComplexFloat128MatrixMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -232,7 +232,7 @@ public final class ComplexFloat128MatrixMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat128Member value = new ComplexFloat128Member();
+		ComplexFloat128Member value = G.CQUAD.construct();
 		BigList<OctonionRepresentation> mat = rep.getMatrix();
 		alloc(rep.getMatrixRowDim(), rep.getMatrixColDim());
 		long matSize = mat.size();
@@ -246,7 +246,7 @@ public final class ComplexFloat128MatrixMember
 
 	@Override
 	public String toString() {
-		ComplexFloat128Member tmp = new ComplexFloat128Member();
+		ComplexFloat128Member tmp = G.CQUAD.construct();
 		StringBuilder builder = new StringBuilder();
 		builder.append('[');
 		for (long r = 0; r < rows; r++) {
@@ -1185,58 +1185,62 @@ public final class ComplexFloat128MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		if (v.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+	public void setFromLong(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(BigDecimal.valueOf(v[index]));
-			value.setI(BigDecimal.valueOf(v[index+1]));
-			storage.set(i/2, value);
-		}
-	}
-
-	@Override
-	public void setFromDouble(double... v) {
-		if (v.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
-		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(BigDecimal.valueOf(v[index]));
-			value.setI(BigDecimal.valueOf(v[index+1]));
-			storage.set(i/2, value);
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		if (v.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+	public void setFromDouble(double... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(new BigDecimal(v[index]));
-			value.setI(new BigDecimal(v[index+1]));
-			storage.set(i/2, value);
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... v) {
-		if (v.length/2 != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+	public void setFromBigInteger(BigInteger... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = new ComplexFloat128Member();
-		for (int i = 0; i < v.length; i += 2) {
-			final int index = 2*i;
-			value.setR(v[index]);
-			value.setI(v[index+1]);
-			storage.set(i/2, value);
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  new BigDecimal(vals[i + 0]) );
+			value.setI(  new BigDecimal(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }

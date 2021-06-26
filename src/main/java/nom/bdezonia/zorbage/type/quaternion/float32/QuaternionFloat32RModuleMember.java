@@ -1373,17 +1373,17 @@ public final class QuaternionFloat32RModuleMember
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length/4 != length()) {
-			reshape(vals.length/4);
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
 		}
-		QuaternionFloat32Member value = new QuaternionFloat32Member();
-		for (int i = 0; i < vals.length/4; i++) {
-			final int index = 4*i;
-			value.setR(vals[index]);
-			value.setI(vals[index + 1]);
-			value.setJ(vals[index + 2]);
-			value.setK(vals[index + 3]);
-			storage.set(i, value);
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
 		}
 	}
 }
