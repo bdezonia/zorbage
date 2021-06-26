@@ -1728,8 +1728,21 @@ public final class OctonionFloat128CartesianTensorProductMember
 
 	@Override
 	public void setFromLong(long... vals) {
-		// TODO Auto-generated method stub
-		
+		if (vals.length/8 != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member value = new OctonionFloat128Member();
+		for (int i = 0; i < vals.length; i+=8) {
+			value.setR(BigDecimal.valueOf(vals[i]));
+			value.setI(BigDecimal.valueOf(vals[i+1]));
+			value.setJ(BigDecimal.valueOf(vals[i+2]));
+			value.setK(BigDecimal.valueOf(vals[i+3]));
+			value.setL(BigDecimal.valueOf(vals[i+4]));
+			value.setI0(BigDecimal.valueOf(vals[i+5]));
+			value.setJ0(BigDecimal.valueOf(vals[i+6]));
+			value.setK0(BigDecimal.valueOf(vals[i+7]));
+			storage.set(i/8, value);
+		}
 	}
 
 	@Override
