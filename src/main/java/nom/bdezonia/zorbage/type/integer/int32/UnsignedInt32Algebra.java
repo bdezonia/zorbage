@@ -90,8 +90,8 @@ public class UnsignedInt32Algebra
 	}
 
 	@Override
-	public UnsignedInt32Member construct(long... val) {
-		return new UnsignedInt32Member(val[0]);
+	public UnsignedInt32Member construct(long... vals) {
+		return new UnsignedInt32Member(vals[0]);
 	}
 	
 	private final Function2<Boolean,UnsignedInt32Member,UnsignedInt32Member> EQ =

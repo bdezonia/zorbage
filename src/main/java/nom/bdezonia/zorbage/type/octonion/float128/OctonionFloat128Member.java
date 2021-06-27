@@ -109,24 +109,24 @@ public final class OctonionFloat128Member
 		setK0(val.k0());
 	}
 	
-	public OctonionFloat128Member(BigDecimal... v) {
+	public OctonionFloat128Member(BigDecimal... vals) {
 		this();
-		setFromBigDecimal(v);
+		setFromBigDecimal(vals);
 	}
 	
-	public OctonionFloat128Member(BigInteger... v) {
+	public OctonionFloat128Member(BigInteger... vals) {
 		this();
-		setFromBigInteger(v);
+		setFromBigInteger(vals);
 	}
 	
-	public OctonionFloat128Member(double... v) {
+	public OctonionFloat128Member(double... vals) {
 		this();
-		setFromDouble(v);
+		setFromDouble(vals);
 	}
 	
-	public OctonionFloat128Member(long... v) {
+	public OctonionFloat128Member(long... vals) {
 		this();
-		setFromLong(v);
+		setFromLong(vals);
 	}
 
 	public Float128Member r() { return r; }

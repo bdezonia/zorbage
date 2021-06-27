@@ -76,8 +76,8 @@ public final class ComplexFloat64Member
 		setI(val.i().doubleValue());
 	}
 	
-	public ComplexFloat64Member(double... val) {
-		setFromDouble(val);
+	public ComplexFloat64Member(double... vals) {
+		setFromDouble(vals);
 	}
 
 	public double r() { return r; }

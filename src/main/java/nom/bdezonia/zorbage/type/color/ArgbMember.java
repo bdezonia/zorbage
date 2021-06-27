@@ -51,8 +51,8 @@ public class ArgbMember
 	
 	public ArgbMember() { }
 	
-	public ArgbMember(int ... val) {
-		setFromInt(val);
+	public ArgbMember(int ... vals) {
+		setFromInt(vals);
 	}
 	
 	public ArgbMember(String str) {

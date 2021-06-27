@@ -81,8 +81,8 @@ public class UnsignedInt1Algebra
 	}
 
 	@Override
-	public UnsignedInt1Member construct(int... val) {
-		return new UnsignedInt1Member(val[0]);
+	public UnsignedInt1Member construct(int... vals) {
+		return new UnsignedInt1Member(vals[0]);
 	}
 
 	private final Function2<Boolean, UnsignedInt1Member, UnsignedInt1Member> EQ =

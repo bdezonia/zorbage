@@ -106,13 +106,13 @@ public class GaussianIntUnboundedAlgebra
 	}
 
 	@Override
-	public GaussianIntUnboundedMember construct(BigInteger... val) {
-		return new GaussianIntUnboundedMember(val);
+	public GaussianIntUnboundedMember construct(BigInteger... vals) {
+		return new GaussianIntUnboundedMember(vals);
 	}
 
 	@Override
-	public GaussianIntUnboundedMember construct(long... val) {
-		return new GaussianIntUnboundedMember(val);
+	public GaussianIntUnboundedMember construct(long... vals) {
+		return new GaussianIntUnboundedMember(vals);
 	}
 	
 	private final Function2<Boolean, GaussianIntUnboundedMember, GaussianIntUnboundedMember> EQ =

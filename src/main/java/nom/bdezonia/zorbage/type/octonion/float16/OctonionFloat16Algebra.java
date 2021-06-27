@@ -126,8 +126,8 @@ public class OctonionFloat16Algebra
 	}
 
 	@Override
-	public OctonionFloat16Member construct(float... val) {
-		return new OctonionFloat16Member(val);
+	public OctonionFloat16Member construct(float... vals) {
+		return new OctonionFloat16Member(vals);
 	}
 
 	private final Procedure1<OctonionFloat16Member> UNITY =

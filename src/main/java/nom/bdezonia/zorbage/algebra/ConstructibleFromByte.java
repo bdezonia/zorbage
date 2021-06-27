@@ -38,5 +38,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleFromByte<U> {
 
-	U construct(byte... val);
+	U construct(byte... vals);
 }

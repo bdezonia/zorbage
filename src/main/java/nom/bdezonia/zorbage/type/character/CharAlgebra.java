@@ -74,8 +74,8 @@ public class CharAlgebra
 	}
 
 	@Override
-	public CharMember construct(char... val) {
-		return new CharMember(val[0]);
+	public CharMember construct(char... vals) {
+		return new CharMember(vals[0]);
 	}
 
 	private final Function2<Boolean, CharMember, CharMember> EQ =

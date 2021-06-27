@@ -122,35 +122,35 @@ public class ComplexFloat128Vector
 	
 
 	@Override
-	public ComplexFloat128VectorMember construct(long... val) {
-		BigDecimal[] bigds = new BigDecimal[val.length];
-		for (int i = 0; i < val.length; i++) {
-			bigds[i] = BigDecimal.valueOf(val[i]);
+	public ComplexFloat128VectorMember construct(long... vals) {
+		BigDecimal[] bigds = new BigDecimal[vals.length];
+		for (int i = 0; i < vals.length; i++) {
+			bigds[i] = BigDecimal.valueOf(vals[i]);
 		}
 		return new ComplexFloat128VectorMember(bigds);
 	}
 
 	@Override
-	public ComplexFloat128VectorMember construct(double... val) {
-		BigDecimal[] bigds = new BigDecimal[val.length];
-		for (int i = 0; i < val.length; i++) {
-			bigds[i] = BigDecimal.valueOf(val[i]);
+	public ComplexFloat128VectorMember construct(double... vals) {
+		BigDecimal[] bigds = new BigDecimal[vals.length];
+		for (int i = 0; i < vals.length; i++) {
+			bigds[i] = BigDecimal.valueOf(vals[i]);
 		}
 		return new ComplexFloat128VectorMember(bigds);
 	}
 
 	@Override
-	public ComplexFloat128VectorMember construct(BigInteger... val) {
-		BigDecimal[] bigds = new BigDecimal[val.length];
-		for (int i = 0; i < val.length; i++) {
-			bigds[i] = new BigDecimal(val[i]);
+	public ComplexFloat128VectorMember construct(BigInteger... vals) {
+		BigDecimal[] bigds = new BigDecimal[vals.length];
+		for (int i = 0; i < vals.length; i++) {
+			bigds[i] = new BigDecimal(vals[i]);
 		}
 		return new ComplexFloat128VectorMember(bigds);
 	}
 
 	@Override
-	public ComplexFloat128VectorMember construct(BigDecimal... val) {
-		return new ComplexFloat128VectorMember(val);
+	public ComplexFloat128VectorMember construct(BigDecimal... vals) {
+		return new ComplexFloat128VectorMember(vals);
 	}
 
 	private final Procedure1<ComplexFloat128VectorMember> ZER =

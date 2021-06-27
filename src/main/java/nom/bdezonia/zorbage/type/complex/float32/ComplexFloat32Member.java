@@ -76,8 +76,8 @@ public final class ComplexFloat32Member
 		setI(val.i().floatValue());
 	}
 
-	public ComplexFloat32Member(float... val) {
-		setFromFloat(val);
+	public ComplexFloat32Member(float... vals) {
+		setFromFloat(vals);
 	}
 	
 	public float r() { return r; }

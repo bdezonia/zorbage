@@ -38,5 +38,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleFromChar<U> {
 
-	U construct(char... val);
+	U construct(char... vals);
 }

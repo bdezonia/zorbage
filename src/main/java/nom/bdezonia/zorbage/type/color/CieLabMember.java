@@ -51,8 +51,8 @@ public class CieLabMember
 	
 	public CieLabMember() { }
 	
-	public CieLabMember(double... val) {
-		setFromDouble(val);
+	public CieLabMember(double... vals) {
+		setFromDouble(vals);
 	}
 	
 	public CieLabMember(String str) {

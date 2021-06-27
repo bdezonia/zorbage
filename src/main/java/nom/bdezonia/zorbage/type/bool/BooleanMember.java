@@ -69,8 +69,8 @@ public final class BooleanMember
 		v = false;
 	}
 	
-	public BooleanMember(boolean... val) {
-		setFromBoolean(val);
+	public BooleanMember(boolean... vals) {
+		setFromBoolean(vals);
 	}
 	
 	public BooleanMember(BooleanMember value) {

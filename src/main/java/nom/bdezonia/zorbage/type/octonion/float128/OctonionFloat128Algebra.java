@@ -130,23 +130,23 @@ public class OctonionFloat128Algebra
 	}
 
 	@Override
-	public OctonionFloat128Member construct(long... val) {
-		return new OctonionFloat128Member(val);
+	public OctonionFloat128Member construct(long... vals) {
+		return new OctonionFloat128Member(vals);
 	}
 
 	@Override
-	public OctonionFloat128Member construct(double... val) {
-		return new OctonionFloat128Member(val);
+	public OctonionFloat128Member construct(double... vals) {
+		return new OctonionFloat128Member(vals);
 	}
 
 	@Override
-	public OctonionFloat128Member construct(BigInteger... val) {
-		return new OctonionFloat128Member(val);
+	public OctonionFloat128Member construct(BigInteger... vals) {
+		return new OctonionFloat128Member(vals);
 	}
 
 	@Override
-	public OctonionFloat128Member construct(BigDecimal... val) {
-		return new OctonionFloat128Member(val);
+	public OctonionFloat128Member construct(BigDecimal... vals) {
+		return new OctonionFloat128Member(vals);
 	}
 
 	private final Procedure1<OctonionFloat128Member> UNITY =

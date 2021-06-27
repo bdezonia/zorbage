@@ -123,23 +123,23 @@ public class QuaternionFloat128Algebra
 	}
 
 	@Override
-	public QuaternionFloat128Member construct(long... val) {
-		return new QuaternionFloat128Member(val);
+	public QuaternionFloat128Member construct(long... vals) {
+		return new QuaternionFloat128Member(vals);
 	}
 
 	@Override
-	public QuaternionFloat128Member construct(double... val) {
-		return new QuaternionFloat128Member(val);
+	public QuaternionFloat128Member construct(double... vals) {
+		return new QuaternionFloat128Member(vals);
 	}
 
 	@Override
-	public QuaternionFloat128Member construct(BigInteger... val) {
-		return new QuaternionFloat128Member(val);
+	public QuaternionFloat128Member construct(BigInteger... vals) {
+		return new QuaternionFloat128Member(vals);
 	}
 
 	@Override
-	public QuaternionFloat128Member construct(BigDecimal... val) {
-		return new QuaternionFloat128Member(val);
+	public QuaternionFloat128Member construct(BigDecimal... vals) {
+		return new QuaternionFloat128Member(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat128Member> UNITY =

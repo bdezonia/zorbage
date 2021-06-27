@@ -84,8 +84,8 @@ public class UnsignedInt14Algebra
 	}
 
 	@Override
-	public UnsignedInt14Member construct(int... val) {
-		return new UnsignedInt14Member(val[0]);
+	public UnsignedInt14Member construct(int... vals) {
+		return new UnsignedInt14Member(vals[0]);
 	}
 
 	private final Function2<Boolean, UnsignedInt14Member, UnsignedInt14Member> EQ =

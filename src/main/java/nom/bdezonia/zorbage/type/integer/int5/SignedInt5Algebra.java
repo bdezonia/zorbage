@@ -84,8 +84,8 @@ public class SignedInt5Algebra
 	}
 
 	@Override
-	public SignedInt5Member construct(int... val) {
-		return new SignedInt5Member(val[0]);
+	public SignedInt5Member construct(int... vals) {
+		return new SignedInt5Member(vals[0]);
 	}
 
 	private final Function2<Boolean, SignedInt5Member, SignedInt5Member> EQ =

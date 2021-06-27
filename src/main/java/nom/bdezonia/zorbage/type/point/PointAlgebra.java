@@ -100,8 +100,8 @@ public class PointAlgebra
 	}
 
 	@Override
-	public Point construct(double... val) {
-		return new Point(val);
+	public Point construct(double... vals) {
+		return new Point(vals);
 	}
 
 	private final Function2<Boolean, Point, Point> EQ =

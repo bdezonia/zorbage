@@ -69,8 +69,8 @@ public class CieLabAlgebra
 	}
 	
 	@Override
-	public CieLabMember construct(double... val) {
-		return new CieLabMember(val[0], val[1], val[2]);
+	public CieLabMember construct(double... vals) {
+		return new CieLabMember(vals[0], vals[1], vals[2]);
 	}
 
 	private final Function2<Boolean, CieLabMember, CieLabMember> EQ =

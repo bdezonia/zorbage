@@ -79,8 +79,8 @@ public final class ComplexFloat16Member
 		setI(val.i().floatValue());
 	}
 
-	public ComplexFloat16Member(float... val) {
-		setFromFloat(val);
+	public ComplexFloat16Member(float... vals) {
+		setFromFloat(vals);
 	}
 	
 	public float r() { return Float16Util.convertHFloatToFloat(r); }

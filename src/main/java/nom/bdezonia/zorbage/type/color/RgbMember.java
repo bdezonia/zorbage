@@ -68,8 +68,8 @@ public class RgbMember
 		setB(b);
 	}
 	
-	public RgbMember(int... val) {
-		setFromInt(val);
+	public RgbMember(int... vals) {
+		setFromInt(vals);
 	}
 	
 	public void setR(int r) {

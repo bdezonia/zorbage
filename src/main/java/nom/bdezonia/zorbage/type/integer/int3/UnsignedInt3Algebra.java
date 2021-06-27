@@ -84,8 +84,8 @@ public class UnsignedInt3Algebra
 	}
 
 	@Override
-	public UnsignedInt3Member construct(int... val) {
-		return new UnsignedInt3Member(val[0]);
+	public UnsignedInt3Member construct(int... vals) {
+		return new UnsignedInt3Member(vals[0]);
 	}
 
 	private final Function2<Boolean, UnsignedInt3Member, UnsignedInt3Member> EQ =

@@ -38,5 +38,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleFromLong<U> {
 
-	U construct(long... val);
+	U construct(long... vals);
 }

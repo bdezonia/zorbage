@@ -137,23 +137,23 @@ public class HighPrecisionAlgebra
 	}
 
 	@Override
-	public HighPrecisionMember construct(BigDecimal... val) {
-		return new HighPrecisionMember(val[0]);
+	public HighPrecisionMember construct(BigDecimal... vals) {
+		return new HighPrecisionMember(vals[0]);
 	}
 
 	@Override
-	public HighPrecisionMember construct(BigInteger... val) {
-		return new HighPrecisionMember(val[0]);
+	public HighPrecisionMember construct(BigInteger... vals) {
+		return new HighPrecisionMember(vals[0]);
 	}
 
 	@Override
-	public HighPrecisionMember construct(double... val) {
-		return new HighPrecisionMember(val[0]);
+	public HighPrecisionMember construct(double... vals) {
+		return new HighPrecisionMember(vals[0]);
 	}
 
 	@Override
-	public HighPrecisionMember construct(long... val) {
-		return new HighPrecisionMember(val[0]);
+	public HighPrecisionMember construct(long... vals) {
+		return new HighPrecisionMember(vals[0]);
 	}
 
 	private final Function2<Boolean,HighPrecisionMember,HighPrecisionMember> EQ =

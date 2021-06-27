@@ -84,8 +84,8 @@ public class UnsignedInt7Algebra
 	}
 
 	@Override
-	public UnsignedInt7Member construct(int... val) {
-		return new UnsignedInt7Member(val[0]);
+	public UnsignedInt7Member construct(int... vals) {
+		return new UnsignedInt7Member(vals[0]);
 	}
 
 	private final Function2<Boolean, UnsignedInt7Member, UnsignedInt7Member> EQ =

@@ -84,8 +84,8 @@ public class UnsignedInt9Algebra
 	}
 
 	@Override
-	public UnsignedInt9Member construct(int... val) {
-		return new UnsignedInt9Member(val[0]);
+	public UnsignedInt9Member construct(int... vals) {
+		return new UnsignedInt9Member(vals[0]);
 	}
 
 	private final Function2<Boolean, UnsignedInt9Member, UnsignedInt9Member> EQ =

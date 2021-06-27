@@ -1476,7 +1476,7 @@ public class OctonionFloat64Algebra
 	}
 
 	@Override
-	public OctonionFloat64Member construct(double... val) {
-		return new OctonionFloat64Member(val);
+	public OctonionFloat64Member construct(double... vals) {
+		return new OctonionFloat64Member(vals);
 	}
 }

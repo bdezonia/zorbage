@@ -92,13 +92,13 @@ public class UnsignedInt64Algebra
 	}
 
 	@Override
-	public UnsignedInt64Member construct(BigInteger... val) {
-		return new UnsignedInt64Member(val[0]);
+	public UnsignedInt64Member construct(BigInteger... vals) {
+		return new UnsignedInt64Member(vals[0]);
 	}
 
 	@Override
-	public UnsignedInt64Member construct(long... val) {
-		return new UnsignedInt64Member(val[0]);
+	public UnsignedInt64Member construct(long... vals) {
+		return new UnsignedInt64Member(vals[0]);
 	}
 
 	private final Function2<Boolean,UnsignedInt64Member,UnsignedInt64Member> EQ =

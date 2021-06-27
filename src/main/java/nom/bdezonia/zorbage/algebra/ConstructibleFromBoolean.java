@@ -38,5 +38,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleFromBoolean<U> {
 
-	U construct(boolean... val);
+	U construct(boolean... vals);
 }

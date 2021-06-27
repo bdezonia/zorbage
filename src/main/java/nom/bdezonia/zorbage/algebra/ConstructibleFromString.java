@@ -36,9 +36,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface ConstructibleFromString<U> extends ConstructibleString<U> {
+public interface ConstructibleFromString<U> {
 	
-	// No extension. I just want to make sure they interoperate. Settle on one
-	// but might beed to deprecate old api.
-
+	U construct(String... vals);
 }

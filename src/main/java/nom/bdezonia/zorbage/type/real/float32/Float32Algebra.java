@@ -117,8 +117,8 @@ public class Float32Algebra
 	}
 	
 	@Override
-	public Float32Member construct(float... val) {
-		return new Float32Member(val[0]);
+	public Float32Member construct(float... vals) {
+		return new Float32Member(vals[0]);
 	}
 
 	private final Function2<Boolean,Float32Member,Float32Member> EQ =

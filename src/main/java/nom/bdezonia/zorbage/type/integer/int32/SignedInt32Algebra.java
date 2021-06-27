@@ -88,8 +88,8 @@ public class SignedInt32Algebra
 	}
 
 	@Override
-	public SignedInt32Member construct(int... val) {
-		return new SignedInt32Member(val[0]);
+	public SignedInt32Member construct(int... vals) {
+		return new SignedInt32Member(vals[0]);
 	}
 	
 	private final Function2<Boolean,SignedInt32Member,SignedInt32Member> EQ =
