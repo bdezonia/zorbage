@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.quaternion.float128;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,8 @@ public final class QuaternionFloat128MatrixMember
 		Settable<QuaternionFloat128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat128Member>,
-		SetFromDouble, SetFromLong, SetFromBigDecimal, SetFromBigInteger
+		SetFromDouble, SetFromLong, SetFromBigDecimal, SetFromBigInteger,
+		GetAsBigDecimalArray
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member();
 
@@ -1608,5 +1610,22 @@ public final class QuaternionFloat128MatrixMember
 			value.setK(  vals[i + 3] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		BigDecimal[] values = new BigDecimal[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v();
+			values[k++] = value.i().v();
+			values[k++] = value.j().v();
+			values[k++] = value.k().v();
+		}
+		return values;
 	}
 }

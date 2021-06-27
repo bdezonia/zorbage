@@ -60,7 +60,7 @@ public final class SignedInt16Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
 		SetFromInt,
-		GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
+		GetAsShort, GetAsShortArray
 {
 
 	short v;
@@ -686,36 +686,6 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v());
-	}
-
-	@Override
-	public BigInteger getAsBigInteger() {
-		return BigInteger.valueOf(v());
-	}
-
-	@Override
-	public double getAsDouble() {
-		return v();
-	}
-
-	@Override
-	public float getAsFloat() {
-		return v();
-	}
-
-	@Override
-	public long getAsLong() {
-		return v();
-	}
-
-	@Override
-	public int getAsInt() {
-		return v();
-	}
-
-	@Override
 	public short getAsShort() {
 		return v();
 	}
@@ -723,5 +693,10 @@ public final class SignedInt16Member
 	@Override
 	public void setFromInt(int... vals) {
 		setV(vals[0]);
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {v()};
 	}
 }

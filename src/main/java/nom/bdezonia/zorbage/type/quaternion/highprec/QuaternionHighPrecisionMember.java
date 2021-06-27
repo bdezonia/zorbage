@@ -58,7 +58,8 @@ public final class QuaternionHighPrecisionMember
 		Settable<QuaternionHighPrecisionMember>, Gettable<QuaternionHighPrecisionMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<HighPrecisionMember>, GetQuaternion<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private BigDecimal r, i, j, k;
 	
@@ -1214,5 +1215,10 @@ public final class QuaternionHighPrecisionMember
 		setI(BigDecimal.valueOf(vals[1]));
 		setJ(BigDecimal.valueOf(vals[2]));
 		setK(BigDecimal.valueOf(vals[3]));
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {r(), i(), j(), k()};
 	}
 }

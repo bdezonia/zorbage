@@ -59,7 +59,7 @@ public final class UnboundedIntMember
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		BigIntegerCoder,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigDecimal
+		GetAsBigInteger, GetAsBigIntegerArray
 {
 	private BigInteger v;
 	
@@ -688,11 +688,6 @@ public final class UnboundedIntMember
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return new BigDecimal(v());
-	}
-
-	@Override
 	public BigInteger getAsBigInteger() {
 		return v();
 	}
@@ -705,5 +700,10 @@ public final class UnboundedIntMember
 	@Override
 	public void setFromLong(long... vals) {
 		setV(BigInteger.valueOf(vals[0]));
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {v()};
 	}
 }

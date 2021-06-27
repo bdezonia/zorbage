@@ -58,7 +58,7 @@ public final class QuaternionFloat64Member
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>,
-		SetFromDouble
+		SetFromDouble, GetAsDoubleArray
 {
 
 	private double r, i, j, k;
@@ -1179,5 +1179,10 @@ public final class QuaternionFloat64Member
 		setI(vals[1]);
 		setJ(vals[2]);
 		setK(vals[3]);
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r(), i(), j(), k()};
 	}
 }

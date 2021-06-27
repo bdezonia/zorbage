@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimal;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
@@ -74,7 +75,7 @@ public final class Float128Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float128Member>, GetReal<Float128Member>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimal
+		GetAsBigDecimal, GetAsBigDecimalArray
 {
 	BigDecimal num;
 	byte classification;
@@ -1115,5 +1116,10 @@ public final class Float128Member
 					setPosZero();
 			}
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {v()};
 	}
 }

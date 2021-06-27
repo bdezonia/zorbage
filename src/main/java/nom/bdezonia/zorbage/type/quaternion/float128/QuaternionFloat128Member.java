@@ -58,7 +58,8 @@ public final class QuaternionFloat128Member
 		Settable<QuaternionFloat128Member>, Gettable<QuaternionFloat128Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float128Member>, GetQuaternion<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private final Float128Member r, i, j, k;
 	
@@ -1233,5 +1234,10 @@ public final class QuaternionFloat128Member
 		setI(vals[1]);
 		setJ(vals[2]);
 		setK(vals[3]);
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {r().v(), i().v(), j().v(), k().v()};
 	}
 }

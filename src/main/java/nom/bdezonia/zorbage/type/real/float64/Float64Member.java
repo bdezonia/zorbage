@@ -59,7 +59,7 @@ public final class Float64Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float64Member>, GetReal<Float64Member>,
 		SetFromDouble,
-		GetAsBigDecimal, GetAsDouble
+		GetAsDouble, GetAsDoubleArray
 {
 	private double v;
 	
@@ -707,13 +707,13 @@ public final class Float64Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v);
+	public void setFromDouble(double... vals) {
+		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
-		setV(vals[0]);
+	public double[] getAsDoubleArray() {
+		return new double[] {v()};
 	}
 
 }

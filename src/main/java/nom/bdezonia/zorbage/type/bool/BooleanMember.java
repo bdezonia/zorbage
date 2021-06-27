@@ -57,7 +57,8 @@ public final class BooleanMember
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
-		PrimitiveConversion, SetFromBoolean, GetAsBoolean
+		PrimitiveConversion, SetFromBoolean, GetAsBoolean,
+		GetAsBooleanArray
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -727,5 +728,10 @@ public final class BooleanMember
 	@Override
 	public void setFromBoolean(boolean... vals) {
 		setV(vals[0]);
+	}
+
+	@Override
+	public boolean[] getAsBooleanArray() {
+		return new boolean[] {v()};
 	}
 }

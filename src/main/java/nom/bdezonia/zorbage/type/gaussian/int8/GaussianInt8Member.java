@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
@@ -69,7 +70,7 @@ public class GaussianInt8Member
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
 		SetComplex<Integer>, GetComplex<SignedInt8Member>,
-		SetFromInt
+		SetFromInt, GetAsIntArray
 {
 	byte r;
 	byte i;
@@ -783,5 +784,10 @@ public class GaussianInt8Member
 	public void setFromInt(int... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {r(), i()};
 	}
 }

@@ -58,7 +58,7 @@ public final class HighPrecisionMember
 		HighPrecRepresentation, SetReal<HighPrecisionMember>, GetReal<HighPrecisionMember>,
 		BigDecimalCoder,
 		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
-		GetAsBigDecimal
+		GetAsBigDecimal, GetAsBigDecimalArray
 {
 	private BigDecimal v;
 	
@@ -719,6 +719,11 @@ public final class HighPrecisionMember
 	@Override
 	public void setFromLong(long... vals) {
 		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {v()};
 	}
 
 }

@@ -57,7 +57,7 @@ public final class ComplexFloat64Member
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float64Member>, GetComplex<Float64Member>,
-		SetFromDouble
+		SetFromDouble, GetAsDoubleArray
 {
 	private double r, i;
 	
@@ -774,5 +774,10 @@ public final class ComplexFloat64Member
 	public void setFromDouble(double... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r(), i()};
 	}
 }

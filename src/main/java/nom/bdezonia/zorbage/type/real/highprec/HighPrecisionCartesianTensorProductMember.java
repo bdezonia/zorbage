@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
 import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
@@ -77,7 +78,8 @@ public final class HighPrecisionCartesianTensorProductMember
 		Settable<HighPrecisionCartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember();
 
@@ -881,5 +883,19 @@ public final class HighPrecisionCartesianTensorProductMember
 			value.setV(  vals[i + 0] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		HighPrecisionMember value = G.HP.construct();
+		BigDecimal[] values = new BigDecimal[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v();
+		}
+		return values;
 	}
 }

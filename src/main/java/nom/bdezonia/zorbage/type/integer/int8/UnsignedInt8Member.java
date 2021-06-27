@@ -61,7 +61,7 @@ public final class UnsignedInt8Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
 		SetFromInt,
-		GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
+		GetAsShort, GetAsShortArray
 {
 
 	byte v;
@@ -693,36 +693,6 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v());
-	}
-
-	@Override
-	public BigInteger getAsBigInteger() {
-		return BigInteger.valueOf(v());
-	}
-
-	@Override
-	public double getAsDouble() {
-		return v();
-	}
-
-	@Override
-	public float getAsFloat() {
-		return v();
-	}
-
-	@Override
-	public long getAsLong() {
-		return v();
-	}
-
-	@Override
-	public int getAsInt() {
-		return v();
-	}
-
-	@Override
 	public short getAsShort() {
 		// normally a cast is a no-no but I am sure the range fits with no data loss
 		return (short) v();
@@ -731,5 +701,11 @@ public final class UnsignedInt8Member
 	@Override
 	public void setFromInt(int... vals) {
 		setV(vals[0]);
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		// normally a cast is a no-no but I am sure the range fits with no data loss
+		return new short[] {(short) v()};
 	}
 }

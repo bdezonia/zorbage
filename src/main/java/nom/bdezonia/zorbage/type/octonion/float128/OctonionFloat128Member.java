@@ -58,7 +58,8 @@ public final class OctonionFloat128Member
 		Settable<OctonionFloat128Member>, Gettable<OctonionFloat128Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float128Member>, GetOctonion<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 
 	private final Float128Member r, i, j, k, l, i0, j0, k0;
@@ -1931,5 +1932,10 @@ public final class OctonionFloat128Member
 		setI0(vals[5]);
 		setJ0(vals[6]);
 		setK0(vals[7]);
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {r().v(), i().v(), j().v(), k().v(), l().v(), i0().v(), j0().v(), k0().v()};
 	}
 }

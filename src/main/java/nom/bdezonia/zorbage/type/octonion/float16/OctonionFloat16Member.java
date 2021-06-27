@@ -59,7 +59,7 @@ public final class OctonionFloat16Member
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1842,14 +1842,19 @@ public final class OctonionFloat16Member
 	}
 
 	@Override
-	public void setFromFloat(float... v) {
-		setR(v[0]);
-		setI(v[1]);
-		setJ(v[2]);
-		setK(v[3]);
-		setL(v[4]);
-		setI0(v[5]);
-		setJ0(v[6]);
-		setK0(v[7]);
+	public void setFromFloat(float... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
+		setL(vals[4]);
+		setI0(vals[5]);
+		setJ0(vals[6]);
+		setK0(vals[7]);
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r(), i(), j(), k(), l(), i0(), j0(), k0()};
 	}
 }

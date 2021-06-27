@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
@@ -74,7 +75,7 @@ public final class ComplexFloat16CartesianTensorProductMember
 		Settable<ComplexFloat16CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat16Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member();
 
@@ -927,4 +928,20 @@ public final class ComplexFloat16CartesianTensorProductMember
 			storage.set(i/componentCount, value);
 		}
 	}
+	
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat16Member value = G.CHLF.construct();
+		float[] values = new float[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+		}
+		return values;
+	}
+
 }

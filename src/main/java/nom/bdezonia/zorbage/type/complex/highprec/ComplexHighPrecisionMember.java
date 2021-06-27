@@ -57,7 +57,8 @@ public final class ComplexHighPrecisionMember
 		Settable<ComplexHighPrecisionMember>, Gettable<ComplexHighPrecisionMember>,
 		NumberMember<ComplexHighPrecisionMember>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<HighPrecisionMember>, GetComplex<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private BigDecimal r, i;
 	
@@ -804,5 +805,10 @@ public final class ComplexHighPrecisionMember
 	public void setFromBigDecimal(BigDecimal... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {r(), i()};
 	}
 }

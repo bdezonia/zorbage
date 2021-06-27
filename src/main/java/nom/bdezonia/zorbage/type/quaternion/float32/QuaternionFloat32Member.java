@@ -58,7 +58,7 @@ public final class QuaternionFloat32Member
 		Settable<QuaternionFloat32Member>, Gettable<QuaternionFloat32Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float32Member>, GetQuaternion<Float32Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 
 	private float r, i, j, k;
@@ -1179,5 +1179,10 @@ public final class QuaternionFloat32Member
 		setI(vals[1]);
 		setJ(vals[2]);
 		setK(vals[3]);
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r(), i(), j(), k()};
 	}
 }

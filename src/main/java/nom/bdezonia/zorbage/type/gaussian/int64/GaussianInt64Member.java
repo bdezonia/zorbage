@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
@@ -69,7 +70,7 @@ public class GaussianInt64Member
 		PrimitiveConversion,
 		SetReal<Long>, GetReal<SignedInt64Member>,
 		SetComplex<Long>, GetComplex<SignedInt64Member>,
-		SetFromLong
+		SetFromLong, GetAsLongArray
 {
 	long r;
 	long i;
@@ -783,5 +784,10 @@ public class GaussianInt64Member
 	public void setFromLong(long... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {r(), i()};
 	}
 }

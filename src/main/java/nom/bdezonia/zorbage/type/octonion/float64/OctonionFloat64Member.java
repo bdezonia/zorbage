@@ -58,7 +58,7 @@ public final class OctonionFloat64Member
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float64Member>, GetOctonion<Float64Member>,
-		SetFromDouble
+		SetFromDouble, GetAsDoubleArray
 {
 
 	private double r, i, j, k, l, i0, j0, k0;
@@ -1848,5 +1848,10 @@ public final class OctonionFloat64Member
 		setI0(vals[5]);
 		setJ0(vals[6]);
 		setK0(vals[7]);
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r(), i(), j(), k(), l(), i0(), j0(), k0()};
 	}
 }

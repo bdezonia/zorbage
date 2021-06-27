@@ -41,7 +41,8 @@ import nom.bdezonia.zorbage.algebra.*;
 public final class StringMember
 	implements
 		Allocatable<StringMember>, Duplicatable<StringMember>,
-		Settable<StringMember>, Gettable<StringMember>
+		Settable<StringMember>, Gettable<StringMember>,
+		SetFromString, GetAsString, GetAsStringArray
 {
 	private String v;
 	
@@ -108,5 +109,20 @@ public final class StringMember
 	
 	public int[] codePoints() {
 		return v.codePoints().toArray();
+	}
+
+	@Override
+	public void setFromString(String... vals) {
+		setV(vals[0]);
+	}
+
+	@Override
+	public String[] getAsStringArray() {
+		return new String[] {v()};
+	}
+
+	@Override
+	public String getAsString() {
+		return v();
 	}
 }

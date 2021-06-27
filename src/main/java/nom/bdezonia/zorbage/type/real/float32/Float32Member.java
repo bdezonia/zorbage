@@ -59,7 +59,7 @@ public final class Float32Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>,
 		SetFromFloat,
-		GetAsBigDecimal, GetAsDouble, GetAsFloat
+		GetAsFloat, GetAsFloatArray
 {
 	private float v;
 	
@@ -691,17 +691,12 @@ public final class Float32Member
 	}
 
 	@Override
-	public double getAsDouble() {
-		return v();
-	}
-
-	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v);
-	}
-
-	@Override
 	public void setFromFloat(float... vals) {
 		setV(vals[0]);
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {v()};
 	}
 }

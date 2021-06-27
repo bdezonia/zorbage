@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
@@ -74,7 +75,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		Settable<QuaternionFloat32CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat32Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member();
 
@@ -1191,5 +1192,22 @@ public final class QuaternionFloat32CartesianTensorProductMember
 			value.setK(  vals[i + 3] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat32Member value = G.QFLT.construct();
+		float[] values = new float[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+		}
+		return values;
 	}
 }

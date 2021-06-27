@@ -57,7 +57,7 @@ public final class ComplexFloat32Member
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private float r, i;
 	
@@ -774,5 +774,10 @@ public final class ComplexFloat32Member
 	public void setFromFloat(float... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r(), i()};
 	}
 }

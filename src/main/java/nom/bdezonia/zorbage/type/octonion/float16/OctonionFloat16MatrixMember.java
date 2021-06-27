@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.octonion.float16;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,7 @@ public final class OctonionFloat16MatrixMember
 		Settable<OctonionFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat16Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
 
@@ -2125,5 +2126,26 @@ public final class OctonionFloat16MatrixMember
 			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat16Member value = G.OHLF.construct();
+		float[] values = new float[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+			values[k++] = value.l();
+			values[k++] = value.i0();
+			values[k++] = value.j0();
+			values[k++] = value.k0();
+		}
+		return values;
 	}
 }

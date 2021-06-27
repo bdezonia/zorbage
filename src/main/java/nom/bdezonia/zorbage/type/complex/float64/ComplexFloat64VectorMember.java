@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.complex.float64;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,7 @@ public final class ComplexFloat64VectorMember
 		Settable<ComplexFloat64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat64Member>,
-		SetFromDouble
+		SetFromDouble, GetAsDoubleArray
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
@@ -1024,5 +1025,20 @@ public final class ComplexFloat64VectorMember
 			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat64Member value = G.CDBL.construct();
+		double[] values = new double[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+		}
+		return values;
 	}
 }

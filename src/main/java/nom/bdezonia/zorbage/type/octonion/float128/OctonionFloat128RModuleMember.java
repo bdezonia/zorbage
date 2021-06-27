@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.octonion.float128;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,8 @@ public final class OctonionFloat128RModuleMember
 		Settable<OctonionFloat128RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member(); 
 
@@ -2058,5 +2060,26 @@ public final class OctonionFloat128RModuleMember
 			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v();
+			values[k++] = value.i().v();
+			values[k++] = value.j().v();
+			values[k++] = value.k().v();
+			values[k++] = value.l().v();
+			values[k++] = value.i0().v();
+			values[k++] = value.j0().v();
+			values[k++] = value.k0().v();
+		}
+		return values;
 	}
 }

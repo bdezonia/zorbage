@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.real.highprec;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,8 @@ public final class HighPrecisionMatrixMember
 		Gettable<HighPrecisionMatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember();
 
@@ -1147,5 +1149,19 @@ public final class HighPrecisionMatrixMember
 			value.setV(  vals[i + 0] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		HighPrecisionMember value = G.HP.construct();
+		BigDecimal[] values = new BigDecimal[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v();
+		}
+		return values;
 	}
 }

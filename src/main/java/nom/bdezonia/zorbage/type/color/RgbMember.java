@@ -46,7 +46,7 @@ public class RgbMember
 	implements
 		ByteCoder, Allocatable<RgbMember>, Duplicatable<RgbMember>,
 		Settable<RgbMember>, Gettable<RgbMember>, NumberMember<RgbMember>,
-		SetFromInt
+		SetFromInt, GetAsIntArray
 {
 	private byte r, g, b;
 	
@@ -184,5 +184,10 @@ public class RgbMember
 		setR(vals[0]);
 		setG(vals[1]);
 		setB(vals[2]);
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {r(), g(), b()};
 	}
 }

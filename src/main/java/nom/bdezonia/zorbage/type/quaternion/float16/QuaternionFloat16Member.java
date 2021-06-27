@@ -59,7 +59,7 @@ public final class QuaternionFloat16Member
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1181,5 +1181,10 @@ public final class QuaternionFloat16Member
 		setI(vals[1]);
 		setJ(vals[2]);
 		setK(vals[3]);
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r(), i(), j(), k()};
 	}
 }

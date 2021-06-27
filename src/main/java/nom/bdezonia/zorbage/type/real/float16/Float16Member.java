@@ -63,7 +63,7 @@ public final class Float16Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>,
 		SetFromFloat,
-		GetAsBigDecimal, GetAsDouble, GetAsFloat
+		GetAsFloat, GetAsFloatArray
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -706,12 +706,7 @@ public final class Float16Member
 	}
 
 	@Override
-	public double getAsDouble() {
-		return v();
-	}
-
-	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v());
+	public float[] getAsFloatArray() {
+		return new float[] {v()};
 	}
 }

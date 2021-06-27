@@ -60,7 +60,7 @@ public final class UnsignedInt32Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Long>, GetReal<SignedInt64Member>,
 		SetFromInt,
-		GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
+		GetAsLong, GetAsLongArray
 {
 
 	int v;
@@ -691,26 +691,6 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v());
-	}
-
-	@Override
-	public BigInteger getAsBigInteger() {
-		return BigInteger.valueOf(v());
-	}
-
-	@Override
-	public double getAsDouble() {
-		return v();
-	}
-
-	@Override
-	public float getAsFloat() {
-		return v();
-	}
-
-	@Override
 	public long getAsLong() {
 		return v();
 	}
@@ -718,5 +698,10 @@ public final class UnsignedInt32Member
 	@Override
 	public void setFromInt(int... vals) {
 		setV(vals[0]);
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {v()};
 	}
 }

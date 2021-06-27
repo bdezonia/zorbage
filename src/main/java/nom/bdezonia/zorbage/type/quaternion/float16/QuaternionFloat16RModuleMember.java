@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.quaternion.float16;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,7 @@ public final class QuaternionFloat16RModuleMember
 		Settable<QuaternionFloat16RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat16Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(); 
 
@@ -1385,5 +1386,22 @@ public final class QuaternionFloat16RModuleMember
 			value.setK(  vals[i + 3] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		float[] values = new float[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+		}
+		return values;
 	}
 }

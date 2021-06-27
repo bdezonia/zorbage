@@ -57,7 +57,8 @@ public final class ComplexFloat128Member
 		Settable<ComplexFloat128Member>, Gettable<ComplexFloat128Member>,
 		NumberMember<ComplexFloat128Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float128Member>, GetComplex<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private final Float128Member r, i;
 	
@@ -813,5 +814,10 @@ public final class ComplexFloat128Member
 	public void setFromBigDecimal(BigDecimal... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {r().v(), i().v()};
 	}
 }

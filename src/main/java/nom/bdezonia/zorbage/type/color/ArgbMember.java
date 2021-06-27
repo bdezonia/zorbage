@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
 public class ArgbMember
 	implements ByteCoder, Allocatable<ArgbMember>, Duplicatable<ArgbMember>,
 		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>,
-		SetFromInt
+		SetFromInt, GetAsIntArray
 {
 	private byte a, r, g, b;
 	
@@ -199,5 +199,10 @@ public class ArgbMember
 		setR(vals[1]);
 		setG(vals[2]);
 		setB(vals[3]);
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {a(), r(), g(), b()};
 	}
 }

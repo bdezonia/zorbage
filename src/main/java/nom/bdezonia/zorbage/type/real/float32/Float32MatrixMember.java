@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.real.float32;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,7 @@ public final class Float32MatrixMember
 		Gettable<Float32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float32Member>,
-		SetFromFloat
+		SetFromFloat, GetAsFloatArray
 {
 	private static final Float32Member ZERO = new Float32Member(0);
 
@@ -1105,5 +1106,19 @@ public final class Float32MatrixMember
 			value.setV(  vals[i + 0] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float32Member value = G.FLT.construct();
+		float[] values = new float[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v();
+		}
+		return values;
 	}
 }

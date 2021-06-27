@@ -62,7 +62,7 @@ public final class SignedInt4Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
 		SetFromInt,
-		GetAsByte, GetAsShort, GetAsInt, GetAsLong, GetAsFloat, GetAsDouble, GetAsBigInteger, GetAsBigDecimal
+		GetAsByte, GetAsByteArray
 {
 	byte v;
 
@@ -701,41 +701,6 @@ public final class SignedInt4Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return BigDecimal.valueOf(v());
-	}
-
-	@Override
-	public BigInteger getAsBigInteger() {
-		return BigInteger.valueOf(v());
-	}
-
-	@Override
-	public double getAsDouble() {
-		return v();
-	}
-
-	@Override
-	public float getAsFloat() {
-		return v();
-	}
-
-	@Override
-	public long getAsLong() {
-		return v();
-	}
-
-	@Override
-	public int getAsInt() {
-		return v();
-	}
-
-	@Override
-	public short getAsShort() {
-		return v();
-	}
-
-	@Override
 	public byte getAsByte() {
 		return v();
 	}
@@ -743,5 +708,10 @@ public final class SignedInt4Member
 	@Override
 	public void setFromInt(int... vals) {
 		setV(vals[0]);
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {v()};
 	}
 }

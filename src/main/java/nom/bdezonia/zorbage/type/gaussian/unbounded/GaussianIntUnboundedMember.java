@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
@@ -70,7 +71,7 @@ public class GaussianIntUnboundedMember
 		PrimitiveConversion,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetComplex<BigInteger>, GetComplex<UnboundedIntMember>,
-		SetFromBigInteger, SetFromLong
+		SetFromBigInteger, SetFromLong, GetAsBigIntegerArray
 {
 	BigInteger r;
 	BigInteger i;
@@ -794,5 +795,10 @@ public class GaussianIntUnboundedMember
 	public void setFromBigInteger(BigInteger... vals) {
 		setR(vals[0]);
 		setI(vals[1]);
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {r(), i()};
 	}
 }

@@ -60,7 +60,7 @@ public final class UnsignedInt128Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigDecimal
+		GetAsBigInteger, GetAsBigIntegerArray
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);
@@ -732,11 +732,6 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigDecimal getAsBigDecimal() {
-		return new BigDecimal(v());
-	}
-
-	@Override
 	public void setFromBigInteger(BigInteger... vals) {
 		setV(vals[0]);
 	}
@@ -744,5 +739,10 @@ public final class UnsignedInt128Member
 	@Override
 	public void setFromLong(long... vals) {
 		setV(BigInteger.valueOf(vals[0]));
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {v()};
 	}
 }

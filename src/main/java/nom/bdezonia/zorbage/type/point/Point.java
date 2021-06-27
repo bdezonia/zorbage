@@ -48,7 +48,7 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class Point
 	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>,
 		Allocatable<Point>, Duplicatable<Point>, NumberMember<Point>,
-		SetFromDouble
+		SetFromDouble, GetAsDoubleArray
 {
 	private double[] vector;
 	
@@ -257,5 +257,10 @@ public class Point
 				vector[i] = vals[i];
 			}
 		}
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return vector.clone();
 	}
 }

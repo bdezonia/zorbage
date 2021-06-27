@@ -56,7 +56,8 @@ public class RationalMember
 		Allocatable<RationalMember>, Duplicatable<RationalMember>,
 		Settable<RationalMember>, Gettable<RationalMember>,
 		UniversalRepresentation, NumberMember<RationalMember>,
-		PrimitiveConversion, SetFromBigInteger, SetFromLong
+		PrimitiveConversion, SetFromBigInteger, SetFromLong,
+		GetAsBigIntegerArray
 {
 	private static final int PLACES = 24;
 	private static final MathContext MC = new MathContext(PLACES);
@@ -728,12 +729,17 @@ public class RationalMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... v) {
-		setV(v[0], v[1]);
+	public void setFromBigInteger(BigInteger... vals) {
+		setV(vals[0], vals[1]);
 	}
 
 	@Override
-	public void setFromLong(long... v) {
-		setV(BigInteger.valueOf(v[0]), BigInteger.valueOf(v[1]));
+	public void setFromLong(long... vals) {
+		setV(BigInteger.valueOf(vals[0]), BigInteger.valueOf(vals[1]));
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {n(), d()};
 	}
 }

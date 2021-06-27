@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface SetFromString {
 
-	void setFromString(String str);
+	void setFromString(String... vals);
 }

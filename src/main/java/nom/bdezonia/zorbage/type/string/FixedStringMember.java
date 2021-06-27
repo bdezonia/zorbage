@@ -43,7 +43,8 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public final class FixedStringMember
 	implements
 		IntCoder, Allocatable<FixedStringMember>, Duplicatable<FixedStringMember>,
-		Settable<FixedStringMember>, Gettable<FixedStringMember>
+		Settable<FixedStringMember>, Gettable<FixedStringMember>,
+		SetFromString, GetAsString, GetAsStringArray
 {
 	private int[] codePoints;
 	
@@ -216,5 +217,20 @@ public final class FixedStringMember
 	
 	public int[] codePoints() {
 		return codePoints;
+	}
+
+	@Override
+	public void setFromString(String... vals) {
+		setV(vals[0]);
+	}
+
+	@Override
+	public String[] getAsStringArray() {
+		return new String[] {v()};
+	}
+
+	@Override
+	public String getAsString() {
+		return v();
 	}
 }

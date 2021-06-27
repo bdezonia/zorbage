@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.complex.float128;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,8 @@ public final class ComplexFloat128VectorMember
 		Settable<ComplexFloat128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member(); 
 
@@ -1087,5 +1089,20 @@ public final class ComplexFloat128VectorMember
 			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		BigDecimal[] values = new BigDecimal[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v();
+			values[k++] = value.i().v();
+		}
+		return values;
 	}
 }

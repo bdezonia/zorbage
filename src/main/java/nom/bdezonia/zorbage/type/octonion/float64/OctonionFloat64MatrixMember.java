@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.type.octonion.float64;
 
+import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +61,7 @@ public final class OctonionFloat64MatrixMember
 		Settable<OctonionFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat64Member>,
-		SetFromDouble
+		SetFromDouble, GetAsDoubleArray
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
@@ -2125,5 +2126,26 @@ public final class OctonionFloat64MatrixMember
 			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		double[] values = new double[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+			values[k++] = value.l();
+			values[k++] = value.i0();
+			values[k++] = value.j0();
+			values[k++] = value.k0();
+		}
+		return values;
 	}
 }

@@ -58,7 +58,8 @@ public final class OctonionHighPrecisionMember
 		Settable<OctonionHighPrecisionMember>, Gettable<OctonionHighPrecisionMember>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<HighPrecisionMember>, GetOctonion<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong
+		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		GetAsBigDecimalArray
 {
 
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
@@ -1896,5 +1897,10 @@ public final class OctonionHighPrecisionMember
 		setI0(vals[5]);
 		setJ0(vals[6]);
 		setK0(vals[7]);
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {r(), i(), j(), k(), l(), i0(), j0(), k0()};
 	}
 }
