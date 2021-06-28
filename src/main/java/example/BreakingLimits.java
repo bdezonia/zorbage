@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 
 /**
@@ -81,7 +82,7 @@ class BreakingLimits {
 	/*
 	 * Unsigned numbers
 	 *   Java does not support unsigned integers
-	 *   Zorbage does support unsigned integers (from 1 bit to 64 bit)
+	 *   Zorbage does support unsigned integers (from 1 bit to 128 bit)
 	 */
 	
 	void example2() {
@@ -157,13 +158,19 @@ class BreakingLimits {
 	
 	void example4() {
 	
-		Float16Member value = G.HLF.construct();
+		Float16Member value16 = G.HLF.construct();
 		
-		value.setV(13.1f);
+		value16.setV(13.1f);
 		
-		G.HLF.add().call(value, value, value);
+		G.HLF.add().call(value16, value16, value16);
 		
-		System.out.println(value.v()); // prints 26.2
+		System.out.println(value16.v()); // prints 26.2
+		
+		Float128Member value128 = G.QUAD.construct();
+		
+		value128.setFromLong(1234567890123456L);
+		
+		System.out.println(value128.v()); // prints 1234567890123456.0
 	}
 	
 	/*
@@ -211,6 +218,7 @@ class BreakingLimits {
 	 * Non byte-aligned integers
 	 *   In Java the integers are always byte aligned: 8 bit byte, 16 bit short, 32 bit int, 64 bit long
 	 *   In Zorbage all these types are present but also ints of depth 1 bit, 2 bit, 3 bit, up to 16-bit
+	 *     are present too.
 	 */
 	
 	void example6() {
