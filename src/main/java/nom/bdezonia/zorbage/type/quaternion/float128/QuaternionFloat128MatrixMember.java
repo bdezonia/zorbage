@@ -301,7 +301,7 @@ public final class QuaternionFloat128MatrixMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override

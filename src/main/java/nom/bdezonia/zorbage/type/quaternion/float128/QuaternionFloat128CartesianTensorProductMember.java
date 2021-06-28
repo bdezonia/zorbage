@@ -444,7 +444,7 @@ public final class QuaternionFloat128CartesianTensorProductMember
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.DOUBLE;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override
