@@ -60,10 +60,14 @@ public class RationalMember
 		PrimitiveConversion, SetFromBigInteger, SetFromLong,
 		GetAsBigIntegerArray
 {
+	// this is how many decimal places of accuracy the BigDecimal values will contain
 	private static final int PLACES = 24;
-	private static final MathContext MC = new MathContext(PLACES);
-	private static final BigInteger SHIFT = BigInteger.TEN.pow(PLACES);
-	private static final BigDecimal SHIFTBD = new BigDecimal(SHIFT);
+	
+	private static final MathContext CONTEXT = new MathContext(PLACES);
+	
+	private static final BigInteger BIG_DENOM = BigInteger.TEN.pow(PLACES);
+	
+	private static final BigDecimal BIG_DENOM_AS_BD = new BigDecimal(BIG_DENOM);
 	
 	BigInteger n, d;
 	
@@ -116,7 +120,7 @@ public class RationalMember
 	}
 	
 	public BigDecimal v() {
-		return new BigDecimal(n).divide(new BigDecimal(d), MC);
+		return new BigDecimal(n).divide(new BigDecimal(d), CONTEXT);
 	}
 	
 	public BigInteger n() { return n; }
@@ -124,7 +128,12 @@ public class RationalMember
 	public BigInteger d() { return d; }
 	
 	public void setV(BigDecimal v) {
-		setV(v.multiply(SHIFTBD, MC).add(BigDecimalUtils.ONE_HALF).toBigInteger(), SHIFT);
+		BigDecimal tmp = v.multiply(BIG_DENOM_AS_BD, CONTEXT);
+		if (tmp.signum() < 0)
+			tmp = tmp.subtract(BigDecimalUtils.ONE_HALF);
+		else
+			tmp = tmp.add(BigDecimalUtils.ONE_HALF);
+		setV(tmp.toBigInteger(), BIG_DENOM);
 	}
 
 	public void setV(BigInteger n) {
