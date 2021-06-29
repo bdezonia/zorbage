@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
 import nom.bdezonia.zorbage.type.universal.TensorOctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
 import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -123,7 +124,7 @@ public class RationalMember
 	public BigInteger d() { return d; }
 	
 	public void setV(BigDecimal v) {
-		setV(v.multiply(SHIFTBD, MC).toBigInteger(), SHIFT);
+		setV(v.multiply(SHIFTBD, MC).add(BigDecimalUtils.ONE_HALF).toBigInteger(), SHIFT);
 	}
 
 	public void setV(BigInteger n) {
