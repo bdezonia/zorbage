@@ -128,12 +128,12 @@ public class RationalMember
 	public BigInteger d() { return d; }
 	
 	public void setV(BigDecimal v) {
-		BigDecimal tmp = v.multiply(BIG_DENOM_AS_BD, CONTEXT);
-		if (tmp.signum() < 0)
-			tmp = tmp.subtract(BigDecimalUtils.ONE_HALF);
+		BigDecimal numer = v.multiply(BIG_DENOM_AS_BD, CONTEXT);
+		if (numer.signum() < 0)
+			numer = numer.subtract(BigDecimalUtils.ONE_HALF);
 		else
-			tmp = tmp.add(BigDecimalUtils.ONE_HALF);
-		setV(tmp.toBigInteger(), BIG_DENOM);
+			numer = numer.add(BigDecimalUtils.ONE_HALF);
+		setV(numer.toBigInteger(), BIG_DENOM);
 	}
 
 	public void setV(BigInteger n) {
