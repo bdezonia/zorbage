@@ -34,6 +34,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
@@ -314,5 +315,12 @@ public class TestRationalAlgebra {
 		System.out.println("--------------------");
 		System.out.println("BIGD " + c.v());
 		System.out.println("DBL  " + cf);
+	}
+	
+	@Test
+	public void testPI() {
+		RationalMember val = new RationalMember();
+		val.setV(BigDecimal.valueOf(Math.PI));
+		System.out.println(val);
 	}
 }
