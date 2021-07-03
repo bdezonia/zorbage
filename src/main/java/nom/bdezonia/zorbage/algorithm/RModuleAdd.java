@@ -56,15 +56,23 @@ public class RModuleAdd {
 	public static <U extends RModuleMember<W>, V extends Algebra<V,W> & Addition<W>, W>
 		void compute(V memberAlgebra, U a, U b, U c)
 	{
-		W atmp = memberAlgebra.construct();
-		W btmp = memberAlgebra.construct();
-		final long length = Math.max(a.length(), b.length());
-		c.alloc(length);
-		for (long i = 0; i < length; i++) {
-			a.getV(i, atmp);
-			b.getV(i, btmp);
-			memberAlgebra.add().call(atmp, btmp, btmp);
-			c.setV(i, btmp);
+		W tmp1 = memberAlgebra.construct();
+		W tmp2 = memberAlgebra.construct();
+		final long maxLength = Math.max(a.length(), b.length());
+		final long minLength = Math.min(a.length(), b.length());
+		c.alloc(maxLength);
+		for (long i = 0; i < minLength; i++) {
+			a.getV(i, tmp1);
+			b.getV(i, tmp2);
+			memberAlgebra.add().call(tmp1, tmp2, tmp2);
+			c.setV(i, tmp2);
+		}
+		for (long i = minLength; i < maxLength; i++) {
+			if (a.length() > minLength)
+				a.getV(i, tmp2);
+			else
+				b.getV(i, tmp2);
+			c.setV(i, tmp2);
 		}
 	}
 }
