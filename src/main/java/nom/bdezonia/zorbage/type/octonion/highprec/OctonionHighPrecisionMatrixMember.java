@@ -87,17 +87,17 @@ public final class OctonionHighPrecisionMatrixMember
 		setFromBigDecimal(vals);
 	}
 	
-	public OctonionHighPrecisionMatrixMember(int r, int c, BigInteger... vals) {
+	public OctonionHighPrecisionMatrixMember(long r, long c, BigInteger... vals) {
 		this(r,c);
 		setFromBigInteger(vals);
 	}
 	
-	public OctonionHighPrecisionMatrixMember(int r, int c, double... vals) {
+	public OctonionHighPrecisionMatrixMember(long r, long c, double... vals) {
 		this(r,c);
 		setFromDouble(vals);
 	}
 	
-	public OctonionHighPrecisionMatrixMember(int r, int c, long... vals) {
+	public OctonionHighPrecisionMatrixMember(long r, long c, long... vals) {
 		this(r,c);
 		setFromLong(vals);
 	}

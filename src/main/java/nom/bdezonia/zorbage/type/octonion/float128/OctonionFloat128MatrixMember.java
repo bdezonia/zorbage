@@ -87,17 +87,17 @@ public final class OctonionFloat128MatrixMember
 		setFromBigDecimal(vals);
 	}
 	
-	public OctonionFloat128MatrixMember(int r, int c, BigInteger... vals) {
+	public OctonionFloat128MatrixMember(long r, long c, BigInteger... vals) {
 		this(r,c);
 		setFromBigInteger(vals);
 	}
 	
-	public OctonionFloat128MatrixMember(int r, int c, double... vals) {
+	public OctonionFloat128MatrixMember(long r, long c, double... vals) {
 		this(r,c);
 		setFromDouble(vals);
 	}
 	
-	public OctonionFloat128MatrixMember(int r, int c, long... vals) {
+	public OctonionFloat128MatrixMember(long r, long c, long... vals) {
 		this(r,c);
 		setFromLong(vals);
 	}

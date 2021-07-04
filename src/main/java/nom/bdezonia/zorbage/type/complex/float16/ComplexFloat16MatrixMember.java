@@ -85,7 +85,7 @@ public final class ComplexFloat16MatrixMember
 		init(r,c);
 	}
 	
-	public ComplexFloat16MatrixMember(int r, int c, float... vals) {
+	public ComplexFloat16MatrixMember(long r, long c, float... vals) {
 		this(r,c);
 		setFromFloat(vals);
 	}
