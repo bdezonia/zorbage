@@ -879,6 +879,9 @@ public class OctonionFloat128Matrix
 	{
 		@Override
 		public void call(OctonionFloat128MatrixMember a, OctonionFloat128MatrixMember b, OctonionFloat128MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OQUAD, G.OQUAD.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -893,6 +896,9 @@ public class OctonionFloat128Matrix
 	{
 		@Override
 		public void call(OctonionFloat128MatrixMember a, OctonionFloat128MatrixMember b, OctonionFloat128MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OQUAD, G.OQUAD.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

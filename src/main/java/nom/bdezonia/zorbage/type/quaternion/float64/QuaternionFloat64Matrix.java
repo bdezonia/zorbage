@@ -893,6 +893,9 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.QDBL, G.QDBL.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -907,6 +910,9 @@ public class QuaternionFloat64Matrix
 	{
 		@Override
 		public void call(QuaternionFloat64MatrixMember a, QuaternionFloat64MatrixMember b, QuaternionFloat64MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.QDBL, G.QDBL.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

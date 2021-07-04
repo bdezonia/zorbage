@@ -879,6 +879,9 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.CFLT, G.CFLT.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -893,6 +896,9 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b, ComplexFloat32MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.CFLT, G.CFLT.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

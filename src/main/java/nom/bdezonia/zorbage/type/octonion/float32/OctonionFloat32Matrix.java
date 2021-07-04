@@ -879,6 +879,9 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b, OctonionFloat32MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OFLT, G.OFLT.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -893,6 +896,9 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b, OctonionFloat32MatrixMember c) {
+			if (a.rows() != b.rows() || a.cols() != b.cols())
+				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
+			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OFLT, G.OFLT.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
