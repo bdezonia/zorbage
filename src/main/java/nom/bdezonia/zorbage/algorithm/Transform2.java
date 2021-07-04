@@ -77,7 +77,12 @@ public class Transform2 {
 	{
 		A valueA = algA.construct();
 		B valueB = algB.construct();
+
 		long aSize = a.size();
+		
+		if (b.size() != aSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			proc.call(valueA, valueB);

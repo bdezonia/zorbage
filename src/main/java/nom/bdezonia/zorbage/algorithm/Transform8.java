@@ -101,7 +101,18 @@ public class Transform8 {
 		F valueF = algF.construct();
 		G valueG = algG.construct();
 		H valueH = algH.construct();
+
 		long aSize = a.size();
+		
+		if (b.size() != aSize ||
+				c.size() != aSize ||
+				d.size() != aSize ||
+				e.size() != aSize ||
+				f.size() != aSize ||
+				g.size() != aSize ||
+				h.size() != aSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);

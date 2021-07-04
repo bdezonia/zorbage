@@ -97,7 +97,17 @@ public class Transform7 {
 		E valueE = algE.construct();
 		F valueF = algF.construct();
 		G valueG = algG.construct();
+
 		long aSize = a.size();
+		
+		if (b.size() != aSize ||
+				c.size() != aSize ||
+				d.size() != aSize ||
+				e.size() != aSize ||
+				f.size() != aSize ||
+				g.size() != aSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);

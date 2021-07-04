@@ -81,7 +81,13 @@ public class Transform3 {
 		A valueA = algA.construct();
 		B valueB = algB.construct();
 		C valueC = algC.construct();
+
 		long aSize = a.size();
+		
+		if (b.size() != aSize ||
+				c.size() != aSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);

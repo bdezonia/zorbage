@@ -113,7 +113,21 @@ public class Transform11 {
 		I valueI = algI.construct();
 		J valueJ = algJ.construct();
 		K valueK = algK.construct();
+
 		long aSize = a.size();
+		
+		if (b.size() != aSize ||
+				c.size() != aSize ||
+				d.size() != aSize ||
+				e.size() != aSize ||
+				f.size() != aSize ||
+				g.size() != aSize ||
+				h.size() != aSize ||
+				ii.size() != aSize ||
+				j.size() != aSize ||
+				k.size() != aSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);

@@ -105,7 +105,19 @@ public class Transform9 {
 		G valueG = algG.construct();
 		H valueH = algH.construct();
 		I valueI = algI.construct();
+
 		long aSize = a.size();
+		
+		if (b.size() != aSize ||
+				c.size() != aSize ||
+				d.size() != aSize ||
+				e.size() != aSize ||
+				f.size() != aSize ||
+				g.size() != aSize ||
+				h.size() != aSize ||
+				ii.size() != aSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);
