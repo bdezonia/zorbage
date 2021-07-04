@@ -585,4 +585,6 @@ public class TestFloat128Vector {
 	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
 		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
+	
+	// https://en.wikipedia.org/?title=3300&redirect=no
 }
