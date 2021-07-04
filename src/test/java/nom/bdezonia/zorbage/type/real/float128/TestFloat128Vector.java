@@ -144,8 +144,8 @@ public class TestFloat128Vector {
 		
 		// add()
 		
-		a = G.QUAD_VEC.construct(3,5,7,9);
-		b = G.QUAD_VEC.construct(1,2);
+		a = G.QUAD_VEC.construct(3, 5, 7, 9);
+		b = G.QUAD_VEC.construct(1, 2);
 		G.QUAD_VEC.add().call(a, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -157,7 +157,7 @@ public class TestFloat128Vector {
 		c.getV(3, value);
 		assertTrue(BigDecimalUtils.isNear(9, value.v(), BigDecimal.ZERO));
 		
-		b = G.QUAD_VEC.construct(1,2,3,4);
+		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		G.QUAD_VEC.add().call(a, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -210,9 +210,21 @@ public class TestFloat128Vector {
 		c.getV(3, value);
 		assertTrue(BigDecimalUtils.isNear(4, value.v(), BigDecimal.ZERO));
 
-		// crossProduct()   TODO
+		// crossProduct()
 		
-		G.QUAD_VEC.crossProduct();
+		a = G.QUAD_VEC.construct(3, 5, 8);
+		b = G.QUAD_VEC.construct(-1, 7, 2);
+		G.QUAD_VEC.crossProduct().call(a, b, c);
+		assertEquals(3, c.length());
+		long tmp = 5*2 - 8*7;
+		c.getV(0, value);
+		assertTrue(BigDecimalUtils.isNear(tmp, value.v(), BigDecimal.ZERO));
+		tmp = 8*(-1) - 3*(2);
+		c.getV(1, value);
+		assertTrue(BigDecimalUtils.isNear(tmp, value.v(), BigDecimal.ZERO));
+		tmp = 3*7 - 5*(-1);
+		c.getV(2, value);
+		assertTrue(BigDecimalUtils.isNear(tmp, value.v(), BigDecimal.ZERO));
 		
 		// directProduct()
 		
@@ -234,7 +246,8 @@ public class TestFloat128Vector {
 		// divideByScalar()
 
 		value.setFromDouble(1.5);
-		a = G.QUAD_VEC.construct(1,2,3,4);
+		a = G.QUAD_VEC.construct(1, 2, 3, 4);
+		c = G.QUAD_VEC.construct(0, 0, 0, 0);
 		G.QUAD_VEC.divideByScalar().call(value, a, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -352,9 +365,13 @@ public class TestFloat128Vector {
 		G.QUAD_VEC.norm().call(a, value);
 		assertTrue(BigDecimalUtils.isNear(Math.sqrt(1+4+9+16), value.v(), TOL));
 		
-		// perpDotPoduct()   TODO
+		// perpDotPoduct(): TODO I have not found examples online and so test
+		//                    below is assumed correct but might be wrong.
 		
-		G.QUAD_VEC.perpDotProduct();
+		a = G.QUAD_VEC.construct(5, 2);		
+		b = G.QUAD_VEC.construct(-2, 14);		
+		G.QUAD_VEC.perpDotProduct().call(a, b, value);
+		assertTrue(BigDecimalUtils.isNear(74, value.v(), BigDecimal.ZERO));
 		
 		// round()
 		
@@ -371,11 +388,14 @@ public class TestFloat128Vector {
 		c.getV(3, value);
 		assertTrue(BigDecimalUtils.isNear(-4, value.v(), BigDecimal.ZERO));
 		
-		G.QUAD_VEC.round();
+		// scalarTripleProduct()  TODO I have not found examples online and so test
+		//                          below is assumed correct but might be wrong.
 		
-		// scalarTripleProduct()   TODO
-		
-		G.QUAD_VEC.scalarTripleProduct();
+		a = G.QUAD_VEC.construct(1,2,3);
+		b = G.QUAD_VEC.construct(14,-12,3);
+		c = G.QUAD_VEC.construct(-6,1,0);
+		G.QUAD_VEC.scalarTripleProduct().call(a, b, c, value);
+		assertTrue(BigDecimalUtils.isNear(-213, value.v(), TOL));
 		
 		// scale()
 		
@@ -552,9 +572,21 @@ public class TestFloat128Vector {
 		mat.getV(1, 1, value);
 		assertTrue(BigDecimalUtils.isNear(15, value.v(), BigDecimal.ZERO));
 		
-		// vectorTripleProduct()   TODO
+		// vectorTripleProduct()  TODO I have not found examples online and so test
+		//                          below is assumed correct but might be wrong.
 		
-		G.QUAD_VEC.vectorTripleProduct();
+		Float128VectorMember d = G.QUAD_VEC.construct(0, 0, 0);
+		a = G.QUAD_VEC.construct(3,5,7);
+		b = G.QUAD_VEC.construct(1,2,4);
+		c = G.QUAD_VEC.construct(10,5,2);
+		G.QUAD_VEC.vectorTripleProduct().call(a, b, c, d);
+		assertEquals(3, d.length());
+		d.getV(0, value);
+		assertTrue(BigDecimalUtils.isNear(-341, value.v(), BigDecimal.ZERO));
+		d.getV(1, value);
+		assertTrue(BigDecimalUtils.isNear(-67, value.v(), BigDecimal.ZERO));
+		d.getV(2, value);
+		assertTrue(BigDecimalUtils.isNear(194, value.v(), BigDecimal.ZERO));
 		
 		// within()
 		
@@ -562,12 +594,12 @@ public class TestFloat128Vector {
 		a = G.QUAD_VEC.construct(1,2,3,4);
 		b = G.QUAD_VEC.construct(1,2,3,4);
 		assertTrue(G.QUAD_VEC.within().call(value, a, b));
-		b = G.QUAD_VEC.construct(1.1, 2.2, 3.0, 4.1);
+		b = G.QUAD_VEC.construct(1.1, 2.25, 3.0, 4.1);
 		value.setFromDouble(0.1);
 		assertFalse(G.QUAD_VEC.within().call(value, a, b));
-		value.setFromDouble(0.1999999999999999999999);
+		value.setFromDouble(0.2499999999999999);
 		assertFalse(G.QUAD_VEC.within().call(value, a, b));
-		value.setFromDouble(0.2000000000000001);  // TODO: 0.2 doesn'tt work. This code might point out a bug.
+		value.setFromDouble(0.25);
 		assertTrue(G.QUAD_VEC.within().call(value, a, b));
 
 		// zero(), isZero()
