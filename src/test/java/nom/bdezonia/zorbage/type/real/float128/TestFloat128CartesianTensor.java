@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProductMember;
@@ -74,9 +75,9 @@ public class TestFloat128CartesianTensor {
 		for (int i = 0; i < 27; i++) {
 			a.v(i, value);
 			if (i == 0 || i == 13 || i == 26) // 1st, halfway, last
-				assertTrue(isNear(1, value.v(), TOL));
+				assertTrue(BigDecimalUtils.isNear(1, value.v(), TOL));
 			else
-				assertTrue(isNear(0, value.v(), TOL));
+				assertTrue(BigDecimalUtils.isNear(0, value.v(), TOL));
 		}
 
 		Float128Member scale = new Float128Member(BigDecimal.valueOf(14));
@@ -86,9 +87,9 @@ public class TestFloat128CartesianTensor {
 		for (int i = 0; i < 27; i++) {
 			a.v(i, value);
 			if (i == 0 || i == 13 || i == 26) // 1st, halfway, last
-				assertTrue(isNear(14, value.v(), TOL));
+				assertTrue(BigDecimalUtils.isNear(14, value.v(), TOL));
 			else
-				assertTrue(isNear(0, value.v(), TOL));
+				assertTrue(BigDecimalUtils.isNear(0, value.v(), TOL));
 		}
 
 		G.QUAD_TEN.power().call(3, a, a);
@@ -96,9 +97,9 @@ public class TestFloat128CartesianTensor {
 		for (int i = 0; i < 27; i++) {
 			a.v(i, value);
 			if (i == 0 || i == 13 || i == 26) // 1st, halfway, last
-				assertTrue(isNear(14*14*14, value.v(), TOL));
+				assertTrue(BigDecimalUtils.isNear(14*14*14, value.v(), TOL));
 			else
-				assertTrue(isNear(0, value.v(), TOL));
+				assertTrue(BigDecimalUtils.isNear(0, value.v(), TOL));
 		}
 
 		Float128CartesianTensorProductMember x = new Float128CartesianTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(1),BigDecimal.valueOf(2),BigDecimal.valueOf(3),BigDecimal.valueOf(4)});
@@ -132,7 +133,7 @@ public class TestFloat128CartesianTensor {
 		assertEquals(2, junk1.rank());
 		assertEquals(3, junk1.dimension());
 		junk1.v(1, tmp1);
-		assertTrue(isNear(2, tmp1.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(2, tmp1.v(), TOL));
 		Float128CartesianTensorProductMember junk2 = G.QUAD_TEN.construct(junk1);
 		assertTrue(G.QUAD_TEN.isEqual().call(junk1, junk2));
 		assertFalse(G.QUAD_TEN.isNotEqual().call(junk1, junk2));
@@ -148,17 +149,17 @@ public class TestFloat128CartesianTensor {
 		assertFalse(G.QUAD_TEN.isEqual().call(value1, value2));
 		assertTrue(G.QUAD_TEN.isNotEqual().call(value1, value2));
 		value2.v(0, tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), TOL));
 		
 		tmp2.setV(BigDecimal.valueOf(4));
 		G.QUAD_TEN.multiplyByScalar().call(tmp2, value2, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(44*4, tmp2.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(44*4, tmp2.v(), TOL));
 
 		tmp2.setV(BigDecimal.valueOf(4));
 		G.QUAD_TEN.divideByScalar().call(tmp2, value2, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(44, tmp2.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(44, tmp2.v(), TOL));
 
 		G.QUAD_TEN.subtractScalar().call(tmp1, value2, value1);
 		assertTrue(G.QUAD_TEN.isZero().call(value1));
@@ -169,16 +170,16 @@ public class TestFloat128CartesianTensor {
 
 		G.QUAD_TEN.unity().call(value1);
 		value1.v(0, tmp1);
-		assertTrue(isNear(1, tmp1.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(1, tmp1.v(), TOL));
 		G.QUAD_TEN.add().call(value1, value1, value2);
 		value2.v(0, tmp1);
-		assertTrue(isNear(2, tmp1.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(2, tmp1.v(), TOL));
 
 		G.QUAD_TEN.multiplyElements().call(value2, value2, value1);
 		value1.v(0, tmp1);
-		assertTrue(isNear(4, tmp1.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(4, tmp1.v(), TOL));
 		value1.v(1, tmp1);
-		assertTrue(isNear(0, tmp1.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, tmp1.v(), TOL));
 
 		assertTrue(value1.numElems() > 0);
 		assertTrue(value2.numElems() > 0);
@@ -193,7 +194,7 @@ public class TestFloat128CartesianTensor {
 		assertTrue(value1.numElems() == value2.numElems());
 		for (long i = 0; i < value1.numElems(); i++) {
 			value1.v(i, tmp1);
-			assertTrue(isNear(1.0*i/43, tmp1.v(), TOL));
+			assertTrue(BigDecimalUtils.isNear(1.0*i/43, tmp1.v(), TOL));
 		}
 
 		G.QUAD_TEN.subtract().call(value1, value1, value2);
@@ -208,7 +209,7 @@ public class TestFloat128CartesianTensor {
 		assertEquals(16, value2.numElems());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
-			assertTrue(isNear(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), BigDecimal.ZERO));
+			assertTrue(BigDecimalUtils.isNear(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), BigDecimal.ZERO));
 		}
 		
 		G.QUAD_TEN.unity().call(value1);
@@ -225,51 +226,51 @@ public class TestFloat128CartesianTensor {
 		G.QUAD_TEN.negate().call(value1, value2);
 		assertFalse(G.QUAD_TEN.isEqual().call(value1, value2));
 		value2.v(2, tmp2);
-		assertTrue(isNear(-3, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-3, tmp2.v(), BigDecimal.ZERO));
 
 		G.QUAD_TEN.commaDerivative().call(0, value1, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(1, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(2, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(2, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 
 		G.QUAD_TEN.commaDerivative().call(1, value1, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(3, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(3, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(4, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(4, tmp2.v(), BigDecimal.ZERO));
 		
 		G.QUAD_TEN.semicolonDerivative().call(0, value1, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(1, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(2, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(2, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 
 		G.QUAD_TEN.semicolonDerivative().call(1, value1, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(0, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(3, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(3, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(4, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(4, tmp2.v(), BigDecimal.ZERO));
 		
 		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
 		G.QUAD_TEN.norm().call(value1, tmp1);
-		assertTrue(isNear(Math.sqrt(30), tmp1.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(Math.sqrt(30), tmp1.v(), TOL));
 		
 		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
@@ -280,7 +281,7 @@ public class TestFloat128CartesianTensor {
 		assertEquals(16, value2.numElems());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
-			assertTrue(isNear(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), BigDecimal.ZERO));
+			assertTrue(BigDecimalUtils.isNear(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), BigDecimal.ZERO));
 		}
 
 		try {
@@ -306,9 +307,9 @@ public class TestFloat128CartesianTensor {
 		}
 		G.QUAD_TEN.contract().call(0, 1, value1, value2);
 		value2.v(0, tmp2);
-		assertTrue(isNear(5, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(5, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(13, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(13, tmp2.v(), BigDecimal.ZERO));
 
 		G.QUAD_TEN.innerProduct().call(0, 1, value1, value1, value2);
 		assertEquals(4, value2.rank());
@@ -319,7 +320,7 @@ public class TestFloat128CartesianTensor {
 			// TODO do something. Note that the impl does a simple approach that matches theory very closely. I think we can
 			//   get by not testing this a lot yet.
 			// System.out.println(tmp2.v());
-			//assertTrue(isNear(some func val, tmp2.v(), BigDecimal.ZERO));
+			//assertTrue(BigDecimalUtils.isNear(some func val, tmp2.v(), BigDecimal.ZERO));
 		}
 
 		// tested in test1() above
@@ -339,13 +340,13 @@ public class TestFloat128CartesianTensor {
 		assertEquals(value1.rank(), value2.rank());
 		assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
-		assertTrue(isNear(15, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(30, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(30, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(45, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(45, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(60, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
 		value1 = new Float128CartesianTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
@@ -360,13 +361,13 @@ public class TestFloat128CartesianTensor {
 		assertEquals(value1.rank(), value2.rank());
 		assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
-		assertTrue(isNear(15, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(30, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(30, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(45, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(45, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(60, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
 		value1 = new Float128CartesianTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
@@ -381,13 +382,13 @@ public class TestFloat128CartesianTensor {
 		assertEquals(value1.rank(), value2.rank());
 		assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
-		assertTrue(isNear(15, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(30, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(30, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(45, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(45, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(60, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
 		value1 = new Float128CartesianTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
@@ -402,13 +403,13 @@ public class TestFloat128CartesianTensor {
 		assertEquals(value1.rank(), value2.rank());
 		assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
-		assertTrue(isNear(15, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
-		assertTrue(isNear(30, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(30, tmp2.v(), BigDecimal.ZERO));
 		value2.v(2, tmp2);
-		assertTrue(isNear(45, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(45, tmp2.v(), BigDecimal.ZERO));
 		value2.v(3, tmp2);
-		assertTrue(isNear(60, tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
 		value1 = new Float128CartesianTensorProductMember("[1.25,2][3,4]");
 		value2 = new Float128CartesianTensorProductMember("[1,2][3,4]");
@@ -459,10 +460,10 @@ public class TestFloat128CartesianTensor {
 		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		ctmp1.getI(tmp1);
 		ctmp2.getI(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		index.set(0, 1);
 		index.set(1, 0);
 		cvalue1.getV(index, ctmp1);
@@ -470,10 +471,10 @@ public class TestFloat128CartesianTensor {
 		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		ctmp1.getI(tmp1);
 		ctmp2.getI(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		index.set(0, 0);
 		index.set(1, 1);
 		cvalue1.getV(index, ctmp1);
@@ -481,10 +482,10 @@ public class TestFloat128CartesianTensor {
 		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		ctmp1.getI(tmp1);
 		ctmp2.getI(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		index.set(0, 1);
 		index.set(1, 1);
 		cvalue1.getV(index, ctmp1);
@@ -492,10 +493,10 @@ public class TestFloat128CartesianTensor {
 		cvalue2.getV(index, ctmp2);
 		ctmp1.getR(tmp1);
 		ctmp2.getR(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 		ctmp1.getI(tmp1);
 		ctmp2.getI(tmp2);
-		assertTrue(isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(tmp1.v(), tmp2.v(), BigDecimal.ZERO));
 
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
@@ -521,13 +522,5 @@ public class TestFloat128CartesianTensor {
 		array.get(0, after);
 
 		assertTrue(G.QUAD.isZero().call(after));
-	}
-	
-	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return isNear(BigDecimal.valueOf(a), b, tol);
-	}
-
-	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
-		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
 }

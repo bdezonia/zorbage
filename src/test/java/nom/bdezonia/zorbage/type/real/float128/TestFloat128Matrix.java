@@ -39,6 +39,7 @@ import org.junit.Test;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.LUDecomp;
 import nom.bdezonia.zorbage.algorithm.LUSolve;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 
 /**
  * 
@@ -73,60 +74,60 @@ public class TestFloat128Matrix {
 		Float128Member value = new Float128Member();
 
 		invMat.getV(0, 0, value);
-		assertTrue(isNear(-6.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-6.0/145, value.v(), tol));
 		
 		invMat.getV(0, 1, value);
-		assertTrue(isNear(-9.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-9.0/145, value.v(), tol));
 		
 		invMat.getV(0, 2, value);
-		assertTrue(isNear(20.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(20.0/145, value.v(), tol));
 		
 		invMat.getV(1, 0, value);
-		assertTrue(isNear(29.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(29.0/145, value.v(), tol));
 		
 		invMat.getV(1, 1, value);
-		assertTrue(isNear(-29.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-29.0/145, value.v(), tol));
 		
 		invMat.getV(1, 2, value);
-		assertTrue(isNear(0.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0.0/145, value.v(), tol));
 		
 		invMat.getV(2, 0, value);
-		assertTrue(isNear(-13.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-13.0/145, value.v(), tol));
 		
 		invMat.getV(2, 1, value);
-		assertTrue(isNear(53.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(53.0/145, value.v(), tol));
 		
 		invMat.getV(2, 2, value);
-		assertTrue(isNear(-5.0/145, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-5.0/145, value.v(), tol));
 		
 		G.QUAD_MAT.multiply().call(mat, invMat, ident);
 		
 		ident.getV(0, 0, value);
-		assertTrue(isNear(1, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(1, value.v(), tol));
 		
 		ident.getV(0, 1, value);
-		assertTrue(isNear(0, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, value.v(), tol));
 		
 		ident.getV(0, 2, value);
-		assertTrue(isNear(0, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, value.v(), tol));
 		
 		ident.getV(1, 0, value);
-		assertTrue(isNear(0, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, value.v(), tol));
 		
 		ident.getV(1, 1, value);
-		assertTrue(isNear(1, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(1, value.v(), tol));
 		
 		ident.getV(1, 2, value);
-		assertTrue(isNear(0, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, value.v(), tol));
 		
 		ident.getV(2, 0, value);
-		assertTrue(isNear(0, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, value.v(), tol));
 		
 		ident.getV(2, 1, value);
-		assertTrue(isNear(0, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, value.v(), tol));
 		
 		ident.getV(2, 2, value);
-		assertTrue(isNear(1, value.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(1, value.v(), tol));
 	}
 	
 	@Test
@@ -145,13 +146,5 @@ public class TestFloat128Matrix {
 		//System.out.println(v.v());
 		x.getV(2, v);
 		//System.out.println(v.v());
-	}
-
-	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return isNear(BigDecimal.valueOf(a), b, tol);
-	}
-
-	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
-		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
 }

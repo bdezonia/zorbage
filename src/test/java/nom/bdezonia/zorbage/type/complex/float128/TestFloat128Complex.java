@@ -42,6 +42,7 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.storage.Storage;
 
 /**
@@ -79,8 +80,8 @@ public class TestFloat128Complex {
 		b.setR(BigDecimal.valueOf(4));
 		b.setI(BigDecimal.valueOf(-1));
 		G.CQUAD.add().call(a, b, c);
-		assertTrue(isNear(5, c.r().v(), tol));
-		assertTrue(isNear(1, c.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(5, c.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(1, c.i().v(), tol));
 		
 		// G.CQUAD.asec();
 		
@@ -94,8 +95,8 @@ public class TestFloat128Complex {
 		a.setR(BigDecimal.valueOf(66));
 		a.setI(BigDecimal.valueOf(99));
 		G.CQUAD.assign().call(a, b);
-		assertTrue(isNear(66, b.r().v(), tol));
-		assertTrue(isNear(99, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(66, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(99, b.i().v(), tol));
 		
 		// G.CQUAD.atan();
 		
@@ -105,44 +106,44 @@ public class TestFloat128Complex {
 		a.setR(BigDecimal.valueOf(8));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.cbrt().call(a, b);
-		assertTrue(isNear(2, b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(2, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.conjugate();
 		a.setR(BigDecimal.valueOf(66));
 		a.setI(BigDecimal.valueOf(99));
 		G.CQUAD.conjugate().call(a, b);
-		assertTrue(isNear(66, b.r().v(), tol));
-		assertTrue(isNear(-99, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(66, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-99, b.i().v(), tol));
 		
 		// G.CQUAD.construct();
 		a = G.CQUAD.construct();
-		assertTrue(isNear(0, a.r().v(), tol));
-		assertTrue(isNear(0, a.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, a.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), tol));
 
 		// G.CQUAD.construct("{14,7}");
 		a = G.CQUAD.construct("{14,7}");
-		assertTrue(isNear(14, a.r().v(), tol));
-		assertTrue(isNear(7, a.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(14, a.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(7, a.i().v(), tol));
 		
 		// G.CQUAD.construct(other);
 		b = G.CQUAD.construct(a);
-		assertTrue(isNear(14, b.r().v(), tol));
-		assertTrue(isNear(7, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(14, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(7, b.i().v(), tol));
 		
 		// G.CQUAD.cos();
 		a.setR(BigDecimal.valueOf(Math.PI/2));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.cos().call(a, b);
-		assertTrue(isNear(Math.cos(Math.PI/2), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.cos(Math.PI/2), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.cosh();
 		a.setR(BigDecimal.valueOf(Math.PI/2));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.cosh().call(a, b);
-		assertTrue(isNear(Math.cosh(Math.PI/2), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.cosh(Math.PI/2), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.cot();
 		
@@ -156,27 +157,27 @@ public class TestFloat128Complex {
 		a = new ComplexFloat128Member(BigDecimal.valueOf(7),BigDecimal.valueOf(3));
 		b = new ComplexFloat128Member(BigDecimal.valueOf(3), BigDecimal.valueOf(0));
 		G.CQUAD.divide().call(a, b, c);
-		assertTrue(isNear(7.0/3, c.r().v(), tol));
-		assertTrue(isNear(1, c.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(7.0/3, c.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(1, c.i().v(), tol));
 
 		// G.CQUAD.E();
 		G.CQUAD.E().call(a);
-		assertTrue(isNear(Math.E, a.r().v(), tol));
-		assertTrue(isNear(0, a.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.E, a.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), tol));
 		
 		// G.CQUAD.exp();
 		a.setR(BigDecimal.valueOf(4));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.exp().call(a, b);
-		assertTrue(isNear(Math.exp(4), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.exp(4), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.expm1();
 		a.setR(BigDecimal.valueOf(4));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.expm1().call(a, b);
-		assertTrue(isNear(Math.expm1(4), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.expm1(4), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.infinite();
 		a = G.CQUAD.construct();
@@ -190,8 +191,8 @@ public class TestFloat128Complex {
 		G.CQUAD.invert().call(a, b);
 		G.CQUAD.unity().call(c);
 		G.CQUAD.divide().call(c, a, c);
-		assertTrue(isNear(c.r().v(), b.r().v(), tol));
-		assertTrue(isNear(c.i().v(), b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(c.r().v(), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(c.i().v(), b.i().v(), tol));
 		
 		// G.CQUAD.isEqual();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(44),BigDecimal.valueOf(7));
@@ -220,22 +221,22 @@ public class TestFloat128Complex {
 		a.setR(BigDecimal.valueOf(Math.PI/2));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.log().call(a, b);
-		assertTrue(isNear(Math.log(Math.PI/2), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.log(Math.PI/2), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 
 		// G.CQUAD.log1p();
 		a.setR(BigDecimal.valueOf(Math.PI/2));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.log1p().call(a, b);
-		assertTrue(isNear(Math.log1p(Math.PI/2), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.log1p(Math.PI/2), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.multiply();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(-8), BigDecimal.valueOf(1));
 		b = new ComplexFloat128Member(BigDecimal.valueOf(-2), BigDecimal.valueOf(0));
 		G.CQUAD.multiply().call(a, b, c);
-		assertTrue(isNear(16, c.r().v(), tol));
-		assertTrue(isNear(-2, c.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(16, c.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-2, c.i().v(), tol));
 		
 		// G.CQUAD.nan();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(44),BigDecimal.valueOf(7));
@@ -246,18 +247,18 @@ public class TestFloat128Complex {
 		// G.CQUAD.negate();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(44),BigDecimal.valueOf(7));
 		G.CQUAD.negate().call(a, b);
-		assertTrue(isNear(-44, b.r().v(), tol));
-		assertTrue(isNear(-7, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-44, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-7, b.i().v(), tol));
 		
 		// G.CQUAD.norm();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(3),BigDecimal.valueOf(4));
 		G.CQUAD.norm().call(a, d);
-		assertTrue(isNear(5, d.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(5, d.v(), tol));
 		
 		// G.CQUAD.PI();
 		G.CQUAD.PI().call(a);
-		assertTrue(isNear(Math.PI, a.r().v(), tol));
-		assertTrue(isNear(0, a.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.PI, a.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), tol));
 		
 		// G.CQUAD.pow();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(-7),BigDecimal.valueOf(-4));
@@ -265,15 +266,15 @@ public class TestFloat128Complex {
 		G.CQUAD.pow().call(a, b, c);
 		ComplexFloat128Member t = G.CQUAD.construct();
 		G.CQUAD.multiply().call(a, a, t);
-		assertTrue(isNear(t.r().v(), c.r().v(), tol));
-		assertTrue(isNear(t.i().v(), c.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(t.r().v(), c.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(t.i().v(), c.i().v(), tol));
 		
 		// G.CQUAD.power();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(-7),BigDecimal.valueOf(-4));
 		G.CQUAD.power().call(2, a, b);
 		G.CQUAD.multiply().call(a, a, t);
-		assertTrue(isNear(t.r().v(), b.r().v(), tol));
-		assertTrue(isNear(t.i().v(), b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(t.r().v(), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(t.i().v(), b.i().v(), tol));
 		
 		// G.CQUAD.random();
 		G.CQUAD.random().call(a);
@@ -285,21 +286,21 @@ public class TestFloat128Complex {
 		// G.CQUAD.real();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.9));
 		G.CQUAD.real().call(a, d);
-		assertTrue(isNear(0.1, d.v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0.1, d.v(), tol));
 		
 		// G.CQUAD.round();
 		d = new Float128Member(BigDecimal.valueOf(1));
 		a = new ComplexFloat128Member(BigDecimal.valueOf(3.3), BigDecimal.valueOf(-4.1));
 		G.CQUAD.round().call(Mode.TOWARDS_ORIGIN, d, a, b);
-		assertTrue(isNear(3, b.r().v(), tol));
-		assertTrue(isNear(-4, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(3, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-4, b.i().v(), tol));
 		
 		// G.CQUAD.scale();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(3), BigDecimal.valueOf(-4));
 		b = new ComplexFloat128Member(BigDecimal.valueOf(3), BigDecimal.valueOf(0));
 		G.CQUAD.scale().call(a, b, c);
-		assertTrue(isNear(9, c.r().v(), tol));
-		assertTrue(isNear(-12, c.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(9, c.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-12, c.i().v(), tol));
 		
 		// G.CQUAD.sec();
 		
@@ -309,8 +310,8 @@ public class TestFloat128Complex {
 		a.setR(BigDecimal.valueOf(Math.PI/2));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.sin().call(a, b);
-		assertTrue(isNear(Math.sin(Math.PI/2), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.sin(Math.PI/2), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.sinAndCos();
 		
@@ -326,8 +327,8 @@ public class TestFloat128Complex {
 		a.setR(BigDecimal.valueOf(Math.PI/2));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.sinh().call(a, b);
-		assertTrue(isNear(Math.sinh(Math.PI/2), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.sinh(Math.PI/2), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.sinhAndCosh();
 		
@@ -335,8 +336,8 @@ public class TestFloat128Complex {
 		a.setR(BigDecimal.valueOf(8));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.sqrt().call(a, b);
-		assertTrue(isNear(Math.sqrt(8), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.sqrt(8), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 		
 		// G.CQUAD.subtract();
 		a.setR(BigDecimal.valueOf(1));
@@ -344,34 +345,34 @@ public class TestFloat128Complex {
 		b.setR(BigDecimal.valueOf(4));
 		b.setI(BigDecimal.valueOf(-1));
 		G.CQUAD.subtract().call(a, b, c);
-		assertTrue(isNear(-3, c.r().v(), tol));
-		assertTrue(isNear(3, c.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(-3, c.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(3, c.i().v(), tol));
 		
 		// G.CQUAD.tan();
 		a.setR(BigDecimal.valueOf(Math.PI/16));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.tan().call(a, b);
-		assertTrue(isNear(Math.tan(Math.PI/16), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.tan(Math.PI/16), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 
 		// G.CQUAD.tanh();
 		a.setR(BigDecimal.valueOf(Math.PI/16));
 		a.setI(BigDecimal.valueOf(0));
 		G.CQUAD.tanh().call(a, b);
-		assertTrue(isNear(Math.tanh(Math.PI/16), b.r().v(), tol));
-		assertTrue(isNear(0, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(Math.tanh(Math.PI/16), b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), tol));
 
 		// G.CQUAD.unity();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.9));
 		G.CQUAD.unity().call(a);
-		assertTrue(isNear(1, a.r().v(), tol));
-		assertTrue(isNear(0, a.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(1, a.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), tol));
 		
 		// G.CQUAD.unreal();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.9));
 		G.CQUAD.unreal().call(a, b);
-		assertTrue(isNear(0, b.r().v(), tol));
-		assertTrue(isNear(0.9, b.i().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0, b.r().v(), tol));
+		assertTrue(BigDecimalUtils.isNear(0.9, b.i().v(), tol));
 		
 		// G.CQUAD.zero();
 		a = new ComplexFloat128Member(BigDecimal.valueOf(0.1), BigDecimal.valueOf(0.9));
@@ -464,13 +465,5 @@ public class TestFloat128Complex {
 			G.CQUAD.divide().call(sum, N, FofU);
 			output.set(u, FofU);
 		}
-	}
-
-	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return isNear(BigDecimal.valueOf(a), b, tol);
-	}
-
-	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
-		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
 }

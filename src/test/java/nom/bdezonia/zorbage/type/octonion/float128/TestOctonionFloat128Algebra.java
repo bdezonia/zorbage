@@ -38,6 +38,7 @@ import java.math.BigDecimal;
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
+import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 
 /**
@@ -61,14 +62,14 @@ public class TestOctonionFloat128Algebra {
 		
 		G.OQUAD.conjugate().call(a, b);
 		G.OQUAD.multiply().call(a, b, c);
-		assertTrue(isNear(109,c.r().v(), TOL));
-		assertTrue(isNear(0,c.i().v(), TOL));
-		assertTrue(isNear(0,c.j().v(), TOL));
-		assertTrue(isNear(0,c.k().v(), TOL));
-		assertTrue(isNear(0,c.l().v(), TOL));
-		assertTrue(isNear(0,c.i0().v(), TOL));
-		assertTrue(isNear(0,c.j0().v(), TOL));
-		assertTrue(isNear(0,c.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(109,c.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0,c.k0().v(), TOL));
 	}
 	
 	@Test
@@ -97,14 +98,14 @@ public class TestOctonionFloat128Algebra {
 		b.setJ0(BigDecimal.valueOf(17));
 		b.setK0(BigDecimal.valueOf(19));
 		G.OQUAD.add().call(a, b, c);
-		assertTrue(isNear(6, c.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(9, c.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(12, c.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(15, c.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(18, c.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(21, c.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(24, c.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(27, c.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(6, c.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(9, c.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(12, c.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(15, c.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(18, c.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(21, c.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(24, c.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(27, c.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.assign();
 		G.OQUAD.assign().call(a, b);
@@ -120,14 +121,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.cbrt().call(a, b);
-		assertTrue(isNear(3, b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), TOL));
-		assertTrue(isNear(0, b.j().v(), TOL));
-		assertTrue(isNear(0, b.k().v(), TOL));
-		assertTrue(isNear(0, b.l().v(), TOL));
-		assertTrue(isNear(0, b.i0().v(), TOL));
-		assertTrue(isNear(0, b.j0().v(), TOL));
-		assertTrue(isNear(0, b.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(3, b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), TOL));
 		
 		// G.OQUAD.conjugate();
 		a.setR(BigDecimal.valueOf(1));
@@ -139,47 +140,47 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(7));
 		a.setK0(BigDecimal.valueOf(8));
 		G.OQUAD.conjugate().call(a, b);
-		assertTrue(isNear(1, b.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-2, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-3, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-4, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-5, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-6, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-7, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-8, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, b.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-2, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-3, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-4, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-5, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-6, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-7, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-8, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.construct();
 		a = G.OQUAD.construct();
-		assertTrue(isNear(0, a.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.construct("");
 		a = G.OQUAD.construct("{3,-1,0,6,7,-9,0.1,-0.3}");
-		assertTrue(isNear(3, a.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-1, a.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(6, a.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(7, a.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-9, a.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0.1, a.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-0.3, a.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(3, a.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-1, a.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(6, a.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(7, a.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-9, a.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0.1, a.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-0.3, a.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.construct(other);
 		b = G.OQUAD.construct(a);
-		assertTrue(isNear(3, b.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-1, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(6, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(7, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-9, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0.1, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-0.3, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(3, b.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-1, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(6, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(7, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-9, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0.1, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-0.3, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.cos();
 		a.setR(BigDecimal.valueOf(Math.PI/2));
@@ -191,14 +192,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.cos().call(a, b);
-		assertTrue(isNear(Math.cos(Math.PI/2), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.cos(Math.PI/2), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.cosh();
 		a.setR(BigDecimal.valueOf(Math.PI/2));
@@ -210,14 +211,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.cosh().call(a, b);
-		assertTrue(isNear(Math.cosh(Math.PI/2), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.cosh(Math.PI/2), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.divide();
 		a.setR(BigDecimal.valueOf(1));
@@ -237,25 +238,25 @@ public class TestOctonionFloat128Algebra {
 		b.setJ0(BigDecimal.valueOf(0));
 		b.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.divide().call(a, b, c);
-		assertTrue(isNear(2, c.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(4, c.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(6, c.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(8, c.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(10, c.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(12, c.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(14, c.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(16, c.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(2, c.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(4, c.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(6, c.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(8, c.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(10, c.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(12, c.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(14, c.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(16, c.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.E();
 		G.OQUAD.E().call(a);
-		assertTrue(isNear(Math.E, a.r().v(), TOL));
-		assertTrue(isNear(0, a.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.E, a.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.exp();
 		a.setR(BigDecimal.valueOf(2));
@@ -267,14 +268,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.exp().call(a, b);
-		assertTrue(isNear(Math.exp(2), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.exp(2), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.infinite();
 		a.setR(BigDecimal.valueOf(1));
@@ -334,14 +335,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.log().call(a, b);
-		assertTrue(isNear(Math.log(4), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.log(4), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.multiply();
 		a.setR(BigDecimal.valueOf(1));
@@ -362,14 +363,14 @@ public class TestOctonionFloat128Algebra {
 		b.setK0(BigDecimal.valueOf(9));
 		G.OQUAD.multiply().call(a, b, c);
 		G.OQUAD.divide().call(c, b, b);
-		assertTrue(isNear(a.r().v(), b.r().v(), TOL));
-		assertTrue(isNear(a.i().v(), b.i().v(), TOL));
-		assertTrue(isNear(a.j().v(), b.j().v(), TOL));
-		assertTrue(isNear(a.k().v(), b.k().v(), TOL));
-		assertTrue(isNear(a.l().v(), b.l().v(), TOL));
-		assertTrue(isNear(a.i0().v(), b.i0().v(), TOL));
-		assertTrue(isNear(a.j0().v(), b.j0().v(), TOL));
-		assertTrue(isNear(a.k0().v(), b.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.r().v(), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.i().v(), b.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.j().v(), b.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.k().v(), b.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.l().v(), b.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.i0().v(), b.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.j0().v(), b.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(a.k0().v(), b.k0().v(), TOL));
 		
 		// G.OQUAD.nan();
 		a.setR(BigDecimal.valueOf(1));
@@ -394,14 +395,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(7));
 		a.setK0(BigDecimal.valueOf(8));
 		G.OQUAD.negate().call(a, b);
-		assertTrue(isNear(-1, b.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-2, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-3, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-4, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-5, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-6, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-7, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-8, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-1, b.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-2, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-3, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-4, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-5, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-6, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-7, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-8, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.norm();
 		a.setR(BigDecimal.valueOf(1));
@@ -413,18 +414,18 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(7));
 		a.setK0(BigDecimal.valueOf(8));
 		G.OQUAD.norm().call(a, t);
-		assertTrue(isNear(Math.sqrt(1*1 + 2*2 + 3*3 + 4*4 + 5*5 + 6*6 + 7*7 + 8*8), t.v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(Math.sqrt(1*1 + 2*2 + 3*3 + 4*4 + 5*5 + 6*6 + 7*7 + 8*8), t.v(), TOL));
 		
 		// G.OQUAD.PI();
 		G.OQUAD.PI().call(a);
-		assertTrue(isNear(Math.PI, a.r().v(), TOL));
-		assertTrue(isNear(0, a.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.PI, a.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.pow();
 		a.setR(BigDecimal.valueOf(7));
@@ -444,14 +445,14 @@ public class TestOctonionFloat128Algebra {
 		b.setJ0(BigDecimal.valueOf(0));
 		b.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.pow().call(a, b, c);
-		assertTrue(isNear(7*7*7*7, c.r().v(), TOL));
-		assertTrue(isNear(0, c.i().v(), TOL));
-		assertTrue(isNear(0, c.j().v(), TOL));
-		assertTrue(isNear(0, c.k().v(), TOL));
-		assertTrue(isNear(0, c.l().v(), TOL));
-		assertTrue(isNear(0, c.i0().v(), TOL));
-		assertTrue(isNear(0, c.j0().v(), TOL));
-		assertTrue(isNear(0, c.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(7*7*7*7, c.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, c.k0().v(), TOL));
 		
 		// G.OQUAD.power();
 		a.setR(BigDecimal.valueOf(7));
@@ -463,14 +464,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.power().call(4, a, b);
-		assertTrue(isNear(7*7*7*7, b.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(7*7*7*7, b.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.random();
 		G.OQUAD.random().call(a);
@@ -501,7 +502,7 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(7));
 		a.setK0(BigDecimal.valueOf(8));
 		G.OQUAD.real().call(a, t);
-		assertTrue(isNear(1, t.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, t.v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.round();
 		a.setR(BigDecimal.valueOf(1.1));
@@ -514,14 +515,14 @@ public class TestOctonionFloat128Algebra {
 		a.setK0(BigDecimal.valueOf(-8.8));
 		t.setV(BigDecimal.valueOf(1));
 		G.OQUAD.round().call(Mode.HALF_EVEN, t, a, b);
-		assertTrue(isNear(1, b.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-2, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(3, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-4, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(6, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-7, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(8, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-9, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, b.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-2, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(3, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-4, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(6, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-7, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(8, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-9, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.scale();
 		a.setR(BigDecimal.valueOf(1.1));
@@ -541,14 +542,14 @@ public class TestOctonionFloat128Algebra {
 		b.setJ0(BigDecimal.valueOf(0));
 		b.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.scale().call(b, a, c);
-		assertTrue(isNear(3.3, c.r().v(), TOL));
-		assertTrue(isNear(-6.6, c.i().v(), TOL));
-		assertTrue(isNear(9.9, c.j().v(), TOL));
-		assertTrue(isNear(-13.2, c.k().v(), TOL));
-		assertTrue(isNear(16.5, c.l().v(), TOL));
-		assertTrue(isNear(-19.8, c.i0().v(), TOL));
-		assertTrue(isNear(23.1, c.j0().v(), TOL));
-		assertTrue(isNear(-26.4, c.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(3.3, c.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(-6.6, c.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(9.9, c.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(-13.2, c.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(16.5, c.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(-19.8, c.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(23.1, c.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(-26.4, c.k0().v(), TOL));
 		
 		// G.OQUAD.sin();
 		a.setR(BigDecimal.valueOf(Math.PI/2));
@@ -560,14 +561,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.sin().call(a, b);
-		assertTrue(isNear(Math.sin(Math.PI/2), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.sin(Math.PI/2), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.sinAndCos();
 		
@@ -589,14 +590,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.sinh().call(a, b);
-		assertTrue(isNear(Math.sinh(Math.PI/2), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.sinh(Math.PI/2), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.sinhAndCosh();
 		
@@ -610,14 +611,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.sqrt().call(a, b);
-		assertTrue(isNear(5, b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), TOL));
-		assertTrue(isNear(0, b.j().v(), TOL));
-		assertTrue(isNear(0, b.k().v(), TOL));
-		assertTrue(isNear(0, b.l().v(), TOL));
-		assertTrue(isNear(0, b.i0().v(), TOL));
-		assertTrue(isNear(0, b.j0().v(), TOL));
-		assertTrue(isNear(0, b.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(5, b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), TOL));
 		
 		// G.OQUAD.subtract();
 		a.setR(BigDecimal.valueOf(1));
@@ -637,14 +638,14 @@ public class TestOctonionFloat128Algebra {
 		b.setJ0(BigDecimal.valueOf(17));
 		b.setK0(BigDecimal.valueOf(19));
 		G.OQUAD.subtract().call(a, b, c);
-		assertTrue(isNear(-4, c.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-5, c.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-6, c.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-7, c.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-8, c.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-9, c.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-10, c.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(-11, c.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-4, c.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-5, c.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-6, c.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-7, c.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-8, c.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-9, c.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-10, c.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(-11, c.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.tan();
 		a.setR(BigDecimal.valueOf(Math.PI/16));
@@ -656,14 +657,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.tan().call(a, b);
-		assertTrue(isNear(Math.tan(Math.PI/16), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(Math.tan(Math.PI/16), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.tanh();
 		a.setR(BigDecimal.valueOf(Math.PI/16));
@@ -675,14 +676,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(0));
 		a.setK0(BigDecimal.valueOf(0));
 		G.OQUAD.tanh().call(a, b);
-		assertTrue(isNear(Math.tanh(Math.PI/16), b.r().v(), TOL));
-		assertTrue(isNear(0, b.i().v(), TOL));
-		assertTrue(isNear(0, b.j().v(), TOL));
-		assertTrue(isNear(0, b.k().v(), TOL));
-		assertTrue(isNear(0, b.l().v(), TOL));
-		assertTrue(isNear(0, b.i0().v(), TOL));
-		assertTrue(isNear(0, b.j0().v(), TOL));
-		assertTrue(isNear(0, b.k0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(Math.tanh(Math.PI/16), b.r().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.j().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.k().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.l().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.i0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.j0().v(), TOL));
+		assertTrue(BigDecimalUtils.isNear(0, b.k0().v(), TOL));
 		
 		// G.OQUAD.unity();
 		a.setR(BigDecimal.valueOf(1));
@@ -694,14 +695,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(7));
 		a.setK0(BigDecimal.valueOf(8));
 		G.OQUAD.unity().call(a);
-		assertTrue(isNear(1, a.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(0, a.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, a.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, a.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.unreal();
 		a.setR(BigDecimal.valueOf(1));
@@ -713,14 +714,14 @@ public class TestOctonionFloat128Algebra {
 		a.setJ0(BigDecimal.valueOf(7));
 		a.setK0(BigDecimal.valueOf(8));
 		G.OQUAD.unreal().call(a, b);
-		assertTrue(isNear(0, b.r().v(), BigDecimal.ZERO));
-		assertTrue(isNear(2, b.i().v(), BigDecimal.ZERO));
-		assertTrue(isNear(3, b.j().v(), BigDecimal.ZERO));
-		assertTrue(isNear(4, b.k().v(), BigDecimal.ZERO));
-		assertTrue(isNear(5, b.l().v(), BigDecimal.ZERO));
-		assertTrue(isNear(6, b.i0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(7, b.j0().v(), BigDecimal.ZERO));
-		assertTrue(isNear(8, b.k0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(0, b.r().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(2, b.i().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(3, b.j().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(4, b.k().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(5, b.l().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(6, b.i0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(7, b.j0().v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(8, b.k0().v(), BigDecimal.ZERO));
 		
 		// G.OQUAD.zero();
 		a.setR(BigDecimal.valueOf(1));
@@ -734,13 +735,5 @@ public class TestOctonionFloat128Algebra {
 		assertFalse(G.OQUAD.isZero().call(a));
 		G.OQUAD.zero().call(a);
 		assertTrue(G.OQUAD.isZero().call(a));
-	}
-	
-	private boolean isNear(double a, BigDecimal b, BigDecimal tol) {
-		return isNear(BigDecimal.valueOf(a), b, tol);
-	}
-	
-	private boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
-		return a.subtract(b).abs().compareTo(tol) <= 0;
 	}
 }

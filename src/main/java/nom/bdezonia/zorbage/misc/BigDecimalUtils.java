@@ -55,4 +55,27 @@ public class BigDecimalUtils {
 			return BigDecimal.ZERO;
 		return v;
 	}
+
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @param tol
+	 * @return
+	 */
+	public static boolean isNear(double a, BigDecimal b, BigDecimal tol) {
+		return isNear(BigDecimal.valueOf(a), b, tol);
+	}
+
+	/**
+	 * 
+	 * @param a
+	 * @param b
+	 * @param tol
+	 * @return
+	 */
+	public static boolean isNear(BigDecimal a, BigDecimal b, BigDecimal tol) {
+		return a.subtract(b).abs().compareTo(tol) <= 0;
+	}
+
 }
