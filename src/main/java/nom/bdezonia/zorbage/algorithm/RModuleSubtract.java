@@ -70,14 +70,14 @@ public class RModuleSubtract {
 		}
 		for (long i = minLength; i < maxLength; i++) {
 			if (a.length() > minLength) {
-				a.getV(i, tmp1);
-				memberAlgebra.zero().call(tmp2);
+				// value = a - 0 : just return a
+				a.getV(i, tmp2);
 			}
 			else {
-				memberAlgebra.zero().call(tmp1);
+				// value = 0 - b : return -b
 				b.getV(i, tmp2);
+				memberAlgebra.negate().call(tmp2, tmp2);
 			}
-			memberAlgebra.subtract().call(tmp1, tmp2, tmp2);
 			c.setV(i, tmp2);
 		}
 	}
