@@ -727,6 +727,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -741,6 +742,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -755,6 +757,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -769,6 +772,7 @@ public class HighPrecisionMatrix
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.divide(), a.rawData(), b.rawData());
 		}
 	};

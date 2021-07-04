@@ -823,6 +823,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -837,6 +838,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +853,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +868,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.divide(), a.rawData(), b.rawData());
 		}
 	};

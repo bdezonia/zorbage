@@ -837,6 +837,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32Member scalar, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QFLT, scalar, G.QFLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +852,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32Member scalar, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QFLT, scalar, G.QFLT.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +867,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32Member scalar, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QFLT, scalar, G.QFLT.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -879,6 +882,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32Member scalar, QuaternionFloat32MatrixMember a, QuaternionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QFLT, scalar, G.QFLT.divide(), a.rawData(), b.rawData());
 		}
 	};

@@ -754,6 +754,7 @@ public class QuaternionHighPrecisionMatrix
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -768,6 +769,7 @@ public class QuaternionHighPrecisionMatrix
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -782,6 +784,7 @@ public class QuaternionHighPrecisionMatrix
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -796,6 +799,7 @@ public class QuaternionHighPrecisionMatrix
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionMatrixMember a, QuaternionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.divide(), a.rawData(), b.rawData());
 		}
 	};

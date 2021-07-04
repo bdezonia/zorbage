@@ -742,6 +742,7 @@ public class ComplexHighPrecisionMatrix
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -756,6 +757,7 @@ public class ComplexHighPrecisionMatrix
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -770,6 +772,7 @@ public class ComplexHighPrecisionMatrix
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -784,6 +787,7 @@ public class ComplexHighPrecisionMatrix
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionMatrixMember a, ComplexHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.divide(), a.rawData(), b.rawData());
 		}
 	};

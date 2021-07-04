@@ -808,6 +808,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16Member scalar, Float16MatrixMember a, Float16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -822,6 +823,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16Member scalar, Float16MatrixMember a, Float16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -836,6 +838,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16Member scalar, Float16MatrixMember a, Float16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -850,6 +853,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16Member scalar, Float16MatrixMember a, Float16MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.divide(), a.rawData(), b.rawData());
 		}
 	};

@@ -809,6 +809,7 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128Member scalar, Float128MatrixMember a, Float128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -823,6 +824,7 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128Member scalar, Float128MatrixMember a, Float128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -837,6 +839,7 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128Member scalar, Float128MatrixMember a, Float128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +854,7 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128Member scalar, Float128MatrixMember a, Float128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.divide(), a.rawData(), b.rawData());
 		}
 	};

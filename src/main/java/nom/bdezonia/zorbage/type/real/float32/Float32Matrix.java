@@ -808,6 +808,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32Member scalar, Float32MatrixMember a, Float32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.FLT, scalar, G.FLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -822,6 +823,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32Member scalar, Float32MatrixMember a, Float32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.FLT, scalar, G.FLT.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -836,6 +838,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32Member scalar, Float32MatrixMember a, Float32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.FLT, scalar, G.FLT.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -850,6 +853,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32Member scalar, Float32MatrixMember a, Float32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.FLT, scalar, G.FLT.divide(), a.rawData(), b.rawData());
 		}
 	};

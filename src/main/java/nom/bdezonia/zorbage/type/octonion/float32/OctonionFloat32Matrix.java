@@ -823,6 +823,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -837,6 +838,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +853,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +868,7 @@ public class OctonionFloat32Matrix
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32MatrixMember a, OctonionFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.divide(), a.rawData(), b.rawData());
 		}
 	};

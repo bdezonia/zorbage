@@ -823,6 +823,7 @@ public class OctonionFloat128Matrix
 	{
 		@Override
 		public void call(OctonionFloat128Member scalar, OctonionFloat128MatrixMember a, OctonionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OQUAD, scalar, G.OQUAD.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -837,6 +838,7 @@ public class OctonionFloat128Matrix
 	{
 		@Override
 		public void call(OctonionFloat128Member scalar, OctonionFloat128MatrixMember a, OctonionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OQUAD, scalar, G.OQUAD.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +853,7 @@ public class OctonionFloat128Matrix
 	{
 		@Override
 		public void call(OctonionFloat128Member scalar, OctonionFloat128MatrixMember a, OctonionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OQUAD, scalar, G.OQUAD.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +868,7 @@ public class OctonionFloat128Matrix
 	{
 		@Override
 		public void call(OctonionFloat128Member scalar, OctonionFloat128MatrixMember a, OctonionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OQUAD, scalar, G.OQUAD.divide(), a.rawData(), b.rawData());
 		}
 	};

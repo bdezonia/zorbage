@@ -823,6 +823,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -837,6 +838,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +853,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +868,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32MatrixMember a, ComplexFloat32MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.divide(), a.rawData(), b.rawData());
 		}
 	};

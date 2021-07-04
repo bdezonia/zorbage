@@ -837,6 +837,7 @@ public class QuaternionFloat128Matrix
 	{
 		@Override
 		public void call(QuaternionFloat128Member scalar, QuaternionFloat128MatrixMember a, QuaternionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QQUAD, scalar, G.QQUAD.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +852,7 @@ public class QuaternionFloat128Matrix
 	{
 		@Override
 		public void call(QuaternionFloat128Member scalar, QuaternionFloat128MatrixMember a, QuaternionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QQUAD, scalar, G.QQUAD.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +867,7 @@ public class QuaternionFloat128Matrix
 	{
 		@Override
 		public void call(QuaternionFloat128Member scalar, QuaternionFloat128MatrixMember a, QuaternionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QQUAD, scalar, G.QQUAD.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -879,6 +882,7 @@ public class QuaternionFloat128Matrix
 	{
 		@Override
 		public void call(QuaternionFloat128Member scalar, QuaternionFloat128MatrixMember a, QuaternionFloat128MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.QQUAD, scalar, G.QQUAD.divide(), a.rawData(), b.rawData());
 		}
 	};

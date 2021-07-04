@@ -808,6 +808,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64Member scalar, Float64MatrixMember a, Float64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -822,6 +823,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64Member scalar, Float64MatrixMember a, Float64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -836,6 +838,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64Member scalar, Float64MatrixMember a, Float64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -850,6 +853,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64Member scalar, Float64MatrixMember a, Float64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.divide(), a.rawData(), b.rawData());
 		}
 	};

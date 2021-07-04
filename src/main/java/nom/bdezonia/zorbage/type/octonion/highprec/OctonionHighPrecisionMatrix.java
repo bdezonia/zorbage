@@ -742,6 +742,7 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -756,6 +757,7 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -770,6 +772,7 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -784,6 +787,7 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.divide(), a.rawData(), b.rawData());
 		}
 	};

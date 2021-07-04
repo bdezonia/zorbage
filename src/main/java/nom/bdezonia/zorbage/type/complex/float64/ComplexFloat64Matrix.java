@@ -823,6 +823,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -837,6 +838,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -851,6 +853,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -865,6 +868,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -909,6 +913,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			ScaleHelper.compute(G.CDBL_MAT, G.CDBL, new ComplexFloat64Member(2, 0), numTimes, a, b);
 		}
 	};
@@ -923,6 +928,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(Integer numTimes, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
+			b.alloc(a.rows(), a.cols());
 			ScaleHelper.compute(G.CDBL_MAT, G.CDBL, new ComplexFloat64Member(0.5, 0), numTimes, a, b);
 		}
 	};

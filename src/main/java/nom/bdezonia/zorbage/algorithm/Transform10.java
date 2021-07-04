@@ -109,7 +109,9 @@ public class Transform10 {
 		H valueH = algH.construct();
 		I valueI = algI.construct();
 		J valueJ = algJ.construct();
+
 		long aSize = a.size();
+		
 		if (b.size() != aSize ||
 				c.size() != aSize ||
 				d.size() != aSize ||
