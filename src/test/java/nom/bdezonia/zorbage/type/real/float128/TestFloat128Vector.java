@@ -261,8 +261,8 @@ public class TestFloat128Vector {
 	
 		// divideElements()
 		
-		a = G.QUAD_VEC.construct(1,2,3,4);
-		b = G.QUAD_VEC.construct(2,-1,5,0);
+		a = G.QUAD_VEC.construct(1, 2, 3, 4);
+		b = G.QUAD_VEC.construct(2, -1, 5, 0);
 		G.QUAD_VEC.divideElements().call(a, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -277,13 +277,13 @@ public class TestFloat128Vector {
 
 		// dotProduct()
 		
-		a = G.QUAD_VEC.construct(3,5,7,9);
+		a = G.QUAD_VEC.construct(3, 5, 7, 9);
 		G.QUAD_VEC.dotProduct().call(a, a, value);
 		assertTrue(BigDecimalUtils.isNear(3*3+5*5+7*7+9*9, value.v(), TOL));
 
 		// infinite() and isInfinite()
 		
-		c = G.QUAD_VEC.construct(1,2);
+		c = G.QUAD_VEC.construct(1, 2);
 		assertEquals(2, c.length());
 		assertFalse(G.QUAD_VEC.isInfinite().call(c));
 		G.QUAD_VEC.infinite().call(c);
@@ -310,7 +310,7 @@ public class TestFloat128Vector {
 
 		// nan() and isNaN()
 		
-		c = G.QUAD_VEC.construct(1,2);
+		c = G.QUAD_VEC.construct(1, 2);
 		assertEquals(2, c.length());
 		assertFalse(G.QUAD_VEC.isNaN().call(c));
 		G.QUAD_VEC.nan().call(c);
@@ -319,7 +319,7 @@ public class TestFloat128Vector {
 		
 		// multiplyByScalar()
 
-		a = G.QUAD_VEC.construct(1,2,3,4);
+		a = G.QUAD_VEC.construct(1, 2, 3, 4);
 		c = new Float128VectorMember(a.length());
 		value.setFromDouble(-2);
 		G.QUAD_VEC.multiplyByScalar().call(value, a, c);
@@ -334,8 +334,8 @@ public class TestFloat128Vector {
 		assertTrue(BigDecimalUtils.isNear(-8, value.v(), BigDecimal.ZERO));
 		
 
-		a = G.QUAD_VEC.construct(1,2,3,4);
-		b = G.QUAD_VEC.construct(-3,14,2,-100);
+		a = G.QUAD_VEC.construct(1, 2, 3, 4);
+		b = G.QUAD_VEC.construct(-3, 14, 2, -100);
 		G.QUAD_VEC.multiplyElements().call(a, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -391,16 +391,16 @@ public class TestFloat128Vector {
 		// scalarTripleProduct()  TODO I have not found examples online and so test
 		//                          below is assumed correct but might be wrong.
 		
-		a = G.QUAD_VEC.construct(1,2,3);
-		b = G.QUAD_VEC.construct(14,-12,3);
-		c = G.QUAD_VEC.construct(-6,1,0);
+		a = G.QUAD_VEC.construct(1, 2, 3);
+		b = G.QUAD_VEC.construct(14, -12, 3);
+		c = G.QUAD_VEC.construct(-6, 1 ,0);
 		G.QUAD_VEC.scalarTripleProduct().call(a, b, c, value);
 		assertTrue(BigDecimalUtils.isNear(-213, value.v(), TOL));
 		
 		// scale()
 		
 		value.setFromLong(14);
-		b = G.QUAD_VEC.construct(1,2,3,4);
+		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		G.QUAD_VEC.scale().call(value, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -414,7 +414,7 @@ public class TestFloat128Vector {
 
 		// scaleByDouble()
 
-		b = G.QUAD_VEC.construct(3,1,7,4);
+		b = G.QUAD_VEC.construct(3, 1, 7, 4);
 		G.QUAD_VEC.scaleByDouble().call(14.0, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -428,7 +428,7 @@ public class TestFloat128Vector {
 
 		// scaleByHighPrec()
 
-		b = G.QUAD_VEC.construct(3,1,7,4);
+		b = G.QUAD_VEC.construct(3, 1, 7, 4);
 		G.QUAD_VEC.scaleByHighPrec().call(new HighPrecisionMember(11), b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -442,7 +442,7 @@ public class TestFloat128Vector {
 		
 		// scaleByOneHalf()
 		
-		b = G.QUAD_VEC.construct(1,2,3,4);
+		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		G.QUAD_VEC.scaleByOneHalf().call(1, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -467,8 +467,8 @@ public class TestFloat128Vector {
 
 		// scaleByRational()
 
-		b = G.QUAD_VEC.construct(3,1,7,4);
-		G.QUAD_VEC.scaleByRational().call(G.RAT.construct(7,5), b, c);
+		b = G.QUAD_VEC.construct(3, 1, 7, 4);
+		G.QUAD_VEC.scaleByRational().call(G.RAT.construct(7, 5), b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
 		assertTrue(BigDecimalUtils.isNear(3.0*7/5, value.v(), TOL));
@@ -481,7 +481,7 @@ public class TestFloat128Vector {
 
 		// scaleByTwo()
 		
-		b = G.QUAD_VEC.construct(1,2,3,4);
+		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		G.QUAD_VEC.scaleByTwo().call(1, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -506,8 +506,8 @@ public class TestFloat128Vector {
 
 		// subtract()
 		
-		a = G.QUAD_VEC.construct(3,5,7,9);
-		b = G.QUAD_VEC.construct(1,2);
+		a = G.QUAD_VEC.construct(3, 5, 7, 9);
+		b = G.QUAD_VEC.construct(1, 2);
 		G.QUAD_VEC.subtract().call(a, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -530,7 +530,7 @@ public class TestFloat128Vector {
 		c.getV(3, value);
 		assertTrue(BigDecimalUtils.isNear(-9, value.v(), BigDecimal.ZERO));
 		
-		b = G.QUAD_VEC.construct(1,2,3,4);
+		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		G.QUAD_VEC.add().call(a, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -576,9 +576,9 @@ public class TestFloat128Vector {
 		//                          below is assumed correct but might be wrong.
 		
 		Float128VectorMember d = G.QUAD_VEC.construct(0, 0, 0);
-		a = G.QUAD_VEC.construct(3,5,7);
-		b = G.QUAD_VEC.construct(1,2,4);
-		c = G.QUAD_VEC.construct(10,5,2);
+		a = G.QUAD_VEC.construct(3, 5, 7);
+		b = G.QUAD_VEC.construct(1, 2, 4);
+		c = G.QUAD_VEC.construct(10, 5, 2);
 		G.QUAD_VEC.vectorTripleProduct().call(a, b, c, d);
 		assertEquals(3, d.length());
 		d.getV(0, value);
@@ -591,8 +591,8 @@ public class TestFloat128Vector {
 		// within()
 		
 		value.setFromDouble(0);
-		a = G.QUAD_VEC.construct(1,2,3,4);
-		b = G.QUAD_VEC.construct(1,2,3,4);
+		a = G.QUAD_VEC.construct(1, 2, 3, 4);
+		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		assertTrue(G.QUAD_VEC.within().call(value, a, b));
 		b = G.QUAD_VEC.construct(1.1, 2.25, 3.0, 4.1);
 		value.setFromDouble(0.1);
