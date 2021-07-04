@@ -880,8 +880,6 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128MatrixMember a, ComplexFloat128MatrixMember b, ComplexFloat128MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.CQUAD, G.CQUAD.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -897,8 +895,6 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128MatrixMember a, ComplexFloat128MatrixMember b, ComplexFloat128MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.CQUAD, G.CQUAD.divide(), a.rawData(), b.rawData(), c.rawData());
 		}

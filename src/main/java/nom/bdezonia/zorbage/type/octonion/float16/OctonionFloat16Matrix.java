@@ -879,8 +879,6 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b, OctonionFloat16MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OHLF, G.OHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -896,8 +894,6 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b, OctonionFloat16MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OHLF, G.OHLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}

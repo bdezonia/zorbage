@@ -879,8 +879,6 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b, ComplexFloat16MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.CHLF, G.CHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -896,8 +894,6 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b, ComplexFloat16MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.CHLF, G.CHLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}

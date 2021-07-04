@@ -893,8 +893,6 @@ public class QuaternionFloat128Matrix
 	{
 		@Override
 		public void call(QuaternionFloat128MatrixMember a, QuaternionFloat128MatrixMember b, QuaternionFloat128MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.QQUAD, G.QQUAD.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -910,8 +908,6 @@ public class QuaternionFloat128Matrix
 	{
 		@Override
 		public void call(QuaternionFloat128MatrixMember a, QuaternionFloat128MatrixMember b, QuaternionFloat128MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.QQUAD, G.QQUAD.divide(), a.rawData(), b.rawData(), c.rawData());
 		}

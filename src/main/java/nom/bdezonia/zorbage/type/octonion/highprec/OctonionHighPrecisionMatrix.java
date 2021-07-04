@@ -798,8 +798,6 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b, OctonionHighPrecisionMatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OHP, G.OHP.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -815,8 +813,6 @@ public class OctonionHighPrecisionMatrix
 	{
 		@Override
 		public void call(OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b, OctonionHighPrecisionMatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.OHP, G.OHP.divide(), a.rawData(), b.rawData(), c.rawData());
 		}

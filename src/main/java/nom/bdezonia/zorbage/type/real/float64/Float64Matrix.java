@@ -864,8 +864,6 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.DBL, G.DBL.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -881,8 +879,6 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a, Float64MatrixMember b, Float64MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.DBL, G.DBL.divide(), a.rawData(), b.rawData(), c.rawData());
 		}

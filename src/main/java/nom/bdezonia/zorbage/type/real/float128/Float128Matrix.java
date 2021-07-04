@@ -865,8 +865,6 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128MatrixMember a, Float128MatrixMember b, Float128MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.QUAD, G.QUAD.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
@@ -882,8 +880,6 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128MatrixMember a, Float128MatrixMember b, Float128MatrixMember c) {
-			if (a.rows() != b.rows() || a.cols() != b.cols())
-				throw new IllegalArgumentException("multiplyElements() requires similarly sized matrices");
 			c.alloc(a.rows(), a.cols());
 			Transform3.compute(G.QUAD, G.QUAD.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
