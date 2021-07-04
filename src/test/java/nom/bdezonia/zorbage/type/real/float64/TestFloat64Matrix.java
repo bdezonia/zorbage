@@ -119,9 +119,4 @@ public class TestFloat64Matrix {
 		x.getV(2, v);
 		//System.out.println(v.v());
 	}
-	
-	@Test
-	public void test1() {
-		
-	}
 }

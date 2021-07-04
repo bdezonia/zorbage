@@ -73,7 +73,7 @@ public class TestRModuleL2Norm {
 	@Test
 	public void testOct() {
 		Float64Member result = G.DBL.construct();
-		OctonionFloat64RModuleMember rmod = new OctonionFloat64RModuleMember(new double[] {0,0,0,0,-2,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,-6,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0});
+		OctonionFloat64RModuleMember rmod = new OctonionFloat64RModuleMember(new double[] {0,0,0,0,0,0,0,0,-2,0,0,0,0,0,0,0, 4,0,0,0,0,0,0,0,-6,0,0,0,0,0,0,0, 8,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0});
 		SequenceL2Norm.compute(G.ODBL, G.DBL, rmod.rawData(), result);
 		assertEquals(Math.sqrt(220), result.v(), 0);
 	}
