@@ -71,17 +71,18 @@ public final class Float16MatrixMember
 	private StorageConstruction s;
 	
 	public Float16MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public Float16MatrixMember(int r, int c, float... vals) {
+	public Float16MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public Float16MatrixMember(long r, long c, float... vals) {
+		this(r,c);
 		setFromFloat(vals);
 	}
 	
@@ -113,10 +114,6 @@ public final class Float16MatrixMember
 		init(d2, d1);
 	}
 
-	public Float16MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
-	}
-	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

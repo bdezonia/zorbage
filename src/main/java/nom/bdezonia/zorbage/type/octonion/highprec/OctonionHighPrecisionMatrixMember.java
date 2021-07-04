@@ -72,41 +72,33 @@ public final class OctonionHighPrecisionMatrixMember
 	private StorageConstruction s;
 	
 	public OctonionHighPrecisionMatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public OctonionHighPrecisionMatrixMember(int r, int c, BigDecimal... vals) {
+	public OctonionHighPrecisionMatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public OctonionHighPrecisionMatrixMember(long r, long c, BigDecimal... vals) {
+		this(r,c);
 		setFromBigDecimal(vals);
 	}
 	
 	public OctonionHighPrecisionMatrixMember(int r, int c, BigInteger... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+		this(r,c);
 		setFromBigInteger(vals);
 	}
 	
 	public OctonionHighPrecisionMatrixMember(int r, int c, double... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+		this(r,c);
 		setFromDouble(vals);
 	}
 	
 	public OctonionHighPrecisionMatrixMember(int r, int c, long... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+		this(r,c);
 		setFromLong(vals);
 	}
 	
@@ -143,10 +135,6 @@ public final class OctonionHighPrecisionMatrixMember
 		cols = -1;
 		this.s = s;
 		init(d2,d1);
-	}
-	
-	public OctonionHighPrecisionMatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
 	}
 	
 	@Override

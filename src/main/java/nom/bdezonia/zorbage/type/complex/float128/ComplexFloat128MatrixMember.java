@@ -72,45 +72,37 @@ public final class ComplexFloat128MatrixMember
 	private StorageConstruction s;
 	
 	public ComplexFloat128MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
 	public ComplexFloat128MatrixMember(ComplexFloat128MatrixMember other) {
 		set(other);
 	}
 	
-	public ComplexFloat128MatrixMember(int r, int c, BigDecimal... vals) {
+	public ComplexFloat128MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public ComplexFloat128MatrixMember(long r, long c, BigDecimal... vals) {
+		this(r,c);
 		setFromBigDecimal(vals);
 	}
 	
-	public ComplexFloat128MatrixMember(int r, int c, BigInteger... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+	public ComplexFloat128MatrixMember(long r, long c, BigInteger... vals) {
+		this(r,c);
 		setFromBigInteger(vals);
 	}
 	
-	public ComplexFloat128MatrixMember(int r, int c, double... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+	public ComplexFloat128MatrixMember(long r, long c, double... vals) {
+		this(r,c);
 		setFromDouble(vals);
 	}
 	
-	public ComplexFloat128MatrixMember(int r, int c, long... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+	public ComplexFloat128MatrixMember(long r, long c, long... vals) {
+		this(r,c);
 		setFromLong(vals);
 	}
 
@@ -137,10 +129,6 @@ public final class ComplexFloat128MatrixMember
 		cols = -1;
 		this.s = s;
 		init(d2, d1);
-	}
-	
-	public ComplexFloat128MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
 	}
 	
 	@Override

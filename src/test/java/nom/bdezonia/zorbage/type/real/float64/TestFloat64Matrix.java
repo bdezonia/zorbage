@@ -107,7 +107,7 @@ public class TestFloat64Matrix {
 	@Test
 	public void testSingular() {
 		Float64MatrixMember a = new Float64MatrixMember(3, 3, new double[] {1,0,0,0,1,0,0,0,0});
-		Float64VectorMember b = new Float64VectorMember(new double[] {1,2,3});
+		Float64VectorMember b = new Float64VectorMember(1, 2, 3);
 		Float64VectorMember x = new Float64VectorMember(new double[3]);
 		LUDecomp.compute(G.DBL, G.DBL_MAT, a);
 		LUSolve.compute(G.DBL, G.DBL_VEC, a, b, x);
@@ -118,5 +118,10 @@ public class TestFloat64Matrix {
 		//System.out.println(v.v());
 		x.getV(2, v);
 		//System.out.println(v.v());
+	}
+	
+	@Test
+	public void test1() {
+		
 	}
 }

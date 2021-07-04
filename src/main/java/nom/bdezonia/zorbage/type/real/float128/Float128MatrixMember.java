@@ -72,18 +72,34 @@ public final class Float128MatrixMember
 	private StorageConstruction s;
 	
 	public Float128MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public Float128MatrixMember(int r, int c, BigDecimal... vals) {
+	public Float128MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public Float128MatrixMember(long r, long c, BigDecimal... vals) {
+		this(r,c);
 		setFromBigDecimal(vals);
+	}
+	
+	public Float128MatrixMember(long r, long c, BigInteger... vals) {
+		this(r,c);
+		setFromBigInteger(vals);
+	}
+	
+	public Float128MatrixMember(long r, long c, double... vals) {
+		this(r,c);
+		setFromDouble(vals);
+	}
+	
+	public Float128MatrixMember(long r, long c, long... vals) {
+		this(r,c);
+		setFromLong(vals);
 	}
 	
 	public Float128MatrixMember(Float128MatrixMember other) {
@@ -114,10 +130,6 @@ public final class Float128MatrixMember
 		init(d2, d1);
 	}
 
-	public Float128MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
-	}
-	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

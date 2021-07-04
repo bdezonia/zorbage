@@ -71,21 +71,22 @@ public final class ComplexFloat64MatrixMember
 	private StorageConstruction s;
 	
 	public ComplexFloat64MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
 	public ComplexFloat64MatrixMember(ComplexFloat64MatrixMember other) {
 		set(other);
 	}
 	
-	public ComplexFloat64MatrixMember(int r, int c, double... vals) {
+	public ComplexFloat64MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public ComplexFloat64MatrixMember(long r, long c, double... vals) {
+		this(r,c);
 		setFromDouble(vals);
 	}
 
@@ -112,10 +113,6 @@ public final class ComplexFloat64MatrixMember
 		cols = -1;
 		this.s = s;
 		init(d2, d1);
-	}
-	
-	public ComplexFloat64MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
 	}
 	
 	@Override

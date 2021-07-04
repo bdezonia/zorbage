@@ -71,17 +71,18 @@ public final class Float64MatrixMember
 	private StorageConstruction s;
 	
 	public Float64MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public Float64MatrixMember(int r, int c, double... vals) {
+	public Float64MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public Float64MatrixMember(long r, long c, double... vals) {
+		this(r,c);
 		setFromDouble(vals);
 	}
 	
@@ -111,10 +112,6 @@ public final class Float64MatrixMember
 		cols = -1;
 		this.s = s;
 		init(d2, d1);
-	}
-
-	public Float64MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
 	}
 	
 	@Override

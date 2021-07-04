@@ -72,41 +72,33 @@ public final class QuaternionFloat128MatrixMember
 	private StorageConstruction s;
 	
 	public QuaternionFloat128MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public QuaternionFloat128MatrixMember(int r, int c, BigDecimal... vals) {
+	public QuaternionFloat128MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public QuaternionFloat128MatrixMember(long r, long c, BigDecimal... vals) {
+		this(r,c);
 		setFromBigDecimal(vals);
 	}
 	
-	public QuaternionFloat128MatrixMember(int r, int c, BigInteger... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+	public QuaternionFloat128MatrixMember(long r, long c, BigInteger... vals) {
+		this(r,c);
 		setFromBigInteger(vals);
 	}
 	
-	public QuaternionFloat128MatrixMember(int r, int c, double... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+	public QuaternionFloat128MatrixMember(long r, long c, double... vals) {
+		this(r,c);
 		setFromDouble(vals);
 	}
 
-	public QuaternionFloat128MatrixMember(int r, int c, long... vals) {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(r,c);
+	public QuaternionFloat128MatrixMember(long r, long c, long... vals) {
+		this(r,c);
 		setFromLong(vals);
 	}
 	
@@ -141,10 +133,6 @@ public final class QuaternionFloat128MatrixMember
 		init(d2,d1);
 	}
 
-	public QuaternionFloat128MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
-	}
-	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

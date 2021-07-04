@@ -72,18 +72,34 @@ public final class HighPrecisionMatrixMember
 	private StorageConstruction s;
 	
 	public HighPrecisionMatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public HighPrecisionMatrixMember(int r, int c, BigDecimal... vals) {
+	public HighPrecisionMatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public HighPrecisionMatrixMember(long r, long c, BigDecimal... vals) {
+		this(r, c);
 		setFromBigDecimal(vals);
+	}
+	
+	public HighPrecisionMatrixMember(long r, long c, BigInteger... vals) {
+		this(r, c);
+		setFromBigInteger(vals);
+	}
+	
+	public HighPrecisionMatrixMember(long r, long c, double... vals) {
+		this(r, c);
+		setFromDouble(vals);
+	}
+	
+	public HighPrecisionMatrixMember(long r, long c, long... vals) {
+		this(r, c);
+		setFromLong(vals);
 	}
 	
 	public HighPrecisionMatrixMember(HighPrecisionMatrixMember other) {
@@ -114,10 +130,6 @@ public final class HighPrecisionMatrixMember
 		init(d2, d1);
 	}
 
-	public HighPrecisionMatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
-	}
-	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

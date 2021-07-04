@@ -71,17 +71,18 @@ public final class QuaternionFloat64MatrixMember
 	private StorageConstruction s;
 	
 	public QuaternionFloat64MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public QuaternionFloat64MatrixMember(int r, int c, double... vals) {
+	public QuaternionFloat64MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public QuaternionFloat64MatrixMember(long r, long c, double... vals) {
+		this(r,c);
 		setFromDouble(vals);
 	}
 	
@@ -116,10 +117,6 @@ public final class QuaternionFloat64MatrixMember
 		init(d2,d1);
 	}
 
-	public QuaternionFloat64MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
-	}
-	
 	@Override
 	public StorageConstruction storageType() {
 		return s;

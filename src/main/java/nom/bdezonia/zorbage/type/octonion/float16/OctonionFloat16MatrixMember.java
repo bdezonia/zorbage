@@ -71,17 +71,18 @@ public final class OctonionFloat16MatrixMember
 	private StorageConstruction s;
 	
 	public OctonionFloat16MatrixMember() {
-		rows = -1;
-		cols = -1;
-		s = StorageConstruction.MEM_ARRAY;
-		init(0,0);
+		this(0,0);
 	}
 	
-	public OctonionFloat16MatrixMember(int r, int c, float... vals) {
+	public OctonionFloat16MatrixMember(long r, long c) {
 		rows = -1;
 		cols = -1;
 		s = StorageConstruction.MEM_ARRAY;
 		init(r,c);
+	}
+	
+	public OctonionFloat16MatrixMember(long r, long c, float... vals) {
+		this(r,c);
 		setFromFloat(vals);
 	}
 	
@@ -118,10 +119,6 @@ public final class OctonionFloat16MatrixMember
 		cols = -1;
 		this.s = s;
 		init(d2,d1);
-	}
-	
-	public OctonionFloat16MatrixMember(long rows, long cols) {
-		this(StorageConstruction.MEM_ARRAY, cols, rows);
 	}
 	
 	@Override
