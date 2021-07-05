@@ -66,9 +66,10 @@ public class Sincpi {
 		}
 		else {
 			U tmp = algebra.construct();
-			U piX = algebra.construct();
-			algebra.PI().call(piX);
-			algebra.multiply().call(piX, x, piX);
+			U pi = algebra.construct(x);
+			U piX = algebra.construct(x);
+			algebra.PI().call(pi);
+			algebra.multiply().call(pi, x, piX);
 			algebra.sin().call(piX, tmp);
 			algebra.divide().call(tmp, piX, result);
 		}
