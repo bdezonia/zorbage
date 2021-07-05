@@ -81,8 +81,7 @@ public class TestFloat16Matrix {
 		double tol = 0.005;
 		
 		Float16MatrixMember mat =
-				new Float16MatrixMember(3, 3,
-						new float[] {1,7,4,1,2,4,8,3,3});
+				new Float16MatrixMember(3, 3, 1,7,4,1,2,4,8,3,3);
 		
 		Float16MatrixMember invMat =
 				new Float16MatrixMember(3, 3, new float[9]);
@@ -137,8 +136,8 @@ public class TestFloat16Matrix {
 	
 	@Test
 	public void testSingular() {
-		Float16MatrixMember a = new Float16MatrixMember(3, 3, new float[] {1,0,0,0,1,0,0,0,0});
-		Float16VectorMember b = new Float16VectorMember(new float[] {1,2,3});
+		Float16MatrixMember a = new Float16MatrixMember(3, 3, 1,0,0,0,1,0,0,0,0);
+		Float16VectorMember b = new Float16VectorMember(1,2,3);
 		Float16VectorMember x = new Float16VectorMember(new float[3]);
 		LUDecomp.compute(G.HLF, G.HLF_MAT, a);
 		LUSolve.compute(G.HLF, G.HLF_VEC, a, b, x);

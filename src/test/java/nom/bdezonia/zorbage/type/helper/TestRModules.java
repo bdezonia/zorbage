@@ -52,7 +52,7 @@ public class TestRModules {
 	@Test
 	public void testRModuleToNumber() {
 		
-		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(new double[] {1,2,3,4,5,6,7,8,9,10});
+		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(1,2, 3,4, 5,6, 7,8, 9,10);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -92,7 +92,7 @@ public class TestRModules {
 	@Test
 	public void testRModuleToSubRModule() {
 		
-		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(new double[] {1,2,3,4,5,6,7,8,9,10});
+		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(1,2, 3,4, 5,6, 7,8, 9,10);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -235,7 +235,7 @@ public class TestRModules {
 	@Test
 	public void testRModuleToMatrix() {
 		
-		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(new double[] {1,2,3,4,5,6,7,8,9,10});
+		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(1,2, 3,4, 5,6, 7,8, 9,10);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -484,7 +484,7 @@ public class TestRModules {
 	@Test
 	public void testRModuleToTensor() {
 		
-		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(new double[] {1,2,3,4,5,6,7,8});
+		ComplexFloat64VectorMember v = new ComplexFloat64VectorMember(1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		

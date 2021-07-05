@@ -53,17 +53,9 @@ public class TestFloat128Matrix {
 		
 		BigDecimal tol = BigDecimal.valueOf(0.00000000000000001);
 		
-		int[] ints = new int[]{1,7,4,1,2,4,8,3,3};
-		
-		BigDecimal[] values = new BigDecimal[ints.length];
-		
-		for (int i = 0; i < ints.length; i++) {
-			values[i] = BigDecimal.valueOf(ints[i]);
-		}
-		
 		// Used wolfram alpha to come up with this example
 		
-		Float128MatrixMember mat = new Float128MatrixMember(3, 3, values);
+		Float128MatrixMember mat = new Float128MatrixMember(3, 3, 1,7,4,1,2,4,8,3,3);
 		
 		Float128MatrixMember invMat = new Float128MatrixMember(3, 3);
 		

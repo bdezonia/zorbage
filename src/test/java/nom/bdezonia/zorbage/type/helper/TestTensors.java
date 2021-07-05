@@ -52,7 +52,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToNumber() {
 		
-		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, new double[] {1,2,3,4,5,6,7,8});
+		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -114,7 +114,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToRModule() {
 		
-		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, new double[] {1,2,3,4,5,6,7,8});
+		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -285,7 +285,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToMatrix() {
 
-		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, new double[] {1,2,3,4,5,6,7,8});
+		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -446,7 +446,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToSubTensor() {
 
-		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, new double[] {1,2,3,4,5,6,7,8});
+		ComplexFloat64CartesianTensorProductMember t = new ComplexFloat64CartesianTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		

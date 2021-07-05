@@ -50,8 +50,7 @@ public class TestFloat32Matrix {
 		double tol = 0.000001;
 		
 		Float32MatrixMember mat =
-				new Float32MatrixMember(3, 3,
-						new float[] {1,7,4,1,2,4,8,3,3});
+				new Float32MatrixMember(3, 3, 1,7,4,1,2,4,8,3,3);
 		
 		Float32MatrixMember invMat =
 				new Float32MatrixMember(3, 3, new float[9]);
@@ -106,8 +105,8 @@ public class TestFloat32Matrix {
 	
 	@Test
 	public void testSingular() {
-		Float32MatrixMember a = new Float32MatrixMember(3, 3, new float[] {1,0,0,0,1,0,0,0,0});
-		Float32VectorMember b = new Float32VectorMember(new float[] {1,2,3});
+		Float32MatrixMember a = new Float32MatrixMember(3, 3, 1,0,0,0,1,0,0,0,0);
+		Float32VectorMember b = new Float32VectorMember(1,2,3);
 		Float32VectorMember x = new Float32VectorMember(new float[3]);
 		LUDecomp.compute(G.FLT, G.FLT_MAT, a);
 		LUSolve.compute(G.FLT, G.FLT_VEC, a, b, x);

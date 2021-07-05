@@ -50,8 +50,7 @@ public class TestFloat64Matrix {
 		double tol = 0.00000000000001;
 		
 		Float64MatrixMember mat =
-				new Float64MatrixMember(3, 3,
-						new double[] {1,7,4,1,2,4,8,3,3});
+				new Float64MatrixMember(3, 3, 1, 7, 4, 1, 2, 4, 8, 3, 3});
 		
 		Float64MatrixMember invMat =
 				new Float64MatrixMember(3, 3, new double[9]);
