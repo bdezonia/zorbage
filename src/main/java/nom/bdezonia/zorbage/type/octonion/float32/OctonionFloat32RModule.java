@@ -514,6 +514,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -528,6 +529,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -542,6 +544,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -556,6 +559,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32Member scalar, OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OFLT, scalar, G.OFLT.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -570,6 +574,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b, OctonionFloat32RModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.OFLT, G.OFLT.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -584,6 +589,7 @@ public class OctonionFloat32RModule
 	{
 		@Override
 		public void call(OctonionFloat32RModuleMember a, OctonionFloat32RModuleMember b, OctonionFloat32RModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.OFLT, G.OFLT.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

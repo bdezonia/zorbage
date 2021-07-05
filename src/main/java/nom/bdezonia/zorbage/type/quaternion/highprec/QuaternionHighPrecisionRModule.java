@@ -470,6 +470,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -484,6 +485,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -498,6 +500,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -512,6 +515,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHP, scalar, G.QHP.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -526,6 +530,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.QHP, G.QHP.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -540,6 +545,7 @@ public class QuaternionHighPrecisionRModule
 	{
 		@Override
 		public void call(QuaternionHighPrecisionRModuleMember a, QuaternionHighPrecisionRModuleMember b, QuaternionHighPrecisionRModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.QHP, G.QHP.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

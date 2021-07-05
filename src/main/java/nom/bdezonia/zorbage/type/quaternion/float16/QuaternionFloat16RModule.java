@@ -525,6 +525,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16Member scalar, QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -539,6 +540,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16Member scalar, QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -553,6 +555,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16Member scalar, QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -567,6 +570,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16Member scalar, QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QHLF, scalar, G.QHLF.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -581,6 +585,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b, QuaternionFloat16RModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.QHLF, G.QHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -595,6 +600,7 @@ public class QuaternionFloat16RModule
 	{
 		@Override
 		public void call(QuaternionFloat16RModuleMember a, QuaternionFloat16RModuleMember b, QuaternionFloat16RModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.QHLF, G.QHLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

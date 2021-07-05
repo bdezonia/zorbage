@@ -460,6 +460,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -474,6 +475,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -488,6 +490,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -502,6 +505,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHP, scalar, G.CHP.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -516,6 +520,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b, ComplexHighPrecisionVectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CHP, G.CHP.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -530,6 +535,7 @@ public class ComplexHighPrecisionVector
 	{
 		@Override
 		public void call(ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b, ComplexHighPrecisionVectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CHP, G.CHP.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

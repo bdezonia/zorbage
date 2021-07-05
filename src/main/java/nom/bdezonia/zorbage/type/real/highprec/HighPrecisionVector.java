@@ -422,6 +422,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -436,6 +437,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -450,6 +452,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -464,6 +467,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionVectorMember a, HighPrecisionVectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HP, scalar, G.HP.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -478,6 +482,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.HP, G.HP.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -492,6 +497,7 @@ public class HighPrecisionVector
 	{
 		@Override
 		public void call(HighPrecisionVectorMember a, HighPrecisionVectorMember b, HighPrecisionVectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.HP, G.HP.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

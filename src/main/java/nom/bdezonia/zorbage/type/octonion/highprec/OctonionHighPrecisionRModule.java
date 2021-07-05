@@ -460,6 +460,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -474,6 +475,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -488,6 +490,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -502,6 +505,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.OHP, scalar, G.OHP.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -516,6 +520,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.OHP, G.OHP.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -530,6 +535,7 @@ public class OctonionHighPrecisionRModule
 	{
 		@Override
 		public void call(OctonionHighPrecisionRModuleMember a, OctonionHighPrecisionRModuleMember b, OctonionHighPrecisionRModuleMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.OHP, G.OHP.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

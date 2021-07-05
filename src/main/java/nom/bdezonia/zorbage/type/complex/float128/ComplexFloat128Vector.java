@@ -547,6 +547,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128VectorMember a, ComplexFloat128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -561,6 +562,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128VectorMember a, ComplexFloat128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -575,6 +577,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128VectorMember a, ComplexFloat128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -589,6 +592,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128VectorMember a, ComplexFloat128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -603,6 +607,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128VectorMember a, ComplexFloat128VectorMember b, ComplexFloat128VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CQUAD, G.CQUAD.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -617,6 +622,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128VectorMember a, ComplexFloat128VectorMember b, ComplexFloat128VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CQUAD, G.CQUAD.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

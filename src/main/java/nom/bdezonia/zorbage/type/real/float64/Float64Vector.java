@@ -492,6 +492,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -506,6 +507,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -520,6 +522,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -534,6 +537,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.DBL, scalar, G.DBL.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -548,6 +552,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.DBL, G.DBL.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -562,6 +567,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a, Float64VectorMember b, Float64VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.DBL, G.DBL.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

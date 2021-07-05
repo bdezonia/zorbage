@@ -514,6 +514,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -528,6 +529,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -542,6 +544,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -556,6 +559,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32Member scalar, ComplexFloat32VectorMember a, ComplexFloat32VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CFLT, scalar, G.CFLT.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -570,6 +574,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b, ComplexFloat32VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CFLT, G.CFLT.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -584,6 +589,7 @@ public class ComplexFloat32Vector
 	{
 		@Override
 		public void call(ComplexFloat32VectorMember a, ComplexFloat32VectorMember b, ComplexFloat32VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CFLT, G.CFLT.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

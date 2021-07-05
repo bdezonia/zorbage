@@ -514,6 +514,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -528,6 +529,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -542,6 +544,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -556,6 +559,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16VectorMember a, ComplexFloat16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -570,6 +574,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CHLF, G.CHLF.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -584,6 +589,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a, ComplexFloat16VectorMember b, ComplexFloat16VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CHLF, G.CHLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

@@ -514,6 +514,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -528,6 +529,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -542,6 +544,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -556,6 +559,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64VectorMember a, ComplexFloat64VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -570,6 +574,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CDBL, G.CDBL.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -584,6 +589,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a, ComplexFloat64VectorMember b, ComplexFloat64VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.CDBL, G.CDBL.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

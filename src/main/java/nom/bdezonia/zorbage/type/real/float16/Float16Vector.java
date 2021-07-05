@@ -492,6 +492,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16Member scalar, Float16VectorMember a, Float16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -506,6 +507,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16Member scalar, Float16VectorMember a, Float16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -520,6 +522,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16Member scalar, Float16VectorMember a, Float16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -534,6 +537,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16Member scalar, Float16VectorMember a, Float16VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.HLF, scalar, G.HLF.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -548,6 +552,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a, Float16VectorMember b, Float16VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.HLF, G.HLF.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -562,6 +567,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a, Float16VectorMember b, Float16VectorMember c) {
+			b.alloc(a.length());
 			Transform3.compute(G.HLF, G.HLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};

@@ -518,6 +518,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.add(), a.rawData(), b.rawData());
 		}
 	};
@@ -532,6 +533,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.subtract(), a.rawData(), b.rawData());
 		}
 	};
@@ -546,6 +548,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.multiply(), a.rawData(), b.rawData());
 		}
 	};
@@ -560,6 +563,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
+			b.alloc(a.length());
 			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.divide(), a.rawData(), b.rawData());
 		}
 	};
@@ -574,6 +578,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128VectorMember a, Float128VectorMember b, Float128VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.QUAD, G.QUAD.multiply(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
@@ -588,6 +593,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128VectorMember a, Float128VectorMember b, Float128VectorMember c) {
+			c.alloc(a.length());
 			Transform3.compute(G.QUAD, G.QUAD.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
