@@ -58,17 +58,17 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
 
     - rational numbers (unbounded)
     
+    - gaussian integers (bits: 8, 16, 32, 64, unbounded)
+    
     - Unicode16 characters and variable length strings and fixed length strings
   
     - booleans
     
     - n-dimensional real Points
     
-    - ARGB and RGB tuples
+    - ARGB, RGB, and LAB tuples
     
     - vectors and matrices and tensors made of the various types
-    
-    - gaussian integers (bits: 8, 16, 32, 64, unbounded)
   
   Define your own data types
   
