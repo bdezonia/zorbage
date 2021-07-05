@@ -57,7 +57,8 @@ public class TestFloat64CartesianTensor {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		Float64CartesianTensorProductMember a = G.DBL_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
+		Float64CartesianTensorProductMember a =
+				G.DBL_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
 		assertEquals(3, a.rank());
 		assertEquals(3, a.dimension(0));
 		assertEquals(3, a.dimension(1));
@@ -95,9 +96,12 @@ public class TestFloat64CartesianTensor {
 				assertEquals(0, value.v(), 0);
 		}
 
-		Float64CartesianTensorProductMember x = new Float64CartesianTensorProductMember(2, 2, new double[] {1,2,3,4});
-		Float64CartesianTensorProductMember y = new Float64CartesianTensorProductMember(2, 2, new double[] {5,6,7,8});
-		Float64CartesianTensorProductMember z = new Float64CartesianTensorProductMember();
+		Float64CartesianTensorProductMember x =
+				new Float64CartesianTensorProductMember(2, 2, 1,2,3,4);
+		Float64CartesianTensorProductMember y =
+				new Float64CartesianTensorProductMember(2, 2, 5,6,7,8);
+		Float64CartesianTensorProductMember z =
+				new Float64CartesianTensorProductMember();
 
 		G.DBL_TEN.multiply().call(x, y, z);
 		
@@ -118,8 +122,10 @@ public class TestFloat64CartesianTensor {
 		Float64Member tmp1 = G.DBL.construct();
 		Float64Member tmp2 = G.DBL.construct();
 		
-		Float64CartesianTensorProductMember value1 = new Float64CartesianTensorProductMember(rank, dimension);
-		Float64CartesianTensorProductMember value2 = new Float64CartesianTensorProductMember(rank, dimension);
+		Float64CartesianTensorProductMember value1 =
+				new Float64CartesianTensorProductMember(rank, dimension);
+		Float64CartesianTensorProductMember value2 =
+				new Float64CartesianTensorProductMember(rank, dimension);
 
 		assertNotNull(G.DBL_TEN.construct());
 		Float64CartesianTensorProductMember junk1 = G.DBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
@@ -310,8 +316,10 @@ public class TestFloat64CartesianTensor {
 		assertEquals(16, value2.numElems());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
-			// TODO do something. Note that the impl does a simple approach that matches theory very closely. I think we can
-			//   get by not testing this a lot yet.
+			// TODO do something. Note that the impl does a simple approach
+			// that matches theory very closely. I think we can get by not
+			// testing this a lot yet.
+			//
 			// System.out.println(tmp2.v());
 			//assertEquals(some func val, tmp2.v(), 0);
 		}
@@ -419,7 +427,8 @@ public class TestFloat64CartesianTensor {
 		IntegerIndex index = new IntegerIndex(2);
 		ComplexFloat64Member ctmp1 = G.CDBL.construct();
 		ComplexFloat64Member ctmp2 = G.CDBL.construct();
-		ComplexFloat64CartesianTensorProductMember cvalue1 = new ComplexFloat64CartesianTensorProductMember(2,2);
+		ComplexFloat64CartesianTensorProductMember cvalue1 =
+				new ComplexFloat64CartesianTensorProductMember(2,2);
 		index.set(0, 0);
 		index.set(1, 0);
 		ctmp1.setR(1);
@@ -440,7 +449,8 @@ public class TestFloat64CartesianTensor {
 		ctmp1.setR(7);
 		ctmp1.setI(8);
 		cvalue1.setV(index, ctmp1);
-		ComplexFloat64CartesianTensorProductMember cvalue2 = new ComplexFloat64CartesianTensorProductMember();
+		ComplexFloat64CartesianTensorProductMember cvalue2 =
+				new ComplexFloat64CartesianTensorProductMember();
 		
 		G.CDBL_TEN.conjugate().call(cvalue1, cvalue2);
 		assertEquals(cvalue1.rank(), cvalue2.rank());
@@ -493,6 +503,10 @@ public class TestFloat64CartesianTensor {
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
 		value1 = new Float64CartesianTensorProductMember(0,3);
-		value1.getV(idx, tmp1);
+		tmp1.setV(53.9);
+		value1.setV(idx, tmp1);
+		tmp2.setV(-99999);
+		value1.getV(idx, tmp2);
+		assertEquals(53.9, tmp2.v(), 0);
 	}
 }
