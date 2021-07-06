@@ -567,7 +567,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a, Float16VectorMember b, Float16VectorMember c) {
-			b.alloc(a.length());
+			c.alloc(a.length());
 			Transform3.compute(G.HLF, G.HLF.divide(), a.rawData(), b.rawData(), c.rawData());
 		}
 	};
