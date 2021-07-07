@@ -82,8 +82,8 @@ public class TwelveDView<U> implements Dimensioned {
 	}
 	
 	public TwelveDView(DimensionedDataSource<U> ds) {
-		if (ds.numDimensions() != 11)
-			throw new IllegalArgumentException("11-d view passed a data source that is "+ds.numDimensions()+"-d");
+		if (ds.numDimensions() != 12)
+			throw new IllegalArgumentException("12-d view passed a data source that is "+ds.numDimensions()+"-d");
 		this.d0 = ds.dimension(0);
 		this.d1 = ds.dimension(1);
 		this.d2 = ds.dimension(2);
@@ -101,7 +101,7 @@ public class TwelveDView<U> implements Dimensioned {
 		this.idx = new ThreadLocal<IntegerIndex>() {
 			@Override
 			protected IntegerIndex initialValue() {
-				return new IntegerIndex(ds.numDimensions());
+				return new IntegerIndex(12);
 			}
 		};
 	}

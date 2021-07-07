@@ -84,8 +84,8 @@ public class ThirteenDView<U> implements Dimensioned {
 	}
 	
 	public ThirteenDView(DimensionedDataSource<U> ds) {
-		if (ds.numDimensions() != 12)
-			throw new IllegalArgumentException("11-d view passed a data source that is "+ds.numDimensions()+"-d");
+		if (ds.numDimensions() != 13)
+			throw new IllegalArgumentException("13-d view passed a data source that is "+ds.numDimensions()+"-d");
 		this.d0 = ds.dimension(0);
 		this.d1 = ds.dimension(1);
 		this.d2 = ds.dimension(2);
@@ -104,7 +104,7 @@ public class ThirteenDView<U> implements Dimensioned {
 		this.idx = new ThreadLocal<IntegerIndex>() {
 			@Override
 			protected IntegerIndex initialValue() {
-				return new IntegerIndex(ds.numDimensions());
+				return new IntegerIndex(13);
 			}
 		};
 	}

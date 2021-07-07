@@ -84,7 +84,7 @@ public class SevenDView<U> implements Dimensioned {
 		this.idx = new ThreadLocal<IntegerIndex>() {
 			@Override
 			protected IntegerIndex initialValue() {
-				return new IntegerIndex(ds.numDimensions());
+				return new IntegerIndex(7);
 			}
 		};
 	}
