@@ -50,8 +50,7 @@ public class TwoDView<U> implements Dimensioned {
 	private final ThreadLocal<IntegerIndex> idx;
 	
 	public TwoDView(long d0, long d1, IndexedDataSource<U> data) {
-		if (d0*d1 != data.size())
-			throw new IllegalArgumentException("view dimensions do not match underlying data source dimensions");
+		DViewUtils.checkDims(data.size(), d0,d1);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.list = data;

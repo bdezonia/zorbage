@@ -58,8 +58,7 @@ public class TenDView<U> implements Dimensioned {
 	private final ThreadLocal<IntegerIndex> idx;
 	
 	public TenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, long d9, IndexedDataSource<U> data) {
-		if (d0*d1*d2*d3*d4*d5*d6*d7*d8*d9 != data.size())
-			throw new IllegalArgumentException("view dimensions do not match underlying data source dimensions");
+		DViewUtils.checkDims(data.size(), d0,d1,d2,d3,d4,d5,d6,d7,d8,d9);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;

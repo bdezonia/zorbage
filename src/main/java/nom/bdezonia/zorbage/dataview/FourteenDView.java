@@ -65,8 +65,7 @@ public class FourteenDView<U> implements Dimensioned {
 						long d8, long d9, long d10, long d11, long d12, long d13,
 						IndexedDataSource<U> data)
 	{
-		if (d0*d1*d2*d3*d4*d5*d6*d7*d8*d9*d10*d11*d12*d13 != data.size())
-			throw new IllegalArgumentException("view dimensions do not match underlying data source dimensions");
+		DViewUtils.checkDims(data.size(), d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;

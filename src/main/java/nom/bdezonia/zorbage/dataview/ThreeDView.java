@@ -51,8 +51,7 @@ public class ThreeDView<U> implements Dimensioned {
 	private final ThreadLocal<IntegerIndex> idx;
 	
 	public ThreeDView(long d0, long d1, long d2, IndexedDataSource<U> data) {
-		if (d0*d1*d2 != data.size())
-			throw new IllegalArgumentException("view dimensions do not match underlying data source dimensions");
+		DViewUtils.checkDims(data.size(), d0,d1,d2);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;

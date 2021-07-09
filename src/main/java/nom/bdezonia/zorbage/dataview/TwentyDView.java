@@ -71,8 +71,7 @@ public class TwentyDView<U> implements Dimensioned {
 						long d8, long d9, long d10, long d11, long d12, long d13, long d14,
 						long d15, long d16, long d17, long d18, long d19, IndexedDataSource<U> data)
 	{
-		if (d0*d1*d2*d3*d4*d5*d6*d7*d8*d9*d10*d11*d12*d13*d14*d15*d16*d17*d18*d19 != data.size())
-			throw new IllegalArgumentException("view dimensions do not match underlying data source dimensions");
+		DViewUtils.checkDims(data.size(), d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;
