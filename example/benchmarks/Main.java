@@ -1,3 +1,5 @@
+// A zorbage example
+
 package benchmarks;
 
 import nom.bdezonia.zorbage.algebra.G;
@@ -10,6 +12,11 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
+/**
+ * 
+ * @author Barry DeZonia
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
