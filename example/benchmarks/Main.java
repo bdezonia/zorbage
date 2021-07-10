@@ -48,11 +48,11 @@ public class Main {
 		
 		FiveDView<Float32Member> view = new FiveDView<>(dataSource);
 		
-		for (long t = 0; t < T; t++) {
-			for (long c = 0; c < C; c++) {
-				for (long z = 0; z < Z; z++) {
-					for (long y = 0; y < Y; y++) {
-						for (long x = 0; x < X; x++) {
+		for (long t = 0; t < view.d4(); t++) {
+			for (long c = 0; c < view.d3(); c++) {
+				for (long z = 0; z < view.d2(); z++) {
+					for (long y = 0; y < view.d1(); y++) {
+						for (long x = 0; x < view.d0(); x++) {
 							view.set(x, y, z, c, t, value);
 						}
 					}
