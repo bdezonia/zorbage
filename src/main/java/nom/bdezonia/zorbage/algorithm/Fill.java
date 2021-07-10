@@ -47,18 +47,20 @@ public class Fill {
 	private Fill() {}
 
 	/**
-	 * Fill a target data source in a non-threaded fashion. This is usually needed when you
-	 * want to fill a virtual structure.
+	 * Fill a target data source in a non-threaded fashion. This is
+	 * usually needed when you want to fill a virtual structure.
 	 *
 	 * @param algebra
 	 * @param storage
 	 * @param value
 	 */
 	public static <T extends Algebra<T,U>,U>
-	void compute(T algebra, U value, IndexedDataSource<U> storage)
+		void compute(T algebra, U value, IndexedDataSource<U> storage)
 	{
-		Constant<T,U> proc = new Constant<>(algebra, value);
-		compute(algebra, proc, storage);
+		long size = storage.size();
+		for (long i = 0; i < size; i++) {
+			storage.set(i, value);
+		}
 	}
 
 	/**
@@ -68,7 +70,7 @@ public class Fill {
 	 * @param proc
 	 */
 	public static <T extends Algebra<T,U>,U>
-	void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
+		void compute(T algebra, Procedure1<U> proc, IndexedDataSource<U> storage)
 	{
 		Transform1.compute(algebra, proc, storage);
 	}
