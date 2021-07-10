@@ -21,10 +21,19 @@ public class Main {
 		long T = 100;
 		
 		long[] dims = new long[] {X, Y, Z, C, T};
+		
 		DimensionedDataSource<Float32Member> dataSource =
 				DimensionedStorage.allocate(G.FLT.construct(), dims);
 
 		Float32Member value = G.FLT.construct();
+		
+		// warm up the cache
+		
+		value.setV(-99);
+
+		Fill.compute(G.FLT, value, dataSource.rawData());
+		
+		// now start timing
 		
 		// fastest approach to filling the dataset
 
