@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -46,16 +45,12 @@ public class TwoDView<U> implements Dimensioned {
 	private final long d0;
 	private final long d1;
 	private final IndexedDataSource<U> list;
-	private final DimensionedDataSource<U> ds;
-	private final ThreadLocal<IntegerIndex> idx;
 	
 	public TwoDView(long d0, long d1, IndexedDataSource<U> data) {
 		DViewUtils.checkDims(data.size(), d0,d1);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.list = data;
-		this.ds = null;
-		this.idx = null;
 	}
 	
 	public TwoDView(DimensionedDataSource<U> ds) {
@@ -64,13 +59,6 @@ public class TwoDView<U> implements Dimensioned {
 		this.d0 = ds.dimension(0);
 		this.d1 = ds.dimension(1);
 		this.list = ds.rawData();
-		this.ds = ds;
-		this.idx = new ThreadLocal<IntegerIndex>() {
-			@Override
-			protected IntegerIndex initialValue() {
-				return new IntegerIndex(2);
-			}
-		};
 	}
 	
 	public long d0() { return d0; }
@@ -91,12 +79,7 @@ public class TwoDView<U> implements Dimensioned {
 	
 	public void safeGet(long i0, long i1, U val) {
 		if (outOfBounds(i0,i1)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			index.set(1, i1);
-			ds.safeGet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			get(i0,i1,val);
@@ -104,12 +87,7 @@ public class TwoDView<U> implements Dimensioned {
 	
 	public void safeSet(long i0, long i1, U val) {
 		if (outOfBounds(i0,i1)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			index.set(1, i1);
-			ds.safeSet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			set(i0,i1,val);

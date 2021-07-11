@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -54,8 +53,6 @@ public class TenDView<U> implements Dimensioned {
 	private final long d8;
 	private final long d9;
 	private final IndexedDataSource<U> list;
-	private final DimensionedDataSource<U> ds;
-	private final ThreadLocal<IntegerIndex> idx;
 	
 	public TenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, long d9, IndexedDataSource<U> data) {
 		DViewUtils.checkDims(data.size(), d0,d1,d2,d3,d4,d5,d6,d7,d8,d9);
@@ -70,8 +67,6 @@ public class TenDView<U> implements Dimensioned {
 		this.d8 = d8;
 		this.d9 = d9;
 		this.list = data;
-		this.ds = null;
-		this.idx = null;
 	}
 	
 	public TenDView(DimensionedDataSource<U> ds) {
@@ -88,13 +83,6 @@ public class TenDView<U> implements Dimensioned {
 		this.d8 = ds.dimension(8);
 		this.d9 = ds.dimension(9);
 		this.list = ds.rawData();
-		this.ds = ds;
-		this.idx = new ThreadLocal<IntegerIndex>() {
-			@Override
-			protected IntegerIndex initialValue() {
-				return new IntegerIndex(10);
-			}
-		};
 	}
 	
 	public long d0() { return d0; }
@@ -147,20 +135,7 @@ public class TenDView<U> implements Dimensioned {
 	
 	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, U val) {
 		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			index.set(1, i1);
-			index.set(2, i2);
-			index.set(3, i3);
-			index.set(4, i4);
-			index.set(5, i5);
-			index.set(6, i6);
-			index.set(7, i7);
-			index.set(8, i8);
-			index.set(9, i9);
-			ds.safeGet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			get(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,val);
@@ -168,20 +143,7 @@ public class TenDView<U> implements Dimensioned {
 	
 	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, U val) {
 		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			index.set(1, i1);
-			index.set(2, i2);
-			index.set(3, i3);
-			index.set(4, i4);
-			index.set(5, i5);
-			index.set(6, i6);
-			index.set(7, i7);
-			index.set(8, i8);
-			index.set(9, i9);
-			ds.safeSet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			set(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,val);

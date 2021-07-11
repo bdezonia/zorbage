@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -45,15 +44,11 @@ public class OneDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final IndexedDataSource<U> list;
-	private final DimensionedDataSource<U> ds;
-	private final ThreadLocal<IntegerIndex> idx;
 
 	
 	public OneDView(IndexedDataSource<U> data) {
 		this.list = data;
 		this.d0 = data.size();
-		this.ds = null;
-		this.idx = null;
 	}
 	
 	public OneDView(DimensionedDataSource<U> ds) {
@@ -61,13 +56,6 @@ public class OneDView<U> implements Dimensioned {
 			throw new IllegalArgumentException("1-d view passed a data source that is "+ds.numDimensions()+"-d");
 		this.list = ds.rawData();
 		this.d0 = list.size();
-		this.ds = ds;
-		this.idx = new ThreadLocal<IntegerIndex>() {
-			@Override
-			protected IntegerIndex initialValue() {
-				return new IntegerIndex(1);
-			}
-		};
 	}
 	
 	public long d0() { return d0; }
@@ -82,11 +70,7 @@ public class OneDView<U> implements Dimensioned {
 	
 	public void safeGet(long i0, U val) {
 		if (outOfBounds(i0)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			ds.safeGet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			get(i0, val);
@@ -94,11 +78,7 @@ public class OneDView<U> implements Dimensioned {
 	
 	public void safeSet(long i0, U val) {
 		if (outOfBounds(i0)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			ds.safeSet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			set(i0, val);

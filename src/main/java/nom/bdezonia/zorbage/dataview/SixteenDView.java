@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -60,8 +59,6 @@ public class SixteenDView<U> implements Dimensioned {
 	private final long d14;
 	private final long d15;
 	private final IndexedDataSource<U> list;
-	private final DimensionedDataSource<U> ds;
-	private final ThreadLocal<IntegerIndex> idx;
 	
 	public SixteenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7,
 						long d8, long d9, long d10, long d11, long d12, long d13, long d14,
@@ -85,8 +82,6 @@ public class SixteenDView<U> implements Dimensioned {
 		this.d14 = d14;
 		this.d15 = d15;
 		this.list = data;
-		this.ds = null;
-		this.idx = null;
 	}
 	
 	public SixteenDView(DimensionedDataSource<U> ds) {
@@ -109,13 +104,6 @@ public class SixteenDView<U> implements Dimensioned {
 		this.d14 = ds.dimension(14);
 		this.d15 = ds.dimension(15);
 		this.list = ds.rawData();
-		this.ds = ds;
-		this.idx = new ThreadLocal<IntegerIndex>() {
-			@Override
-			protected IntegerIndex initialValue() {
-				return new IntegerIndex(16);
-			}
-		};
 	}
 	
 	public long d0() { return d0; }
@@ -200,26 +188,7 @@ public class SixteenDView<U> implements Dimensioned {
 			long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, U val)
 	{
 		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			index.set(1, i1);
-			index.set(2, i2);
-			index.set(3, i3);
-			index.set(4, i4);
-			index.set(5, i5);
-			index.set(6, i6);
-			index.set(7, i7);
-			index.set(8, i8);
-			index.set(9, i9);
-			index.set(10, i10);
-			index.set(11, i11);
-			index.set(12, i12);
-			index.set(13, i13);
-			index.set(14, i14);
-			index.set(15, i15);
-			ds.safeGet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			get(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,val);
@@ -229,26 +198,7 @@ public class SixteenDView<U> implements Dimensioned {
 			long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, U val)
 	{
 		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15)) {
-			if (ds == null)
-				throw new IllegalArgumentException("view index out of bounds");
-			IntegerIndex index = idx.get();
-			index.set(0, i0);
-			index.set(1, i1);
-			index.set(2, i2);
-			index.set(3, i3);
-			index.set(4, i4);
-			index.set(5, i5);
-			index.set(6, i6);
-			index.set(7, i7);
-			index.set(8, i8);
-			index.set(9, i9);
-			index.set(10, i10);
-			index.set(11, i11);
-			index.set(12, i12);
-			index.set(13, i13);
-			index.set(14, i14);
-			index.set(15, i15);
-			ds.safeSet(index, val);
+			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
 			set(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,val);
