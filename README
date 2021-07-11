@@ -45,8 +45,14 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
 
   Define multidimensional data sets with flexible out of bounds data
     handling procedures.
-    
-  Use many different data types (116 and counting)
+
+  Use data views of your multidimensional data source to very rapidly set
+    and get values. Data views allow one to write any sample visiting
+    algorithm desired. The views are especially good with nested for loop
+    approaches to iterating through data. Their speed is comparable to
+    direct 1-d array access. 
+        
+  Use many different data types (133 and counting)
 
     - signed integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128, unbounded)
@@ -66,7 +72,7 @@ Thanks, I'll look that up later. Can you desribe what can I do with Zorbage?
     
     - n-dimensional real Points
     
-    - ARGB, RGB, and LAB tuples
+    - ARGB, RGB, and CIE LAB tuples
     
     - vectors and matrices and tensors made of the various types
   
