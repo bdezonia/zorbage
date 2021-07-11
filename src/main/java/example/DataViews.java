@@ -34,22 +34,16 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.datasource.ProcedurePaddedDataSource;
 import nom.bdezonia.zorbage.dataview.FiveDView;
 import nom.bdezonia.zorbage.dataview.OneDView;
 import nom.bdezonia.zorbage.dataview.ThreeDView;
 import nom.bdezonia.zorbage.dataview.TwoDView;
-import nom.bdezonia.zorbage.oob.nd.ConstantNdOOB;
-import nom.bdezonia.zorbage.oob.oned.ConstantOOB;
-import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorageSignedInt16;
 import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
-import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
 /**
@@ -199,9 +193,11 @@ class DataViews {
 	// along the time axis etc.
 
 	// You can construct data views from a DimensionedDataSource or an
-	// IndexedDataSource. Data views make sure if you poke one of these
-	// sources out of bounds you will get the appropriate OOB value if
-	// the source has attached one.
+	// IndexedDataSource. Data views do not respect out of bounds 
+	// policies for a given source. It is assumed you will always access
+	// a data view in bounds. You can call the safeSet()/safeGet()
+	// methods. They bounds check but simply aboirt their operation
+	// with an error exception.
 	
 	// Here is an example of this using an IndexedDataSource
 	
@@ -210,28 +206,19 @@ class DataViews {
 		IndexedDataSource<Float32Member> ids =
 				Storage.allocate(G.FLT.construct(), 100);
 		
-		Float32Member constant = G.FLT.construct(-999);
-		
-		Procedure2<Long,Float32Member> proc = new ConstantOOB<>(G.FLT, ids.size(), constant);
-		
-		IndexedDataSource<Float32Member> padded =
-				new ProcedurePaddedDataSource<Float32Algebra,Float32Member>(G.FLT, ids, proc);
-		
-		OneDView<Float32Member> view = new OneDView<>(padded);
+		OneDView<Float32Member> view = new OneDView<>(ids);
 		
 		Float32Member value = G.FLT.construct();
 		
 		value.setV(0);
 		
-		view.get(-ids.size(), value);
+		view.get(-ids.size(), value);  // may poke a random memory location
 		
-		System.out.println(value);  // prints -999
+		view.safeGet(-ids.size(), value);  // will throw an index oob exception
 		
-		value.setV(0);
+		view.get(ids.size()*2, value);  // may poke a random memory location
 		
-		view.get(ids.size()*2, value);
-		
-		System.out.println(value);  // prints -999
+		view.safeGet(ids.size()*2, value);  // will throw an index oob exception
 	}
 	
 	// And here is an example of this using a DimensionedDataSource
@@ -243,28 +230,17 @@ class DataViews {
 		DimensionedDataSource<Float32Member> dds =
 				DimensionedStorage.allocate(G.FLT.construct(), dims);
 		
-		Float32Member constant = G.FLT.construct(-999);
-		
-		Procedure2<IntegerIndex,Float32Member> proc = new ConstantNdOOB<>(G.FLT, dds, constant);
-		
-		DimensionedDataSource<Float32Member> padded =
-				new ProcedurePaddedDimensionedDataSource<>(G.FLT, dds, proc);
-		
-		ThreeDView<Float32Member> view = new ThreeDView<>(padded);
+		ThreeDView<Float32Member> view = new ThreeDView<>(dds);
 		
 		Float32Member value = G.FLT.construct();
 		
-		value.setV(0);
+		view.get(50, 50, -1, value);  // may poke a random memory location
 		
-		view.get(50, 50, -1, value);
+		view.safeGet(50, 50, -1, value);  // will throw an index oob exception
 		
-		System.out.println(value);  // prints -999
+		view.get(50, 50, 1000000, value);  // may poke a random memory location
 		
-		value.setV(0);
-		
-		view.get(50, 50, 1000000, value);
-		
-		System.out.println(value);  // prints -999
+		view.safeGet(50, 50, 1000000, value);  // will throw an index oob exception
 	}
 	
 	// One nice thing about a data view is that you can enforce a shape to
@@ -293,9 +269,7 @@ class DataViews {
 		// DimensionedDataSource as input just uses the dimensions of
 		// the source. But you can create a redimensioned source by
 		// passing the dimensionedDataSource.rawData() to a view
-		// constructor and specify the new dimensions. Note if you do
-		// this any out of bounds scheme attached to the
-		// DimensionedDataSource is ignored.
+		// constructor and specify the new dimensions.
 	}
 
 }
