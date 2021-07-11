@@ -34,6 +34,8 @@ public class Main {
 
 		Float32Member value = G.FLT.construct();
 		
+		float[] barestLevel = new float[(int) dataSource.numElements()];
+
 		// warm up the cache
 		
 		value.setV(-99);
@@ -42,11 +44,19 @@ public class Main {
 		
 		// now start timing
 		
-		// fastest approach to filling the dataset
-
 		long t0 = System.currentTimeMillis();
 		
-		value.setV(1);
+		// simulate setV(1) on all elements of an array
+		
+		for (int i = 0; i < barestLevel.length; i++) {
+			barestLevel[i] = 1;
+		}
+		
+		// fastest approach to filling the dataset
+
+		long t1 = System.currentTimeMillis();
+		
+		value.setV(2);
 
 		Fill.compute(G.FLT, value, dataSource.rawData());
 		
@@ -54,13 +64,13 @@ public class Main {
 		
 		dataSource.rawData().get(dataSource.rawData().size()-1, value);
 		
-		if (value.v() != 1) System.out.println("RawData failed");
+		if (value.v() != 2) System.out.println("RawData failed");
 
 		// next fastest?
 		
-		long t1 = System.currentTimeMillis();
+		long t2 = System.currentTimeMillis();
 		
-		value.setV(2);
+		value.setV(3);
 		
 		FiveDView<Float32Member> view = new FiveDView<>(dataSource);
 		
@@ -80,13 +90,13 @@ public class Main {
 		
 		view.get(X-1, Y-1, Z-1, C-1, T-1, value);
 		
-		if (value.v() != 2) System.out.println("View failed");
+		if (value.v() != 3) System.out.println("View failed");
 
 		// slowest?
 		
-		long t2 = System.currentTimeMillis();
+		long t3 = System.currentTimeMillis();
 		
-		value.setV(3);
+		value.setV(4);
 		
 		SamplingIterator<IntegerIndex> iter = GridIterator.compute(dataSource);
 		
@@ -103,15 +113,19 @@ public class Main {
 		
 		dataSource.get(idx, value);
 		
-		if (value.v() != 3) System.out.println("GridIterator failed");
+		if (value.v() != 4) System.out.println("GridIterator failed");
 		
-		long t3 = System.currentTimeMillis();
+		long t4 = System.currentTimeMillis();
 		
-		System.out.println(" rawData of data source "+(t1-t0));
+		System.out.println("Results");
+				
+		System.out.println("  lowest level of java "+(t1-t0));
 		
-		System.out.println(" view of data source "+(t2-t1));
+		System.out.println("  Fill rawData() of data source "+(t2-t1));
 		
-		System.out.println(" data source "+(t3-t2));
+		System.out.println("  view of data source "+(t3-t2));
+		
+		System.out.println("  data source "+(t4-t3));
 	}
 
 }
