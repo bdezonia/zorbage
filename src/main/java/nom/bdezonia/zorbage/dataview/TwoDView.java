@@ -1,6 +1,6 @@
 /*
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
- *
+ * 
  * Copyright (c) 2016-2021 Barry DeZonia All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 /**
  * 
  * @author Barry DeZonia
- *
+ * 
  * @param <U>
  */
 public class TwoDView<U> implements Dimensioned {
@@ -45,14 +45,14 @@ public class TwoDView<U> implements Dimensioned {
 	private final long d0;
 	private final long d1;
 	private final IndexedDataSource<U> list;
-	
+
 	public TwoDView(long d0, long d1, IndexedDataSource<U> data) {
-		DViewUtils.checkDims(data.size(), d0,d1);
+		DViewUtils.checkDims(data.size(),d0,d1);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.list = data;
 	}
-	
+
 	public TwoDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 2)
 			throw new IllegalArgumentException("2-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -60,39 +60,39 @@ public class TwoDView<U> implements Dimensioned {
 		this.d1 = ds.dimension(1);
 		this.list = ds.rawData();
 	}
-	
+
 	public long d0() { return d0; }
-	
+
 	public long d1() { return d1; }
-	
+
 	public void get(long i0, long i1, U val) {
 		long index = i1;
 		index = index*d0 + i0;
 		list.get(index, val);
 	}
-	
+
 	public void set(long i0, long i1, U val) {
 		long index = i1;
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
-	
+
 	public void safeGet(long i0, long i1, U val) {
-		if (outOfBounds(i0,i1)) {
+		if (outOfBounds(i0, i1)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			get(i0,i1,val);
+			get(i0, i1, val);
 	}
-	
+
 	public void safeSet(long i0, long i1, U val) {
-		if (outOfBounds(i0,i1)) {
+		if (outOfBounds(i0, i1)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			set(i0,i1,val);
+			set(i0, i1, val);
 	}
-	
+
 	private boolean outOfBounds(long i0, long i1) {
 		if (i0 < 0 || i0 >= d0) return true;
 		if (i1 < 0 || i1 >= d1) return true;

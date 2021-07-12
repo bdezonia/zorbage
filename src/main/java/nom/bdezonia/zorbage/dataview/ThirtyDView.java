@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * 
  * @param <U>
  */
-public class EighteenDView<U> implements Dimensioned {
+public class ThirtyDView<U> implements Dimensioned {
 
 	private final long d0;
 	private final long d1;
@@ -60,10 +60,22 @@ public class EighteenDView<U> implements Dimensioned {
 	private final long d15;
 	private final long d16;
 	private final long d17;
+	private final long d18;
+	private final long d19;
+	private final long d20;
+	private final long d21;
+	private final long d22;
+	private final long d23;
+	private final long d24;
+	private final long d25;
+	private final long d26;
+	private final long d27;
+	private final long d28;
+	private final long d29;
 	private final IndexedDataSource<U> list;
 
-	public EighteenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, long d9, long d10, long d11, long d12, long d13, long d14, long d15, long d16, long d17, IndexedDataSource<U> data) {
-		DViewUtils.checkDims(data.size(),d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17);
+	public ThirtyDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, long d9, long d10, long d11, long d12, long d13, long d14, long d15, long d16, long d17, long d18, long d19, long d20, long d21, long d22, long d23, long d24, long d25, long d26, long d27, long d28, long d29, IndexedDataSource<U> data) {
+		DViewUtils.checkDims(data.size(),d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,d21,d22,d23,d24,d25,d26,d27,d28,d29);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;
@@ -82,12 +94,24 @@ public class EighteenDView<U> implements Dimensioned {
 		this.d15 = d15;
 		this.d16 = d16;
 		this.d17 = d17;
+		this.d18 = d18;
+		this.d19 = d19;
+		this.d20 = d20;
+		this.d21 = d21;
+		this.d22 = d22;
+		this.d23 = d23;
+		this.d24 = d24;
+		this.d25 = d25;
+		this.d26 = d26;
+		this.d27 = d27;
+		this.d28 = d28;
+		this.d29 = d29;
 		this.list = data;
 	}
 
-	public EighteenDView(DimensionedDataSource<U> ds) {
-		if (ds.numDimensions() != 18)
-			throw new IllegalArgumentException("18-d view passed a data source that is "+ds.numDimensions()+"-d");
+	public ThirtyDView(DimensionedDataSource<U> ds) {
+		if (ds.numDimensions() != 30)
+			throw new IllegalArgumentException("30-d view passed a data source that is "+ds.numDimensions()+"-d");
 		this.d0 = ds.dimension(0);
 		this.d1 = ds.dimension(1);
 		this.d2 = ds.dimension(2);
@@ -106,6 +130,18 @@ public class EighteenDView<U> implements Dimensioned {
 		this.d15 = ds.dimension(15);
 		this.d16 = ds.dimension(16);
 		this.d17 = ds.dimension(17);
+		this.d18 = ds.dimension(18);
+		this.d19 = ds.dimension(19);
+		this.d20 = ds.dimension(20);
+		this.d21 = ds.dimension(21);
+		this.d22 = ds.dimension(22);
+		this.d23 = ds.dimension(23);
+		this.d24 = ds.dimension(24);
+		this.d25 = ds.dimension(25);
+		this.d26 = ds.dimension(26);
+		this.d27 = ds.dimension(27);
+		this.d28 = ds.dimension(28);
+		this.d29 = ds.dimension(29);
 		this.list = ds.rawData();
 	}
 
@@ -145,8 +181,44 @@ public class EighteenDView<U> implements Dimensioned {
 
 	public long d17() { return d17; }
 
-	public void get(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, U val) {
-		long index = i17;
+	public long d18() { return d18; }
+
+	public long d19() { return d19; }
+
+	public long d20() { return d20; }
+
+	public long d21() { return d21; }
+
+	public long d22() { return d22; }
+
+	public long d23() { return d23; }
+
+	public long d24() { return d24; }
+
+	public long d25() { return d25; }
+
+	public long d26() { return d26; }
+
+	public long d27() { return d27; }
+
+	public long d28() { return d28; }
+
+	public long d29() { return d29; }
+
+	public void get(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, long i18, long i19, long i20, long i21, long i22, long i23, long i24, long i25, long i26, long i27, long i28, long i29, U val) {
+		long index = i29;
+		index = index*d28 + i28;
+		index = index*d27 + i27;
+		index = index*d26 + i26;
+		index = index*d25 + i25;
+		index = index*d24 + i24;
+		index = index*d23 + i23;
+		index = index*d22 + i22;
+		index = index*d21 + i21;
+		index = index*d20 + i20;
+		index = index*d19 + i19;
+		index = index*d18 + i18;
+		index = index*d17 + i17;
 		index = index*d16 + i16;
 		index = index*d15 + i15;
 		index = index*d14 + i14;
@@ -167,8 +239,20 @@ public class EighteenDView<U> implements Dimensioned {
 		list.get(index, val);
 	}
 
-	public void set(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, U val) {
-		long index = i17;
+	public void set(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, long i18, long i19, long i20, long i21, long i22, long i23, long i24, long i25, long i26, long i27, long i28, long i29, U val) {
+		long index = i29;
+		index = index*d28 + i28;
+		index = index*d27 + i27;
+		index = index*d26 + i26;
+		index = index*d25 + i25;
+		index = index*d24 + i24;
+		index = index*d23 + i23;
+		index = index*d22 + i22;
+		index = index*d21 + i21;
+		index = index*d20 + i20;
+		index = index*d19 + i19;
+		index = index*d18 + i18;
+		index = index*d17 + i17;
 		index = index*d16 + i16;
 		index = index*d15 + i15;
 		index = index*d14 + i14;
@@ -189,23 +273,23 @@ public class EighteenDView<U> implements Dimensioned {
 		list.set(index, val);
 	}
 
-	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, U val) {
-		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17)) {
+	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, long i18, long i19, long i20, long i21, long i22, long i23, long i24, long i25, long i26, long i27, long i28, long i29, U val) {
+		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			get(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, val);
+			get(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, val);
 	}
 
-	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, U val) {
-		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17)) {
+	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, long i18, long i19, long i20, long i21, long i22, long i23, long i24, long i25, long i26, long i27, long i28, long i29, U val) {
+		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			set(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, val);
+			set(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, val);
 	}
 
-	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17) {
+	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, long i16, long i17, long i18, long i19, long i20, long i21, long i22, long i23, long i24, long i25, long i26, long i27, long i28, long i29) {
 		if (i0 < 0 || i0 >= d0) return true;
 		if (i1 < 0 || i1 >= d1) return true;
 		if (i2 < 0 || i2 >= d2) return true;
@@ -224,12 +308,24 @@ public class EighteenDView<U> implements Dimensioned {
 		if (i15 < 0 || i15 >= d15) return true;
 		if (i16 < 0 || i16 >= d16) return true;
 		if (i17 < 0 || i17 >= d17) return true;
+		if (i18 < 0 || i18 >= d18) return true;
+		if (i19 < 0 || i19 >= d19) return true;
+		if (i20 < 0 || i20 >= d20) return true;
+		if (i21 < 0 || i21 >= d21) return true;
+		if (i22 < 0 || i22 >= d22) return true;
+		if (i23 < 0 || i23 >= d23) return true;
+		if (i24 < 0 || i24 >= d24) return true;
+		if (i25 < 0 || i25 >= d25) return true;
+		if (i26 < 0 || i26 >= d26) return true;
+		if (i27 < 0 || i27 >= d27) return true;
+		if (i28 < 0 || i28 >= d28) return true;
+		if (i29 < 0 || i29 >= d29) return true;
 		return false;
 	}
 
 	@Override
 	public int numDimensions() {
-		return 18;
+		return 30;
 	}
 
 	@Override
@@ -252,6 +348,18 @@ public class EighteenDView<U> implements Dimensioned {
 		if (d == 15) return d15;
 		if (d == 16) return d16;
 		if (d == 17) return d17;
+		if (d == 18) return d18;
+		if (d == 19) return d19;
+		if (d == 20) return d20;
+		if (d == 21) return d21;
+		if (d == 22) return d22;
+		if (d == 23) return d23;
+		if (d == 24) return d24;
+		if (d == 25) return d25;
+		if (d == 26) return d26;
+		if (d == 27) return d27;
+		if (d == 28) return d28;
+		if (d == 29) return d29;
 		throw new IllegalArgumentException("dimension out of bounds");
 	}
 }

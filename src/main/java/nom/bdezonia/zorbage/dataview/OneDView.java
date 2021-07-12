@@ -1,6 +1,6 @@
 /*
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
- *
+ * 
  * Copyright (c) 2016-2021 Barry DeZonia All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 /**
  * 
  * @author Barry DeZonia
- *
+ * 
  * @param <U>
  */
 public class OneDView<U> implements Dimensioned {
@@ -45,29 +45,31 @@ public class OneDView<U> implements Dimensioned {
 	private final long d0;
 	private final IndexedDataSource<U> list;
 
-	
-	public OneDView(IndexedDataSource<U> data) {
+	public OneDView(long d0, IndexedDataSource<U> data) {
+		DViewUtils.checkDims(data.size(),d0);
+		this.d0 = d0;
 		this.list = data;
-		this.d0 = data.size();
 	}
-	
+
 	public OneDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 1)
 			throw new IllegalArgumentException("1-d view passed a data source that is "+ds.numDimensions()+"-d");
+		this.d0 = ds.dimension(0);
 		this.list = ds.rawData();
-		this.d0 = list.size();
 	}
-	
+
 	public long d0() { return d0; }
-	
+
 	public void get(long i0, U val) {
-		list.get(i0, val);
+		long index = i0;
+		list.get(index, val);
 	}
-	
+
 	public void set(long i0, U val) {
-		list.set(i0, val);
+		long index = i0;
+		list.set(index, val);
 	}
-	
+
 	public void safeGet(long i0, U val) {
 		if (outOfBounds(i0)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -75,7 +77,7 @@ public class OneDView<U> implements Dimensioned {
 		else
 			get(i0, val);
 	}
-	
+
 	public void safeSet(long i0, U val) {
 		if (outOfBounds(i0)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -83,7 +85,7 @@ public class OneDView<U> implements Dimensioned {
 		else
 			set(i0, val);
 	}
-	
+
 	private boolean outOfBounds(long i0) {
 		if (i0 < 0 || i0 >= d0) return true;
 		return false;

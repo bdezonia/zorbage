@@ -1,6 +1,6 @@
 /*
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
- *
+ * 
  * Copyright (c) 2016-2021 Barry DeZonia All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 /**
  * 
  * @author Barry DeZonia
- *
+ * 
  * @param <U>
  */
 public class ThreeDView<U> implements Dimensioned {
@@ -46,15 +46,15 @@ public class ThreeDView<U> implements Dimensioned {
 	private final long d1;
 	private final long d2;
 	private final IndexedDataSource<U> list;
-	
+
 	public ThreeDView(long d0, long d1, long d2, IndexedDataSource<U> data) {
-		DViewUtils.checkDims(data.size(), d0,d1,d2);
+		DViewUtils.checkDims(data.size(),d0,d1,d2);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;
 		this.list = data;
 	}
-	
+
 	public ThreeDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 3)
 			throw new IllegalArgumentException("3-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -63,43 +63,43 @@ public class ThreeDView<U> implements Dimensioned {
 		this.d2 = ds.dimension(2);
 		this.list = ds.rawData();
 	}
-	
+
 	public long d0() { return d0; }
-	
+
 	public long d1() { return d1; }
-	
+
 	public long d2() { return d2; }
-	
+
 	public void get(long i0, long i1, long i2, U val) {
 		long index = i2;
 		index = index*d1 + i1;
 		index = index*d0 + i0;
 		list.get(index, val);
 	}
-	
+
 	public void set(long i0, long i1, long i2, U val) {
 		long index = i2;
 		index = index*d1 + i1;
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
-	
+
 	public void safeGet(long i0, long i1, long i2, U val) {
-		if (outOfBounds(i0,i1,i2)) {
+		if (outOfBounds(i0, i1, i2)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			get(i0,i1,i2,val);
+			get(i0, i1, i2, val);
 	}
-	
+
 	public void safeSet(long i0, long i1, long i2, U val) {
-		if (outOfBounds(i0,i1,i2)) {
+		if (outOfBounds(i0, i1, i2)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			set(i0,i1,i2,val);
+			set(i0, i1, i2, val);
 	}
-	
+
 	private boolean outOfBounds(long i0, long i1, long i2) {
 		if (i0 < 0 || i0 >= d0) return true;
 		if (i1 < 0 || i1 >= d1) return true;

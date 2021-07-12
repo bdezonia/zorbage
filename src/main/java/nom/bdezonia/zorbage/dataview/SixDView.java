@@ -1,6 +1,6 @@
 /*
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
- *
+ * 
  * Copyright (c) 2016-2021 Barry DeZonia All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 /**
  * 
  * @author Barry DeZonia
- *
+ * 
  * @param <U>
  */
 public class SixDView<U> implements Dimensioned {
@@ -49,9 +49,9 @@ public class SixDView<U> implements Dimensioned {
 	private final long d4;
 	private final long d5;
 	private final IndexedDataSource<U> list;
-	
+
 	public SixDView(long d0, long d1, long d2, long d3, long d4, long d5, IndexedDataSource<U> data) {
-		DViewUtils.checkDims(data.size(), d0,d1,d2,d3,d4,d5);
+		DViewUtils.checkDims(data.size(),d0,d1,d2,d3,d4,d5);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;
@@ -60,7 +60,7 @@ public class SixDView<U> implements Dimensioned {
 		this.d5 = d5;
 		this.list = data;
 	}
-	
+
 	public SixDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 6)
 			throw new IllegalArgumentException("6-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -72,19 +72,19 @@ public class SixDView<U> implements Dimensioned {
 		this.d5 = ds.dimension(5);
 		this.list = ds.rawData();
 	}
-	
+
 	public long d0() { return d0; }
-	
+
 	public long d1() { return d1; }
-	
+
 	public long d2() { return d2; }
-	
+
 	public long d3() { return d3; }
-	
+
 	public long d4() { return d4; }
-	
+
 	public long d5() { return d5; }
-	
+
 	public void get(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
 		long index = i5;
 		index = index*d4 + i4;
@@ -94,7 +94,7 @@ public class SixDView<U> implements Dimensioned {
 		index = index*d0 + i0;
 		list.get(index, val);
 	}
-	
+
 	public void set(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
 		long index = i5;
 		index = index*d4 + i4;
@@ -104,23 +104,23 @@ public class SixDView<U> implements Dimensioned {
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
-	
+
 	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
-		if (outOfBounds(i0,i1,i2,i3,i4,i5)) {
+		if (outOfBounds(i0, i1, i2, i3, i4, i5)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			get(i0,i1,i2,i3,i4,i5,val);
+			get(i0, i1, i2, i3, i4, i5, val);
 	}
-	
+
 	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
-		if (outOfBounds(i0,i1,i2,i3,i4,i5)) {
+		if (outOfBounds(i0, i1, i2, i3, i4, i5)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			set(i0,i1,i2,i3,i4,i5,val);
+			set(i0, i1, i2, i3, i4, i5, val);
 	}
-	
+
 	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5) {
 		if (i0 < 0 || i0 >= d0) return true;
 		if (i1 < 0 || i1 >= d1) return true;

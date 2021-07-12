@@ -1,6 +1,6 @@
 /*
  * Zorbage: an algebraic data hierarchy for use in numeric processing.
- *
+ * 
  * Copyright (c) 2016-2021 Barry DeZonia All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification,
@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 /**
  * 
  * @author Barry DeZonia
- *
+ * 
  * @param <U>
  */
 public class FifteenDView<U> implements Dimensioned {
@@ -58,12 +58,9 @@ public class FifteenDView<U> implements Dimensioned {
 	private final long d13;
 	private final long d14;
 	private final IndexedDataSource<U> list;
-	
-	public FifteenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7,
-						long d8, long d9, long d10, long d11, long d12, long d13, long d14,
-						IndexedDataSource<U> data)
-	{
-		DViewUtils.checkDims(data.size(), d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14);
+
+	public FifteenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, long d9, long d10, long d11, long d12, long d13, long d14, IndexedDataSource<U> data) {
+		DViewUtils.checkDims(data.size(),d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14);
 		this.d0 = d0;
 		this.d1 = d1;
 		this.d2 = d2;
@@ -81,7 +78,7 @@ public class FifteenDView<U> implements Dimensioned {
 		this.d14 = d14;
 		this.list = data;
 	}
-	
+
 	public FifteenDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 15)
 			throw new IllegalArgumentException("15-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -102,40 +99,38 @@ public class FifteenDView<U> implements Dimensioned {
 		this.d14 = ds.dimension(14);
 		this.list = ds.rawData();
 	}
-	
+
 	public long d0() { return d0; }
-	
+
 	public long d1() { return d1; }
-	
+
 	public long d2() { return d2; }
-	
+
 	public long d3() { return d3; }
-	
+
 	public long d4() { return d4; }
-	
+
 	public long d5() { return d5; }
-	
+
 	public long d6() { return d6; }
-	
+
 	public long d7() { return d7; }
-	
+
 	public long d8() { return d8; }
-	
+
 	public long d9() { return d9; }
-	
+
 	public long d10() { return d10; }
-	
+
 	public long d11() { return d11; }
-	
+
 	public long d12() { return d12; }
-	
+
 	public long d13() { return d13; }
-	
+
 	public long d14() { return d14; }
-	
-	public void get(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7,
-						long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val)
-	{
+
+	public void get(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val) {
 		long index = i14;
 		index = index*d13 + i13;
 		index = index*d12 + i12;
@@ -153,10 +148,8 @@ public class FifteenDView<U> implements Dimensioned {
 		index = index*d0 + i0;
 		list.get(index, val);
 	}
-	
-	public void set(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7,
-						long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val)
-	{
+
+	public void set(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val) {
 		long index = i14;
 		index = index*d13 + i13;
 		index = index*d12 + i12;
@@ -174,40 +167,34 @@ public class FifteenDView<U> implements Dimensioned {
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
-	
-	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7,
-			long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val)
-	{
-		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14)) {
+
+	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val) {
+		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			get(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,val);
+			get(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, val);
 	}
-	
-	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7,
-			long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val)
-	{
-		if (outOfBounds(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14)) {
+
+	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, U val) {
+		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14)) {
 			throw new IllegalArgumentException("view index out of bounds");
 		}
 		else
-			set(i0,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,val);
+			set(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, val);
 	}
-	
-	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7,
-									long i8, long i9, long i10, long i11, long i12, long i13, long i14)
-	{
-		if (i0 < 0  || i0 >= d0) return true;
-		if (i1 < 0  || i1 >= d1) return true;
-		if (i2 < 0  || i2 >= d2) return true;
-		if (i3 < 0  || i3 >= d3) return true;
-		if (i4 < 0  || i4 >= d4) return true;
-		if (i5 < 0  || i5 >= d5) return true;
-		if (i6 < 0  || i6 >= d6) return true;
-		if (i7 < 0  || i7 >= d7) return true;
-		if (i8 < 0  || i8 >= d8) return true;
-		if (i9 < 0  || i9 >= d9) return true;
+
+	private boolean outOfBounds(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14) {
+		if (i0 < 0 || i0 >= d0) return true;
+		if (i1 < 0 || i1 >= d1) return true;
+		if (i2 < 0 || i2 >= d2) return true;
+		if (i3 < 0 || i3 >= d3) return true;
+		if (i4 < 0 || i4 >= d4) return true;
+		if (i5 < 0 || i5 >= d5) return true;
+		if (i6 < 0 || i6 >= d6) return true;
+		if (i7 < 0 || i7 >= d7) return true;
+		if (i8 < 0 || i8 >= d8) return true;
+		if (i9 < 0 || i9 >= d9) return true;
 		if (i10 < 0 || i10 >= d10) return true;
 		if (i11 < 0 || i11 >= d11) return true;
 		if (i12 < 0 || i12 >= d12) return true;
@@ -223,16 +210,16 @@ public class FifteenDView<U> implements Dimensioned {
 
 	@Override
 	public long dimension(int d) {
-		if (d == 0)  return d0;
-		if (d == 1)  return d1;
-		if (d == 2)  return d2;
-		if (d == 3)  return d3;
-		if (d == 4)  return d4;
-		if (d == 5)  return d5;
-		if (d == 6)  return d6;
-		if (d == 7)  return d7;
-		if (d == 8)  return d8;
-		if (d == 9)  return d9;
+		if (d == 0) return d0;
+		if (d == 1) return d1;
+		if (d == 2) return d2;
+		if (d == 3) return d3;
+		if (d == 4) return d4;
+		if (d == 5) return d5;
+		if (d == 6) return d6;
+		if (d == 7) return d7;
+		if (d == 8) return d8;
+		if (d == 9) return d9;
 		if (d == 10) return d10;
 		if (d == 11) return d11;
 		if (d == 12) return d12;
