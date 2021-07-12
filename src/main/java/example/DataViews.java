@@ -203,22 +203,22 @@ class DataViews {
 	
 	void example4() {
 		
-		IndexedDataSource<Float32Member> ids =
+		IndexedDataSource<Float32Member> data =
 				Storage.allocate(G.FLT.construct(), 100);
 		
-		OneDView<Float32Member> view = new OneDView<>(ids);
+		OneDView<Float32Member> view = new OneDView<>(data.size(),data);
 		
 		Float32Member value = G.FLT.construct();
 		
 		value.setV(0);
 		
-		view.get(-ids.size(), value);  // may poke a random memory location
+		view.get(-data.size(), value);  // may poke a random memory location
 		
-		view.safeGet(-ids.size(), value);  // will throw an index oob exception
+		view.safeGet(-data.size(), value);  // will throw an index oob exception
 		
-		view.get(ids.size()*2, value);  // may poke a random memory location
+		view.get(data.size()*2, value);  // may poke a random memory location
 		
-		view.safeGet(ids.size()*2, value);  // will throw an index oob exception
+		view.safeGet(data.size()*2, value);  // will throw an index oob exception
 	}
 	
 	// And here is an example of this using a DimensionedDataSource
