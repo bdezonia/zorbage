@@ -50,6 +50,17 @@ public class SixDView<U> implements Dimensioned {
 	private final long d5;
 	private final IndexedDataSource<U> list;
 
+/**
+ * Construct a view from an {@link IndexedDataSource} and some dimensions.
+ * 
+ * @param d0 0th dimension in the view.
+ * @param d1 1th dimension in the view.
+ * @param d2 2th dimension in the view.
+ * @param d3 3th dimension in the view.
+ * @param d4 4th dimension in the view.
+ * @param d5 5th dimension in the view.
+ * @param data The 1-d list the view is being built around.
+ */
 	public SixDView(long d0, long d1, long d2, long d3, long d4, long d5, IndexedDataSource<U> data) {
 		DViewUtils.checkDims(data.size(),d0,d1,d2,d3,d4,d5);
 		this.d0 = d0;
@@ -61,6 +72,11 @@ public class SixDView<U> implements Dimensioned {
 		this.list = data;
 	}
 
+/**
+ * Construct a view from a {@link DimensionedDataSource}.
+ * 
+ * @param ds The n-d data set that the view is being built around.
+ */
 	public SixDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 6)
 			throw new IllegalArgumentException("6-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -73,18 +89,48 @@ public class SixDView<U> implements Dimensioned {
 		this.list = ds.rawData();
 	}
 
+/**
+ * Returns the 0th dimension of the view.
+ */
 	public long d0() { return d0; }
 
+/**
+ * Returns the 1th dimension of the view.
+ */
 	public long d1() { return d1; }
 
+/**
+ * Returns the 2th dimension of the view.
+ */
 	public long d2() { return d2; }
 
+/**
+ * Returns the 3th dimension of the view.
+ */
 	public long d3() { return d3; }
 
+/**
+ * Returns the 4th dimension of the view.
+ */
 	public long d4() { return d4; }
 
+/**
+ * Returns the 5th dimension of the view.
+ */
 	public long d5() { return d5; }
 
+/**
+ * A view.get() call will pull the value at the view input coordinates from the data set into val.
+ * No index out of bounds checking is done.
+ * 
+ * @param i0 0th view input coord
+ * @param i1 1th view input coord
+ * @param i2 2th view input coord
+ * @param i3 3th view input coord
+ * @param i4 4th view input coord
+ * @param i5 5th view input coord
+ * @param val The output where the result is placed
+ */
 	public void get(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
 		long index = i5;
 		index = index*d4 + i4;
@@ -95,6 +141,18 @@ public class SixDView<U> implements Dimensioned {
 		list.get(index, val);
 	}
 
+/**
+ * A view.set() call will push the value at the view input coordinates into the data set.
+ * No index out of bounds checking is done.
+ * 
+ * @param i0 0th view input coord
+ * @param i1 1th view input coord
+ * @param i2 2th view input coord
+ * @param i3 3th view input coord
+ * @param i4 4th view input coord
+ * @param i5 5th view input coord
+ * @param val The input that is stored in the underlying data set
+ */
 	public void set(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
 		long index = i5;
 		index = index*d4 + i4;
@@ -105,6 +163,10 @@ public class SixDView<U> implements Dimensioned {
 		list.set(index, val);
 	}
 
+/**
+ * A view.safeGet() call will do a get() call provided the passed index coordinate values
+ * fit within the view's dimensions. If not an exception is throw instead.
+ */
 	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
 		if (outOfBounds(i0, i1, i2, i3, i4, i5)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -113,6 +175,10 @@ public class SixDView<U> implements Dimensioned {
 			get(i0, i1, i2, i3, i4, i5, val);
 	}
 
+/**
+ * A view.safeSet() call will do a set() call provided the passed index coordinate values
+ * fit within the view's dimensions. If not an exception is throw instead.
+ */
 	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, U val) {
 		if (outOfBounds(i0, i1, i2, i3, i4, i5)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -131,11 +197,18 @@ public class SixDView<U> implements Dimensioned {
 		return false;
 	}
 
+/**
+ * Return the number of dimensions in the view.
+ */
 	@Override
 	public int numDimensions() {
 		return 6;
 	}
 
+/**
+ * Retrieve each view dimension by index. Throws an exception if
+ * the dimension index number is outside the view dimensions.
+ */
 	@Override
 	public long dimension(int d) {
 		if (d == 0) return d0;

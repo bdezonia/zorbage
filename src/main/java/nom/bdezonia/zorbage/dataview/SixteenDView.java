@@ -60,6 +60,27 @@ public class SixteenDView<U> implements Dimensioned {
 	private final long d15;
 	private final IndexedDataSource<U> list;
 
+/**
+ * Construct a view from an {@link IndexedDataSource} and some dimensions.
+ * 
+ * @param d0 0th dimension in the view.
+ * @param d1 1th dimension in the view.
+ * @param d2 2th dimension in the view.
+ * @param d3 3th dimension in the view.
+ * @param d4 4th dimension in the view.
+ * @param d5 5th dimension in the view.
+ * @param d6 6th dimension in the view.
+ * @param d7 7th dimension in the view.
+ * @param d8 8th dimension in the view.
+ * @param d9 9th dimension in the view.
+ * @param d10 10th dimension in the view.
+ * @param d11 11th dimension in the view.
+ * @param d12 12th dimension in the view.
+ * @param d13 13th dimension in the view.
+ * @param d14 14th dimension in the view.
+ * @param d15 15th dimension in the view.
+ * @param data The 1-d list the view is being built around.
+ */
 	public SixteenDView(long d0, long d1, long d2, long d3, long d4, long d5, long d6, long d7, long d8, long d9, long d10, long d11, long d12, long d13, long d14, long d15, IndexedDataSource<U> data) {
 		DViewUtils.checkDims(data.size(),d0,d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15);
 		this.d0 = d0;
@@ -81,6 +102,11 @@ public class SixteenDView<U> implements Dimensioned {
 		this.list = data;
 	}
 
+/**
+ * Construct a view from a {@link DimensionedDataSource}.
+ * 
+ * @param ds The n-d data set that the view is being built around.
+ */
 	public SixteenDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 16)
 			throw new IllegalArgumentException("16-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -103,38 +129,108 @@ public class SixteenDView<U> implements Dimensioned {
 		this.list = ds.rawData();
 	}
 
+/**
+ * Returns the 0th dimension of the view.
+ */
 	public long d0() { return d0; }
 
+/**
+ * Returns the 1th dimension of the view.
+ */
 	public long d1() { return d1; }
 
+/**
+ * Returns the 2th dimension of the view.
+ */
 	public long d2() { return d2; }
 
+/**
+ * Returns the 3th dimension of the view.
+ */
 	public long d3() { return d3; }
 
+/**
+ * Returns the 4th dimension of the view.
+ */
 	public long d4() { return d4; }
 
+/**
+ * Returns the 5th dimension of the view.
+ */
 	public long d5() { return d5; }
 
+/**
+ * Returns the 6th dimension of the view.
+ */
 	public long d6() { return d6; }
 
+/**
+ * Returns the 7th dimension of the view.
+ */
 	public long d7() { return d7; }
 
+/**
+ * Returns the 8th dimension of the view.
+ */
 	public long d8() { return d8; }
 
+/**
+ * Returns the 9th dimension of the view.
+ */
 	public long d9() { return d9; }
 
+/**
+ * Returns the 10th dimension of the view.
+ */
 	public long d10() { return d10; }
 
+/**
+ * Returns the 11th dimension of the view.
+ */
 	public long d11() { return d11; }
 
+/**
+ * Returns the 12th dimension of the view.
+ */
 	public long d12() { return d12; }
 
+/**
+ * Returns the 13th dimension of the view.
+ */
 	public long d13() { return d13; }
 
+/**
+ * Returns the 14th dimension of the view.
+ */
 	public long d14() { return d14; }
 
+/**
+ * Returns the 15th dimension of the view.
+ */
 	public long d15() { return d15; }
 
+/**
+ * A view.get() call will pull the value at the view input coordinates from the data set into val.
+ * No index out of bounds checking is done.
+ * 
+ * @param i0 0th view input coord
+ * @param i1 1th view input coord
+ * @param i2 2th view input coord
+ * @param i3 3th view input coord
+ * @param i4 4th view input coord
+ * @param i5 5th view input coord
+ * @param i6 6th view input coord
+ * @param i7 7th view input coord
+ * @param i8 8th view input coord
+ * @param i9 9th view input coord
+ * @param i10 10th view input coord
+ * @param i11 11th view input coord
+ * @param i12 12th view input coord
+ * @param i13 13th view input coord
+ * @param i14 14th view input coord
+ * @param i15 15th view input coord
+ * @param val The output where the result is placed
+ */
 	public void get(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, U val) {
 		long index = i15;
 		index = index*d14 + i14;
@@ -155,6 +251,28 @@ public class SixteenDView<U> implements Dimensioned {
 		list.get(index, val);
 	}
 
+/**
+ * A view.set() call will push the value at the view input coordinates into the data set.
+ * No index out of bounds checking is done.
+ * 
+ * @param i0 0th view input coord
+ * @param i1 1th view input coord
+ * @param i2 2th view input coord
+ * @param i3 3th view input coord
+ * @param i4 4th view input coord
+ * @param i5 5th view input coord
+ * @param i6 6th view input coord
+ * @param i7 7th view input coord
+ * @param i8 8th view input coord
+ * @param i9 9th view input coord
+ * @param i10 10th view input coord
+ * @param i11 11th view input coord
+ * @param i12 12th view input coord
+ * @param i13 13th view input coord
+ * @param i14 14th view input coord
+ * @param i15 15th view input coord
+ * @param val The input that is stored in the underlying data set
+ */
 	public void set(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, U val) {
 		long index = i15;
 		index = index*d14 + i14;
@@ -175,6 +293,10 @@ public class SixteenDView<U> implements Dimensioned {
 		list.set(index, val);
 	}
 
+/**
+ * A view.safeGet() call will do a get() call provided the passed index coordinate values
+ * fit within the view's dimensions. If not an exception is throw instead.
+ */
 	public void safeGet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, U val) {
 		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -183,6 +305,10 @@ public class SixteenDView<U> implements Dimensioned {
 			get(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, val);
 	}
 
+/**
+ * A view.safeSet() call will do a set() call provided the passed index coordinate values
+ * fit within the view's dimensions. If not an exception is throw instead.
+ */
 	public void safeSet(long i0, long i1, long i2, long i3, long i4, long i5, long i6, long i7, long i8, long i9, long i10, long i11, long i12, long i13, long i14, long i15, U val) {
 		if (outOfBounds(i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -211,11 +337,18 @@ public class SixteenDView<U> implements Dimensioned {
 		return false;
 	}
 
+/**
+ * Return the number of dimensions in the view.
+ */
 	@Override
 	public int numDimensions() {
 		return 16;
 	}
 
+/**
+ * Retrieve each view dimension by index. Throws an exception if
+ * the dimension index number is outside the view dimensions.
+ */
 	@Override
 	public long dimension(int d) {
 		if (d == 0) return d0;
