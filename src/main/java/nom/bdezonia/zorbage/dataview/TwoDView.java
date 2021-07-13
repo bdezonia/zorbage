@@ -46,13 +46,13 @@ public class TwoDView<U> implements Dimensioned {
 	private final long d1;
 	private final IndexedDataSource<U> list;
 
-/**
- * Construct a view from an {@link IndexedDataSource} and some dimensions.
- * 
- * @param d0 0th dimension in the view.
- * @param d1 1th dimension in the view.
- * @param data The 1-d list the view is being built around.
- */
+	/**
+	 * Construct a view from an {@link IndexedDataSource} and some dimensions.
+	 * 
+	 * @param d0 0th dimension in the view.
+	 * @param d1 1th dimension in the view.
+	 * @param data The 1-d list the view is being built around.
+	 */
 	public TwoDView(long d0, long d1, IndexedDataSource<U> data) {
 		DViewUtils.checkDims(data.size(),d0,d1);
 		this.d0 = d0;
@@ -60,11 +60,11 @@ public class TwoDView<U> implements Dimensioned {
 		this.list = data;
 	}
 
-/**
- * Construct a view from a {@link DimensionedDataSource}.
- * 
- * @param ds The n-d data set that the view is being built around.
- */
+	/**
+	 * Construct a view from a {@link DimensionedDataSource}.
+	 * 
+	 * @param ds The n-d data set that the view is being built around.
+	 */
 	public TwoDView(DimensionedDataSource<U> ds) {
 		if (ds.numDimensions() != 2)
 			throw new IllegalArgumentException("2-d view passed a data source that is "+ds.numDimensions()+"-d");
@@ -73,48 +73,48 @@ public class TwoDView<U> implements Dimensioned {
 		this.list = ds.rawData();
 	}
 
-/**
- * Returns the 0th dimension of the view.
- */
+	/**
+	 * Returns the 0th dimension of the view.
+	 */
 	public long d0() { return d0; }
 
-/**
- * Returns the 1th dimension of the view.
- */
+	/**
+	 * Returns the 1th dimension of the view.
+	 */
 	public long d1() { return d1; }
 
-/**
- * A view.get() call will pull the value at the view input coordinates from the data set into val.
- * No index out of bounds checking is done.
- * 
- * @param i0 0th view input coord
- * @param i1 1th view input coord
- * @param val The output where the result is placed
- */
+	/**
+	 * A view.get() call will pull the value at the view input coordinates from the data set into val.
+	 * No index out of bounds checking is done.
+	 * 
+	 * @param i0 0th view input coord
+	 * @param i1 1th view input coord
+	 * @param val The output where the result is placed
+	 */
 	public void get(long i0, long i1, U val) {
 		long index = i1;
 		index = index*d0 + i0;
 		list.get(index, val);
 	}
 
-/**
- * A view.set() call will push the value at the view input coordinates into the data set.
- * No index out of bounds checking is done.
- * 
- * @param i0 0th view input coord
- * @param i1 1th view input coord
- * @param val The input that is stored in the underlying data set
- */
+	/**
+	 * A view.set() call will push the value at the view input coordinates into the data set.
+	 * No index out of bounds checking is done.
+	 * 
+	 * @param i0 0th view input coord
+	 * @param i1 1th view input coord
+	 * @param val The input that is stored in the underlying data set
+	 */
 	public void set(long i0, long i1, U val) {
 		long index = i1;
 		index = index*d0 + i0;
 		list.set(index, val);
 	}
 
-/**
- * A view.safeGet() call will do a get() call provided the passed index coordinate values
- * fit within the view's dimensions. If not an exception is throw instead.
- */
+	/**
+	 * A view.safeGet() call will do a get() call provided the passed index coordinate values
+	 * fit within the view's dimensions. If not an exception is thrown instead.
+	 */
 	public void safeGet(long i0, long i1, U val) {
 		if (outOfBounds(i0, i1)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -123,10 +123,10 @@ public class TwoDView<U> implements Dimensioned {
 			get(i0, i1, val);
 	}
 
-/**
- * A view.safeSet() call will do a set() call provided the passed index coordinate values
- * fit within the view's dimensions. If not an exception is throw instead.
- */
+	/**
+	 * A view.safeSet() call will do a set() call provided the passed index coordinate values
+	 * fit within the view's dimensions. If not an exception is thrown instead.
+	 */
 	public void safeSet(long i0, long i1, U val) {
 		if (outOfBounds(i0, i1)) {
 			throw new IllegalArgumentException("view index out of bounds");
@@ -141,18 +141,18 @@ public class TwoDView<U> implements Dimensioned {
 		return false;
 	}
 
-/**
- * Return the number of dimensions in the view.
- */
+	/**
+	 * Return the number of dimensions in the view.
+	 */
 	@Override
 	public int numDimensions() {
 		return 2;
 	}
 
-/**
- * Retrieve each view dimension by index. Throws an exception if
- * the dimension index number is outside the view dimensions.
- */
+	/**
+	 * Retrieve each view dimension by index. Throws an exception if
+	 * the dimension index number is outside the view dimensions.
+	 */
 	@Override
 	public long dimension(int d) {
 		if (d == 0) return d0;
