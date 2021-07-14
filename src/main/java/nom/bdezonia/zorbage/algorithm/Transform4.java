@@ -86,7 +86,7 @@ public class Transform4 {
 		C valueC = algC.construct();
 		D valueD = algD.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

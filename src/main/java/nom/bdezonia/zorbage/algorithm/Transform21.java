@@ -154,7 +154,7 @@ public class Transform21 {
 		T valueT = algT.construct();
 		U valueU = algU.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

@@ -130,7 +130,7 @@ public class Transform15 {
 		N valueN = algN.construct();
 		O valueO = algO.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

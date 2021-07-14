@@ -146,7 +146,7 @@ public class Transform19 {
 		R valueR = algR.construct();
 		S valueS = algS.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

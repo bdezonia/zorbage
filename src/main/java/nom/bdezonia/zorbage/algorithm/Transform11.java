@@ -114,7 +114,7 @@ public class Transform11 {
 		J valueJ = algJ.construct();
 		K valueK = algK.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

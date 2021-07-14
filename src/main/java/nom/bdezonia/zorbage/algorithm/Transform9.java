@@ -106,7 +106,7 @@ public class Transform9 {
 		H valueH = algH.construct();
 		I valueI = algI.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

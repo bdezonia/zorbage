@@ -134,7 +134,7 @@ public class Transform16 {
 		O valueO = algO.construct();
 		P valueP = algP.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

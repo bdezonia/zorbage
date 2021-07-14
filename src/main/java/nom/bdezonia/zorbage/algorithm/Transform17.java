@@ -138,7 +138,7 @@ public class Transform17 {
 		P valueP = algP.construct();
 		Q valueQ = algQ.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

@@ -102,7 +102,7 @@ public class Transform8 {
 		G valueG = algG.construct();
 		H valueH = algH.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

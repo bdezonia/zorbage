@@ -162,7 +162,7 @@ public class Transform23 {
 		V valueV = algV.construct();
 		W valueW = algW.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

@@ -126,7 +126,7 @@ public class Transform14 {
 		M valueM = algM.construct();
 		N valueN = algN.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

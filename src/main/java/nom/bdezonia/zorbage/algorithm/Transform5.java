@@ -90,7 +90,7 @@ public class Transform5 {
 		D valueD = algD.construct();
 		E valueE = algE.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

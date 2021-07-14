@@ -142,7 +142,7 @@ public class Transform18 {
 		Q valueQ = algQ.construct();
 		R valueR = algR.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

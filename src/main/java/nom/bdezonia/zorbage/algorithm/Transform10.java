@@ -110,7 +110,7 @@ public class Transform10 {
 		I valueI = algI.construct();
 		J valueJ = algJ.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

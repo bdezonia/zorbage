@@ -158,7 +158,7 @@ public class Transform22 {
 		U valueU = algU.construct();
 		V valueV = algV.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

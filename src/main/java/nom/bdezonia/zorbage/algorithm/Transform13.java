@@ -122,7 +122,7 @@ public class Transform13 {
 		L valueL = algL.construct();
 		M valueM = algM.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

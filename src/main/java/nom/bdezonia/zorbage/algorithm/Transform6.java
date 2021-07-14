@@ -94,7 +94,7 @@ public class Transform6 {
 		E valueE = algE.construct();
 		F valueF = algF.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

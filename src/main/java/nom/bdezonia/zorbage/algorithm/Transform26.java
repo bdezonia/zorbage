@@ -174,7 +174,7 @@ public class Transform26 {
 		Y valueY = algY.construct();
 		Z valueZ = algZ.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

@@ -170,7 +170,7 @@ public class Transform25 {
 		X valueX = algX.construct();
 		Y valueY = algY.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

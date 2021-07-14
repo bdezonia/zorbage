@@ -98,7 +98,7 @@ public class Transform7 {
 		F valueF = algF.construct();
 		G valueG = algG.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

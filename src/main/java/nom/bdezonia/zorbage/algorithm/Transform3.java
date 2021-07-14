@@ -82,7 +82,7 @@ public class Transform3 {
 		B valueB = algB.construct();
 		C valueC = algC.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize)

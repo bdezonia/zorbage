@@ -118,7 +118,7 @@ public class Transform12 {
 		K valueK = algK.construct();
 		L valueL = algL.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||

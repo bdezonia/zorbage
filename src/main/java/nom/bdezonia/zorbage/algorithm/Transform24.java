@@ -166,7 +166,7 @@ public class Transform24 {
 		W valueW = algW.construct();
 		X valueX = algX.construct();
 
-		long aSize = a.size();
+		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||
