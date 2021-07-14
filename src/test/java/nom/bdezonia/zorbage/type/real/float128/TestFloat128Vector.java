@@ -76,10 +76,10 @@ public class TestFloat128Vector {
 		
 		// bigi ctor
 		
-		c = G.QUAD_VEC.construct(BigInteger.TWO, BigInteger.TEN, BigInteger.ZERO, BigInteger.ONE);
+		c = G.QUAD_VEC.construct(BigInteger.ONE, BigInteger.TEN, BigInteger.ZERO, BigInteger.ONE);
 		assertEquals(4, c.length());
 		c.getV(0, value);
-		assertTrue(BigDecimalUtils.isNear(2, value.v(), BigDecimal.ZERO));
+		assertTrue(BigDecimalUtils.isNear(1, value.v(), BigDecimal.ZERO));
 		c.getV(1, value);
 		assertTrue(BigDecimalUtils.isNear(10, value.v(), BigDecimal.ZERO));
 		c.getV(2, value);
