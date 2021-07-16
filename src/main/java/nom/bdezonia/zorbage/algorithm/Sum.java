@@ -69,9 +69,22 @@ public class Sum {
 	public static <T extends Algebra<T,U> & Addition<U>, U>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		sum(alg, 0, storage.size(), storage, result);
+		// OLD WAY : too slow
+		//
+		//sum(alg, 0, storage.size(), storage, result);
+		
+		U sum = alg.construct();
+		U tmp = alg.construct();
+		final long sz = storage.size();
+		for (long i = 0; i < sz; i++) {
+			storage.get(i, tmp);
+			alg.add().call(sum, tmp, sum);
+		}
+		alg.assign().call(sum, result);
 	}
-	
+
+	/*  OLD WAY TOO SLOW
+
 	// Note: for now will just recursively sum to eliminate some roundoff errors. This is not
 	// great for summing a virtual storage structure. Maybe need a StraightlineSum algo for
 	// summing virtual structures. Maybe all sum oriented algos could switch on a boolean or
@@ -107,4 +120,5 @@ public class Sum {
 			alg.add().call(tmp1, tmp2, result);
 		}
 	}
+	 */
 }
