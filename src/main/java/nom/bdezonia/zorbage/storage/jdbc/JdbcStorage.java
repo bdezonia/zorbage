@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
+import nom.bdezonia.zorbage.storage.coder.StringCoder;
 
 /**
  * 
@@ -81,6 +82,9 @@ public class JdbcStorage {
 		}
 		if (type instanceof CharCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageChar(conn, (CharCoder)type, size);
+		}
+		if (type instanceof StringCoder) {
+			return (IndexedDataSource<U>) new JdbcStorageString(conn, (StringCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
