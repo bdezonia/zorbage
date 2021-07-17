@@ -53,38 +53,38 @@ public class SparseStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U> IndexedDataSource<U> allocate(U type, long size) {
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<U>) new SparseStorageFloat64((DoubleCoder)type, size);
+			return new SparseStorageFloat64((DoubleCoder)type, size);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<U>) new SparseStorageFloat32((FloatCoder)type, size);
+			return new SparseStorageFloat32((FloatCoder)type, size);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<U>) new SparseStorageSignedInt64((LongCoder)type, size);
+			return new SparseStorageSignedInt64((LongCoder)type, size);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<U>) new SparseStorageSignedInt32((IntCoder)type, size);
+			return new SparseStorageSignedInt32((IntCoder)type, size);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<U>) new SparseStorageSignedInt16((ShortCoder)type, size);
+			return new SparseStorageSignedInt16((ShortCoder)type, size);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<U>) new SparseStorageBoolean((BooleanCoder)type, size);
+			return new SparseStorageBoolean((BooleanCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return (IndexedDataSource<U>) new SparseStorageBigInteger((BigIntegerCoder)type, size);
+			return new SparseStorageBigInteger((BigIntegerCoder)type, size);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return (IndexedDataSource<U>) new SparseStorageBigDecimal((BigDecimalCoder)type, size);
+			return new SparseStorageBigDecimal((BigDecimalCoder)type, size);
 		}
 		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new SparseStorageChar((CharCoder)type, size);
+			return new SparseStorageChar((CharCoder)type, size);
 		}
 		if (type instanceof StringCoder) {
-			return (IndexedDataSource<U>) new SparseStorageString((StringCoder)type, size);
+			return new SparseStorageString((StringCoder)type, size);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<U>) new SparseStorageSignedInt8((ByteCoder)type, size);
+			return new SparseStorageSignedInt8((ByteCoder)type, size);
 		}
 		
 		// TODO: add bitCoder when it is done.

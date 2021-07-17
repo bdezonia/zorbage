@@ -63,44 +63,44 @@ public class ArrayStorage {
 		IndexedDataSource<U> allocate(U type, long size)
 	{
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageFloat64((DoubleCoder)type, size);
+			return new ArrayStorageFloat64((DoubleCoder)type, size);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageFloat32((FloatCoder)type, size);
+			return new ArrayStorageFloat32((FloatCoder)type, size);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageSignedInt64((LongCoder)type, size);
+			return new ArrayStorageSignedInt64((LongCoder)type, size);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageSignedInt32((IntCoder)type, size);
+			return new ArrayStorageSignedInt32((IntCoder)type, size);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageSignedInt16((ShortCoder)type, size);
+			return new ArrayStorageSignedInt16((ShortCoder)type, size);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageBoolean((BooleanCoder)type, size);
+			return new ArrayStorageBoolean((BooleanCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageBigInteger((BigIntegerCoder)type, size);
+			return new ArrayStorageBigInteger((BigIntegerCoder)type, size);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageBigDecimal((BigDecimalCoder)type, size);
+			return new ArrayStorageBigDecimal((BigDecimalCoder)type, size);
 		}
 		if (type instanceof StringCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageString((StringCoder)type, size);
+			return new ArrayStorageString((StringCoder)type, size);
 		}
 		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageChar((CharCoder)type, size);
+			return new ArrayStorageChar((CharCoder)type, size);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageSignedInt8((ByteCoder)type, size);
+			return new ArrayStorageSignedInt8((ByteCoder)type, size);
 		}
 		
 		// Best if last: since bit types are slow
 		if (type instanceof BitCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageBit((BitCoder)type, size);
+			return new ArrayStorageBit((BitCoder)type, size);
 		}
 
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");

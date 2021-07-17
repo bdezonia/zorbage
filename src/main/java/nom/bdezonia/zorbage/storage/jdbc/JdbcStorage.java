@@ -63,38 +63,38 @@ public class JdbcStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(Connection conn, U type, long size) {
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageFloat64(conn, (DoubleCoder)type, size);
+			return new JdbcStorageFloat64(conn, (DoubleCoder)type, size);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageFloat32(conn, (FloatCoder)type, size);
+			return new JdbcStorageFloat32(conn, (FloatCoder)type, size);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt64(conn, (LongCoder)type, size);
+			return new JdbcStorageSignedInt64(conn, (LongCoder)type, size);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt32(conn, (IntCoder)type, size);
+			return new JdbcStorageSignedInt32(conn, (IntCoder)type, size);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt16(conn, (ShortCoder)type, size);
+			return new JdbcStorageSignedInt16(conn, (ShortCoder)type, size);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageBoolean(conn, (BooleanCoder)type, size);
+			return new JdbcStorageBoolean(conn, (BooleanCoder)type, size);
 		}
 		if (type instanceof StringCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageString(conn, (StringCoder)type, size);
+			return new JdbcStorageString(conn, (StringCoder)type, size);
 		}
 		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageChar(conn, (CharCoder)type, size);
+			return new JdbcStorageChar(conn, (CharCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
+			return new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageBigDecimal(conn, (BigDecimalCoder)type, size);
+			return new JdbcStorageBigDecimal(conn, (BigDecimalCoder)type, size);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageSignedInt8(conn, (ByteCoder)type, size);
+			return new JdbcStorageSignedInt8(conn, (ByteCoder)type, size);
 		}
 		
 		throw new IllegalArgumentException("Unsupported type in JdbcStorage");

@@ -63,29 +63,29 @@ public class FileStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(U type, long size) {
 		if (type instanceof DoubleCoder) {
-			return (IndexedDataSource<U>) new FileStorageFloat64((DoubleCoder)type, size);
+			return new FileStorageFloat64((DoubleCoder)type, size);
 		}
 		if (type instanceof FloatCoder) {
-			return (IndexedDataSource<U>) new FileStorageFloat32((FloatCoder)type, size);
+			return new FileStorageFloat32((FloatCoder)type, size);
 		}
 		if (type instanceof LongCoder) {
-			return (IndexedDataSource<U>) new FileStorageSignedInt64((LongCoder)type, size);
+			return new FileStorageSignedInt64((LongCoder)type, size);
 		}
 		if (type instanceof IntCoder) {
-			return (IndexedDataSource<U>) new FileStorageSignedInt32((IntCoder)type, size);
+			return new FileStorageSignedInt32((IntCoder)type, size);
 		}
 		if (type instanceof ShortCoder) {
-			return (IndexedDataSource<U>) new FileStorageSignedInt16((ShortCoder)type, size);
+			return new FileStorageSignedInt16((ShortCoder)type, size);
 		}
 		if (type instanceof BooleanCoder) {
-			return (IndexedDataSource<U>) new FileStorageBoolean((BooleanCoder)type, size);
+			return new FileStorageBoolean((BooleanCoder)type, size);
 		}
 		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new FileStorageChar((CharCoder)type, size);
+			return new FileStorageChar((CharCoder)type, size);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return (IndexedDataSource<U>) new FileStorageSignedInt8((ByteCoder)type, size);
+			return new FileStorageSignedInt8((ByteCoder)type, size);
 		}
 		
 		// TODO: add bitCoder when it is done. It should certainly be last as it will
