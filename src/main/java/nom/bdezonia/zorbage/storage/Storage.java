@@ -47,6 +47,8 @@ import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
+import nom.bdezonia.zorbage.storage.coder.StringCoder;
+import nom.bdezonia.zorbage.storage.extmem.ExtMemStorage;
 import nom.bdezonia.zorbage.storage.file.FileStorage;
 import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
 
@@ -57,10 +59,6 @@ import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
  */
 public class Storage {
 
-	// do not instantiate
-	
-	private Storage() { }
-	
 	/**
 	 * 
 	 * @param numElements
@@ -70,6 +68,13 @@ public class Storage {
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
 		allocate(U type, long numElements)
 	{
+		// catch the most basic of errors
+		
+		if (numElements < 0)
+			throw new IllegalArgumentException("negative index exception");
+		
+		// try the fastest simplest storage list type
+		
 		try {
 			return ArrayStorage.allocate(type, numElements);
 		}
@@ -78,6 +83,20 @@ public class Storage {
 			// or requested size is larger than any array can hold
 			// or others I might be too accepting of
 		}
+		
+		// assume it was a list too long problem. try a bigger in ram solution.
+		
+		try {
+			return ExtMemStorage.allocate(type, numElements);
+		}
+		catch (Exception e) {
+			// out of memory
+			// or requested size is larger than any array can hold
+			// or others I might be too accepting of
+		}
+		
+		// fall back to a virtual file solution
+		
 		return FileStorage.allocate(type, numElements);
 	}
 	
@@ -91,18 +110,46 @@ public class Storage {
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
 		allocate(StorageConstruction strategy, U type, long numElements)
 	{
+		// catch the most basic of errors
+		
+		if (numElements < 0)
+			throw new IllegalArgumentException("negative index exception");
+		
 		if (strategy == StorageConstruction.MEM_ARRAY) {
-			return ArrayStorage.allocate(type, numElements);
+
+			try {
+				return ArrayStorage.allocate(type, numElements);
+			}
+			catch (Exception e) {
+				// out of memory
+				// or requested size is larger than any array can hold
+				// or others I might be too accepting of
+			}
+			
+			// assume it was a list too long problem. try a bigger in ram solution.
+			
+			try {
+				return ExtMemStorage.allocate(type, numElements);
+			}
+			catch (Exception e) {
+				// out of memory
+				// or requested size is larger than any array can hold
+				// or others I might be too accepting of
+			}
 			// if would be nice if we tested size and if too big for array we tried to
 			//   allocate a BigListDataSource. But that ctor needs an Algebra. At one
 			//   time I tried changing these signatures to take (numElem, algebra)
 			//   which was pretty elegant but it killed the ability to support the
 			//   Point type with varying sized elements (2d or 3d or 4d etc.).
 		}
-		else if (strategy == StorageConstruction.MEM_SPARSE)
+		else if (strategy == StorageConstruction.MEM_SPARSE) {
+		
 			return SparseStorage.allocate(type, numElements);
-		else if (strategy == StorageConstruction.MEM_VIRTUAL)
+		}
+		else if (strategy == StorageConstruction.MEM_VIRTUAL) {
+		
 			return FileStorage.allocate(type, numElements);
+		}
 		throw new IllegalArgumentException("Unknown storage strategy "+strategy);
 	}
 	
@@ -305,4 +352,28 @@ public class Storage {
 		}
 		return list;
 	}
+
+	/**
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & StringCoder>
+		IndexedDataSource<U> allocate(U type, String[] array)
+	{
+		if (array.length % type.stringCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(type, array.length / type.stringCount());
+		U tmp = type.allocate();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.stringCount()) {
+			tmp.fromStringArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+
+	// do not instantiate
+	
+	private Storage() { }
 }

@@ -106,4 +106,7 @@ public class ArrayStorage {
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
 	}
 	
+	// do not instaniate
+	
+	private ArrayStorage() { }
 }

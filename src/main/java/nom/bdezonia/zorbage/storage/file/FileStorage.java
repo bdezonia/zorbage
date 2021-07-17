@@ -94,4 +94,8 @@ public class FileStorage {
 		throw new IllegalArgumentException("Unsupported type in FileStorage");
 	}
 
+	// do not instantiate
+	
+	private FileStorage() { }
+	
 }

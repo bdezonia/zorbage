@@ -100,4 +100,8 @@ public class JdbcStorage {
 		throw new IllegalArgumentException("Unsupported type in JdbcStorage");
 	}
 
+	// do not instantiate
+	
+	private JdbcStorage() { }
+	
 }

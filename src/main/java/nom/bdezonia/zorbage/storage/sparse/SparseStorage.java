@@ -76,11 +76,11 @@ public class SparseStorage {
 		if (type instanceof BigDecimalCoder) {
 			return new SparseStorageBigDecimal((BigDecimalCoder)type, size);
 		}
-		if (type instanceof CharCoder) {
-			return new SparseStorageChar((CharCoder)type, size);
-		}
 		if (type instanceof StringCoder) {
 			return new SparseStorageString((StringCoder)type, size);
+		}
+		if (type instanceof CharCoder) {
+			return new SparseStorageChar((CharCoder)type, size);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
@@ -92,4 +92,8 @@ public class SparseStorage {
 		throw new IllegalArgumentException("Unsupported type in SparseStorage");
 	}
 
+	// do not instantiate
+	
+	private SparseStorage() { }
+	
 }

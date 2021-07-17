@@ -42,7 +42,7 @@ public class ExtMemStorage {
 
 	/**
 	 * Allocate a list of elements that resides completely in memory and can
-	 * contain up to 128 GB of elements and each element can have multiple
+	 * contain up to 128 gig of elements and each element can have multiple
 	 * components.
 	 * 
 	 * @param <U>
@@ -93,4 +93,9 @@ public class ExtMemStorage {
 
 		throw new IllegalArgumentException("Unsupported type in HyperBoxStorage");
 	}
+
+	// do not instantiate
+	
+	private ExtMemStorage() { }
+	
 }
