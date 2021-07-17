@@ -47,28 +47,28 @@ import nom.bdezonia.zorbage.storage.coder.CharCoder;
  * @author Barry DeZonia
  *
  */
-public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
+public class JdbcStorageChar<U extends CharCoder & Allocatable<U>>
 	extends AbstractJdbcStorage<U>
-	implements IndexedDataSource<U>, Allocatable<JdbcStorageCharacter<U>>
+	implements IndexedDataSource<U>, Allocatable<JdbcStorageChar<U>>
 {
 	// string passed to createTable based on info from:
 	//   https://docs.oracle.com/javase/1.5.0/docs/guide/jdbc/getstart/mapping.html
 	
-	public JdbcStorageCharacter(Connection conn, U type, long size) {
+	public JdbcStorageChar(Connection conn, U type, long size) {
 		super(size, type, conn);
 		createTable(conn, tableName, "CHAR", type.charCount(), size);
 		zeroFill(type.charCount());
 	}
 
-	public JdbcStorageCharacter(JdbcStorageCharacter<U> other) {
+	public JdbcStorageChar(JdbcStorageChar<U> other) {
 		super(other.size, other.type, other.conn);
 		createTable(conn, tableName, "CHAR", type.charCount(), size);
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 
 	@Override
-	public JdbcStorageCharacter<U> duplicate() {
-		return new JdbcStorageCharacter<U>(this);
+	public JdbcStorageChar<U> duplicate() {
+		return new JdbcStorageChar<U>(this);
 	}
 
 	@Override
@@ -121,8 +121,8 @@ public class JdbcStorageCharacter<U extends CharCoder & Allocatable<U>>
 		};
 
 	@Override
-	public JdbcStorageCharacter<U> allocate() {
-		return new JdbcStorageCharacter<U>(conn, type, size());
+	public JdbcStorageChar<U> allocate() {
+		return new JdbcStorageChar<U>(conn, type, size());
 	}
 
 	@Override

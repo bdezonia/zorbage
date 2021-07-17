@@ -80,7 +80,7 @@ public class JdbcStorage {
 			return (IndexedDataSource<U>) new JdbcStorageBoolean(conn, (BooleanCoder)type, size);
 		}
 		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageCharacter(conn, (CharCoder)type, size);
+			return (IndexedDataSource<U>) new JdbcStorageChar(conn, (CharCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
