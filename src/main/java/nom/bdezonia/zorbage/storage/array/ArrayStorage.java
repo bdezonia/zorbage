@@ -86,11 +86,11 @@ public class ArrayStorage {
 		if (type instanceof BigDecimalCoder) {
 			return (IndexedDataSource<U>) new ArrayStorageBigDecimal((BigDecimalCoder)type, size);
 		}
-		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new ArrayStorageChar((CharCoder)type, size);
-		}
 		if (type instanceof StringCoder) {
 			return (IndexedDataSource<U>) new ArrayStorageString((StringCoder)type, size);
+		}
+		if (type instanceof CharCoder) {
+			return (IndexedDataSource<U>) new ArrayStorageChar((CharCoder)type, size);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed

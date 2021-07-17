@@ -80,11 +80,11 @@ public class JdbcStorage {
 		if (type instanceof BooleanCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageBoolean(conn, (BooleanCoder)type, size);
 		}
-		if (type instanceof CharCoder) {
-			return (IndexedDataSource<U>) new JdbcStorageChar(conn, (CharCoder)type, size);
-		}
 		if (type instanceof StringCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageString(conn, (StringCoder)type, size);
+		}
+		if (type instanceof CharCoder) {
+			return (IndexedDataSource<U>) new JdbcStorageChar(conn, (CharCoder)type, size);
 		}
 		if (type instanceof BigIntegerCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
@@ -96,9 +96,6 @@ public class JdbcStorage {
 		if (type instanceof ByteCoder) {
 			return (IndexedDataSource<U>) new JdbcStorageSignedInt8(conn, (ByteCoder)type, size);
 		}
-		
-		// TODO: add bitCoder when it is done. It should certainly be last as it will
-		//   do files reads as well as writes and thus will be slowest.
 		
 		throw new IllegalArgumentException("Unsupported type in JdbcStorage");
 	}
