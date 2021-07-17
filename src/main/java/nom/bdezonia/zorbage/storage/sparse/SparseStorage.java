@@ -50,41 +50,55 @@ import nom.bdezonia.zorbage.storage.coder.StringCoder;
  */
 public class SparseStorage {
 	
+	/**
+	 * Allocate a list of elements that resides completely in memory. The
+	 * underlying structure is designed to support data that is mostly
+	 * zero. One can then allocate and quickly utilize a list without
+	 * bogging the system down with unimportant information. It is possible
+	 * to fail to allocate lists of any size if your system does not have
+	 * enough free ram.
+	 * 
+	 * @param type
+	 * @param numElements
+ 	 * @param <U>
+	 * @return
+	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U> IndexedDataSource<U> allocate(U type, long size) {
+	public static <U> IndexedDataSource<U> allocate(U type, long numElements) {
+		
 		if (type instanceof DoubleCoder) {
-			return new SparseStorageFloat64((DoubleCoder)type, size);
+			return new SparseStorageFloat64((DoubleCoder)type, numElements);
 		}
 		if (type instanceof FloatCoder) {
-			return new SparseStorageFloat32((FloatCoder)type, size);
+			return new SparseStorageFloat32((FloatCoder)type, numElements);
 		}
 		if (type instanceof LongCoder) {
-			return new SparseStorageSignedInt64((LongCoder)type, size);
+			return new SparseStorageSignedInt64((LongCoder)type, numElements);
 		}
 		if (type instanceof IntCoder) {
-			return new SparseStorageSignedInt32((IntCoder)type, size);
+			return new SparseStorageSignedInt32((IntCoder)type, numElements);
 		}
 		if (type instanceof ShortCoder) {
-			return new SparseStorageSignedInt16((ShortCoder)type, size);
+			return new SparseStorageSignedInt16((ShortCoder)type, numElements);
 		}
 		if (type instanceof BooleanCoder) {
-			return new SparseStorageBoolean((BooleanCoder)type, size);
+			return new SparseStorageBoolean((BooleanCoder)type, numElements);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return new SparseStorageBigInteger((BigIntegerCoder)type, size);
+			return new SparseStorageBigInteger((BigIntegerCoder)type, numElements);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return new SparseStorageBigDecimal((BigDecimalCoder)type, size);
+			return new SparseStorageBigDecimal((BigDecimalCoder)type, numElements);
 		}
 		if (type instanceof StringCoder) {
-			return new SparseStorageString((StringCoder)type, size);
+			return new SparseStorageString((StringCoder)type, numElements);
 		}
 		if (type instanceof CharCoder) {
-			return new SparseStorageChar((CharCoder)type, size);
+			return new SparseStorageChar((CharCoder)type, numElements);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return new SparseStorageSignedInt8((ByteCoder)type, size);
+			return new SparseStorageSignedInt8((ByteCoder)type, numElements);
 		}
 		
 		// TODO: add bitCoder when it is done.

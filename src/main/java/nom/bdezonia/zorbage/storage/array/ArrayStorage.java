@@ -53,54 +53,61 @@ import nom.bdezonia.zorbage.storage.coder.StringCoder;
 public class ArrayStorage {
 	
 	/**
+	 * Allocate an array based storage structure for storing data
+	 * elements. These storage types live in ram and are the
+	 * fastest storage types to access. One cannot allocate more
+	 * than Integer.MAX_VALUE elements using this allocator. It
+	 * is possible to fail to allocate lists if your system does
+	 * not have enough free ram.
 	 * 
-	 * @param size
 	 * @param type
+	 * @param numElements
+	 * @param <U>
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>>
-		IndexedDataSource<U> allocate(U type, long size)
+		IndexedDataSource<U> allocate(U type, long numElements)
 	{
 		if (type instanceof DoubleCoder) {
-			return new ArrayStorageFloat64((DoubleCoder)type, size);
+			return new ArrayStorageFloat64((DoubleCoder)type, numElements);
 		}
 		if (type instanceof FloatCoder) {
-			return new ArrayStorageFloat32((FloatCoder)type, size);
+			return new ArrayStorageFloat32((FloatCoder)type, numElements);
 		}
 		if (type instanceof LongCoder) {
-			return new ArrayStorageSignedInt64((LongCoder)type, size);
+			return new ArrayStorageSignedInt64((LongCoder)type, numElements);
 		}
 		if (type instanceof IntCoder) {
-			return new ArrayStorageSignedInt32((IntCoder)type, size);
+			return new ArrayStorageSignedInt32((IntCoder)type, numElements);
 		}
 		if (type instanceof ShortCoder) {
-			return new ArrayStorageSignedInt16((ShortCoder)type, size);
+			return new ArrayStorageSignedInt16((ShortCoder)type, numElements);
 		}
 		if (type instanceof BooleanCoder) {
-			return new ArrayStorageBoolean((BooleanCoder)type, size);
+			return new ArrayStorageBoolean((BooleanCoder)type, numElements);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return new ArrayStorageBigInteger((BigIntegerCoder)type, size);
+			return new ArrayStorageBigInteger((BigIntegerCoder)type, numElements);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return new ArrayStorageBigDecimal((BigDecimalCoder)type, size);
+			return new ArrayStorageBigDecimal((BigDecimalCoder)type, numElements);
 		}
 		if (type instanceof StringCoder) {
-			return new ArrayStorageString((StringCoder)type, size);
+			return new ArrayStorageString((StringCoder)type, numElements);
 		}
 		if (type instanceof CharCoder) {
-			return new ArrayStorageChar((CharCoder)type, size);
+			return new ArrayStorageChar((CharCoder)type, numElements);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
 		if (type instanceof ByteCoder) {
-			return new ArrayStorageSignedInt8((ByteCoder)type, size);
+			return new ArrayStorageSignedInt8((ByteCoder)type, numElements);
 		}
 		
 		// Best if last: since bit types are slow
 		if (type instanceof BitCoder) {
-			return new ArrayStorageBit((BitCoder)type, size);
+			return new ArrayStorageBit((BitCoder)type, numElements);
 		}
 
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");

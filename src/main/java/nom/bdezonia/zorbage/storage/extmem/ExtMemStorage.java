@@ -43,11 +43,12 @@ public class ExtMemStorage {
 	/**
 	 * Allocate a list of elements that resides completely in memory and can
 	 * contain up to 128 gig of elements and each element can have multiple
-	 * components.
-	 * 
-	 * @param <U>
+	 * components. It is possible to fail to allocate lists of any size
+	 * if your system does not have enough free ram.
+	 *  
 	 * @param type
 	 * @param numElements
+	 * @param <U>
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})

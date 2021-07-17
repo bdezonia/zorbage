@@ -55,37 +55,45 @@ import nom.bdezonia.zorbage.storage.coder.ShortCoder;
 public class FileStorage {
 	
 	/**
+	 * Allocate a file based storage structure for storing data
+	 * elements. These storage types primarily live on disk.
+	 * It is a slower storage type to access bit one can
+	 * allocate a huge number of elements. It is possible to fail
+	 * to allocate lists when your system does not have enough
+	 * free disk space.
 	 * 
-	 * @param size
 	 * @param type
+	 * @param numElements
+	 * @param <U>
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(U type, long size) {
+	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(U type, long numElements) {
+		
 		if (type instanceof DoubleCoder) {
-			return new FileStorageFloat64((DoubleCoder)type, size);
+			return new FileStorageFloat64((DoubleCoder)type, numElements);
 		}
 		if (type instanceof FloatCoder) {
-			return new FileStorageFloat32((FloatCoder)type, size);
+			return new FileStorageFloat32((FloatCoder)type, numElements);
 		}
 		if (type instanceof LongCoder) {
-			return new FileStorageSignedInt64((LongCoder)type, size);
+			return new FileStorageSignedInt64((LongCoder)type, numElements);
 		}
 		if (type instanceof IntCoder) {
-			return new FileStorageSignedInt32((IntCoder)type, size);
+			return new FileStorageSignedInt32((IntCoder)type, numElements);
 		}
 		if (type instanceof ShortCoder) {
-			return new FileStorageSignedInt16((ShortCoder)type, size);
+			return new FileStorageSignedInt16((ShortCoder)type, numElements);
 		}
 		if (type instanceof BooleanCoder) {
-			return new FileStorageBoolean((BooleanCoder)type, size);
+			return new FileStorageBoolean((BooleanCoder)type, numElements);
 		}
 		if (type instanceof CharCoder) {
-			return new FileStorageChar((CharCoder)type, size);
+			return new FileStorageChar((CharCoder)type, numElements);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return new FileStorageSignedInt8((ByteCoder)type, size);
+			return new FileStorageSignedInt8((ByteCoder)type, numElements);
 		}
 		
 		// TODO: add bitCoder when it is done. It should certainly be last as it will

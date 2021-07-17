@@ -54,47 +54,56 @@ import nom.bdezonia.zorbage.storage.coder.StringCoder;
 public class JdbcStorage {
 
 	/**
+	 * Allocate a database friendly storage structure for storing
+	 * data. These storage types live in rows of database tables.
+	 * It is a slow storage type to access bit one can allocate a
+	 * huge number of elements and external programs can query
+	 * your data. It is possible to fail to allocate lists when
+	 * your RDBMS system does not have enough resources.
 	 * 
 	 * @param conn
-	 * @param size
 	 * @param type
+	 * @param numElements
+ 	 * @param <U>
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(Connection conn, U type, long size) {
+	public static <U extends Allocatable<U>> IndexedDataSource<U>
+		allocate(Connection conn, U type, long numElements)
+	{
 		if (type instanceof DoubleCoder) {
-			return new JdbcStorageFloat64(conn, (DoubleCoder)type, size);
+			return new JdbcStorageFloat64(conn, (DoubleCoder)type, numElements);
 		}
 		if (type instanceof FloatCoder) {
-			return new JdbcStorageFloat32(conn, (FloatCoder)type, size);
+			return new JdbcStorageFloat32(conn, (FloatCoder)type, numElements);
 		}
 		if (type instanceof LongCoder) {
-			return new JdbcStorageSignedInt64(conn, (LongCoder)type, size);
+			return new JdbcStorageSignedInt64(conn, (LongCoder)type, numElements);
 		}
 		if (type instanceof IntCoder) {
-			return new JdbcStorageSignedInt32(conn, (IntCoder)type, size);
+			return new JdbcStorageSignedInt32(conn, (IntCoder)type, numElements);
 		}
 		if (type instanceof ShortCoder) {
-			return new JdbcStorageSignedInt16(conn, (ShortCoder)type, size);
+			return new JdbcStorageSignedInt16(conn, (ShortCoder)type, numElements);
 		}
 		if (type instanceof BooleanCoder) {
-			return new JdbcStorageBoolean(conn, (BooleanCoder)type, size);
+			return new JdbcStorageBoolean(conn, (BooleanCoder)type, numElements);
 		}
 		if (type instanceof StringCoder) {
-			return new JdbcStorageString(conn, (StringCoder)type, size);
+			return new JdbcStorageString(conn, (StringCoder)type, numElements);
 		}
 		if (type instanceof CharCoder) {
-			return new JdbcStorageChar(conn, (CharCoder)type, size);
+			return new JdbcStorageChar(conn, (CharCoder)type, numElements);
 		}
 		if (type instanceof BigIntegerCoder) {
-			return new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, size);
+			return new JdbcStorageBigInteger(conn, (BigIntegerCoder)type, numElements);
 		}
 		if (type instanceof BigDecimalCoder) {
-			return new JdbcStorageBigDecimal(conn, (BigDecimalCoder)type, size);
+			return new JdbcStorageBigDecimal(conn, (BigDecimalCoder)type, numElements);
 		}
 		// Best if close to last as types may define Bytes as a last ditch approach
 		if (type instanceof ByteCoder) {
-			return new JdbcStorageSignedInt8(conn, (ByteCoder)type, size);
+			return new JdbcStorageSignedInt8(conn, (ByteCoder)type, numElements);
 		}
 		
 		throw new IllegalArgumentException("Unsupported type in JdbcStorage");

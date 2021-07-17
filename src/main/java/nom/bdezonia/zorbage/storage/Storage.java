@@ -63,8 +63,9 @@ public class Storage {
 	 * Allocate a list of elements using the most convenient method
 	 * zorbage can find at runtime. In memory structures are preferred.
 	 * 
-	 * @param numElements
 	 * @param type
+	 * @param numElements
+	 * @param <U>
 	 * @return
 	 */
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
@@ -107,8 +108,9 @@ public class Storage {
 	 * api user.
 	 * 
 	 * @param strategy
-	 * @param numElements
 	 * @param type
+	 * @param numElements
+	 * @param <U>
 	 * @return
 	 */
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
