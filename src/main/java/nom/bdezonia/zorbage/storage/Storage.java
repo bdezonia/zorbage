@@ -60,6 +60,8 @@ import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
 public class Storage {
 
 	/**
+	 * Allocate a list of elements using the most convenient method
+	 * zorbage can find at runtime. In memory structures are preferred.
 	 * 
 	 * @param numElements
 	 * @param type
@@ -101,6 +103,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of elements using the method specified by the
+	 * api user.
 	 * 
 	 * @param strategy
 	 * @param numElements
@@ -154,6 +158,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of byte based elements and initialize their values
+	 * from a passed in byte array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -174,6 +180,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of short based elements and initialize their values
+	 * from a passed in short array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -194,6 +202,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of int based elements and initialize their values
+	 * from a passed in int array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -214,6 +224,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of long based elements and initialize their values
+	 * from a passed in long array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -234,6 +246,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of float based elements and initialize their values
+	 * from a passed in float array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -254,6 +268,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of double based elements and initialize their values
+	 * from a passed in double array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -274,26 +290,8 @@ public class Storage {
 	}
 	
 	/**
-	 * 
-	 * @param type
-	 * @param array
-	 * @return
-	 */
-	public static <U extends Allocatable<U> & BooleanCoder>
-		IndexedDataSource<U> allocate(U type, boolean[] array)
-	{
-		if (array.length % type.booleanCount() != 0)
-			throw new IllegalArgumentException("allocation must be correctly aligned");
-		IndexedDataSource<U> list = allocate(type, array.length / type.booleanCount());
-		U tmp = type.allocate();
-		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.booleanCount()) {
-			tmp.fromBooleanArray(array, offset);
-			list.set(i, tmp);
-		}
-		return list;
-	}
-	
-	/**
+	 * Allocate a list of BigInteger based elements and initialize their values
+	 * from a passed in BigInteger array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -314,6 +312,8 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of BigDecimal based elements and initialize their values
+	 * from a passed in BigDecimal array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -334,6 +334,30 @@ public class Storage {
 	}
 	
 	/**
+	 * Allocate a list of String based elements and initialize their values
+	 * from a passed in String array of data.
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static <U extends Allocatable<U> & StringCoder>
+		IndexedDataSource<U> allocate(U type, String[] array)
+	{
+		if (array.length % type.stringCount() != 0)
+			throw new IllegalArgumentException("allocation must be correctly aligned");
+		IndexedDataSource<U> list = allocate(type, array.length / type.stringCount());
+		U tmp = type.allocate();
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.stringCount()) {
+			tmp.fromStringArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+
+	/**
+	 * Allocate a list of char based elements and initialize their values
+	 * from a passed in char array of data.
 	 * 
 	 * @param type
 	 * @param array
@@ -354,25 +378,27 @@ public class Storage {
 	}
 
 	/**
+	 * Allocate a list of boolean based elements and initialize their values
+	 * from a passed in boolean array of data.
 	 * 
 	 * @param type
 	 * @param array
 	 * @return
 	 */
-	public static <U extends Allocatable<U> & StringCoder>
-		IndexedDataSource<U> allocate(U type, String[] array)
+	public static <U extends Allocatable<U> & BooleanCoder>
+		IndexedDataSource<U> allocate(U type, boolean[] array)
 	{
-		if (array.length % type.stringCount() != 0)
+		if (array.length % type.booleanCount() != 0)
 			throw new IllegalArgumentException("allocation must be correctly aligned");
-		IndexedDataSource<U> list = allocate(type, array.length / type.stringCount());
+		IndexedDataSource<U> list = allocate(type, array.length / type.booleanCount());
 		U tmp = type.allocate();
-		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.stringCount()) {
-			tmp.fromStringArray(array, offset);
+		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.booleanCount()) {
+			tmp.fromBooleanArray(array, offset);
 			list.set(i, tmp);
 		}
 		return list;
 	}
-
+	
 	// do not instantiate
 	
 	private Storage() { }
