@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
+import nom.bdezonia.zorbage.storage.coder.StringCoder;
 
 /**
  * 
@@ -87,6 +88,9 @@ public class ArrayStorage {
 		}
 		if (type instanceof CharCoder) {
 			return (IndexedDataSource<U>) new ArrayStorageChar((CharCoder)type, size);
+		}
+		if (type instanceof StringCoder) {
+			return (IndexedDataSource<U>) new ArrayStorageString((StringCoder)type, size);
 		}
 		// Best if one of last as many types might support Bytes by default but prefer
 		// other types for speed
