@@ -91,7 +91,7 @@ public class ExtMemStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.toIntArray(pipedContainer[containerIndex], subIndex * value.intCount());
 	}
@@ -102,7 +102,7 @@ public class ExtMemStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.fromIntArray(pipedContainer[containerIndex], subIndex * value.intCount());
 	}

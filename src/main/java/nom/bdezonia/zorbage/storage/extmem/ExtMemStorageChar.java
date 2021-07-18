@@ -91,7 +91,7 @@ public class ExtMemStorageChar<U extends CharCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.toCharArray(pipedContainer[containerIndex], subIndex * value.charCount());
 	}
@@ -102,7 +102,7 @@ public class ExtMemStorageChar<U extends CharCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.fromCharArray(pipedContainer[containerIndex], subIndex * value.charCount());
 	}

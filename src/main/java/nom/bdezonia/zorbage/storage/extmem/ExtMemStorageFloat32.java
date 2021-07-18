@@ -91,7 +91,7 @@ public class ExtMemStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.toFloatArray(pipedContainer[containerIndex], subIndex * value.floatCount());
 	}
@@ -102,7 +102,7 @@ public class ExtMemStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.fromFloatArray(pipedContainer[containerIndex], subIndex * value.floatCount());
 	}

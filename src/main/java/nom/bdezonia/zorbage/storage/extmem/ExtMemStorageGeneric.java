@@ -94,7 +94,7 @@ public class ExtMemStorageGeneric<T extends Algebra<T,U>,U>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		alg.assign().call(value, (U) pipedContainer[containerIndex][subIndex]);
 	}
@@ -106,7 +106,7 @@ public class ExtMemStorageGeneric<T extends Algebra<T,U>,U>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		alg.assign().call((U) pipedContainer[containerIndex][subIndex], value);
 	}

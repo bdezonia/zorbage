@@ -91,7 +91,7 @@ public class ExtMemStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.toShortArray(pipedContainer[containerIndex], subIndex * value.shortCount());
 	}
@@ -102,7 +102,7 @@ public class ExtMemStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 			throw new IllegalArgumentException("negative index exception");
 		if (index >= numElements)
 			throw new IllegalArgumentException("index out of bounds");
-		int containerIndex = (int) (index / numElements);
+		int containerIndex = (int) (index / ELEMENTS_PER_PIPED);
 		int subIndex = (int) (index % ELEMENTS_PER_PIPED);
 		value.fromShortArray(pipedContainer[containerIndex], subIndex * value.shortCount());
 	}
