@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.misc;
 
 import nom.bdezonia.zorbage.function.Function0;
 import nom.bdezonia.zorbage.procedure.Procedure1;
