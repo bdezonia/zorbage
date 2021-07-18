@@ -7,7 +7,7 @@ package nom.bdezonia.zorbage.storage.extmem;
  */
 abstract class AbstractExtMemStorage {
 	
-	protected static final int ELEMENTS_PER_PIPED = 64;
+	protected static final int ELEMENTS_PER_PIPED = 1024;
 	
 	public AbstractExtMemStorage() { }
 
