@@ -43,28 +43,28 @@ public class Benchmark {
 	/**
 	 * Measure the time for a process to run.
 	 * @param <X>
-	 * @param initializer The setup code for the timing suite.
-	 * @param procedure The "chunk of code' that is being timed.
+	 * @param setupCode The setup code for the timing suite.
+	 * @param measuredProcess The "chunk of code' that is being timed.
 	 * @return The total milleseconds it takes to run the chunk of code.
 	 */
 	public static <X>
-		long measureTime(Function0<X> initializer, Procedure1<X> procedure)
+		long measureTime(Function0<X> setupCode, Procedure1<X> measuredProcess)
 	{
-		// allocate data
+		// setup any params the measuredProcess will use
 		
-		X data = initializer.call();
+		X parameters = setupCode.call();
 		
-		// warm up the cache
+		// warm up the cache and the code optimizer
 		
 		for (int i = 0; i < 5; i++) {
-			procedure.call(data);
+			measuredProcess.call(parameters);
 		}
 		
 		// now time one run
 		
 		long start = System.currentTimeMillis();
 		
-		procedure.call(data);
+		measuredProcess.call(parameters);
 		
 		long end = System.currentTimeMillis();
 		
