@@ -45,7 +45,7 @@ public class Benchmark {
 	 * @param <X>
 	 * @param setupCode The setup code for the timing suite.
 	 * @param measuredProcess The "chunk of code' that is being timed.
-	 * @return The total milleseconds it takes to run the chunk of code.
+	 * @return The total milliseconds it takes to run the chunk of code.
 	 */
 	public static <X>
 		long measureTime(Function0<X> setupCode, Procedure1<X> measuredProcess)
