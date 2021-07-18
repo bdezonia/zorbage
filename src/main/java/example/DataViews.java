@@ -196,7 +196,7 @@ class DataViews {
 	// IndexedDataSource. Data views do not respect out of bounds 
 	// policies for a given source. It is assumed you will always access
 	// a data view in bounds. You can call the safeSet()/safeGet()
-	// methods. They bounds check but simply aboirt their operation
+	// methods. They bounds check but simply abort their operation
 	// with an error exception.
 	
 	// Here is an example of this using an IndexedDataSource
