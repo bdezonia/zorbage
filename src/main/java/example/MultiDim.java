@@ -38,11 +38,14 @@ import nom.bdezonia.zorbage.coordinates.IdentityAxisEquation;
 import nom.bdezonia.zorbage.coordinates.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.data.MultiDimWrapper;
 import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.oob.nd.ConstantNdOOB;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
+import nom.bdezonia.zorbage.type.integer.int10.UnsignedInt10Member;
 import nom.bdezonia.zorbage.type.integer.int16.UnsignedInt16Algebra;
 import nom.bdezonia.zorbage.type.integer.int16.UnsignedInt16Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -157,6 +160,25 @@ class MultiDim {
 		paddedData.get(index, value);  // value == 83 here
 	}
 	
+	// Sometimes you have a 1-d dataset that you'd like to turn into a multidim
+	// dataset. Zorbage provides a simple way of doing this.
+	
+	@SuppressWarnings("unused")
+	void example2() {
+
+		// imagine we have a list of a 1000 numbers
+		
+		IndexedDataSource<UnsignedInt10Member> list = null;
+
+		// we can wrap that into a 10 x 10 x 10 cube of numbers
+		
+		long[] dims = new long[] {10, 10, 10};
+		
+		DimensionedDataSource<UnsignedInt10Member> multidim =
+				new MultiDimWrapper<UnsignedInt10Member>(list, dims);
+	}
+	
+	
 	// Zorbage has a helper for manipulating multidim datasets. Sometimes when you
 	// import from elsewhere (using let's say zorbage-netcdf or zorbage-gdal) you
 	// might get data encoded in an order you do not wish to work with. You can
@@ -164,7 +186,7 @@ class MultiDim {
 	// by this transformation. Maybe this is best shown with an example.
 	
 	@SuppressWarnings("null")
-	void example2() {
+	void example3() {
 	
 		DimensionedDataSource<Float64Member> origSrc = null;
 		
@@ -184,10 +206,10 @@ class MultiDim {
 		origSrc.dimension(2);    // == 768
 		origSrc.getAxisType(2);  // == "y"
 		
-		origSrc.dimension(3);    // = 300
+		origSrc.dimension(3);    // == 300
 		origSrc.getAxisType(3);  // == "z"
 		
-		origSrc.dimension(4);    // = 1000
+		origSrc.dimension(4);    // == 1000
 		origSrc.getAxisType(4);  // == "time"
 		
 		int[] permutation = new int[] {3, 0, 1, 2, 4};
@@ -211,7 +233,7 @@ class MultiDim {
 		result.dimension(1);    // == 768
 		result.getAxisType(1);  // == "y"
 		
-		result.dimension(2);    // = 300
+		result.dimension(2);    // == 300
 		result.getAxisType(2);  // == "z"
 		
 		result.dimension(3);    // == 4

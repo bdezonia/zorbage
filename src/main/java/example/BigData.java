@@ -33,17 +33,22 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.ParallelFill;
 import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.Find;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Sum;
+import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.MultiDimWrapper;
 import nom.bdezonia.zorbage.datasource.BigListDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.storage.extmem.ExtMemStorage;
 import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Algebra;
 import nom.bdezonia.zorbage.type.integer.int16.SignedInt16Member;
 import nom.bdezonia.zorbage.type.integer.int16.UnsignedInt16Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
+import nom.bdezonia.zorbage.type.string.StringMember;
 
 import java.math.BigDecimal;
 
@@ -64,8 +69,15 @@ class BigData {
 		SignedInt16Member value = G.INT16.construct();
 
 		// Allocate a huge list: 10 billion short integers (20 billion bytes). Zorbage takes large
-		//   requests like this and has a 2000 byte memory buffer containing values that are paged
-		//   to a file on disk as needed. The created list is zero filled.
+		//   requests like this and allocates the best data structure for the job. It will first
+		//   try to allocate an in memory structure (one that is allowed to grow beyond 2 gig in
+		//   memory use). This structure is fast and completely contained in RAM so if your Java
+		//   heap size is large enough (which is configurable by a user of your application) the
+		//   storage allocator will generate one. If you do not have enough RAM for a complete
+		//   in memory data structure the storage allocator will return a file based list that
+		//   contains a 4K byte memory buffer. All the values of the list are paged to a file on
+		//   disk as needed. The created list is zero filled. This access is much slower than RAM
+		//   access but can allocate mind boggling large lists of data.
 
 		IndexedDataSource<SignedInt16Member> data = Storage.allocate(value, 10L * 1000 * 1000 * 1000);
 
@@ -91,7 +103,28 @@ class BigData {
 		System.out.println("Number of integers with value of 4 was " + numFours);
 	}
 
+	@SuppressWarnings("unused")
 	void example2() {
+		
+		// As described in example one there are multiple ways to generate big data structures.
+		// One storage allocator that excels at allocating big, fast, ALL IN RAM lists is the
+		// ExtMemStorage allocator. It can return very large lists with greater than 2 gig
+		// elements that reside completely in RAM and is only limited by the (configurable)
+		// Java heap size.
+		
+		IndexedDataSource<StringMember> lotsaStrings =
+				ExtMemStorage.allocate(G.STRING.construct(),  10L * 1000 * 1000 * 1000);
+		
+		long index = Find.compute(G.STRING, new StringMember("Arby's"), lotsaStrings);
+		
+		// One of the interesting things about any IndexedDataSource is that it can be
+		// wrapped to become a multidimensional data source quite easily.
+		
+		DimensionedDataSource<StringMember> multiDimStructure =
+				new MultiDimWrapper<>(lotsaStrings, new long[] {10,1000,1000,1000});
+	}
+	
+	void example3() {
 
 		// Another way to allocate a huge list (ALL IN RAM): 10 billion short integers (20 billion bytes).
 		//   Use the BigList class from Zorbage. The created list is zero filled. BigList based code
@@ -127,7 +160,7 @@ class BigData {
 		System.out.println("Number of integers with value of 4 was " + numFours);
 	}
 
-	void example3() {
+	void example4() {
 
 		// One issue with working with lots of data is that doing math with many numbers can result
 		// in overflows or underflows or losses of precision. One trick Zorbage uses is to allow

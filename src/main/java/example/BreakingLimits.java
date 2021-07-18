@@ -148,7 +148,8 @@ class BreakingLimits {
 	/*
 	 * Many floating point types
 	 *   Java supports 32 bit and 64 bit floating types
-	 *   Zorbage supports 16 bit, 32 bit, 64 bit, 128 bit, and seemingly limitless precision floating bit numbers.
+	 *   Zorbage supports 16 bit, 32 bit, 64 bit, 128 bit, and seemingly limitless precision floating
+	 *   point numbers.
 	 *   
 	 *     One nice thing about floating point in Zorbage is that you can write one algorithm and by
 	 *     passing it different parameters you can compute a result with 3 places precision or 7 places
@@ -174,9 +175,10 @@ class BreakingLimits {
 	}
 	
 	/*
-	 * Pass by reference of primitive types
-	 *   In Java you cannot write a method that changes the value of a primitive type (int, float, etc.)
-	 *   In Zorbage pass by reference even works with primitive types
+	 * Pass by reference of primitive types:
+	 *   In Java you cannot write a method that changes the value of a primitive type
+	 *   (int, float, etc.).
+	 *   In Zorbage pass by reference even works with primitive types.
 	 */
 	
 	void example5() {
@@ -216,9 +218,10 @@ class BreakingLimits {
 	/*
 	 *   
 	 * Non byte-aligned integers
-	 *   In Java the integers are always byte aligned: 8 bit byte, 16 bit short, 32 bit int, 64 bit long
-	 *   In Zorbage all these types are present but also ints of depth 1 bit, 2 bit, 3 bit, up to 16-bit
-	 *     are present too.
+	 *   In Java the integers are always byte aligned: 8 bit byte, 16 bit short, 32 bit int,
+	 *     64 bit long.
+	 *   In Zorbage all these types are present but also signed and unsiged integers of bit
+	 *     depth 1, 2, 3, etc. all the way up to 16-bits are present.
 	 */
 	
 	void example6() {

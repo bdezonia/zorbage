@@ -305,13 +305,13 @@ public class WaysToComputeThings {
 		Float32Member tmp = G.FLT.construct();
 		
 		// one way: pass the n-d data source's rawData() accessor to any of the 
-		//   four 1-d sum approaches shown above
+		//   four 1-d sum approaches shown above. Usually quite fast.
 		//
 		// e.g. here is one example
 		//
 		Scale.compute(G.FLT, scale, dataSource.rawData(), dataSource.rawData());
 
-		// second way: use a view
+		// second way: use a view: usually quite fast
 		
 		FiveDView<Float32Member> view = new FiveDView<>(dataSource);
 
@@ -329,7 +329,7 @@ public class WaysToComputeThings {
 			}
 		}
 		
-		// third way: n-d access
+		// third way: n-d access: slow
 		
 		IntegerIndex idx = new IntegerIndex(dataSource.numDimensions());
 		
