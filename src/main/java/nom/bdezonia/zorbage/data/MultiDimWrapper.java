@@ -32,6 +32,9 @@ public class MultiDimWrapper<U>
 	private String valueUnit;
 	
 	/**
+	 * Wrap any 1-d list as a multidimensional n-d data source. The
+	 * number of elements in the list must be compatible with the
+	 * number of elements represented by the passed in dimensions.
 	 * 
 	 * @param list
 	 * @param dims
@@ -47,7 +50,10 @@ public class MultiDimWrapper<U>
 		this.axisTypes = new String[dims.length];
 		this.axisUnits = new String[dims.length];
 	}
-	
+
+	/**
+	 * Returns the size of dimension number d in this multidim data set
+	 */
 	@Override
 	public long dimension(int d) {
 		
@@ -60,24 +66,37 @@ public class MultiDimWrapper<U>
 		return dims[d];
 	}
 
+	/**
+	 * Returns the number of dimensions in this multidim data set
+	 */
 	@Override
 	public int numDimensions() {
 		
 		return dims.length;
 	}
 
+	/**
+	 * Returns the 1-d list that resides within the core of this
+	 * multidim data set and which stores all its values.
+	 */
 	@Override
 	public IndexedDataSource<U> rawData() {
 		
 		return oneDdata;
 	}
 
+	/**
+	 * Return the storage type if this multidim data set.
+	 */
 	@Override
 	public StorageConstruction storageType() {
 		
 		return oneDdata.storageType();
 	}
 
+	/**
+	 * Returns the total number of elements in this data set
+	 */
 	@Override
 	public long numElements() {
 
