@@ -32,7 +32,6 @@ package nom.bdezonia.zorbage.dataview;
 
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -235,28 +234,28 @@ public class PlaneView<U> implements Dimensioned {
 
 	private abstract class AccessorBase {
 		
-		private long[] planePos;
+		private long[] extraDimPositions;
 		
 		AccessorBase(int numD) {
 			int size = numD - 2;
 			if (size < 0) size = 0;
-			planePos = new long[size]; 
+			extraDimPositions = new long[size]; 
 		}
 
 		public int getExtraDimsCount() {
-			return planePos.length;
+			return extraDimPositions.length;
 		}
 		
 		public void setExtraDimValue(int i, long v) {
-			if (i < 0 || i >= planePos.length)
-				throw new IllegalArgumentException("illegal planePos");
-			planePos[i] = v;
+			if (i < 0 || i >= extraDimPositions.length)
+				throw new IllegalArgumentException("illegal extra dim position");
+			extraDimPositions[i] = v;
 		}
 		
 		public long getExtraDimValue(int i) {
-			if (i < 0 || i >= planePos.length)
-				throw new IllegalArgumentException("illegal planePos");
-			return planePos[i];
+			if (i < 0 || i >= extraDimPositions.length)
+				throw new IllegalArgumentException("illegal extra dim position");
+			return extraDimPositions[i];
 		}
 	}
 	
