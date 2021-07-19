@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.dataview;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
  * 
@@ -47,8 +46,7 @@ public class PlaneView<U> implements Dimensioned {
 	private final int c1;
 	private final long d0;
 	private final long d1;
-	private final Procedure3<Long,Long,U> setter;
-	private final Procedure3<Long,Long,U> getter;
+	private final Accessor<U> accessor;
 
 	/**
 	 * Construct a view from an {@link IndexedDataSource} and some dimensions.
@@ -57,13 +55,18 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param c0 The "x" component in the data source
 	 * @param c1 The "y" component in the data source
 	 */
-	public PlaneView(DimensionedDataSource<U> data, int c0, int c1, long ... fixedComponents) {
+	public PlaneView(DimensionedDataSource<U> data, int c0, int c1, long ... getExtraDimValue) {
 		int numD = data.numDimensions();
-		
-		if (numD < 2)
-			throw new IllegalArgumentException("data source must be 2d or greater");
-		
-		if (numD - fixedComponents.length != 2)
+
+		if (numD == 0)
+			throw new IllegalArgumentException(
+						"data source must have at least 1 dimension");
+
+		if (numD == 1) {
+			if (getExtraDimValue.length > 0)
+				throw new IllegalArgumentException("1d data source cannot have extra dims");
+		}
+		else if (numD - getExtraDimValue.length != 2)
 			throw new IllegalArgumentException("specified data source would not be 2d");
 		
 		if (c0 == c1)
@@ -76,17 +79,46 @@ public class PlaneView<U> implements Dimensioned {
 		if (c0 < 0 || c0 >= numD)
 			throw new IllegalArgumentException("plane component 0 is outside number of dimensions");
 		
-		if (c1 < 0 || c1 >= numD)
+		if (c1 < 0 || ((numD == 1 && c1 > 1) || (numD > 1 && c1 >= numD)))
 			throw new IllegalArgumentException("plane component 1 is outside number of dimensions");
 
 		this.c0 = c0;
 		this.c1 = c1;
 
 		this.d0 = data.dimension(c0);
-		this.d1 = data.dimension(c1);
-		
-		setter = chooseSetter(data, fixedComponents);
-		getter = chooseGetter(data, fixedComponents);
+		this.d1 = numD == 1 ? 1 : data.dimension(c1);
+
+		switch (numD) {
+		case 1:
+			accessor = new Accessor1d<U>(data, c0, c1);
+			break;
+		case 2:
+			accessor = new Accessor2d<U>(data, c0, c1);
+			break;
+		case 3:
+			accessor = new Accessor3d<U>(data, c0, c1);
+			break;
+		case 4:
+			accessor = new Accessor4d<U>(data, c0, c1);
+			break;
+		case 5:
+			accessor = new Accessor5d<U>(data, c0, c1);
+			break;
+		case 6:
+			accessor = new Accessor6d<U>(data, c0, c1);
+			break;
+		case 7:
+			accessor = new Accessor7d<U>(data, c0, c1);
+			break;
+		case 8:
+			accessor = new Accessor8d<U>(data, c0, c1);
+			break;
+		default:
+			throw new IllegalArgumentException(""+numD+" dimensions not yet supported in PlaneView");
+		}
+		for (int i = 0; i < getExtraDimValue.length; i++) {
+			accessor.setExtraDimValue(i, getExtraDimValue[i]);
+		}
 	}
 
 	/**
@@ -108,7 +140,7 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param val The output where the result is placed
 	 */
 	public void get(long i0, long i1, U val) {
-		getter.call(i0, i1, val);
+		accessor.get(i0, i1, val);
 	}
 
 	/**
@@ -121,7 +153,7 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param val The input that is stored in the underlying data set
 	 */
 	public void set(long i0, long i1, U val) {
-		setter.call(i0, i1, val);
+		accessor.set(i0, i1, val);
 	}
 
 	/**
@@ -175,1666 +207,989 @@ public class PlaneView<U> implements Dimensioned {
 		throw new IllegalArgumentException("dimension out of bounds");
 	}
 
-	private Procedure3<Long, Long, U> chooseGetter(DimensionedDataSource<U> data, long[] fixedComponents) {
-		
-		if (data.numDimensions() == 2) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final TwoDView<U> view = new TwoDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					view.get(i0, i1, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 3) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final ThreeDView<U> view = new ThreeDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-					}
-					else {  // (c0 == 1 && c1 == 2)
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-					}
-					view.get(u0, u1, u2, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 4) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final FourDView<U> view = new FourDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-					}
-					view.get(u0, u1, u2, u3, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 5) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final FiveDView<U> view = new FiveDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-					}
-					view.get(u0, u1, u2, u3, u4, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 6) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final SixDView<U> view = new SixDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					long u5 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 5) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 1 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 2 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 3 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 4 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = i1;
-					}
-					view.get(u0, u1, u2, u3, u4, u5, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 7) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final SevenDView<U> view = new SevenDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					long u5 = -1;
-					long u6 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 5) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 6) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 2 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 2 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 3 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 3 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 4 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 4 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 5 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = i0;
-						u6 = i1;
-					}
-					view.get(u0, u1, u2, u3, u4, u5, u6, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 8) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final EightDView<U> view = new EightDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					long u5 = -1;
-					long u6 = -1;
-					long u7 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 5) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 6) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 7) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 3 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 3 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 3 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 4 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 4 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 4 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 5 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = i0;
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 5 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = i0;
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 5 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = fixedComponents[5];
-						u6 = i0;
-						u7 = i1;
-					}
-					view.get(u0, u1, u2, u3, u4, u5, u6, u7, val);
-				}
-			};
-		}
-		if (data.numDimensions() == 9) {
-			
-		}
-		if (data.numDimensions() == 10) {
-			
-		}
-		if (data.numDimensions() == 11) {
-			
-		}
-		if (data.numDimensions() == 12) {
-			
-		}
-		throw new IllegalArgumentException(
-				"PlaneView only works on data sets with between 2 and 8 dimensions at the moment");
+	public int getExtraDimsCount() {
+		return accessor.getExtraDimsCount();
 	}
 	
-	private Procedure3<Long, Long, U> chooseSetter(DimensionedDataSource<U> data, long[] fixedComponents) {
-		if (data.numDimensions() == 2) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final TwoDView<U> view = new TwoDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					view.set(i0, i1, val);
-				}
-			};
+	public void setExtraDimValue(int i, long v) {
+		accessor.setExtraDimValue(i, v);
+	}
+
+	public long getExtraDimValue(int i) {
+		return accessor.getExtraDimValue(i);
+	}
+	
+	private interface Accessor<X> {
+
+		void set(long i0, long i1, X value);
+		
+		void get(long i0, long i1, X value);
+		
+		int getExtraDimsCount();
+		
+		void setExtraDimValue(int i, long v);
+		
+		long getExtraDimValue(int i);
+	}
+
+	private abstract class AccessorBase {
+		
+		private long[] planePos;
+		
+		AccessorBase(int numD) {
+			int size = numD - 2;
+			if (size < 0) size = 0;
+			planePos = new long[size]; 
 		}
-		if (data.numDimensions() == 3) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final ThreeDView<U> view = new ThreeDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-					}
-					else {  // (c0 == 1 && c1 == 2)
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-					}
-					view.set(u0, u1, u2, val);
-				}
-			};
+
+		public int getExtraDimsCount() {
+			return planePos.length;
 		}
-		if (data.numDimensions() == 4) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final FourDView<U> view = new FourDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-					}
-					view.set(u0, u1, u2, u3, val);
-				}
-			};
+		
+		public void setExtraDimValue(int i, long v) {
+			if (i < 0 || i >= planePos.length)
+				throw new IllegalArgumentException("illegal planePos");
+			planePos[i] = v;
 		}
-		if (data.numDimensions() == 5) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final FiveDView<U> view = new FiveDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-					}
-					view.set(u0, u1, u2, u3, u4, val);
-				}
-			};
+		
+		public long getExtraDimValue(int i) {
+			if (i < 0 || i >= planePos.length)
+				throw new IllegalArgumentException("illegal planePos");
+			return planePos[i];
 		}
-		if (data.numDimensions() == 6) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final SixDView<U> view = new SixDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					long u5 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 0 && c1 == 5) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 1 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 2 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-						u5 = fixedComponents[3];
-					}
-					else if (c0 == 3 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = i1;
-					}
-					else if (c0 == 4 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = i1;
-					}
-					view.set(u0, u1, u2, u3, u4, u5, val);
-				}
-			};
+	}
+	
+	private class Accessor1d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final OneDView<X> view;
+
+		Accessor1d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new OneDView<>(data);
 		}
-		if (data.numDimensions() == 7) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final SevenDView<U> view = new SevenDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					long u5 = -1;
-					long u6 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 5) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 0 && c1 == 6) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 1 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 2 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 2 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 3 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 3 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 4 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = i1;
-						u6 = fixedComponents[4];
-					}
-					else if (c0 == 4 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = fixedComponents[4];
-						u6 = i1;
-					}
-					else if (c0 == 5 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = i0;
-						u6 = i1;
-					}
-					view.set(u0, u1, u2, u3, u4, u5, u6, val);
-				}
-			};
+
+		@Override
+		public void set(long i0, long i1, X value) {
+			view.set(i0, value);
 		}
-		if (data.numDimensions() == 8) {
-			return new Procedure3<Long, Long, U>() {
-				
-				private final EightDView<U> view = new EightDView<>(data);
-				
-				@Override
-				public void call(Long i0, Long i1, U val) {
-					long u0 = -1;
-					long u1 = -1;
-					long u2 = -1;
-					long u3 = -1;
-					long u4 = -1;
-					long u5 = -1;
-					long u6 = -1;
-					long u7 = -1;
-					if (c0 == 0 && c1 == 1) {
-						u0 = i0;
-						u1 = i1;
-						u2 = fixedComponents[0];
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 2) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 3) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 4) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 5) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 6) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 0 && c1 == 7) { 
-						u0 = i0;
-						u1 = fixedComponents[0];
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 1 && c1 == 2) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = i1;
-						u3 = fixedComponents[1];
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 1 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = i0;
-						u2 = fixedComponents[1];
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 2 && c1 == 3) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = i1;
-						u4 = fixedComponents[2];
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 2 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = i0;
-						u3 = fixedComponents[2];
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 3 && c1 == 4) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = i1;
-						u5 = fixedComponents[3];
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 3 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 3 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 3 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = i0;
-						u4 = fixedComponents[3];
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 4 && c1 == 5) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = i1;
-						u6 = fixedComponents[4];
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 4 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = fixedComponents[4];
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 4 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = i0;
-						u5 = fixedComponents[4];
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 5 && c1 == 6) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = i0;
-						u6 = i1;
-						u7 = fixedComponents[5];
-					}
-					else if (c0 == 5 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = i0;
-						u6 = fixedComponents[5];
-						u7 = i1;
-					}
-					else if (c0 == 5 && c1 == 7) { 
-						u0 = fixedComponents[0];
-						u1 = fixedComponents[1];
-						u2 = fixedComponents[2];
-						u3 = fixedComponents[3];
-						u4 = fixedComponents[4];
-						u5 = fixedComponents[5];
-						u6 = i0;
-						u7 = i1;
-					}
-					view.set(u0, u1, u2, u3, u4, u5, u6, u7, val);
-				}
-			};
+
+		@Override
+		public void get(long i0, long i1, X value) {
+			view.get(i0, value);
 		}
-		throw new IllegalArgumentException(
-				"PlaneView only works on data sets with between 2 and 8 dimensions at the moment");
+	}
+	
+	private class Accessor2d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final TwoDView<X> view;
+	
+		Accessor2d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new TwoDView<>(data);
+		}
+	
+		@Override
+		public void set(long i0, long i1, X value) {
+			view.set(i0, i1, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			view.get(i0, i1, value);
+		}
+	}
+
+	private class Accessor3d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final ThreeDView<X> view;
+		private long u0, u1, u2;
+	
+		Accessor3d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new ThreeDView<>(data);
+		}
+
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) {
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 3d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, value);
+		}
+	}
+
+	private class Accessor4d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final FourDView<X> view;
+		private long u0, u1, u2, u3;
+	
+		Accessor4d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new FourDView<>(data);
+		}
+
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+				u3 = getExtraDimValue(1);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+			}
+			else if (c0 == 0 && c1 == 3) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+			}
+			else if (c0 == 1 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+			}
+			else if (c0 == 2 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 4d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, value);
+		}
+	}
+
+	private class Accessor5d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final FiveDView<X> view;
+		private long u0, u1, u2, u3, u4;
+	
+		Accessor5d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new FiveDView<>(data);
+		}
+
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+			}
+			else if (c0 == 0 && c1 == 3) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+			}
+			else if (c0 == 0 && c1 == 4) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+			}
+			else if (c0 == 1 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+			}
+			else if (c0 == 1 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+			}
+			else if (c0 == 2 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+			}
+			else if (c0 == 2 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+			}
+			else if (c0 == 3 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 5d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, u4, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, u4, value);
+		}
+	}
+
+	private class Accessor6d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final SixDView<X> view;
+		private long u0, u1, u2, u3, u4, u5;
+	
+		Accessor6d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new SixDView<>(data);
+		}
+
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 0 && c1 == 3) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 0 && c1 == 4) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 0 && c1 == 5) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 1 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 1 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 1 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+			}
+			else if (c0 == 2 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 2 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 2 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+			}
+			else if (c0 == 3 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+			}
+			else if (c0 == 3 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+			}
+			else if (c0 == 4 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 6d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, u4, u5, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, u4, u5, value);
+		}
+	}
+
+	private class Accessor7d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final SevenDView<X> view;
+		private long u0, u1, u2, u3, u4, u5, u6;
+	
+		Accessor7d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new SevenDView<>(data);
+		}
+
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 0 && c1 == 3) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 0 && c1 == 4) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 0 && c1 == 5) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 0 && c1 == 6) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 1 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 1 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 1 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 1 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+			}
+			else if (c0 == 2 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 2 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 2 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 2 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+			}
+			else if (c0 == 3 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 3 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 3 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+			}
+			else if (c0 == 4 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+			}
+			else if (c0 == 4 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+			}
+			else if (c0 == 5 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = i0;
+				u6 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 7d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, u4, u5, u6, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, u4, u5, u6, value);
+		}
+	}
+
+	private class Accessor8d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final EightDView<X> view;
+		private long u0, u1, u2, u3, u4, u5, u6, u7;
+	
+		Accessor8d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new EightDView<>(data);
+		}
+
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 0 && c1 == 3) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 0 && c1 == 4) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 0 && c1 == 5) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 0 && c1 == 6) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 0 && c1 == 7) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 1 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 1 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 1 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 1 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 1 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+			}
+			else if (c0 == 2 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 2 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 2 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 2 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 2 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+			}
+			else if (c0 == 3 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 3 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 3 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 3 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+			}
+			else if (c0 == 4 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 4 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 4 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+			}
+			else if (c0 == 5 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = i0;
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+			}
+			else if (c0 == 5 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = i0;
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+			}
+			else if (c0 == 5 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = getExtraDimValue(5);
+				u6 = i0;
+				u7 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 8d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, u4, u5, u6, u7, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, u4, u5, u6, u7, value);
+		}
 	}
 }
