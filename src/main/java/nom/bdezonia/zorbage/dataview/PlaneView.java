@@ -113,6 +113,9 @@ public class PlaneView<U> implements Dimensioned {
 		case 8:
 			accessor = new Accessor8d<U>(data, c0, c1);
 			break;
+		case 9:
+			accessor = new Accessor9d<U>(data, c0, c1);
+			break;
 		default:
 			throw new IllegalArgumentException(""+numD+" dimensions not yet supported in PlaneView");
 		}
@@ -1166,7 +1169,7 @@ public class PlaneView<U> implements Dimensioned {
 				u6 = getExtraDimValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 5 && c1 == 7) { 
+			else if (c0 == 6 && c1 == 7) { 
 				u0 = getExtraDimValue(0);
 				u1 = getExtraDimValue(1);
 				u2 = getExtraDimValue(2);
@@ -1190,6 +1193,432 @@ public class PlaneView<U> implements Dimensioned {
 		public void get(long i0, long i1, X value) {
 			setPos(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, u7, value);
+		}
+	}
+
+	private class Accessor9d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final NineDView<X> view;
+		private long u0, u1, u2, u3, u4, u5, u6, u7, u8;
+	
+		Accessor9d(DimensionedDataSource<X> data, int c0, int c1) {
+			super(data.numDimensions());
+			view = new NineDView<>(data);
+		}
+	
+		private void setPos(long i0, long i1) {
+			if (c0 == 0 && c1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getExtraDimValue(0);
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 2) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 3) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 4) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 5) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 6) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 7) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 0 && c1 == 8) { 
+				u0 = i0;
+				u1 = getExtraDimValue(0);
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 1 && c1 == 2) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getExtraDimValue(1);
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 1 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 1 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 1 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 1 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 1 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 1 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = i0;
+				u2 = getExtraDimValue(1);
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 2 && c1 == 3) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = i1;
+				u4 = getExtraDimValue(2);
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 2 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 2 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 2 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 2 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 2 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = i0;
+				u3 = getExtraDimValue(2);
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 3 && c1 == 4) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = i1;
+				u5 = getExtraDimValue(3);
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 3 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 3 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 3 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 3 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = i0;
+				u4 = getExtraDimValue(3);
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 4 && c1 == 5) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = i1;
+				u6 = getExtraDimValue(4);
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 4 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = getExtraDimValue(4);
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 4 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 4 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = i0;
+				u5 = getExtraDimValue(4);
+				u6 = getExtraDimValue(5);
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 5 && c1 == 6) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = i0;
+				u6 = i1;
+				u7 = getExtraDimValue(5);
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 5 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = i0;
+				u6 = getExtraDimValue(5);
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 5 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = i0;
+				u6 = getExtraDimValue(5);
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 6 && c1 == 7) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = getExtraDimValue(5);
+				u6 = i0;
+				u7 = i1;
+				u8 = getExtraDimValue(6);
+			}
+			else if (c0 == 6 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = getExtraDimValue(5);
+				u6 = i0;
+				u7 = getExtraDimValue(6);
+				u8 = i1;
+			}
+			else if (c0 == 7 && c1 == 8) { 
+				u0 = getExtraDimValue(0);
+				u1 = getExtraDimValue(1);
+				u2 = getExtraDimValue(2);
+				u3 = getExtraDimValue(3);
+				u4 = getExtraDimValue(4);
+				u5 = getExtraDimValue(5);
+				u6 = getExtraDimValue(6);
+				u7 = i0;
+				u8 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 8d "+c0+" "+c1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, u4, u5, u6, u7, u8, value);
+		}
+	
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, u4, u5, u6, u7, u8, value);
 		}
 	}
 }
