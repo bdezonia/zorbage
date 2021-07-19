@@ -49,38 +49,39 @@ public class PlaneView<U> implements Dimensioned {
 	private final Accessor<U> accessor;
 
 	/**
-	 * Construct a view from an {@link IndexedDataSource} and some dimensions.
+	 * Construct a view from an {@link DimensionedDataSource} and some dimensions.
 	 * 
 	 * @param data The n-d data source the view is being built around.
-	 * @param c0 The "x" component in the data source
-	 * @param c1 The "y" component in the data source
+	 * @param c0 The coordinate position of the "x" component in the data source
+	 * @param c1 The coordinate position of the "y" component in the data source
 	 */
-	public PlaneView(DimensionedDataSource<U> data, int c0, int c1, long ... getExtraDimValue) {
+	public PlaneView(DimensionedDataSource<U> data, int c0, int c1, long ... extraDimValues) {
+
 		int numD = data.numDimensions();
 
 		if (numD == 0)
 			throw new IllegalArgumentException(
 						"data source must have at least 1 dimension");
 
-		if (numD == 1) {
-			if (getExtraDimValue.length > 0)
+		else if (numD == 1) {
+			if (extraDimValues.length > 0)
 				throw new IllegalArgumentException("1d data source cannot have extra dims");
 		}
-		else if (numD - getExtraDimValue.length != 2)
-			throw new IllegalArgumentException("specified data source would not be 2d");
+		else if (numD - extraDimValues.length != 2)
+			throw new IllegalArgumentException("number of dims in data source minus number of extra dims does not add up to 2");
 		
 		if (c0 == c1)
-			throw new IllegalArgumentException("same plane axis specified twice");
+			throw new IllegalArgumentException("same coordinate axis specified twice");
 		
 		if (c0 >= c1)
 			throw new IllegalArgumentException(
 					"axis specified out of order: all numbers assume left to right declaration");
 		
 		if (c0 < 0 || c0 >= numD)
-			throw new IllegalArgumentException("plane component 0 is outside number of dimensions");
+			throw new IllegalArgumentException("coordinate component 0 is outside number of dimensions");
 		
 		if (c1 < 0 || ((numD == 1 && c1 > 1) || (numD > 1 && c1 >= numD)))
-			throw new IllegalArgumentException("plane component 1 is outside number of dimensions");
+			throw new IllegalArgumentException("coordinate component 1 is outside number of dimensions");
 
 		this.c0 = c0;
 		this.c1 = c1;
@@ -116,8 +117,8 @@ public class PlaneView<U> implements Dimensioned {
 		default:
 			throw new IllegalArgumentException(""+numD+" dimensions not yet supported in PlaneView");
 		}
-		for (int i = 0; i < getExtraDimValue.length; i++) {
-			accessor.setExtraDimValue(i, getExtraDimValue[i]);
+		for (int i = 0; i < extraDimValues.length; i++) {
+			accessor.setExtraDimValue(i, extraDimValues[i]);
 		}
 	}
 
@@ -157,7 +158,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	/**
-	 * A plneView.safeGet() call will do a get() call provided the
+	 * A planeView.safeGet() call will do a get() call provided the
 	 * passed index coordinate values fit within the view's dimensions.
 	 * If not an exception is thrown instead.
 	 */
