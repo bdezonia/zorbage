@@ -46,6 +46,7 @@ public class PlaneView<U> implements Dimensioned {
 	private final long d0;
 	private final long d1;
 	private final Accessor<U> accessor;
+	private final DimensionedDataSource<U> data;
 
 	/**
 	 * Construct a view from an {@link DimensionedDataSource} and some dimensions.
@@ -82,6 +83,8 @@ public class PlaneView<U> implements Dimensioned {
 		if (c1 < 0 || ((numD == 1 && c1 > 1) || (numD > 1 && c1 >= numD)))
 			throw new IllegalArgumentException("coordinate component 1 is outside number of dimensions");
 
+		this.data = data;
+		
 		this.c0 = c0;
 		this.c1 = c1;
 
@@ -124,6 +127,13 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	/**
+	 * Returns the {@link DimensionedDataSource} that the PlaneView is attached to.
+	 */
+	public DimensionedDataSource<U> getDataSource() {
+		return data;
+	}
+	
 	/**
 	 * Returns the 0th dimension of the view.
 	 */
@@ -185,12 +195,6 @@ public class PlaneView<U> implements Dimensioned {
 			set(i0, i1, val);
 	}
 
-	private boolean outOfBounds(long i0, long i1) {
-		if (i0 < 0 || i0 >= d0) return true;
-		if (i1 < 0 || i1 >= d1) return true;
-		return false;
-	}
-
 	/**
 	 * Return the number of dimensions in the view.
 	 */
@@ -210,18 +214,38 @@ public class PlaneView<U> implements Dimensioned {
 		throw new IllegalArgumentException("dimension out of bounds");
 	}
 
+	/**
+	 * Returns the number of dimensions beyond 2 that this Planeview can manipulate.
+	 * @return
+	 */
 	public int getExtraDimsCount() {
 		return accessor.getExtraDimsCount();
 	}
 	
+	/**
+	 * Set the position value of one of the dimensions of the PlaneView
+	 */
 	public void setExtraDimValue(int i, long v) {
 		accessor.setExtraDimValue(i, v);
 	}
 
+	/**
+	 * Get the position value of one of the dimensions of the PlaneView
+	 */
 	public long getExtraDimValue(int i) {
 		return accessor.getExtraDimValue(i);
 	}
+
+	// ----------------------------------------------------------------------
+	//   PRIVATE DECLARATIONS FOLLOW
+	// ----------------------------------------------------------------------
 	
+	private boolean outOfBounds(long i0, long i1) {
+		if (i0 < 0 || i0 >= d0) return true;
+		if (i1 < 0 || i1 >= d1) return true;
+		return false;
+	}
+
 	private interface Accessor<X> {
 
 		void set(long i0, long i1, X value);
