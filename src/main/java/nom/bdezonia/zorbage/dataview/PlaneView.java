@@ -55,7 +55,7 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param c0 The coordinate position of the "x" component in the data source
 	 * @param c1 The coordinate position of the "y" component in the data source
 	 */
-	public PlaneView(DimensionedDataSource<U> data, int c0, int c1, long ... extraDimValues) {
+	public PlaneView(DimensionedDataSource<U> data, int c0, int c1) {
 
 		int numD = data.numDimensions();
 
@@ -63,13 +63,6 @@ public class PlaneView<U> implements Dimensioned {
 			throw new IllegalArgumentException(
 						"data source must have at least 1 dimension");
 
-		else if (numD == 1) {
-			if (extraDimValues.length > 0)
-				throw new IllegalArgumentException("1d data source cannot have extra dims");
-		}
-		else if (numD - extraDimValues.length != 2)
-			throw new IllegalArgumentException("number of dims in data source minus number of extra dims does not add up to 2");
-		
 		if (c0 == c1)
 			throw new IllegalArgumentException("same coordinate axis specified twice");
 		
@@ -93,37 +86,34 @@ public class PlaneView<U> implements Dimensioned {
 
 		switch (numD) {
 		case 1:
-			accessor = new Accessor1d<U>(data, c0, c1);
+			accessor = new Accessor1d<U>(data);
 			break;
 		case 2:
-			accessor = new Accessor2d<U>(data, c0, c1);
+			accessor = new Accessor2d<U>(data);
 			break;
 		case 3:
-			accessor = new Accessor3d<U>(data, c0, c1);
+			accessor = new Accessor3d<U>(data);
 			break;
 		case 4:
-			accessor = new Accessor4d<U>(data, c0, c1);
+			accessor = new Accessor4d<U>(data);
 			break;
 		case 5:
-			accessor = new Accessor5d<U>(data, c0, c1);
+			accessor = new Accessor5d<U>(data);
 			break;
 		case 6:
-			accessor = new Accessor6d<U>(data, c0, c1);
+			accessor = new Accessor6d<U>(data);
 			break;
 		case 7:
-			accessor = new Accessor7d<U>(data, c0, c1);
+			accessor = new Accessor7d<U>(data);
 			break;
 		case 8:
-			accessor = new Accessor8d<U>(data, c0, c1);
+			accessor = new Accessor8d<U>(data);
 			break;
 		case 9:
-			accessor = new Accessor9d<U>(data, c0, c1);
+			accessor = new Accessor9d<U>(data);
 			break;
 		default:
 			throw new IllegalArgumentException(""+numD+" dimensions not yet supported in PlaneView");
-		}
-		for (int i = 0; i < extraDimValues.length; i++) {
-			accessor.setExtraDimValue(i, extraDimValues[i]);
 		}
 	}
 
@@ -292,7 +282,7 @@ public class PlaneView<U> implements Dimensioned {
 	{
 		private final OneDView<X> view;
 
-		Accessor1d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor1d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new OneDView<>(data);
 		}
@@ -314,7 +304,7 @@ public class PlaneView<U> implements Dimensioned {
 	{
 		private final TwoDView<X> view;
 	
-		Accessor2d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor2d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new TwoDView<>(data);
 		}
@@ -337,7 +327,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final ThreeDView<X> view;
 		private long u0, u1, u2;
 	
-		Accessor3d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor3d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new ThreeDView<>(data);
 		}
@@ -382,7 +372,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final FourDView<X> view;
 		private long u0, u1, u2, u3;
 	
-		Accessor4d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor4d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new FourDView<>(data);
 		}
@@ -448,7 +438,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final FiveDView<X> view;
 		private long u0, u1, u2, u3, u4;
 	
-		Accessor5d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor5d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new FiveDView<>(data);
 		}
@@ -548,7 +538,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final SixDView<X> view;
 		private long u0, u1, u2, u3, u4, u5;
 	
-		Accessor6d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor6d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new SixDView<>(data);
 		}
@@ -698,7 +688,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final SevenDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6;
 	
-		Accessor7d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor7d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new SevenDView<>(data);
 		}
@@ -917,7 +907,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final EightDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6, u7;
 	
-		Accessor8d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor8d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new EightDView<>(data);
 		}
@@ -1227,7 +1217,7 @@ public class PlaneView<U> implements Dimensioned {
 		private final NineDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6, u7, u8;
 	
-		Accessor9d(DimensionedDataSource<X> data, int c0, int c1) {
+		Accessor9d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new NineDView<>(data);
 		}
