@@ -74,7 +74,7 @@ public class Storage {
 		// catch the most basic of errors
 		
 		if (numElements < 0)
-			throw new IllegalArgumentException("negative index exception");
+			throw new IllegalArgumentException("num elements must be >= 0");
 		
 		// try the fastest simplest storage list type
 		
@@ -119,7 +119,7 @@ public class Storage {
 		// catch the most basic of errors
 		
 		if (numElements < 0)
-			throw new IllegalArgumentException("negative index exception");
+			throw new IllegalArgumentException("num elements must be >= 0");
 		
 		if (strategy == StorageConstruction.MEM_ARRAY) {
 

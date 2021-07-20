@@ -52,10 +52,14 @@ public class WindowView<U> implements DimensionCount {
 	private long origin1;
 
 	/**
+	 * Create a WindowView by specifying the data source to zoom upon
+	 * and the two dimensions of the size of the viewport. The dimensions
+	 * are integers rather than longs so they work well with Java's
+	 * display classes.
 	 * 
-	 * @param dataSource
-	 * @param d0
-	 * @param d1
+	 * @param dataSource The possibly large data set to view
+	 * @param d0 the width of view of data
+	 * @param d1 the height of the view of data
 	 */
 	public WindowView(DimensionedDataSource<U> dataSource, int d0, int d1) {
 		this.dataView = new PlaneView<>(dataSource, 0, 1);
@@ -72,7 +76,7 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
-	 * 
+	 * The number of dimensions in this view
 	 */
 	@Override
 	public int numDimensions() {
@@ -80,8 +84,9 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * Returns each of the view dimensions
 	 * 
-	 * @param d
+	 * @param d Dimension number
 	 * @return
 	 */
 	public int dimension(int d) {
@@ -91,6 +96,7 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * Return the 0th (width) dimension of the view (as an int)
 	 * 
 	 * @return
 	 */
@@ -99,6 +105,7 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * Return the 1th (height) dimension of the view (as an int)
 	 * 
 	 * @return
 	 */
@@ -107,6 +114,7 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
+	 * Returns the original data set we are viewing
 	 * 
 	 * @return
 	 */
@@ -115,6 +123,7 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
+	 * Return the number of dimensions of the data set beyond 2
 	 * 
 	 * @return
 	 */
@@ -123,6 +132,7 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * Return the value of the extra dimension i of this view.
 	 * 
 	 * @param i
 	 * @return
@@ -132,6 +142,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
+	 * Set the value of the extra dimension i of this view. This affects
+	 * which plane of the data set is returned from this view.
 	 * 
 	 * @param i
 	 * @param v
@@ -141,6 +153,9 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
+	 * Return the 0th dimension origin point in the original data source.
+	 * the origin is used to locate the window in real world space so that
+	 * local data can be pulled out of the data set.
 	 * 
 	 * @return
 	 */
@@ -149,6 +164,9 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
+	 * Return the 1th dimension origin point in the original data source.
+	 * the origin is used to locate the window in real world space so that
+	 * local data can be pulled out of the data set.
 	 * 
 	 * @return
 	 */
@@ -157,20 +175,26 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * Move the view window to the left relative to the data source
 	 * 
 	 * @param numCols
 	 */
 	public void moveWindowLeft(long numCols) {
+		if (numCols < 0)
+			throw new IllegalArgumentException("unexpected negative number");
 		origin0 -= numCols;
 		if (origin0 < 0)
 			origin0 = 0;
 	}
 	
 	/**
+	 * Move the view window to the right relative to the data source
 	 * 
 	 * @param numCols
 	 */
 	public void moveWindowRight(long numCols) {
+		if (numCols < 0)
+			throw new IllegalArgumentException("unexpected negative number");
 		origin0 += numCols;
 		if (origin0 > (dataView.d0() - this.d0))
 			origin0 = dataView.d0() - this.d0;
@@ -179,27 +203,35 @@ public class WindowView<U> implements DimensionCount {
 	// TODO: do we want origin at LL or UL?
 	
 	/**
+	 * Move the view window up relative to the data source
 	 * 
 	 * @param numRows
 	 */
 	public void moveWindowUp(long numRows) {
+		if (numRows < 0)
+			throw new IllegalArgumentException("unexpected negative number");
 		origin1 += numRows;
 		if (origin1 > (dataView.d1() - this.d1))
 			origin1 = dataView.d1() - this.d1;
 	}
 	
 	/**
+	 * Move the view window down relative to the data source
 	 * 
 	 * @param numRows
 	 */
 	public void moveWindowDown(long numRows) {
+		if (numRows < 0)
+			throw new IllegalArgumentException("unexpected negative number");
 		origin1 -= numRows;
 		if (origin1 < 0)
 			origin1 = 0;
 	}
 	
 	/**
-	 * 
+	 * gets the value stored in the data source using coords local to view.
+	 *   no bounds checking id done on the input coords.
+	 *   
 	 * @param i0
 	 * @param i1
 	 * @param value
@@ -209,6 +241,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * sets the value stored in the data source using coords local to view.
+	 *   no bounds checking id done on the input coords.
 	 * 
 	 * @param i0
 	 * @param i1
@@ -219,6 +253,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * safeGet will bounds check input coords.if they are out of bounds an
+	 * exception is thrown. otherwise safeGet() does a regular get().
 	 * 
 	 * @param i0
 	 * @param i1
@@ -229,6 +265,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
+	 * safeSet will bounds check input coords.if they are out of bounds an
+	 * exception is thrown. otherwise safeSet() does a regular set().
 	 * 
 	 * @param i0
 	 * @param i1
