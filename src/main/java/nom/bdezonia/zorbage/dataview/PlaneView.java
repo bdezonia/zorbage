@@ -241,6 +241,19 @@ public class PlaneView<U> implements Dimensioned {
 	public long getExtraDimValue(int i) {
 		return accessor.getExtraDimValue(i);
 	}
+	
+	public int originalCoordPos(int extraDimPos) {
+		if (extraDimPos < c0)
+			return extraDimPos;
+		if (extraDimPos < c1)
+			return extraDimPos + 1;
+		return extraDimPos + 2;
+	}
+	
+	public long originalCoordDim(int extraDimPos) {
+		int pos = originalCoordPos(extraDimPos);
+		return data.dimension(pos);
+	}
 
 	// ----------------------------------------------------------------------
 	//   PRIVATE DECLARATIONS FOLLOW
