@@ -186,6 +186,22 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	/**
+	 * Return the column number of 0th index view position
+	 * (i.e. which column is "x" in the view).
+	 */
+	public int c0() {
+		return c0;
+	}
+
+	/**
+	 * Return the column number of 1th index view position
+	 * (i.e. which column is "y" in the view).
+	 */
+	public int c1() {
+		return c1;
+	}
+	
+	/**
 	 * Return the number of dimensions in the view.
 	 */
 	@Override

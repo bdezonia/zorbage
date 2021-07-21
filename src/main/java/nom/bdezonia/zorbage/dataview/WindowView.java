@@ -123,6 +123,15 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
+	 * Returns the PlaneView we are wrapping
+	 * 
+	 * @return
+	 */
+	public PlaneView<U> getPlaneView() {
+		return dataView;
+	}
+
+	/**
 	 * Return the number of dimensions of the data set beyond 2
 	 * 
 	 * @return
@@ -200,8 +209,6 @@ public class WindowView<U> implements DimensionCount {
 			origin0 = dataView.d0() - this.d0;
 	}
 	
-	// TODO: do we want origin at LL or UL?
-	
 	/**
 	 * Move the view window up relative to the data source
 	 * 
@@ -210,9 +217,9 @@ public class WindowView<U> implements DimensionCount {
 	public void moveWindowUp(long numRows) {
 		if (numRows < 0)
 			throw new IllegalArgumentException("unexpected negative number");
-		origin1 += numRows;
-		if (origin1 > (dataView.d1() - this.d1))
-			origin1 = dataView.d1() - this.d1;
+		origin1 -= numRows;
+		if (origin1 < 0)
+			origin1 = 0;
 	}
 	
 	/**
@@ -223,9 +230,9 @@ public class WindowView<U> implements DimensionCount {
 	public void moveWindowDown(long numRows) {
 		if (numRows < 0)
 			throw new IllegalArgumentException("unexpected negative number");
-		origin1 -= numRows;
-		if (origin1 < 0)
-			origin1 = 0;
+		origin1 += numRows;
+		if (origin1 > (dataView.d1() - this.d1))
+			origin1 = dataView.d1() - this.d1;
 	}
 	
 	/**
@@ -275,4 +282,5 @@ public class WindowView<U> implements DimensionCount {
 	public void safeSet(int i0, int i1, U value) {
 		dataView.safeSet((long)(origin0) + i0, (long)(origin1) + i1, value);
 	}
+
 }
