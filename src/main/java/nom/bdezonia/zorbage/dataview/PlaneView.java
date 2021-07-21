@@ -243,11 +243,14 @@ public class PlaneView<U> implements Dimensioned {
 	}
 	
 	public int originalCoordPos(int extraDimPos) {
-		if (extraDimPos < c0)
-			return extraDimPos;
-		if (extraDimPos < c1)
-			return extraDimPos + 1;
-		return extraDimPos + 2;
+		int counted = 0;
+		for (int i = 0; i < data.numDimensions(); i++) {
+			if (i == c0 || i == c1)
+				continue;
+			if (counted == extraDimPos)
+				return i;
+		}
+		return -1;
 	}
 	
 	public long originalCoordDim(int extraDimPos) {
