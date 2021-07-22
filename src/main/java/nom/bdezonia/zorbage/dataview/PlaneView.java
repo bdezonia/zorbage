@@ -259,6 +259,16 @@ public class PlaneView<U> implements Dimensioned {
 		return data.dimension(pos);
 	}
 
+	public void getModelCoords(long i0, long i1, long[] modelCoords) {
+		for (int i = 0; i < getExtraDimsCount(); i++) {
+			int pos = originalCoordPos(i);
+			long value = getExtraDimValue(i);
+			modelCoords[pos] = value;
+		}
+		modelCoords[c0] = i0;
+		modelCoords[c1] = i1;
+	}
+	
 	// ----------------------------------------------------------------------
 	//   PRIVATE DECLARATIONS FOLLOW
 	// ----------------------------------------------------------------------

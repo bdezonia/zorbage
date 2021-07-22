@@ -283,4 +283,9 @@ public class WindowView<U> implements DimensionCount {
 		dataView.safeSet((long)(origin0) + i0, (long)(origin1) + i1, value);
 	}
 
+	public void getModelCoords(int x, int y, long[] modelCoords) {
+		long i0 = origin0 + x;
+		long i1 = origin1 + y;
+		dataView.getModelCoords(i0, i1, modelCoords);
+	}
 }
