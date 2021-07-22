@@ -249,6 +249,7 @@ public class PlaneView<U> implements Dimensioned {
 				continue;
 			if (counted == extraDimPos)
 				return i;
+			counted++;
 		}
 		return -1;
 	}
