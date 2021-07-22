@@ -61,14 +61,14 @@ public class WindowView<U> implements DimensionCount {
 	 * @param d0 the width of view of data
 	 * @param d1 the height of the view of data
 	 */
-	public WindowView(DimensionedDataSource<U> dataSource, int d0, int d1) {
-		this.dataView = new PlaneView<>(dataSource, 0, 1);
-		if (d0 > dataSource.dimension(0))
-			this.d0 = (int) dataSource.dimension(0);
+	public WindowView(DimensionedDataSource<U> dataSource, int d0, int d1, int c0, int c1) {
+		this.dataView = new PlaneView<>(dataSource, c0, c1);
+		if (d0 > dataSource.dimension(c0))
+			this.d0 = (int) dataSource.dimension(c0);
 		else
 			this.d0 = d0;
-		if (d1 > dataSource.dimension(1))
-			this.d1 = (int) dataSource.dimension(1);
+		if (d1 > dataSource.dimension(c1))
+			this.d1 = (int) dataSource.dimension(c1);
 		else
 			this.d1 = d1;
 		this.origin0 = 0;
