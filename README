@@ -1,12 +1,30 @@
+Zorbage: algebraic data types and algorithms for use in numeric processing
+
+Developer Info:
+
+How to include zorbage in your Maven project
+
+  Add the following dependency to your project's pom.xml:
+  
+  <dependency>
+    <groupId>io.github.bdezonia</groupId>
+    <artifactId>zorbage</artifactId>
+    <version>1.9.4</version>
+  </dependency>
+  
+How to include zorbage in a different build system
+
+  See https://search.maven.org/artifact/io.github.bdezonia/zorbage/1.9.4/jar
+  for instructions on how to reference zorbage in build systems such as
+  Gradle or others.
+
 (Note: I am looking to help some lab in remote sensing or other big data
  consumer by taking your slow analyses in Python or R or Matlab,
  reimplementing them to work with Zorbage, and iterating until the
  Zorbage implementation can outperform your current solutions. Create an
  issue if you are interested in pursuing something like this.)
 
-Zorbage: algebraic data types and algorithms for use in numeric processing
-
-Goals:
+Project Goals:
   - provide a framework for reusable numeric algorithms
   - support numeric computing in Java in an efficient manner
     - provide code easier to develop and almost as fast as C++
@@ -44,13 +62,16 @@ Can you show me what Zorbage can do?
 Thanks, I'll look that up later. Can you describe what can I do with Zorbage?
 
   Define multidimensional data sets with flexible out of bounds data
-    handling procedures.
+    handling procedures. Zorbage has an excellent abstraction for multi-
+    dimensional data that is easy to understand and use and is at the same
+    time quite powerful.
 
   Use data views of your multidimensional data source to very rapidly set
     and get values. Data views allow one to write any sample visiting
     algorithm desired. The views are especially good with nested for loop
     approaches to iterating through data. Their speed is comparable to
-    direct 1-d array access. 
+    direct 1-d array access. Pull out arbitrary planes of your multi-
+    dimensional data set with ease.
         
   Use many different data types (133 and counting)
 
@@ -93,10 +114,11 @@ Thanks, I'll look that up later. Can you describe what can I do with Zorbage?
     
   You can allocate and use huge (length up to 2^63 elements) data structures.
   
-  Data access is standardized as if everything is an array. Arrays can be
+  Data access revolves around 1-d lists that act like arrays. Arrays can be
     concatenated, trimmed, subsampled, masked, padded, readonly, as well as
-    other abstractions. Arrays can be adapted to be accessible as
-    n-dimensional data structures.
+    other abstractions. At the heart, each multidim data source has one of
+    these arrays behind it. These arrays are not indexed by integers but
+    instead by longs and break many of the limitations of Java arrays.
       
   Array storage can be in native types (for speed of access) or for many
     integer types they can be bit encoded (to save space).
@@ -239,7 +261,7 @@ Is there a way to get data into a Zorbage backed application?
   
 Is there a way to view Zorbage data?
 
-  Coding is underway on a data viewer. It will be alpha ready soon.
+  Coding is underway on a data viewer. It is available now (alpha ready).
   You can find it here: https://github.com/bdezonia/zorbage-viewer
 
 Programming notes
@@ -265,22 +287,6 @@ Programming notes
     
     Zorbage has been compiled and tested with many versions of Eclipse and some versions
     of IntelliJ.
-
-How to include zorbage in your Maven project
-
-  Add the following dependency to your project's pom.xml:
-  
-  <dependency>
-    <groupId>io.github.bdezonia</groupId>
-    <artifactId>zorbage</artifactId>
-    <version>1.9.4</version>
-  </dependency>
-  
-How to include zorbage in a different build system
-
-  See https://search.maven.org/artifact/io.github.bdezonia/zorbage/1.9.4/jar
-  for instructions on how to reference zorbage in build systems such as
-  Gradle or others.
 
 Acknowledgements
 
