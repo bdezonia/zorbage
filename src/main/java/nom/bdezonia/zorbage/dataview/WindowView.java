@@ -283,6 +283,15 @@ public class WindowView<U> implements DimensionCount {
 		dataView.safeSet((long)(origin0) + i0, (long)(origin1) + i1, value);
 	}
 
+	/**
+	 * Returns the model coords of the point on the model currently
+	 * associated with the x/y coords and the current slider
+	 * positions.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param modelCoords
+	 */
 	public void getModelCoords(int x, int y, long[] modelCoords) {
 		long i0 = origin0 + x;
 		long i1 = origin1 + y;

@@ -242,6 +242,18 @@ public class PlaneView<U> implements Dimensioned {
 		return accessor.getExtraDimValue(i);
 	}
 	
+	/**
+	 * Translates the dimensions associated with sliders into their own
+	 * original coordinate position of the parent data source. That's
+	 * kind of confusing. Imagine you have a 5d dataset. Your "x" and "y"
+	 * coord positions were set to 1 and 3. The planeView stores the 3
+	 * non-planar dims as 0, 1, and 2. But their original coord positions
+	 * in the parent data source were 0, 2, and 4. This method maps 0/1/2
+	 * into 0/2/4 in this one case.
+	 *  
+	 * @param extraDimPos
+	 * @return
+	 */
 	public int originalCoordPos(int extraDimPos) {
 		int counted = 0;
 		for (int i = 0; i < data.numDimensions(); i++) {
@@ -254,11 +266,26 @@ public class PlaneView<U> implements Dimensioned {
 		return -1;
 	}
 	
+	/**
+	 * Returns the dimension of extra axis i in the parent data source
+	 * 
+	 * @param extraDimPos
+	 * @return
+	 */
 	public long originalCoordDim(int extraDimPos) {
 		int pos = originalCoordPos(extraDimPos);
 		return data.dimension(pos);
 	}
 
+	/**
+	 * Returns the model coords of the point on the model currently
+	 * associated with the i0/i1 coords and the current slider
+	 * positions.
+	 * 
+	 * @param i0
+	 * @param i1
+	 * @param modelCoords
+	 */
 	public void getModelCoords(long i0, long i1, long[] modelCoords) {
 		for (int i = 0; i < getExtraDimsCount(); i++) {
 			int pos = originalCoordPos(i);
