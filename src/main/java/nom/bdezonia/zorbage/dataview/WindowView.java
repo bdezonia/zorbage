@@ -46,8 +46,8 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 public class WindowView<U> implements DimensionCount {
 	
 	private final PlaneView<U> dataView;
-	private final int d0;
-	private final int d1;
+	private final int width;
+	private final int height;
 	private long origin0;
 	private long origin1;
 
@@ -58,19 +58,15 @@ public class WindowView<U> implements DimensionCount {
 	 * display classes.
 	 * 
 	 * @param dataSource The possibly large data set to view
-	 * @param d0 the width of view of data
-	 * @param d1 the height of the view of data
+	 * @param width the width of viewport on the data
+	 * @param height the height of the viewport on the data
+	 * @param c0
+	 * @param c1
 	 */
-	public WindowView(DimensionedDataSource<U> dataSource, int d0, int d1, int c0, int c1) {
+	public WindowView(DimensionedDataSource<U> dataSource, int width, int height, int c0, int c1) {
 		this.dataView = new PlaneView<>(dataSource, c0, c1);
-		if (d0 > dataSource.dimension(c0))
-			this.d0 = (int) dataSource.dimension(c0);
-		else
-			this.d0 = d0;
-		if (d1 > dataSource.dimension(c1))
-			this.d1 = (int) dataSource.dimension(c1);
-		else
-			this.d1 = d1;
+		this.width = (int) Math.min(width, dataSource.dimension(c0));
+		this.height = (int) Math.min(height, dataSource.dimension(c1));
 		this.origin0 = 0;
 		this.origin1 = 0;
 	}
@@ -90,8 +86,8 @@ public class WindowView<U> implements DimensionCount {
 	 * @return
 	 */
 	public int dimension(int d) {
-		if (d == 0) return d0;
-		if (d == 1) return d1;
+		if (d == 0) return width;
+		if (d == 1) return height;
 		throw new IllegalArgumentException("dimension out of bounds");
 	}
 	
@@ -101,7 +97,7 @@ public class WindowView<U> implements DimensionCount {
 	 * @return
 	 */
 	public int d0() {
-		return d0;
+		return width;
 	}
 	
 	/**
@@ -110,7 +106,7 @@ public class WindowView<U> implements DimensionCount {
 	 * @return
 	 */
 	public int d1() {
-		return d1;
+		return height;
 	}
 
 	/**
@@ -155,10 +151,10 @@ public class WindowView<U> implements DimensionCount {
 	 * which plane of the data set is returned from this view.
 	 * 
 	 * @param i
-	 * @param v
+	 * @param value
 	 */
-	public void setExtraDimValue(int i, long v) {
-		dataView.setExtraDimValue(i, v);
+	public void setExtraDimValue(int i, long value) {
+		dataView.setExtraDimValue(i, value);
 	}
 
 	/**
@@ -205,8 +201,8 @@ public class WindowView<U> implements DimensionCount {
 		if (numCols < 0)
 			throw new IllegalArgumentException("unexpected negative number");
 		origin0 += numCols;
-		if (origin0 > (dataView.d0() - this.d0))
-			origin0 = dataView.d0() - this.d0;
+		if (origin0 > (dataView.d0() - this.width))
+			origin0 = dataView.d0() - this.width;
 	}
 	
 	/**
@@ -231,8 +227,8 @@ public class WindowView<U> implements DimensionCount {
 		if (numRows < 0)
 			throw new IllegalArgumentException("unexpected negative number");
 		origin1 += numRows;
-		if (origin1 > (dataView.d1() - this.d1))
-			origin1 = dataView.d1() - this.d1;
+		if (origin1 > (dataView.d1() - this.height))
+			origin1 = dataView.d1() - this.height;
 	}
 	
 	/**
