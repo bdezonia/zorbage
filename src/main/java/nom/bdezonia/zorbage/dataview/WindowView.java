@@ -30,8 +30,10 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.DimensionCount;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
 
 /**
  * WindowView is used to grab data from a DimensionedDataSource where all the view
@@ -293,4 +295,41 @@ public class WindowView<U> implements DimensionCount {
 		long i1 = origin1 + y;
 		dataView.getModelCoords(i0, i1, modelCoords);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <V extends Allocatable<V>>
+		DimensionedDataSource<U> takeSnapsot(U scratchVar)
+	{
+		DimensionedDataSource<U> newDs = (DimensionedDataSource<U>)
+				DimensionedStorage.allocate((V) scratchVar, new long[] {d0(), d1()});
+		
+		TwoDView<U> view = new TwoDView<>(newDs);
+		
+		for (int y = 0; y < d1(); y++) {
+			for (int x = 0; x < d0(); x++) {
+				dataView.get(origin0 + x, origin1 + y , scratchVar);
+				view.set(x, y, scratchVar);
+			}
+		}
+		
+		DimensionedDataSource<U> origDs = dataView.getDataSource();
+
+
+		String d0Str = origDs.getAxisType(dataView.c0()) == null ? ("dim "+dataView.c0()) : origDs.getAxisType(dataView.c0());
+		String d1Str = origDs.getAxisType(dataView.c1()) == null ? ("dim "+dataView.c1()) : origDs.getAxisType(dataView.c1());
+		String axes = "["+d0Str+":"+d1Str+"]";
+		String miniTitle = axes + " : slice";
+
+		newDs.setName(origDs.getName() == null ? miniTitle : (miniTitle + " of "+origDs.getName()));
+		newDs.setAxisType(0, origDs.getAxisType(dataView.c0()));
+		newDs.setAxisType(1, origDs.getAxisType(dataView.c1()));
+		newDs.setAxisUnit(0, origDs.getAxisUnit(dataView.c0()));
+		newDs.setAxisUnit(1, origDs.getAxisUnit(dataView.c1()));
+		newDs.setValueType(origDs.getValueType());
+		newDs.setValueUnit(origDs.getValueUnit());
+
+		return newDs;
+	}
+	
+
 }

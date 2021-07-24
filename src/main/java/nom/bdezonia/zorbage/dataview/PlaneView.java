@@ -30,8 +30,10 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.data.DimensionedStorage;
 
 /**
  * 
@@ -294,6 +296,45 @@ public class PlaneView<U> implements Dimensioned {
 		}
 		modelCoords[c0] = i0;
 		modelCoords[c1] = i1;
+	}
+
+	/**
+	 * Get a snapshot of a whole plane of data using the current axis positions.
+	 * 
+	 * @param scratchVar
+
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public <V extends Allocatable<V>>
+		DimensionedDataSource<U> copyPlane(U scratchVar)
+	{
+		DimensionedDataSource<U> newDs = (DimensionedDataSource<U>)
+				DimensionedStorage.allocate((V) scratchVar, new long[] {d0,d1});
+		
+		TwoDView<U> view = new TwoDView<>(newDs);
+		
+		for (long y = 0; y < d1; y++) {
+			for (long x = 0; x < d0; x++) {
+				accessor.get(x, y, scratchVar);
+				view.set(x, y, scratchVar);
+			}
+		}
+
+		String d0Str = data.getAxisType(c0) == null ? ("dim "+c0) : data.getAxisType(c0);
+		String d1Str = data.getAxisType(c1) == null ? ("dim "+c1) : data.getAxisType(c1);
+		String axes = "["+d0Str+":"+d1Str+"]";
+		String miniTitle = axes + "slice";
+		
+		newDs.setName(data.getName() == null ? miniTitle : (miniTitle + " of "+data.getName()));
+		newDs.setAxisType(0, data.getAxisType(c0));
+		newDs.setAxisType(1, data.getAxisType(c1));
+		newDs.setAxisUnit(0, data.getAxisUnit(c0));
+		newDs.setAxisUnit(1, data.getAxisUnit(c1));
+		newDs.setValueType(data.getValueType());
+		newDs.setValueUnit(data.getValueUnit());
+
+		return newDs;
 	}
 	
 	// ----------------------------------------------------------------------
