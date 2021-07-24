@@ -57,7 +57,7 @@ public class FileStorage {
 	/**
 	 * Allocate a file based storage structure for storing data
 	 * elements. These storage types primarily live on disk.
-	 * It is a slower storage type to access bit one can
+	 * It is a slower storage type to access but one can
 	 * allocate a huge number of elements. It is possible to fail
 	 * to allocate lists when your system does not have enough
 	 * free disk space.

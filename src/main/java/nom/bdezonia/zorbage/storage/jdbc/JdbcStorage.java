@@ -56,7 +56,7 @@ public class JdbcStorage {
 	/**
 	 * Allocate a database friendly storage structure for storing
 	 * data. These storage types live in rows of database tables.
-	 * It is a slow storage type to access bit one can allocate a
+	 * It is a slow storage type to access but one can allocate a
 	 * huge number of elements and external programs can query
 	 * your data. It is possible to fail to allocate lists when
 	 * your RDBMS system does not have enough resources.
