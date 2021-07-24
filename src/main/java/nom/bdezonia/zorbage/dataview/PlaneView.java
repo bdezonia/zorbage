@@ -121,6 +121,9 @@ public class PlaneView<U> implements Dimensioned {
 		case 10:
 			accessor = new Accessor10d<U>(data);
 			break;
+		case 11:
+			accessor = new Accessor11d<U>(data);
+			break;
 		default:
 			throw new IllegalArgumentException(""+numD+" dimensions not yet supported in PlaneView");
 		}
@@ -2268,6 +2271,7 @@ public class PlaneView<U> implements Dimensioned {
 				u6 = i0;
 				u7 = i1;
 				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 8) { 
 				u0 = getPositionValue(0);
@@ -2343,6 +2347,751 @@ public class PlaneView<U> implements Dimensioned {
 		public void get(long i0, long i1, X value) {
 			setPos(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, value);
+		}
+	}
+
+	private class Accessor11d<X>
+		extends AccessorBase
+		implements Accessor<X>
+	{
+		private final ElevenDView<X> view;
+		private long u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10;
+		
+		Accessor11d(DimensionedDataSource<X> data) {
+			super(data.numDimensions());
+			view = new ElevenDView<>(data);
+		}
+		
+		private void setPos(long i0, long i1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
+				u0 = i0;
+				u1 = i1;
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = i1;
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = i1;
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = i1;
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = i1;
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = i1;
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 8) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 9) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 0 && axisNumber1 == 10) { 
+				u0 = i0;
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = i1;
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = i1;
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = i1;
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = i1;
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = i1;
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 1 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = i0;
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = i1;
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = i1;
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = i1;
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = i1;
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 2 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = i0;
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = i1;
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = getPositionValue(3);
+				u5 = i1;
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = i1;
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 3 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = i0;
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = i0;
+				u5 = i1;
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = i0;
+				u5 = getPositionValue(4);
+				u6 = i1;
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = i0;
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 4 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = i0;
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 4 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = i0;
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 4 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = i0;
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = i0;
+				u6 = i1;
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = i0;
+				u6 = getPositionValue(5);
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 5 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = i0;
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 5 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = i0;
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 5 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = i0;
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = i0;
+				u7 = i1;
+				u8 = getPositionValue(6);
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 6 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = i0;
+				u7 = getPositionValue(6);
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 6 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = i0;
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 6 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = i0;
+				u7 = getPositionValue(6);
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 7 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
+				u7 = i0;
+				u8 = i1;
+				u9 = getPositionValue(7);
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 7 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
+				u7 = i0;
+				u8 = getPositionValue(7);
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 7 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
+				u7 = i0;
+				u8 = getPositionValue(7);
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 8 && axisNumber1 == 9) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
+				u7 = getPositionValue(7);
+				u8 = i0;
+				u9 = i1;
+				u10 = getPositionValue(8);
+			}
+			else if (axisNumber0 == 8 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
+				u7 = getPositionValue(7);
+				u8 = i0;
+				u9 = getPositionValue(8);
+				u10 = i1;
+			}
+			else if (axisNumber0 == 8 && axisNumber1 == 10) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
+				u7 = getPositionValue(7);
+				u8 = getPositionValue(8);
+				u9 = i0;
+				u10 = i1;
+			}
+			else
+				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
+		}
+		
+		@Override
+		public void set(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.set(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, value);
+		}
+		
+		@Override
+		public void get(long i0, long i1, X value) {
+			setPos(i0, i1);
+			view.get(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, value);
 		}
 	}
 }
