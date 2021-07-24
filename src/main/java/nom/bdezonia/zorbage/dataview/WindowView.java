@@ -30,8 +30,12 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import java.math.BigDecimal;
+
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.DimensionCount;
+import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 
@@ -314,7 +318,6 @@ public class WindowView<U> implements DimensionCount {
 		
 		DimensionedDataSource<U> origDs = dataView.getDataSource();
 
-
 		String d0Str = origDs.getAxisType(dataView.c0()) == null ? ("dim "+dataView.c0()) : origDs.getAxisType(dataView.c0());
 		String d1Str = origDs.getAxisType(dataView.c1()) == null ? ("dim "+dataView.c1()) : origDs.getAxisType(dataView.c1());
 		String axes = "["+d0Str+":"+d1Str+"]";
@@ -327,9 +330,37 @@ public class WindowView<U> implements DimensionCount {
 		newDs.setAxisUnit(1, origDs.getAxisUnit(dataView.c1()));
 		newDs.setValueType(origDs.getValueType());
 		newDs.setValueUnit(origDs.getValueUnit());
+		
+		CoordinateSpace origSpace = dataView.getDataSource().getCoordinateSpace();
+		if (origSpace instanceof LinearNdCoordinateSpace) {
+
+			LinearNdCoordinateSpace origLinSpace =
+					(LinearNdCoordinateSpace) dataView.getDataSource().getCoordinateSpace();
+			
+			BigDecimal[] scales = new BigDecimal[2];
+
+			scales[0] = origLinSpace.getScale(dataView.c0());
+			scales[1] = origLinSpace.getScale(dataView.c1());
+			
+			BigDecimal[] offsets = new BigDecimal[2];
+			
+			offsets[0] = origLinSpace.getOffset(dataView.c0());
+			offsets[1] = origLinSpace.getOffset(dataView.c1());
+			
+			long[] coord = new long[origDs.numDimensions()];
+			
+			coord[dataView.c0()] = origin0;
+			coord[dataView.c1()] = origin1;
+
+			offsets[0] = origLinSpace.project(coord, dataView.c0());
+			offsets[1] = origLinSpace.project(coord, dataView.c1());
+
+			LinearNdCoordinateSpace newLinSpace = new LinearNdCoordinateSpace(scales, offsets);
+			
+			newDs.setCoordinateSpace(newLinSpace);
+		}
 
 		return newDs;
 	}
 	
-
 }

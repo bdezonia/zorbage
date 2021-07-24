@@ -30,8 +30,12 @@
  */
 package nom.bdezonia.zorbage.dataview;
 
+import java.math.BigDecimal;
+
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 
@@ -333,6 +337,27 @@ public class PlaneView<U> implements Dimensioned {
 		newDs.setAxisUnit(1, data.getAxisUnit(c1));
 		newDs.setValueType(data.getValueType());
 		newDs.setValueUnit(data.getValueUnit());
+		
+		CoordinateSpace origSpace = data.getCoordinateSpace();
+		if (origSpace instanceof LinearNdCoordinateSpace) {
+
+			LinearNdCoordinateSpace origLinSpace =
+					(LinearNdCoordinateSpace) data.getCoordinateSpace();
+			
+			BigDecimal[] scales = new BigDecimal[2];
+
+			scales[0] = origLinSpace.getScale(c0);
+			scales[1] = origLinSpace.getScale(c1);
+			
+			BigDecimal[] offsets = new BigDecimal[2];
+			
+			offsets[0] = origLinSpace.getOffset(c0);
+			offsets[1] = origLinSpace.getOffset(c1);
+			
+			LinearNdCoordinateSpace newLinSpace = new LinearNdCoordinateSpace(scales, offsets);
+			
+			newDs.setCoordinateSpace(newLinSpace);
+		}
 
 		return newDs;
 	}
