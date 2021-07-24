@@ -55,6 +55,11 @@ public class Tuple5Algebra<AA extends Algebra<AA,A>, A,
 	private final DD algD;
 	private final EE algE;
 	
+	@Override
+	public String typeDescription() {
+		return "5 element tuple";
+	}
+
 	public Tuple5Algebra(AA algA, BB algB, CC algC, DD algD, EE algE) {
 		this.algA = algA;
 		this.algB = algB;

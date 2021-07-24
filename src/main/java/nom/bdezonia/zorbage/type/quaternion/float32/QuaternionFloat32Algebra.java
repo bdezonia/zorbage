@@ -101,6 +101,11 @@ public class QuaternionFloat32Algebra
 	private static final QuaternionFloat32Member J = new QuaternionFloat32Member(0,0,1,0);
 	private static final QuaternionFloat32Member K = new QuaternionFloat32Member(0,0,0,1);
 	
+	@Override
+	public String typeDescription() {
+		return "32-bit based quaternion number";
+	}
+
 	public QuaternionFloat32Algebra() { }
 
 	@Override

@@ -64,6 +64,10 @@ public class UnsignedInt1Algebra
 		Tolerance<UnsignedInt1Member,UnsignedInt1Member>,
 		ConstructibleFromInt<UnsignedInt1Member>
 {
+	@Override
+	public String typeDescription() {
+		return "1-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt1Member construct() {

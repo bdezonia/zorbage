@@ -91,6 +91,12 @@ public class ComplexFloat64CartesianTensorProduct
 		Tolerance<Float64Member, ComplexFloat64CartesianTensorProductMember>,
 		ArrayLikeMethods<ComplexFloat64CartesianTensorProductMember, ComplexFloat64Member>
 {
+
+	@Override
+	public String typeDescription() {
+		return "64-bit based complex tensor";
+	}
+
 	@Override
 	public ComplexFloat64CartesianTensorProductMember construct() {
 		return new ComplexFloat64CartesianTensorProductMember();

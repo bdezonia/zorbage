@@ -67,6 +67,10 @@ public class SignedInt12Algebra
 		ScaleByTwo<SignedInt12Member>,
 		ConstructibleFromInt<SignedInt12Member>
 {
+	@Override
+	public String typeDescription() {
+		return "12-bit signed int";
+	}
 
 	@Override
 	public SignedInt12Member construct() {

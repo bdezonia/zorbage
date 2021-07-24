@@ -93,6 +93,11 @@ public class OctonionFloat16RModule
 		ArrayLikeMethods<OctonionFloat16RModuleMember,OctonionFloat16Member>,
 		ConstructibleFromFloat<OctonionFloat16RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based octonion rmodule";
+	}
+
 	public OctonionFloat16RModule() { }
 
 	@Override

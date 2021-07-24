@@ -114,6 +114,12 @@ public class ComplexFloat32Matrix
 		Tolerance<Float32Member,ComplexFloat32MatrixMember>,
 		ArrayLikeMethods<ComplexFloat32MatrixMember,ComplexFloat32Member>
 {
+
+	@Override
+	public String typeDescription() {
+		return "32-bit based complex matrix";
+	}
+
 	public ComplexFloat32Matrix() { }
 
 	@Override

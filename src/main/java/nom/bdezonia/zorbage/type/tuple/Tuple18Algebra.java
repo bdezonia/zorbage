@@ -81,6 +81,11 @@ public class Tuple18Algebra<AA extends Algebra<AA,A>, A,
 	private final QQ algQ;
 	private final RR algR;
 	
+	@Override
+	public String typeDescription() {
+		return "18 element tuple";
+	}
+
 	public Tuple18Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR) {
 		this.algA = algA;
 		this.algB = algB;

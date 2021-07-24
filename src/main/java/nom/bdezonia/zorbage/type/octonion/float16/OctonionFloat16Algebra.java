@@ -108,6 +108,11 @@ public class OctonionFloat16Algebra
 	private static final OctonionFloat16Member J0 = new OctonionFloat16Member(0,0,0,0,0,0,1,0);
 	private static final OctonionFloat16Member K0 = new OctonionFloat16Member(0,0,0,0,0,0,0,1);
 
+	@Override
+	public String typeDescription() {
+		return "16-bit based octonion number";
+	}
+
 	public OctonionFloat16Algebra() { }
 
 	@Override

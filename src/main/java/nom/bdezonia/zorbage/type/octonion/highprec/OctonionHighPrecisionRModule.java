@@ -90,6 +90,11 @@ public class OctonionHighPrecisionRModule
 		ConstructibleFromDouble<OctonionHighPrecisionRModuleMember>,
 		ConstructibleFromLong<OctonionHighPrecisionRModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision octonion rmodule";
+	}
+
 	public OctonionHighPrecisionRModule() { }
 
 	@Override

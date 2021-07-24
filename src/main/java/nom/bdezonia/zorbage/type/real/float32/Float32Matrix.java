@@ -111,6 +111,11 @@ public class Float32Matrix
 		Tolerance<Float32Member,Float32MatrixMember>,
 		ArrayLikeMethods<Float32MatrixMember,Float32Member>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based real matrix";
+	}
+
 	public Float32Matrix() { }
 
 	@Override

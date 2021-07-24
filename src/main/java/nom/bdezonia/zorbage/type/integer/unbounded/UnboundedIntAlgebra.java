@@ -74,6 +74,11 @@ public class UnboundedIntAlgebra
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
 	private static final BigInteger TWO = BigInteger.valueOf(2);
 	
+	@Override
+	public String typeDescription() {
+		return "Unbounded signed int";
+	}
+
 	public UnboundedIntAlgebra() { }
 
 	@Override

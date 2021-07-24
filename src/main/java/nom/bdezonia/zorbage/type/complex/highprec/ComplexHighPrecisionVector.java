@@ -90,6 +90,11 @@ public class ComplexHighPrecisionVector
 		ConstructibleFromDouble<ComplexHighPrecisionVectorMember>,
 		ConstructibleFromLong<ComplexHighPrecisionVectorMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision complex vector";
+	}
+
 	public ComplexHighPrecisionVector() { }
 
 	@Override

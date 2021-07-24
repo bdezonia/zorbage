@@ -69,6 +69,11 @@ public class SignedInt5Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "5-bit signed int";
+	}
+
+	@Override
 	public SignedInt5Member construct() {
 		return new SignedInt5Member();
 	}

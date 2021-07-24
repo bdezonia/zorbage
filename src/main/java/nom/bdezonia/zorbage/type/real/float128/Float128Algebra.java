@@ -147,6 +147,11 @@ public class Float128Algebra
 	private static final BigDecimal MINUS_PI_OVER_TWO = _PI.negate().divide(TWO);
 	
 	@Override
+	public String typeDescription() {
+		return "128-bit based real number";
+	}
+
+	@Override
 	public Float128Member construct() {
 		return new Float128Member();
 	}

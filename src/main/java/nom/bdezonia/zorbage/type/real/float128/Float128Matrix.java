@@ -112,6 +112,11 @@ public class Float128Matrix
 		Tolerance<Float128Member,Float128MatrixMember>,
 		ArrayLikeMethods<Float128MatrixMember,Float128Member>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based real matrix";
+	}
+
 	public Float128Matrix() { }
 
 	@Override

@@ -99,6 +99,11 @@ public class Float32Algebra
 	private static final Float32Member GAMMA = new Float32Member((float)0.57721566490153286060);
 	private static final Float32Member PHI = new Float32Member((float)1.61803398874989484820);
 	
+	@Override
+	public String typeDescription() {
+		return "32-bit based real number";
+	}
+
 	public Float32Algebra() { }
 
 	@Override

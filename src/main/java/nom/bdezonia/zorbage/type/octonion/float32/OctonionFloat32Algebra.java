@@ -108,6 +108,11 @@ public class OctonionFloat32Algebra
 	private static final OctonionFloat32Member J0 = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 1, 0);
 	private static final OctonionFloat32Member K0 = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 0, 1);
 
+	@Override
+	public String typeDescription() {
+		return "32-bit based octonion number";
+	}
+
 	public OctonionFloat32Algebra() { }
 	
 	@Override

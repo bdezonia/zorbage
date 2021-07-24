@@ -69,6 +69,11 @@ public class SignedInt9Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "9-bit signed int";
+	}
+
+	@Override
 	public SignedInt9Member construct() {
 		return new SignedInt9Member();
 	}

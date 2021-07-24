@@ -92,6 +92,11 @@ public class GaussianInt8Algebra
 		ConstructibleFromInt<GaussianInt8Member>
 {
 	@Override
+	public String typeDescription() {
+		return "8-bit based gaussian int";
+	}
+
+	@Override
 	public GaussianInt8Member construct() {
 		return new GaussianInt8Member();
 	}

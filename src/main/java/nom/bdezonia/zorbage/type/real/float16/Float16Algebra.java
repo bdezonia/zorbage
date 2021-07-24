@@ -99,6 +99,11 @@ public class Float16Algebra
 	private static final Float16Member GAMMA = new Float16Member((float)0.57721566490153286060);
 	private static final Float16Member PHI = new Float16Member((float)1.61803398874989484820);
 
+	@Override
+	public String typeDescription() {
+		return "16-bit based real number";
+	}
+
 	public Float16Algebra() { }
 	
 	private final Function2<Boolean,Float16Member,Float16Member> EQ =

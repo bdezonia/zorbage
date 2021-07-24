@@ -92,6 +92,11 @@ public class GaussianInt64Algebra
 		ConstructibleFromLong<GaussianInt64Member>
 {
 	@Override
+	public String typeDescription() {
+		return "64-bit based gaussian int";
+	}
+
+	@Override
 	public GaussianInt64Member construct() {
 		return new GaussianInt64Member();
 	}

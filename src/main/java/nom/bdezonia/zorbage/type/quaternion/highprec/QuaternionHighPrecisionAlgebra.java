@@ -92,6 +92,11 @@ public class QuaternionHighPrecisionAlgebra
 	private static final QuaternionHighPrecisionMember J = new QuaternionHighPrecisionMember(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember K = new QuaternionHighPrecisionMember(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE);
 	
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precicion quaternion number";
+	}
+
 	public QuaternionHighPrecisionAlgebra() { }
 
 	@Override

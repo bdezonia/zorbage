@@ -92,6 +92,11 @@ public class ComplexFloat16CartesianTensorProduct
 		ArrayLikeMethods<ComplexFloat16CartesianTensorProductMember, ComplexFloat16Member>
 {
 	@Override
+	public String typeDescription() {
+		return "16-bit based complex tensor";
+	}
+	
+	@Override
 	public ComplexFloat16CartesianTensorProductMember construct() {
 		return new ComplexFloat16CartesianTensorProductMember();
 	}

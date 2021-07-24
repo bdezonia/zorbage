@@ -91,6 +91,12 @@ public class OctonionFloat128CartesianTensorProduct
 		Tolerance<Float128Member, OctonionFloat128CartesianTensorProductMember>,
 		ArrayLikeMethods<OctonionFloat128CartesianTensorProductMember, OctonionFloat128Member>
 {
+
+	@Override
+	public String typeDescription() {
+		return "128-bit based octonion tensor";
+	}
+
 	@Override
 	public OctonionFloat128CartesianTensorProductMember construct() {
 		return new OctonionFloat128CartesianTensorProductMember();

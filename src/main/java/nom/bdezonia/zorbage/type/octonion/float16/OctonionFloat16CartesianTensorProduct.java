@@ -92,6 +92,11 @@ public class OctonionFloat16CartesianTensorProduct
 		ArrayLikeMethods<OctonionFloat16CartesianTensorProductMember, OctonionFloat16Member>
 {
 	@Override
+	public String typeDescription() {
+		return "16-bit based octonion tensor";
+	}
+
+	@Override
 	public OctonionFloat16CartesianTensorProductMember construct() {
 		return new OctonionFloat16CartesianTensorProductMember();
 	}

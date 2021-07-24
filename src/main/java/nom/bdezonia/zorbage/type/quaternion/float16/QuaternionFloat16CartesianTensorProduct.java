@@ -92,6 +92,11 @@ public class QuaternionFloat16CartesianTensorProduct
 		ArrayLikeMethods<QuaternionFloat16CartesianTensorProductMember, QuaternionFloat16Member>
 {
 	@Override
+	public String typeDescription() {
+		return "16-bit based quaternion tensor";
+	}
+
+	@Override
 	public QuaternionFloat16CartesianTensorProductMember construct() {
 		return new QuaternionFloat16CartesianTensorProductMember();
 	}

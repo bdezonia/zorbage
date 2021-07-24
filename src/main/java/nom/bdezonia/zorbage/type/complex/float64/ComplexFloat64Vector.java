@@ -93,6 +93,11 @@ public class ComplexFloat64Vector
 		ArrayLikeMethods<ComplexFloat64VectorMember,ComplexFloat64Member>,
 		ConstructibleFromDouble<ComplexFloat64VectorMember>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based complex vector";
+	}
+
 	public ComplexFloat64Vector() { }
 
 	@Override

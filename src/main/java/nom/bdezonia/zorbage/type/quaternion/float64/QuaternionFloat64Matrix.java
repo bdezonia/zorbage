@@ -114,6 +114,11 @@ public class QuaternionFloat64Matrix
 		Tolerance<Float64Member,QuaternionFloat64MatrixMember>,
 		ArrayLikeMethods<QuaternionFloat64MatrixMember,QuaternionFloat64Member>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based quaternion matrix";
+	}
+
 	public QuaternionFloat64Matrix() { }
 
 	@Override

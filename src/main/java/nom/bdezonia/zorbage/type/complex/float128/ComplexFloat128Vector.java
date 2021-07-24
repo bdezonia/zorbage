@@ -98,6 +98,11 @@ public class ComplexFloat128Vector
 		ConstructibleFromDouble<ComplexFloat128VectorMember>,
 		ConstructibleFromLong<ComplexFloat128VectorMember>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based complex vector";
+	}
+	
 	public ComplexFloat128Vector() { }
 
 	@Override

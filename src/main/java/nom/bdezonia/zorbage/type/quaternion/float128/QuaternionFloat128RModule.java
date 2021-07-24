@@ -98,6 +98,11 @@ public class QuaternionFloat128RModule
 		ConstructibleFromBigInteger<QuaternionFloat128RModuleMember>,
 		ConstructibleFromBigDecimal<QuaternionFloat128RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based quaternion rmodule";
+	}
+
 	public QuaternionFloat128RModule() { }
 
 	@Override

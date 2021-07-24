@@ -91,6 +91,11 @@ public class GaussianIntUnboundedAlgebra
 		ConstructibleFromBigInteger<GaussianIntUnboundedMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Unbounded gaussian int";
+	}
+
+	@Override
 	public GaussianIntUnboundedMember construct() {
 		return new GaussianIntUnboundedMember();
 	}

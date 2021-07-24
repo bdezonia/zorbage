@@ -92,6 +92,11 @@ public class QuaternionFloat128CartesianTensorProduct
 		ArrayLikeMethods<QuaternionFloat128CartesianTensorProductMember, QuaternionFloat128Member>
 {
 	@Override
+	public String typeDescription() {
+		return "128-bit based quaternion tensor";
+	}
+
+	@Override
 	public QuaternionFloat128CartesianTensorProductMember construct() {
 		return new QuaternionFloat128CartesianTensorProductMember();
 	}

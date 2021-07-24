@@ -69,6 +69,11 @@ public class UnsignedInt9Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "9-bit unsigned int";
+	}
+
+	@Override
 	public UnsignedInt9Member construct() {
 		return new UnsignedInt9Member();
 	}

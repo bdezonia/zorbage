@@ -93,6 +93,11 @@ public class QuaternionFloat64RModule
 		ArrayLikeMethods<QuaternionFloat64RModuleMember,QuaternionFloat64Member>,
 		ConstructibleFromDouble<QuaternionFloat64RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based quaternion rmodule";
+	}
+
 	public QuaternionFloat64RModule() { }
 
 	@Override

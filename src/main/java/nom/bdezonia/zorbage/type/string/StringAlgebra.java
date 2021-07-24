@@ -61,6 +61,11 @@ public class StringAlgebra
 		Ordered<StringMember>
 {
 	@Override
+	public String typeDescription() {
+		return "String";
+	}
+
+	@Override
 	public StringMember construct() {
 		return new StringMember();
 	}

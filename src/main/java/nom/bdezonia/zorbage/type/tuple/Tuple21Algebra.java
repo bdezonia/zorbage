@@ -87,6 +87,11 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 	private final TT algT;
 	private final UU algU;
 	
+	@Override
+	public String typeDescription() {
+		return "21 element tuple";
+	}
+
 	public Tuple21Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS, TT algT, UU algU) {
 		this.algA = algA;
 		this.algB = algB;

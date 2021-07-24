@@ -93,6 +93,11 @@ public class ComplexFloat128CartesianTensorProduct
 		ArrayLikeMethods<ComplexFloat128CartesianTensorProductMember, ComplexFloat128Member>
 {
 	@Override
+	public String typeDescription() {
+		return "128-bit based complex tensor";
+	}
+	
+	@Override
 	public ComplexFloat128CartesianTensorProductMember construct() {
 		return new ComplexFloat128CartesianTensorProductMember();
 	}

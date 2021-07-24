@@ -90,6 +90,11 @@ public class Float32Vector
 		Tolerance<Float32Member, Float32VectorMember>,
 		ArrayLikeMethods<Float32VectorMember,Float32Member>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based real vector";
+	}
+
 	public Float32Vector() { }
 	
 	private final Procedure1<Float32VectorMember> ZER =

@@ -114,6 +114,11 @@ public class QuaternionFloat128Matrix
 		Tolerance<Float128Member,QuaternionFloat128MatrixMember>,
 		ArrayLikeMethods<QuaternionFloat128MatrixMember,QuaternionFloat128Member>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based quaternion matrix";
+	}
+
 	public QuaternionFloat128Matrix() { }
 
 	@Override

@@ -98,6 +98,12 @@ public class OctonionFloat128RModule
 		ConstructibleFromDouble<OctonionFloat128RModuleMember>,
 		ConstructibleFromLong<OctonionFloat128RModuleMember>
 {
+
+	@Override
+	public String typeDescription() {
+		return "128-bit based octonion rmodule";
+	}
+
 	public OctonionFloat128RModule() { }
 
 	@Override

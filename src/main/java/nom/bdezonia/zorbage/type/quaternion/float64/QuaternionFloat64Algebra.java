@@ -101,6 +101,11 @@ public class QuaternionFloat64Algebra
 	private static final QuaternionFloat64Member J = new QuaternionFloat64Member(0,0,1,0);
 	private static final QuaternionFloat64Member K = new QuaternionFloat64Member(0,0,0,1);
 	
+	@Override
+	public String typeDescription() {
+		return "64-bit based quaternion number";
+	}
+
 	public QuaternionFloat64Algebra() { }
 
 	@Override

@@ -101,6 +101,11 @@ public class QuaternionFloat16Algebra
 	private static final QuaternionFloat16Member J = new QuaternionFloat16Member(0,0,1,0);
 	private static final QuaternionFloat16Member K = new QuaternionFloat16Member(0,0,0,1);
 	
+	@Override
+	public String typeDescription() {
+		return "16-bit based quaternion number";
+	}
+
 	public QuaternionFloat16Algebra() { }
 
 	@Override

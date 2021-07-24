@@ -93,6 +93,11 @@ public class ComplexFloat16Vector
 		ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>,
 		ConstructibleFromFloat<ComplexFloat16VectorMember>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based complex vector";
+	}
+	
 	public ComplexFloat16Vector() { }
 	
 	@Override

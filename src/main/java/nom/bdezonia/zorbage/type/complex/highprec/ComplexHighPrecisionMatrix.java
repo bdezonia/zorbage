@@ -103,6 +103,11 @@ public class ComplexHighPrecisionMatrix
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMatrixMember>,
 		ArrayLikeMethods<ComplexHighPrecisionMatrixMember,ComplexHighPrecisionMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision complex matrix";
+	}
+
 	public ComplexHighPrecisionMatrix() { }
 
 	@Override

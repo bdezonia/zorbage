@@ -105,6 +105,11 @@ public class QuaternionFloat128Algebra
 	private static final QuaternionFloat128Member J = new QuaternionFloat128Member(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE,BigDecimal.ZERO);
 	private static final QuaternionFloat128Member K = new QuaternionFloat128Member(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE);
 	
+	@Override
+	public String typeDescription() {
+		return "128-bit based quaternion number";
+	}
+
 	public QuaternionFloat128Algebra() { }
 
 	@Override

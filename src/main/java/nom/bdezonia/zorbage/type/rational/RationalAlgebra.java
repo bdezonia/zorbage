@@ -69,6 +69,11 @@ public class RationalAlgebra
 		ConstructibleFromLong<RationalMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Unbounded rational number";
+	}
+
+	@Override
 	public RationalMember construct() {
 		return new RationalMember();
 	}

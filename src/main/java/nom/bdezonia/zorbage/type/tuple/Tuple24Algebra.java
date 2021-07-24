@@ -93,6 +93,11 @@ public class Tuple24Algebra<AA extends Algebra<AA,A>, A,
 	private final WW algW;
 	private final XX algX;
 	
+	@Override
+	public String typeDescription() {
+		return "24 element tuple";
+	}
+
 	public Tuple24Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS, TT algT, UU algU, VV algV, WW algW, XX algX) {
 		this.algA = algA;
 		this.algB = algB;

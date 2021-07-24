@@ -108,6 +108,11 @@ public class OctonionFloat64Algebra
 	private static final OctonionFloat64Member J0 = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 1, 0);
 	private static final OctonionFloat64Member K0 = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 1);
 
+	@Override
+	public String typeDescription() {
+		return "64-bit based octonion number";
+	}
+
 	public OctonionFloat64Algebra() { }
 	
 	private final Procedure1<OctonionFloat64Member> UNITY =

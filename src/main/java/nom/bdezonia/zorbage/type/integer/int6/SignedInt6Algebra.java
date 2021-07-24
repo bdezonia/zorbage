@@ -69,6 +69,11 @@ public class SignedInt6Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "6-bit signed int";
+	}
+
+	@Override
 	public SignedInt6Member construct() {
 		return new SignedInt6Member();
 	}

@@ -93,6 +93,11 @@ public class QuaternionFloat32RModule
 		ArrayLikeMethods<QuaternionFloat32RModuleMember, QuaternionFloat32Member>,
 		ConstructibleFromFloat<QuaternionFloat32RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based quaternion rmodule";
+	}
+
 	public QuaternionFloat32RModule() { }
 
 	@Override

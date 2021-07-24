@@ -69,6 +69,10 @@ public class SignedInt32Algebra
 		ScaleByTwo<SignedInt32Member>,
 		ConstructibleFromInt<SignedInt32Member>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit signed int";
+	}
 
 	public SignedInt32Algebra() { }
 

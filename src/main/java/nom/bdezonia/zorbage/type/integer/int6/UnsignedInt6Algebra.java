@@ -69,6 +69,11 @@ public class UnsignedInt6Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "6-bit unsigned int";
+	}
+
+	@Override
 	public UnsignedInt6Member construct() {
 		return new UnsignedInt6Member();
 	}

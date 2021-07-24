@@ -74,6 +74,11 @@ public class UnsignedInt64Algebra
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);
 	
+	@Override
+	public String typeDescription() {
+		return "64-bit unsigned int";
+	}
+
 	public UnsignedInt64Algebra() { }
 
 	@Override

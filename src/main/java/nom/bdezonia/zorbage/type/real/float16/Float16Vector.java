@@ -90,6 +90,11 @@ public class Float16Vector
 		Tolerance<Float16Member,Float16VectorMember>,
 		ArrayLikeMethods<Float16VectorMember,Float16Member>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based real vector";
+	}
+
 	public Float16Vector() { }
 	
 	private final Procedure1<Float16VectorMember> ZER =

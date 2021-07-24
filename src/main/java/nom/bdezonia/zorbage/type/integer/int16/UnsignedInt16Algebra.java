@@ -69,7 +69,11 @@ public class UnsignedInt16Algebra
 		ScaleByTwo<UnsignedInt16Member>,
 		ConstructibleFromInt<UnsignedInt16Member>
 {
-	
+	@Override
+	public String typeDescription() {
+		return "16-bit unsigned int";
+	}
+
 	public UnsignedInt16Algebra() { }
 
 	@Override

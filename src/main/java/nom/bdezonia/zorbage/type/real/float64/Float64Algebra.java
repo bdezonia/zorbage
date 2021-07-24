@@ -99,6 +99,11 @@ public class Float64Algebra
 	private static final Float64Member GAMMA = new Float64Member(0.57721566490153286060);
 	private static final Float64Member PHI = new Float64Member(1.61803398874989484820);
 	
+	@Override
+	public String typeDescription() {
+		return "64-bit based real number";
+	}
+
 	public Float64Algebra() { }
 	
 	private final Function2<Boolean,Float64Member,Float64Member> EQ =

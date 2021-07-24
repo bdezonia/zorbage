@@ -103,6 +103,11 @@ public class OctonionHighPrecisionMatrix
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionMatrixMember>,
 		ArrayLikeMethods<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision octonion matrix";
+	}
+
 	public OctonionHighPrecisionMatrix() { }
 
 	@Override

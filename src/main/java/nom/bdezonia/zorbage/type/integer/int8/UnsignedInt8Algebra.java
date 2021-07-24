@@ -70,6 +70,11 @@ public class UnsignedInt8Algebra
 		ConstructibleFromInt<UnsignedInt8Member>
 {
 
+	@Override
+	public String typeDescription() {
+		return "8-bit unsigned int";
+	}
+
 	public UnsignedInt8Algebra() { }
 
 	@Override

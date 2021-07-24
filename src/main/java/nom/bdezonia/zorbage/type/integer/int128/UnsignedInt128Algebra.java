@@ -85,6 +85,11 @@ public class UnsignedInt128Algebra
 	private static final UnsignedInt128Member ONE = new UnsignedInt128Member(0,1);
 
 	@Override
+	public String typeDescription() {
+		return "128-bit unsigned int";
+	}
+
+	@Override
 	public UnsignedInt128Member construct() {
 		return new UnsignedInt128Member();
 	}

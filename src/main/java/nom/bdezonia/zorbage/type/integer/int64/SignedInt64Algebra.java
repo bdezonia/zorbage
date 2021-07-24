@@ -72,6 +72,11 @@ public class SignedInt64Algebra
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);
 	
+	@Override
+	public String typeDescription() {
+		return "64-bit signed int";
+	}
+
 	public SignedInt64Algebra() { }
 
 	@Override

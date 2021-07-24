@@ -100,6 +100,11 @@ public class HighPrecisionMatrix
 		Tolerance<HighPrecisionMember,HighPrecisionMatrixMember>,
 		ArrayLikeMethods<HighPrecisionMatrixMember,HighPrecisionMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision real matrix";
+	}
+
 	public HighPrecisionMatrix() { }
 
 	@Override

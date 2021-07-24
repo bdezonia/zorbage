@@ -67,6 +67,10 @@ public class SignedInt13Algebra
 		ScaleByTwo<SignedInt13Member>,
 		ConstructibleFromInt<SignedInt13Member>
 {
+	@Override
+	public String typeDescription() {
+		return "13-bit signed int";
+	}
 
 	@Override
 	public SignedInt13Member construct() {

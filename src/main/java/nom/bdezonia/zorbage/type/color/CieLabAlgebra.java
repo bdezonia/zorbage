@@ -51,6 +51,11 @@ public class CieLabAlgebra
 		Random<CieLabMember>,
 		ConstructibleFromDouble<CieLabMember>
 {
+	@Override
+	public String typeDescription() {
+		return "192-bit CIE LAB color";
+	}
+	
 	public CieLabAlgebra() { }
 	
 	@Override

@@ -67,6 +67,10 @@ public class UnsignedInt11Algebra
 		ScaleByTwo<UnsignedInt11Member>,
 		ConstructibleFromInt<UnsignedInt11Member>
 {
+	@Override
+	public String typeDescription() {
+		return "11-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt11Member construct() {

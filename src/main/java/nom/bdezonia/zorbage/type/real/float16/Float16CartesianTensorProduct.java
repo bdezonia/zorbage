@@ -92,6 +92,11 @@ public class Float16CartesianTensorProduct
 
 {
 	@Override
+	public String typeDescription() {
+		return "16-bit based real tensor";
+	}
+
+	@Override
 	public Float16CartesianTensorProductMember construct() {
 		return new Float16CartesianTensorProductMember();
 	}

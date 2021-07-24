@@ -114,6 +114,11 @@ public class OctonionFloat16Matrix
 		Tolerance<Float16Member,OctonionFloat16MatrixMember>,
 		ArrayLikeMethods<OctonionFloat16MatrixMember,OctonionFloat16Member>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based octonion matrix";
+	}
+
 	public OctonionFloat16Matrix() { }
 
 	@Override

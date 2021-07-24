@@ -83,6 +83,11 @@ public class OctonionHighPrecisionCartesianTensorProduct
 		ArrayLikeMethods<OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Arbitrary precision octonion tensor";
+	}
+
+	@Override
 	public OctonionHighPrecisionCartesianTensorProductMember construct() {
 		return new OctonionHighPrecisionCartesianTensorProductMember();
 	}

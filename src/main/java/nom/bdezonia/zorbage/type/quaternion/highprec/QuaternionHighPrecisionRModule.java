@@ -90,6 +90,11 @@ public class QuaternionHighPrecisionRModule
 		ConstructibleFromDouble<QuaternionHighPrecisionRModuleMember>,
 		ConstructibleFromLong<QuaternionHighPrecisionRModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precicion quaternion rmodule";
+	}
+
 	public QuaternionHighPrecisionRModule() { }
 
 	@Override

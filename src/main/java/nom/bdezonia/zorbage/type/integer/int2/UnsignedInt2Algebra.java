@@ -67,6 +67,10 @@ public class UnsignedInt2Algebra
 		ScaleByTwo<UnsignedInt2Member>,
 		ConstructibleFromInt<UnsignedInt2Member>
 {
+	@Override
+	public String typeDescription() {
+		return "2-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt2Member construct() {

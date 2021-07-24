@@ -114,6 +114,11 @@ public class OctonionFloat128Matrix
 		Tolerance<Float128Member,OctonionFloat128MatrixMember>,
 		ArrayLikeMethods<OctonionFloat128MatrixMember,OctonionFloat128Member>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based octonion matrix";
+	}
+
 	public OctonionFloat128Matrix() { }
 
 	@Override

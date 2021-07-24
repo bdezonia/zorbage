@@ -91,6 +91,11 @@ public class QuaternionFloat64CartesianTensorProduct
 		Tolerance<Float64Member, QuaternionFloat64CartesianTensorProductMember>,
 		ArrayLikeMethods<QuaternionFloat64CartesianTensorProductMember, QuaternionFloat64Member>
 {
+	
+	@Override
+	public String typeDescription() {
+		return "64-bit based quaternion tensor";
+	}
 	@Override
 	public QuaternionFloat64CartesianTensorProductMember construct() {
 		return new QuaternionFloat64CartesianTensorProductMember();

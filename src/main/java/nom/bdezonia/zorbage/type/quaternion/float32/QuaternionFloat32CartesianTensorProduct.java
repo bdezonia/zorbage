@@ -92,6 +92,11 @@ public class QuaternionFloat32CartesianTensorProduct
 		ArrayLikeMethods<QuaternionFloat32CartesianTensorProductMember, QuaternionFloat32Member>
 {
 	@Override
+	public String typeDescription() {
+		return "32-bit based quaternion tensor";
+	}
+
+	@Override
 	public QuaternionFloat32CartesianTensorProductMember construct() {
 		return new QuaternionFloat32CartesianTensorProductMember();
 	}

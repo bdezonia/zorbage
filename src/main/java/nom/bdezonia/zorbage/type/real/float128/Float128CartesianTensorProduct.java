@@ -92,6 +92,11 @@ public class Float128CartesianTensorProduct
 		ArrayLikeMethods<Float128CartesianTensorProductMember, Float128Member>
 {
 	@Override
+	public String typeDescription() {
+		return "128-bit based real tensor";
+	}
+
+	@Override
 	public Float128CartesianTensorProductMember construct() {
 		return new Float128CartesianTensorProductMember();
 	}

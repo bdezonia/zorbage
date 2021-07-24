@@ -82,6 +82,11 @@ public class HighPrecisionVector
 		Tolerance<HighPrecisionMember,HighPrecisionVectorMember>,
 		ArrayLikeMethods<HighPrecisionVectorMember,HighPrecisionMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision real vector";
+	}
+
 	public HighPrecisionVector() { }
 	
 	private final Procedure1<HighPrecisionVectorMember> ZER =

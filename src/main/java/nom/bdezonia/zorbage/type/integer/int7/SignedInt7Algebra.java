@@ -69,6 +69,11 @@ public class SignedInt7Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "7-bit signed int";
+	}
+
+	@Override
 	public SignedInt7Member construct() {
 		return new SignedInt7Member();
 	}

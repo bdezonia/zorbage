@@ -97,6 +97,11 @@ public class Tuple26Algebra<AA extends Algebra<AA,A>, A,
 	private final YY algY;
 	private final ZZ algZ;
 	
+	@Override
+	public String typeDescription() {
+		return "26 element tuple";
+	}
+
 	public Tuple26Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS, TT algT, UU algU, VV algV, WW algW, XX algX, YY algY, ZZ algZ) {
 		this.algA = algA;
 		this.algB = algB;

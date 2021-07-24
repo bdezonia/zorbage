@@ -59,6 +59,10 @@ public class BooleanAlgebra
 		Random<BooleanMember>,
 		ConstructibleFromBoolean<BooleanMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Boolean";
+	}
 	
 	public BooleanAlgebra() { }
 	

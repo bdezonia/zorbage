@@ -48,6 +48,11 @@ public class Tuple2Algebra<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>
 	private final AA algA;
 	private final BB algB;
 	
+	@Override
+	public String typeDescription() {
+		return "2 element tuple";
+	}
+
 	public Tuple2Algebra(AA algA, BB algB) {
 		this.algA = algA;
 		this.algB = algB;

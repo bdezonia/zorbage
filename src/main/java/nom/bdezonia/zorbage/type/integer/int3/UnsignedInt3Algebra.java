@@ -67,6 +67,10 @@ public class UnsignedInt3Algebra
 		ScaleByTwo<UnsignedInt3Member>,
 		ConstructibleFromInt<UnsignedInt3Member>
 {
+	@Override
+	public String typeDescription() {
+		return "3-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt3Member construct() {

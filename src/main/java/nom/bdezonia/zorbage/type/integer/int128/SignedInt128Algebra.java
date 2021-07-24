@@ -85,6 +85,11 @@ public class SignedInt128Algebra
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
 
 	@Override
+	public String typeDescription() {
+		return "128-bit signed int";
+	}
+
+	@Override
 	public SignedInt128Member construct() {
 		return new SignedInt128Member();
 	}

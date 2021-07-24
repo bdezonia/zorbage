@@ -67,6 +67,10 @@ public class UnsignedInt13Algebra
 		ScaleByTwo<UnsignedInt13Member>,
 		ConstructibleFromInt<UnsignedInt13Member>
 {
+	@Override
+	public String typeDescription() {
+		return "13-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt13Member construct() {

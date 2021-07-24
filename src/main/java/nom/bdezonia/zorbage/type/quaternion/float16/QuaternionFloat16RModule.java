@@ -93,6 +93,11 @@ public class QuaternionFloat16RModule
 		ArrayLikeMethods<QuaternionFloat16RModuleMember,QuaternionFloat16Member>,
 		ConstructibleFromFloat<QuaternionFloat16RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based quaternion rmodule";
+	}
+
 	public QuaternionFloat16RModule() { }
 
 	@Override

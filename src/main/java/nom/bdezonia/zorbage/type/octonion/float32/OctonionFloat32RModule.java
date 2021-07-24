@@ -93,6 +93,11 @@ public class OctonionFloat32RModule
 		ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>,
 		ConstructibleFromFloat<OctonionFloat32RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based octonion rmodule";
+	}
+
 	public OctonionFloat32RModule() { }
 
 	@Override

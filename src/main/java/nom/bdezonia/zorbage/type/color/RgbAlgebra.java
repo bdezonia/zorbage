@@ -55,6 +55,10 @@ public class RgbAlgebra
 		PredSucc<RgbMember>, ColorMethods<Double, RgbMember>,
 		ConstructibleFromInt<RgbMember>
 {
+	@Override
+	public String typeDescription() {
+		return "24-bit RGB color";
+	}
 
 	@Override
 	public RgbMember construct() {

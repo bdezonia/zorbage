@@ -92,6 +92,11 @@ public class GaussianInt32Algebra
 		ConstructibleFromInt<GaussianInt32Member>
 {
 	@Override
+	public String typeDescription() {
+		return "32-bit based gaussian int";
+	}
+
+	@Override
 	public GaussianInt32Member construct() {
 		return new GaussianInt32Member();
 	}

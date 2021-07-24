@@ -96,6 +96,11 @@ public class Float128Vector
 		ConstructibleFromDouble<Float128VectorMember>,
 		ConstructibleFromLong<Float128VectorMember>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based real vector";
+	}
+
 	public Float128Vector() { }
 
 	@Override

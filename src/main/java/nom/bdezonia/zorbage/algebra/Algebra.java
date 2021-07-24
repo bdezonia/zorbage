@@ -40,4 +40,5 @@ public interface Algebra<T extends Algebra<T,U>, U>
 		Constructible<U>,
 		Equality<U>
 {
+	String typeDescription();
 }

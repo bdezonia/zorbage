@@ -67,6 +67,10 @@ public class UnsignedInt12Algebra
 		ScaleByTwo<UnsignedInt12Member>,
 		ConstructibleFromInt<UnsignedInt12Member>
 {
+	@Override
+	public String typeDescription() {
+		return "12-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt12Member construct() {

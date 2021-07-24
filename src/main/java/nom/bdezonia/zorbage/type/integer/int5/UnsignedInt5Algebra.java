@@ -69,6 +69,11 @@ public class UnsignedInt5Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "5-bit unsigned int";
+	}
+
+	@Override
 	public UnsignedInt5Member construct() {
 		return new UnsignedInt5Member();
 	}

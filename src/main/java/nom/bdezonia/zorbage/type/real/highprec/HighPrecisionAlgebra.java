@@ -86,6 +86,11 @@ public class HighPrecisionAlgebra
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
 	
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision real number";
+	}
+
 	public static MathContext getContext() {
 		return CONTEXT;
 	}

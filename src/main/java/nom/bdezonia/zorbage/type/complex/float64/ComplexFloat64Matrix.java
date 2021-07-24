@@ -114,6 +114,12 @@ public class ComplexFloat64Matrix
 		Tolerance<Float64Member,ComplexFloat64MatrixMember>,
 		ArrayLikeMethods<ComplexFloat64MatrixMember,ComplexFloat64Member>
 {
+
+	@Override
+	public String typeDescription() {
+		return "64-bit based complex matrix";
+	}
+
 	public ComplexFloat64Matrix() { }
 
 	@Override

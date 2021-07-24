@@ -61,6 +61,11 @@ public class FixedStringAlgebra
 		Ordered<FixedStringMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Fixed lengths strings";
+	}
+
+	@Override
 	public FixedStringMember construct() {
 		return new FixedStringMember();
 	}

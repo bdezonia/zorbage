@@ -114,6 +114,11 @@ public class QuaternionFloat16Matrix
 		Tolerance<Float16Member,QuaternionFloat16MatrixMember>,
 		ArrayLikeMethods<QuaternionFloat16MatrixMember,QuaternionFloat16Member>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based quaternion matrix";
+	}
+
 	public QuaternionFloat16Matrix() { }
 
 	@Override

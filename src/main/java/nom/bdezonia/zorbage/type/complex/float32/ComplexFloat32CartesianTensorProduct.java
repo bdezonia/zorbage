@@ -91,6 +91,12 @@ public class ComplexFloat32CartesianTensorProduct
 		Tolerance<Float32Member, ComplexFloat32CartesianTensorProductMember>,
 		ArrayLikeMethods<ComplexFloat32CartesianTensorProductMember, ComplexFloat32Member>
 {
+
+	@Override
+	public String typeDescription() {
+		return "32-bit based complex tensor";
+	}
+
 	@Override
 	public ComplexFloat32CartesianTensorProductMember construct() {
 		return new ComplexFloat32CartesianTensorProductMember();

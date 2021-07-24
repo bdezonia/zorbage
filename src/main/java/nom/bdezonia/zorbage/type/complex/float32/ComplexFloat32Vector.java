@@ -93,6 +93,11 @@ public class ComplexFloat32Vector
 		ArrayLikeMethods<ComplexFloat32VectorMember,ComplexFloat32Member>,
 		ConstructibleFromFloat<ComplexFloat32VectorMember>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based complex vector";
+	}
+
 	public ComplexFloat32Vector() { }
 
 	@Override

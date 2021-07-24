@@ -91,6 +91,11 @@ public class Tuple23Algebra<AA extends Algebra<AA,A>, A,
 	private final VV algV;
 	private final WW algW;
 	
+	@Override
+	public String typeDescription() {
+		return "23 element tuple";
+	}
+
 	public Tuple23Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS, TT algT, UU algU, VV algV, WW algW) {
 		this.algA = algA;
 		this.algB = algB;

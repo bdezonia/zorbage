@@ -111,6 +111,11 @@ public class Float64Matrix
 		Tolerance<Float64Member,Float64MatrixMember>,
 		ArrayLikeMethods<Float64MatrixMember,Float64Member>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based real matrix";
+	}
+
 	public Float64Matrix() { }
 
 	@Override

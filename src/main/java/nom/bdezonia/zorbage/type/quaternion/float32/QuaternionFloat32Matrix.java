@@ -114,6 +114,11 @@ public class QuaternionFloat32Matrix
 		Tolerance<Float32Member,QuaternionFloat32MatrixMember>,
 		ArrayLikeMethods<QuaternionFloat32MatrixMember,QuaternionFloat32Member>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based quaternion matrix";
+	}
+
 	public QuaternionFloat32Matrix() { }
 
 	@Override

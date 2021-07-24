@@ -92,6 +92,11 @@ public class OctonionFloat32CartesianTensorProduct
 		ArrayLikeMethods<OctonionFloat32CartesianTensorProductMember, OctonionFloat32Member>
 {
 	@Override
+	public String typeDescription() {
+		return "32-bit based octonion tensor";
+	}
+
+	@Override
 	public OctonionFloat32CartesianTensorProductMember construct() {
 		return new OctonionFloat32CartesianTensorProductMember();
 	}

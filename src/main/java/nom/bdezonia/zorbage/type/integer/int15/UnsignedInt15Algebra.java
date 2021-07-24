@@ -67,6 +67,10 @@ public class UnsignedInt15Algebra
 		ScaleByTwo<UnsignedInt15Member>,
 		ConstructibleFromInt<UnsignedInt15Member>
 {
+	@Override
+	public String typeDescription() {
+		return "15-bit unsigned int";
+	}
 
 	@Override
 	public UnsignedInt15Member construct() {

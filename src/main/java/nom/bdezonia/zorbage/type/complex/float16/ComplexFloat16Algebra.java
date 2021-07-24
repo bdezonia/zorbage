@@ -115,6 +115,11 @@ public class ComplexFloat16Algebra
 	private static final ComplexFloat16Member MINUS_I_OVER_TWO = new ComplexFloat16Member(0,(float)-0.5);
 	private static final ComplexFloat16Member NaN_ = new ComplexFloat16Member(Float.NaN,Float.NaN);
 
+	@Override
+	public String typeDescription() {
+		return "16-bit based complex number";
+	}
+	
 	public ComplexFloat16Algebra() { }
 
 	@Override

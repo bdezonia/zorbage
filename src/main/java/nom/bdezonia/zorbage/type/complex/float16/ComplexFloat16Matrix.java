@@ -114,6 +114,11 @@ public class ComplexFloat16Matrix
 		Tolerance<Float16Member,ComplexFloat16MatrixMember>,
 		ArrayLikeMethods<ComplexFloat16MatrixMember, ComplexFloat16Member>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based complex matrix";
+	}
+	
 	public ComplexFloat16Matrix() { }
 
 	@Override

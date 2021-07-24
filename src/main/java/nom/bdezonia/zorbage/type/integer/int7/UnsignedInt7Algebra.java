@@ -69,6 +69,11 @@ public class UnsignedInt7Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "7-bit unsigned int";
+	}
+
+	@Override
 	public UnsignedInt7Member construct() {
 		return new UnsignedInt7Member();
 	}

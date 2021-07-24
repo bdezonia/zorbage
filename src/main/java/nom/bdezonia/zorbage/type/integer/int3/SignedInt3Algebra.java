@@ -67,6 +67,10 @@ public class SignedInt3Algebra
 		ScaleByTwo<SignedInt3Member>,
 		ConstructibleFromInt<SignedInt3Member>
 {
+	@Override
+	public String typeDescription() {
+		return "3-bit signed int";
+	}
 
 	@Override
 	public SignedInt3Member construct() {

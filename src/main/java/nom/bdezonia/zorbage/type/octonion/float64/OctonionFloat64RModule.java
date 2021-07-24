@@ -93,6 +93,11 @@ public class OctonionFloat64RModule
 		ArrayLikeMethods<OctonionFloat64RModuleMember,OctonionFloat64Member>,
 		ConstructibleFromDouble<OctonionFloat64RModuleMember>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based octonion rmodule";
+	}
+
 	public OctonionFloat64RModule() { }
 
 	@Override

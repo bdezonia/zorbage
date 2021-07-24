@@ -69,6 +69,10 @@ public class SignedInt16Algebra
 		ScaleByTwo<SignedInt16Member>,
 		ConstructibleFromInt<SignedInt16Member>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit signed int";
+	}
 
 	public SignedInt16Algebra() { }
 

@@ -83,6 +83,11 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		ArrayLikeMethods<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Arbitrary precicion quaternion tensor";
+	}
+
+	@Override
 	public QuaternionHighPrecisionCartesianTensorProductMember construct() {
 		return new QuaternionHighPrecisionCartesianTensorProductMember();
 	}

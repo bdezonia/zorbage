@@ -69,6 +69,11 @@ public class UnsignedInt4Algebra
 {
 
 	@Override
+	public String typeDescription() {
+		return "4-bit unsigned int";
+	}
+
+	@Override
 	public UnsignedInt4Member construct() {
 		return new UnsignedInt4Member();
 	}

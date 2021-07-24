@@ -85,6 +85,11 @@ public class PointAlgebra
 	private static final MathContext CONTEXT = new MathContext(18);
 	
 	@Override
+	public String typeDescription() {
+		return "64-bit based n dimensional real point";
+	}
+
+	@Override
 	public Point construct() {
 		return new Point();
 	}

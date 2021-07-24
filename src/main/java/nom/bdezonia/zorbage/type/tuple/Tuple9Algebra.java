@@ -63,6 +63,11 @@ public class Tuple9Algebra<AA extends Algebra<AA,A>, A,
 	private final HH algH;
 	private final II algI;
 	
+	@Override
+	public String typeDescription() {
+		return "9 element tuple";
+	}
+
 	public Tuple9Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI) {
 		this.algA = algA;
 		this.algB = algB;

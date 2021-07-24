@@ -59,6 +59,11 @@ public class CharAlgebra
 		ConstructibleFromChar<CharMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Character";
+	}
+	
+	@Override
 	public CharMember construct() {
 		return new CharMember();
 	}

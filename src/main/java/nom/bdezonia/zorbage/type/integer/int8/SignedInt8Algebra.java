@@ -70,6 +70,11 @@ public class SignedInt8Algebra
 		ConstructibleFromInt<SignedInt8Member>
 {
 
+	@Override
+	public String typeDescription() {
+		return "8-bit signed int";
+	}
+
 	public SignedInt8Algebra() { }
 	
 	@Override

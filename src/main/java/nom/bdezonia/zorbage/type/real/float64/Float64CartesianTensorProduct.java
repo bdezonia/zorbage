@@ -91,6 +91,11 @@ public class Float64CartesianTensorProduct
 		ArrayLikeMethods<Float64CartesianTensorProductMember, Float64Member>
 {
 	@Override
+	public String typeDescription() {
+		return "64-bit based real tensor";
+	}
+
+	@Override
 	public Float64CartesianTensorProductMember construct() {
 		return new Float64CartesianTensorProductMember();
 	}

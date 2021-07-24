@@ -75,6 +75,11 @@ public class Tuple15Algebra<AA extends Algebra<AA,A>, A,
 	private final NN algN;
 	private final OO algO;
 	
+	@Override
+	public String typeDescription() {
+		return "15 element tuple";
+	}
+
 	public Tuple15Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO) {
 		this.algA = algA;
 		this.algB = algB;

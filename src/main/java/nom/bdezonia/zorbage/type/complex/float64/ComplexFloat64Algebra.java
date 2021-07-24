@@ -115,6 +115,11 @@ public class ComplexFloat64Algebra
 	private static final ComplexFloat64Member MINUS_I_OVER_TWO = new ComplexFloat64Member(0,-0.5);
 	private static final ComplexFloat64Member NaN_ = new ComplexFloat64Member(Double.NaN,Double.NaN);
 
+	@Override
+	public String typeDescription() {
+		return "64-bit based complex number";
+	}
+
 	public ComplexFloat64Algebra() { }
 
 	@Override

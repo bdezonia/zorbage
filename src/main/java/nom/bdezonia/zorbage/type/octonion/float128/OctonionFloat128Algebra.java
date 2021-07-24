@@ -112,6 +112,11 @@ public class OctonionFloat128Algebra
 	private static final OctonionFloat128Member J0 = new OctonionFloat128Member(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO);
 	private static final OctonionFloat128Member K0 = new OctonionFloat128Member(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE);
 
+	@Override
+	public String typeDescription() {
+		return "128-bit based octonion number";
+	}
+
 	public OctonionFloat128Algebra() { }
 
 	@Override

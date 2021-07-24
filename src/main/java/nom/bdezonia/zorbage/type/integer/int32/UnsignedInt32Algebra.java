@@ -71,6 +71,11 @@ public class UnsignedInt32Algebra
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();
+
+	@Override
+	public String typeDescription() {
+		return "32-bit unsigned int";
+	}
 	
 	public UnsignedInt32Algebra() { }
 

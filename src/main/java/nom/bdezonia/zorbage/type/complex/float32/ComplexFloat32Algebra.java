@@ -115,6 +115,11 @@ public class ComplexFloat32Algebra
 	private static final ComplexFloat32Member MINUS_I_OVER_TWO = new ComplexFloat32Member(0,-0.5f);
 	private static final ComplexFloat32Member NaN_ = new ComplexFloat32Member(Float.NaN,Float.NaN);
 
+	@Override
+	public String typeDescription() {
+		return "32-bit based complex number";
+	}
+	
 	public ComplexFloat32Algebra() { }
 
 	@Override

@@ -91,6 +91,12 @@ public class GaussianInt16Algebra
 		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>,
 		ConstructibleFromInt<GaussianInt16Member>
 {
+
+	@Override
+	public String typeDescription() {
+		return "16-bit based gaussian int";
+	}
+
 	@Override
 	public GaussianInt16Member construct() {
 		return new GaussianInt16Member();

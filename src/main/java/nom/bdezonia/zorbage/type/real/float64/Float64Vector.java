@@ -90,6 +90,11 @@ public class Float64Vector
 		Tolerance<Float64Member,Float64VectorMember>,
 		ArrayLikeMethods<Float64VectorMember,Float64Member>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based real vector";
+	}
+
 	public Float64Vector() { }
 	
 	private final Procedure1<Float64VectorMember> ZER =

@@ -67,6 +67,10 @@ public class SignedInt1Algebra
 		ScaleByDoubleAndRound<SignedInt1Member>,
 		ConstructibleFromInt<SignedInt1Member>
 {
+	@Override
+	public String typeDescription() {
+		return "1-bit signed int";
+	}
 
 	@Override
 	public SignedInt1Member construct() {

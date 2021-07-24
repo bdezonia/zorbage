@@ -97,6 +97,11 @@ public class HighPrecisionCartesianTensorProduct
 		ArrayLikeMethods<HighPrecisionCartesianTensorProductMember, HighPrecisionMember>
 {
 	@Override
+	public String typeDescription() {
+		return "Arbitrary precision real tensor";
+	}
+
+	@Override
 	public HighPrecisionCartesianTensorProductMember construct() {
 		return new HighPrecisionCartesianTensorProductMember();
 	}

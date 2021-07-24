@@ -47,6 +47,11 @@ public class Tuple1Algebra<AA extends Algebra<AA,A>, A>
 {
 	private final AA algA;
 	
+	@Override
+	public String typeDescription() {
+		return "1 element tuple";
+	}
+
 	public Tuple1Algebra(AA algA) {
 		this.algA = algA;
 	}

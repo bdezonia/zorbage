@@ -115,6 +115,11 @@ public class ComplexFloat128Matrix
 		Tolerance<Float128Member,ComplexFloat128MatrixMember>,
 		ArrayLikeMethods<ComplexFloat128MatrixMember,ComplexFloat128Member>
 {
+	@Override
+	public String typeDescription() {
+		return "128-bit based complex matrix";
+	}
+	
 	public ComplexFloat128Matrix() { }
 
 	@Override

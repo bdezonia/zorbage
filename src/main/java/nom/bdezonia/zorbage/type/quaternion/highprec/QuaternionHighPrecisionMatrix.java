@@ -103,6 +103,11 @@ public class QuaternionHighPrecisionMatrix
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>,
 		ArrayLikeMethods<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMember>
 {
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precicion quaternion matrix";
+	}
+
 	public QuaternionHighPrecisionMatrix() { }
 
 	@Override

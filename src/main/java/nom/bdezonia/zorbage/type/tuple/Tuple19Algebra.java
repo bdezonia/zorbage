@@ -83,6 +83,11 @@ public class Tuple19Algebra<AA extends Algebra<AA,A>, A,
 	private final RR algR;
 	private final SS algS;
 	
+	@Override
+	public String typeDescription() {
+		return "19 element tuple";
+	}
+
 	public Tuple19Algebra(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, MM algM, NN algN, OO algO, PP algP, QQ algQ, RR algR, SS algS) {
 		this.algA = algA;
 		this.algB = algB;

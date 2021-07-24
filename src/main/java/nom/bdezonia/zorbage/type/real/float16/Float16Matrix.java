@@ -111,6 +111,11 @@ public class Float16Matrix
 		Tolerance<Float16Member,Float16MatrixMember>,
 		ArrayLikeMethods<Float16MatrixMember,Float16Member>
 {
+	@Override
+	public String typeDescription() {
+		return "16-bit based real matrix";
+	}
+
 	public Float16Matrix() { }
 
 	@Override

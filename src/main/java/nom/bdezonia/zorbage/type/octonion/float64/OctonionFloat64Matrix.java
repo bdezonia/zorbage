@@ -114,6 +114,11 @@ public class OctonionFloat64Matrix
 		Tolerance<Float64Member,OctonionFloat64MatrixMember>,
 		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>
 {
+	@Override
+	public String typeDescription() {
+		return "64-bit based octonion matrix";
+	}
+
 	public OctonionFloat64Matrix() { }
 
 	@Override

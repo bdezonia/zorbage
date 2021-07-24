@@ -114,6 +114,11 @@ public class OctonionFloat32Matrix
 		Tolerance<Float32Member,OctonionFloat32MatrixMember>,
 		ArrayLikeMethods<OctonionFloat32MatrixMember,OctonionFloat32Member>
 {
+	@Override
+	public String typeDescription() {
+		return "32-bit based octonion matrix";
+	}
+
 	public OctonionFloat32Matrix() { }
 
 	@Override

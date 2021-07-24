@@ -102,6 +102,11 @@ public class ComplexHighPrecisionAlgebra
 	private static final ComplexHighPrecisionMember TWO_I = new ComplexHighPrecisionMember(BigDecimal.ZERO,BigDecimal.valueOf(2));
 	private static final ComplexHighPrecisionMember MINUS_I = new ComplexHighPrecisionMember(BigDecimal.ZERO,BigDecimal.valueOf(-1));
 
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision complex number";
+	}
+
 	public ComplexHighPrecisionAlgebra() { }
 
 	@Override

@@ -67,6 +67,10 @@ public class SignedInt4Algebra
 		ScaleByTwo<SignedInt4Member>,
 		ConstructibleFromInt<SignedInt4Member>
 {
+	@Override
+	public String typeDescription() {
+		return "4-bit signed int";
+	}
 
 	@Override
 	public SignedInt4Member construct() {

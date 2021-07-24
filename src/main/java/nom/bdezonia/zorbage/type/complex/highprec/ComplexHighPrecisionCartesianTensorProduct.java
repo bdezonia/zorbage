@@ -82,6 +82,12 @@ public class ComplexHighPrecisionCartesianTensorProduct
 		Tolerance<HighPrecisionMember, ComplexHighPrecisionCartesianTensorProductMember>,
 		ArrayLikeMethods<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionMember>
 {
+
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision complex tensor";
+	}
+
 	@Override
 	public ComplexHighPrecisionCartesianTensorProductMember construct() {
 		return new ComplexHighPrecisionCartesianTensorProductMember();

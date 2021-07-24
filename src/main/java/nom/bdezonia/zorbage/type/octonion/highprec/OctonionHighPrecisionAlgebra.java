@@ -97,6 +97,11 @@ public class OctonionHighPrecisionAlgebra
 	private static final OctonionHighPrecisionMember J0 = new OctonionHighPrecisionMember(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ZERO);
 	private static final OctonionHighPrecisionMember K0 = new OctonionHighPrecisionMember(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ONE);
 
+	@Override
+	public String typeDescription() {
+		return "Arbitrary precision octonion number";
+	}
+
 	public OctonionHighPrecisionAlgebra() { }
 
 	@Override

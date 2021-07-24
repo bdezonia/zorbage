@@ -121,6 +121,11 @@ public class ComplexFloat128Algebra
 	private static final Float128Member REAL_PI_OVER_TWO = new Float128Member(new BigDecimal(HighPrecisionAlgebra.PI_STR.substring(0,40)).divide(BigDecimal.valueOf(2)));
 	private static final Float128Member REAL_MINUS_PI_OVER_TWO = new Float128Member(new BigDecimal(HighPrecisionAlgebra.PI_STR.substring(0,40)).multiply(BigDecimal.valueOf(-1)).divide(BigDecimal.valueOf(2)));
 
+	@Override
+	public String typeDescription() {
+		return "128-bit based complex number";
+	}
+	
 	public ComplexFloat128Algebra() { }
 
 	@Override

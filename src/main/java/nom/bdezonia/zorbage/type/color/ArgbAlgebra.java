@@ -55,7 +55,11 @@ public class ArgbAlgebra
 		PredSucc<ArgbMember>, ColorMethods<Double, ArgbMember>,
 		ConstructibleFromInt<ArgbMember>
 {
-
+	@Override
+	public String typeDescription() {
+		return "32-bit ARGB color";
+	}
+	
 	@Override
 	public ArgbMember construct() {
 		return new ArgbMember();
