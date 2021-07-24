@@ -64,15 +64,15 @@ public class WindowView<U> implements DimensionCount {
 	 * display classes.
 	 * 
 	 * @param dataSource The possibly large data set to view
-	 * @param width the width of viewport on the data
-	 * @param height the height of the viewport on the data
-	 * @param c0
-	 * @param c1
+	 * @param width The width of viewport on the data
+	 * @param height The height of the viewport on the data
+	 * @param axisNumber0
+	 * @param axisNumber1
 	 */
-	public WindowView(DimensionedDataSource<U> dataSource, int width, int height, int c0, int c1) {
-		this.dataView = new PlaneView<>(dataSource, c0, c1);
-		this.width = (int) Math.min(width, dataSource.dimension(c0));
-		this.height = (int) Math.min(height, dataSource.dimension(c1));
+	public WindowView(DimensionedDataSource<U> dataSource, int width, int height, int axisNumber0, int axisNumber1) {
+		this.dataView = new PlaneView<>(dataSource, axisNumber0, axisNumber1);
+		this.width = (int) Math.min(width, dataSource.dimension(axisNumber0));
+		this.height = (int) Math.min(height, dataSource.dimension(axisNumber1));
 		this.origin0 = 0;
 		this.origin1 = 0;
 	}
@@ -138,35 +138,36 @@ public class WindowView<U> implements DimensionCount {
 	 * 
 	 * @return
 	 */
-	public int getExtraDimsCount() {
-		return dataView.getExtraDimsCount();
+	public int getPositionsCount() {
+		return dataView.getPositionsCount();
 	}
 	
 	/**
-	 * Return the value of the extra dimension i of this view.
+	 * Return the value of the position of extra dimension i of this view.
 	 * 
 	 * @param i
 	 * @return
 	 */
-	public long getExtraDimValue(int i) {
-		return dataView.getExtraDimValue(i);
+	public long getPositionValue(int i) {
+		return dataView.getPositionValue(i);
 	}
 
 	/**
-	 * Set the value of the extra dimension i of this view. This affects
-	 * which plane of the data set is returned from this view.
+	 * Set the value of the position of extra dimension i of this view.
+	 * This affects which plane of the data source is returned from this view.
 	 * 
 	 * @param i
 	 * @param value
 	 */
-	public void setExtraDimValue(int i, long value) {
-		dataView.setExtraDimValue(i, value);
+	public void setPositionValue(int i, long value) {
+		dataView.setPositionValue(i, value);
 	}
 
 	/**
-	 * Return the 0th dimension origin point in the original data source.
-	 * the origin is used to locate the window in real world space so that
-	 * local data can be pulled out of the data set.
+	 * Return the 0th dimension origin point of this view in model coords.
+	 * The origin is used to locate the window in real world space so that
+	 * local data can be pulled out of the data source. As you move the
+	 * WindowView around on the data source the origin is updated.
 	 * 
 	 * @return
 	 */
@@ -175,9 +176,10 @@ public class WindowView<U> implements DimensionCount {
 	}
 
 	/**
-	 * Return the 1th dimension origin point in the original data source.
-	 * the origin is used to locate the window in real world space so that
-	 * local data can be pulled out of the data set.
+	 * Return the 1th dimension origin point of this view in model coords.
+	 * The origin is used to locate the window in real world space so that
+	 * local data can be pulled out of the data source. As you move the
+	 * WindowView around on the data source the origin is updated.
 	 * 
 	 * @return
 	 */
@@ -186,7 +188,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Move the view window to the left relative to the data source
+	 * Move the view window to the left relative to the data source.
+	 * This changes the value of the internally stored origin point.
 	 * 
 	 * @param numCols
 	 */
@@ -199,7 +202,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Move the view window to the right relative to the data source
+	 * Move the view window to the right relative to the data source.
+	 * This changes the value of the internally stored origin point.
 	 * 
 	 * @param numCols
 	 */
@@ -212,7 +216,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Move the view window up relative to the data source
+	 * Move the view window up relative to the data source.
+	 * This changes the value of the internally stored origin point.
 	 * 
 	 * @param numRows
 	 */
@@ -225,7 +230,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Move the view window down relative to the data source
+	 * Move the view window down relative to the data source.
+	 * This changes the value of the internally stored origin point.
 	 * 
 	 * @param numRows
 	 */
@@ -238,8 +244,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * gets the value stored in the data source using coords local to view.
-	 *   no bounds checking id done on the input coords.
+	 * Gets the value stored in the data source using coords local to
+	 *   this view. No bounds checking is done on the input coords.
 	 *   
 	 * @param i0
 	 * @param i1
@@ -250,8 +256,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * sets the value stored in the data source using coords local to view.
-	 *   no bounds checking id done on the input coords.
+	 * Sets the value stored in the data source using coords local to
+	 *   this view. No bounds checking is done on the input coords.
 	 * 
 	 * @param i0
 	 * @param i1
@@ -262,8 +268,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * safeGet will bounds check input coords.if they are out of bounds an
-	 * exception is thrown. otherwise safeGet() does a regular get().
+	 * safeGet will bounds check input coords. If they are out of bounds an
+	 * exception is thrown. Otherwise safeGet() does a regular get().
 	 * 
 	 * @param i0
 	 * @param i1
@@ -274,8 +280,8 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * safeSet will bounds check input coords.if they are out of bounds an
-	 * exception is thrown. otherwise safeSet() does a regular set().
+	 * safeSet will bounds check input coords. If they are out of bounds an
+	 * exception is thrown. Otherwise safeSet() does a regular set().
 	 * 
 	 * @param i0
 	 * @param i1
@@ -287,24 +293,23 @@ public class WindowView<U> implements DimensionCount {
 
 	/**
 	 * Returns the model coords of the point on the model currently
-	 * associated with the x/y coords and the current slider
+	 * associated with the axis0/axis1 coords and the current slider
 	 * positions.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param i0 The coordinate of interest in the view along axisNumber0
+	 * @param i1 The coordinate of interest in the view along axisNumber1
 	 * @param modelCoords
 	 */
-	public void getModelCoords(int x, int y, long[] modelCoords) {
-		long i0 = origin0 + x;
-		long i1 = origin1 + y;
-		dataView.getModelCoords(i0, i1, modelCoords);
+	public void getModelCoords(int i0, int i1, long[] modelCoords) {
+		long modelPos0 = origin0 + i0;
+		long modelPos1 = origin1 + i1;
+		dataView.getModelCoords(modelPos0, modelPos1, modelCoords);
 	}
 	
 	/**
 	 * Make a 2d image snapshot of the WindowView's viewport
 	 * 
-	 * @param <V>
-	 * @param scratchVar
+	 * @param scratchVar A variable this routine can use for work
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -325,16 +330,16 @@ public class WindowView<U> implements DimensionCount {
 		
 		DimensionedDataSource<U> origDs = dataView.getDataSource();
 
-		String d0Str = origDs.getAxisType(dataView.c0()) == null ? ("dim "+dataView.c0()) : origDs.getAxisType(dataView.c0());
-		String d1Str = origDs.getAxisType(dataView.c1()) == null ? ("dim "+dataView.c1()) : origDs.getAxisType(dataView.c1());
+		String d0Str = origDs.getAxisType(dataView.axisNumber0()) == null ? ("dim "+dataView.axisNumber0()) : origDs.getAxisType(dataView.axisNumber0());
+		String d1Str = origDs.getAxisType(dataView.axisNumber1()) == null ? ("dim "+dataView.axisNumber1()) : origDs.getAxisType(dataView.axisNumber1());
 		String axes = "["+d0Str+":"+d1Str+"]";
 		String miniTitle = axes + " : slice";
 
 		newDs.setName(origDs.getName() == null ? miniTitle : (miniTitle + " of "+origDs.getName()));
-		newDs.setAxisType(0, origDs.getAxisType(dataView.c0()));
-		newDs.setAxisType(1, origDs.getAxisType(dataView.c1()));
-		newDs.setAxisUnit(0, origDs.getAxisUnit(dataView.c0()));
-		newDs.setAxisUnit(1, origDs.getAxisUnit(dataView.c1()));
+		newDs.setAxisType(0, origDs.getAxisType(dataView.axisNumber0()));
+		newDs.setAxisType(1, origDs.getAxisType(dataView.axisNumber1()));
+		newDs.setAxisUnit(0, origDs.getAxisUnit(dataView.axisNumber0()));
+		newDs.setAxisUnit(1, origDs.getAxisUnit(dataView.axisNumber1()));
 		newDs.setValueType(origDs.getValueType());
 		newDs.setValueUnit(origDs.getValueUnit());
 		
@@ -346,21 +351,21 @@ public class WindowView<U> implements DimensionCount {
 			
 			BigDecimal[] scales = new BigDecimal[2];
 
-			scales[0] = origLinSpace.getScale(dataView.c0());
-			scales[1] = origLinSpace.getScale(dataView.c1());
+			scales[0] = origLinSpace.getScale(dataView.axisNumber0());
+			scales[1] = origLinSpace.getScale(dataView.axisNumber1());
 			
 			BigDecimal[] offsets = new BigDecimal[2];
 			
-			offsets[0] = origLinSpace.getOffset(dataView.c0());
-			offsets[1] = origLinSpace.getOffset(dataView.c1());
+			offsets[0] = origLinSpace.getOffset(dataView.axisNumber0());
+			offsets[1] = origLinSpace.getOffset(dataView.axisNumber1());
 			
 			long[] coord = new long[origDs.numDimensions()];
 			
-			coord[dataView.c0()] = origin0;
-			coord[dataView.c1()] = origin1;
+			coord[dataView.axisNumber0()] = origin0;
+			coord[dataView.axisNumber1()] = origin1;
 
-			offsets[0] = origLinSpace.project(coord, dataView.c0());
-			offsets[1] = origLinSpace.project(coord, dataView.c1());
+			offsets[0] = origLinSpace.project(coord, dataView.axisNumber0());
+			offsets[1] = origLinSpace.project(coord, dataView.axisNumber1());
 
 			LinearNdCoordinateSpace newLinSpace = new LinearNdCoordinateSpace(scales, offsets);
 			

@@ -47,10 +47,10 @@ import nom.bdezonia.zorbage.data.DimensionedStorage;
  */
 public class PlaneView<U> implements Dimensioned {
 
-	private final int c0;
-	private final int c1;
-	private final long d0;
-	private final long d1;
+	private final int axisNumber0;  // axis number 1 in parent data source
+	private final int axisNumber1;  // axis number 2 in parent data source
+	private final long axisNumber0Size;  // dimension of axis number 1
+	private final long axisNumber1Size;  // dimension of axis number 2
 	private final Accessor<U> accessor;
 	private final DimensionedDataSource<U> data;
 
@@ -58,10 +58,10 @@ public class PlaneView<U> implements Dimensioned {
 	 * Construct a view from an {@link DimensionedDataSource} and some dimensions.
 	 * 
 	 * @param data The n-d data source the view is being built around.
-	 * @param c0 The coordinate position of the "x" component in the data source
-	 * @param c1 The coordinate position of the "y" component in the data source
+	 * @param axis0 The axis number of the "x" component in the data source
+	 * @param axis1 The axis number of the "y" component in the data source
 	 */
-	public PlaneView(DimensionedDataSource<U> data, int c0, int c1) {
+	public PlaneView(DimensionedDataSource<U> data, int axis0, int axis1) {
 
 		int numD = data.numDimensions();
 
@@ -69,26 +69,26 @@ public class PlaneView<U> implements Dimensioned {
 			throw new IllegalArgumentException(
 						"data source must have at least 1 dimension");
 
-		if (c0 == c1)
+		if (axis0 == axis1)
 			throw new IllegalArgumentException("same coordinate axis specified twice");
 		
-		if (c0 >= c1)
+		if (axis0 >= axis1)
 			throw new IllegalArgumentException(
 					"axis specified out of order: all numbers assume left to right declaration");
 		
-		if (c0 < 0 || c0 >= numD)
+		if (axis0 < 0 || axis0 >= numD)
 			throw new IllegalArgumentException("coordinate component 0 is outside number of dimensions");
 		
-		if (c1 < 0 || ((numD == 1 && c1 > 1) || (numD > 1 && c1 >= numD)))
+		if (axis1 < 0 || ((numD == 1 && axis1 > 1) || (numD > 1 && axis1 >= numD)))
 			throw new IllegalArgumentException("coordinate component 1 is outside number of dimensions");
 
 		this.data = data;
 		
-		this.c0 = c0;
-		this.c1 = c1;
+		this.axisNumber0 = axis0;
+		this.axisNumber1 = axis1;
 
-		this.d0 = data.dimension(c0);
-		this.d1 = numD == 1 ? 1 : data.dimension(c1);
+		this.axisNumber0Size = data.dimension(axis0);
+		this.axisNumber1Size = numD == 1 ? 1 : data.dimension(axis1);
 
 		switch (numD) {
 		case 1:
@@ -133,12 +133,12 @@ public class PlaneView<U> implements Dimensioned {
 	/**
 	 * Returns the 0th dimension of the view.
 	 */
-	public long d0() { return d0; }
+	public long d0() { return axisNumber0Size; }
 
 	/**
 	 * Returns the 1th dimension of the view.
 	 */
-	public long d1() { return d1; }
+	public long d1() { return axisNumber1Size; }
 
 	/**
 	 * A view.get() call will pull the value at the view input coordinates
@@ -195,16 +195,16 @@ public class PlaneView<U> implements Dimensioned {
 	 * Return the column number of 0th index view position
 	 * (i.e. which column is "x" in the view).
 	 */
-	public int c0() {
-		return c0;
+	public int axisNumber0() {
+		return axisNumber0;
 	}
 
 	/**
 	 * Return the column number of 1th index view position
 	 * (i.e. which column is "y" in the view).
 	 */
-	public int c1() {
-		return c1;
+	public int axisNumber1() {
+		return axisNumber1;
 	}
 	
 	/**
@@ -221,31 +221,31 @@ public class PlaneView<U> implements Dimensioned {
 	 */
 	@Override
 	public long dimension(int d) {
-		if (d == 0) return d0;
-		if (d == 1) return d1;
+		if (d == 0) return axisNumber0Size;
+		if (d == 1) return axisNumber1Size;
 		throw new IllegalArgumentException("dimension out of bounds");
 	}
 
 	/**
-	 * Returns the number of dimensions beyond 2 that this Planeview can manipulate.
+	 * Returns the number of dimensions beyond 2 that this PlaneView can manipulate.
 	 * @return
 	 */
-	public int getExtraDimsCount() {
-		return accessor.getExtraDimsCount();
+	public int getPositionsCount() {
+		return accessor.getPositionsCount();
 	}
 	
 	/**
 	 * Set the position value of one of the dimensions of the PlaneView
 	 */
-	public void setExtraDimValue(int i, long v) {
-		accessor.setExtraDimValue(i, v);
+	public void setPositionValue(int i, long v) {
+		accessor.setPositionValue(i, v);
 	}
 
 	/**
 	 * Get the position value of one of the dimensions of the PlaneView
 	 */
-	public long getExtraDimValue(int i) {
-		return accessor.getExtraDimValue(i);
+	public long getPositionValue(int i) {
+		return accessor.getPositionValue(i);
 	}
 	
 	/**
@@ -260,10 +260,10 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param extraDimPos
 	 * @return
 	 */
-	public int originalCoordPos(int extraDimPos) {
+	public int getDataSourceAxisNumber(int extraDimPos) {
 		int counted = 0;
 		for (int i = 0; i < data.numDimensions(); i++) {
-			if (i == c0 || i == c1)
+			if (i == axisNumber0 || i == axisNumber1)
 				continue;
 			if (counted == extraDimPos)
 				return i;
@@ -278,8 +278,8 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param extraDimPos
 	 * @return
 	 */
-	public long originalCoordDim(int extraDimPos) {
-		int pos = originalCoordPos(extraDimPos);
+	public long getDataSourceAxisSize(int extraDimPos) {
+		int pos = getDataSourceAxisNumber(extraDimPos);
 		return data.dimension(pos);
 	}
 
@@ -293,13 +293,13 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param modelCoords
 	 */
 	public void getModelCoords(long i0, long i1, long[] modelCoords) {
-		for (int i = 0; i < getExtraDimsCount(); i++) {
-			int pos = originalCoordPos(i);
-			long value = getExtraDimValue(i);
+		for (int i = 0; i < getPositionsCount(); i++) {
+			int pos = getDataSourceAxisNumber(i);
+			long value = getPositionValue(i);
 			modelCoords[pos] = value;
 		}
-		modelCoords[c0] = i0;
-		modelCoords[c1] = i1;
+		modelCoords[axisNumber0] = i0;
+		modelCoords[axisNumber1] = i1;
 	}
 
 	/**
@@ -316,27 +316,27 @@ public class PlaneView<U> implements Dimensioned {
 		DimensionedDataSource<U> copyPlane(U scratchVar)
 	{
 		DimensionedDataSource<U> newDs = (DimensionedDataSource<U>)
-				DimensionedStorage.allocate((V) scratchVar, new long[] {d0,d1});
+				DimensionedStorage.allocate((V) scratchVar, new long[] {axisNumber0Size,axisNumber1Size});
 		
 		TwoDView<U> view = new TwoDView<>(newDs);
 		
-		for (long y = 0; y < d1; y++) {
-			for (long x = 0; x < d0; x++) {
+		for (long y = 0; y < axisNumber1Size; y++) {
+			for (long x = 0; x < axisNumber0Size; x++) {
 				accessor.get(x, y, scratchVar);
 				view.set(x, y, scratchVar);
 			}
 		}
 
-		String d0Str = data.getAxisType(c0) == null ? ("dim "+c0) : data.getAxisType(c0);
-		String d1Str = data.getAxisType(c1) == null ? ("dim "+c1) : data.getAxisType(c1);
+		String d0Str = data.getAxisType(axisNumber0) == null ? ("dim "+axisNumber0) : data.getAxisType(axisNumber0);
+		String d1Str = data.getAxisType(axisNumber1) == null ? ("dim "+axisNumber1) : data.getAxisType(axisNumber1);
 		String axes = "["+d0Str+":"+d1Str+"]";
 		String miniTitle = axes + "slice";
 		
 		newDs.setName(data.getName() == null ? miniTitle : (miniTitle + " of "+data.getName()));
-		newDs.setAxisType(0, data.getAxisType(c0));
-		newDs.setAxisType(1, data.getAxisType(c1));
-		newDs.setAxisUnit(0, data.getAxisUnit(c0));
-		newDs.setAxisUnit(1, data.getAxisUnit(c1));
+		newDs.setAxisType(0, data.getAxisType(axisNumber0));
+		newDs.setAxisType(1, data.getAxisType(axisNumber1));
+		newDs.setAxisUnit(0, data.getAxisUnit(axisNumber0));
+		newDs.setAxisUnit(1, data.getAxisUnit(axisNumber1));
 		newDs.setValueType(data.getValueType());
 		newDs.setValueUnit(data.getValueUnit());
 		
@@ -348,13 +348,13 @@ public class PlaneView<U> implements Dimensioned {
 			
 			BigDecimal[] scales = new BigDecimal[2];
 
-			scales[0] = origLinSpace.getScale(c0);
-			scales[1] = origLinSpace.getScale(c1);
+			scales[0] = origLinSpace.getScale(axisNumber0);
+			scales[1] = origLinSpace.getScale(axisNumber1);
 			
 			BigDecimal[] offsets = new BigDecimal[2];
 			
-			offsets[0] = origLinSpace.getOffset(c0);
-			offsets[1] = origLinSpace.getOffset(c1);
+			offsets[0] = origLinSpace.getOffset(axisNumber0);
+			offsets[1] = origLinSpace.getOffset(axisNumber1);
 			
 			LinearNdCoordinateSpace newLinSpace = new LinearNdCoordinateSpace(scales, offsets);
 			
@@ -369,8 +369,8 @@ public class PlaneView<U> implements Dimensioned {
 	// ----------------------------------------------------------------------
 	
 	private boolean outOfBounds(long i0, long i1) {
-		if (i0 < 0 || i0 >= d0) return true;
-		if (i1 < 0 || i1 >= d1) return true;
+		if (i0 < 0 || i0 >= axisNumber0Size) return true;
+		if (i1 < 0 || i1 >= axisNumber1Size) return true;
 		return false;
 	}
 
@@ -380,11 +380,11 @@ public class PlaneView<U> implements Dimensioned {
 		
 		void get(long i0, long i1, X value);
 		
-		int getExtraDimsCount();
+		int getPositionsCount();
 		
-		void setExtraDimValue(int i, long v);
+		void setPositionValue(int i, long v);
 		
-		long getExtraDimValue(int i);
+		long getPositionValue(int i);
 	}
 
 	private abstract class AccessorBase {
@@ -397,17 +397,17 @@ public class PlaneView<U> implements Dimensioned {
 			extraDimPositions = new long[size]; 
 		}
 
-		public int getExtraDimsCount() {
+		public int getPositionsCount() {
 			return extraDimPositions.length;
 		}
 		
-		public void setExtraDimValue(int i, long v) {
+		public void setPositionValue(int i, long v) {
 			if (i < 0 || i >= extraDimPositions.length)
 				throw new IllegalArgumentException("illegal extra dim position");
 			extraDimPositions[i] = v;
 		}
 		
-		public long getExtraDimValue(int i) {
+		public long getPositionValue(int i) {
 			if (i < 0 || i >= extraDimPositions.length)
 				throw new IllegalArgumentException("illegal extra dim position");
 			return extraDimPositions[i];
@@ -471,23 +471,23 @@ public class PlaneView<U> implements Dimensioned {
 		}
 
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
+				u2 = getPositionValue(0);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) {
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) {
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 3d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 3d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
@@ -516,44 +516,44 @@ public class PlaneView<U> implements Dimensioned {
 		}
 
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
-				u3 = getExtraDimValue(1);
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
-				u3 = getExtraDimValue(1);
+				u3 = getPositionValue(1);
 			}
-			else if (c0 == 0 && c1 == 3) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
 				u3 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
-				u3 = getExtraDimValue(1);
+				u3 = getPositionValue(1);
 			}
-			else if (c0 == 1 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
+				u2 = getPositionValue(1);
 				u3 = i1;
 			}
-			else if (c0 == 2 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
 				u3 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 4d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 4d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
@@ -582,78 +582,78 @@ public class PlaneView<U> implements Dimensioned {
 		}
 
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
 			}
-			else if (c0 == 0 && c1 == 3) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
+				u4 = getPositionValue(2);
 			}
-			else if (c0 == 0 && c1 == 4) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
 			}
-			else if (c0 == 1 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
+				u4 = getPositionValue(2);
 			}
-			else if (c0 == 1 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
 			}
-			else if (c0 == 2 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
 				u3 = i1;
-				u4 = getExtraDimValue(2);
+				u4 = getPositionValue(2);
 			}
-			else if (c0 == 2 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
+				u3 = getPositionValue(2);
 				u4 = i1;
 			}
-			else if (c0 == 3 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
 				u4 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 5d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 5d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
@@ -682,128 +682,128 @@ public class PlaneView<U> implements Dimensioned {
 		}
 
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 0 && c1 == 3) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 0 && c1 == 4) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 0 && c1 == 5) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 1 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 1 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 1 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
 			}
-			else if (c0 == 2 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 2 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 2 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
 			}
-			else if (c0 == 3 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
 				u4 = i1;
-				u5 = getExtraDimValue(3);
+				u5 = getPositionValue(3);
 			}
-			else if (c0 == 3 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
+				u4 = getPositionValue(3);
 				u5 = i1;
 			}
-			else if (c0 == 4 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
 				u5 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 6d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 6d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
@@ -832,197 +832,197 @@ public class PlaneView<U> implements Dimensioned {
 		}
 
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 0 && c1 == 3) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 0 && c1 == 4) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 0 && c1 == 5) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 0 && c1 == 6) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 1 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 1 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 1 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 1 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
 			}
-			else if (c0 == 2 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 2 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 2 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 2 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
 			}
-			else if (c0 == 3 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 3 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 3 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
 			}
-			else if (c0 == 4 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
 				u5 = i1;
-				u6 = getExtraDimValue(4);
+				u6 = getPositionValue(4);
 			}
-			else if (c0 == 4 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
-				u5 = getExtraDimValue(4);
+				u5 = getPositionValue(4);
 				u6 = i1;
 			}
-			else if (c0 == 5 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
+			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
 				u5 = i0;
 				u6 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 7d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 7d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
@@ -1051,288 +1051,288 @@ public class PlaneView<U> implements Dimensioned {
 		}
 
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 0 && c1 == 3) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 0 && c1 == 4) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 0 && c1 == 5) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 0 && c1 == 6) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 0 && c1 == 7) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 1 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 1 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 1 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 1 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 1 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 2 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 2 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 2 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 2 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 2 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 3 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 3 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 3 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 3 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 4 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 4 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
-				u5 = getExtraDimValue(4);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 4 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 5 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
+			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
 				u5 = i0;
 				u6 = i1;
-				u7 = getExtraDimValue(5);
+				u7 = getPositionValue(5);
 			}
-			else if (c0 == 5 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
+			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
 				u5 = i0;
-				u6 = getExtraDimValue(5);
+				u6 = getPositionValue(5);
 				u7 = i1;
 			}
-			else if (c0 == 6 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
-				u5 = getExtraDimValue(5);
+			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
 				u6 = i0;
 				u7 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 8d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
@@ -1361,404 +1361,404 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	
 		private void setPos(long i0, long i1) {
-			if (c0 == 0 && c1 == 1) {
+			if (axisNumber0 == 0 && axisNumber1 == 1) {
 				u0 = i0;
 				u1 = i1;
-				u2 = getExtraDimValue(0);
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u2 = getPositionValue(0);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 2) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
+				u1 = getPositionValue(0);
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 3) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 4) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 5) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 6) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 7) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 0 && c1 == 8) { 
+			else if (axisNumber0 == 0 && axisNumber1 == 8) { 
 				u0 = i0;
-				u1 = getExtraDimValue(0);
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
-				u7 = getExtraDimValue(6);
+				u1 = getPositionValue(0);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 1 && c1 == 2) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
 				u2 = i1;
-				u3 = getExtraDimValue(1);
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u3 = getPositionValue(1);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 1 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
+				u2 = getPositionValue(1);
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 1 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 1 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 1 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 1 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 1 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
+			else if (axisNumber0 == 1 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
 				u1 = i0;
-				u2 = getExtraDimValue(1);
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
-				u7 = getExtraDimValue(6);
+				u2 = getPositionValue(1);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 2 && c1 == 3) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
 				u3 = i1;
-				u4 = getExtraDimValue(2);
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u4 = getPositionValue(2);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 2 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
+				u3 = getPositionValue(2);
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 2 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 2 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 2 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 2 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
+			else if (axisNumber0 == 2 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
 				u2 = i0;
-				u3 = getExtraDimValue(2);
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
-				u7 = getExtraDimValue(6);
+				u3 = getPositionValue(2);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 3 && c1 == 4) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
 				u4 = i1;
-				u5 = getExtraDimValue(3);
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u5 = getPositionValue(3);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 3 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
+				u4 = getPositionValue(3);
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 3 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 3 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 3 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
+			else if (axisNumber0 == 3 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
 				u3 = i0;
-				u4 = getExtraDimValue(3);
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
-				u7 = getExtraDimValue(6);
+				u4 = getPositionValue(3);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 4 && c1 == 5) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
 				u5 = i1;
-				u6 = getExtraDimValue(4);
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u6 = getPositionValue(4);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 4 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
-				u5 = getExtraDimValue(4);
+				u5 = getPositionValue(4);
 				u6 = i1;
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 4 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 4 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
+			else if (axisNumber0 == 4 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
 				u4 = i0;
-				u5 = getExtraDimValue(4);
-				u6 = getExtraDimValue(5);
-				u7 = getExtraDimValue(6);
+				u5 = getPositionValue(4);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 5 && c1 == 6) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
+			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
 				u5 = i0;
 				u6 = i1;
-				u7 = getExtraDimValue(5);
-				u8 = getExtraDimValue(6);
+				u7 = getPositionValue(5);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 5 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
+			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
 				u5 = i0;
-				u6 = getExtraDimValue(5);
+				u6 = getPositionValue(5);
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 5 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
+			else if (axisNumber0 == 5 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
 				u5 = i0;
-				u6 = getExtraDimValue(5);
-				u7 = getExtraDimValue(6);
+				u6 = getPositionValue(5);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 6 && c1 == 7) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
-				u5 = getExtraDimValue(5);
+			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
 				u6 = i0;
 				u7 = i1;
-				u8 = getExtraDimValue(6);
+				u8 = getPositionValue(6);
 			}
-			else if (c0 == 6 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
-				u5 = getExtraDimValue(5);
+			else if (axisNumber0 == 6 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
 				u6 = i0;
-				u7 = getExtraDimValue(6);
+				u7 = getPositionValue(6);
 				u8 = i1;
 			}
-			else if (c0 == 7 && c1 == 8) { 
-				u0 = getExtraDimValue(0);
-				u1 = getExtraDimValue(1);
-				u2 = getExtraDimValue(2);
-				u3 = getExtraDimValue(3);
-				u4 = getExtraDimValue(4);
-				u5 = getExtraDimValue(5);
-				u6 = getExtraDimValue(6);
+			else if (axisNumber0 == 7 && axisNumber1 == 8) { 
+				u0 = getPositionValue(0);
+				u1 = getPositionValue(1);
+				u2 = getPositionValue(2);
+				u3 = getPositionValue(3);
+				u4 = getPositionValue(4);
+				u5 = getPositionValue(5);
+				u6 = getPositionValue(6);
 				u7 = i0;
 				u8 = i1;
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 8d "+c0+" "+c1);
+				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
