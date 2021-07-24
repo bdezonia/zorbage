@@ -465,6 +465,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor3d<X>
 		extends AccessorBase
@@ -512,6 +513,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor4d<X>
 		extends AccessorBase
@@ -580,6 +582,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor5d<X>
 		extends AccessorBase
@@ -682,6 +685,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor6d<X>
 		extends AccessorBase
@@ -834,6 +838,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor7d<X>
 		extends AccessorBase
@@ -1055,6 +1060,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor8d<X>
 		extends AccessorBase
@@ -1367,6 +1373,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor9d<X>
 		extends AccessorBase
@@ -1795,6 +1802,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor10d<X>
 		extends AccessorBase
@@ -2367,6 +2375,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	// spot checked that i* and u* are correctly ordered
+	// spot checked that u* are completely specified
 	
 	private class Accessor11d<X>
 		extends AccessorBase
