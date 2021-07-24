@@ -55,11 +55,16 @@ public class PlaneView<U> implements Dimensioned {
 	private final DimensionedDataSource<U> data;
 
 	/**
-	 * Construct a view from an {@link DimensionedDataSource} and some dimensions.
+	 * Construct a 2-d view of a {@link DimensionedDataSource} by specifying
+	 * two axis numbers.
 	 * 
-	 * @param data The n-d data source the view is being built around.
-	 * @param axis0 The axis number of the "x" component in the data source
-	 * @param axis1 The axis number of the "y" component in the data source
+	 * @param data The n-d data source the view is being built upon.
+	 * @param axis0 The axis number of the "x" component in the data source. X is
+	 *              in quotes here because you can specify the y, x, time, channel
+	 *              or whatever other axis is defined for the data source.
+	 * @param axis1 The axis number of the "y" component in the data source. Y is
+	 *              in quotes here because you can specify the y, x, time, channel
+	 *              or whatever other axis is defined for the data source.
 	 */
 	public PlaneView(DimensionedDataSource<U> data, int axis0, int axis1) {
 
@@ -243,8 +248,8 @@ public class PlaneView<U> implements Dimensioned {
 	/**
 	 * Set the position value of one of the dimensions of the PlaneView
 	 */
-	public void setPositionValue(int i, long v) {
-		accessor.setPositionValue(i, v);
+	public void setPositionValue(int i, long pos) {
+		accessor.setPositionValue(i, pos);
 	}
 
 	/**
@@ -294,8 +299,8 @@ public class PlaneView<U> implements Dimensioned {
 	 * associated with the i0/i1 coords and the current slider
 	 * positions.
 	 * 
-	 * @param i0
-	 * @param i1
+	 * @param i0 The 0th component of the point within the d0 x d1 view we are interested in
+	 * @param i1 The 1th component of the point within the d0 x d1 view we are interested in
 	 * @param modelCoords
 	 */
 	public void getModelCoords(long i0, long i1, long[] modelCoords) {
@@ -310,8 +315,8 @@ public class PlaneView<U> implements Dimensioned {
 
 	/**
 	 * Get a snapshot of a whole plane of data using the current axis positions
-	 * and "x" and "y" axis designations. So one can easily generate a Y/Z plane
-	 * where X == 250, for example.
+	 * and defined 0th and 1th axis designations. So one can easily generate a
+	 * Y/Z plane where X == 250, for example.
 	 * 
 	 * @param scratchVar A variable that the routine will use in its calcs. 
 	 * 
@@ -373,6 +378,8 @@ public class PlaneView<U> implements Dimensioned {
 	// ----------------------------------------------------------------------
 	//   PRIVATE DECLARATIONS FOLLOW
 	// ----------------------------------------------------------------------
+	
+	// TODO expose these publicly? Will they be useful to someone?
 	
 	private boolean outOfBounds(long i0, long i1) {
 		if (i0 < 0 || i0 >= axisNumber0Size) return true;

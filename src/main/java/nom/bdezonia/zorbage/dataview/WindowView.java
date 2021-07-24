@@ -66,13 +66,13 @@ public class WindowView<U> implements DimensionCount {
 	 * @param dataSource The possibly large data set to view
 	 * @param width The width of viewport on the data
 	 * @param height The height of the viewport on the data
-	 * @param axisNumber0
-	 * @param axisNumber1
+	 * @param axisNumber0 The 0th axis of the view (x, y, z, time, ...)
+	 * @param axisNumber1 The 1th axis of the view (x, y, z, time, ...)
 	 */
 	public WindowView(DimensionedDataSource<U> dataSource, int width, int height, int axisNumber0, int axisNumber1) {
 		this.dataView = new PlaneView<>(dataSource, axisNumber0, axisNumber1);
-		this.width = (int) Math.min(width, dataSource.dimension(axisNumber0));
-		this.height = (int) Math.min(height, dataSource.dimension(axisNumber1));
+		this.width = (int) Math.min(width, dataView.dimension(0));
+		this.height = (int) Math.min(height, dataView.dimension(1));
 		this.origin0 = 0;
 		this.origin1 = 0;
 	}
@@ -167,7 +167,9 @@ public class WindowView<U> implements DimensionCount {
 	 * Return the 0th dimension origin point of this view in model coords.
 	 * The origin is used to locate the window in real world space so that
 	 * local data can be pulled out of the data source. As you move the
-	 * WindowView around on the data source the origin is updated.
+	 * WindowView around on the data source the origin is updated. One
+	 * should never store the value of the origin point since it could
+	 * change out from under you.
 	 * 
 	 * @return
 	 */
@@ -179,7 +181,9 @@ public class WindowView<U> implements DimensionCount {
 	 * Return the 1th dimension origin point of this view in model coords.
 	 * The origin is used to locate the window in real world space so that
 	 * local data can be pulled out of the data source. As you move the
-	 * WindowView around on the data source the origin is updated.
+	 * WindowView around on the data source the origin is updated. One
+	 * should never store the value of the origin point since it could
+	 * change out from under you.
 	 * 
 	 * @return
 	 */
@@ -244,11 +248,12 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Gets the value stored in the data source using coords local to
-	 *   this view. No bounds checking is done on the input coords.
+	 * Using coords local to this view get the value stored in the data
+	 * source at the relevant model coords. No bounds checking is done
+	 * on the input coords.
 	 *   
-	 * @param i0
-	 * @param i1
+	 * @param i0 The 0th component (x or y or z etc.) of the 2d view of data we are interested in
+	 * @param i1 The 1th component (y or z or t etc.) of the 2d view of data we are interested in
 	 * @param value
 	 */
 	public void get(int i0, int i1, U value) {
@@ -256,11 +261,12 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Sets the value stored in the data source using coords local to
-	 *   this view. No bounds checking is done on the input coords.
+	 * Using coords local to this view set the value stored in the data
+	 * source at the relevant model coords. No bounds checking is done
+	 * on the input coords.
 	 * 
-	 * @param i0
-	 * @param i1
+	 * @param i0 The 0th component (x or y or z etc.) of the 2d view of data we are interested in
+	 * @param i1 The 1th component (y or z or t etc.) of the 2d view of data we are interested in
 	 * @param value
 	 */
 	public void set(int i0, int i1, U value) {
@@ -271,8 +277,8 @@ public class WindowView<U> implements DimensionCount {
 	 * safeGet will bounds check input coords. If they are out of bounds an
 	 * exception is thrown. Otherwise safeGet() does a regular get().
 	 * 
-	 * @param i0
-	 * @param i1
+	 * @param i0 The 0th component (x or y or z etc.) of the 2d view of data we are interested in
+	 * @param i1 The 1th component (y or z or t etc.) of the 2d view of data we are interested in
 	 * @param value
 	 */
 	public void safeGet(int i0, int i1, U value) {
@@ -283,8 +289,8 @@ public class WindowView<U> implements DimensionCount {
 	 * safeSet will bounds check input coords. If they are out of bounds an
 	 * exception is thrown. Otherwise safeSet() does a regular set().
 	 * 
-	 * @param i0
-	 * @param i1
+	 * @param i0 The 0th component (x or y or z etc.) of the 2d view of data we are interested in
+	 * @param i1 The 1th component (y or z or t etc.) of the 2d view of data we are interested in
 	 * @param value
 	 */
 	public void safeSet(int i0, int i1, U value) {
@@ -298,7 +304,7 @@ public class WindowView<U> implements DimensionCount {
 	 * 
 	 * @param i0 The coordinate of interest in the view along axisNumber0
 	 * @param i1 The coordinate of interest in the view along axisNumber1
-	 * @param modelCoords
+	 * @param modelCoords The output storage for the coords
 	 */
 	public void getModelCoords(int i0, int i1, long[] modelCoords) {
 		long modelPos0 = origin0 + i0;
@@ -307,9 +313,12 @@ public class WindowView<U> implements DimensionCount {
 	}
 	
 	/**
-	 * Make a 2d image snapshot of the WindowView's viewport
+	 * Make a 2d image snapshot of the WindowView's viewport.
+	 * Calibration and units are transferred to the snapshot
+	 * as much as is feasible.
 	 * 
 	 * @param scratchVar A variable this routine can use for work
+	 *
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
