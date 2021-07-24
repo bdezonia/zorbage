@@ -464,6 +464,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor3d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -509,6 +511,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor4d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -575,6 +579,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor5d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -675,6 +681,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor6d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -825,6 +833,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor7d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -1044,6 +1054,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor8d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -1354,6 +1366,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor9d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -1780,6 +1794,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor10d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -2350,6 +2366,8 @@ public class PlaneView<U> implements Dimensioned {
 		}
 	}
 
+	// spot checked that i* and u* are correctly ordered
+	
 	private class Accessor11d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -3065,7 +3083,7 @@ public class PlaneView<U> implements Dimensioned {
 				u9 = getPositionValue(8);
 				u10 = i1;
 			}
-			else if (axisNumber0 == 8 && axisNumber1 == 10) { 
+			else if (axisNumber0 == 9 && axisNumber1 == 10) { 
 				u0 = getPositionValue(0);
 				u1 = getPositionValue(1);
 				u2 = getPositionValue(2);
