@@ -303,10 +303,12 @@ public class PlaneView<U> implements Dimensioned {
 	}
 
 	/**
-	 * Get a snapshot of a whole plane of data using the current axis positions.
+	 * Get a snapshot of a whole plane of data using the current axis positions
+	 * and "x" and "y" axis designations. So one can easily generate a Y/Z plane
+	 * where X == 250, for example.
 	 * 
-	 * @param scratchVar
-
+	 * @param scratchVar A variable that the routine will use in its calcs. 
+	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")

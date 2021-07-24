@@ -300,6 +300,13 @@ public class WindowView<U> implements DimensionCount {
 		dataView.getModelCoords(i0, i1, modelCoords);
 	}
 	
+	/**
+	 * Make a 2d image snapshot of the WindowView's viewport
+	 * 
+	 * @param <V>
+	 * @param scratchVar
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public <V extends Allocatable<V>>
 		DimensionedDataSource<U> takeSnapsot(U scratchVar)
