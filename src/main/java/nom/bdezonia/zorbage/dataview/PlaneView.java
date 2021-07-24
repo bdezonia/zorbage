@@ -47,10 +47,10 @@ import nom.bdezonia.zorbage.data.DimensionedStorage;
  */
 public class PlaneView<U> implements Dimensioned {
 
-	private final int axisNumber0;  // axis number 1 in parent data source
-	private final int axisNumber1;  // axis number 2 in parent data source
-	private final long axisNumber0Size;  // dimension of axis number 1
-	private final long axisNumber1Size;  // dimension of axis number 2
+	private final int axisNumber0;  // number of our 0th axis in the parent data source
+	private final int axisNumber1;  // number of our 1th axis in the parent data source
+	private final long axisNumber0Size;  // dimension of our 0th axis in the parent data source
+	private final long axisNumber1Size;  // dimension of our 1th axis in the parent data source
 	private final Accessor<U> accessor;
 	private final DimensionedDataSource<U> data;
 
@@ -130,7 +130,8 @@ public class PlaneView<U> implements Dimensioned {
 			accessor = new Accessor11d<U>(data);
 			break;
 		default:
-			throw new IllegalArgumentException(""+numD+" dimensions not yet supported in PlaneView");
+			throw new IllegalArgumentException(
+					""+numD+" dimensions not yet supported in PlaneView");
 		}
 	}
 
@@ -142,12 +143,12 @@ public class PlaneView<U> implements Dimensioned {
 	}
 	
 	/**
-	 * Returns the 0th dimension of the view.
+	 * Returns the 0th dimension of the view (the width).
 	 */
 	public long d0() { return axisNumber0Size; }
 
 	/**
-	 * Returns the 1th dimension of the view.
+	 * Returns the 1th dimension of the view (the height).
 	 */
 	public long d1() { return axisNumber1Size; }
 
@@ -246,14 +247,14 @@ public class PlaneView<U> implements Dimensioned {
 	}
 	
 	/**
-	 * Set the position value of one of the dimensions of the PlaneView
+	 * Set the position value of one of the dimensions of the PlaneView.
 	 */
 	public void setPositionValue(int i, long pos) {
 		accessor.setPositionValue(i, pos);
 	}
 
 	/**
-	 * Get the position value of one of the dimensions of the PlaneView
+	 * Get the position value of one of the dimensions of the PlaneView.
 	 */
 	public long getPositionValue(int i) {
 		return accessor.getPositionValue(i);
@@ -261,12 +262,11 @@ public class PlaneView<U> implements Dimensioned {
 	
 	/**
 	 * Translates the dimensions associated with sliders into their own
-	 * original coordinate position of the parent data source. That's
-	 * kind of confusing. Imagine you have a 5d dataset. Your "x" and "y"
-	 * coord positions were set to 1 and 3. The planeView stores the 3
-	 * non-planar dims as 0, 1, and 2. But their original coord positions
-	 * in the parent data source were 0, 2, and 4. This method maps 0/1/2
-	 * into 0/2/4 in this one case.
+	 * original axis number of the parent data source. Imagine you have
+	 * a 5d dataset. Your "x" and "y" axis numbers set to 1 and 3. The
+	 * planeView stores the 3 other dims as 0, 1, and 2. But their
+	 * original axis numbers in the parent data source were 0, 2, and 4.
+	 * This method maps 0/1/2 into 0/2/4 in this one case.
 	 *  
 	 * @param extraDimPos
 	 * @return
@@ -284,7 +284,7 @@ public class PlaneView<U> implements Dimensioned {
 	}
 	
 	/**
-	 * Returns the dimension of extra axis i in the parent data source
+	 * Returns the dimension of extra axis i in the parent data source.
 	 * 
 	 * @param extraDimPos
 	 * @return
@@ -301,7 +301,7 @@ public class PlaneView<U> implements Dimensioned {
 	 * 
 	 * @param i0 The 0th component of the point within the d0 x d1 view we are interested in
 	 * @param i1 The 1th component of the point within the d0 x d1 view we are interested in
-	 * @param modelCoords
+	 * @param modelCoords The array to store the output coords in.
 	 */
 	public void getModelCoords(long i0, long i1, long[] modelCoords) {
 		for (int i = 0; i < getPositionsCount(); i++) {
@@ -316,11 +316,12 @@ public class PlaneView<U> implements Dimensioned {
 	/**
 	 * Get a snapshot of a whole plane of data using the current axis positions
 	 * and defined 0th and 1th axis designations. So one can easily generate a
-	 * Y/Z plane where X == 250, for example.
+	 * Y/Z plane where X == 250, for example. As much as feasible pass on the
+	 * units and calibration to the new data source.
 	 * 
 	 * @param scratchVar A variable that the routine will use in its calcs. 
 	 * 
-	 * @return
+	 * @return A 2-d data source containing the plane
 	 */
 	@SuppressWarnings("unchecked")
 	public <V extends Allocatable<V>>
