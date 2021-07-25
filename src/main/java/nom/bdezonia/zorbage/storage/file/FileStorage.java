@@ -70,6 +70,9 @@ public class FileStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(U type, long numElements) {
 		
+		if (numElements < 0)
+			throw new IllegalArgumentException("num elements must be >= 0");
+
 		if (type instanceof DoubleCoder) {
 			return new FileStorageFloat64((DoubleCoder)type, numElements);
 		}

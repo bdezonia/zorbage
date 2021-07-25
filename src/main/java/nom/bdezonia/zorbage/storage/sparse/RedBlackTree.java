@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.storage.sparse;
  * @author Barry DeZonia
  *
  */
-public class RedBlackTree<T> {
+class RedBlackTree<T> {
 
 	// Code adapted from Cormen, Leiserson, Rivest, & Stein, 3rd Edition
 

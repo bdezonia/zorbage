@@ -45,7 +45,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
  * @author Barry DeZonia
  *
  */
-public abstract class AbstractJdbcStorage<U extends Allocatable<U>>
+abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 {
 	protected final U type;
 	protected final long size;

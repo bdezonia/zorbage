@@ -53,8 +53,6 @@ public class ExtMemStorageString<U extends StringCoder & Allocatable<U>>
 	
 	public ExtMemStorageString(U type, long numElements) {
 		super();
-		if (numElements < 0)
-			throw new IllegalArgumentException("negative size exception");
 		this.type = type.allocate();
 		this.numElements = numElements;
 		long totalPipeds = (numElements / ELEMENTS_PER_PIPED) + ( numElements % ELEMENTS_PER_PIPED > 0 ? 1 : 0);

@@ -52,8 +52,6 @@ public class ExtMemStorageGeneric<T extends Algebra<T,U>,U>
 	
 	public ExtMemStorageGeneric(T alg, long numElements) {
 		super();
-		if (numElements < 0)
-			throw new IllegalArgumentException("negative size exception");
 		this.alg = alg;
 		this.numElements = numElements;
 		long totalPipeds = (numElements / ELEMENTS_PER_PIPED) + ( numElements % ELEMENTS_PER_PIPED > 0 ? 1 : 0);
