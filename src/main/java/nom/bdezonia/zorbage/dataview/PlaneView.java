@@ -304,13 +304,20 @@ public class PlaneView<U> implements Dimensioned {
 	 * @param modelCoords The array to store the output coords in.
 	 */
 	public void getModelCoords(long i0, long i1, long[] modelCoords) {
+		
 		for (int i = 0; i < getPositionsCount(); i++) {
 			int pos = getDataSourceAxisNumber(i);
 			long value = getPositionValue(i);
 			modelCoords[pos] = value;
 		}
-		modelCoords[axisNumber0] = i0;
-		modelCoords[axisNumber1] = i1;
+		
+		// avoid failure: a 0-d data set would kill code otherwise
+		if (axisNumber0 < data.numDimensions())
+			modelCoords[axisNumber0] = i0;
+		
+		// avoid failure: a 1-d data set would kill code otherwise
+		if (axisNumber1 < data.numDimensions())
+			modelCoords[axisNumber1] = i1;
 	}
 
 	/**
