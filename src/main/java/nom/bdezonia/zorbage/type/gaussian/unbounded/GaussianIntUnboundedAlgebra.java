@@ -90,6 +90,8 @@ public class GaussianIntUnboundedAlgebra
 		ConstructibleFromLong<GaussianIntUnboundedMember>,
 		ConstructibleFromBigInteger<GaussianIntUnboundedMember>
 {
+	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
+	
 	@Override
 	public String typeDescription() {
 		return "Unbounded gaussian int";
@@ -455,7 +457,7 @@ public class GaussianIntUnboundedAlgebra
 		public Boolean call(GaussianIntUnboundedMember a) {
 			UnboundedIntMember norm = G.UNBOUND.construct();
 			norm().call(a, norm);
-			return norm.v().and(BigInteger.ONE).equals(BigInteger.ZERO);
+			return norm.v().mod(TWO).equals(BigInteger.ZERO);
 		}
 	};
 
@@ -469,9 +471,7 @@ public class GaussianIntUnboundedAlgebra
 	{
 		@Override
 		public Boolean call(GaussianIntUnboundedMember a) {
-			UnboundedIntMember norm = G.UNBOUND.construct();
-			norm().call(a, norm);
-			return norm.v().and(BigInteger.ONE).equals(BigInteger.ONE);
+			return !isEven().call(a);
 		}
 	};
 
