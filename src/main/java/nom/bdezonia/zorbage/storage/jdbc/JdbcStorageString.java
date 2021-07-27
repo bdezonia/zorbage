@@ -81,7 +81,7 @@ public class JdbcStorageString<U extends StringCoder & Allocatable<U>>
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			for (int i = 0; i < arr.length; i++) {
-				statement.setString(i+1, "'" + arr[i] + "'"); // NOTE BDZ 7-27-21: this encasing in '' is unlike any other jdbc storage
+				statement.setString(i+1, arr[i]);
 			}
 			statement.executeUpdate();
 			statement.close();
@@ -132,7 +132,7 @@ public class JdbcStorageString<U extends StringCoder & Allocatable<U>>
 
 	@Override
 	String zeroValueAsString() {
-		return "";  // unlike char we will not use a space here. maybe that is a mistake. 
+		return "''";  // unlike char we will not use a space here. maybe that is a mistake. 
 	}
 	
 }
