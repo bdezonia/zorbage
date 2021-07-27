@@ -56,13 +56,13 @@ public class JdbcStorageChar<U extends CharCoder & Allocatable<U>>
 	
 	public JdbcStorageChar(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "CHAR", type.charCount(), size);
+		createTable(conn, tableName, "CHAR", type.charCount());
 		zeroFill(type.charCount());
 	}
 
 	public JdbcStorageChar(JdbcStorageChar<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "CHAR", type.charCount(), size);
+		createTable(conn, tableName, "CHAR", type.charCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 
@@ -136,8 +136,8 @@ public class JdbcStorageChar<U extends CharCoder & Allocatable<U>>
 
 	@Override
 	String zeroValueAsString() {
-		return "' '";  // For a character we will treat a space as the zero value. Maybe /NUL would be better
-					   //   but experiments seemed to uncover problems doing this. 
+		return "' '";  // For a character we will treat a space as the zero value. Maybe the NUL
+						// char would be better but experiments seemed to uncover problems doing this. 
 	}
 	
 }

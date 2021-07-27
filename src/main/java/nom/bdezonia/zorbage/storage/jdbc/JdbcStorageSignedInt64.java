@@ -56,13 +56,13 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	
 	public JdbcStorageSignedInt64(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "BIGINT", type.longCount(), size);
+		createTable(conn, tableName, "BIGINT", type.longCount());
 		zeroFill(type.longCount());
 	}
 
 	public JdbcStorageSignedInt64(JdbcStorageSignedInt64<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "BIGINT", type.longCount(), size);
+		createTable(conn, tableName, "BIGINT", type.longCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 

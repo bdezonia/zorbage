@@ -44,11 +44,13 @@ import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
+import nom.bdezonia.zorbage.storage.coder.CharCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
+import nom.bdezonia.zorbage.storage.coder.StringCoder;
 
 /**
  * 
@@ -768,7 +770,6 @@ public class TestJdbc {
 			System.out.println(e.getMessage());
 		}
 	}
-	
 
 	@Test
 	public void test9() {
@@ -859,6 +860,182 @@ public class TestJdbc {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	@Test
+	public void test10() {
+		try {
+			Connection conn = getConnection();
+			
+			class Chars implements CharCoder, Allocatable<Chars> {
+
+				char a = ' ', b = ' ', c = ' ';
+				
+				@Override
+				public int charCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromCharArray(char[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toCharArray(char[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Chars allocate() {
+					return new Chars();
+				}
+				
+			}
+			
+			JdbcStorageChar<Chars> storage = new JdbcStorageChar<Chars>(conn, new Chars(), 50);
+			
+			assertEquals(50, storage.size());
+			
+			Chars value = new Chars();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 'f';
+				value.b = 'f';
+				value.c = 'f';
+				storage.get(i, value);
+				assertEquals(' ', value.a);
+				assertEquals(' ', value.b);
+				assertEquals(' ', value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = (char) (i+0);
+				value.b = (char) (i+1);
+				value.c = (char) (i+2);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = 'f';
+				value.b = 'f';
+				value.c = 'f';
+				storage.get(i, value);
+				assertEquals((char) (i+0), value.a);
+				assertEquals((char) (i+1), value.b);
+				assertEquals((char) (i+2), value.c);
+			}
+			
+			JdbcStorageChar<Chars> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = 'f';
+				value.b = 'f';
+				value.c = 'f';
+				storage2.get(i, value);
+				assertEquals((char) (i+0), value.a);
+				assertEquals((char) (i+1), value.b);
+				assertEquals((char) (i+2), value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Test
+	public void test11() {
+		try {
+			Connection conn = getConnection();
+			
+			class Strings implements StringCoder, Allocatable<Strings> {
+
+				String a = "", b = "", c = "";
+				
+				@Override
+				public int stringCount() {
+					return 3;
+				}
+
+				@Override
+				public void fromStringArray(String[] arr, int index) {
+					a = arr[index+0];
+					b = arr[index+1];
+					c = arr[index+2];
+				}
+
+				@Override
+				public void toStringArray(String[] arr, int index) {
+					arr[index+0] = a;
+					arr[index+1] = b;
+					arr[index+2] = c;
+				}
+
+				@Override
+				public Strings allocate() {
+					return new Strings();
+				}
+				
+			}
+			
+			JdbcStorageString<Strings> storage = new JdbcStorageString<Strings>(conn, new Strings(), 50);
+			
+			assertEquals(50, storage.size());
+			
+			Strings value = new Strings();
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = "huey";
+				value.b = "huey";
+				value.c = "huey";
+				storage.get(i, value);
+				assertEquals("", value.a);
+				assertEquals("", value.b);
+				assertEquals("", value.c);
+			}
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = "" + (i+0);
+				value.b = "" + (i+1);
+				value.c = "" + (i+2);
+				storage.set(i, value);
+			}
+			
+			for (long i = 0; i < storage.size(); i++) {
+				value.a = "";
+				value.b = "";
+				value.c = "";
+				storage.get(i, value);
+				assertEquals("" + (i+0), value.a);
+				assertEquals("" + (i+1), value.b);
+				assertEquals("" + (i+2), value.c);
+			}
+			
+			JdbcStorageString<Strings> storage2 = storage.duplicate();
+			
+			assertEquals(storage.size(), storage2.size());
+			
+			for (long i = 0; i < storage2.size(); i++) {
+				value.a = "nuts";
+				value.b = "nuts";
+				value.c = "nuts";
+				storage2.get(i, value);
+				assertEquals("" + (i+0), value.a);
+				assertEquals("" + (i+1), value.b);
+				assertEquals("" + (i+2), value.c);
+			}
+			
+			storage.cleanup();
+			storage2.cleanup();
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	private Connection getConnection() throws Exception {
 
@@ -867,8 +1044,7 @@ public class TestJdbc {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?serverTimezone=UTC&user=zorbage&password=zorbage");
-
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/zorbage?useSSL=false&serverTimezone=UTC&user=zorbage&password=ZagNut103^^");
 	}
 	
 }

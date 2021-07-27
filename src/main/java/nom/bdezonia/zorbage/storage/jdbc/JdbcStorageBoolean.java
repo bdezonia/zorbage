@@ -56,13 +56,13 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	
 	public JdbcStorageBoolean(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "BIT", type.booleanCount(), size);
+		createTable(conn, tableName, "BIT", type.booleanCount());
 		zeroFill(type.booleanCount());
 	}
 
 	public JdbcStorageBoolean(JdbcStorageBoolean<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "BIT", type.booleanCount(), size);
+		createTable(conn, tableName, "BIT", type.booleanCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 	

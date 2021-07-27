@@ -56,13 +56,13 @@ public class JdbcStorageString<U extends StringCoder & Allocatable<U>>
 	
 	public JdbcStorageString(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "VARCHAR", type.stringCount(), size);
+		createTable(conn, tableName, "VARCHAR(256)", type.stringCount());
 		zeroFill(type.stringCount());
 	}
 
 	public JdbcStorageString(JdbcStorageString<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "VARCHAR", type.stringCount(), size);
+		createTable(conn, tableName, "VARCHAR(256)", type.stringCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 
@@ -81,7 +81,7 @@ public class JdbcStorageString<U extends StringCoder & Allocatable<U>>
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			for (int i = 0; i < arr.length; i++) {
-				statement.setString(i+1, arr[i] );
+				statement.setString(i+1, "'" + arr[i] + "'"); // NOTE BDZ 7-27-21: this encasing in '' is unlike any other jdbc storage
 			}
 			statement.executeUpdate();
 			statement.close();

@@ -56,13 +56,13 @@ public class JdbcStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	
 	public JdbcStorageSignedInt8(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "TINYINT", type.byteCount(), size);
+		createTable(conn, tableName, "TINYINT", type.byteCount());
 		zeroFill(type.byteCount());
 	}
 
 	public JdbcStorageSignedInt8(JdbcStorageSignedInt8<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "TINYINT", type.byteCount(), size);
+		createTable(conn, tableName, "TINYINT", type.byteCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 

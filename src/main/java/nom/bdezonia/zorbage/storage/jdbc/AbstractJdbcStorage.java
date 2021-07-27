@@ -83,7 +83,7 @@ abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 
-	protected void createTable(Connection conn, String tableName, String sqlType, int count, long size) {
+	protected void createTable(Connection conn, String tableName, String sqlType, int count) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("CREATE TABLE ");
 		sb.append(tableName);
@@ -93,6 +93,8 @@ abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 			sb.append(i);
 			sb.append(' ');
 			sb.append(sqlType);
+			sb.append(" DEFAULT ");
+			sb.append(zeroValueAsString());
 			sb.append(" NOT NULL,");
 		}
 		sb.append(" PRIMARY KEY (ID));");
@@ -132,18 +134,15 @@ abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 		}
 	}
 	
+	
 	protected String makeInsertZeroesStatement(long offset, long count, int valueCount) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO ");
 		sb.append(tableName);
-		sb.append(" VALUES ");
+		sb.append(" (ID) VALUES ");
 		for (long c = 0; c < count; c++) {
 			sb.append('(');
 			sb.append(offset+c);
-			for (int i = 0; i < valueCount; i++) {
-				sb.append(',');
-				sb.append(zeroValueAsString());
-			}
 			sb.append(')');
 			if (c != count-1)
 				sb.append(',');

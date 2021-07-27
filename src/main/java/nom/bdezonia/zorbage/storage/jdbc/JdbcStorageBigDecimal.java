@@ -57,13 +57,13 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	 
 	 public JdbcStorageBigDecimal(Connection conn, U type, long size) {
 		  super(size, type, conn);
-		  createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount(), size);
+		  createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount());
 		  zeroFill(type.bigDecimalCount());
 	 }
 
 	 public JdbcStorageBigDecimal(JdbcStorageBigDecimal<U> other) {
 		  super(other.size, other.type, other.conn);
-		  createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount(), size);
+		  createTable(conn, tableName, "NUMERIC(65,25)", type.bigDecimalCount());
 		  copyTableToTable(conn, other.tableName, tableName);
 	 }
 

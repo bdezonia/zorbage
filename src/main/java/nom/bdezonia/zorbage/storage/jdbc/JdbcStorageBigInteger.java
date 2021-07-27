@@ -58,13 +58,13 @@ public class JdbcStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	
 	public JdbcStorageBigInteger(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "NUMERIC(65)", type.bigIntegerCount(), size);
+		createTable(conn, tableName, "NUMERIC(65)", type.bigIntegerCount());
 		zeroFill(type.bigIntegerCount());
 	}
 
 	public JdbcStorageBigInteger(JdbcStorageBigInteger<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "NUMERIC(65)", type.bigIntegerCount(), size);
+		createTable(conn, tableName, "NUMERIC(65)", type.bigIntegerCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 

@@ -56,13 +56,13 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	
 	public JdbcStorageSignedInt32(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "INTEGER", type.intCount(), size);
+		createTable(conn, tableName, "INTEGER", type.intCount());
 		zeroFill(type.intCount());
 	}
 
 	public JdbcStorageSignedInt32(JdbcStorageSignedInt32<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "INTEGER", type.intCount(), size);
+		createTable(conn, tableName, "INTEGER", type.intCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 

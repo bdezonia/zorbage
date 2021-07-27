@@ -56,14 +56,14 @@ public class JdbcStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	
 	public JdbcStorageFloat32(Connection conn, U type, long size) {
 		super(size, type, conn);
-		createTable(conn, tableName, "REAL", type.floatCount(), size);
+		createTable(conn, tableName, "REAL", type.floatCount());
 		zeroFill(type.floatCount());
 	}
 
 
 	public JdbcStorageFloat32(JdbcStorageFloat32<U> other) {
 		super(other.size, other.type, other.conn);
-		createTable(conn, tableName, "REAL", type.floatCount(), size);
+		createTable(conn, tableName, "REAL", type.floatCount());
 		copyTableToTable(conn, other.tableName, tableName);
 	}
 
