@@ -150,6 +150,40 @@ public class Affine3dCoordinateSpace
 		this.context = new MathContext(precision);
 	}
 
+	public Affine2dCoordinateSpace reduce(int coordToDrop) {
+
+		if (coordToDrop < 0 || coordToDrop >= 3)
+			throw new IllegalArgumentException("coordinate out of bounds");
+
+		BigDecimal x0, x1, x2, y0, y1, y2;
+		
+		if (coordToDrop == 0) {
+			x0 = this.y1;
+			x1 = this.y2;
+			x2 = this.y3;
+			y0 = this.z1;
+			y1 = this.z2;
+			y2 = this.z3;
+		}
+		else if (coordToDrop == 1) {
+			x0 = this.x0;
+			x1 = this.x2;
+			x2 = this.x3;
+			y0 = this.z0;
+			y1 = this.z2;
+			y2 = this.z3;
+		}
+		else {  // coordToDrop == 2)
+			x0 = this.x0;
+			x1 = this.x1;
+			x2 = this.x3;
+			y0 = this.y0;
+			y1 = this.y1;
+			y2 = this.y3;
+		}
+		return new Affine2dCoordinateSpace(x0, x1, x2, y0, y1, y2);
+	}
+	
 	private BigDecimal transform(long i, long j, long k, BigDecimal t0, BigDecimal t1, BigDecimal t2, BigDecimal t3) {
 		BigDecimal tmp = BigDecimal.valueOf(i).multiply(t0, context);
 		tmp = tmp.add(BigDecimal.valueOf(j).multiply(t1, context), context);

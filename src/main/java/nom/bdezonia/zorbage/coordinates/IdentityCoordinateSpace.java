@@ -81,4 +81,11 @@ public class IdentityCoordinateSpace
 		}
 	}
 
+	public IdentityCoordinateSpace reduce(int coordToDrop) {
+
+		if (coordToDrop < 0 || coordToDrop >= numDimensions())
+			throw new IllegalArgumentException("coordinate out of bounds");
+		
+		return new IdentityCoordinateSpace(numDimensions() - 1);
+	}
 }

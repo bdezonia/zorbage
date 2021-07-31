@@ -102,4 +102,22 @@ public class LinearNdCoordinateSpace
 	public BigDecimal getOffset(int axis) {
 		return offsets[axis];
 	}
+	
+	public LinearNdCoordinateSpace reduce(int coordToDrop) {
+
+		if (coordToDrop < 0 || coordToDrop >= numDimensions())
+			throw new IllegalArgumentException("coordinate out of bounds");
+		
+		BigDecimal[] scales = new BigDecimal[numDimensions()-1];
+		BigDecimal[] offsets = new BigDecimal[numDimensions()-1];
+		int count = 0;
+		for (int i = 0; i < numDimensions(); i++) {
+			if (i == coordToDrop) continue;
+			scales[count] = getScale(i);
+			offsets[count] = getOffset(i);
+			count++;
+		}
+		
+		return new LinearNdCoordinateSpace(scales, offsets);
+	}
 }

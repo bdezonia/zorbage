@@ -31,6 +31,10 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.coordinates.Affine3dCoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.IdentityCoordinateSpace;
+import nom.bdezonia.zorbage.coordinates.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -120,7 +124,34 @@ public class MakeColorDatasource {
 			newData.set(idx1, compositeVal);
 		}
 
-		// TODO: copy metadata
+		CoordinateSpace coords = inputImage.getCoordinateSpace();
+		
+		if (coords != null) {
+			if (coords instanceof LinearNdCoordinateSpace) {
+				LinearNdCoordinateSpace linSpace = (LinearNdCoordinateSpace) coords;
+				newData.setCoordinateSpace(linSpace.reduce(channelDimension));
+			}
+			if (coords instanceof Affine3dCoordinateSpace) {
+				Affine3dCoordinateSpace affSpace = (Affine3dCoordinateSpace) coords;
+				newData.setCoordinateSpace(affSpace.reduce(channelDimension));
+			}
+			if (coords instanceof IdentityCoordinateSpace) {
+				IdentityCoordinateSpace identitySpace = (IdentityCoordinateSpace) coords;
+				newData.setCoordinateSpace(identitySpace.reduce(channelDimension));
+			}
+		}
+		
+		newData.setName("Color conversion of "+inputImage.getName());
+		newData.setSource(inputImage.getSource());
+		newData.setValueType(inputImage.getValueType());
+		newData.setValueUnit(inputImage.getValueUnit());
+		int count = 0;
+		for (int i = 0; i < inputImage.numDimensions(); i++) {
+			if (i == channelDimension) continue;
+			newData.setAxisType(count, inputImage.getAxisType(i));
+			newData.setAxisUnit(count, inputImage.getAxisUnit(i));
+			count++;
+		}
 		
 		return newData;
 	}
