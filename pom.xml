@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.bdezonia</groupId>
   <artifactId>zorbage</artifactId>
-  <version>1.9.5</version>
+  <version>1.9.6-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Zorbage</name>
   <description>Algebraic data types and algorithms for use in numeric processing</description>
@@ -15,7 +15,7 @@
 
   <licenses>
     <license>
-      <name>BSD-3 clause</name>
+      <name>BSD-3-Clause</name>
       <distribution>repo</distribution>
     </license>
   </licenses>
