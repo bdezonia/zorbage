@@ -88,4 +88,12 @@ public interface CoordinateSpace
 	 * @param output The output point that contains the coordinates after projection
 	 */
 	void project(IntegerIndex coord, BigDecimal[] output);
+	
+	/**
+	 * Set the decimal places of accuracy the coordinate transformation calculations
+	 * will work in.
+	 * 
+	 * @param decimalPlaces
+	 */
+	void setPrecision(int decimalPlaces);
 }

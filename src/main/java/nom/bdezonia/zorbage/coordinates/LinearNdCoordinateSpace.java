@@ -91,6 +91,7 @@ public class LinearNdCoordinateSpace
 		}
 	}
 
+	@Override
 	public void setPrecision(int precision) {
 		this.context = new MathContext(precision);
 	}

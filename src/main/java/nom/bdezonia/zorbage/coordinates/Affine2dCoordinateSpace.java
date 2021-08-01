@@ -119,6 +119,7 @@ public class Affine2dCoordinateSpace
 		}
 	}
 
+	@Override
 	public void setPrecision(int precision) {
 		this.context = new MathContext(precision);
 	}

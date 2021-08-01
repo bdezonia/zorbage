@@ -80,6 +80,11 @@ public class IdentityCoordinateSpace
 			output[i] = project(coord, i);
 		}
 	}
+	
+	@Override
+	public void setPrecision(int decimalPlaces) {
+		// nothing to do here
+	}
 
 	public IdentityCoordinateSpace reduce(int coordToDrop) {
 
