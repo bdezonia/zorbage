@@ -30,8 +30,15 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.InverseTrigonometric;
+import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.NaN;
+import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.RealConstants;
+import nom.bdezonia.zorbage.algebra.Roots;
 import nom.bdezonia.zorbage.algebra.SetComplex;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
 
@@ -64,4 +71,75 @@ public class ComplexPolar {
 		out.setI(tmp);
 	}
 
+	/**
+	 * @param <T>
+	 * @param <U>
+	 * @param realAlg
+	 * @param real
+	 * @param imag
+	 * @param magnitude
+	 */
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Roots<U>, U>
+		void magnitude(T realAlg, U real, U imag, U magnitude)
+	{
+		U sum = realAlg.construct();
+
+		U r2 = realAlg.construct();
+		U i2 = realAlg.construct();
+		
+		// TODO: this is the super naive algo. look at the L2 Norm code
+		// for a better approach to tak in the future.
+		
+		realAlg.multiply().call(real, real, r2);
+		realAlg.multiply().call(imag, imag, i2);
+
+		realAlg.add().call(r2, i2, sum);
+		
+		realAlg.sqrt().call(sum, magnitude);
+	}
+
+	/**
+	 * @param <T>
+	 * @param <U>
+	 * @param realAlg
+	 * @param real
+	 * @param imag
+	 * @param phase
+	 */
+	public static <T extends Algebra<T,U> & Invertible<U> & NaN<U> &
+						InverseTrigonometric<U> & RealConstants<U> &
+						Ordered<U> & Addition<U>,
+					U>
+		void phase(T realAlg, U real, U imag, U phase)
+	{
+		U quotient = realAlg.construct();
+
+		if (realAlg.isZero().call(real)) {
+
+			int signum = realAlg.signum().call(imag);
+			
+			if (signum < 0) {
+
+				U pi = realAlg.construct();
+				
+				realAlg.PI().call(pi);
+				
+				realAlg.negate().call(pi, phase);
+			}
+			else if (signum > 0) {
+
+				realAlg.PI().call(phase);
+			}
+			else { // signum == 0
+				
+				realAlg.nan().call(phase);
+			}
+		}
+		else {
+
+			realAlg.divide().call(imag, real, quotient);
+			
+			realAlg.atan().call(quotient, phase);
+		}
+	}
 }
