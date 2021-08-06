@@ -44,7 +44,9 @@ public class ComplexCartesian {
 	private ComplexCartesian() { }
 
 	/**
-	 * 
+	 * Set the real and imag components of a complex number taking
+	 * the real and imag components as the inputs.
+	 *  
 	 * @param real
 	 * @param imag
 	 */
