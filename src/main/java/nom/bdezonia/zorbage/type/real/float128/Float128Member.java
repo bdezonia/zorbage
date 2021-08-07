@@ -929,11 +929,12 @@ public final class Float128Member
 			// is it between zero and one?
 			
 			else if (tmp.compareTo(BigDecimal.ZERO) > 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
+
 				// it's a number > 0 and < 1
-				BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
-				int exponent = lg2.intValue();
-				BigDecimal lowerBound = TWO.pow(exponent-1, Float128Algebra.CONTEXT);
-				BigDecimal upperBound = TWO.pow(exponent, Float128Algebra.CONTEXT);
+
+				int exponent = 0; // or 1;
+				BigDecimal lowerBound = BigDecimal.ZERO;
+				BigDecimal upperBound = BigDecimal.ONE;
 				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);
 				exponent += 16382;
 				int ehi = (exponent & 0xff00) >> 8;
