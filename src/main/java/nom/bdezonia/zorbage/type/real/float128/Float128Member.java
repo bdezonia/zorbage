@@ -220,42 +220,42 @@ public final class Float128Member
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		setFromLong(v);
+		setV(BigDecimal.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		setFromLong(v);
+		setV(BigDecimal.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		setFromLong(v);
+		setV(BigDecimal.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		setFromLong(v);
+		setV(BigDecimal.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		setFromDouble(v);
+		setV(BigDecimal.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		setFromDouble(v);
+		setV(BigDecimal.valueOf(v));
 	}
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		setFromBigInteger(v);
+		setV(new BigDecimal(v));
 	}
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		setFromBigDecimal(v);
+		setV(v);
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromLong(v);
+			setV(BigDecimal.valueOf(v));
 		}
 	}
 
@@ -302,7 +302,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromLong(v);
+			setV(BigDecimal.valueOf(v));
 		}
 	}
 
@@ -326,7 +326,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromLong(v);
+			setV(BigDecimal.valueOf(v));
 		}
 	}
 
@@ -350,7 +350,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromLong(v);
+			setV(BigDecimal.valueOf(v));
 		}
 	}
 
@@ -374,7 +374,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromDouble(v);
+			setV(BigDecimal.valueOf(v));
 		}
 	}
 
@@ -398,7 +398,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromDouble(v);
+			setV(BigDecimal.valueOf(v));
 		}
 	}
 
@@ -422,7 +422,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromBigInteger(v);
+			setV(new BigDecimal(v));
 		}
 	}
 
@@ -446,7 +446,7 @@ public final class Float128Member
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			setFromBigDecimal(v);
+			setV(v);
 		}
 	}
 
@@ -900,9 +900,11 @@ public final class Float128Member
 	void encode(byte[] arr, int offset) {
 		switch (classification) {
 		case NORMAL:
+			
 			BigInteger ff = BigInteger.valueOf(255);
 			BigDecimal tmp = num.abs();
 			int signBit = (num.signum() < 0) ? 0x80 : 0;
+			
 			if (tmp.compareTo(BigDecimal.ONE) == 0) {
 				arr[offset + 15] = (byte) (signBit | 0x3f);
 				arr[offset + 14] = (byte) 0xff;
@@ -910,7 +912,9 @@ public final class Float128Member
 					arr[offset + i] = 0;
 				}
 			}
+			
 			// is it a subnormal?
+			
 			else if (tmp.compareTo(MIN_SUBNORMAL) >= 0 && tmp.compareTo(MAX_SUBNORMAL) <= 0) {
 				BigInteger fraction = findFraction(MIN_SUBNORMAL, MAX_SUBNORMAL, tmp);
 				arr[offset + 15] = (byte) signBit;
@@ -921,7 +925,9 @@ public final class Float128Member
 					arr[offset + i] = b;
 				}
 			}
+			
 			// is it between zero and one?
+			
 			else if (tmp.compareTo(BigDecimal.ZERO) > 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
 				// it's a number > 0 and < 1
 				BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
@@ -940,10 +946,13 @@ public final class Float128Member
 					arr[offset + i] = b;
 				}
 			}
+			
 			else {
+
 				// it's a number > 1 and <= MAXBOUND
-				BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
-				int exponent = lg2.intValue();
+				
+				BigInteger bi = tmp.toBigInteger();
+				int exponent = bi.bitLength() - 1;
 				BigDecimal lowerBound = TWO.pow(exponent, Float128Algebra.CONTEXT);
 				BigDecimal upperBound = TWO.pow(exponent+1, Float128Algebra.CONTEXT);
 				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);

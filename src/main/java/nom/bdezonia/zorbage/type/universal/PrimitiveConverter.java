@@ -133,10 +133,7 @@ public class PrimitiveConverter {
 	}
 	
 	private static
-		void convertOneValue(
-			IntegerIndex index,
-			PrimitiveConversion from,
-			PrimitiveConversion to)
+		void convertOneValue(IntegerIndex index, PrimitiveConversion from, PrimitiveConversion to)
 	{
 		switch (from.preferredRepresentation()) {
 			case BYTE:
