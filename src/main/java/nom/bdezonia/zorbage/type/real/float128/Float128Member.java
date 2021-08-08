@@ -930,8 +930,9 @@ public final class Float128Member
 			
 			else if (tmp.compareTo(BigDecimal.ZERO) > 0 && tmp.compareTo(BigDecimal.ONE) < 0) {
 				// it's a number > 0 and < 1
-				BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
-				int exponent = lg2.intValue();
+				//BigDecimal lg2 = BigDecimalMath.log2(tmp, Float128Algebra.CONTEXT);
+				//int exponent = lg2.intValue();
+				int exponent = -(BigDecimal.ONE.divide(tmp, Float128Algebra.CONTEXT).toBigInteger().bitLength()-1); 
 				BigDecimal lowerBound = TWO.pow(exponent-1, Float128Algebra.CONTEXT);
 				BigDecimal upperBound = TWO.pow(exponent, Float128Algebra.CONTEXT);
 				BigInteger fraction = findFraction(lowerBound, upperBound, tmp);
