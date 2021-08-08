@@ -339,8 +339,8 @@ public class WindowView<U> implements DimensionCount {
 		
 		DimensionedDataSource<U> origDs = dataView.getDataSource();
 
-		String d0Str = origDs.getAxisType(dataView.axisNumber0()) == null ? ("dim "+dataView.axisNumber0()) : origDs.getAxisType(dataView.axisNumber0());
-		String d1Str = origDs.getAxisType(dataView.axisNumber1()) == null ? ("dim "+dataView.axisNumber1()) : origDs.getAxisType(dataView.axisNumber1());
+		String d0Str = origDs.getAxisType(dataView.axisNumber0());
+		String d1Str = origDs.getAxisType(dataView.axisNumber1());
 		String axes = "["+d0Str+":"+d1Str+"]";
 		String miniTitle = axes + " : slice";
 

@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.algorithm.Find;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
-import nom.bdezonia.zorbage.data.MultiDimWrapper;
+import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.datasource.BigListDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
@@ -121,7 +121,7 @@ class BigData {
 		// wrapped to become a multidimensional data source quite easily.
 		
 		DimensionedDataSource<StringMember> multiDimStructure =
-				new MultiDimWrapper<>(lotsaStrings, new long[] {10,1000,1000,1000});
+				new NdData<>(new long[] {10,1000,1000,1000}, lotsaStrings);
 	}
 	
 	void example3() {

@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.coordinates.IdentityAxisEquation;
 import nom.bdezonia.zorbage.coordinates.StringDefinedAxisEquation;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.data.MultiDimWrapper;
+import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.data.ProcedurePaddedDimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.oob.nd.ConstantNdOOB;
@@ -175,7 +175,7 @@ class MultiDim {
 		long[] dims = new long[] {10, 10, 10};
 		
 		DimensionedDataSource<UnsignedInt10Member> multidim =
-				new MultiDimWrapper<UnsignedInt10Member>(list, dims);
+				new NdData<UnsignedInt10Member>(dims, list);
 	}
 	
 	

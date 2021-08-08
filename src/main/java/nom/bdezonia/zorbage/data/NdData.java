@@ -59,43 +59,56 @@ public class NdData<U>
 	private String valueUnit;
 	private final Map<String,String> metadata;
 
-	// Ideally, every U type could have a getRepresentation() that for bytes would return
-	// "signed 8-bit byte" and for float64 matrix "64-bit float matrix" etc. Then one can
-	// query the U data rep for any DimensionedDataSource. But this violates the goal of
-	// having dumb U's everywhere. Changing this would affect a lot of code and might not
-	// have a big payoff. Think what is best here.
-	
 	/**
+	 * Wrap any 1-d list as a multidimensional n-d data source. The
+	 * number of elements in the list must be compatible with the
+	 * number of elements represented by the passed in dimensions.
 	 * 
 	 * @param dims
 	 * @param data
 	 */
 	public NdData(long[] dims, IndexedDataSource<U> data) {
-		this.name = null;
 		if (dims.length == 0)
 			throw new IllegalArgumentException("dimensioned data source must have 1 or more dimensions");
 		if (LongUtils.numElements(dims) != data.size())
 			throw new IllegalArgumentException("num elements within stated dimensions do not match size of given data source");
 		this.dims = dims;
 		this.data = data;
-		this.space = new IdentityCoordinateSpace(dims.length);
 		this.axisUnits = new String[dims.length];
 		this.axisTypes = new String[dims.length];
-		this.valueType = null;
-		this.valueUnit = null;
 		this.metadata = new HashMap<>();
+
+		setName(null);
+		setSource(null);
+		setValueType(null);
+		setValueUnit(null);
+		setCoordinateSpace(new IdentityCoordinateSpace(dims.length));
+		for (int i = 0; i < dims.length; i++) {
+			setAxisUnit(i, null);
+			setAxisType(i, null);
+		}
 	}
 	
+	/**
+	 * Returns the 1-d list that resides within the core of this
+	 * multidim data set and which stores all its values.
+	 */
 	@Override
 	public IndexedDataSource<U> rawData() {
 		return data;
 	}
 
+	/**
+	 * Returns the number of dimensions in this multidim data set
+	 */
 	@Override
 	public int numDimensions() {
 		return dims.length;
 	}
 
+	/**
+	 * Returns the size of dimension number d in this multidim data set
+	 */
 	@Override
 	public long dimension(int d) {
 		if (d < 0) throw new IllegalArgumentException("negative index exception");
@@ -103,16 +116,29 @@ public class NdData<U>
 		return 1;
 	}
 	
+	/**
+	 * Returns the total number of elements in this data set
+	 */
 	@Override
 	public long numElements() {
 		return data.size();
 	}
 
+	/**
+	 * Return the coordinate space that maps the grid values to numeric values
+	 * (for instance if you wanted to display a coordinate while mousing over
+	 * a set of data).
+	 */
 	@Override
 	public CoordinateSpace getCoordinateSpace() {
 		return space;
 	}
 	
+	/**
+	 * Set the coordinate space that maps the grid values to numeric values
+	 * (for instance if you wanted to display a coordinate while mousing over
+	 * a set of data).
+	 */
 	@Override
 	public void setCoordinateSpace(CoordinateSpace space) {
 		if (space == null)
@@ -122,17 +148,31 @@ public class NdData<U>
 		this.space = space;
 	}
 	
+	/**
+	 * Return a 1-d piped (PIE-PED) "slice" of this data source.
+	 */
 	@Override
 	public IndexedDataSource<U> piped(int dim, IntegerIndex coord) {
 		return new PipedDataSource<U>(this, dim, coord);
 	}
 	
+	/**
+	 * Sets the value associated with this data source's n-d coord space
+	 * as stored in the underlying 1-d list of data. No checking is done
+	 * in regards to the validity of the input coordinate.
+	 */
 	@Override
 	public void set(IntegerIndex index, U value) {
 		long idx = IndexUtils.indexToLong(dims, index);
 		data.set(idx, value);
 	}
 	
+	/**
+	 * Sets the value associated with this data source's n-d coord space
+	 * as stored in the underlying 1-d list of data. The input coordinate
+	 * is checked for validity and if it is out of the bounds of this n-d
+	 * data source then an exception is thrown.
+	 */
 	@Override
 	public void safeSet(IntegerIndex index, U value) {
 		if (oob(index))
@@ -140,12 +180,23 @@ public class NdData<U>
 		set(index, value);
 	}
 	
+	/**
+	 * Gets the value associated with this data source's n-d coord space
+	 * as stored in the underlying 1-d list of data. No checking is done
+	 * in regards to the validity of the input coordinate.
+	 */
 	@Override
 	public void get(IntegerIndex index, U value) {
 		long idx = IndexUtils.indexToLong(dims, index);
 		data.get(idx, value);
 	}
 	
+	/**
+	 * Gets the value associated with this data source's n-d coord space
+	 * as stored in the underlying 1-d list of data. The input coordinate
+	 * is checked for validity and if it is out of the bounds of this n-d
+	 * data source then an exception is thrown.
+	 */
 	@Override
 	public void safeGet(IntegerIndex index, U value) {
 		if (oob(index))
@@ -153,6 +204,10 @@ public class NdData<U>
 		get(index, value);
 	}
 	
+	/**
+	 * Return true if a given index represents coordinates outside this
+	 * data source's bounds.
+	 */
 	@Override
 	public boolean oob(IntegerIndex index) {
 		if (index.numDimensions() != numDimensions())
@@ -164,73 +219,135 @@ public class NdData<U>
 		return false;
 	}
 
+	/**
+	 * Return the storage type of this multidim data set.
+	 */
 	@Override
 	public StorageConstruction storageType() {
 		return data.storageType();
 	}
 	
+	/**
+	 * Return the metadata structure associated with this data.
+	 */
 	@Override
 	public Map<String,String> metadata() {
 		return metadata;
 	}
 
+	/**
+	 * Get the axis unit associated with a dimension/coordinate axis.
+	 * An axis unit might be something like "mm" or "deciliters" etc.
+	 */
 	@Override
 	public String getAxisUnit(int i) {
 		return axisUnits[i];
 	}
 
+	/**
+	 * Get the axis type associated with a dimension/coordinate axis.
+	 * An axis type might be something like "pressure" or "acceleration" etc.
+	 */
 	@Override
 	public String getAxisType(int i) {
 		return axisTypes[i];
 	}
 
+	/**
+	 * Set the axis unit associated with a dimension/coordinate axis.
+	 * An axis unit might be something like "mm" or "deciliters" etc.
+	 */
 	@Override
 	public void setAxisUnit(int i, String unit) {
+		if (unit == null) unit = "unknown";
 		this.axisUnits[i] = unit;
 	}
 
+	/**
+	 * Set the axis type associated with a dimension/coordinate axis.
+	 * An axis type might be something like "pressure" or "acceleration" etc.
+	 */
 	@Override
 	public void setAxisType(int i, String type) {
+		if (type == null || type == "") type = "d" + i;
 		this.axisTypes[i] = type;
 	}
 
+	/**
+	 * Return the value unit for the n-d data source. The value unit is related
+	 * to the value type. So if value type is "temperature" then value unit will
+	 * be something like "degrees C" or "degrees F", or "degrees K".
+	 */
 	@Override
 	public String getValueUnit() {
 		return valueUnit;
 	}
 
+	/**
+	 * Set the value unit for the n-d data source. The value unit is related
+	 * to the value type. So if value type is "temperature" then value unit will
+	 * be something like "degrees C" or "degrees F", or "degrees K".
+	 */
 	@Override
 	public void setValueUnit(String unit) {
+		if (unit == null) unit = "unknown";
 		this.valueUnit = unit;
 	}
 	
+	/**
+	 * Return the name for the n-d data source (something like "Lateral Brain Scan")
+	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Set the name for the n-d data source (something like "Lateral Brain Scan")
+	 */
 	@Override
 	public void setName(String name) {
+		if (name == null) name = "";
 		this.name = name;
 	}
 	
+	/**
+	 * Return the source for the n-d data source. The source might be a filename
+	 * or a URL.
+	 */
 	@Override
 	public String getSource() {
 		return source;
 	}
 	
+	/**
+	 * Set the source for the n-d data source. The source might be a filename
+	 * or a URL.
+	 */
 	@Override
 	public void setSource(String locator) {
+		if (locator == null) locator = "";
 		this.source = locator;
 	}
 
+	/**
+	 * Return the value type for the n-d data source. The value type is typically
+	 * the type of data that is represented by the values (temperature, distance,
+	 * weight, etc.).
+	 */
 	@Override
 	public String getValueType() {
 		return valueType;
 	}
 	
+	/**
+	 * Set the value type for the n-d data source. The value type is typically
+	 * the type of data that is represented by the values (temperature, distance,
+	 * weight, etc.).
+	 */
 	@Override
 	public void setValueType(String type) {
+		if (type == null || type == "") type = "unknown";
 		this.valueType = type;
 	}
 }

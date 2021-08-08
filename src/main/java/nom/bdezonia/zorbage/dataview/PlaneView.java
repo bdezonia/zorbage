@@ -346,8 +346,8 @@ public class PlaneView<U> implements Dimensioned {
 			}
 		}
 
-		String d0Str = data.getAxisType(axisNumber0) == null ? ("dim "+axisNumber0) : data.getAxisType(axisNumber0);
-		String d1Str = data.getAxisType(axisNumber1) == null ? ("dim "+axisNumber1) : data.getAxisType(axisNumber1);
+		String d0Str = data.getAxisType(axisNumber0);
+		String d1Str = data.getAxisType(axisNumber1);
 		String axes = "["+d0Str+":"+d1Str+"]";
 		String miniTitle = axes + "slice";
 		
