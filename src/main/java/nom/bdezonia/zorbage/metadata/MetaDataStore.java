@@ -37,8 +37,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-// TODO - must do all the get() methods. Sigh. This file is tiring.
-
 /**
  * 
  * @author Barry DeZonia
@@ -147,6 +145,69 @@ public class MetaDataStore {
 		if (byteMatrices.containsKey(identifier))
 			entries.add(MetaDataType.BYTE_MATRIX);
 		
+		if (shorts.containsKey(identifier))
+			entries.add(MetaDataType.SHORT);
+		
+		if (shortArrays.containsKey(identifier))
+			entries.add(MetaDataType.SHORT_ARRAY);
+		
+		if (shortMatrices.containsKey(identifier))
+			entries.add(MetaDataType.SHORT_MATRIX);
+		
+		if (ints.containsKey(identifier))
+			entries.add(MetaDataType.INT);
+		
+		if (intArrays.containsKey(identifier))
+			entries.add(MetaDataType.INT_ARRAY);
+		
+		if (intMatrices.containsKey(identifier))
+			entries.add(MetaDataType.INT_MATRIX);
+		
+		if (longs.containsKey(identifier))
+			entries.add(MetaDataType.LONG);
+		
+		if (longArrays.containsKey(identifier))
+			entries.add(MetaDataType.LONG_ARRAY);
+		
+		if (longMatrices.containsKey(identifier))
+			entries.add(MetaDataType.LONG_MATRIX);
+		
+		if (floats.containsKey(identifier))
+			entries.add(MetaDataType.FLOAT);
+		
+		if (floatArrays.containsKey(identifier))
+			entries.add(MetaDataType.FLOAT_ARRAY);
+		
+		if (floatMatrices.containsKey(identifier))
+			entries.add(MetaDataType.FLOAT_MATRIX);
+		
+		if (doubles.containsKey(identifier))
+			entries.add(MetaDataType.DOUBLE);
+		
+		if (doubleArrays.containsKey(identifier))
+			entries.add(MetaDataType.DOUBLE_ARRAY);
+		
+		if (doubleMatrices.containsKey(identifier))
+			entries.add(MetaDataType.DOUBLE_MATRIX);
+		
+		if (bigintegers.containsKey(identifier))
+			entries.add(MetaDataType.BIGINTEGER);
+		
+		if (bigintegerArrays.containsKey(identifier))
+			entries.add(MetaDataType.BIGINTEGER_ARRAY);
+		
+		if (bigintegerMatrices.containsKey(identifier))
+			entries.add(MetaDataType.BIGINTEGER_MATRIX);
+		
+		if (bigdecimals.containsKey(identifier))
+			entries.add(MetaDataType.BIGDECIMAL);
+		
+		if (bigdecimalArrays.containsKey(identifier))
+			entries.add(MetaDataType.BIGDECIMAL_ARRAY);
+		
+		if (bigdecimalMatrices.containsKey(identifier))
+			entries.add(MetaDataType.BIGDECIMAL_MATRIX);
+		
 		if (strings.containsKey(identifier))
 			entries.add(MetaDataType.STRING);
 		
@@ -156,17 +217,165 @@ public class MetaDataStore {
 		if (stringMatrices.containsKey(identifier))
 			entries.add(MetaDataType.STRING_MATRIX);
 		
+		if (chars.containsKey(identifier))
+			entries.add(MetaDataType.CHAR);
+		
+		if (charArrays.containsKey(identifier))
+			entries.add(MetaDataType.CHAR_ARRAY);
+		
+		if (charMatrices.containsKey(identifier))
+			entries.add(MetaDataType.CHAR_MATRIX);
+		
+		if (booleans.containsKey(identifier))
+			entries.add(MetaDataType.BOOLEAN);
+		
+		if (booleanArrays.containsKey(identifier))
+			entries.add(MetaDataType.BOOLEAN_ARRAY);
+		
+		if (booleanMatrices.containsKey(identifier))
+			entries.add(MetaDataType.BOOLEAN_MATRIX);
+		
 		return entries;
 	}
 
 	
-	// TODO finish me!
-	
 	public void merge(MetaDataStore other) {
 
-		System.out.println();
-		System.out.println("THIS MetaDataStore CODE HAS NOT BEEN WRITTEN YET!");
-		System.out.println();
+		for (String key : other.blobs.keySet()) {
+			blobs.put(key, other.blobs.get(key));
+		}
+		
+		for (String key : other.bytes.keySet()) {
+			bytes.put(key, other.bytes.get(key));
+		}
+		
+		for (String key : other.byteArrays.keySet()) {
+			byteArrays.put(key, other.byteArrays.get(key));
+		}
+
+		for (String key : other.byteMatrices.keySet()) {
+			byteMatrices.put(key, other.byteMatrices.get(key));
+		}
+		
+		for (String key : other.shorts.keySet()) {
+			shorts.put(key, other.shorts.get(key));
+		}
+		
+		for (String key : other.shortArrays.keySet()) {
+			shortArrays.put(key, other.shortArrays.get(key));
+		}
+
+		for (String key : other.shortMatrices.keySet()) {
+			shortMatrices.put(key, other.shortMatrices.get(key));
+		}
+		
+		for (String key : other.ints.keySet()) {
+			ints.put(key, other.ints.get(key));
+		}
+		
+		for (String key : other.intArrays.keySet()) {
+			intArrays.put(key, other.intArrays.get(key));
+		}
+
+		for (String key : other.intMatrices.keySet()) {
+			intMatrices.put(key, other.intMatrices.get(key));
+		}
+		
+		for (String key : other.longs.keySet()) {
+			longs.put(key, other.longs.get(key));
+		}
+		
+		for (String key : other.longArrays.keySet()) {
+			longArrays.put(key, other.longArrays.get(key));
+		}
+
+		for (String key : other.longMatrices.keySet()) {
+			longMatrices.put(key, other.longMatrices.get(key));
+		}
+		
+		for (String key : other.floats.keySet()) {
+			floats.put(key, other.floats.get(key));
+		}
+		
+		for (String key : other.floatArrays.keySet()) {
+			floatArrays.put(key, other.floatArrays.get(key));
+		}
+
+		for (String key : other.floatMatrices.keySet()) {
+			floatMatrices.put(key, other.floatMatrices.get(key));
+		}
+		
+		for (String key : other.doubles.keySet()) {
+			doubles.put(key, other.doubles.get(key));
+		}
+		
+		for (String key : other.doubleArrays.keySet()) {
+			doubleArrays.put(key, other.doubleArrays.get(key));
+		}
+
+		for (String key : other.doubleMatrices.keySet()) {
+			doubleMatrices.put(key, other.doubleMatrices.get(key));
+		}
+		
+		for (String key : other.bigintegers.keySet()) {
+			bigintegers.put(key, other.bigintegers.get(key));
+		}
+		
+		for (String key : other.bigintegerArrays.keySet()) {
+			bigintegerArrays.put(key, other.bigintegerArrays.get(key));
+		}
+
+		for (String key : other.bigintegerMatrices.keySet()) {
+			bigintegerMatrices.put(key, other.bigintegerMatrices.get(key));
+		}
+		
+		for (String key : other.bigdecimals.keySet()) {
+			bigdecimals.put(key, other.bigdecimals.get(key));
+		}
+		
+		for (String key : other.bigdecimalArrays.keySet()) {
+			bigdecimalArrays.put(key, other.bigdecimalArrays.get(key));
+		}
+
+		for (String key : other.bigdecimalMatrices.keySet()) {
+			bigdecimalMatrices.put(key, other.bigdecimalMatrices.get(key));
+		}
+		
+		for (String key : other.strings.keySet()) {
+			strings.put(key, other.strings.get(key));
+		}
+		
+		for (String key : other.stringArrays.keySet()) {
+			stringArrays.put(key, other.stringArrays.get(key));
+		}
+
+		for (String key : other.stringMatrices.keySet()) {
+			stringMatrices.put(key, other.stringMatrices.get(key));
+		}
+		
+		for (String key : other.chars.keySet()) {
+			chars.put(key, other.chars.get(key));
+		}
+		
+		for (String key : other.charArrays.keySet()) {
+			charArrays.put(key, other.charArrays.get(key));
+		}
+
+		for (String key : other.charMatrices.keySet()) {
+			charMatrices.put(key, other.charMatrices.get(key));
+		}
+		
+		for (String key : other.booleans.keySet()) {
+			booleans.put(key, other.booleans.get(key));
+		}
+		
+		for (String key : other.booleanArrays.keySet()) {
+			booleanArrays.put(key, other.booleanArrays.get(key));
+		}
+
+		for (String key : other.booleanMatrices.keySet()) {
+			booleanMatrices.put(key, other.booleanMatrices.get(key));
+		}
 	}
 	
 	// TODO finish me!
@@ -177,6 +386,8 @@ public class MetaDataStore {
 		
 		return null;
 	}
+
+	// TODO - must do all the get() methods. Sigh. This file is tiring.
 	
 	/**
 	 * Put a blob into the MetaDataStore.
