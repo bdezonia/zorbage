@@ -32,13 +32,12 @@ package nom.bdezonia.zorbage.data;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
-import java.util.Map;
-
 import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.algebra.StorageType;
 import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
+import nom.bdezonia.zorbage.metadata.MetaDataStore;
 
 /**
  * 
@@ -153,5 +152,5 @@ public interface DimensionedDataSource<U>
 	/**
 	 * Provide read/write access to further metadata of the data source
 	 */
-	Map<String,String> metadata();
+	MetaDataStore metadata();
 }

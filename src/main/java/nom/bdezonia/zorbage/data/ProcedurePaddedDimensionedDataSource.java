@@ -33,12 +33,11 @@ package nom.bdezonia.zorbage.data;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
-import java.util.Map;
-
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.metadata.MetaDataStore;
 
 /**
  * 
@@ -139,7 +138,7 @@ public class ProcedurePaddedDimensionedDataSource<T extends Algebra<T,U>,U>
 	}
 	
 	@Override
-	public Map<String, String> metadata() {
+	public MetaDataStore metadata() {
 		return dd.metadata();
 	}
 

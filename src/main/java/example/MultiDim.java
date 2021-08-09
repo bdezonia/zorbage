@@ -134,7 +134,7 @@ class MultiDim {
 		data.setValueUnit("degrees C");
 		data.setAxisType(0, "distance");
 		data.setAxisUnit(0, "meter");
-		data.metadata().put("data creator", "Barry DeZonia");
+		data.metadata().putString("data creator", "Barry DeZonia");
 		
 		// Finally let's visit the get()/set() vs. getSafe()/setSafe() discussion from
 		// before. Multi dim data can be padded with a strategy for producing values

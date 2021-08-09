@@ -30,15 +30,13 @@
  */
 package nom.bdezonia.zorbage.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import nom.bdezonia.zorbage.misc.LongUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.coordinates.CoordinateSpace;
 import nom.bdezonia.zorbage.coordinates.IdentityCoordinateSpace;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.metadata.MetaDataStore;
 
 /**
  * 
@@ -57,7 +55,7 @@ public class NdData<U>
 	private final String[] axisTypes;
 	private String valueType;
 	private String valueUnit;
-	private final Map<String,String> metadata;
+	private final MetaDataStore metadata;
 
 	/**
 	 * Wrap any 1-d list as a multidimensional n-d data source. The
@@ -76,7 +74,7 @@ public class NdData<U>
 		this.data = data;
 		this.axisUnits = new String[dims.length];
 		this.axisTypes = new String[dims.length];
-		this.metadata = new HashMap<>();
+		this.metadata = new MetaDataStore();
 
 		setName(null);
 		setSource(null);
@@ -231,7 +229,7 @@ public class NdData<U>
 	 * Return the metadata structure associated with this data.
 	 */
 	@Override
-	public Map<String,String> metadata() {
+	public MetaDataStore metadata() {
 		return metadata;
 	}
 
