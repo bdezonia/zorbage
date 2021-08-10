@@ -451,8 +451,6 @@ public class MetaDataStore {
 		return new ArrayList<>(new HashSet<>(keys));
 	}
 
-	// TODO - must do all the get() methods. Sigh. This file is tiring.
-	
 	/**
 	 * Put a blob into the MetaDataStore.
 	 * 
@@ -462,6 +460,17 @@ public class MetaDataStore {
 	public void putBlob(String identifier, Object value) {
 		
 		blobs.put(identifier, value);
+	}
+
+	/**
+	 * Get a blob from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Object getBlob(String identifier) {
+		
+		return blobs.get(identifier);
 	}
 	
 	/**
@@ -473,6 +482,17 @@ public class MetaDataStore {
 	public void putByte(String identifier, byte value) {
 		
 		bytes.put(identifier, value);
+	}
+
+	/**
+	 * Get a byte from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Byte getByte(String identifier) {
+		
+		return bytes.get(identifier);
 	}
 	
 	/**
@@ -487,6 +507,17 @@ public class MetaDataStore {
 	}
 	
 	/**
+	 * Get a byte array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public byte[] getByteArray(String identifier) {
+		
+		return byteArrays.get(identifier);
+	}
+
+	/**
 	 * Put a byte matrix into the MetaDataStore.
 	 * 
 	 * @param identifier
@@ -495,6 +526,17 @@ public class MetaDataStore {
 	public void putByteMatrix(String identifier, byte[][] value) {
 		
 		byteMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a byte matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public byte[][] getByteMatrix(String identifier) {
+		
+		return byteMatrices.get(identifier);
 	}
 	
 	/**
@@ -506,6 +548,17 @@ public class MetaDataStore {
 	public void putShort(String identifier, short value) {
 		
 		shorts.put(identifier, value);
+	}
+
+	/**
+	 * Get a short from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Short getShort(String identifier) {
+		
+		return shorts.get(identifier);
 	}
 	
 	/**
@@ -520,6 +573,17 @@ public class MetaDataStore {
 	}
 	
 	/**
+	 * Get a short array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public short[] getShortArray(String identifier) {
+		
+		return shortArrays.get(identifier);
+	}
+
+	/**
 	 * Put a short matrix into the MetaDataStore.
 	 * 
 	 * @param identifier
@@ -528,6 +592,17 @@ public class MetaDataStore {
 	public void putShortMatrix(String identifier, short[][] value) {
 		
 		shortMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a short matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public short[][] getShortMatrix(String identifier) {
+		
+		return shortMatrices.get(identifier);
 	}
 	
 	/**
@@ -540,6 +615,17 @@ public class MetaDataStore {
 		
 		ints.put(identifier, value);
 	}
+
+	/**
+	 * Get an int from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Integer getInt(String identifier) {
+		
+		return ints.get(identifier);
+	}
 	
 	/**
 	 * Put an int array into the MetaDataStore.
@@ -550,6 +636,17 @@ public class MetaDataStore {
 	public void putIntArray(String identifier, int[] value) {
 		
 		intArrays.put(identifier, value);
+	}
+
+	/**
+	 * Get an int array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public int[] getIntArray(String identifier) {
+		
+		return intArrays.get(identifier);
 	}
 	
 	/**
@@ -562,6 +659,17 @@ public class MetaDataStore {
 		
 		intMatrices.put(identifier, value);
 	}
+
+	/**
+	 * Get an int matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public int[][] getIntMatrix(String identifier) {
+		
+		return intMatrices.get(identifier);
+	}
 	
 	/**
 	 * Put a long into the MetaDataStore.
@@ -572,6 +680,17 @@ public class MetaDataStore {
 	public void putLong(String identifier, long value) {
 		
 		longs.put(identifier, value);
+	}
+
+	/**
+	 * Get a long from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Long getLong(String identifier) {
+		
+		return longs.get(identifier);
 	}
 	
 	/**
@@ -584,6 +703,17 @@ public class MetaDataStore {
 		
 		longArrays.put(identifier, value);
 	}
+
+	/**
+	 * Get a long array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public long[] getLongArray(String identifier) {
+		
+		return longArrays.get(identifier);
+	}
 	
 	/**
 	 * Put a long matrix into the MetaDataStore.
@@ -594,6 +724,17 @@ public class MetaDataStore {
 	public void putLongMatrix(String identifier, long[][] value) {
 		
 		longMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a long matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public long[][] getLongMatrix(String identifier) {
+		
+		return longMatrices.get(identifier);
 	}
 	
 	/**
@@ -606,6 +747,17 @@ public class MetaDataStore {
 		
 		floats.put(identifier, value);
 	}
+
+	/**
+	 * Get a float from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Float getFloat(String identifier) {
+		
+		return floats.get(identifier);
+	}
 	
 	/**
 	 * Put a float array into the MetaDataStore.
@@ -616,6 +768,17 @@ public class MetaDataStore {
 	public void putFloatArray(String identifier, float[] value) {
 		
 		floatArrays.put(identifier, value);
+	}
+
+	/**
+	 * Get a float array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public float[] getFloatArray(String identifier) {
+		
+		return floatArrays.get(identifier);
 	}
 	
 	/**
@@ -628,6 +791,17 @@ public class MetaDataStore {
 		
 		floatMatrices.put(identifier, value);
 	}
+
+	/**
+	 * Get a float matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public float[][] getFloatMatrix(String identifier) {
+		
+		return floatMatrices.get(identifier);
+	}
 	
 	/**
 	 * Put a double into the MetaDataStore.
@@ -638,6 +812,17 @@ public class MetaDataStore {
 	public void putDouble(String identifier, double value) {
 		
 		doubles.put(identifier, value);
+	}
+
+	/**
+	 * Get a double from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Double getDouble(String identifier) {
+		
+		return doubles.get(identifier);
 	}
 	
 	/**
@@ -650,6 +835,17 @@ public class MetaDataStore {
 		
 		doubleArrays.put(identifier, value);
 	}
+
+	/**
+	 * Get a double array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public double[] getDoubleArray(String identifier) {
+		
+		return doubleArrays.get(identifier);
+	}
 	
 	/**
 	 * Put a double matrix into the MetaDataStore.
@@ -660,6 +856,17 @@ public class MetaDataStore {
 	public void putDoubleMatrix(String identifier, double[][] value) {
 		
 		doubleMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a double matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public double[][] getDoubleMatrix(String identifier) {
+		
+		return doubleMatrices.get(identifier);
 	}
 	
 	/**
@@ -672,6 +879,17 @@ public class MetaDataStore {
 		
 		bigintegers.put(identifier, value);
 	}
+
+	/**
+	 * Get a BigInteger from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public BigInteger getBigInteger(String identifier) {
+		
+		return bigintegers.get(identifier);
+	}
 	
 	/**
 	 * Put a BigInteger array into the MetaDataStore.
@@ -683,7 +901,18 @@ public class MetaDataStore {
 		
 		bigintegerArrays.put(identifier, value);
 	}
-	
+
+	/**
+	 * Get a BigInteger array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public BigInteger[] getBigIntegerArray(String identifier) {
+		
+		return bigintegerArrays.get(identifier);
+	}
+
 	/**
 	 * Put a BigInteger matrix into the MetaDataStore.
 	 * 
@@ -694,9 +923,20 @@ public class MetaDataStore {
 		
 		bigintegerMatrices.put(identifier, value);
 	}
+
+	/**
+	 * Get a BigInteger matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public BigInteger[][] getBigIntegerMatrix(String identifier) {
+		
+		return bigintegerMatrices.get(identifier);
+	}
 	
 	/**
-	 * Put a BigInteger into the MetaDataStore.
+	 * Put a BigDecimal into the MetaDataStore.
 	 * 
 	 * @param identifier
 	 * @param value
@@ -704,6 +944,17 @@ public class MetaDataStore {
 	public void putBigDecimal(String identifier, BigDecimal value) {
 		
 		bigdecimals.put(identifier, value);
+	}
+
+	/**
+	 * Get a BigDecimal from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public BigDecimal getBigDecimal(String identifier) {
+		
+		return bigdecimals.get(identifier);
 	}
 	
 	/**
@@ -715,6 +966,17 @@ public class MetaDataStore {
 	public void putBigDecimalArray(String identifier, BigDecimal[] value) {
 		
 		bigdecimalArrays.put(identifier, value);
+	}
+
+	/**
+	 * Get a BigDecimalArray from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public BigDecimal[] getBigDecimalArray(String identifier) {
+		
+		return bigdecimalArrays.get(identifier);
 	}
 	
 	/**
@@ -729,6 +991,17 @@ public class MetaDataStore {
 	}
 	
 	/**
+	 * Get a BigDecimal matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public BigDecimal[][] getBigDecimalMatrix(String identifier) {
+		
+		return bigdecimalMatrices.get(identifier);
+	}
+	
+	/**
 	 * Put a String into the MetaDataStore.
 	 * 
 	 * @param identifier
@@ -737,6 +1010,17 @@ public class MetaDataStore {
 	public void putString(String identifier, String value) {
 		
 		strings.put(identifier, value);
+	}
+
+	/**
+	 * Get a String from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public String getString(String identifier) {
+		
+		return strings.get(identifier);
 	}
 	
 	/**
@@ -749,6 +1033,17 @@ public class MetaDataStore {
 		
 		stringArrays.put(identifier, value);
 	}
+
+	/**
+	 * Get a String array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public String[] getStringArray(String identifier) {
+		
+		return stringArrays.get(identifier);
+	}
 	
 	/**
 	 * Put a String matrix into the MetaDataStore.
@@ -759,6 +1054,17 @@ public class MetaDataStore {
 	public void putStringMatrix(String identifier, String[][] value) {
 		
 		stringMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a String matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public String[][] getStringMatrix(String identifier) {
+		
+		return stringMatrices.get(identifier);
 	}
 	
 	/**
@@ -773,6 +1079,17 @@ public class MetaDataStore {
 	}
 	
 	/**
+	 * Get a char from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Character getCharacter(String identifier) {
+		
+		return chars.get(identifier);
+	}
+	
+	/**
 	 * Put a char array into the MetaDataStore.
 	 * 
 	 * @param identifier
@@ -781,6 +1098,17 @@ public class MetaDataStore {
 	public void putCharArray(String identifier, char[] value) {
 		
 		charArrays.put(identifier, value);
+	}
+
+	/**
+	 * Get a char array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public char[] getCharArray(String identifier) {
+		
+		return charArrays.get(identifier);
 	}
 	
 	/**
@@ -792,6 +1120,17 @@ public class MetaDataStore {
 	public void putCharMatrix(String identifier, char[][] value) {
 		
 		charMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a char matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public char[][] getCharMatrix(String identifier) {
+		
+		return charMatrices.get(identifier);
 	}
 	
 	/**
@@ -806,6 +1145,17 @@ public class MetaDataStore {
 	}
 	
 	/**
+	 * Get a boolean from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public Boolean getBoolean(String identifier) {
+		
+		return booleans.get(identifier);
+	}
+	
+	/**
 	 * Put a boolean array into the MetaDataStore.
 	 * 
 	 * @param identifier
@@ -814,6 +1164,17 @@ public class MetaDataStore {
 	public void putBooleanArray(String identifier, boolean[] value) {
 		
 		booleanArrays.put(identifier, value);
+	}
+
+	/**
+	 * Get a boolean array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public boolean[] getBoolenArray(String identifier) {
+		
+		return booleanArrays.get(identifier);
 	}
 	
 	/**
@@ -825,5 +1186,16 @@ public class MetaDataStore {
 	public void putBooleanMatrix(String identifier, boolean[][] value) {
 		
 		booleanMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a boolean matrix from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public boolean[][] getBooleanMatrix(String identifier) {
+		
+		return booleanMatrices.get(identifier);
 	}
 }
