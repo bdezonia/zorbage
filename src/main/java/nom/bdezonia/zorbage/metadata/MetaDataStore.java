@@ -1084,7 +1084,7 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public Character getCharacter(String identifier) {
+	public Character getChar(String identifier) {
 		
 		return chars.get(identifier);
 	}
@@ -1172,7 +1172,7 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public boolean[] getBoolenArray(String identifier) {
+	public boolean[] getBooleanArray(String identifier) {
 		
 		return booleanArrays.get(identifier);
 	}
