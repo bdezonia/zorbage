@@ -32,7 +32,9 @@ package nom.bdezonia.zorbage.metadata;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -129,7 +131,7 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @return
 	 */
-	public List<MetaDataType> howPresent(String identifier) {
+	public List<MetaDataType> keyTypes(String identifier) {
 
 		List<MetaDataType> entries = new LinkedList<>();
 		
@@ -238,7 +240,11 @@ public class MetaDataStore {
 		return entries;
 	}
 
-	
+	/**
+	 * Add to self all the contents of another MetaDataStore.
+	 * Existing values in self are overwritten if the two
+	 * store share a key with the same type. 
+	 */
 	public void merge(MetaDataStore other) {
 
 		for (String key : other.blobs.keySet()) {
@@ -377,14 +383,72 @@ public class MetaDataStore {
 			booleanMatrices.put(key, other.booleanMatrices.get(key));
 		}
 	}
-	
-	// TODO finish me!
-	
+
+	/**
+	 * Get a summary of all stored fields and their various types. Or can
+	 * lookup a key and find all the types of data stored under that key.
+	 * One can then choose which type of data they want to retrieve using
+	 * the key.  
+	 */
 	public Map<String, List<MetaDataType>> keysPresent() {
 		
-		// get a summary of all stored fields and their various types
+		Map<String, List<MetaDataType>> keysPres =
+				new HashMap<String, List<MetaDataType>>();
 		
-		return null;
+		List<String> keys = keys();
+
+		for (String key : keys) {
+			keysPres.put(key, keyTypes(key));
+		}
+		
+		return keysPres;
+	}
+
+	/**
+	 * Return the list of all the keys in the MetaDataStore.
+	 */
+	public List<String> keys() {
+
+		List<String> keys = new ArrayList<>();
+		
+		keys.addAll(blobs.keySet());
+		keys.addAll(bytes.keySet());
+		keys.addAll(byteArrays.keySet());
+		keys.addAll(byteMatrices.keySet());
+		keys.addAll(shorts.keySet());
+		keys.addAll(shortArrays.keySet());
+		keys.addAll(shortMatrices.keySet());
+		keys.addAll(ints.keySet());
+		keys.addAll(intArrays.keySet());
+		keys.addAll(intMatrices.keySet());
+		keys.addAll(longs.keySet());
+		keys.addAll(longArrays.keySet());
+		keys.addAll(longMatrices.keySet());
+		keys.addAll(floats.keySet());
+		keys.addAll(floatArrays.keySet());
+		keys.addAll(floatMatrices.keySet());
+		keys.addAll(doubles.keySet());
+		keys.addAll(doubleArrays.keySet());
+		keys.addAll(doubleMatrices.keySet());
+		keys.addAll(bigintegers.keySet());
+		keys.addAll(bigintegerArrays.keySet());
+		keys.addAll(bigintegerMatrices.keySet());
+		keys.addAll(bigdecimals.keySet());
+		keys.addAll(bigdecimalArrays.keySet());
+		keys.addAll(bigdecimalMatrices.keySet());
+		keys.addAll(strings.keySet());
+		keys.addAll(stringArrays.keySet());
+		keys.addAll(stringMatrices.keySet());
+		keys.addAll(chars.keySet());
+		keys.addAll(charArrays.keySet());
+		keys.addAll(charMatrices.keySet());
+		keys.addAll(booleans.keySet());
+		keys.addAll(booleanArrays.keySet());
+		keys.addAll(booleanMatrices.keySet());
+
+		// remove the duplicates and return result
+		
+		return new ArrayList<>(new HashSet<>(keys));
 	}
 
 	// TODO - must do all the get() methods. Sigh. This file is tiring.
