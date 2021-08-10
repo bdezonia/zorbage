@@ -97,37 +97,37 @@ public class PlaneView<U> implements Dimensioned {
 
 		switch (numD) {
 		case 1:
-			accessor = new Accessor1d<U>(data);
+			accessor = new Accessor1d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 2:
 			accessor = new Accessor2d<U>(data);
 			break;
 		case 3:
-			accessor = new Accessor3d<U>(data);
+			accessor = new Accessor3d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 4:
-			accessor = new Accessor4d<U>(data);
+			accessor = new Accessor4d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 5:
-			accessor = new Accessor5d<U>(data);
+			accessor = new Accessor5d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 6:
-			accessor = new Accessor6d<U>(data);
+			accessor = new Accessor6d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 7:
-			accessor = new Accessor7d<U>(data);
+			accessor = new Accessor7d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 8:
-			accessor = new Accessor8d<U>(data);
+			accessor = new Accessor8d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 9:
-			accessor = new Accessor9d<U>(data);
+			accessor = new Accessor9d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 10:
-			accessor = new Accessor10d<U>(data);
+			accessor = new Accessor10d<U>(data, axisNumber0, axisNumber1);
 			break;
 		case 11:
-			accessor = new Accessor11d<U>(data);
+			accessor = new Accessor11d<U>(data, axisNumber0, axisNumber1);
 			break;
 		default:
 			throw new IllegalArgumentException(
@@ -387,7 +387,7 @@ public class PlaneView<U> implements Dimensioned {
 	//   PRIVATE DECLARATIONS FOLLOW
 	// ----------------------------------------------------------------------
 	
-	// TODO expose these publicly? Will they be useful to someone?
+	// TODO expose these accessors publicly? Will they be useful to someone?
 	
 	private boolean outOfBounds(long i0, long i1) {
 		if (i0 < 0 || i0 >= axisNumber0Size) return true;
@@ -410,6 +410,7 @@ public class PlaneView<U> implements Dimensioned {
 
 	private abstract class AccessorBase {
 		
+		protected PositionMapper posMapper;
 		private long[] extraDimPositions;
 		
 		AccessorBase(int numD) {
@@ -433,6 +434,10 @@ public class PlaneView<U> implements Dimensioned {
 				throw new IllegalArgumentException("illegal extra dim position");
 			return extraDimPositions[i];
 		}
+		
+		void setPositionMapper(PositionMapper mapper) {
+			this.posMapper = mapper;
+		}
 	}
 	
 	private class Accessor1d<X>
@@ -441,7 +446,7 @@ public class PlaneView<U> implements Dimensioned {
 	{
 		private final OneDView<X> view;
 
-		Accessor1d(DimensionedDataSource<X> data) {
+		Accessor1d(DimensionedDataSource<X> data, int axis0, int axis1) {
 			super(data.numDimensions());
 			view = new OneDView<>(data);
 		}
@@ -482,6 +487,11 @@ public class PlaneView<U> implements Dimensioned {
 	// spot checked that i* and u* are correctly ordered
 	// spot checked that u* are completely specified
 	
+	
+	private interface PositionMapper {
+		void setPosition(long i0, long i1);
+	}
+	
 	private class Accessor3d<X>
 		extends AccessorBase
 		implements Accessor<X>
@@ -489,40 +499,58 @@ public class PlaneView<U> implements Dimensioned {
 		private final ThreeDView<X> view;
 		private long u0, u1, u2;
 	
-		Accessor3d(DimensionedDataSource<X> data) {
+		Accessor3d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new ThreeDView<>(data);
-		}
-
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
+
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
+
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) {
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
+
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+					}
+				});
 			}
 			else
 				throw new IllegalArgumentException("missing coordinate combo for 3d "+axisNumber0+" "+axisNumber1);
 		}
-		
+
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, value);
 		}
 	}
@@ -537,61 +565,95 @@ public class PlaneView<U> implements Dimensioned {
 		private final FourDView<X> view;
 		private long u0, u1, u2, u3;
 	
-		Accessor4d(DimensionedDataSource<X> data) {
+		Accessor4d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new FourDView<>(data);
-		}
-
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+					}
+					
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+					}
+				});
 			}
 			else
 				throw new IllegalArgumentException("missing coordinate combo for 4d "+axisNumber0+" "+axisNumber1);
 		}
-		
+
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, value);
 		}
 	}
@@ -606,95 +668,152 @@ public class PlaneView<U> implements Dimensioned {
 		private final FiveDView<X> view;
 		private long u0, u1, u2, u3, u4;
 	
-		Accessor5d(DimensionedDataSource<X> data) {
+		Accessor5d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new FiveDView<>(data);
-		}
-
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+					}
+				});
 			}
 			else
 				throw new IllegalArgumentException("missing coordinate combo for 5d "+axisNumber0+" "+axisNumber1);
 		}
-		
+
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, value);
 		}
 	}
@@ -709,145 +828,232 @@ public class PlaneView<U> implements Dimensioned {
 		private final SixDView<X> view;
 		private long u0, u1, u2, u3, u4, u5;
 	
-		Accessor6d(DimensionedDataSource<X> data) {
+		Accessor6d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new SixDView<>(data);
-		}
-
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
-				u5 = getPositionValue(3);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+						u5 = getPositionValue(3);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = i1;
+					}
+				});
 			}
 			else
 				throw new IllegalArgumentException("missing coordinate combo for 6d "+axisNumber0+" "+axisNumber1);
 		}
-		
+
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, u5, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, value);
 		}
 	}
@@ -862,214 +1068,337 @@ public class PlaneView<U> implements Dimensioned {
 		private final SevenDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6;
 	
-		Accessor7d(DimensionedDataSource<X> data) {
+		Accessor7d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new SevenDView<>(data);
-		}
-
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = i1;
-				u6 = getPositionValue(4);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = i1;
+						u6 = getPositionValue(4);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = i1;
+					}
+				});
 			}
 			else
 				throw new IllegalArgumentException("missing coordinate combo for 7d "+axisNumber0+" "+axisNumber1);
 		}
-		
+
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, u5, u6, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, value);
 		}
 	}
@@ -1084,305 +1413,470 @@ public class PlaneView<U> implements Dimensioned {
 		private final EightDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6, u7;
 	
-		Accessor8d(DimensionedDataSource<X> data) {
+		Accessor8d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new EightDView<>(data);
-		}
-
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = i1;
-				u7 = getPositionValue(5);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = i1;
+						u7 = getPositionValue(5);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = i1;
+					}
+				});
 			}
 			else
 				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
 		}
-		
+
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, u5, u6, u7, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, u7, value);
 		}
 	}
@@ -1397,421 +1891,634 @@ public class PlaneView<U> implements Dimensioned {
 		private final NineDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6, u7, u8;
 	
-		Accessor9d(DimensionedDataSource<X> data) {
+		Accessor9d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new NineDView<>(data);
-		}
-	
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 8) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = i1;
-				u8 = getPositionValue(6);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = i1;
+						u8 = getPositionValue(6);
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = getPositionValue(6);
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = getPositionValue(6);
+						u8 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 7 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = i0;
-				u8 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+					u0 = getPositionValue(0);
+					u1 = getPositionValue(1);
+					u2 = getPositionValue(2);
+					u3 = getPositionValue(3);
+					u4 = getPositionValue(4);
+					u5 = getPositionValue(5);
+					u6 = getPositionValue(6);
+					u7 = i0;
+					u8 = i1;
+					}
+				});
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
+				throw new IllegalArgumentException("missing coordinate combo for 9d "+axisNumber0+" "+axisNumber1);
 		}
-		
+	
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, u5, u6, u7, u8, value);
 		}
 	
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, u7, u8, value);
 		}
 	}
@@ -1826,565 +2533,832 @@ public class PlaneView<U> implements Dimensioned {
 		private final TenDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6, u7, u8, u9;
 		
-		Accessor10d(DimensionedDataSource<X> data) {
+		Accessor10d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new TenDView<>(data);
-		}
-		
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 8) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 9) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+					u0 = getPositionValue(0);
+					u1 = getPositionValue(1);
+					u2 = i0;
+					u3 = getPositionValue(2);
+					u4 = getPositionValue(3);
+					u5 = getPositionValue(4);
+					u6 = getPositionValue(5);
+					u7 = getPositionValue(6);
+					u8 = i1;
+					u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 7 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = i0;
-				u8 = i1;
-				u9 = getPositionValue(7);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = i0;
+						u8 = i1;
+						u9 = getPositionValue(7);
+					}
+				});
 			}
 			else if (axisNumber0 == 7 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = i0;
-				u8 = getPositionValue(7);
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = i0;
+						u8 = getPositionValue(7);
+						u9 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 8 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = getPositionValue(7);
-				u8 = i0;
-				u9 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = getPositionValue(7);
+						u8 = i0;
+						u9 = i1;
+					}
+				});
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
+				throw new IllegalArgumentException("missing coordinate combo for 10d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, value);
 		}
 		
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, value);
 		}
 	}
@@ -2399,740 +3373,1067 @@ public class PlaneView<U> implements Dimensioned {
 		private final ElevenDView<X> view;
 		private long u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10;
 		
-		Accessor11d(DimensionedDataSource<X> data) {
+		Accessor11d(DimensionedDataSource<X> data, int axisNumber0, int axisNumber1) {
 			super(data.numDimensions());
 			view = new ElevenDView<>(data);
-		}
-		
-		private void setPos(long i0, long i1) {
 			if (axisNumber0 == 0 && axisNumber1 == 1) {
-				u0 = i0;
-				u1 = i1;
-				u2 = getPositionValue(0);
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = i1;
+						u2 = getPositionValue(0);
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 2) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 3) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 4) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 5) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 6) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 7) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 8) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 9) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 0 && axisNumber1 == 10) { 
-				u0 = i0;
-				u1 = getPositionValue(0);
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = i0;
+						u1 = getPositionValue(0);
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 2) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = i1;
-				u3 = getPositionValue(1);
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = i1;
+						u3 = getPositionValue(1);
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 1 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = i0;
-				u2 = getPositionValue(1);
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = i0;
+						u2 = getPositionValue(1);
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 3) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = i1;
-				u4 = getPositionValue(2);
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = i1;
+						u4 = getPositionValue(2);
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 2 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = i0;
-				u3 = getPositionValue(2);
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = i0;
+						u3 = getPositionValue(2);
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 4) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = i1;
-				u5 = getPositionValue(3);
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = i1;
+						u5 = getPositionValue(3);
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+					u0 = getPositionValue(0);
+					u1 = getPositionValue(1);
+					u2 = getPositionValue(2);
+					u3 = i0;
+					u4 = getPositionValue(3);
+					u5 = getPositionValue(4);
+					u6 = getPositionValue(5);
+					u7 = getPositionValue(6);
+					u8 = getPositionValue(7);
+					u9 = i1;
+					u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 3 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = i0;
-				u4 = getPositionValue(3);
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = i0;
+						u4 = getPositionValue(3);
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 5) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = i1;
-				u6 = getPositionValue(4);
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = i1;
+						u6 = getPositionValue(4);
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 4 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = i0;
-				u5 = getPositionValue(4);
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = i0;
+						u5 = getPositionValue(4);
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 6) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = i1;
-				u7 = getPositionValue(5);
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = i1;
+						u7 = getPositionValue(5);
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 5 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = i0;
-				u6 = getPositionValue(5);
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = i0;
+						u6 = getPositionValue(5);
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 7) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = i1;
-				u8 = getPositionValue(6);
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = i1;
+						u8 = getPositionValue(6);
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = getPositionValue(6);
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = getPositionValue(6);
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 6 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = i0;
-				u7 = getPositionValue(6);
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = i0;
+						u7 = getPositionValue(6);
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 7 && axisNumber1 == 8) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = i0;
-				u8 = i1;
-				u9 = getPositionValue(7);
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = i0;
+						u8 = i1;
+						u9 = getPositionValue(7);
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 7 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = i0;
-				u8 = getPositionValue(7);
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = i0;
+						u8 = getPositionValue(7);
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 7 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = i0;
-				u8 = getPositionValue(7);
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = i0;
+						u8 = getPositionValue(7);
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 8 && axisNumber1 == 9) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = getPositionValue(7);
-				u8 = i0;
-				u9 = i1;
-				u10 = getPositionValue(8);
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = getPositionValue(7);
+						u8 = i0;
+						u9 = i1;
+						u10 = getPositionValue(8);
+					}
+				});
 			}
 			else if (axisNumber0 == 8 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = getPositionValue(7);
-				u8 = i0;
-				u9 = getPositionValue(8);
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = getPositionValue(7);
+						u8 = i0;
+						u9 = getPositionValue(8);
+						u10 = i1;
+					}
+				});
 			}
 			else if (axisNumber0 == 9 && axisNumber1 == 10) { 
-				u0 = getPositionValue(0);
-				u1 = getPositionValue(1);
-				u2 = getPositionValue(2);
-				u3 = getPositionValue(3);
-				u4 = getPositionValue(4);
-				u5 = getPositionValue(5);
-				u6 = getPositionValue(6);
-				u7 = getPositionValue(7);
-				u8 = getPositionValue(8);
-				u9 = i0;
-				u10 = i1;
+				setPositionMapper(new PositionMapper() {
+
+					@Override
+					public void setPosition(long i0, long i1) {
+						u0 = getPositionValue(0);
+						u1 = getPositionValue(1);
+						u2 = getPositionValue(2);
+						u3 = getPositionValue(3);
+						u4 = getPositionValue(4);
+						u5 = getPositionValue(5);
+						u6 = getPositionValue(6);
+						u7 = getPositionValue(7);
+						u8 = getPositionValue(8);
+						u9 = i0;
+						u10 = i1;
+					}
+				});
 			}
 			else
-				throw new IllegalArgumentException("missing coordinate combo for 8d "+axisNumber0+" "+axisNumber1);
+				throw new IllegalArgumentException("missing coordinate combo for 11d "+axisNumber0+" "+axisNumber1);
 		}
 		
 		@Override
 		public void set(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.set(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, value);
 		}
 		
 		@Override
 		public void get(long i0, long i1, X value) {
-			setPos(i0, i1);
+			posMapper.setPosition(i0, i1);
 			view.get(u0, u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, value);
 		}
 	}
