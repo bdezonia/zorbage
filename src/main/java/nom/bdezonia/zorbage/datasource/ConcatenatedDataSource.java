@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.datasource;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
@@ -102,4 +103,53 @@ public class ConcatenatedDataSource<U>
 			return StorageConstruction.MEM_ARRAY;
 		return StorageConstruction.MEM_VIRTUAL;
 	}
+
+	/**
+	 * Make a nice lg2 n hierarchy of concatenated data sources from a list of sources.
+	 * 
+	 * @param <R>
+	 * @param sources
+	 * @return
+	 *
+	 */ 
+	public static <R>
+		IndexedDataSource<R> optimalConcat(List<IndexedDataSource<R>> sources)
+	{
+		if (sources.size() == 0) { 
+			throw new IllegalArgumentException("Cannot concatenate an empty list of data sources");
+		}
+		
+		return concat(sources, 0, sources.size());
+	}
+	
+	private static <R>
+		IndexedDataSource<R> concat(List<IndexedDataSource<R>> sources, int left, int rightPlusOne)
+	{
+		if (left < 0)
+			throw new IllegalArgumentException("concat has error condition 1");
+			
+		if (rightPlusOne > sources.size())
+			throw new IllegalArgumentException("concat has error condition 2");
+	
+		if (left >= rightPlusOne)
+			throw new IllegalArgumentException("concat has error condition 3");
+	
+		if (rightPlusOne - left <= 0)
+			throw new IllegalArgumentException("concat has error condition 4");
+		
+		if (rightPlusOne - left == 1) {
+			return sources.get(left);
+		}
+	
+		else if (rightPlusOne - left == 2) {
+			return new ConcatenatedDataSource<>(sources.get(left), sources.get(left+1));
+		}
+		else {
+			int midPt = left + ((rightPlusOne - left) / 2);
+			IndexedDataSource<R> leftSrc = concat(sources, left, midPt);
+			IndexedDataSource<R> rightSrc = concat(sources, midPt + 1, rightPlusOne);
+			return new ConcatenatedDataSource<>(leftSrc, rightSrc);
+		}
+	}
+
 }
