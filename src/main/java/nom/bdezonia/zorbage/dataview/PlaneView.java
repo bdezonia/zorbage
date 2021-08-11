@@ -97,7 +97,7 @@ public class PlaneView<U> implements Dimensioned {
 
 		switch (numD) {
 		case 1:
-			accessor = new Accessor1d<U>(data, axisNumber0, axisNumber1);
+			accessor = new Accessor1d<U>(data);
 			break;
 		case 2:
 			accessor = new Accessor2d<U>(data);
@@ -446,7 +446,7 @@ public class PlaneView<U> implements Dimensioned {
 	{
 		private final OneDView<X> view;
 
-		Accessor1d(DimensionedDataSource<X> data, int axis0, int axis1) {
+		Accessor1d(DimensionedDataSource<X> data) {
 			super(data.numDimensions());
 			view = new OneDView<>(data);
 		}
