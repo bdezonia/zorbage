@@ -54,7 +54,7 @@ import nom.bdezonia.zorbage.storage.coder.LongCoder;
 public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		implements IndexedDataSource<U>, Allocatable<FileStorageSignedInt64<U>>
 {
-	private static final int BYTE_CHUNK = 4096;
+	private static final int BYTE_CHUNK = FileStorage.INTERNAL_BUFFER_SIZE;
 	private final long numElements;
 	private final U type;
 	private final long[] tmpArray;

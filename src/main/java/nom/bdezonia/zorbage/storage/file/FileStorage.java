@@ -53,6 +53,11 @@ import nom.bdezonia.zorbage.storage.coder.ShortCoder;
  *
  */
 public class FileStorage {
+
+	/**
+	 * A constant used by all the file storage implementations.
+	 */
+	public static int INTERNAL_BUFFER_SIZE = 4096;
 	
 	/**
 	 * Allocate a file based storage structure for storing data

@@ -54,7 +54,7 @@ import nom.bdezonia.zorbage.storage.coder.ShortCoder;
 public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		implements IndexedDataSource<U>, Allocatable<FileStorageSignedInt16<U>>
 {
-	private static final int BYTE_CHUNK = 4096;
+	private static final int BYTE_CHUNK = FileStorage.INTERNAL_BUFFER_SIZE;
 	private final long numElements;
 	private final U type;
 	private final short[] tmpArray;
