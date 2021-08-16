@@ -46,6 +46,17 @@ import nom.bdezonia.zorbage.data.DimensionedStorage;
  * @param <U>
  */
 public class PlaneView<U> implements Dimensioned {
+	
+	// TODO : update this value whenever we add another case (12d, 13d, 14d, etc.) below.
+	//   Adding case could be simplified by writing a program that writes this file with
+	//   dim count <= MAX specified by user. The code right now could easily be machine
+	//   driven.
+	
+	/**
+	 * Test this value to make sure you can use a PlaneView in your code. Any dataset
+	 * with dimensions greater than this value will error out on construction. 
+	 */
+	public static final int MAX_SUPPORTED_DIMS = 11;
 
 	private final int axisNumber0;  // number of our 0th axis in the parent data source
 	private final int axisNumber1;  // number of our 1th axis in the parent data source
