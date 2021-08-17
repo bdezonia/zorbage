@@ -87,16 +87,22 @@ public class Storage {
 			// or others I might be too accepting of
 		}
 		
+		//System.out.println("GAVE UP ON ARRAY STORAGE");
+		
 		// assume it was a list too long problem. try a bigger in ram solution.
 		
 		try {
 			return ExtMemStorage.allocate(type, numElements);
 		}
-		catch (Exception e) {
+		catch (OutOfMemoryError e) {
 			// out of memory
 			// or requested size is larger than any array can hold
 			// or others I might be too accepting of
 		}
+		
+		//System.out.println("GAVE UP ON EXTMEM STORAGE");
+		
+		//System.out.println("TRYING FILE STORAGE");
 		
 		// fall back to a virtual file solution
 		
