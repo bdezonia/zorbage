@@ -86,6 +86,10 @@ public class NdNormalize {
 			}
 		}
 		
+		// TODO: this is really stupid. Instead just pass original rawdata and newdims
+		//   to an n-d data constructor. The rawdata could be shared by two people this
+		//   way if not careful. But it is way way faster!
+		
 		DimensionedDataSource<U> newData =
 			DimensionedStorage.allocate(alg.construct(), newDims);
 		
