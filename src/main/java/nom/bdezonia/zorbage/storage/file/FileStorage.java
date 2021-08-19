@@ -57,7 +57,20 @@ public class FileStorage {
 	/**
 	 * A constant used by all the file storage implementations.
 	 */
-	public static int INTERNAL_BUFFER_SIZE = 1024 * 1024; // originally was 4096;
+	
+	// TODO
+	// Maybe this should be expressed as bytes since types vary in size
+	//   The rage numbers are for numelements. Byte size would be times 4.
+	
+	public static int INTERNAL_BUFFER_SIZE = 4096;
+	
+	// huge mpnrage file load/draw stats based upon buffer sizes here
+	// 2^10 : 1024        : 655000 load, 200000 draw
+	// 2^11 : 2048          643000 load, 186000 draw
+	// 2^12 : 4096        : 570000 load, 173000 draw
+	// 2^13 : 8192          613000 load, 178000 draw
+	// 2^15 : 32768       : 610000 load, 191000 draw
+	// 2^20 : 1024 * 1024 : 640000 load, 189000 draw
 	
 	/**
 	 * Allocate a file based storage structure for storing data
