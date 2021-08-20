@@ -104,13 +104,12 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			this.raf = new RandomAccessFile(file, "rw");
 			this.channel = raf.getChannel();
 			// make a one element buffer
-			this.buffer1 = ByteBuffer.allocate(bytesPerPage);
-			this.buffer2 = ByteBuffer.allocate(bytesPerPage);
+			this.buffer1 = ByteBuffer.allocateDirect(bytesPerPage);
+			this.buffer2 = ByteBuffer.allocateDirect(bytesPerPage);
 			// fill the buffers with zeroes
-			for (int i = 0; i < bytesPerPage; i++) {
-				buffer1.put((byte) 0);
-				buffer2.put((byte) 0);
-			}
+			byte[] zeroes = new byte[bytesPerPage];
+			buffer1.put(zeroes);
+			buffer2.put(zeroes);
 			// write zeroes to the file over and over
 			channel.position(0);
 			for (long i = 0; i <= (numElements / elementsPerPage); i++) {  // <= is intentional here
