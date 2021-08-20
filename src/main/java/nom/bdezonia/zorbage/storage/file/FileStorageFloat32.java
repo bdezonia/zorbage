@@ -103,7 +103,6 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			this.file.deleteOnExit();
 			this.raf = new RandomAccessFile(file, "rw");
 			this.channel = raf.getChannel();
-			// make a one element buffer
 			this.buffer1 = ByteBuffer.allocateDirect(bytesPerPage);
 			this.buffer2 = ByteBuffer.allocateDirect(bytesPerPage);
 			// fill the buffers with zeroes
