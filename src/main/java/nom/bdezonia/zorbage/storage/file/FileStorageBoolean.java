@@ -208,9 +208,10 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 					buffer = buffer2;
 					dirty2 = true;
 				}
-				int idx = (int)(index % elementsPerPage);
-				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.put(idx*elementByteSize + i*1, (byte) (tmpArray[i] ? 1 : 0));
+				int idx = (int) (index % elementsPerPage);
+				int base = idx * elementByteSize;
+				for (int i = 0; i < tmpArray.length; i++, base += 1) {
+					buffer.put(base, (byte) (tmpArray[i] ? 1 : 0));
 				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -258,8 +259,9 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 				}
 				ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
 				int idx = (int) (index % elementsPerPage);
-				for (int i = 0; i < tmpArray.length; i++) {
-					tmpArray[i] = buffer.get(idx*elementByteSize + i*1) == 1;
+				int base = idx * elementByteSize;
+				for (int i = 0; i < tmpArray.length; i++, base += 1) {
+					tmpArray[i] = buffer.get(base) == 1;
 				}
 				value.fromBooleanArray(tmpArray, 0);
 			} catch (IOException e) {

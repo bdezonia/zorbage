@@ -208,9 +208,10 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 					buffer = buffer2;
 					dirty2 = true;
 				}
-				int idx = (int)(index % elementsPerPage);
-				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.putInt(idx*elementByteSize + i*4, tmpArray[i]);
+				int idx = (int) (index % elementsPerPage);
+				int base = idx * elementByteSize;
+				for (int i = 0; i < tmpArray.length; i++, base += 4) {
+					buffer.putInt(base, tmpArray[i]);
 				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -258,8 +259,9 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 				}
 				ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
 				int idx = (int) (index % elementsPerPage);
-				for (int i = 0; i < tmpArray.length; i++) {
-					tmpArray[i] = buffer.getInt(idx*elementByteSize + i*4);
+				int base = idx * elementByteSize;
+				for (int i = 0; i < tmpArray.length; i++, base += 4) {
+					tmpArray[i] = buffer.getInt(base);
 				}
 				value.fromIntArray(tmpArray, 0);
 			} catch (IOException e) {

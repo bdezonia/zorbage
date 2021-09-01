@@ -208,9 +208,10 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 					buffer = buffer2;
 					dirty2 = true;
 				}
-				int idx = (int)(index % elementsPerPage);
-				for (int i = 0; i < tmpArray.length; i++) {
-					buffer.putDouble(idx*elementByteSize + i*8, tmpArray[i]);
+				int idx = (int) (index % elementsPerPage);
+				int base = idx * elementByteSize;
+				for (int i = 0; i < tmpArray.length; i++, base += 8) {
+					buffer.putDouble(base, tmpArray[i]);
 				}
 			} catch (IOException e) {
 				throw new IllegalArgumentException(e.getMessage());
@@ -258,8 +259,9 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 				}
 				ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
 				int idx = (int) (index % elementsPerPage);
-				for (int i = 0; i < tmpArray.length; i++) {
-					tmpArray[i] = buffer.getDouble(idx*elementByteSize + i*8);
+				int base = idx * elementByteSize;
+				for (int i = 0; i < tmpArray.length; i++, base += 8) {
+					tmpArray[i] = buffer.getDouble(base);
 				}
 				value.fromDoubleArray(tmpArray, 0);
 			} catch (IOException e) {
