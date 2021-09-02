@@ -57,7 +57,6 @@ import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 		implements IndexedDataSource<U>, Allocatable<FileStorageSignedInt8<U>>
 {
-	private static final int IDEAL_BUFFER_SIZE = 10000000;
 	private final long numElements;
 	private final U type;
 	private final byte[] tmpArray;
@@ -80,7 +79,7 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 			// overflow happened
 			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
 		}
-		long elementsInPage = IDEAL_BUFFER_SIZE / elementByteSize;
+		long elementsInPage = FileStorage.IDEAL_BUFFER_SIZE / elementByteSize;
 		if (elementsInPage <= 0) {
 			// Emergency: type is bigger than our default max buffer size. Just buffer one.
 			elementsInPage = 1;
