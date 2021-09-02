@@ -87,4 +87,9 @@ public class ArrayStorageChar<U extends CharCoder & Allocatable<U>>
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

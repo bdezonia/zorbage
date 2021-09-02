@@ -122,4 +122,9 @@ public class ExtMemStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

@@ -100,4 +100,9 @@ public class ArrayDataSource<T extends Algebra<T,U>,U> implements IndexedDataSou
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

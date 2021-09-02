@@ -136,5 +136,9 @@ public class JdbcStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

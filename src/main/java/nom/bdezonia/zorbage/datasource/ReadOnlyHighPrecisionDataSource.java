@@ -94,4 +94,8 @@ public class ReadOnlyHighPrecisionDataSource<T extends Algebra<T,U>, U extends H
 		return src.storageType();
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return src.accessWithOneThread();
+	}
 }

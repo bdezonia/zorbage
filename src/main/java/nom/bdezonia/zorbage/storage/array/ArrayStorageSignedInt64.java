@@ -87,4 +87,8 @@ public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

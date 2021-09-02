@@ -134,5 +134,9 @@ public class JdbcStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

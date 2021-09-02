@@ -71,4 +71,8 @@ public class ProcedureDataSource<U> implements IndexedDataSource<U>
 		return Long.MAX_VALUE;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

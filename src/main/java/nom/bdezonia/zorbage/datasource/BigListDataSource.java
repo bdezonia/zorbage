@@ -95,4 +95,9 @@ public class BigListDataSource<T extends Algebra<T,U>, U extends Allocatable<U>>
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

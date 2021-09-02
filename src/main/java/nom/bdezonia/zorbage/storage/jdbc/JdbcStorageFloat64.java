@@ -134,6 +134,9 @@ public class JdbcStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";
 	}
-	
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

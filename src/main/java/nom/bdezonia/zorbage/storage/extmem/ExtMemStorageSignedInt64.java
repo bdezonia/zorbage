@@ -117,4 +117,9 @@ public class ExtMemStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

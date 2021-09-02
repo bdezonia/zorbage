@@ -117,4 +117,9 @@ public class ExtMemStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

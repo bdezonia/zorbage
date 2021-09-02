@@ -120,4 +120,9 @@ public class ExtMemStorageString<U extends StringCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

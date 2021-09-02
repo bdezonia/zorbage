@@ -103,4 +103,9 @@ public class SequencedDataSource<U>
 	public StorageConstruction storageType() {
 		return data.storageType();
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return data.accessWithOneThread();
+	}
 }

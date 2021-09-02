@@ -45,4 +45,5 @@ public interface IndexedDataSource<U>
 	void set(long index, U value);
 	void get(long index, U value);
 	long size();
+	boolean accessWithOneThread();
 }

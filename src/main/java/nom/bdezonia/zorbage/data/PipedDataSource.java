@@ -127,5 +127,12 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 	public StorageConstruction storageType() {
 		return d.storageType();
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		
+		// I think this is correct. d.rawData().access...() instead?
+		
+		return data.accessWithOneThread();
+	}
 }

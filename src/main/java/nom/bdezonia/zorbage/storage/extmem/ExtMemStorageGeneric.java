@@ -121,4 +121,9 @@ public class ExtMemStorageGeneric<T extends Algebra<T,U>,U>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

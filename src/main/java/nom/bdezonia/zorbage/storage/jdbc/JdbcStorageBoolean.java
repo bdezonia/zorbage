@@ -134,5 +134,9 @@ public class JdbcStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";  // given the JDBC type is BIT it's expecting 0's and 1's
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

@@ -88,4 +88,9 @@ public class ArrayStorageString<U extends StringCoder & Allocatable<U>>
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

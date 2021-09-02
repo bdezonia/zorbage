@@ -107,4 +107,9 @@ public class ListDataSource<T extends Algebra<T,U>,U> implements IndexedDataSour
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

@@ -75,4 +75,8 @@ public class ReversedDataSource<U> implements IndexedDataSource<U>{
 		return storage.storageType();
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return storage.accessWithOneThread();
+	}
 }

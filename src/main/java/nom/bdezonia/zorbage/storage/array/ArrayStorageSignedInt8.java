@@ -87,4 +87,8 @@ public class ArrayStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

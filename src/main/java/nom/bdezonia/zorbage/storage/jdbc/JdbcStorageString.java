@@ -134,5 +134,9 @@ public class JdbcStorageString<U extends StringCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "''";  // unlike char we will not use a space here. maybe that is a mistake. 
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

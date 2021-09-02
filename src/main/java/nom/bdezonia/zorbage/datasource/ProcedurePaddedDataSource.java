@@ -106,4 +106,8 @@ public class ProcedurePaddedDataSource<T extends Algebra<T,U>,U>
 		return storage.storageType();
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return storage.accessWithOneThread();
+	}
 }

@@ -104,6 +104,11 @@ public class ConcatenatedDataSource<U>
 		return StorageConstruction.MEM_VIRTUAL;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return first.accessWithOneThread() || second.accessWithOneThread();
+	}
+
 	/**
 	 * Make a nice lg2 n hierarchy of concatenated data sources from a list of sources.
 	 * 
@@ -151,5 +156,4 @@ public class ConcatenatedDataSource<U>
 			return new ConcatenatedDataSource<>(leftSrc, rightSrc);
 		}
 	}
-
 }

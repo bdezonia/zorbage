@@ -88,4 +88,8 @@ public class ArrayStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

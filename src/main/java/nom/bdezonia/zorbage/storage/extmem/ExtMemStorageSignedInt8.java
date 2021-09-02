@@ -117,4 +117,9 @@ public class ExtMemStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

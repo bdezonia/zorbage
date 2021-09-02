@@ -113,28 +113,22 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	}
 
 	public FileStorageFloat32(FileStorageFloat32<U> other, U type) {
-		synchronized(other) {
-			this.numElements = other.numElements;
-			this.type = type.allocate();
-			this.tmpArray = other.tmpArray.clone();
-			this.bufSize = other.bufSize;
-			try {
-				this.file = File.createTempFile("Storage", ".storage");
-				this.file.deleteOnExit();
-				Path from = Paths.get(other.file.getAbsolutePath());
-				Path to = Paths.get(file.getAbsolutePath());
-				//overwrite existing file, if exists
-				CopyOption[] options = new CopyOption[]{
-					StandardCopyOption.REPLACE_EXISTING,
-					StandardCopyOption.COPY_ATTRIBUTES
-				};
-				Files.copy(from, to, options);
-			} catch (Exception e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
+		this.numElements = other.numElements;
+		this.type = type.allocate();
+		this.tmpArray = other.tmpArray.clone();
+		this.bufSize = other.bufSize;
 		try {
-			// these can happen after synchronization and after file copy
+			this.file = File.createTempFile("Storage", ".storage");
+			this.file.deleteOnExit();
+			Path from = Paths.get(other.file.getAbsolutePath());
+			Path to = Paths.get(file.getAbsolutePath());
+			//overwrite existing file, if exists
+			CopyOption[] options = new CopyOption[]{
+				StandardCopyOption.REPLACE_EXISTING,
+				StandardCopyOption.COPY_ATTRIBUTES
+			};
+			Files.copy(from, to, options);
+			// these can happen after file copy
 			this.raf = new RandomAccessFile(file, "rw");
 			long size = this.numElements * (type.floatCount() * 4);
 			for (long offset = 0; offset < size; offset += bufSize) {
@@ -200,5 +194,10 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	protected void finalize() throws Throwable {
 		mappings.clear();
 		raf.close();
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return true;
 	}
 }

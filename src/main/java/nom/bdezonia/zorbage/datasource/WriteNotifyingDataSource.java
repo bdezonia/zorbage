@@ -105,4 +105,9 @@ public class WriteNotifyingDataSource<T extends Algebra<T,U>, U>
 	public StorageConstruction storageType() {
 		return source.storageType();
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return source.accessWithOneThread();
+	}
 }

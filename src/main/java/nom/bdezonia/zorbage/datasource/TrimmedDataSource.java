@@ -95,4 +95,9 @@ public class TrimmedDataSource<U>
 	public StorageConstruction storageType() {
 		return list.storageType();
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return list.accessWithOneThread();
+	}
 }

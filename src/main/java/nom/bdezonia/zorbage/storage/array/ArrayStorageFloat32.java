@@ -88,4 +88,8 @@ public class ArrayStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

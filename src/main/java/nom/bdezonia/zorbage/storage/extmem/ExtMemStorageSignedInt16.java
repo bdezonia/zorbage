@@ -117,4 +117,9 @@ public class ExtMemStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

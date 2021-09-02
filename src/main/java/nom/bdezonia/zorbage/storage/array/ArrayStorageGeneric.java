@@ -96,4 +96,8 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

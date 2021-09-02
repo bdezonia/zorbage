@@ -101,4 +101,9 @@ public class TransformedDataSource<U,W>
 	public StorageConstruction storageType() {
 		return uCollection.storageType();
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return uCollection.accessWithOneThread();
+	}
 }

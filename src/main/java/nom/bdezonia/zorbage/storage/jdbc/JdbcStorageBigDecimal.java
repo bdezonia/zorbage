@@ -135,5 +135,9 @@ public class JdbcStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";
 	}
-	 
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

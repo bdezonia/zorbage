@@ -105,4 +105,9 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

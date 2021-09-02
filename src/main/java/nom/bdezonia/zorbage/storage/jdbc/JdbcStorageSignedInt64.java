@@ -134,5 +134,9 @@ public class JdbcStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	String zeroValueAsString() {
 		return "0";
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

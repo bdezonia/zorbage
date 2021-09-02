@@ -87,4 +87,8 @@ public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		return StorageConstruction.MEM_ARRAY;
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

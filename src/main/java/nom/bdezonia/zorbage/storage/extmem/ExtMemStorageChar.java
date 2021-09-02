@@ -117,4 +117,9 @@ public class ExtMemStorageChar<U extends CharCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

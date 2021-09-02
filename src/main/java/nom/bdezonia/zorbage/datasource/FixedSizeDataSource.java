@@ -86,4 +86,8 @@ public class FixedSizeDataSource<U>
 		return src.storageType();
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return src.accessWithOneThread();
+	}
 }

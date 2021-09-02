@@ -71,4 +71,8 @@ public class ReadOnlyDataSource<U>
 		return source.storageType();
 	}
 
+	@Override
+	public boolean accessWithOneThread() {
+		return source.accessWithOneThread();
+	}
 }

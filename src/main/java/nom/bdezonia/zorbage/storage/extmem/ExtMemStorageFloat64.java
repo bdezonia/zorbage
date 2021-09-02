@@ -117,4 +117,9 @@ public class ExtMemStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

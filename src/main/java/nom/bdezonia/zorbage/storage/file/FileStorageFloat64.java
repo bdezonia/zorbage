@@ -121,37 +121,35 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	}
 	
 	public FileStorageFloat64(FileStorageFloat64<U> other, U type) {
-		synchronized(other) {
-			this.numElements = other.numElements;
-			this.type = type.allocate();
-			this.tmpArray = other.tmpArray.clone();
-			this.bytesPerPage = other.bytesPerPage;
-			this.elementByteSize = other.elementByteSize;
-			this.elementsPerPage = other.elementsPerPage;
-			this.pageLoaded1 = other.pageLoaded1;
-			this.pageLoaded2 = other.pageLoaded2;
-			this.dirty1 = other.dirty1;
-			this.dirty2 = other.dirty2;
-			this.lru = other.lru;
-			try {
-				this.file = File.createTempFile("Storage", ".storage");
-				this.file.deleteOnExit();
-				Path from = Paths.get(other.file.getAbsolutePath());
-				Path to = Paths.get(file.getAbsolutePath());
-				//overwrite existing file, if exists
-				CopyOption[] options = new CopyOption[]{
-					StandardCopyOption.REPLACE_EXISTING,
-					StandardCopyOption.COPY_ATTRIBUTES
-				};
-				Files.copy(from, to, options);
-				// these first two must happen after the file copy
-				this.raf = new RandomAccessFile(file, "rw");
-				this.channel = raf.getChannel();
-				this.buffer1 = other.buffer1.duplicate();
-				this.buffer2 = other.buffer2.duplicate();
-			} catch (Exception e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
+		this.numElements = other.numElements;
+		this.type = type.allocate();
+		this.tmpArray = other.tmpArray.clone();
+		this.bytesPerPage = other.bytesPerPage;
+		this.elementByteSize = other.elementByteSize;
+		this.elementsPerPage = other.elementsPerPage;
+		this.pageLoaded1 = other.pageLoaded1;
+		this.pageLoaded2 = other.pageLoaded2;
+		this.dirty1 = other.dirty1;
+		this.dirty2 = other.dirty2;
+		this.lru = other.lru;
+		try {
+			this.file = File.createTempFile("Storage", ".storage");
+			this.file.deleteOnExit();
+			Path from = Paths.get(other.file.getAbsolutePath());
+			Path to = Paths.get(file.getAbsolutePath());
+			//overwrite existing file, if exists
+			CopyOption[] options = new CopyOption[]{
+				StandardCopyOption.REPLACE_EXISTING,
+				StandardCopyOption.COPY_ATTRIBUTES
+			};
+			Files.copy(from, to, options);
+			// these first two must happen after the file copy
+			this.raf = new RandomAccessFile(file, "rw");
+			this.channel = raf.getChannel();
+			this.buffer1 = other.buffer1.duplicate();
+			this.buffer2 = other.buffer2.duplicate();
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 	
@@ -164,58 +162,56 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
-		synchronized(this) {
-			try {
-				long desiredPage = index / elementsPerPage;
-				if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
-					// save out old page if needed
-					if (lru == 1) {
-						if (dirty1) {
-							buffer1.rewind();
-							channel.position(pageLoaded1 * bytesPerPage);
-							channel.write(buffer1);
-							dirty1 = false;
-						}
-						// read in new page
+		try {
+			long desiredPage = index / elementsPerPage;
+			if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
+				// save out old page if needed
+				if (lru == 1) {
+					if (dirty1) {
 						buffer1.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer1);
-						pageLoaded1 = desiredPage;
-						lru = 2;
+						channel.position(pageLoaded1 * bytesPerPage);
+						channel.write(buffer1);
+						dirty1 = false;
 					}
-					else if (lru == 2) {
-						if (dirty2) {
-							buffer2.rewind();
-							channel.position(pageLoaded2 * bytesPerPage);
-							channel.write(buffer2);
-							dirty2 = false;
-						}
-						// read in new page
+					// read in new page
+					buffer1.rewind();
+					channel.position(desiredPage * bytesPerPage);
+					channel.read(buffer1);
+					pageLoaded1 = desiredPage;
+					lru = 2;
+				}
+				else if (lru == 2) {
+					if (dirty2) {
 						buffer2.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer2);
-						pageLoaded2 = desiredPage;
-						lru = 1;
+						channel.position(pageLoaded2 * bytesPerPage);
+						channel.write(buffer2);
+						dirty2 = false;
 					}
+					// read in new page
+					buffer2.rewind();
+					channel.position(desiredPage * bytesPerPage);
+					channel.read(buffer2);
+					pageLoaded2 = desiredPage;
+					lru = 1;
 				}
-				value.toDoubleArray(tmpArray, 0);
-				ByteBuffer buffer;
-				if (desiredPage == pageLoaded1) {
-					buffer = buffer1;
-					dirty1 = true;
-				}
-				else {
-					buffer = buffer2;
-					dirty2 = true;
-				}
-				int idx = (int) (index % elementsPerPage);
-				int base = idx * elementByteSize;
-				for (int i = 0; i < tmpArray.length; i++, base += 8) {
-					buffer.putDouble(base, tmpArray[i]);
-				}
-			} catch (IOException e) {
-				throw new IllegalArgumentException(e.getMessage());
 			}
+			value.toDoubleArray(tmpArray, 0);
+			ByteBuffer buffer;
+			if (desiredPage == pageLoaded1) {
+				buffer = buffer1;
+				dirty1 = true;
+			}
+			else {
+				buffer = buffer2;
+				dirty2 = true;
+			}
+			int idx = (int) (index % elementsPerPage);
+			int base = idx * elementByteSize;
+			for (int i = 0; i < tmpArray.length; i++, base += 8) {
+				buffer.putDouble(base, tmpArray[i]);
+			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
@@ -223,50 +219,48 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	public void get(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
-		synchronized(this) {
-			try {
-				long desiredPage = index / elementsPerPage;
-				if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
-					// save out old page if needed
-					if (lru == 1) {
-						if (dirty1) {
-							buffer1.rewind();
-							channel.position(pageLoaded1 * bytesPerPage);
-							channel.write(buffer1);
-							dirty1 = false;
-						}
-						// read in new page
+		try {
+			long desiredPage = index / elementsPerPage;
+			if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
+				// save out old page if needed
+				if (lru == 1) {
+					if (dirty1) {
 						buffer1.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer1);
-						pageLoaded1 = desiredPage;
-						lru = 2;
+						channel.position(pageLoaded1 * bytesPerPage);
+						channel.write(buffer1);
+						dirty1 = false;
 					}
-					else if (lru == 2) {
-						if (dirty2) {
-							buffer2.rewind();
-							channel.position(pageLoaded2 * bytesPerPage);
-							channel.write(buffer2);
-							dirty2 = false;
-						}
-						// read in new page
+					// read in new page
+					buffer1.rewind();
+					channel.position(desiredPage * bytesPerPage);
+					channel.read(buffer1);
+					pageLoaded1 = desiredPage;
+					lru = 2;
+				}
+				else if (lru == 2) {
+					if (dirty2) {
 						buffer2.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer2);
-						pageLoaded2 = desiredPage;
-						lru = 1;
+						channel.position(pageLoaded2 * bytesPerPage);
+						channel.write(buffer2);
+						dirty2 = false;
 					}
+					// read in new page
+					buffer2.rewind();
+					channel.position(desiredPage * bytesPerPage);
+					channel.read(buffer2);
+					pageLoaded2 = desiredPage;
+					lru = 1;
 				}
-				ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
-				int idx = (int) (index % elementsPerPage);
-				int base = idx * elementByteSize;
-				for (int i = 0; i < tmpArray.length; i++, base += 8) {
-					tmpArray[i] = buffer.getDouble(base);
-				}
-				value.fromDoubleArray(tmpArray, 0);
-			} catch (IOException e) {
-				throw new IllegalArgumentException(e.getMessage());
 			}
+			ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
+			int idx = (int) (index % elementsPerPage);
+			int base = idx * elementByteSize;
+			for (int i = 0; i < tmpArray.length; i++, base += 8) {
+				tmpArray[i] = buffer.getDouble(base);
+			}
+			value.fromDoubleArray(tmpArray, 0);
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
@@ -288,5 +282,10 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	@Override
 	protected void finalize() throws Throwable {
 		raf.close();
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return true;
 	}
 }

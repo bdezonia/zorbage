@@ -117,4 +117,9 @@ public class ExtMemStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

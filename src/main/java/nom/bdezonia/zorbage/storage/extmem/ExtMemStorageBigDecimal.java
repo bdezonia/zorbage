@@ -122,4 +122,9 @@ public class ExtMemStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 			}
 		}
 	}
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

@@ -139,5 +139,9 @@ public class JdbcStorageChar<U extends CharCoder & Allocatable<U>>
 		return "' '";  // For a character we will treat a space as the zero value. Maybe the NUL
 						// char would be better but experiments seemed to uncover problems doing this. 
 	}
-	
+
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }
