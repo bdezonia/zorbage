@@ -34,12 +34,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+
+import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
@@ -54,24 +58,15 @@ import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		implements IndexedDataSource<U>, Allocatable<FileStorageFloat32<U>>
 {
-	private static final int BYTE_CHUNK = FileStorage.INTERNAL_BUFFER_SIZE;
+	private static final int IDEAL_BUFFER_SIZE = 10000000;
 	private final long numElements;
 	private final U type;
 	private final float[] tmpArray;
 	private final File file;
 	private final RandomAccessFile raf;
-	private final FileChannel channel;
-	private final ByteBuffer buffer1;
-	private final ByteBuffer buffer2;
-	private final int elementByteSize;
-	private final int elementsPerPage;
-	private final int bytesPerPage;
-	private long pageLoaded1;
-	private long pageLoaded2;
-	private boolean dirty1;
-	private boolean dirty2;
-	private int lru;
-
+	private final int bufSize;
+	private final List<MappedByteBuffer> mappings = new ArrayList<>();
+	
 	/**
 	 *
 	 * @param numElements
@@ -81,39 +76,36 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new float[type.floatCount()];
-		this.elementByteSize = type.floatCount() * 4;
+		int elementByteSize = type.floatCount() * 4;
 		if (elementByteSize <= 0) {
 			// overflow happened
 			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
 		}
-		long elementsInPage = BYTE_CHUNK / elementByteSize;
+		long elementsInPage = IDEAL_BUFFER_SIZE / elementByteSize;
 		if (elementsInPage <= 0) {
 			// Emergency: type is bigger than our default max buffer size. Just buffer one.
 			elementsInPage = 1;
 		}
-		this.elementsPerPage = (int) elementsInPage;
-		this.bytesPerPage = (int) (elementsInPage * elementByteSize);
-		this.pageLoaded1 = -1;
-		this.pageLoaded2 = -1;
-		this.dirty1 = false;
-		this.dirty2 = false;
-		this.lru = 1;
+		this.bufSize = (int) (elementsInPage * elementByteSize);
 		try {
 			this.file = File.createTempFile("Storage", ".storage");
 			this.file.deleteOnExit();
 			this.raf = new RandomAccessFile(file, "rw");
-			this.channel = raf.getChannel();
-			this.buffer1 = ByteBuffer.allocateDirect(bytesPerPage);
-			this.buffer2 = ByteBuffer.allocateDirect(bytesPerPage);
-			// fill the buffers with zeroes
-			byte[] zeroes = new byte[bytesPerPage];
-			buffer1.put(zeroes);
-			buffer2.put(zeroes);
 			// write zeroes to the file over and over
+			FileChannel channel = raf.getChannel();
+			ByteBuffer buf = ByteBuffer.allocateDirect(bufSize);
+			byte[] zeroes = new byte[bufSize];
+			buf.put(zeroes);
 			channel.position(0);
-			for (long i = 0; i <= (numElements / elementsPerPage); i++) {  // <= is intentional here
-				buffer1.rewind();
-				channel.write(buffer1);
+			long size = this.numElements * (type.floatCount() * 4);
+			for (long offset = 0; offset < size; offset += bufSize) {
+				buf.rewind();
+				channel.write(buf);
+			}
+			// now create the mappings
+			for (long offset = 0; offset < size; offset += bufSize) {
+				//System.out.println("mapping "+bufSize+" bytes at offset "+offset+" of total size "+size);
+				mappings.add(channel.map(FileChannel.MapMode.READ_WRITE, offset, bufSize));
 			}
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e.getMessage());
@@ -125,14 +117,7 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 			this.numElements = other.numElements;
 			this.type = type.allocate();
 			this.tmpArray = other.tmpArray.clone();
-			this.bytesPerPage = other.bytesPerPage;
-			this.elementByteSize = other.elementByteSize;
-			this.elementsPerPage = other.elementsPerPage;
-			this.pageLoaded1 = other.pageLoaded1;
-			this.pageLoaded2 = other.pageLoaded2;
-			this.dirty1 = other.dirty1;
-			this.dirty2 = other.dirty2;
-			this.lru = other.lru;
+			this.bufSize = other.bufSize;
 			try {
 				this.file = File.createTempFile("Storage", ".storage");
 				this.file.deleteOnExit();
@@ -144,14 +129,20 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 					StandardCopyOption.COPY_ATTRIBUTES
 				};
 				Files.copy(from, to, options);
-				// these first two must happen after the file copy
-				this.raf = new RandomAccessFile(file, "rw");
-				this.channel = raf.getChannel();
-				this.buffer1 = other.buffer1.duplicate();
-				this.buffer2 = other.buffer2.duplicate();
 			} catch (Exception e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
+		}
+		try {
+			// these can happen after synchronization and after file copy
+			this.raf = new RandomAccessFile(file, "rw");
+			long size = this.numElements * (type.floatCount() * 4);
+			for (long offset = 0; offset < size; offset += bufSize) {
+				//System.out.println("mapping "+bufSize+" bytes at offset "+offset+" of total size "+size);
+				mappings.add(raf.getChannel().map(FileChannel.MapMode.READ_WRITE, offset, bufSize));
+			}
+		} catch (Exception e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
@@ -164,110 +155,30 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
-		synchronized(this) {
-			try {
-				long desiredPage = index / elementsPerPage;
-				if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
-					// save out old page if needed
-					if (lru == 1) {
-						if (dirty1) {
-							buffer1.rewind();
-							channel.position(pageLoaded1 * bytesPerPage);
-							channel.write(buffer1);
-							dirty1 = false;
-						}
-						// read in new page
-						buffer1.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer1);
-						pageLoaded1 = desiredPage;
-						lru = 2;
-					}
-					else if (lru == 2) {
-						if (dirty2) {
-							buffer2.rewind();
-							channel.position(pageLoaded2 * bytesPerPage);
-							channel.write(buffer2);
-							dirty2 = false;
-						}
-						// read in new page
-						buffer2.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer2);
-						pageLoaded2 = desiredPage;
-						lru = 1;
-					}
-				}
-				value.toFloatArray(tmpArray, 0);
-				ByteBuffer buffer;
-				if (desiredPage == pageLoaded1) {
-					buffer = buffer1;
-					dirty1 = true;
-				}
-				else {
-					buffer = buffer2;
-					dirty2 = true;
-				}
-				int idx = (int) (index % elementsPerPage);
-				int base = idx * elementByteSize;
-				for (int i = 0; i < tmpArray.length; i++, base += 4) {
-					buffer.putFloat(base, tmpArray[i]);
-				}
-			} catch (IOException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
+        long p = index * (type.floatCount() * 4);
+        int mapN = (int) (p / bufSize);
+        int offN = (int) (p % bufSize);
+        value.toFloatArray(tmpArray, 0);
+        MappedByteBuffer buf = mappings.get(mapN);
+        buf.position(offN);
+        for (int i = 0; i < tmpArray.length; i++) {
+        	buf.putFloat(tmpArray[i]);
+        }
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
-		synchronized(this) {
-			try {
-				long desiredPage = index / elementsPerPage;
-				if (desiredPage != pageLoaded1 && desiredPage != pageLoaded2) {
-					// save out old page if needed
-					if (lru == 1) {
-						if (dirty1) {
-							buffer1.rewind();
-							channel.position(pageLoaded1 * bytesPerPage);
-							channel.write(buffer1);
-							dirty1 = false;
-						}
-						// read in new page
-						buffer1.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer1);
-						pageLoaded1 = desiredPage;
-						lru = 2;
-					}
-					else if (lru == 2) {
-						if (dirty2) {
-							buffer2.rewind();
-							channel.position(pageLoaded2 * bytesPerPage);
-							channel.write(buffer2);
-							dirty2 = false;
-						}
-						// read in new page
-						buffer2.rewind();
-						channel.position(desiredPage * bytesPerPage);
-						channel.read(buffer2);
-						pageLoaded2 = desiredPage;
-						lru = 1;
-					}
-				}
-				ByteBuffer buffer = (desiredPage == pageLoaded1) ? buffer1 : buffer2;
-				int idx = (int) (index % elementsPerPage);
-				int base = idx * elementByteSize;
-				for (int i = 0; i < tmpArray.length; i++, base += 4) {
-					tmpArray[i] = buffer.getFloat(base);
-				}
-				value.fromFloatArray(tmpArray, 0);
-			} catch (IOException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
+        long p = index * (type.floatCount() * 4);
+        int mapN = (int) (p / bufSize);
+	    int offN = (int) (p % bufSize);
+        MappedByteBuffer buf = mappings.get(mapN);
+        buf.position(offN);
+        for (int i = 0; i < tmpArray.length; i++) {
+        	tmpArray[i] = buf.getFloat();
+        }
+        value.fromFloatArray(tmpArray, 0);
 	}
 
 	@Override
@@ -287,6 +198,7 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 
 	@Override
 	protected void finalize() throws Throwable {
+		mappings.clear();
 		raf.close();
 	}
 }
