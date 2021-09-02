@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  */
 public class TestArrayStorageBit {
 
-	// how slow is the synchronized access overhead for array storage bit class?
+	// how slow is the access overhead for array storage bit class?
 	
 	@Test
 	public void speed() {

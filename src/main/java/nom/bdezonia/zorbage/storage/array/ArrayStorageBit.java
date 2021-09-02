@@ -67,9 +67,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 		final long bitIndex = index * type.bitCount();
 		final int bucketStart = (int)(bitIndex / 64);
 		final int bucketOffset = (int)(bitIndex % 64);
-		synchronized (data) {
-			value.toBitArray(data, bucketStart, bucketOffset);
-		}
+		value.toBitArray(data, bucketStart, bucketOffset);
 	}
 
 	@Override
@@ -77,9 +75,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 		final long bitIndex = index * type.bitCount();
 		final int bucketStart = (int)(bitIndex / 64);
 		final int bucketOffset = (int)(bitIndex % 64);
-		synchronized (data) {
-			value.fromBitArray(data, bucketStart, bucketOffset);
-		}
+		value.fromBitArray(data, bucketStart, bucketOffset);
 	}
 	
 	@Override
@@ -90,9 +86,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	@Override
 	public ArrayStorageBit<U> duplicate() {
 		ArrayStorageBit<U> s = new ArrayStorageBit<U>(type, size());
-		synchronized (data) {
-			System.arraycopy(data, 0, s.data, 0, data.length);
-		}
+		System.arraycopy(data, 0, s.data, 0, data.length);
 		return s;
 	}
 
@@ -108,6 +102,6 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 
 	@Override
 	public boolean accessWithOneThread() {
-		return false;
+		return true;
 	}
 }
