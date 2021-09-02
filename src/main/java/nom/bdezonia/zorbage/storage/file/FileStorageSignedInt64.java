@@ -77,7 +77,7 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 		int elementByteSize = type.longCount() * 8;
 		if (elementByteSize <= 0) {
 			// overflow happened
-			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
+			throw new IllegalArgumentException("element type is too big to be buffered: max longCount is "+(Integer.MAX_VALUE/8));
 		}
 		long elementsInPage = FileStorage.IDEAL_BUFFER_SIZE / elementByteSize;
 		if (elementsInPage <= 0) {

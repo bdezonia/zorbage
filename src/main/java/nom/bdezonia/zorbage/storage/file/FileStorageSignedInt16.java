@@ -77,7 +77,7 @@ public class FileStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 		int elementByteSize = type.shortCount() * 2;
 		if (elementByteSize <= 0) {
 			// overflow happened
-			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
+			throw new IllegalArgumentException("element type is too big to be buffered: max shortCount is "+(Integer.MAX_VALUE/2));
 		}
 		long elementsInPage = FileStorage.IDEAL_BUFFER_SIZE / elementByteSize;
 		if (elementsInPage <= 0) {

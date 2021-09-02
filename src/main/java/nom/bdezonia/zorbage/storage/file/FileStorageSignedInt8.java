@@ -77,7 +77,7 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 		int elementByteSize = type.byteCount() * 1;
 		if (elementByteSize <= 0) {
 			// overflow happened
-			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
+			throw new IllegalArgumentException("element type is too big to be buffered: max byteCount is "+(Integer.MAX_VALUE/1));
 		}
 		long elementsInPage = FileStorage.IDEAL_BUFFER_SIZE / elementByteSize;
 		if (elementsInPage <= 0) {

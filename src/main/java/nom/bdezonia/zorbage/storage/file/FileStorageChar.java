@@ -77,7 +77,7 @@ public class FileStorageChar<U extends CharCoder & Allocatable<U>>
 		int elementByteSize = type.charCount() * 2;
 		if (elementByteSize <= 0) {
 			// overflow happened
-			throw new IllegalArgumentException("element type is too big to be buffered: max floatCount is "+(Integer.MAX_VALUE/4));
+			throw new IllegalArgumentException("element type is too big to be buffered: max charCount is "+(Integer.MAX_VALUE/2));
 		}
 		long elementsInPage = FileStorage.IDEAL_BUFFER_SIZE / elementByteSize;
 		if (elementsInPage <= 0) {
