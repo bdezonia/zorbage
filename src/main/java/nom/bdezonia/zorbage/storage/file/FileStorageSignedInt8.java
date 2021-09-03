@@ -147,30 +147,30 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	public void set(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
-        long p = index * (type.byteCount() * 1);
-        int mapN = (int) (p / bufSize);
-        int offN = (int) (p % bufSize);
-        value.toByteArray(tmpArray, 0);
-        MappedByteBuffer buf = mappings.get(mapN);
-        buf.position(offN);
-        for (int i = 0; i < tmpArray.length; i++) {
-        	buf.put(tmpArray[i]);
-        }
+		long p = index * (type.byteCount() * 1);
+		int mapN = (int) (p / bufSize);
+		int offN = (int) (p % bufSize);
+		value.toByteArray(tmpArray, 0);
+		MappedByteBuffer buf = mappings.get(mapN);
+		buf.position(offN);
+		for (int i = 0; i < tmpArray.length; i++) {
+			buf.put(tmpArray[i]);
+		}
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0 || index >= numElements)
 			throw new IllegalArgumentException("storage index out of bounds");
-        long p = index * (type.byteCount() * 1);
-        int mapN = (int) (p / bufSize);
-	    int offN = (int) (p % bufSize);
-        MappedByteBuffer buf = mappings.get(mapN);
-        buf.position(offN);
-        for (int i = 0; i < tmpArray.length; i++) {
-        	tmpArray[i] = buf.get();
-        }
-        value.fromByteArray(tmpArray, 0);
+		long p = index * (type.byteCount() * 1);
+		int mapN = (int) (p / bufSize);
+		int offN = (int) (p % bufSize);
+		MappedByteBuffer buf = mappings.get(mapN);
+		buf.position(offN);
+		for (int i = 0; i < tmpArray.length; i++) {
+			tmpArray[i] = buf.get();
+		}
+		value.fromByteArray(tmpArray, 0);
 	}
 
 	@Override
