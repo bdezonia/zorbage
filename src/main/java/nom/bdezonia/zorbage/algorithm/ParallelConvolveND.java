@@ -61,7 +61,10 @@ public class ParallelConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, Runtime.getRuntime().availableProcessors(), new ConvolutionIndexerND<U>(), filter, a, b);
+		int numProcs = Runtime.getRuntime().availableProcessors();
+		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
+			numProcs = 1;
+		ParallelCorrConvND.compute(alg, numProcs, new ConvolutionIndexerND<U>(), filter, a, b);
 	}
 	
 }

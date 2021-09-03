@@ -115,6 +115,11 @@ public class ParallelTransform14 {
 		if (aSize < numProcs) {
 			numProcs = (int) aSize;
 		}
+		if (a.accessWithOneThread() || b.accessWithOneThread() || c.accessWithOneThread() || d.accessWithOneThread() ||
+				e.accessWithOneThread() || f.accessWithOneThread() || g.accessWithOneThread() || h.accessWithOneThread() ||
+				ii.accessWithOneThread() || j.accessWithOneThread() || k.accessWithOneThread() || l.accessWithOneThread() ||
+				m.accessWithOneThread() || n.accessWithOneThread())
+			numProcs = 1;
 		final Thread[] threads = new Thread[numProcs];
 		long thOffset = 0;
 		long slice = aSize / numProcs;

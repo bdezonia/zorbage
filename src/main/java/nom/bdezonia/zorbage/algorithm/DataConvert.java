@@ -72,6 +72,8 @@ public class DataConvert {
 		int maxPieces = Runtime.getRuntime().availableProcessors();
 		if (maxPieces > fromSize)
 			maxPieces = 1;
+		if (fromList.accessWithOneThread() || toList.accessWithOneThread())
+			maxPieces = 1;
 		long start = 0;
 		long count = fromSize / maxPieces;
 		Thread[] threads = new Thread[maxPieces];

@@ -62,6 +62,8 @@ public class Generate {
 		if (aSize < numProcs) {
 			numProcs = (int) aSize;
 		}
+		if (a.accessWithOneThread())
+			numProcs = 1;
 		final Thread[] threads = new Thread[numProcs];
 		long thOffset = 0;
 		long slice = aSize / numProcs;

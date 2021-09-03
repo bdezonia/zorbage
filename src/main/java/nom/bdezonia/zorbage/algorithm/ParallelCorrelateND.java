@@ -61,7 +61,10 @@ public class ParallelCorrelateND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, Runtime.getRuntime().availableProcessors(), new CorrelationIndexerND<U>(), filter, a, b);
+		int numProcs = Runtime.getRuntime().availableProcessors();
+		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
+			numProcs = 1;
+		ParallelCorrConvND.compute(alg, numProcs, new CorrelationIndexerND<U>(), filter, a, b);
 	}
 	
 }

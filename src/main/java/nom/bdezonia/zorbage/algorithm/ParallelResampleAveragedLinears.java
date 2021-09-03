@@ -63,6 +63,9 @@ public class ParallelResampleAveragedLinears {
 					U extends Allocatable<U>>
 		DimensionedDataSource<U> compute(T alg, long[] newDims, DimensionedDataSource<U> input)
 	{
-		return ResampleLinear.compute(alg, newDims, input, Runtime.getRuntime().availableProcessors());
+		int numProcs = Runtime.getRuntime().availableProcessors();
+		if (input.rawData().accessWithOneThread())
+			numProcs = 1;
+		return ResampleLinear.compute(alg, newDims, input, numProcs);
 	}
 }

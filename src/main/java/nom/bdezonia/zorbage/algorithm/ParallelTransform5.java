@@ -88,6 +88,9 @@ public class ParallelTransform5 {
 		if (aSize < numProcs) {
 			numProcs = (int) aSize;
 		}
+		if (a.accessWithOneThread() || b.accessWithOneThread() || c.accessWithOneThread() || d.accessWithOneThread() ||
+				e.accessWithOneThread())
+			numProcs = 1;
 		final Thread[] threads = new Thread[numProcs];
 		long thOffset = 0;
 		long slice = aSize / numProcs;

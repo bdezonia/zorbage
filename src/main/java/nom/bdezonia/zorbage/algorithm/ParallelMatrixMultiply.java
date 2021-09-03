@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.MatrixMember;
 import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.StorageConstruction;
 
 /**
  * 
@@ -73,6 +74,11 @@ public class ParallelMatrixMultiply {
 		
 		if (pieces > Integer.MAX_VALUE)
 			pieces = Integer.MAX_VALUE;
+		
+		if (a.storageType() == StorageConstruction.MEM_VIRTUAL ||
+				b.storageType() == StorageConstruction.MEM_VIRTUAL ||
+				c.storageType() == StorageConstruction.MEM_VIRTUAL)
+			pieces = 1;
 
 		final Thread[] threads = new Thread[(int)pieces];
 		long start = 0;
