@@ -28,13 +28,14 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.point;
+package nom.bdezonia.zorbage.type.geom.point;
 
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 

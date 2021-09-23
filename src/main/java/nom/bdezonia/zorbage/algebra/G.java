@@ -60,6 +60,8 @@ import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Algebra;
 import nom.bdezonia.zorbage.type.gaussian.int64.GaussianInt64Algebra;
 import nom.bdezonia.zorbage.type.gaussian.int8.GaussianInt8Algebra;
 import nom.bdezonia.zorbage.type.gaussian.unbounded.GaussianIntUnboundedAlgebra;
+import nom.bdezonia.zorbage.type.geom.point.PointAlgebra;
+import nom.bdezonia.zorbage.type.geom.polygonalchain.PolygonalChainAlgebra;
 import nom.bdezonia.zorbage.type.integer.int1.SignedInt1Algebra;
 import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Algebra;
 import nom.bdezonia.zorbage.type.integer.int10.SignedInt10Algebra;
@@ -119,7 +121,6 @@ import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesianTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModule;
-import nom.bdezonia.zorbage.type.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Algebra;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Matrix;
@@ -187,6 +188,8 @@ public class G {
 	public static final BooleanAlgebra BOOL = new BooleanAlgebra();
 
 	public static final PointAlgebra POINT = new PointAlgebra();
+
+	public static final PolygonalChainAlgebra CHAIN = new PolygonalChainAlgebra();
 
 	public static final ArgbAlgebra ARGB = new ArgbAlgebra();
 	public static final RgbAlgebra RGB = new RgbAlgebra();

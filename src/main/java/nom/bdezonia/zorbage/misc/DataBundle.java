@@ -67,6 +67,7 @@ import nom.bdezonia.zorbage.type.gaussian.int32.GaussianInt32Member;
 import nom.bdezonia.zorbage.type.gaussian.int64.GaussianInt64Member;
 import nom.bdezonia.zorbage.type.gaussian.int8.GaussianInt8Member;
 import nom.bdezonia.zorbage.type.gaussian.unbounded.GaussianIntUnboundedMember;
+import nom.bdezonia.zorbage.type.geom.point.Point;
 import nom.bdezonia.zorbage.type.integer.int1.SignedInt1Member;
 import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.type.integer.int10.SignedInt10Member;
@@ -126,7 +127,6 @@ import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesia
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModuleMember;
-import nom.bdezonia.zorbage.type.point.Point;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Member;

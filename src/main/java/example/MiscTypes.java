@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.character.CharAlgebra;
 import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.color.ArgbMember;
 import nom.bdezonia.zorbage.type.color.RgbMember;
-import nom.bdezonia.zorbage.type.point.Point;
+import nom.bdezonia.zorbage.type.geom.point.Point;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.string.FixedStringMember;
 import nom.bdezonia.zorbage.type.string.StringMember;

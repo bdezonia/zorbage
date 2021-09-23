@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.point;
+package nom.bdezonia.zorbage.type.geom.point;
 
 import java.lang.Integer;
 import java.nio.ByteBuffer;
