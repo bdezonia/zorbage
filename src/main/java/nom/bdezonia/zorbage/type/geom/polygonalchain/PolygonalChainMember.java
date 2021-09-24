@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
@@ -64,7 +65,7 @@ public class PolygonalChainMember
 
 		if (x.length != y.length || x.length != z.length)
 			throw new IllegalArgumentException(
-					"Track coordinate arrays must be equal in length");
+					"polygonal chain coordinate arrays must be equal in length");
 		
 		this.x = x.clone();
 		this.y = y.clone();
@@ -84,12 +85,12 @@ public class PolygonalChainMember
 	@Override
 	public void fromByteArray(byte[] arr, int index) {
 
-		int numFloats = 0;
+		int numFloats;
 
-		numFloats |= arr[0] << 24;
-		numFloats |= arr[1] << 16;
-		numFloats |= arr[2] << 8;
-		numFloats |= arr[3] << 0;
+		numFloats  = (arr[0] << 24);
+		numFloats |= (arr[1] << 16);
+		numFloats |= (arr[2] << 8);
+		numFloats |= (arr[3] << 0);
 		
 		if (numFloats % 3 != 0)
 			throw new IllegalArgumentException("Tracks require 3 floats per point");
@@ -355,18 +356,28 @@ public class PolygonalChainMember
 	public boolean equals(Object obj) {
 		if (obj instanceof PolygonalChainMember)
 			return G.CHAIN.isEqual().call(this, (PolygonalChainMember) obj);
-		return super.equals(obj);
+		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+
+		int code = Hasher.PRIME;
+		
+		for (int i = 0; i < Math.max(3, x.length); i++) {
+			code = code * Hasher.PRIME + Hasher.hashCode(x[i]);
+			code = code * Hasher.PRIME + Hasher.hashCode(y[i]);
+			code = code * Hasher.PRIME + Hasher.hashCode(z[i]);
+		}
+
+		return code;
 	}
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
+		
+		// TODO DO SOMETHING ...
+		
 		return super.toString();
 	}
 }

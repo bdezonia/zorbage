@@ -59,19 +59,24 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	 */
 	public RaggedFloatStorage(long numElements, long totalFloats) {
 
+		System.out.println("numElems  = "+numElements);
+		System.out.println("totFloats = "+totalFloats);
+		
 		// TODO:
-		//   take an IndexedDataSource<Float32> ???
-		//   build the index from the data source
-		//   make a track algebra
+		//   take an IndexedDataSource<Float32> instead of totalFloats ???
+		//   build the internal index from the data source
 		//   make an example that reads data and builds the index
 		
 		this.numElements = numElements;
 		this.numFloats = totalFloats;
 		elementByteOffsets = Storage.allocate(G.INT64.construct(), numElements);
+		System.out.println("  allocated longs");
 		elementData = Storage.allocate(G.UINT8.construct(), totalFloats * 4);
+		System.out.println("  allocated bytes");
 		uBuffer = new byte[0];
 		tmpInt64 = G.INT64.construct();
 		tmpUInt8 = G.UINT8.construct();
+		System.out.println("  done allocating");
 	}
 
 	/**
@@ -171,6 +176,14 @@ public class RaggedFloatStorage<U extends ByteCoder>
 		value.fromByteArray(uBuffer, 0);
 	}
 
+	public void setByteOffset(long i, SignedInt64Member offset) {
+		elementByteOffsets.set(i, offset);
+	}
+
+	public void getByteOffset(long i, SignedInt64Member offset) {
+		elementByteOffsets.get(i, offset);
+	}
+	
 	@Override
 	public long size() {
 
