@@ -87,10 +87,10 @@ public class PolygonalChainMember
 
 		int numFloats;
 
-		numFloats  = (arr[0] << 24);
-		numFloats |= (arr[1] << 16);
-		numFloats |= (arr[2] << 8);
-		numFloats |= (arr[3] << 0);
+		numFloats  = ((arr[0] & 0xff) << 24);
+		numFloats |= ((arr[1] & 0xff) << 16);
+		numFloats |= ((arr[2] & 0xff) << 8);
+		numFloats |= ((arr[3] & 0xff) << 0);
 		
 		if (numFloats % 3 != 0)
 			throw new IllegalArgumentException("Tracks require 3 floats per point");
@@ -107,33 +107,33 @@ public class PolygonalChainMember
 			int base = 4 + 12*i;
 			
 			b = arr[base + 0];
-			tmp = (((int) b) & 0xff) << 24;
+			tmp = (b & 0xff) << 24;
 			b = arr[base + 1];
-			tmp = (((int) b) & 0xff) << 16;
+			tmp = (b & 0xff) << 16;
 			b = arr[base + 2];
-			tmp = (((int) b) & 0xff) << 8;
+			tmp = (b & 0xff) << 8;
 			b = arr[base + 3];
-			tmp = (((int) b) & 0xff) << 0;
+			tmp = (b & 0xff) << 0;
 			x[i] = Float.intBitsToFloat(tmp);
 			
 			b = arr[base + 4];
-			tmp = (((int) b) & 0xff) << 24;
+			tmp = (b & 0xff) << 24;
 			b = arr[base + 5];
-			tmp = (((int) b) & 0xff) << 16;
+			tmp = (b & 0xff) << 16;
 			b = arr[base + 6];
-			tmp = (((int) b) & 0xff) << 8;
+			tmp = (b & 0xff) << 8;
 			b = arr[base + 7];
-			tmp = (((int) b) & 0xff) << 0;
+			tmp = (b & 0xff) << 0;
 			y[i] = Float.intBitsToFloat(tmp);
 			
 			b = arr[base + 8];
-			tmp = (((int) b) & 0xff) << 24;
+			tmp = (b & 0xff) << 24;
 			b = arr[base + 9];
-			tmp = (((int) b) & 0xff) << 16;
+			tmp = (b & 0xff) << 16;
 			b = arr[base + 10];
-			tmp = (((int) b) & 0xff) << 8;
+			tmp = (b & 0xff) << 8;
 			b = arr[base + 11];
-			tmp = (((int) b) & 0xff) << 0;
+			tmp = (b & 0xff) << 0;
 			z[i] = Float.intBitsToFloat(tmp);
 		}
 	}

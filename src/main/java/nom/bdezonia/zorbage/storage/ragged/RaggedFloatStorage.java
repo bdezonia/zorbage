@@ -71,7 +71,7 @@ public class RaggedFloatStorage<U extends ByteCoder>
 		this.numFloats = totalFloats;
 		elementByteOffsets = Storage.allocate(G.INT64.construct(), numElements);
 		System.out.println("  allocated longs");
-		elementData = Storage.allocate(G.UINT8.construct(), totalFloats * 4);
+		elementData = Storage.allocate(G.UINT8.construct(), (numElements * 4) + (totalFloats * 4));
 		System.out.println("  allocated bytes");
 		uBuffer = new byte[0];
 		tmpInt64 = G.INT64.construct();
@@ -195,6 +195,12 @@ public class RaggedFloatStorage<U extends ByteCoder>
 		value.toByteArray(uBuffer, 0);
 		UnsignedInt8Member b = tmpUInt8;
 		for (long i = 0; i < value.byteCount(); i++) {
+			if (prevBytesIndex + i >= elementData.size()) {
+				System.out.println("DEBUG");
+				System.out.println("  size " + elementData.size());
+				System.out.println("  prev " + prevBytesIndex);
+				System.out.println("  i    " + i);
+			}
 			b.setV(uBuffer[(int) i]);
 			elementData.set(prevBytesIndex+i, b);
 		}
