@@ -79,7 +79,7 @@ public class PolygonalChainMember
 	@Override
 	public int byteCount() {
 
-		return 4 * (1 + 3 * x.length);
+		return (1 + 3 * x.length) * 4;
 	}
 
 	@Override

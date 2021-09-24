@@ -109,13 +109,13 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	@Override
 	public void set(long index, U value) {
 
-		long currBytesIndex;
-		long prevBytesIndex;
 		if (index < 0) {
 			throw new IllegalArgumentException("negative index exception");
 		}
 
 		SignedInt64Member idx = tmpInt64;
+
+		long prevBytesIndex;
 		if (index == 0) {
 			prevBytesIndex = 0;
 		}
@@ -123,19 +123,15 @@ public class RaggedFloatStorage<U extends ByteCoder>
 			elementByteOffsets.get(index-1, idx);
 			prevBytesIndex = idx.v();
 		}
-		elementByteOffsets.get(index, idx);
-		currBytesIndex = idx.v();
 		
-		int diff = (int) (currBytesIndex - prevBytesIndex);
-
 		// make sure our uBuffer is big enough
 		
-		if (uBuffer.length < diff) {
-			uBuffer = new byte[diff];
+		if (uBuffer.length < value.byteCount()) {
+			uBuffer = new byte[value.byteCount()];
 		}
 		value.toByteArray(uBuffer, 0);
 		UnsignedInt8Member b = tmpUInt8;
-		for (long i = 0; i < diff; i++) {
+		for (long i = 0; i < value.byteCount(); i++) {
 			b.setV(uBuffer[(int) i]);
 			elementData.set(prevBytesIndex+i, b);
 		}
@@ -144,13 +140,13 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	@Override
 	public void get(long index, U value) {
 
-		long currBytesIndex;
-		long prevBytesIndex;
 		if (index < 0) {
 			throw new IllegalArgumentException("negative index exception");
 		}
 
 		SignedInt64Member idx = tmpInt64;
+
+		long prevBytesIndex;
 		if (index == 0) {
 			prevBytesIndex = 0;
 		}
@@ -158,30 +154,52 @@ public class RaggedFloatStorage<U extends ByteCoder>
 			elementByteOffsets.get(index-1, idx);
 			prevBytesIndex = idx.v();
 		}
-		elementByteOffsets.get(index, idx);
-		currBytesIndex = idx.v();
-
-		int diff = (int) (currBytesIndex - prevBytesIndex);
 
 		// make sure out ubuffer is big enough
 		
-		if (uBuffer.length < diff) {
-			uBuffer = new byte[diff];
+		if (uBuffer.length < value.byteCount()) {
+			uBuffer = new byte[value.byteCount()];
 		}
 		UnsignedInt8Member b = tmpUInt8;
-		for (int i = 0; i < diff; i++) {
+		for (int i = 0; i < value.byteCount(); i++) {
 			elementData.get(prevBytesIndex+i, b);
 			uBuffer[i] = (byte) b.v();
 		}
 		value.fromByteArray(uBuffer, 0);
 	}
 
-	public void setByteOffset(long i, SignedInt64Member offset) {
-		elementByteOffsets.set(i, offset);
-	}
+	// Note: assumes every entity up to index-1 has been placed correctly
+	
+	public void place(long index, U value) {
 
-	public void getByteOffset(long i, SignedInt64Member offset) {
-		elementByteOffsets.get(i, offset);
+		if (index < 0) {
+			throw new IllegalArgumentException("negative index exception");
+		}
+
+		SignedInt64Member idx = tmpInt64;
+		
+		long prevBytesIndex;
+		if (index == 0) {
+			prevBytesIndex = 0;
+		}
+		else {
+			elementByteOffsets.get(index-1, idx);
+			prevBytesIndex = idx.v();
+		}
+		
+		// make sure our uBuffer is big enough
+		
+		if (uBuffer.length < value.byteCount()) {
+			uBuffer = new byte[value.byteCount()];
+		}
+		value.toByteArray(uBuffer, 0);
+		UnsignedInt8Member b = tmpUInt8;
+		for (long i = 0; i < value.byteCount(); i++) {
+			b.setV(uBuffer[(int) i]);
+			elementData.set(prevBytesIndex+i, b);
+		}
+		idx.setV(prevBytesIndex + value.byteCount());
+		elementByteOffsets.set(index, idx);
 	}
 	
 	@Override
