@@ -59,24 +59,13 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	 */
 	public RaggedFloatStorage(long numElements, long totalFloats) {
 
-		System.out.println("numElems  = "+numElements);
-		System.out.println("totFloats = "+totalFloats);
-		
-		// TODO:
-		//   take an IndexedDataSource<Float32> instead of totalFloats ???
-		//   build the internal index from the data source
-		//   make an example that reads data and builds the index
-		
 		this.numElements = numElements;
 		this.numFloats = totalFloats;
-		elementByteOffsets = Storage.allocate(G.INT64.construct(), numElements);
-		System.out.println("  allocated longs");
-		elementData = Storage.allocate(G.UINT8.construct(), (numElements * 4) + (totalFloats * 4));
-		System.out.println("  allocated bytes");
-		uBuffer = new byte[0];
-		tmpInt64 = G.INT64.construct();
-		tmpUInt8 = G.UINT8.construct();
-		System.out.println("  done allocating");
+		this.elementByteOffsets = Storage.allocate(G.INT64.construct(), numElements);
+		this.elementData = Storage.allocate(G.UINT8.construct(), (numElements * 4) + (totalFloats * 4));
+		this.uBuffer = new byte[0];
+		this.tmpInt64 = G.INT64.construct();
+		this.tmpUInt8 = G.UINT8.construct();
 	}
 
 	/**
@@ -85,13 +74,13 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	 */
 	public RaggedFloatStorage(RaggedFloatStorage<U> other) {
 		
-		numElements = other.numElements;
-		numFloats = other.numFloats;
-		elementByteOffsets = other.elementByteOffsets.duplicate();
-		elementData = other.elementData.duplicate();
-		uBuffer = other.uBuffer.clone();
-		tmpInt64 = G.INT64.construct();
-		tmpUInt8 = G.UINT8.construct();
+		this.numElements = other.numElements;
+		this.numFloats = other.numFloats;
+		this.elementByteOffsets = other.elementByteOffsets.duplicate();
+		this.elementData = other.elementData.duplicate();
+		this.uBuffer = other.uBuffer.clone();
+		this.tmpInt64 = G.INT64.construct();
+		this.tmpUInt8 = G.UINT8.construct();
 	}
 
 	@Override
@@ -113,27 +102,37 @@ public class RaggedFloatStorage<U extends ByteCoder>
 			throw new IllegalArgumentException("negative index exception");
 		}
 
-		SignedInt64Member idx = tmpInt64;
-
-		long prevBytesIndex;
+		long startByte;
+		long byteSize;
 		if (index == 0) {
-			prevBytesIndex = 0;
+			startByte = 0;
 		}
 		else {
-			elementByteOffsets.get(index-1, idx);
-			prevBytesIndex = idx.v();
+			elementByteOffsets.get(index-1, tmpInt64);
+			startByte = tmpInt64.v();
+		}
+		elementByteOffsets.get(index, tmpInt64);
+		byteSize = tmpInt64.v() - startByte;
+
+		// now is numbytes stored at startbyte == this value's numbytes?
+		
+		if (byteSize != value.byteCount()) {
+			throw new IllegalArgumentException(
+				"Ragged storage set(index,value) may not change stored element size");
 		}
 		
 		// make sure our uBuffer is big enough
 		
-		if (uBuffer.length < value.byteCount()) {
-			uBuffer = new byte[value.byteCount()];
+		int byteCount = value.byteCount();
+		
+		if (uBuffer.length < byteCount) {
+			uBuffer = new byte[byteCount];
 		}
 		value.toByteArray(uBuffer, 0);
 		UnsignedInt8Member b = tmpUInt8;
-		for (long i = 0; i < value.byteCount(); i++) {
+		for (long i = 0; i < byteCount; i++) {
 			b.setV(uBuffer[(int) i]);
-			elementData.set(prevBytesIndex+i, b);
+			elementData.set(startByte + i, b);
 		}
 	}
 
@@ -146,23 +145,33 @@ public class RaggedFloatStorage<U extends ByteCoder>
 
 		SignedInt64Member idx = tmpInt64;
 
-		long prevBytesIndex;
+		long startByte;
 		if (index == 0) {
-			prevBytesIndex = 0;
+			startByte = 0;
 		}
 		else {
 			elementByteOffsets.get(index-1, idx);
-			prevBytesIndex = idx.v();
+			startByte = idx.v();
 		}
 
-		// make sure out ubuffer is big enough
+		// make sure our uBuffer is big enough
 		
-		if (uBuffer.length < value.byteCount()) {
-			uBuffer = new byte[value.byteCount()];
+		int byteCount = value.byteCount();
+		
+		if (uBuffer.length < byteCount) {
+			uBuffer = new byte[byteCount];
 		}
 		UnsignedInt8Member b = tmpUInt8;
-		for (int i = 0; i < value.byteCount(); i++) {
-			elementData.get(prevBytesIndex+i, b);
+		for (int i = 0; i < byteCount; i++) {
+			if (startByte + i >= elementData.size()) {
+				System.out.println("DEBUG1");
+				System.out.println("  numElems " + numElements);
+				System.out.println("  index    " + index);
+				System.out.println("  size     " + elementData.size());
+				System.out.println("  start    " + startByte);
+				System.out.println("  i        " + i);
+			}
+			elementData.get(startByte + i, b);
 			uBuffer[i] = (byte) b.v();
 		}
 		value.fromByteArray(uBuffer, 0);
@@ -178,33 +187,37 @@ public class RaggedFloatStorage<U extends ByteCoder>
 
 		SignedInt64Member idx = tmpInt64;
 		
-		long prevBytesIndex;
+		long startByte;
 		if (index == 0) {
-			prevBytesIndex = 0;
+			startByte = 0;
 		}
 		else {
 			elementByteOffsets.get(index-1, idx);
-			prevBytesIndex = idx.v();
+			startByte = idx.v();
 		}
 		
 		// make sure our uBuffer is big enough
 		
-		if (uBuffer.length < value.byteCount()) {
-			uBuffer = new byte[value.byteCount()];
+		int byteCount = value.byteCount();
+		
+		if (uBuffer.length < byteCount) {
+			uBuffer = new byte[byteCount];
 		}
 		value.toByteArray(uBuffer, 0);
 		UnsignedInt8Member b = tmpUInt8;
-		for (long i = 0; i < value.byteCount(); i++) {
-			if (prevBytesIndex + i >= elementData.size()) {
-				System.out.println("DEBUG");
-				System.out.println("  size " + elementData.size());
-				System.out.println("  prev " + prevBytesIndex);
-				System.out.println("  i    " + i);
+		for (long i = 0; i < byteCount; i++) {
+			if (startByte + i >= elementData.size()) {
+				System.out.println("DEBUG2");
+				System.out.println("  numElems " + numElements);
+				System.out.println("  index    " + index);
+				System.out.println("  size     " + elementData.size());
+				System.out.println("  start    " + startByte);
+				System.out.println("  i        " + i);
 			}
 			b.setV(uBuffer[(int) i]);
-			elementData.set(prevBytesIndex+i, b);
+			elementData.set(startByte + i, b);
 		}
-		idx.setV(prevBytesIndex + value.byteCount());
+		idx.setV(startByte + byteCount);
 		elementByteOffsets.set(index, idx);
 	}
 	
@@ -221,5 +234,9 @@ public class RaggedFloatStorage<U extends ByteCoder>
 		//   multithreaded stuff could break accessing these
 
 		return true;
+	}
+	
+	private int bytesToInt(byte b0, byte b1, byte b2, byte b3) {
+		return (b0 & 0xff << 24) | (b1 & 0xff << 16) | (b2 & 0xff << 8) | (b3 & 0xff << 0); 
 	}
 }

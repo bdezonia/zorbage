@@ -79,12 +79,18 @@ public class PolygonalChainMember
 	@Override
 	public int byteCount() {
 
+		// (1 int to store numFloats value + 3 floats per x/y/z coord we have)
+		//   TIMES 4 bytes per int or float
+		
 		return (1 + 3 * x.length) * 4;
 	}
 
 	@Override
 	public void fromByteArray(byte[] arr, int index) {
 
+		if (index != 0)
+			throw new IllegalArgumentException("bad array offset");
+		
 		int numFloats;
 
 		numFloats  = ((arr[0] & 0xff) << 24);
@@ -93,47 +99,49 @@ public class PolygonalChainMember
 		numFloats |= ((arr[3] & 0xff) << 0);
 		
 		if (numFloats % 3 != 0)
-			throw new IllegalArgumentException("Tracks require 3 floats per point");
-		
-		if (numFloats != 3 * x.length) {
-			x = new float[numFloats/3];
-			y = new float[numFloats/3];
-			z = new float[numFloats/3];
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+	
+		int numPoints = numFloats / 3;
+
+		if (numPoints != x.length) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
 		}
-		
-		for (int i = 0; i < x.length; i++) {
+
+		int base = 4;
+		for (int i = 0; i < numPoints; i++, base += 12) {
 			int tmp;
 			byte b;
-			int base = 4 + 12*i;
 			
 			b = arr[base + 0];
 			tmp = (b & 0xff) << 24;
 			b = arr[base + 1];
-			tmp = (b & 0xff) << 16;
+			tmp |= (b & 0xff) << 16;
 			b = arr[base + 2];
-			tmp = (b & 0xff) << 8;
+			tmp |= (b & 0xff) << 8;
 			b = arr[base + 3];
-			tmp = (b & 0xff) << 0;
+			tmp |= (b & 0xff) << 0;
 			x[i] = Float.intBitsToFloat(tmp);
 			
 			b = arr[base + 4];
 			tmp = (b & 0xff) << 24;
 			b = arr[base + 5];
-			tmp = (b & 0xff) << 16;
+			tmp |= (b & 0xff) << 16;
 			b = arr[base + 6];
-			tmp = (b & 0xff) << 8;
+			tmp |= (b & 0xff) << 8;
 			b = arr[base + 7];
-			tmp = (b & 0xff) << 0;
+			tmp |= (b & 0xff) << 0;
 			y[i] = Float.intBitsToFloat(tmp);
 			
 			b = arr[base + 8];
 			tmp = (b & 0xff) << 24;
 			b = arr[base + 9];
-			tmp = (b & 0xff) << 16;
+			tmp |= (b & 0xff) << 16;
 			b = arr[base + 10];
-			tmp = (b & 0xff) << 8;
+			tmp |= (b & 0xff) << 8;
 			b = arr[base + 11];
-			tmp = (b & 0xff) << 0;
+			tmp |= (b & 0xff) << 0;
 			z[i] = Float.intBitsToFloat(tmp);
 		}
 	}
@@ -141,7 +149,12 @@ public class PolygonalChainMember
 	@Override
 	public void toByteArray(byte[] arr, int index) {
 		
-		int numFloats = 3 * x.length;
+		if (index != 0)
+			throw new IllegalArgumentException("bad array offset");
+		
+		int numPoints = x.length;
+
+		int numFloats = 3 * numPoints;
 		
 		byte b = 0;
 		
@@ -157,9 +170,9 @@ public class PolygonalChainMember
 		b = (byte) ((numFloats & 0x000000ff) >> 0);
 		arr[3] = b;
 		
-		for (int i = 0; i < x.length; i++) {
+		int base = 4;
+		for (int i = 0; i < numPoints; i++, base += 12) {
 			int tmp;
-			int base = 4 + 12 * i;
 			
 			tmp = Float.floatToIntBits(x[i]);
 			b = (byte) ((tmp & 0xff000000) >> 24);
@@ -242,10 +255,14 @@ public class PolygonalChainMember
 	@Override
 	public float[] getAsFloatArray() {
 		
-		float[] vals = new float[3 * x.length];
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		float[] vals = new float[numFloats];
 		
 		int idx = 0;
-		for (int i = 0; i < x.length; i++, idx+=3) {
+		for (int i = 0; i < numPoints; i++, idx += 3) {
 			vals[idx + 0] = x[i];
 			vals[idx + 1] = y[i];
 			vals[idx + 2] = z[i];
@@ -258,18 +275,18 @@ public class PolygonalChainMember
 	public void setFromFloat(float... vals) {
 
 		if (vals.length % 3 != 0)
-			throw new IllegalArgumentException("Tracks require 3 floats per point");
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
 		
-		int numFloats = vals.length / 3;
+		int numPoints = vals.length / 3;
 		
-		if (x.length != numFloats) {
-			x = new float[numFloats];
-			y = new float[numFloats];
-			z = new float[numFloats];
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
 		}
 		
 		int idx = 0;
-		for (int i = 0; i < numFloats; i++, idx+=3) {
+		for (int i = 0; i < numPoints; i++, idx += 3) {
 			x[i] = vals[idx + 0];
 			y[i] = vals[idx + 1];
 			z[i] = vals[idx + 2];
@@ -285,7 +302,7 @@ public class PolygonalChainMember
 	@Override
 	public int numDimensions() {
 					// TODO
-		return 0;	// is this correct? a number is 0-dimensional. is a track?
+		return 0;	// is this correct? a number is 0-dimensional. is a tract?
 	}
 
 	@Override
@@ -296,6 +313,7 @@ public class PolygonalChainMember
 
 	@Override
 	public void setV(PolygonalChainMember value) {
+		
 		set(value);
 	}
 	
@@ -307,7 +325,7 @@ public class PolygonalChainMember
 	public void getX(int pointNum, Float32Member val) {
 
 		if (pointNum < 0 || pointNum >= x.length)
-			throw new IllegalArgumentException("index out of bounds in TrackMember");
+			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		val.setV( x[pointNum] );
 	}
@@ -315,7 +333,7 @@ public class PolygonalChainMember
 	public void getY(int pointNum, Float32Member val) {
 		
 		if (pointNum < 0 || pointNum >= x.length)
-			throw new IllegalArgumentException("index out of bounds in TrackMember");
+			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		val.setV( y[pointNum] );
 	}
@@ -323,7 +341,7 @@ public class PolygonalChainMember
 	public void getZ(int pointNum, Float32Member val) {
 		
 		if (pointNum < 0 || pointNum >= x.length)
-			throw new IllegalArgumentException("index out of bounds in TrackMember");
+			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		val.setV( z[pointNum] );
 	}
@@ -331,7 +349,7 @@ public class PolygonalChainMember
 	public void setX(int pointNum, Float32Member val) {
 
 		if (pointNum < 0 || pointNum >= x.length)
-			throw new IllegalArgumentException("index out of bounds in TrackMember");
+			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		x[pointNum] = val.v();
 	}
@@ -339,7 +357,7 @@ public class PolygonalChainMember
 	public void setY(int pointNum, Float32Member val) {
 		
 		if (pointNum < 0 || pointNum >= x.length)
-			throw new IllegalArgumentException("index out of bounds in TrackMember");
+			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		y[pointNum] = val.v();
 	}
@@ -347,15 +365,17 @@ public class PolygonalChainMember
 	public void setZ(int pointNum, Float32Member val) {
 		
 		if (pointNum < 0 || pointNum >= x.length)
-			throw new IllegalArgumentException("index out of bounds in TrackMember");
+			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		z[pointNum] = val.v();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
+		
 		if (obj instanceof PolygonalChainMember)
 			return G.CHAIN.isEqual().call(this, (PolygonalChainMember) obj);
+		
 		return false;
 	}
 	
