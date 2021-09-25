@@ -88,15 +88,12 @@ public class PolygonalChainMember
 	@Override
 	public void fromByteArray(byte[] arr, int index) {
 
-		if (index != 0)
-			throw new IllegalArgumentException("bad array offset");
-		
 		int numFloats;
 
-		numFloats  = ((arr[0] & 0xff) << 24);
-		numFloats |= ((arr[1] & 0xff) << 16);
-		numFloats |= ((arr[2] & 0xff) << 8);
-		numFloats |= ((arr[3] & 0xff) << 0);
+		numFloats  = ((arr[index + 0] & 0xff) << 24);
+		numFloats |= ((arr[index + 1] & 0xff) << 16);
+		numFloats |= ((arr[index + 2] & 0xff) << 8);
+		numFloats |= ((arr[index + 3] & 0xff) << 0);
 		
 		if (numFloats % 3 != 0)
 			throw new IllegalArgumentException("Tracts require 3 floats per point");
@@ -114,33 +111,33 @@ public class PolygonalChainMember
 			int tmp;
 			byte b;
 			
-			b = arr[base + 0];
+			b = arr[index + base + 0];
 			tmp = (b & 0xff) << 24;
-			b = arr[base + 1];
+			b = arr[index + base + 1];
 			tmp |= (b & 0xff) << 16;
-			b = arr[base + 2];
+			b = arr[index + base + 2];
 			tmp |= (b & 0xff) << 8;
-			b = arr[base + 3];
+			b = arr[index + base + 3];
 			tmp |= (b & 0xff) << 0;
 			x[i] = Float.intBitsToFloat(tmp);
 			
-			b = arr[base + 4];
+			b = arr[index + base + 4];
 			tmp = (b & 0xff) << 24;
-			b = arr[base + 5];
+			b = arr[index + base + 5];
 			tmp |= (b & 0xff) << 16;
-			b = arr[base + 6];
+			b = arr[index + base + 6];
 			tmp |= (b & 0xff) << 8;
-			b = arr[base + 7];
+			b = arr[index + base + 7];
 			tmp |= (b & 0xff) << 0;
 			y[i] = Float.intBitsToFloat(tmp);
 			
-			b = arr[base + 8];
+			b = arr[index + base + 8];
 			tmp = (b & 0xff) << 24;
-			b = arr[base + 9];
+			b = arr[index + base + 9];
 			tmp |= (b & 0xff) << 16;
-			b = arr[base + 10];
+			b = arr[index + base + 10];
 			tmp |= (b & 0xff) << 8;
-			b = arr[base + 11];
+			b = arr[index + base + 11];
 			tmp |= (b & 0xff) << 0;
 			z[i] = Float.intBitsToFloat(tmp);
 		}
@@ -149,9 +146,6 @@ public class PolygonalChainMember
 	@Override
 	public void toByteArray(byte[] arr, int index) {
 		
-		if (index != 0)
-			throw new IllegalArgumentException("bad array offset");
-		
 		int numPoints = x.length;
 
 		int numFloats = 3 * numPoints;
@@ -159,16 +153,16 @@ public class PolygonalChainMember
 		byte b = 0;
 		
 		b = (byte) ((numFloats & 0xff000000) >> 24);
-		arr[0] = b;
+		arr[index + 0] = b;
 		
 		b = (byte) ((numFloats & 0x00ff0000) >> 16);
-		arr[1] = b;
+		arr[index + 1] = b;
 
 		b = (byte) ((numFloats & 0x0000ff00) >> 8);
-		arr[2] = b;
+		arr[index + 2] = b;
 
 		b = (byte) ((numFloats & 0x000000ff) >> 0);
-		arr[3] = b;
+		arr[index + 3] = b;
 		
 		int base = 4;
 		for (int i = 0; i < numPoints; i++, base += 12) {
@@ -176,33 +170,33 @@ public class PolygonalChainMember
 			
 			tmp = Float.floatToIntBits(x[i]);
 			b = (byte) ((tmp & 0xff000000) >> 24);
-			arr[base + 0] = b;
+			arr[index + base + 0] = b;
 			b = (byte) ((tmp & 0x00ff0000) >> 16);
-			arr[base + 1] = b;
+			arr[index + base + 1] = b;
 			b = (byte) ((tmp & 0x0000ff00) >> 8);
-			arr[base + 2] = b;
+			arr[index + base + 2] = b;
 			b = (byte) ((tmp & 0x000000ff) >> 0);
-			arr[base + 3] = b;
+			arr[index + base + 3] = b;
 			
 			tmp = Float.floatToIntBits(y[i]);
 			b = (byte) ((tmp & 0xff000000) >> 24);
-			arr[base + 4] = b;
+			arr[index + base + 4] = b;
 			b = (byte) ((tmp & 0x00ff0000) >> 16);
-			arr[base + 5] = b;
+			arr[index + base + 5] = b;
 			b = (byte) ((tmp & 0x0000ff00) >> 8);
-			arr[base + 6] = b;
+			arr[index + base + 6] = b;
 			b = (byte) ((tmp & 0x000000ff) >> 0);
-			arr[base + 7] = b;
+			arr[index + base + 7] = b;
 			
 			tmp = Float.floatToIntBits(z[i]);
 			b = (byte) ((tmp & 0xff000000) >> 24);
-			arr[base + 8] = b;
+			arr[index + base + 8] = b;
 			b = (byte) ((tmp & 0x00ff0000) >> 16);
-			arr[base + 9] = b;
+			arr[index + base + 9] = b;
 			b = (byte) ((tmp & 0x0000ff00) >> 8);
-			arr[base + 10] = b;
+			arr[index + base + 10] = b;
 			b = (byte) ((tmp & 0x000000ff) >> 0);
-			arr[base + 11] = b;
+			arr[index + base + 11] = b;
 		}
 	}
 
