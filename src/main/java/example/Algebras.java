@@ -165,7 +165,8 @@ class Algebras {
 	 * gaussian integers (8 bit, 16 bit, 32 bit, 64 bit, and unbounded)
 	 * booleans
 	 * n-dimensional real Points
-	 * ARGB and RGB pixels
+	 * polygonal chains made of 3-dimensional points 
+	 * ARGB, RGB, and LAB CIE pixels
 	 * vectors and matrices and tensors
 	 * real, complex, quaternion, and octonion numbers
 	 * and more

@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.color.ArgbMember;
 import nom.bdezonia.zorbage.type.color.RgbMember;
 import nom.bdezonia.zorbage.type.geom.point.Point;
+import nom.bdezonia.zorbage.type.geom.polygonalchain.PolygonalChainMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.string.FixedStringMember;
 import nom.bdezonia.zorbage.type.string.StringMember;
@@ -528,4 +529,43 @@ class MiscTypes {
 		CharAlgebra.valueOf().call('n');
 	}
 
+	// Polygonal chains made of 3-d points: a stepped path in 3-d space
+	
+	void example9() {
+		
+		float[] x = new float[] {1, 7, 15};
+		float[] y = new float[] {11, -1, 8};
+		float[] z = new float[] {6, 11, 0};
+		
+		PolygonalChainMember ch = new PolygonalChainMember(x,y,z);
+		PolygonalChainMember other = null;
+		
+		// java ops
+
+		ch.equals(other);
+		ch.hashCode();
+		ch.toString();
+		
+		// constructions
+		
+		G.CHAIN.construct();
+		G.CHAIN.construct(other);
+		G.CHAIN.construct("[1,2,3,12,14,13,0,1,2]");
+
+		// mathematical operations
+		
+		G.CHAIN.assign();
+		G.CHAIN.zero();
+		G.CHAIN.infinite();
+		G.CHAIN.negInfinite();
+		G.CHAIN.nan();
+
+		// comparisons
+		
+		G.CHAIN.isEqual();
+		G.CHAIN.isNotEqual();
+		G.CHAIN.isZero();
+		G.CHAIN.isInfinite();
+		G.CHAIN.isNaN();
+	}
 }

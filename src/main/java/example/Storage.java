@@ -38,11 +38,14 @@ import nom.bdezonia.zorbage.datasource.BigListDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ListDataSource;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.extmem.ExtMemStorage;
 import nom.bdezonia.zorbage.storage.file.FileStorage;
 import nom.bdezonia.zorbage.storage.jdbc.JdbcStorage;
+import nom.bdezonia.zorbage.storage.ragged.RaggedStorageUnsignedInt8;
 import nom.bdezonia.zorbage.storage.sparse.SparseStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
+import nom.bdezonia.zorbage.type.geom.polygonalchain.PolygonalChainMember;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 
@@ -144,5 +147,40 @@ class Storage {
 		// allocate storage sparsely
 		
 		IndexedDataSource<ComplexFloat32Member> list = SparseStorage.allocate(G.CFLT.construct(), 50000);
+	}
+	
+	@SuppressWarnings("unused")
+	void example6() {
+		
+		// allocate storage in a memory friendly way.
+		
+		// Java has about a 2 billion entity limit when allocating memory. ExtMemStorage allows Zorbage to
+		//   handle very large requests and attempt to pack them into RAM. When possible this can compute
+		//   quickly on large data sets.
+		
+		IndexedDataSource<ComplexFloat32Member> list = ExtMemStorage.allocate(G.CFLT.construct(), 2L * Integer.MAX_VALUE);
+	}
+	
+	@SuppressWarnings("unused")
+	void example7() {
+		
+		// allocate memory in "ragged" structures
+		
+		//   Some lists of data can contain elements of differing sizes. When you need to support this
+		//     Zorbage provides ragged storage for just such a scenario. Any element that can be encoded
+		//     as bytes can reside in a ragged structure. A list of polygonal chains might have one chain
+		//     with 10 points and another with 4. Each one encodes as a different byte size. Ragged storage
+		//     can deal with their differing sizes by storing an index into the mass of bytes of the list
+		//     to keep track of where each chain starts in memory. A ragged structure is built once and
+		//     updates to the individual elements in the list can change except how many bytes it takes
+		//     to encode them. For instance you can update the components of all the coordinates of any
+		//     points in any polygonal chain in the list. But you cannot change the number of points
+		//     contained in any of the polygonal chains as stored.
+		
+		long numChains = 45;
+		long totalBytesStoringChains = 10046;
+
+		IndexedDataSource<PolygonalChainMember> list = 
+				new RaggedStorageUnsignedInt8<PolygonalChainMember>(numChains, totalBytesStoringChains);
 	}
 }

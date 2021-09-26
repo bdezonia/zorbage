@@ -52,7 +52,8 @@ class DataTypes {
 	 *   Tensors
 	 *   
 	 *   MiscTypes
-	 *     booleans, characters, strings, rgb, argb, rationals, n-dimensional real points
+	 *     booleans, characters, strings, rgb, argb, rationals, n-dimensional real points,
+	 *     polygonal chains
 	 *  
 	 * Some things that are worth knowing about types in Zorbage:
 	 * 
