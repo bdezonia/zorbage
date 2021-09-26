@@ -171,16 +171,20 @@ class Storage {
 		//     as bytes can reside in a ragged structure. A list of polygonal chains might have one chain
 		//     with 10 points and another with 4. Each one encodes as a different byte size. Ragged storage
 		//     can deal with their differing sizes by storing an index into the mass of bytes of the list
-		//     to keep track of where each chain starts in memory. A ragged structure is built once and
-		//     updates to the individual elements in the list can change except how many bytes it takes
-		//     to encode them. For instance you can update the components of all the coordinates of any
-		//     points in any polygonal chain in the list. But you cannot change the number of points
-		//     contained in any of the polygonal chains as stored.
+		//     to keep track of where each chain starts in it's containing structure. A ragged structure
+		//     is built once and updates to the individual elements in the list can change except how many
+		//     bytes it takes to encode them. For instance you can update the components of all the
+		//     coordinates of any points in any polygonal chain in the list. But you cannot change the
+		//     number of points contained in any of the polygonal chains as stored. If you need a list of
+		//     elements of varied sizes and the non-edit rule of ragged storage is prohibitive use an
+		//     ArrayDataSource or a ListDataSource (if your number of elements is less than 2 billion)
+		//     or use a BigListDataSource (if your number of elements is larger than 2 billion). Note that
+		//     these alternatives all are memory resident (while ragged storage does not require that).
 		
 		long numChains = 45;
-		long totalBytesStoringChains = 10046;
+		long totalBytesStoringTheChains = 10046;
 
 		IndexedDataSource<PolygonalChainMember> list = 
-				new RaggedStorageUnsignedInt8<PolygonalChainMember>(numChains, totalBytesStoringChains);
+				new RaggedStorageUnsignedInt8<PolygonalChainMember>(numChains, totalBytesStoringTheChains);
 	}
 }
