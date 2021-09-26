@@ -41,11 +41,9 @@ import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 /**
  * @author Barry DeZonia
  */
-public class RaggedFloatStorage<U extends ByteCoder>
+public class RaggedStorageUnsignedInt8<U extends ByteCoder>
 	implements IndexedDataSource<U>
 {
-	private final long numElements;
-	private final long numFloats;
 	private final IndexedDataSource<SignedInt64Member> elementByteOffsets;
 	private final IndexedDataSource<UnsignedInt8Member> elementData;
 	private final SignedInt64Member tmpInt64;
@@ -57,12 +55,10 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	 * @param numElements
 	 * @param totalFloats
 	 */
-	public RaggedFloatStorage(long numElements, long totalFloats) {
+	public RaggedStorageUnsignedInt8(long numElements, long totalBytes) {
 
-		this.numElements = numElements;
-		this.numFloats = totalFloats;
 		this.elementByteOffsets = Storage.allocate(G.INT64.construct(), numElements);
-		this.elementData = Storage.allocate(G.UINT8.construct(), (numElements * 4) + (totalFloats * 4));
+		this.elementData = Storage.allocate(G.UINT8.construct(), totalBytes);
 		this.uBuffer = new byte[0];
 		this.tmpInt64 = G.INT64.construct();
 		this.tmpUInt8 = G.UINT8.construct();
@@ -72,10 +68,8 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	 * 
 	 * @param other
 	 */
-	public RaggedFloatStorage(RaggedFloatStorage<U> other) {
+	public RaggedStorageUnsignedInt8(RaggedStorageUnsignedInt8<U> other) {
 		
-		this.numElements = other.numElements;
-		this.numFloats = other.numFloats;
 		this.elementByteOffsets = other.elementByteOffsets.duplicate();
 		this.elementData = other.elementData.duplicate();
 		this.uBuffer = other.uBuffer.clone();
@@ -84,9 +78,9 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	}
 
 	@Override
-	public RaggedFloatStorage<U> duplicate() {
+	public RaggedStorageUnsignedInt8<U> duplicate() {
 		
-		return new RaggedFloatStorage<>(this);
+		return new RaggedStorageUnsignedInt8<>(this);
 	}
 
 	@Override
@@ -205,7 +199,12 @@ public class RaggedFloatStorage<U extends ByteCoder>
 	@Override
 	public long size() {
 
-		return numElements;
+		return elementByteOffsets.size();
+	}
+
+	public long byteCount() {
+
+		return elementData.size();
 	}
 
 	@Override
@@ -216,8 +215,4 @@ public class RaggedFloatStorage<U extends ByteCoder>
 
 		return true;
 	}
-	
-//	private int bytesToInt(byte b0, byte b1, byte b2, byte b3) {
-//		return (b0 & 0xff << 24) | (b1 & 0xff << 16) | (b2 & 0xff << 8) | (b3 & 0xff << 0); 
-//	}
 }
