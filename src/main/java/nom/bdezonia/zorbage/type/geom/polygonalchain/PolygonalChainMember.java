@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.type.geom.polygonalchain;
 
+import java.util.List;
+
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
@@ -70,6 +72,65 @@ public class PolygonalChainMember
 		this.x = x.clone();
 		this.y = y.clone();
 		this.z = z.clone();
+	}
+	
+	public PolygonalChainMember(List<Float> x, List<Float> y, List<Float> z) {
+
+		if (x.size() != y.size() || x.size() != z.size())
+			throw new IllegalArgumentException(
+					"polygonal chain coordinate lists must be equal in length");
+		
+		int sz = x.size();
+		
+		this.x = new float[sz];
+		this.y = new float[sz];
+		this.z = new float[sz];
+		
+		for (int i = 0; i < sz; i++) {
+			
+			this.x[i] = x.get(i);
+			this.y[i] = y.get(i);
+			this.z[i] = z.get(i);
+		}
+		
+	}
+	
+	public PolygonalChainMember(float[] triplets) {
+
+		if (triplets.length % 3 != 0)
+			throw new IllegalArgumentException(
+					"polygonal chain coordinate array length must be a multiple of three");
+		
+		int sz = triplets.length % 3;
+		
+		this.x = new float[sz];
+		this.y = new float[sz];
+		this.z = new float[sz];
+		
+		for (int i = 0, offset = 0; offset < triplets.length; offset += 3, i++) {
+			this.x[i] = triplets[offset + 0];
+			this.y[i] = triplets[offset + 1];
+			this.z[i] = triplets[offset + 2];
+		}
+	}
+	
+	public PolygonalChainMember(List<Float> triplets) {
+
+		if (triplets.size() % 3 != 0)
+			throw new IllegalArgumentException(
+					"polygonal chain coordinate list length must be a multiple of three");
+		
+		int sz = triplets.size() % 3;
+		
+		this.x = new float[sz];
+		this.y = new float[sz];
+		this.z = new float[sz];
+		
+		for (int i = 0, offset = 0; offset < triplets.size(); offset += 3, i++) {
+			this.x[i] = triplets.get(offset + 0);
+			this.y[i] = triplets.get(offset + 1);
+			this.z[i] = triplets.get(offset + 2);
+		}
 	}
 	
 	public PolygonalChainMember(PolygonalChainMember other) {
@@ -390,7 +451,7 @@ public class PolygonalChainMember
 	@Override
 	public String toString() {
 		
-		// TODO DO SOMETHING ...
+		// TODO DO SOMETHING ... a nx3 matrix? (a column of n 3-d rows). is that mathematically correct?
 		
 		return super.toString();
 	}
