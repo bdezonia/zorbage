@@ -53,6 +53,8 @@ public class PolygonalChainMember
 		Allocatable<PolygonalChainMember>, Duplicatable<PolygonalChainMember>,
 		SetFromFloat, GetAsFloatArray, NumberMember<PolygonalChainMember>
 {
+	float boundsValid;
+	float minx, miny, minz, maxx, maxy, maxz;
 	float[] x;
 	float[] y;
 	float[] z;
@@ -61,6 +63,7 @@ public class PolygonalChainMember
 		x = new float[0];
 		y = new float[0];
 		z = new float[0];
+		boundsValid = 0;
 	}
 
 	public PolygonalChainMember(float[] x, float[] y, float[] z) {
@@ -72,6 +75,7 @@ public class PolygonalChainMember
 		this.x = x.clone();
 		this.y = y.clone();
 		this.z = z.clone();
+		this.boundsValid = 0;
 	}
 	
 	public PolygonalChainMember(List<Float> x, List<Float> y, List<Float> z) {
@@ -93,6 +97,7 @@ public class PolygonalChainMember
 			this.z[i] = z.get(i);
 		}
 		
+		this.boundsValid = 0;
 	}
 	
 	public PolygonalChainMember(float[] triplets) {
@@ -112,6 +117,8 @@ public class PolygonalChainMember
 			this.y[i] = triplets[offset + 1];
 			this.z[i] = triplets[offset + 2];
 		}
+
+		this.boundsValid = 0;
 	}
 	
 	public PolygonalChainMember(List<Float> triplets) {
@@ -131,6 +138,8 @@ public class PolygonalChainMember
 			this.y[i] = triplets.get(offset + 1);
 			this.z[i] = triplets.get(offset + 2);
 		}
+
+		this.boundsValid = 0;
 	}
 	
 	public PolygonalChainMember(PolygonalChainMember other) {
@@ -140,10 +149,11 @@ public class PolygonalChainMember
 	@Override
 	public int byteCount() {
 
-		// (1 int to store numFloats value + 3 floats per x/y/z coord we have)
-		//   TIMES 4 bytes per int or float
+		// (1 int to store numFloats value and 7 floats for bounds and
+		//   3 floats per x/y/z coord we have)
+		//     TIMES 4 bytes per int or float
 		
-		return (1 + 3 * x.length) * 4;
+		return (1 + 7 + 3 * x.length) * 4;
 	}
 
 	@Override
@@ -156,6 +166,11 @@ public class PolygonalChainMember
 		numFloats |= ((arr[index + 2] & 0xff) << 8);
 		numFloats |= ((arr[index + 3] & 0xff) << 0);
 		
+		if (numFloats < 7)
+			throw new IllegalArgumentException("invalid number of floats in chain header");
+		
+		numFloats -= 7;
+		
 		if (numFloats % 3 != 0)
 			throw new IllegalArgumentException("Tracts require 3 floats per point");
 	
@@ -167,11 +182,96 @@ public class PolygonalChainMember
 			z = new float[numPoints];
 		}
 
+		int tmp;
+		byte b;
+		
 		int base = 4;
+
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		boundsValid = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		minx = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		miny = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		minz = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		maxx = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		maxy = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
+		b = arr[index + base + 0];
+		tmp = (b & 0xff) << 24;
+		b = arr[index + base + 1];
+		tmp |= (b & 0xff) << 16;
+		b = arr[index + base + 2];
+		tmp |= (b & 0xff) << 8;
+		b = arr[index + base + 3];
+		tmp |= (b & 0xff) << 0;
+		maxz = Float.intBitsToFloat(tmp);
+		
+		base += 4;
+		
 		for (int i = 0; i < numPoints; i++, base += 12) {
-			int tmp;
-			byte b;
-			
 			b = arr[index + base + 0];
 			tmp = (b & 0xff) << 24;
 			b = arr[index + base + 1];
@@ -225,9 +325,95 @@ public class PolygonalChainMember
 		b = (byte) ((numFloats & 0x000000ff) >> 0);
 		arr[index + 3] = b;
 		
+		int tmp;
+
 		int base = 4;
+		
+		tmp = Float.floatToIntBits(boundsValid);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
+		tmp = Float.floatToIntBits(minx);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
+		tmp = Float.floatToIntBits(miny);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
+		tmp = Float.floatToIntBits(minz);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
+		tmp = Float.floatToIntBits(maxx);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
+		tmp = Float.floatToIntBits(maxy);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
+		tmp = Float.floatToIntBits(maxz);
+		b = (byte) ((tmp & 0xff000000) >> 24);
+		arr[index + base + 0] = b;
+		b = (byte) ((tmp & 0x00ff0000) >> 16);
+		arr[index + base + 1] = b;
+		b = (byte) ((tmp & 0x0000ff00) >> 8);
+		arr[index + base + 2] = b;
+		b = (byte) ((tmp & 0x000000ff) >> 0);
+		arr[index + base + 3] = b;
+
+		base += 4;
+		
 		for (int i = 0; i < numPoints; i++, base += 12) {
-			int tmp;
 			
 			tmp = Float.floatToIntBits(x[i]);
 			b = (byte) ((tmp & 0xff000000) >> 24);
@@ -276,6 +462,13 @@ public class PolygonalChainMember
 				other.z[i] = z[i];
 			}
 		}
+		other.boundsValid = boundsValid;
+		other.minx = minx;
+		other.miny = miny;
+		other.minz = minz;
+		other.maxx = maxx;
+		other.maxy = maxy;
+		other.maxz = maxz;
 	}
 
 	@Override
@@ -293,6 +486,13 @@ public class PolygonalChainMember
 				z[i] = other.z[i];
 			}
 		}
+		boundsValid = other.boundsValid;
+		minx = other.minx;
+		miny = other.miny;
+		minz = other.minz;
+		maxx = other.maxx;
+		maxy = other.maxy;
+		maxz = other.maxz;
 	}
 
 	@Override
@@ -346,6 +546,8 @@ public class PolygonalChainMember
 			y[i] = vals[idx + 1];
 			z[i] = vals[idx + 2];
 		}
+		
+		boundsValid = 0;
 	}
 
 	@Override
@@ -405,8 +607,10 @@ public class PolygonalChainMember
 
 		if (pointNum < 0 || pointNum >= x.length)
 			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
-		
+
 		x[pointNum] = val.v();
+		
+		boundsValid = 0;  // this could be done much more efficiently
 	}
 	
 	public void setY(int pointNum, Float32Member val) {
@@ -415,6 +619,8 @@ public class PolygonalChainMember
 			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		y[pointNum] = val.v();
+		
+		boundsValid = 0;  // this could be done much more efficiently
 	}
 	
 	public void setZ(int pointNum, Float32Member val) {
@@ -423,6 +629,8 @@ public class PolygonalChainMember
 			throw new IllegalArgumentException("index out of bounds in PolygonalChainMember");
 		
 		z[pointNum] = val.v();
+		
+		boundsValid = 0;  // this could be done much more efficiently
 	}
 	
 	@Override
@@ -454,5 +662,80 @@ public class PolygonalChainMember
 		// TODO DO SOMETHING ... a nx3 matrix? (a column of n 3-d rows). is that mathematically correct?
 		
 		return super.toString();
+	}
+	
+	public float getMinX() {
+		if (boundsValid == 0) {
+			calcBounds();
+		}
+		return minx;
+	}
+	
+	public float getMinY() {
+		if (boundsValid == 0) {
+			calcBounds();
+		}
+		return miny;
+	}
+	
+	public float getMinZ() {
+		if (boundsValid == 0) {
+			calcBounds();
+		}
+		return minz;
+	}
+	
+	public float getMaxX() {
+		if (boundsValid == 0) {
+			calcBounds();
+		}
+		return maxx;
+	}
+	
+	public float getMaxY() {
+		if (boundsValid == 0) {
+			calcBounds();
+		}
+		return maxy;
+	}
+	
+	public float getMaxZ() {
+		if (boundsValid == 0) {
+			calcBounds();
+		}
+		return maxz;
+	}
+	
+	private void calcBounds() {
+		minx = Float.NaN;
+		miny = Float.NaN;
+		minz = Float.NaN;
+		maxx = Float.NaN;
+		maxy = Float.NaN;
+		maxz = Float.NaN;
+		for (int i = 0; i < x.length; i++) {
+			if (i == 0) {
+				minx = maxx = x[0];
+				miny = maxy = y[0];
+				minz = maxz = z[0];
+			}
+			else {
+				if (x[i] < minx)
+					minx = x[i];
+				else if (x[i] > maxx)
+					maxx = x[i];
+
+				if (y[i] < miny)
+					miny = y[i];
+				else if (y[i] > maxy)
+					maxy = y[i];
+
+				if (z[i] < minz)
+					minz = z[i];
+				else if (z[i] > maxz)
+					maxz = z[i];
+			}
+		}
+		boundsValid = 1;
 	}
 }
