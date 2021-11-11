@@ -169,12 +169,12 @@ public class PolygonalChainMember
 		if (numFloats < 7)
 			throw new IllegalArgumentException("invalid number of floats in chain header");
 		
-		numFloats -= 7;
+		int numPointFloats = numFloats - 7;
 		
-		if (numFloats % 3 != 0)
-			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		if (numPointFloats % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point: numFloats = "+numPointFloats);
 	
-		int numPoints = numFloats / 3;
+		int numPoints = numPointFloats / 3;
 
 		if (numPoints != x.length) {
 			x = new float[numPoints];
@@ -309,7 +309,7 @@ public class PolygonalChainMember
 		
 		int numPoints = x.length;
 
-		int numFloats = 3 * numPoints;
+		int numFloats = 3 * numPoints + 7;
 		
 		byte b = 0;
 		
@@ -665,77 +665,99 @@ public class PolygonalChainMember
 	}
 	
 	public float getMinX() {
+		
 		if (boundsValid == 0) {
 			calcBounds();
 		}
+		
 		return minx;
 	}
 	
 	public float getMinY() {
+		
 		if (boundsValid == 0) {
 			calcBounds();
 		}
+		
 		return miny;
 	}
 	
 	public float getMinZ() {
+		
 		if (boundsValid == 0) {
 			calcBounds();
 		}
+		
 		return minz;
 	}
 	
 	public float getMaxX() {
+		
 		if (boundsValid == 0) {
 			calcBounds();
 		}
+		
 		return maxx;
 	}
 	
 	public float getMaxY() {
+		
 		if (boundsValid == 0) {
 			calcBounds();
 		}
+		
 		return maxy;
 	}
 	
 	public float getMaxZ() {
+		
 		if (boundsValid == 0) {
 			calcBounds();
 		}
+		
 		return maxz;
 	}
 	
 	private void calcBounds() {
-		minx = Float.NaN;
-		miny = Float.NaN;
-		minz = Float.NaN;
-		maxx = Float.NaN;
-		maxy = Float.NaN;
-		maxz = Float.NaN;
-		for (int i = 0; i < x.length; i++) {
-			if (i == 0) {
-				minx = maxx = x[0];
-				miny = maxy = y[0];
-				minz = maxz = z[0];
-			}
-			else {
-				if (x[i] < minx)
-					minx = x[i];
-				else if (x[i] > maxx)
-					maxx = x[i];
-
-				if (y[i] < miny)
-					miny = y[i];
-				else if (y[i] > maxy)
-					maxy = y[i];
-
-				if (z[i] < minz)
-					minz = z[i];
-				else if (z[i] > maxz)
-					maxz = z[i];
-			}
+		
+		if (x.length == 0) {
+			minx = Float.NaN;
+			miny = Float.NaN;
+			minz = Float.NaN;
+			maxx = Float.NaN;
+			maxy = Float.NaN;
+			maxz = Float.NaN;
 		}
+		else {
+			minx = maxx = x[0];
+			miny = maxy = y[0];
+			minz = maxz = z[0];
+		}
+		
+		for (int i = 1; i < x.length; i++) {
+			
+			float val = x[i];
+			
+			if (val < minx)
+				minx = val;
+			else if (val > maxx)
+				maxx = val;
+
+			val = y[i];
+			
+			if (val < miny)
+				miny = val;
+			else if (val > maxy)
+				maxy = val;
+
+			val = z[i];
+			
+			if (val < minz)
+				minz = val;
+			else if (val > maxz)
+				maxz = val;
+		}
+		
 		boundsValid = 1;
 	}
 }
