@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.geom.polygonalchain;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.NegInfinite;
@@ -38,8 +39,10 @@ import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
+import nom.bdezonia.zorbage.function.Function7;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 
 /**
  * @author Barry DeZonia
@@ -317,6 +320,55 @@ public class PolygonalChainAlgebra
 	public Function3<Boolean, Float, PolygonalChainMember, PolygonalChainMember> within() {
 
 		return WITHIN;
+	}
+	
+	private final Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember> INTERSECT =
+	
+		new Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember>() {
+
+			@Override
+			public Boolean call(Float minx, Float miny, Float minz, Float maxx, Float maxy, Float maxz, PolygonalChainMember pc) {
+
+				// degenerate chains intersect nothing
+				
+				if (pc.pointCount() == 0) return false;
+
+				// chains whose bounds are outside the specified region don't intersect
+				
+				if (pc.getMinX() > maxx) return false;
+				if (pc.getMinY() > maxy) return false;
+				if (pc.getMinZ() > maxz) return false;
+				if (pc.getMaxX() < minx) return false;
+				if (pc.getMaxY() < miny) return false;
+				if (pc.getMaxZ() < minz) return false;
+
+				// there is some overlap in regions: now check point by point
+				
+				Float32Member x = G.FLT.construct();
+				Float32Member y = G.FLT.construct();
+				Float32Member z = G.FLT.construct();
+
+				for (int i = 0; i < pc.pointCount(); i++) {
+					
+					pc.getX(i, x);
+					pc.getY(i, y);
+					pc.getZ(i, z);
+				
+					// is point inside the region
+					if (minx <= x.v() && x.v() <= maxx &&
+							miny <= y.v() && y.v() <= maxy &&
+							minz <= z.v() && z.v() <= maxz)
+						return true;
+				}
+				
+				// if here then every point failed to be in the bounds
+				
+				return false;
+			}
+		};
+	
+	public Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember> intersect() {
+		return INTERSECT;
 	}
 
 }
