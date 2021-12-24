@@ -44,7 +44,6 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
 
 /**
  * @author Barry DeZonia
@@ -457,6 +456,9 @@ public class PolygonalChainAlgebra
 
 	// from https://stackoverflow.com/questions/53962225/how-to-know-if-a-line-segment-intersects-a-triangle-in-3d-space
 	
+	// TODO: replace all the high level vector code with low level inline float
+	//   code that computes the same stuff.
+		
 	private final boolean segmentIntersectsTriangle(
 			float segx0, float segy0, float segz0,
 			float segx1, float segy1, float segz1,
@@ -464,15 +466,15 @@ public class PolygonalChainAlgebra
 			float trix1, float triy1, float triz1,
 			float trix2, float triy2, float triz2)
 	{
-		Float32VectorMember rayVector = new Float32VectorMember((segx1-segx0), (segy1-segy0), (segz1-segz0));
+		Float32VectorMember segmentVector = new Float32VectorMember((segx1-segx0), (segy1-segy0), (segz1-segz0));
 		
 		Float32Member tmp = G.FLT.construct();
 		
-		G.FLT_VEC.norm().call(rayVector, tmp);
+		G.FLT_VEC.norm().call(segmentVector, tmp);
 		
 		G.FLT.invert().call(tmp, tmp);
 		
-		G.FLT_VEC.scale().call(tmp, rayVector, rayVector);
+		G.FLT_VEC.scale().call(tmp, segmentVector, segmentVector);
 		
 		Float32VectorMember edge1 = new Float32VectorMember((trix1-trix0),(triy1-triy0),(triz1-triz0));
 
@@ -480,7 +482,7 @@ public class PolygonalChainAlgebra
 
 		Float32VectorMember h = G.FLT_VEC.construct();
 		
-		G.FLT_VEC.crossProduct().call(rayVector, edge2, h);
+		G.FLT_VEC.crossProduct().call(segmentVector, edge2, h);
 		
 		G.FLT_VEC.dotProduct().call(edge1, h, tmp);
 
@@ -506,7 +508,7 @@ public class PolygonalChainAlgebra
 		
 		G.FLT_VEC.crossProduct().call(s, edge1, q);
 		
-		G.FLT_VEC.dotProduct().call(rayVector, q, tmp);
+		G.FLT_VEC.dotProduct().call(segmentVector, q, tmp);
 		
 		float v = f * tmp.v();
 		
@@ -516,17 +518,16 @@ public class PolygonalChainAlgebra
 		}
 		
 		// At this stage we can compute t to find out where the intersection point is on the line.
+		
 		G.FLT_VEC.dotProduct().call(edge2, q, tmp);
 		
 		float t = f * tmp.v();
 		
-		G.FLT_VEC.norm().call(rayVector, tmp);
-		
-		if (t > ZERO_TOL && t < tmp.v()) // ray intersection
+		if (t > ZERO_TOL && t < 1.0-ZERO_TOL) // segment intersection
 		{
 			return true;
 		}
-		else // This means that there is a line intersection but not a ray intersection.
+		else // This means that there is a line intersection but not a segment intersection.
 		{
 			return false;
 		}
