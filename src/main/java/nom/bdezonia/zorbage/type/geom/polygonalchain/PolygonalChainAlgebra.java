@@ -43,6 +43,8 @@ import nom.bdezonia.zorbage.function.Function7;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
+import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
 
 /**
  * @author Barry DeZonia
@@ -322,6 +324,8 @@ public class PolygonalChainAlgebra
 		return WITHIN;
 	}
 	
+	private static final float ZERO_TOL = 0.000000001f;
+	
 	private final Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember> INTERSECT =
 	
 		new Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember>() {
@@ -362,10 +366,171 @@ public class PolygonalChainAlgebra
 				}
 				
 				// if here then every point failed to be in the bounds
+				//   so check for segment intersections with faces
+				
+				pc.getX(0, x);
+				pc.getY(0, y);
+				pc.getZ(0, z);
+				
+				Float32Member x2 = G.FLT.construct();
+				Float32Member y2 = G.FLT.construct();
+				Float32Member z2 = G.FLT.construct();
+
+				for (int i = 1; i < pc.pointCount(); i++) {
+					
+					pc.getX(i, x2);
+					pc.getY(i, y2);
+					pc.getZ(i, z2);
+					
+					// calc against every face of volume to see if segment intersects
+
+					// eight corner points:
+					//   minx,miny,minz
+					//   minx,miny,maxz
+					//   minx,maxy,minz
+					//   minx,maxy,maxz
+					//   maxx,miny,minz
+					//   maxx,miny,maxz
+					//   maxx,maxy,minz
+					//   maxx,maxy,maxz
+					
+					// 6 faces defined by two triangles each : 12 total triangles
+
+					// face 1 : front
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,minz, maxx,miny,minz, maxx,miny,maxz))
+						return true;
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,minz, minx,miny,maxz, maxx,miny,maxz))
+						return true;
+
+					// face 2 : back
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,maxy,minz, maxx,maxy,minz, maxx,maxy,maxz))
+						return true;
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,maxy,minz, minx,maxy,maxz, maxx,maxy,maxz))
+						return true;
+					
+					// face 3 : left
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,minz, minx,miny,maxz, minx,maxy,maxz))
+						return true;
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,minz, minx,maxy,minz, minx,maxy,maxz))
+						return true;
+					
+					// face 4 : right
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), maxx,miny,minz, maxx,miny,maxz, maxx,maxy,maxz))
+						return true;
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), maxx,miny,minz, maxx,maxy,minz, maxx,maxy,maxz))
+						return true;
+					
+					// face 5 : top
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,maxz, minx,maxy,maxz, maxx,maxy,maxz))
+						return true;
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,maxz, maxx,miny,maxz, maxx,maxy,maxz))
+						return true;
+					
+					// face 6 : bottom
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,minz, minx,maxy,minz, maxx,maxy,minz))
+						return true;
+					
+					if (segmentIntersectsTriangle(x.v(),y.v(),z.v(), x2.v(),y2.v(),z2.v(), minx,miny,minz, maxx,miny,minz, maxx,maxy,minz))
+						return true;
+					
+					// prepare to move to next segment
+					
+					G.FLT.assign().call(x2, x);
+					G.FLT.assign().call(y2, y);
+					G.FLT.assign().call(z2, z);
+				}
 				
 				return false;
 			}
 		};
+
+	// from https://stackoverflow.com/questions/53962225/how-to-know-if-a-line-segment-intersects-a-triangle-in-3d-space
+	
+	private final boolean segmentIntersectsTriangle(
+			float segx0, float segy0, float segz0,
+			float segx1, float segy1, float segz1,
+			float trix0, float triy0, float triz0,
+			float trix1, float triy1, float triz1,
+			float trix2, float triy2, float triz2)
+	{
+		Float32VectorMember rayVector = new Float32VectorMember((segx1-segx0), (segy1-segy0), (segz1-segz0));
+		
+		Float32Member tmp = G.FLT.construct();
+		
+		G.FLT_VEC.norm().call(rayVector, tmp);
+		
+		G.FLT.invert().call(tmp, tmp);
+		
+		G.FLT_VEC.scale().call(tmp, rayVector, rayVector);
+		
+		Float32VectorMember edge1 = new Float32VectorMember((trix1-trix0),(triy1-triy0),(triz1-triz0));
+
+		Float32VectorMember edge2 = new Float32VectorMember((trix2-trix0),(triy2-triy0),(triz2-triz0));
+
+		Float32VectorMember h = G.FLT_VEC.construct();
+		
+		G.FLT_VEC.crossProduct().call(rayVector, edge2, h);
+		
+		G.FLT_VEC.dotProduct().call(edge1, h, tmp);
+
+		if (tmp.v() > -ZERO_TOL && tmp.v() < ZERO_TOL)
+		{
+			return false;    // This ray is parallel to this triangle.
+		}
+		
+		float f = 1.0f / tmp.v();
+
+		Float32VectorMember s = new Float32VectorMember((segx0-trix0), (segy0-triy0), (segz0-triz0));
+		
+		G.FLT_VEC.dotProduct().call(s, h, tmp);
+		
+		float u = f * tmp.v();
+		
+		if (u < 0.0 || u > 1.0)
+		{
+			return false;
+		}
+		
+		Float32VectorMember q = G.FLT_VEC.construct();
+		
+		G.FLT_VEC.crossProduct().call(s, edge1, q);
+		
+		G.FLT_VEC.dotProduct().call(rayVector, q, tmp);
+		
+		float v = f * tmp.v();
+		
+		if (v < 0.0 || u + v > 1.0)
+		{
+			return false;
+		}
+		
+		// At this stage we can compute t to find out where the intersection point is on the line.
+		G.FLT_VEC.dotProduct().call(edge2, q, tmp);
+		
+		float t = f * tmp.v();
+		
+		G.FLT_VEC.norm().call(rayVector, tmp);
+		
+		if (t > ZERO_TOL && t < tmp.v()) // ray intersection
+		{
+			return true;
+		}
+		else // This means that there is a line intersection but not a ray intersection.
+		{
+			return false;
+		}
+	}
 	
 	public Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember> intersect() {
 		return INTERSECT;
