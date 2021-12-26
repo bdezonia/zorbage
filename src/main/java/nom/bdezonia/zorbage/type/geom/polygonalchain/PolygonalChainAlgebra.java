@@ -56,6 +56,8 @@ public class PolygonalChainAlgebra
 		NaN<PolygonalChainMember>,
 		Tolerance<Float, PolygonalChainMember>
 {
+	private static final float ZERO_TOL = 0.00000001f;
+	
 	public PolygonalChainAlgebra() { }
 
 	@Override
@@ -323,8 +325,6 @@ public class PolygonalChainAlgebra
 		return WITHIN;
 	}
 	
-	private static final float ZERO_TOL = 0.000000001f;
-	
 	private final Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember> INTERSECT =
 	
 		new Function7<Boolean, Float, Float, Float, Float, Float, Float, PolygonalChainMember>() {
@@ -523,7 +523,7 @@ public class PolygonalChainAlgebra
 		
 		float t = f * tmp.v();
 		
-		if (t > ZERO_TOL && t < 1.0-ZERO_TOL) // segment intersection
+		if (t >= ZERO_TOL && t <= 1.0) // segment intersection
 		{
 			return true;
 		}
