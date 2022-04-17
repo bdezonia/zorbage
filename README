@@ -254,8 +254,8 @@ Is there a way to get data into a Zorbage backed application?
     
     https://github.com/bdezonia/zorbage-nifti
 
-  Code has been written to load raster data using the SCIFIO library
-    into Zorbage structures. You can find it here:
+  Code has been written to load common raster data formats using
+    the SCIFIO library into Zorbage structures. You can find it here:
   
     https://github.com/bdezonia/zorbage-scifio
   
