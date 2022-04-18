@@ -53,7 +53,7 @@ public class RaggedStorageUnsignedInt8<U extends ByteCoder>
 	/**
 	 * 
 	 * @param numElements
-	 * @param totalFloats
+	 * @param totalBytes
 	 */
 	public RaggedStorageUnsignedInt8(long numElements, long totalBytes) {
 
@@ -92,11 +92,6 @@ public class RaggedStorageUnsignedInt8<U extends ByteCoder>
 	@Override
 	public void set(final long index, U value) {
 		
-		//for (int i = 0; i < 4; i++) {
-			//elementByteOffsets.get(i, tmpInt64);
-			//System.out.println(" offset "+i+" value "+tmpInt64.v()+" bytecount "+value.byteCount());
-		//}
-
 		if (index < 0) {
 			throw new IllegalArgumentException("negative index exception");
 		}
@@ -112,7 +107,7 @@ public class RaggedStorageUnsignedInt8<U extends ByteCoder>
 		elementByteOffsets.get(index, tmpInt64);
 		final long byteSize = tmpInt64.v() - startByte;
 
-		// now is numbytes stored at startbyte == this value's numbytes?
+		// now is value of numBytes stored at startByte == this value's numBytes?
 		
 		if (byteSize != value.byteCount()) {
 			throw new IllegalArgumentException(
@@ -194,13 +189,6 @@ public class RaggedStorageUnsignedInt8<U extends ByteCoder>
 		}
 		tmpInt64.setV(startByte + byteCount);
 		elementByteOffsets.set(index, tmpInt64);
-		
-		//System.out.println("byte offset for index "+index+" set to "+tmpInt64.v());
-		
-		//for (int i = 0; i < 4; i++) {
-			//elementByteOffsets.get(i, tmpInt64);
-			//System.out.println("In place(): offset "+i+" = "+tmpInt64.v());
-		//}
 	}
 	
 	@Override
