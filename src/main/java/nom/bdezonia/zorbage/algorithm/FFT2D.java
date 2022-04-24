@@ -67,59 +67,66 @@ public class FFT2D {
 	 * @param <W>
 	 * @param cmplxAlg
 	 * @param realAlg
-	 * @param ds
+	 * @param realData
 	 * @param axis0
 	 * @param axis1
 	 * @param otherPositions
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static
 		<T extends Algebra<T,U> & Addition<U> & Multiplication<U>,
 			U extends SetComplex<W>,
 			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> &
 				Multiplication<W> & Addition<W> & Invertible<W> & Unity<W>,
 			W>
-	DimensionedDataSource<U> compute(T cmplxAlg, V realAlg, DimensionedDataSource<U> ds, int axis0, int axis1, IntegerIndex otherPositions)
+	DimensionedDataSource<U> compute(T cmplxAlg, V realAlg, DimensionedDataSource<W> realData, int axis0, int axis1, IntegerIndex otherPositions)
 	{
-		U value = cmplxAlg.construct();
+		U complexValue = cmplxAlg.construct();
 		
+		W realValue = realAlg.construct();
+
+		W zero = realAlg.construct();
+
 		// grab the plane of data the user is interested in
 		
-		PlaneView<U> view = new PlaneView<U>(ds, axis0, axis1);
+		PlaneView<W> view = new PlaneView<W>(realData, axis0, axis1);
 		
 		for (int i = 0; i < otherPositions.numDimensions(); i++) {
 			view.setPositionValue(i, otherPositions.get(i));
 		}
 		
-		DimensionedDataSource<U> input = view.copyPlane(value);
-
-		// calc some important varaibles
+		DimensionedDataSource<W> theData = view.copyPlane(realValue);
 		
-		long cols = input.dimension(0);
+		// calc some important variables
 		
-		long rows = input.dimension(1);
+		long cols = theData.dimension(0);
+		
+		long rows = theData.dimension(1);
 		
 		long sz = FFT.enclosingPowerOf2(Math.max(rows, cols));
 
 		// create power of two square planes for calculations
 		
-		DimensionedDataSource<U> inputPlane = DimensionedStorage.allocate((Allocatable) value, new long[] {sz,sz});
+		DimensionedDataSource<U> inputPlane = DimensionedStorage.allocate((Allocatable) complexValue, new long[] {sz,sz});
 
-		DimensionedDataSource<U> tmpPlane = DimensionedStorage.allocate((Allocatable) value, new long[] {sz,sz});
+		DimensionedDataSource<U> tmpPlane = DimensionedStorage.allocate((Allocatable) complexValue, new long[] {sz,sz});
 
-		DimensionedDataSource<U> outputPlane = DimensionedStorage.allocate((Allocatable) value, new long[] {sz,sz});
+		DimensionedDataSource<U> outputPlane = DimensionedStorage.allocate((Allocatable) complexValue, new long[] {sz,sz});
 
 		// Copy the rectangular input image into the square plane defined for it.
 		// The other (padded) values are zero.
 		
-		TwoDView<U> dataVw = new TwoDView<>(input);
+		TwoDView<W> realVw = new TwoDView<>(theData);
 		
-		TwoDView<U> copyVw = new TwoDView<>(inputPlane);
+		TwoDView<U> complexVw = new TwoDView<>(inputPlane);
 		
 		for (long y = 0; y < rows; y++) {
 			for (long x = 0; x < cols; x++) {
-				dataVw.get(x, y, value);
-				copyVw.set(x, y, value);
+				realVw.get(x, y, realValue);
+				complexValue.setR(realValue);
+				complexValue.setI(zero);
+				complexVw.set(x, y, complexValue);
 			}
 		}
 		

@@ -348,12 +348,12 @@ public class PlaneView<U> implements Dimensioned {
 		DimensionedDataSource<U> newDs = (DimensionedDataSource<U>)
 				DimensionedStorage.allocate((V) scratchVar, new long[] {axisNumber0Size,axisNumber1Size});
 		
-		TwoDView<U> view = new TwoDView<>(newDs);
+		TwoDView<U> vw = new TwoDView<>(newDs);
 		
 		for (long y = 0; y < axisNumber1Size; y++) {
 			for (long x = 0; x < axisNumber0Size; x++) {
 				accessor.get(x, y, scratchVar);
-				view.set(x, y, scratchVar);
+				vw.set(x, y, scratchVar);
 			}
 		}
 
