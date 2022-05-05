@@ -144,7 +144,6 @@ public class InvFFT2D {
 			InvFFT.compute(complexAlg, realAlg, inPiped, tmpCol);
 		}
 		
-		
 		// for each row of temp data do a 1-d FFT and store as a row in output
 		
 		for (long r = 0; r < sz; r++) {

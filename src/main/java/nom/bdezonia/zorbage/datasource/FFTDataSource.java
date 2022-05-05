@@ -57,6 +57,8 @@ public class FFTDataSource<M extends Algebra<M,N>, N>
 		return data.storageType();
 	}
 
+	// TODO: this routine is never out of bounds in my testing. Why?
+	
 	@Override
 	public void set(long index, N value) {
 
@@ -66,6 +68,8 @@ public class FFTDataSource<M extends Algebra<M,N>, N>
 		}
 	}
 
+	// TODO: this routine is never out of bounds in my testing. Why?
+	
 	@Override
 	public void get(long index, N value) {
 		
