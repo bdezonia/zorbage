@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
+import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
@@ -53,14 +54,14 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @author Barry DeZonia
  *
  */
-public class FFT2D {
+public class InvFFT2D {
 
 	// do not instantiate
 	
-	private FFT2D() { }
+	private InvFFT2D() { }
 
 	/**
-	 * Do a 2-dimensional fourier transform of 1 plane of a complex DataSource
+	 * Do a 2-dimensional inverse fourier transform of 1 plane of a complex DataSource
 	 * 
 	 * @param <T>
 	 * @param <U>
@@ -68,17 +69,17 @@ public class FFT2D {
 	 * @param <W>
 	 * @param cmplxAlg
 	 * @param realAlg
-	 * @param realData
+	 * @param cmplxData
 	 * @param axis0
 	 * @param axis1
 	 * @param otherPositions
 	 * @return
 	 */
 	public static
-		<T extends Algebra<T,U> & Addition<U> & Multiplication<U>,
+		<T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>,
 			U extends SetComplex<W> & Allocatable<U>,
-			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> &
-				Multiplication<W> & Addition<W> & Invertible<W> & Unity<W>,
+			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> & Unity<W> &
+						Multiplication<W> & Addition<W> & Invertible<W>,
 			W>
 	DimensionedDataSource<U> compute(T complexAlg, V realAlg, DimensionedDataSource<U> complexData, int axis0, int axis1, IntegerIndex otherPositions)
 	{
@@ -138,9 +139,9 @@ public class FFT2D {
 
 			IndexedDataSource<U> tmpCol = new SequencedDataSource<>(tmpPlane.rawData(), c, sz, sz);
 			
-			// do the fft into output col
+			// do the inv fft into output col
 			
-			FFT.compute(complexAlg, realAlg, inPiped, tmpCol);
+			InvFFT.compute(complexAlg, realAlg, inPiped, tmpCol);
 		}
 		
 		
@@ -158,9 +159,9 @@ public class FFT2D {
 
 			IndexedDataSource<U> outRow = new SequencedDataSource<>(outputPlane.rawData(), r*sz, 1, sz);
 			
-			// do the fft into output row
+			// do the inv fft into output row
 			
-			FFT.compute(complexAlg, realAlg, tmpPiped, outRow);
+			InvFFT.compute(complexAlg, realAlg, tmpPiped, outRow);
 		}
 		
 		return outputPlane;

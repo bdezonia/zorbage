@@ -72,7 +72,7 @@ public class InvFFT {
 			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> & Unity<W> &
 				Multiplication<W> & Addition<W> & Invertible<W>,
 			W>
-	void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a,IndexedDataSource<U> b)
+	void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
