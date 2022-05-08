@@ -57,17 +57,21 @@ public class FFT {
 	 * a and b are lists of complex numbers. Their length must match and be a power
 	 * of 2.
 	 * 
-	 * @param cmplxAlg
+	 * @param <CA>
+	 * @param <C>
+	 * @param <RA>
+	 * @param <R>
+	 * @param complexAlg
 	 * @param realAlg
-	 * @param a Source list of data
-	 * @param b Destination list of data
+	 * @param a Source list of complex data
+	 * @param b Destination list of complex data
 	 */
 	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
 						C extends SetComplex<R>,
 						RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
 							Multiplication<R> & Addition<R> & Invertible<R> & Unity<R>,
 						R>
-		void compute(CA cmplxAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
+		void compute(CA complexAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -76,8 +80,8 @@ public class FFT {
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
-		C tmp1 = cmplxAlg.construct();
-		C tmp2 = cmplxAlg.construct();
+		C tmp1 = complexAlg.construct();
+		C tmp2 = complexAlg.construct();
 
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
@@ -95,8 +99,8 @@ public class FFT {
 			}
 		}
 
-		C w = cmplxAlg.construct();
-		C tao = cmplxAlg.construct();
+		C w = complexAlg.construct();
+		C tao = complexAlg.construct();
 
 		// butterfly updates
 		R pi = realAlg.construct();
@@ -123,11 +127,11 @@ public class FFT {
 				w.setI(sin);
 				for (long j = 0; j < aSize/el; j++) {
 					b.get(j*el + kay + el/2, tmp1);
-					cmplxAlg.multiply().call(w, tmp1, tao);
+					complexAlg.multiply().call(w, tmp1, tao);
 					b.get(j*el + kay, tmp2);
-					cmplxAlg.subtract().call(tmp2, tao, tmp1);
+					complexAlg.subtract().call(tmp2, tao, tmp1);
 					b.set(j*el + kay + el/2, tmp1);
-					cmplxAlg.add().call(tmp2, tao, tmp1);
+					complexAlg.add().call(tmp2, tao, tmp1);
 					b.set(j*el + kay, tmp1);
 				}
 				realAlg.add().call(k, one, k);
@@ -135,7 +139,7 @@ public class FFT {
 			realAlg.add().call(l, l, l);
 		}
 	}
-	
+	    
 	/**
 	 * 
 	 * @param num

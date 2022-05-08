@@ -56,23 +56,27 @@ public class InvFFT {
 	private InvFFT() {}
 
 	/**
+	 * Do an inverse fast fourier transform taking data from source a and putting
+	 * results in destination b. a and b can be the same list: in place transformation
+	 * works. a and b are lists of complex numbers. Their length must match and be a
+	 * power of 2.
 	 * 
-	 * @param <T>
-	 * @param <U>
-	 * @param <V>
-	 * @param <W>
-	 * @param cmplxAlg
+	 * @param <CA>
+	 * @param <C>
+	 * @param <RA>
+	 * @param <R>
+	 * @param complexAlg
 	 * @param realAlg
-	 * @param a
-	 * @param b
+	 * @param a Source list of complex data
+	 * @param b Destination list of complex data
 	 */
 	public static
-		<T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>,
-			U extends SetComplex<W>,
-			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> & Unity<W> &
-				Multiplication<W> & Addition<W> & Invertible<W>,
-			W>
-	void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
+			C extends SetComplex<R>,
+			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
+				Multiplication<R> & Addition<R> & Invertible<R>,
+			R>
+	void compute(CA complexAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -80,10 +84,10 @@ public class InvFFT {
 			throw new IllegalArgumentException("input size is not a power of 2");
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
-		U one_over_n = cmplxAlg.construct((BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))).toString());
-		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, a, b);
-		FFT.compute(cmplxAlg, realAlg, b, b);
-		nom.bdezonia.zorbage.algorithm.Conjugate.compute(cmplxAlg, b, b);
-		Scale.compute(cmplxAlg, one_over_n, b, b);
+		C one_over_n = complexAlg.construct((BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))).toString());
+		nom.bdezonia.zorbage.algorithm.Conjugate.compute(complexAlg, a, b);
+		FFT.compute(complexAlg, realAlg, b, b);
+		nom.bdezonia.zorbage.algorithm.Conjugate.compute(complexAlg, b, b);
+		Scale.compute(complexAlg, one_over_n, b, b);
 	}
 }
