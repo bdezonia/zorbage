@@ -62,12 +62,12 @@ public class FFT {
 	 * @param a Source list of data
 	 * @param b Destination list of data
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,
-						U extends SetComplex<W>,
-						V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> &
-							Multiplication<W> & Addition<W> & Invertible<W> & Unity<W>,
-						W>
-		void compute(T cmplxAlg, V realAlg, IndexedDataSource<U> a, IndexedDataSource<U> b)
+	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
+						C extends SetComplex<R>,
+						RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
+							Multiplication<R> & Addition<R> & Invertible<R> & Unity<R>,
+						R>
+		void compute(CA cmplxAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
@@ -76,8 +76,8 @@ public class FFT {
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
-		U tmp1 = cmplxAlg.construct();
-		U tmp2 = cmplxAlg.construct();
+		C tmp1 = cmplxAlg.construct();
+		C tmp2 = cmplxAlg.construct();
 
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
@@ -95,21 +95,21 @@ public class FFT {
 			}
 		}
 
-		U w = cmplxAlg.construct();
-		U tao = cmplxAlg.construct();
+		C w = cmplxAlg.construct();
+		C tao = cmplxAlg.construct();
 
 		// butterfly updates
-		W pi = realAlg.construct();
+		R pi = realAlg.construct();
 		realAlg.PI().call(pi);
-		W cos = realAlg.construct();
-		W sin = realAlg.construct();
-		W one = realAlg.construct();
-		W two = realAlg.construct();
+		R cos = realAlg.construct();
+		R sin = realAlg.construct();
+		R one = realAlg.construct();
+		R two = realAlg.construct();
 		realAlg.unity().call(one);
 		realAlg.add().call(one, one, two);
-		W l = realAlg.construct(two);
-		W k = realAlg.construct();
-		W kth = realAlg.construct();
+		R l = realAlg.construct(two);
+		R k = realAlg.construct();
+		R kth = realAlg.construct();
 		for (long el = 2; el <= aSize; el = el+el) {
 			realAlg.zero().call(k);
 			for (long kay = 0; kay < el/2; kay++) {
