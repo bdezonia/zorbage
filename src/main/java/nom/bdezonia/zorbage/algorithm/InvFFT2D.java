@@ -45,9 +45,7 @@ import nom.bdezonia.zorbage.data.DimensionedStorage;
 import nom.bdezonia.zorbage.datasource.FFTDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.SequencedDataSource;
-import nom.bdezonia.zorbage.dataview.PlaneView;
 import nom.bdezonia.zorbage.dataview.TwoDView;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 
 /**
  * 
@@ -81,25 +79,18 @@ public class InvFFT2D {
 			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> & Unity<W> &
 						Multiplication<W> & Addition<W> & Invertible<W>,
 			W>
-	DimensionedDataSource<U> compute(T complexAlg, V realAlg, DimensionedDataSource<U> complexData, int axis0, int axis1, IntegerIndex otherPositions)
+	DimensionedDataSource<U> compute(T complexAlg, V realAlg, DimensionedDataSource<U> complexData)
 	{
+		if (complexData.numDimensions() != 2)
+			throw new IllegalArgumentException("InvFFT2D input should be a single 2-d plane of complex values");
+		
 		U complexValue = complexAlg.construct();
-		
-		// grab the plane of data the user is interested in
-		
-		PlaneView<U> view = new PlaneView<U>(complexData, axis0, axis1);
-		
-		for (int i = 0; i < otherPositions.numDimensions(); i++) {
-			view.setPositionValue(i, otherPositions.get(i));
-		}
-		
-		DimensionedDataSource<U> theData = view.copyPlane(complexValue);
 		
 		// calc some important variables
 		
-		long cols = theData.dimension(0);
+		long cols = complexData.dimension(0);
 		
-		long rows = theData.dimension(1);
+		long rows = complexData.dimension(1);
 		
 		long sz = FFT.enclosingPowerOf2(Math.max(rows, cols));
 
@@ -114,7 +105,7 @@ public class InvFFT2D {
 		// Copy the rectangular input image into the square plane defined for it.
 		// The other (padded) values are zero.
 		
-		TwoDView<U> complexVw1 = new TwoDView<>(theData);
+		TwoDView<U> complexVw1 = new TwoDView<>(complexData);
 		
 		TwoDView<U> complexVw2 = new TwoDView<>(inputPlane);
 		
