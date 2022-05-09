@@ -83,13 +83,15 @@ public class FFT {
 		C tmp1 = complexAlg.construct();
 		C tmp2 = complexAlg.construct();
 
+		Copy.compute(complexAlg, a, b);
+		
 		// bit reversal permutation
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
 		for (long k = 0; k < aSize; k++) {
 			long j = Long.reverse(k) >>> shift;
-			a.get(j, tmp1);
-			a.get(k, tmp2);
-			if (j < k) {
+			b.get(j, tmp1);
+			b.get(k, tmp2);
+			if (j > k) {
 				b.set(k, tmp1);
 				b.set(j, tmp2);
 			}
