@@ -41,7 +41,6 @@ import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
-import nom.bdezonia.zorbage.datasource.FFTDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.SequencedDataSource;
 import nom.bdezonia.zorbage.dataview.TwoDView;
@@ -119,19 +118,17 @@ public class FFT2D {
 		
 		for (long c = 0; c < sz; c++) {
 			
-			// setup the padded input piped to do FFT on
+			// setup the input col to do FFT on
 			
 			IndexedDataSource<U> inCol = new SequencedDataSource<>(inputPlane.rawData(), c, sz, sz);
 			
-			IndexedDataSource<U> inPiped = new FFTDataSource<T,U>(complexAlg, inCol, sz);
-			
-			// setup the padded tmp piped to place FFT results in
+			// setup the tmp col to place FFT results in
 
 			IndexedDataSource<U> tmpCol = new SequencedDataSource<>(tmpPlane.rawData(), c, sz, sz);
 			
-			// do the fft into output col
+			// do the fft into from the input col into the tmp col
 			
-			FFT.compute(complexAlg, realAlg, inPiped, tmpCol);
+			FFT.compute(complexAlg, realAlg, inCol, tmpCol);
 		}
 		
 		
@@ -139,19 +136,17 @@ public class FFT2D {
 		
 		for (long r = 0; r < sz; r++) {
 					
-			// setup the padded tmp piped to do FFT on
+			// setup the tmp row to do FFT on
 
 			IndexedDataSource<U> tmpRow = new SequencedDataSource<>(tmpPlane.rawData(), r*sz, 1, sz);
 			
-			IndexedDataSource<U> tmpPiped = new FFTDataSource<T,U>(complexAlg, tmpRow, sz);
-			
-			// setup the padded output piped to place FFT results in
+			// setup the output row to place FFT results in
 
 			IndexedDataSource<U> outRow = new SequencedDataSource<>(outputPlane.rawData(), r*sz, 1, sz);
 			
-			// do the fft into output row
+			// do the fft from the tmp row into the output row
 			
-			FFT.compute(complexAlg, realAlg, tmpPiped, outRow);
+			FFT.compute(complexAlg, realAlg, tmpRow, outRow);
 		}
 		
 		return outputPlane;
