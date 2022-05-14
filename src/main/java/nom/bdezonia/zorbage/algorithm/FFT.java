@@ -89,17 +89,12 @@ public class FFT {
 		int shift = 1 + Long.numberOfLeadingZeros(aSize);
 		for (long k = 0; k < aSize; k++) {
 			long j = Long.reverse(k) >>> shift;
-			b.get(j, tmp1);
-			b.get(k, tmp2);
 			if (j > k) {
+				b.get(j, tmp1);
+				b.get(k, tmp2);
 				b.set(k, tmp1);
 				b.set(j, tmp2);
 			}
-			// unnecessary
-			//else {
-			//	b.set(j, tmp1);
-			//	b.set(k, tmp2);
-			//}
 		}
 
 		C w = complexAlg.construct();
