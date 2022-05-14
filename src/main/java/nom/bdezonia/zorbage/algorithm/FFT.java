@@ -95,10 +95,11 @@ public class FFT {
 				b.set(k, tmp1);
 				b.set(j, tmp2);
 			}
-			else {
-				b.set(j, tmp1);
-				b.set(k, tmp2);
-			}
+			// unnecessary
+			//else {
+			//	b.set(j, tmp1);
+			//	b.set(k, tmp2);
+			//}
 		}
 
 		C w = complexAlg.construct();
@@ -128,13 +129,15 @@ public class FFT {
 				w.setR(cos);
 				w.setI(sin);
 				for (long j = 0; j < aSize/el; j++) {
-					b.get(j*el + kay + el/2, tmp1);
+					final long idx1 = j*el + kay;
+					final long idx2 = idx1 + el/2;
+					b.get(idx2, tmp1);
 					complexAlg.multiply().call(w, tmp1, tao);
-					b.get(j*el + kay, tmp2);
+					b.get(idx1, tmp2);
 					complexAlg.subtract().call(tmp2, tao, tmp1);
-					b.set(j*el + kay + el/2, tmp1);
+					b.set(idx2, tmp1);
 					complexAlg.add().call(tmp2, tao, tmp1);
-					b.set(j*el + kay, tmp1);
+					b.set(idx1, tmp1);
 				}
 				realAlg.add().call(k, one, k);
 			}
