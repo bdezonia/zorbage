@@ -30,10 +30,11 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algorithm.corrconv.CorrConv1D;
+import nom.bdezonia.zorbage.algorithm.corrconv.Corr1D;
 import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexer1D;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -57,10 +58,10 @@ public class Correlate1D {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>, U>
 		void compute(T alg, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		CorrConv1D.compute(alg, new CorrelationIndexer1D(), filter, a, b);
+		Corr1D.compute(alg, new CorrelationIndexer1D(), filter, a, b);
 	}
 	
 }

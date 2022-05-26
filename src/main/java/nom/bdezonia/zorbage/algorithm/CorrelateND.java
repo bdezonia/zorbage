@@ -31,10 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
+import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrND;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 
 /**
@@ -57,10 +58,10 @@ public class CorrelateND {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>, U>
 		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, 1, new CorrelationIndexerND<U>(), filter, a, b);
+		ParallelCorrND.compute(alg, 1, new CorrelationIndexerND<U>(), filter, a, b);
 	}
 	
 }

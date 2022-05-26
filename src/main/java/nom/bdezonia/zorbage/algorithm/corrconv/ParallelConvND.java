@@ -44,11 +44,11 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
  * @author Barry DeZonia
  *
  */
-public class ParallelCorrConvND {
+public class ParallelConvND {
 
 	// do not instantiate
 	
-	private ParallelCorrConvND() { }
+	private ParallelConvND() { }
 	
 	/**
 	 * 

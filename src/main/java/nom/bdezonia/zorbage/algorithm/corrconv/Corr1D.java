@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.algorithm.corrconv;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -41,11 +42,11 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class CorrConv1D {
+public class Corr1D {
 
 	// do not instantiate
 	
-	private CorrConv1D() { }
+	private Corr1D() { }
 	
 	/**
 	 * 
@@ -55,7 +56,7 @@ public class CorrConv1D {
 	 * @param a
 	 * @param b
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>, U>
 		void compute(T alg, Function2<Long,Long,Long> indexer, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		if (a == b)
@@ -73,6 +74,7 @@ public class CorrConv1D {
 			for (long i = -n; i <= n; i++) {
 				long idx = indexer.call(x, i);
 				a.get(idx, tmp);
+				alg.conjugate().call(tmp, tmp);
 				filter.get(i + n, f);
 				alg.multiply().call(tmp, f, tmp);
 				alg.add().call(sum, tmp, sum);

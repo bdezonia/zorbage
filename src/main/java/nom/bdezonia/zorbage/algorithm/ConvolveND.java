@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.corrconv.ConvolutionIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
+import nom.bdezonia.zorbage.algorithm.corrconv.ParallelConvND;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -60,7 +60,7 @@ public class ConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
-		ParallelCorrConvND.compute(alg, 1, new ConvolutionIndexerND<U>(), filter, a, b);
+		ParallelConvND.compute(alg, 1, new ConvolutionIndexerND<U>(), filter, a, b);
 	}
 	
 }

@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.corrconv.ConvolutionIndexer1D;
-import nom.bdezonia.zorbage.algorithm.corrconv.CorrConv1D;
+import nom.bdezonia.zorbage.algorithm.corrconv.Conv1D;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
@@ -60,7 +60,7 @@ public class Convolve1D {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		CorrConv1D.compute(alg, new ConvolutionIndexer1D(), filter, a, b);
+		Conv1D.compute(alg, new ConvolutionIndexer1D(), filter, a, b);
 	}
 
 }

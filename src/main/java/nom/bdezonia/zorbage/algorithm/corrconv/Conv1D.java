@@ -28,43 +28,56 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.corrconv;
 
-import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelConvND;
-import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ParallelCorrelateND {
+public class Conv1D {
 
 	// do not instantiate
 	
-	private ParallelCorrelateND() { }
+	private Conv1D() { }
 	
 	/**
-	 * Correlate an n-d {@link DimensionedDataSource} by a filter using
-	 * a parallel algorithm which provides improved performance over a
-	 * single threaded approach.
 	 * 
 	 * @param alg
+	 * @param indexer
 	 * @param filter
 	 * @param a
 	 * @param b
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
-		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
+		void compute(T alg, Function2<Long,Long,Long> indexer, IndexedDataSource<U> filter, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		int numProcs = Runtime.getRuntime().availableProcessors();
-		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
-			numProcs = 1;
-		ParallelConvND.compute(alg, numProcs, new CorrelationIndexerND<U>(), filter, a, b);
+		if (a == b)
+			throw new IllegalArgumentException("source and dest lists must be different");
+		
+		if (filter.size() % 2 != 1)
+			throw new IllegalArgumentException("filter length should be odd");
+		
+		U tmp = alg.construct();
+		U f = alg.construct();
+		U sum = alg.construct();
+		long n = filter.size() / 2;
+		for (long x = 0; x < a.size(); x++) {
+			alg.zero().call(sum);
+			for (long i = -n; i <= n; i++) {
+				long idx = indexer.call(x, i);
+				a.get(idx, tmp);
+				filter.get(i + n, f);
+				alg.multiply().call(tmp, f, tmp);
+				alg.add().call(sum, tmp, sum);
+			}
+			b.set(x, sum);
+		}
 	}
-	
 }

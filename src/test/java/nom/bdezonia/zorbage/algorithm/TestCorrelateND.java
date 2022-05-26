@@ -41,8 +41,8 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.oob.nd.ZeroNdOOB;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Algebra;
-import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 
@@ -54,11 +54,11 @@ public class TestCorrelateND {
 	@Test
 	public void test1() {
 
-		SignedInt64Member value = G.INT64.construct();
-		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
-		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
-		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded =
-				new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
+		Float64Member value = G.DBL.construct();
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
+		ZeroNdOOB<Float64Algebra,Float64Member> oobProc = new ZeroNdOOB<>(G.DBL, ds);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra,Float64Member> padded =
+				new ProcedurePaddedDimensionedDataSource<>(G.DBL, ds, oobProc);
 		
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		
@@ -107,9 +107,9 @@ public class TestCorrelateND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(value, new long[] {3,3});
+		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(value, new long[] {3,3});
 
-		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(value, new long[] {3,3});
+		DimensionedDataSource<Float64Member> out = DimensionedStorage.allocate(value, new long[] {3,3});
 
 		value.setV(1);
 		
@@ -149,61 +149,61 @@ public class TestCorrelateND {
 		idx.set(1, 2);
 		filter.set(idx, value);
 
-		CorrelateND.compute(G.INT64, filter, padded, out);
+		CorrelateND.compute(G.DBL, filter, padded, out);
 
 		idx.set(0, 0);
 		idx.set(1, 0);
 		out.get(idx, value);
-		assertEquals(12, value.v());
+		assertEquals(12, value.v(), 0);
 		
 		idx.set(0, 1);
 		idx.set(1, 0);
 		out.get(idx, value);
-		assertEquals(21, value.v());
+		assertEquals(21, value.v(), 0);
 		
 		idx.set(0, 2);
 		idx.set(1, 0);
 		out.get(idx, value);
-		assertEquals(16, value.v());
+		assertEquals(16, value.v(), 0);
 		
 		idx.set(0, 0);
 		idx.set(1, 1);
 		out.get(idx, value);
-		assertEquals(27, value.v());
+		assertEquals(27, value.v(), 0);
 		
 		idx.set(0, 1);
 		idx.set(1, 1);
 		out.get(idx, value);
-		assertEquals(45, value.v());
+		assertEquals(45, value.v(), 0);
 		
 		idx.set(0, 2);
 		idx.set(1, 1);
 		out.get(idx, value);
-		assertEquals(33, value.v());
+		assertEquals(33, value.v(), 0);
 		
 		idx.set(0, 0);
 		idx.set(1, 2);
 		out.get(idx, value);
-		assertEquals(24, value.v());
+		assertEquals(24, value.v(), 0);
 		
 		idx.set(0, 1);
 		idx.set(1, 2);
 		out.get(idx, value);
-		assertEquals(39, value.v());
+		assertEquals(39, value.v(), 0);
 		
 		idx.set(0, 2);
 		idx.set(1, 2);
 		out.get(idx, value);
-		assertEquals(28, value.v());
+		assertEquals(28, value.v(), 0);
 	}
 
 	@Test
 	public void test2() {
 
-		SignedInt64Member value = G.INT64.construct();
-		DimensionedDataSource<SignedInt64Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
-		ZeroNdOOB<SignedInt64Algebra,SignedInt64Member> oobProc = new ZeroNdOOB<>(G.INT64, ds);
-		ProcedurePaddedDimensionedDataSource<SignedInt64Algebra,SignedInt64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.INT64, ds, oobProc);
+		Float64Member value = G.DBL.construct();
+		DimensionedDataSource<Float64Member> ds = DimensionedStorage.allocate(value, new long[] {3,3});
+		ZeroNdOOB<Float64Algebra,Float64Member> oobProc = new ZeroNdOOB<>(G.DBL, ds);
+		ProcedurePaddedDimensionedDataSource<Float64Algebra,Float64Member> padded = new ProcedurePaddedDimensionedDataSource<>(G.DBL, ds, oobProc);
 		
 		IntegerIndex idx = new IntegerIndex(ds.numDimensions());
 		
@@ -252,9 +252,9 @@ public class TestCorrelateND {
 		idx.set(1, 2);
 		ds.set(idx, value);
 		
-		DimensionedDataSource<SignedInt64Member> filter = DimensionedStorage.allocate(value, new long[] {3,3});
+		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(value, new long[] {3,3});
 
-		DimensionedDataSource<SignedInt64Member> out = DimensionedStorage.allocate(value, new long[] {3,3});
+		DimensionedDataSource<Float64Member> out = DimensionedStorage.allocate(value, new long[] {3,3});
 
 		value.setV(1);
 		
@@ -298,51 +298,51 @@ public class TestCorrelateND {
 		idx.set(1, 2);
 		filter.set(idx, value);
 
-		CorrelateND.compute(G.INT64, filter, padded, out);
+		CorrelateND.compute(G.DBL, filter, padded, out);
 
 		idx.set(0, 0);
 		idx.set(1, 0);
 		out.get(idx, value);
-		assertEquals(2*1 + 2*2 + 3*4 + 3*5, value.v());
+		assertEquals(2*1 + 2*2 + 3*4 + 3*5, value.v(), 0);
 		
 		idx.set(0, 1);
 		idx.set(1, 0);
 		out.get(idx, value);
-		assertEquals(2*1 + 2*2 + 2*3 + 3*4 + 3*5 + 3*6, value.v());
+		assertEquals(2*1 + 2*2 + 2*3 + 3*4 + 3*5 + 3*6, value.v(), 0);
 		
 		idx.set(0, 2);
 		idx.set(1, 0);
 		out.get(idx, value);
-		assertEquals(2*2 + 2*3 + 3*5 + 3*6, value.v());
+		assertEquals(2*2 + 2*3 + 3*5 + 3*6, value.v(), 0);
 		
 		idx.set(0, 0);
 		idx.set(1, 1);
 		out.get(idx, value);
-		assertEquals(3*7 + 3*8 + 2*4 + 2*5 + 1*1 + 1*2, value.v());
+		assertEquals(3*7 + 3*8 + 2*4 + 2*5 + 1*1 + 1*2, value.v(), 0);
 		
 		idx.set(0, 1);
 		idx.set(1, 1);
 		out.get(idx, value);
-		assertEquals(3*7 + 3*8 + 3*9 + 2*4 + 2*5 + 2*6 + 1*1 + 1*2 + 1*3, value.v());
+		assertEquals(3*7 + 3*8 + 3*9 + 2*4 + 2*5 + 2*6 + 1*1 + 1*2 + 1*3, value.v(), 0);
 		
 		idx.set(0, 2);
 		idx.set(1, 1);
 		out.get(idx, value);
-		assertEquals(3*8 + 3*9 + 2*5 + 2*6 + 1*2 + 1*3, value.v());
+		assertEquals(3*8 + 3*9 + 2*5 + 2*6 + 1*2 + 1*3, value.v(), 0);
 		
 		idx.set(0, 0);
 		idx.set(1, 2);
 		out.get(idx, value);
-		assertEquals(2*7 + 2*8 + 1*4 + 1*5, value.v());
+		assertEquals(2*7 + 2*8 + 1*4 + 1*5, value.v(), 0);
 		
 		idx.set(0, 1);
 		idx.set(1, 2);
 		out.get(idx, value);
-		assertEquals(2*7 + 2*8 + 2*9 + 1*4 + 1*5 + 1*6, value.v());
+		assertEquals(2*7 + 2*8 + 2*9 + 1*4 + 1*5 + 1*6, value.v(), 0);
 		
 		idx.set(0, 2);
 		idx.set(1, 2);
 		out.get(idx, value);
-		assertEquals(2*8 + 2*9 + 1*5 + 1*6, value.v());
+		assertEquals(2*8 + 2*9 + 1*5 + 1*6, value.v(), 0);
 	}
 }

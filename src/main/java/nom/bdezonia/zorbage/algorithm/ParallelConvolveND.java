@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.corrconv.ConvolutionIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrConvND;
+import nom.bdezonia.zorbage.algorithm.corrconv.ParallelConvND;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -64,7 +64,7 @@ public class ParallelConvolveND {
 		int numProcs = Runtime.getRuntime().availableProcessors();
 		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
 			numProcs = 1;
-		ParallelCorrConvND.compute(alg, numProcs, new ConvolutionIndexerND<U>(), filter, a, b);
+		ParallelConvND.compute(alg, numProcs, new ConvolutionIndexerND<U>(), filter, a, b);
 	}
 	
 }
