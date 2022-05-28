@@ -724,18 +724,9 @@ public class SignedInt1Algebra
 		return SBDR;
 	}
 
-	private final Procedure2<SignedInt1Member, SignedInt1Member> CONJ =
-		new Procedure2<SignedInt1Member, SignedInt1Member>() {
-			
-			@Override
-			public void call(SignedInt1Member a, SignedInt1Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<SignedInt1Member, SignedInt1Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 }

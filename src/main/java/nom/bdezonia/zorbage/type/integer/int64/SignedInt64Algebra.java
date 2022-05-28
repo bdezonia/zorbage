@@ -866,17 +866,8 @@ public class SignedInt64Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<SignedInt64Member, SignedInt64Member> CONJ =
-		new Procedure2<SignedInt64Member, SignedInt64Member>() {
-			
-			@Override
-			public void call(SignedInt64Member a, SignedInt64Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<SignedInt64Member, SignedInt64Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

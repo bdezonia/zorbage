@@ -1018,17 +1018,8 @@ public class SignedInt128Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<SignedInt128Member, SignedInt128Member> CONJ =
-		new Procedure2<SignedInt128Member, SignedInt128Member>() {
-			
-			@Override
-			public void call(SignedInt128Member a, SignedInt128Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<SignedInt128Member, SignedInt128Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

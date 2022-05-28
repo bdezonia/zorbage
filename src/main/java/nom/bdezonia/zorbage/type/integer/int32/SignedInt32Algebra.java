@@ -843,17 +843,8 @@ public class SignedInt32Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<SignedInt32Member, SignedInt32Member> CONJ =
-		new Procedure2<SignedInt32Member, SignedInt32Member>() {
-			
-			@Override
-			public void call(SignedInt32Member a, SignedInt32Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<SignedInt32Member, SignedInt32Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

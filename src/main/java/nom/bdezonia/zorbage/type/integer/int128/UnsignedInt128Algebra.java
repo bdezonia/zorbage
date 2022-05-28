@@ -959,17 +959,8 @@ public class UnsignedInt128Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnsignedInt128Member, UnsignedInt128Member> CONJ =
-		new Procedure2<UnsignedInt128Member, UnsignedInt128Member>() {
-			
-			@Override
-			public void call(UnsignedInt128Member a, UnsignedInt128Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnsignedInt128Member, UnsignedInt128Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

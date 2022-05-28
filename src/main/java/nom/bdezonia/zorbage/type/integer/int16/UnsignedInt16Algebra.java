@@ -814,17 +814,8 @@ public class UnsignedInt16Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnsignedInt16Member, UnsignedInt16Member> CONJ =
-		new Procedure2<UnsignedInt16Member, UnsignedInt16Member>() {
-			
-			@Override
-			public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnsignedInt16Member, UnsignedInt16Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

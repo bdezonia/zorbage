@@ -822,17 +822,8 @@ public class UnsignedInt12Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnsignedInt12Member, UnsignedInt12Member> CONJ =
-		new Procedure2<UnsignedInt12Member, UnsignedInt12Member>() {
-			
-			@Override
-			public void call(UnsignedInt12Member a, UnsignedInt12Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnsignedInt12Member, UnsignedInt12Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

@@ -820,17 +820,8 @@ public class UnsignedInt3Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnsignedInt3Member, UnsignedInt3Member> CONJ =
-		new Procedure2<UnsignedInt3Member, UnsignedInt3Member>() {
-			
-			@Override
-			public void call(UnsignedInt3Member a, UnsignedInt3Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnsignedInt3Member, UnsignedInt3Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

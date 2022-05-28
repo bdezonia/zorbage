@@ -983,17 +983,8 @@ public class UnboundedIntAlgebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnboundedIntMember, UnboundedIntMember> CONJ =
-		new Procedure2<UnboundedIntMember, UnboundedIntMember>() {
-			
-			@Override
-			public void call(UnboundedIntMember a, UnboundedIntMember b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnboundedIntMember, UnboundedIntMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

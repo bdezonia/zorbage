@@ -867,17 +867,8 @@ public class SignedInt10Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<SignedInt10Member, SignedInt10Member> CONJ =
-		new Procedure2<SignedInt10Member, SignedInt10Member>() {
-			
-			@Override
-			public void call(SignedInt10Member a, SignedInt10Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<SignedInt10Member, SignedInt10Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

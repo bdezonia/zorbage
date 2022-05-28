@@ -856,17 +856,8 @@ public class UnsignedInt64Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnsignedInt64Member, UnsignedInt64Member> CONJ =
-		new Procedure2<UnsignedInt64Member, UnsignedInt64Member>() {
-			
-			@Override
-			public void call(UnsignedInt64Member a, UnsignedInt64Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnsignedInt64Member, UnsignedInt64Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

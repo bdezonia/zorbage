@@ -821,17 +821,8 @@ public class UnsignedInt7Algebra
 		return ISUNITY;
 	}
 
-	private final Procedure2<UnsignedInt7Member, UnsignedInt7Member> CONJ =
-		new Procedure2<UnsignedInt7Member, UnsignedInt7Member>() {
-			
-			@Override
-			public void call(UnsignedInt7Member a, UnsignedInt7Member b) {
-				b.set(a);
-			}
-		};
-		
 	@Override
 	public Procedure2<UnsignedInt7Member, UnsignedInt7Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }

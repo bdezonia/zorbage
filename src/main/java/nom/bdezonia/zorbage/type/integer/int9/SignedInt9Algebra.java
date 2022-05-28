@@ -867,18 +867,9 @@ public class SignedInt9Algebra
 	public Function1<Boolean, SignedInt9Member> isUnity() {
 		return ISUNITY;
 	}
-
-	private final Procedure2<SignedInt9Member, SignedInt9Member> CONJ =
-		new Procedure2<SignedInt9Member, SignedInt9Member>() {
-			
-			@Override
-			public void call(SignedInt9Member a, SignedInt9Member b) {
-				b.set(a);
-			}
-		};
 		
 	@Override
 	public Procedure2<SignedInt9Member, SignedInt9Member> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 }
