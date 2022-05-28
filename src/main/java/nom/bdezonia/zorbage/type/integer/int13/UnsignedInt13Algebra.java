@@ -65,7 +65,8 @@ public class UnsignedInt13Algebra
 		Tolerance<UnsignedInt13Member,UnsignedInt13Member>,
 		ScaleByOneHalf<UnsignedInt13Member>,
 		ScaleByTwo<UnsignedInt13Member>,
-		ConstructibleFromInt<UnsignedInt13Member>
+		ConstructibleFromInt<UnsignedInt13Member>,
+		Conjugate<UnsignedInt13Member>
 {
 	@Override
 	public String typeDescription() {
@@ -819,5 +820,19 @@ public class UnsignedInt13Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt13Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt13Member, UnsignedInt13Member> CONJ =
+		new Procedure2<UnsignedInt13Member, UnsignedInt13Member>() {
+			
+			@Override
+			public void call(UnsignedInt13Member a, UnsignedInt13Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt13Member, UnsignedInt13Member> conjugate() {
+		return CONJ;
 	}
 }

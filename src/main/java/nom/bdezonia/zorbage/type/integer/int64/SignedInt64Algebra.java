@@ -67,7 +67,8 @@ public class SignedInt64Algebra
 		Tolerance<SignedInt64Member,SignedInt64Member>,
 		ScaleByOneHalf<SignedInt64Member>,
 		ScaleByTwo<SignedInt64Member>,
-		ConstructibleFromLong<SignedInt64Member>
+		ConstructibleFromLong<SignedInt64Member>,
+		Conjugate<SignedInt64Member>
 {
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);
@@ -863,5 +864,19 @@ public class SignedInt64Algebra
 	@Override
 	public Function1<Boolean, SignedInt64Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<SignedInt64Member, SignedInt64Member> CONJ =
+		new Procedure2<SignedInt64Member, SignedInt64Member>() {
+			
+			@Override
+			public void call(SignedInt64Member a, SignedInt64Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<SignedInt64Member, SignedInt64Member> conjugate() {
+		return CONJ;
 	}
 }

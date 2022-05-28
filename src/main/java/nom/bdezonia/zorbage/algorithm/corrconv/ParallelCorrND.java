@@ -182,8 +182,8 @@ public class ParallelCorrND {
 					filterPoints.next(filterPoint);
 					indexer.call(filter, dataPoint, filterPoint, pt);
 					a.get(pt, tmp);
-					alg.conjugate().call(tmp, tmp);
 					filter.get(filterPoint, f);
+					alg.conjugate().call(tmp, tmp);
 					alg.multiply().call(tmp, f, tmp);
 					alg.add().call(sum, tmp, sum);
 				}

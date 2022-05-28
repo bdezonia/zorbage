@@ -74,8 +74,8 @@ public class Corr1D {
 			for (long i = -n; i <= n; i++) {
 				long idx = indexer.call(x, i);
 				a.get(idx, tmp);
-				alg.conjugate().call(tmp, tmp);
 				filter.get(i + n, f);
+				alg.conjugate().call(tmp, tmp);
 				alg.multiply().call(tmp, f, tmp);
 				alg.add().call(sum, tmp, sum);
 			}

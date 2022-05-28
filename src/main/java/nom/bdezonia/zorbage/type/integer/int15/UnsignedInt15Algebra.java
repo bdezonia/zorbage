@@ -65,7 +65,8 @@ public class UnsignedInt15Algebra
 		Tolerance<UnsignedInt15Member,UnsignedInt15Member>,
 		ScaleByOneHalf<UnsignedInt15Member>,
 		ScaleByTwo<UnsignedInt15Member>,
-		ConstructibleFromInt<UnsignedInt15Member>
+		ConstructibleFromInt<UnsignedInt15Member>,
+		Conjugate<UnsignedInt15Member>
 {
 	@Override
 	public String typeDescription() {
@@ -817,5 +818,19 @@ public class UnsignedInt15Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt15Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt15Member, UnsignedInt15Member> CONJ =
+		new Procedure2<UnsignedInt15Member, UnsignedInt15Member>() {
+			
+			@Override
+			public void call(UnsignedInt15Member a, UnsignedInt15Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt15Member, UnsignedInt15Member> conjugate() {
+		return CONJ;
 	}
 }

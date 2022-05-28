@@ -65,7 +65,8 @@ public class UnsignedInt5Algebra
 		Tolerance<UnsignedInt5Member,UnsignedInt5Member>,
 		ScaleByOneHalf<UnsignedInt5Member>,
 		ScaleByTwo<UnsignedInt5Member>,
-		ConstructibleFromInt<UnsignedInt5Member>
+		ConstructibleFromInt<UnsignedInt5Member>,
+		Conjugate<UnsignedInt5Member>
 {
 
 	@Override
@@ -818,5 +819,19 @@ public class UnsignedInt5Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt5Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt5Member, UnsignedInt5Member> CONJ =
+		new Procedure2<UnsignedInt5Member, UnsignedInt5Member>() {
+			
+			@Override
+			public void call(UnsignedInt5Member a, UnsignedInt5Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt5Member, UnsignedInt5Member> conjugate() {
+		return CONJ;
 	}
 }

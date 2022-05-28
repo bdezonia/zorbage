@@ -62,7 +62,8 @@ public class UnsignedInt1Algebra
 		Random<UnsignedInt1Member>,
 		LogicalOperations<UnsignedInt1Member>,
 		Tolerance<UnsignedInt1Member,UnsignedInt1Member>,
-		ConstructibleFromInt<UnsignedInt1Member>
+		ConstructibleFromInt<UnsignedInt1Member>,
+		Conjugate<UnsignedInt1Member>
 {
 	@Override
 	public String typeDescription() {
@@ -830,5 +831,19 @@ public class UnsignedInt1Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt1Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt1Member, UnsignedInt1Member> CONJ =
+		new Procedure2<UnsignedInt1Member, UnsignedInt1Member>() {
+			
+			@Override
+			public void call(UnsignedInt1Member a, UnsignedInt1Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt1Member, UnsignedInt1Member> conjugate() {
+		return CONJ;
 	}
 }

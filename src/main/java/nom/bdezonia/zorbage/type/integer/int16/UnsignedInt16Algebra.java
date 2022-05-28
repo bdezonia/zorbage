@@ -67,7 +67,8 @@ public class UnsignedInt16Algebra
 		Tolerance<UnsignedInt16Member,UnsignedInt16Member>,
 		ScaleByOneHalf<UnsignedInt16Member>,
 		ScaleByTwo<UnsignedInt16Member>,
-		ConstructibleFromInt<UnsignedInt16Member>
+		ConstructibleFromInt<UnsignedInt16Member>,
+		Conjugate<UnsignedInt16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -811,5 +812,19 @@ public class UnsignedInt16Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt16Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt16Member, UnsignedInt16Member> CONJ =
+		new Procedure2<UnsignedInt16Member, UnsignedInt16Member>() {
+			
+			@Override
+			public void call(UnsignedInt16Member a, UnsignedInt16Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt16Member, UnsignedInt16Member> conjugate() {
+		return CONJ;
 	}
 }

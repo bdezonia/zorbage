@@ -79,7 +79,8 @@ public class SignedInt128Algebra
 		ScaleByOneHalf<SignedInt128Member>,
 		ScaleByTwo<SignedInt128Member>,
 		ConstructibleFromBigInteger<SignedInt128Member>,
-		ConstructibleFromLong<SignedInt128Member>
+		ConstructibleFromLong<SignedInt128Member>,
+		Conjugate<SignedInt128Member>
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
@@ -1015,5 +1016,19 @@ public class SignedInt128Algebra
 	@Override
 	public Function1<Boolean, SignedInt128Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<SignedInt128Member, SignedInt128Member> CONJ =
+		new Procedure2<SignedInt128Member, SignedInt128Member>() {
+			
+			@Override
+			public void call(SignedInt128Member a, SignedInt128Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<SignedInt128Member, SignedInt128Member> conjugate() {
+		return CONJ;
 	}
 }

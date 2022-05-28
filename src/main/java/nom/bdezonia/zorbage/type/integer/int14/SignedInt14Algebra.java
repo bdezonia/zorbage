@@ -65,7 +65,8 @@ public class SignedInt14Algebra
 		Tolerance<SignedInt14Member,SignedInt14Member>,
 		ScaleByOneHalf<SignedInt14Member>,
 		ScaleByTwo<SignedInt14Member>,
-		ConstructibleFromInt<SignedInt14Member>
+		ConstructibleFromInt<SignedInt14Member>,
+		Conjugate<SignedInt14Member>
 {
 	@Override
 	public String typeDescription() {
@@ -864,5 +865,19 @@ public class SignedInt14Algebra
 	@Override
 	public Function1<Boolean, SignedInt14Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<SignedInt14Member, SignedInt14Member> CONJ =
+		new Procedure2<SignedInt14Member, SignedInt14Member>() {
+			
+			@Override
+			public void call(SignedInt14Member a, SignedInt14Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<SignedInt14Member, SignedInt14Member> conjugate() {
+		return CONJ;
 	}
 }

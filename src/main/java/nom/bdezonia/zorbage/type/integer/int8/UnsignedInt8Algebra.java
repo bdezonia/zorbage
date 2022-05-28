@@ -67,7 +67,8 @@ public class UnsignedInt8Algebra
 		Tolerance<UnsignedInt8Member,UnsignedInt8Member>,
 		ScaleByOneHalf<UnsignedInt8Member>,
 		ScaleByTwo<UnsignedInt8Member>,
-		ConstructibleFromInt<UnsignedInt8Member>
+		ConstructibleFromInt<UnsignedInt8Member>,
+		Conjugate<UnsignedInt8Member>
 {
 
 	@Override
@@ -812,5 +813,19 @@ public class UnsignedInt8Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt8Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt8Member, UnsignedInt8Member> CONJ =
+		new Procedure2<UnsignedInt8Member, UnsignedInt8Member>() {
+			
+			@Override
+			public void call(UnsignedInt8Member a, UnsignedInt8Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt8Member, UnsignedInt8Member> conjugate() {
+		return CONJ;
 	}
 }

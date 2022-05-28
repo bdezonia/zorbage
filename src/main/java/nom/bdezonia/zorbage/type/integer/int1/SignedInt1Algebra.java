@@ -65,7 +65,8 @@ public class SignedInt1Algebra
 		ScaleByRational<SignedInt1Member>,
 		ScaleByDouble<SignedInt1Member>,
 		ScaleByDoubleAndRound<SignedInt1Member>,
-		ConstructibleFromInt<SignedInt1Member>
+		ConstructibleFromInt<SignedInt1Member>,
+		Conjugate<SignedInt1Member>
 {
 	@Override
 	public String typeDescription() {
@@ -721,6 +722,20 @@ public class SignedInt1Algebra
 	@Override
 	public Procedure3<Double, SignedInt1Member, SignedInt1Member> scaleByDoubleAndRound() {
 		return SBDR;
+	}
+
+	private final Procedure2<SignedInt1Member, SignedInt1Member> CONJ =
+		new Procedure2<SignedInt1Member, SignedInt1Member>() {
+			
+			@Override
+			public void call(SignedInt1Member a, SignedInt1Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<SignedInt1Member, SignedInt1Member> conjugate() {
+		return CONJ;
 	}
 
 }

@@ -65,7 +65,8 @@ public class SignedInt7Algebra
 		Tolerance<SignedInt7Member,SignedInt7Member>,
 		ScaleByOneHalf<SignedInt7Member>,
 		ScaleByTwo<SignedInt7Member>,
-		ConstructibleFromInt<SignedInt7Member>
+		ConstructibleFromInt<SignedInt7Member>,
+		Conjugate<SignedInt7Member>
 {
 
 	@Override
@@ -865,5 +866,19 @@ public class SignedInt7Algebra
 	@Override
 	public Function1<Boolean, SignedInt7Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<SignedInt7Member, SignedInt7Member> CONJ =
+		new Procedure2<SignedInt7Member, SignedInt7Member>() {
+			
+			@Override
+			public void call(SignedInt7Member a, SignedInt7Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<SignedInt7Member, SignedInt7Member> conjugate() {
+		return CONJ;
 	}
 }

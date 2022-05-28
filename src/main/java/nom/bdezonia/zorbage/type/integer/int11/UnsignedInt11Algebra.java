@@ -65,7 +65,8 @@ public class UnsignedInt11Algebra
 		Tolerance<UnsignedInt11Member,UnsignedInt11Member>,
 		ScaleByOneHalf<UnsignedInt11Member>,
 		ScaleByTwo<UnsignedInt11Member>,
-		ConstructibleFromInt<UnsignedInt11Member>
+		ConstructibleFromInt<UnsignedInt11Member>,
+		Conjugate<UnsignedInt11Member>
 {
 	@Override
 	public String typeDescription() {
@@ -819,5 +820,19 @@ public class UnsignedInt11Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt11Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt11Member, UnsignedInt11Member> CONJ =
+		new Procedure2<UnsignedInt11Member, UnsignedInt11Member>() {
+			
+			@Override
+			public void call(UnsignedInt11Member a, UnsignedInt11Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt11Member, UnsignedInt11Member> conjugate() {
+		return CONJ;
 	}
 }

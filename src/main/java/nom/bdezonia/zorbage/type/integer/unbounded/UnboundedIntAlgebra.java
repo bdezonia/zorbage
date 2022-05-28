@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.BitOperations;
+import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLong;
 import nom.bdezonia.zorbage.algebra.G;
@@ -68,7 +69,8 @@ public class UnboundedIntAlgebra
 		ScaleByOneHalf<UnboundedIntMember>,
 		ScaleByTwo<UnboundedIntMember>,
 		ConstructibleFromBigInteger<UnboundedIntMember>,
-		ConstructibleFromLong<UnboundedIntMember>
+		ConstructibleFromLong<UnboundedIntMember>,
+		Conjugate<UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
@@ -979,5 +981,19 @@ public class UnboundedIntAlgebra
 	@Override
 	public Function1<Boolean, UnboundedIntMember> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnboundedIntMember, UnboundedIntMember> CONJ =
+		new Procedure2<UnboundedIntMember, UnboundedIntMember>() {
+			
+			@Override
+			public void call(UnboundedIntMember a, UnboundedIntMember b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnboundedIntMember, UnboundedIntMember> conjugate() {
+		return CONJ;
 	}
 }

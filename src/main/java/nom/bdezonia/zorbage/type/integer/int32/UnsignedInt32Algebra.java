@@ -67,7 +67,8 @@ public class UnsignedInt32Algebra
 		Tolerance<UnsignedInt32Member,UnsignedInt32Member>,
 		ScaleByOneHalf<UnsignedInt32Member>,
 		ScaleByTwo<UnsignedInt32Member>,
-		ConstructibleFromLong<UnsignedInt32Member>
+		ConstructibleFromLong<UnsignedInt32Member>,
+		Conjugate<UnsignedInt32Member>
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();
@@ -823,5 +824,19 @@ public class UnsignedInt32Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt32Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt32Member, UnsignedInt32Member> CONJ =
+		new Procedure2<UnsignedInt32Member, UnsignedInt32Member>() {
+			
+			@Override
+			public void call(UnsignedInt32Member a, UnsignedInt32Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt32Member, UnsignedInt32Member> conjugate() {
+		return CONJ;
 	}
 }

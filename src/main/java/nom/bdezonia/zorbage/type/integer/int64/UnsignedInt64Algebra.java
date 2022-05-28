@@ -69,7 +69,8 @@ public class UnsignedInt64Algebra
 		ScaleByOneHalf<UnsignedInt64Member>,
 		ScaleByTwo<UnsignedInt64Member>,
 		ConstructibleFromBigInteger<UnsignedInt64Member>,
-		ConstructibleFromLong<UnsignedInt64Member>
+		ConstructibleFromLong<UnsignedInt64Member>,
+		Conjugate<UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);
@@ -853,5 +854,19 @@ public class UnsignedInt64Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt64Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt64Member, UnsignedInt64Member> CONJ =
+		new Procedure2<UnsignedInt64Member, UnsignedInt64Member>() {
+			
+			@Override
+			public void call(UnsignedInt64Member a, UnsignedInt64Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt64Member, UnsignedInt64Member> conjugate() {
+		return CONJ;
 	}
 }

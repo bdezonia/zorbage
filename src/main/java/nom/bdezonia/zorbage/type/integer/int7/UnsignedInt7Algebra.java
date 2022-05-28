@@ -65,7 +65,8 @@ public class UnsignedInt7Algebra
 		Tolerance<UnsignedInt7Member,UnsignedInt7Member>,
 		ScaleByOneHalf<UnsignedInt7Member>,
 		ScaleByTwo<UnsignedInt7Member>,
-		ConstructibleFromInt<UnsignedInt7Member>
+		ConstructibleFromInt<UnsignedInt7Member>,
+		Conjugate<UnsignedInt7Member>
 {
 
 	@Override
@@ -818,5 +819,19 @@ public class UnsignedInt7Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt7Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt7Member, UnsignedInt7Member> CONJ =
+		new Procedure2<UnsignedInt7Member, UnsignedInt7Member>() {
+			
+			@Override
+			public void call(UnsignedInt7Member a, UnsignedInt7Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt7Member, UnsignedInt7Member> conjugate() {
+		return CONJ;
 	}
 }

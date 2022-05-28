@@ -65,7 +65,8 @@ public class UnsignedInt3Algebra
 		Tolerance<UnsignedInt3Member,UnsignedInt3Member>,
 		ScaleByOneHalf<UnsignedInt3Member>,
 		ScaleByTwo<UnsignedInt3Member>,
-		ConstructibleFromInt<UnsignedInt3Member>
+		ConstructibleFromInt<UnsignedInt3Member>,
+		Conjugate<UnsignedInt3Member>
 {
 	@Override
 	public String typeDescription() {
@@ -817,5 +818,19 @@ public class UnsignedInt3Algebra
 	@Override
 	public Function1<Boolean, UnsignedInt3Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<UnsignedInt3Member, UnsignedInt3Member> CONJ =
+		new Procedure2<UnsignedInt3Member, UnsignedInt3Member>() {
+			
+			@Override
+			public void call(UnsignedInt3Member a, UnsignedInt3Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<UnsignedInt3Member, UnsignedInt3Member> conjugate() {
+		return CONJ;
 	}
 }

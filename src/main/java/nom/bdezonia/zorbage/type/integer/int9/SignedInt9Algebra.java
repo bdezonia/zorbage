@@ -65,7 +65,8 @@ public class SignedInt9Algebra
 		Tolerance<SignedInt9Member,SignedInt9Member>,
 		ScaleByOneHalf<SignedInt9Member>,
 		ScaleByTwo<SignedInt9Member>,
-		ConstructibleFromInt<SignedInt9Member>
+		ConstructibleFromInt<SignedInt9Member>,
+		Conjugate<SignedInt9Member>
 {
 
 	@Override
@@ -865,5 +866,19 @@ public class SignedInt9Algebra
 	@Override
 	public Function1<Boolean, SignedInt9Member> isUnity() {
 		return ISUNITY;
+	}
+
+	private final Procedure2<SignedInt9Member, SignedInt9Member> CONJ =
+		new Procedure2<SignedInt9Member, SignedInt9Member>() {
+			
+			@Override
+			public void call(SignedInt9Member a, SignedInt9Member b) {
+				b.set(a);
+			}
+		};
+		
+	@Override
+	public Procedure2<SignedInt9Member, SignedInt9Member> conjugate() {
+		return CONJ;
 	}
 }
