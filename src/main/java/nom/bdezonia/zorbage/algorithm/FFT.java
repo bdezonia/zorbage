@@ -109,22 +109,22 @@ public class FFT {
 		R two = realAlg.construct();
 		realAlg.unity().call(one);
 		realAlg.add().call(one, one, two);
+		R jth = realAlg.construct();
+		R j = realAlg.construct();
 		R l = realAlg.construct(two);
-		R k = realAlg.construct();
-		R kth = realAlg.construct();
 		for (long el = 2; el <= aSize; el = el+el) {
-			realAlg.zero().call(k);
-			for (long kay = 0; kay < el/2; kay++) {
-				realAlg.negate().call(two, kth);
-				realAlg.multiply().call(kth, k, kth);
-				realAlg.multiply().call(kth, pi, kth);
-				realAlg.divide().call(kth, l, kth);
-				realAlg.cos().call(kth, cos);
-				realAlg.sin().call(kth, sin);
-				w.setR(cos);
-				w.setI(sin);
-				for (long j = 0; j < aSize/el; j++) {
-					final long idx1 = j*el + kay;
+			realAlg.zero().call(j);
+			for (long jay = 0; jay < el/2; jay++) {
+	 			realAlg.multiply().call(two, pi, jth);
+	 			realAlg.divide().call(jth, l, jth);
+	 			realAlg.multiply().call(jth, j, jth);
+	 			realAlg.cos().call(jth, cos);
+	 			realAlg.sin().call(jth, sin);
+	 			realAlg.negate().call(sin, sin);
+	 			w.setR(cos);
+	 			w.setI(sin);
+				for (long kay = 0; kay < aSize/el; kay++) {
+					final long idx1 = kay*el + jay;
 					final long idx2 = idx1 + el/2;
 					b.get(idx2, tmp1);
 					complexAlg.multiply().call(w, tmp1, tao);
@@ -134,7 +134,7 @@ public class FFT {
 					complexAlg.add().call(tmp2, tao, tmp1);
 					b.set(idx1, tmp1);
 				}
-				realAlg.add().call(k, one, k);
+				realAlg.add().call(j, one, j);
 			}
 			realAlg.add().call(l, l, l);
 		}
