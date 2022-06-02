@@ -102,17 +102,20 @@ public class FFT {
 
 		// butterfly updates
 		R pi = realAlg.construct();
-		realAlg.PI().call(pi);
 		R cos = realAlg.construct();
 		R sin = realAlg.construct();
 		R one = realAlg.construct();
 		R two = realAlg.construct();
-		realAlg.unity().call(one);
-		realAlg.add().call(one, one, two);
 		R jth = realAlg.construct();
 		R j = realAlg.construct();
-		R l = realAlg.construct(two);
+		R l = realAlg.construct();
+		realAlg.PI().call(pi);
+		realAlg.unity().call(one);
+		realAlg.add().call(one, one, two);
+		// at all times long el == real l
+		realAlg.assign().call(two, l);
 		for (long el = 2; el <= aSize; el = el+el) {
+			// at all times long jay == real j
 			realAlg.zero().call(j);
 			for (long jay = 0; jay < el/2; jay++) {
 	 			realAlg.multiply().call(two, pi, jth);
