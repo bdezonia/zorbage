@@ -387,6 +387,7 @@ public class ComplexFloat128Algebra
 			G.QUAD.multiply().call(a.r(), b.i(), tmp2);
 			G.QUAD.subtract().call(tmp1, tmp2, i);
 			G.QUAD.divide().call(i, mod2, i);
+
 			c.setR( r );
 			c.setI( i );
 		}

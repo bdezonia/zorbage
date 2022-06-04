@@ -60,6 +60,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
@@ -147,11 +148,16 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(ComplexFloat32Member a, ComplexFloat32Member b, ComplexFloat32Member c) {
-			// for safety must use tmps
-			double r = a.r()*b.r() - a.i()*b.i();
-			double i = a.i()*b.r() + a.r()*b.i();
-			c.setR( (float) r );
-			c.setI( (float) i );
+			double max = Math.max( Math.max(Math.abs(a.r()), Math.abs(a.i())) , Math.max(Math.abs(b.r()), Math.abs(b.i())) );
+			if (max == 0) {
+				zero().call(c);
+			}
+			else {
+				double r = ((a.r()/max) * (b.r()/max)) - (a.i()/max)*(b.i()/max);
+				double i = ((a.i()/max) * (b.r()/max)) + (a.r()/max)*(b.i()/max);
+				c.setR( (float) (r * max * max) );
+				c.setI( (float) (i * max * max) );
+			}
 		}
 	};
 
@@ -315,12 +321,18 @@ public class ComplexFloat32Algebra
 	{
 		@Override
 		public void call(ComplexFloat32Member a, ComplexFloat32Member b, ComplexFloat32Member c) {
-			// for safety must use tmps
-			double mod2 = b.r()*b.r() + b.i()*b.i();
-			double r = (a.r()*b.r() + a.i()*b.i()) / mod2;
-			double i = (a.i()*b.r() - a.r()*b.i()) / mod2;
-			c.setR( (float) r );
-			c.setI( (float) i );
+			double max = Math.max( Math.max(Math.abs(a.r()), Math.abs(a.i())) , Math.max(Math.abs(b.r()), Math.abs(b.i())) );
+			if (max == 0) {
+				nan().call(c);
+			}
+			else {
+				// for safety must use tmps
+				double mod2 = (b.r()/max)*(b.r()/max) + (b.i()/max)*(b.i()/max);
+				double r = (a.r()/max) * (b.r()/max) + (a.i()/max)*(b.i()/max);
+				double i = (a.i()/max) * (b.r()/max) - (a.r()/max)*(b.i()/max);
+				c.setR( (float) (r / mod2) );
+				c.setI( (float) (i / mod2) );
+			}
 		}
 	};
 
