@@ -60,7 +60,6 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
@@ -153,8 +152,12 @@ public class ComplexFloat32Algebra
 				zero().call(c);
 			}
 			else {
-				double r = ((a.r()/max) * (b.r()/max)) - (a.i()/max)*(b.i()/max);
-				double i = ((a.i()/max) * (b.r()/max)) + (a.r()/max)*(b.i()/max);
+				double ar = a.r() / max;
+				double ai = a.i() / max;
+				double br = b.r() / max;
+				double bi = b.i() / max;
+				double r = (ar*br) - (ai*bi);
+				double i = (ai*br) + (ar*bi);
 				c.setR( (float) (r * max * max) );
 				c.setI( (float) (i * max * max) );
 			}
@@ -327,9 +330,13 @@ public class ComplexFloat32Algebra
 			}
 			else {
 				// for safety must use tmps
-				double mod2 = (b.r()/max)*(b.r()/max) + (b.i()/max)*(b.i()/max);
-				double r = (a.r()/max) * (b.r()/max) + (a.i()/max)*(b.i()/max);
-				double i = (a.i()/max) * (b.r()/max) - (a.r()/max)*(b.i()/max);
+				double ar = a.r() / max;
+				double ai = a.i() / max;
+				double br = b.r() / max;
+				double bi = b.i() / max;
+				double mod2 = (br*br) + (bi*bi);
+				double r = (ar*br) + (ai*bi);
+				double i = (ai*br) - (ar*bi);
 				c.setR( (float) (r / mod2) );
 				c.setI( (float) (i / mod2) );
 			}
