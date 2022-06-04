@@ -158,6 +158,8 @@ public class ComplexFloat128Algebra
 		@Override
 		public void call(ComplexFloat128Member a, ComplexFloat128Member b, ComplexFloat128Member c) {
 			
+			// TODO: adopt approach that 16/32/64 code uses to not overflow
+			
 			// for safety must use tmps
 			Float128Member r = new Float128Member();
 			Float128Member i = new Float128Member();
@@ -366,6 +368,8 @@ public class ComplexFloat128Algebra
 	{
 		@Override
 		public void call(ComplexFloat128Member a, ComplexFloat128Member b, ComplexFloat128Member c) {
+			
+			// TODO: adopt approach that 16/32/64 code uses to not overflow
 			
 			// for safety must use tmps
 			Float128Member r = new Float128Member();
