@@ -81,11 +81,17 @@ Thanks, I'll look that up later. Can you describe what can I do with Zorbage?
     - unsigned integers (bits: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
                            14, 15, 16, 32, 64, 128)
 
-    - floats (bits: 16, 32, 64, 128, unbounded)
-
     - rational numbers (unbounded)
     
+    - floats (bits: 16, 32, 64, 128, unbounded)
+
     - gaussian integers (bits: 8, 16, 32, 64, unbounded)
+    
+    - complex numbers (bits: 16, 32, 64, 128)
+    
+    - quaternions (bits: 16, 32, 64, 128)
+    
+    - octonions (bits: 16, 32, 64, 128)
     
     - Unicode16 characters and variable length strings and fixed length strings
   
