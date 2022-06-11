@@ -50,6 +50,8 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  *
  */
 public class TestComplexFloat64Matrix {
+
+	final double tol = 0.00000000000001;
 	
 	@Test
 	public void test1() {
@@ -689,8 +691,8 @@ public class TestComplexFloat64Matrix {
 		assertEquals(1, b.rows());
 		assertEquals(1, b.cols());
 		b.getV(0, 0, value2);
-		assertEquals(12, value2.r(), 0);
-		assertEquals(21, value2.i(), 0);
+		assertEquals(12, value2.r(), tol);
+		assertEquals(21, value2.i(), tol);
 		
 		// scaleByDouble()
 		
