@@ -41,6 +41,11 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
+// TODO:
+// 1) parallelize this and find something better than an N^2 algorithm.
+// 2) can the inner loop be cut in half and do less work?
+// 3) should I do the sqrt calc more often? slower but maybe more accurate.
+
 /**
  * 
  * @author Barry DeZonia
@@ -67,7 +72,9 @@ public class Autocorrelation {
 	{
 		// NMR Data Processing, Hoch and Stern, p. 23
 		
-		IndexedDataSource<C> b = Storage.allocate(alg.construct(), a.size());
+		final long N = a.size();
+		
+		IndexedDataSource<C> b = Storage.allocate(alg.construct(), N);
 
 		C a0 = alg.construct();
 		C a1 = alg.construct();
@@ -78,13 +85,15 @@ public class Autocorrelation {
 		G.HP.sqrt().call(scale, scale);
 		G.HP.invert().call(scale, scale);
 
-		for (long k = 0; k < a.size(); k++) {
+		for (long k = 0; k < N; k++) {
 
 			alg.zero().call(sum);
 			
-			for (long i = 0; i < a.size(); i++) {
+			for (long i = 0; i < N; i++) {
+				long j = N-1-i-k;
+				if (j < 0) j += N;
 				a.get(i, a0);
-				a.get(a.size()-i-1-k, a1);
+				a.get(j, a1);
 				alg.conjugate().call(a1, a1);
 				alg.multiply().call(a0, a1, term);
 				alg.add().call(sum, term, sum);
