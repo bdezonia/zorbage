@@ -65,6 +65,8 @@ public class Autocorrelation {
 					C extends Allocatable<C>>
 		IndexedDataSource<C> compute(CA alg, IndexedDataSource<C> a)
 	{
+		// NMR Data Processing, Hoch and Stern, p. 23
+		
 		IndexedDataSource<C> b = Storage.allocate(alg.construct(), a.size());
 
 		C a0 = alg.construct();

@@ -74,6 +74,8 @@ public class PowerSpectrum {
 					R>
 		void compute(CA complexAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
+		// NMR Data Processing, Hoch and Stern, p. 23
+		
 		IndexedDataSource<C> autocorrelation = Autocorrelation.compute(complexAlg, a);
 		FFT.compute(complexAlg, realAlg, autocorrelation, b);
 	}
