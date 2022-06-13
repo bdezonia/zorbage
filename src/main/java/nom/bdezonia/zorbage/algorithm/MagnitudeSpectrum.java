@@ -74,7 +74,11 @@ public class MagnitudeSpectrum {
 								Unity<R>,
 					R>
 
-	void compute(CA complexAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b) {
+		void compute(CA complexAlg,
+						RA realAlg,
+						IndexedDataSource<C> a,
+						IndexedDataSource<C> b)
+	{
 		PowerSpectrum.compute(complexAlg, realAlg, a, b);
 		ParallelTransform2.compute(complexAlg, complexAlg.sqrt(), b, b);
 	}
