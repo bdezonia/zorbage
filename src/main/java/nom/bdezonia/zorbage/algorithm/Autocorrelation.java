@@ -42,7 +42,7 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 // TODO:
-// 1) parallelize this and find something better than an N^2 algorithm.
+// 1) find something better than an N^2 algorithm.
 // 2) can the inner loop be cut in half and do less work?
 // 3) should I do the sqrt calc more often? slower but maybe more accurate.
 
@@ -70,40 +70,108 @@ public class Autocorrelation {
 					C extends Allocatable<C>>
 		IndexedDataSource<C> compute(CA alg, IndexedDataSource<C> a)
 	{
-		// NMR Data Processing, Hoch and Stern, p. 23
-		
-		final long N = a.size();
-		
-		IndexedDataSource<C> b = Storage.allocate(alg.construct(), N);
+		IndexedDataSource<C> b = Storage.allocate(alg.construct(), a.size());
 
-		C a0 = alg.construct();
-		C a1 = alg.construct();
-		C term = alg.construct();
-		C sum = alg.construct();
+		long pieceSize = a.size() / Runtime.getRuntime().availableProcessors();
 		
-		HighPrecisionMember scale = G.HP.construct(a.size());
-		G.HP.sqrt().call(scale, scale);
-		G.HP.invert().call(scale, scale);
+		if (pieceSize == 0) pieceSize = a.size();
+		
+		long pieces = a.size() / pieceSize;
+		
+		if (a.size() % pieceSize != 0)
+			pieces += 1;
+		
+		if (pieces > Integer.MAX_VALUE)
+			pieces = Integer.MAX_VALUE;
 
-		for (long k = 0; k < N; k++) {
-
-			alg.zero().call(sum);
-			
-			for (long i = 0; i < N; i++) {
-				long j = N-1-i-k;
-				if (j < 0) j += N;
-				a.get(i, a0);
-				a.get(j, a1);
-				alg.conjugate().call(a1, a1);
-				alg.multiply().call(a0, a1, term);
-				alg.add().call(sum, term, sum);
+		final Thread[] threads = new Thread[(int)pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long endPlusOne;
+			// last piece?
+			if (i == pieces-1) {
+				endPlusOne = a.size();
 			}
-			
-			alg.scaleByHighPrec().call(scale, sum, sum);
+			else {
+				endPlusOne = start + pieceSize;
+			}
+			Computer<CA,C> computer = new Computer<CA,C>(alg, start, endPlusOne, a, b);
+			threads[i] = new Thread(computer);
+			start = endPlusOne;
+		}
 
-			b.set(k, sum);
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].start();
+		}
+
+		for (int i = 0; i < threads.length; i++) {
+			try {
+				threads[i].join();
+			} catch(InterruptedException e) {
+				throw new IllegalArgumentException("Thread execution error in ParallelCorrConvND");
+			}
 		}
 		
 		return b;
 	}
+	
+	private static class Computer<CA extends Algebra<CA,C> & Addition<C> &
+									Multiplication<C> & Conjugate<C> &
+									ScaleByHighPrec<C>,
+									C>
+		implements Runnable
+	{
+		final CA alg;
+		final long start;
+		final long endPlusOne;
+		final IndexedDataSource<C> src;
+		final IndexedDataSource<C> dst;
+		
+		Computer(CA alg, long start, long endPlusOne,
+				IndexedDataSource<C> src, IndexedDataSource<C> dst)
+		{
+			this.alg = alg;
+			this.start = start;
+			this.endPlusOne = endPlusOne;
+			this.src = src;
+			this.dst = dst;
+		}
+		
+		@Override
+		public void run() {
+
+			// NMR Data Processing, Hoch and Stern, p. 23
+			
+			long N = src.size();
+			
+			C a0 = alg.construct();
+			C a1 = alg.construct();
+			C term = alg.construct();
+			C sum = alg.construct();
+
+			HighPrecisionMember scale = G.HP.construct(N);
+			G.HP.sqrt().call(scale, scale);
+			G.HP.invert().call(scale, scale);
+
+			for (long k = start; k < endPlusOne; k++) {
+
+				alg.zero().call(sum);
+				
+				for (long i = 0; i < N; i++) {
+					long j = N-1-i-k;
+					if (j < 0) j += N;
+					src.get(i, a0);
+					src.get(j, a1);
+					alg.conjugate().call(a1, a1);
+					alg.multiply().call(a0, a1, term);
+					alg.add().call(sum, term, sum);
+				}
+				
+				alg.scaleByHighPrec().call(scale, sum, sum);
+
+				dst.set(k, sum);
+			}
+		}
+	}
+	
 }
