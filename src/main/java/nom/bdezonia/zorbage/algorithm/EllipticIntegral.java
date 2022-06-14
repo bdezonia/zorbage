@@ -75,27 +75,65 @@ public class EllipticIntegral {
 		R an = alg.construct();
 		R bn = alg.construct();
 		R denom = alg.construct();
+
+		// calc constants
+		
 		alg.unity().call(one);
 		alg.add().call(one, one, two);
 		alg.PI().call(pi);
+		
+		// setup initial values for iteration
+		
+		// a = 1
+		
 		alg.assign().call(one, a);
+		
+		// b = sqrt(1 - k^2)
+		
 		alg.multiply().call(k, k, b);
 		alg.subtract().call(one, b, b);
 		alg.sqrt().call(b, b);
+		
+		// now iterate
+		
 		for (long i = 0; i < maxIters; i++) {
+			
+			// arithmetic mean of a and b
+		
 			alg.add().call(a, b, an);
 			alg.divide().call(an, two, an);
+			
+			// geometric mean of a and b
+			
 			alg.multiply().call(a, b, bn);
 			alg.sqrt().call(bn, bn);
+		
+			// are we converged?
+			
 			if (alg.within().call(tol, an, bn)) {
+				
+				// yes - calc final result
+			
 				alg.multiply().call(an, two, denom);
 				alg.divide().call(pi, denom, result);
+				
+				// signify we found the value
+				
 				return true;
 			}
+			
+			// no - setup for next iteration
+			
 			alg.assign().call(an, a);
 			alg.assign().call(bn, b);
 		}
+		
+		// clear the result
+		
 		alg.zero().call(result);
+		
+		// signify we did not find the value
+		
 		return false;
 	}
 }
