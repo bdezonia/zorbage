@@ -51,15 +51,17 @@ public class EllipticIntegral {
 	private EllipticIntegral() { }
 
 	/**
+	 * Calculate the value of an elliptic integral (of the first or second kinds)
+	 * for a given value of k.
 	 * 
-	 * @param <RA>
-	 * @param <R>
-	 * @param alg
-	 * @param k
-	 * @param tol
-	 * @param maxIters
-	 * @param result
-	 * @return
+	 * @param <RA> A real-like algebra.
+	 * @param <R> A real-like type.
+	 * @param alg The algebra used for calculating intermediate values.
+	 * @param k The integral parameter k.
+	 * @param tol The tolerance that defines when we'll accept the solution.
+	 * @param maxIters The max number of iterations to try before giving up.
+	 * @param result The value of the integral if a solution is found.
+	 * @return True if a solution was found in <= maxIters, else false.
 	 */
 	public static <RA extends Algebra<RA,R> & Tolerance<R,R> & Unity<R> & Roots<R> &
 								Addition<R> & Multiplication<R> & RealConstants<R> &
