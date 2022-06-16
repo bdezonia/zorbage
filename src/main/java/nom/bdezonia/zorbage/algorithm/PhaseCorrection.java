@@ -77,10 +77,11 @@ public class PhaseCorrection {
 		void compute(CA cAlg, RA rAlg, long pivot, R theta0, R theta1,
 						IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
+		// NMR Data Processing, Hoch and Stern, p. 58-59
+		
 		if (pivot < 0 || pivot >= a.size())
 			throw new IllegalArgumentException("phase correction pivot out of bounds");
 		
-		//e i ( th0 + (n - pivot)th1/N)
 		long N = a.size();
 		R n = rAlg.construct();
 		R scaleTerm = rAlg.construct();
