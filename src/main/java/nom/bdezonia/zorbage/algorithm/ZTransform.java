@@ -52,25 +52,26 @@ public class ZTransform {
 	 * Do a one sided z transform operation on a list of (usually) complex values
 	 * and place the resulting terms in an output list. The input list and output
 	 * list can be the same list as this code works safely in place one term at a
-	 * time. The positiveTermCount is the number of forward terms to include in the
-	 * summation of individual values. There are no negative terms included in this
-	 * summation code. Users of this routine must make sure the radius of convergence
-	 * is not violated by passing an incorrect number for positiveTermCount.
+	 * time. The descTermCount is the number of descending power terms to include
+	 * in the summation of individual values. There are no ascending power terms
+	 * included in this summation code. Users of this routine must make sure the
+	 * radius of convergence of the series is not violated by passing an incorrect
+	 * number for descTermCount.
 	 * 
 	 * @param <CA>
 	 * @param <C>
 	 * @param cAlg The (complex or real or other) algebra to use for math operations.
 	 * @param z The z value to scale terms by.
-	 * @param positiveTermCount Number of forward terms to generate in summation.
+	 * @param descTermCount Number of decending power terms to generate in summation.
 	 * @param a The list of input values.
 	 * @param b The list to place the resulting output values.
 	 */
 	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> &
 								Invertible<C> & Unity<C>,
 						C>
-		void oneSided(CA cAlg, C z, long positiveTermCount, IndexedDataSource<C> a, IndexedDataSource<C> b)
+		void oneSided(CA cAlg, C z, long descTermCount, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
-		if (positiveTermCount < 0)
+		if (descTermCount < 0)
 			throw new IllegalArgumentException("term count cannot be negative");
 		
 		C in = cAlg.construct();
@@ -78,7 +79,7 @@ public class ZTransform {
 		long N = a.size();
 		for (long i = 0; i < N; i++) {
 			a.get(i, in);
-			calcOneSidedValue(cAlg, positiveTermCount, in, z, out);
+			calcOneSidedValue(cAlg, descTermCount, in, z, out);
 			b.set(i, out);
 		}
 	}
@@ -87,25 +88,26 @@ public class ZTransform {
 	 * Do a two sided z transform operation on a list of (usually) complex values
 	 * and place the resulting terms in an output list. The input list and output
 	 * list can be the same list as this code works safely in place one term at a
-	 * time. The positiveTermCount is the number of forward terms to include in the
-	 * summation of individual values. There are an equal number of negative terms
-	 * included in this summation code. Users of this routine must make sure the radius of convergence
-	 * is not violated by passing an incorrect number for positiveTermCount.
+	 * time. The descTermCount is the number of descending power terms to include
+	 * in the summation of individual values. There are an equal number of ascending
+	 * power terms included in this summation code. Users of this routine must make
+	 * sure the radius of convergence of the series is not violated by passing an
+	 * incorrect number for descTermCount.
 	 * 
 	 * @param <CA>
 	 * @param <C>
 	 * @param cAlg The (complex or real or other) algebra to use for math operations.
 	 * @param z The z value to scale terms by.
-	 * @param positiveTermCount Number of forward terms to generate in summation.
+	 * @param descTermCount Number of descending power terms to generate in summation.
 	 * @param a The list of input values.
 	 * @param b The list to place the resulting output values.
 	 */
 	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> &
 								Invertible<C> & Unity<C>,
 						C>
-		void twoSided(CA cAlg, C z, long positiveTermCount, IndexedDataSource<C> a, IndexedDataSource<C> b)
+		void twoSided(CA cAlg, C z, long descTermCount, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
-		if (positiveTermCount < 0)
+		if (descTermCount < 0)
 			throw new IllegalArgumentException("term count cannot be negative");
 	
 		C in = cAlg.construct();
@@ -113,7 +115,7 @@ public class ZTransform {
 		long N = a.size();
 		for (long i = 0; i < N; i++) {
 			a.get(i, in);
-			calcTwoSidedValue(cAlg, positiveTermCount, in, z, out);
+			calcTwoSidedValue(cAlg, descTermCount, in, z, out);
 			b.set(i, out);
 		}
 	}
@@ -123,13 +125,13 @@ public class ZTransform {
 	private static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> &
 								Invertible<C> & Unity<C>,
 						C>
-		void calcOneSidedValue(CA cAlg, long positiveTermCount, C in, C z, C out)
+		void calcOneSidedValue(CA cAlg, long descTermCount, C in, C z, C out)
 	{
 		C scale = cAlg.construct();
 		C tmp = cAlg.construct(in);
 		C sum = cAlg.construct(in);
 		cAlg.unity().call(scale);
-		for (long i = 1; i <= positiveTermCount; i++) {
+		for (long i = 1; i <= descTermCount; i++) {
 			cAlg.divide().call(scale, z, scale);
 			cAlg.multiply().call(tmp, scale, tmp);
 			cAlg.add().call(sum, tmp, sum);
@@ -142,19 +144,19 @@ public class ZTransform {
 	private static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> &
 								Invertible<C> & Unity<C>,
 						C>
-		void calcTwoSidedValue(CA cAlg, long positiveTermCount, C in, C z, C out)
+		void calcTwoSidedValue(CA cAlg, long descTermCount, C in, C z, C out)
 	{
 		C scale = cAlg.construct();
 		C tmp = cAlg.construct(in);
 		C sum = cAlg.construct(in);
 		cAlg.unity().call(scale);
-		for (long i = 1; i <= positiveTermCount; i++) {
+		for (long i = 1; i <= descTermCount; i++) {
 			cAlg.divide().call(scale, z, scale);
 			cAlg.multiply().call(tmp, scale, tmp);
 			cAlg.add().call(sum, tmp, sum);
 		}
 		cAlg.unity().call(scale);
-		for (long i = 1; i <= positiveTermCount; i++) {
+		for (long i = 1; i <= descTermCount; i++) {
 			cAlg.multiply().call(scale, z, scale);
 			cAlg.multiply().call(tmp, scale, tmp);
 			cAlg.add().call(sum, tmp, sum);
