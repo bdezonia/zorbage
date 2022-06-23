@@ -77,7 +77,7 @@ public class GaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 			}
 		
 		};
-		alg.multiply().call(base,w,base);
+		alg.assign().call(w, base);
 		alg.negate().call(base, base);
 		alg.multiply().call(base, dt, base);
 		alg.multiply().call(base, dt, base);
