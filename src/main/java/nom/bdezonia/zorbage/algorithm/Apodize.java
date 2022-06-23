@@ -59,13 +59,85 @@ public class Apodize {
 					C>
 		void compute(CA alg, Procedure2<Long,C> windowFunc, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
-		C tmp = alg.construct();
-		C ak = alg.construct();
-		for (long i = 0; i < a.size(); i++) {
-			windowFunc.call(i, ak);
-			a.get(i, tmp);
-			alg.multiply().call(tmp, ak, tmp);
-			b.set(i, tmp);
+		if (a.size() != b.size())
+			throw new IllegalArgumentException("mismatched list sizes");
+		
+		long pieceSize = a.size() / Runtime.getRuntime().availableProcessors();
+		
+		if (pieceSize == 0) pieceSize = a.size();
+		
+		long pieces = a.size() / pieceSize;
+		
+		if (a.size() % pieceSize != 0)
+			pieces += 1;
+		
+		if (a.accessWithOneThread() || b.accessWithOneThread()) {
+			pieces = 1;
+		}
+		else if (pieces >= a.size()) {
+			pieces = 1;
+		}
+		else if (pieces > Integer.MAX_VALUE) {
+			pieces = Integer.MAX_VALUE;
+		}
+	
+		final Thread[] threads = new Thread[(int)pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long endPlusOne;
+			// last piece?
+			if (i == pieces-1) {
+				endPlusOne = a.size();
+			}
+			else {
+				endPlusOne = start + pieceSize;
+			}
+			Computer<CA,C> computer = new Computer<CA,C>(alg, start, endPlusOne, windowFunc, a, b);
+			threads[i] = new Thread(computer);
+			start = endPlusOne;
+		}
+	
+		for (int i = 0; i < threads.length; i++) {
+			threads[i].start();
+		}
+		for (int i = 0; i < threads.length; i++) {
+			try {
+				threads[i].join();
+			} catch(InterruptedException e) {
+				throw new IllegalArgumentException("Thread execution error in ParallelResampler");
+			}
+		}
+	}
+
+	private static class Computer<CA extends Algebra<CA,C> & Multiplication<C>, C>
+		implements Runnable
+	{
+		private final CA alg;
+		private final IndexedDataSource<C> a;
+		private final IndexedDataSource<C> b;
+		private final long start;
+		private final long endPlusOne;
+		private final Procedure2<Long,C> windowFunc;
+	
+		Computer(CA alg, long start, long endPlusOne, Procedure2<Long,C> windowFunc, IndexedDataSource<C> a, IndexedDataSource<C> b) {
+			this.alg = alg;
+			this.a = a;
+			this.b = b;
+			this.start = start;
+			this.endPlusOne = endPlusOne;
+			this.windowFunc = windowFunc;
+		}
+		
+		@Override
+		public void run() {
+			C tmp = alg.construct();
+			C ak = alg.construct();
+			for (long i = start; i < endPlusOne; i++) {
+				windowFunc.call(i, ak);
+				a.get(i, tmp);
+				alg.multiply().call(tmp, ak, tmp);
+				b.set(i, tmp);
+			}
 		}
 	}
 }
