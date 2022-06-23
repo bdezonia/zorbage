@@ -68,6 +68,8 @@ public class ParallelMatrixMultiply {
 
 		long numRows = rows;
 		long pieces = Runtime.getRuntime().availableProcessors();
+
+		// TODO: check if matrices can only support single thread access
 		
 		if (pieces > numRows)
 			pieces = numRows; // 1 thread per row

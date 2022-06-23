@@ -90,6 +90,9 @@ public class ParallelConvND {
 		
 		long pieces = maxPieces;
 		
+		if (a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
+			pieces = 1;
+		
 		if (pieces > maxDim)
 			pieces = maxDim; // 1 thread per piped
 		

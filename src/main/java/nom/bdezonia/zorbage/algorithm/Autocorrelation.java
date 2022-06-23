@@ -81,6 +81,9 @@ public class Autocorrelation {
 		if (a.size() % pieceSize != 0)
 			pieces += 1;
 		
+		if (a.accessWithOneThread() || b.accessWithOneThread())
+			pieces = 1;
+		
 		if (pieces > Integer.MAX_VALUE)
 			pieces = Integer.MAX_VALUE;
 

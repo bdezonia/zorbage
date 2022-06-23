@@ -93,6 +93,9 @@ public class ResampleCubic {
 		
 		long pieces = maxPieces;
 		
+		if (input.rawData().accessWithOneThread() || output.rawData().accessWithOneThread())
+			pieces = 1;
+		
 		if (pieces > maxDim)
 			pieces = maxDim; // 1 thread per piped
 		
