@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
+// Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
+
 /**
  * 
  * @author Barry DeZonia

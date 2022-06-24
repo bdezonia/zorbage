@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
+// Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
+
 // TODO: I know SquaredSineBell is right but I may have messed this one up. Do I
 //   still do a sin() call and mess with phase? Or leave phase as is and
 //   call cos()?
@@ -56,10 +58,7 @@ public class SquaredCosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
-	private final C phase;
-	private final C t1;
-	private final ThreadLocal<C> tk;
-	private final ThreadLocal<C> k;
+	private final CosineBellApodizer<CA,C> apdz;
 
 	/**
 	 * 
@@ -69,44 +68,12 @@ public class SquaredCosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<
 	 */
 	public SquaredCosineBellApodizer(CA alg, C phase, long signalLen) {
 		this.alg = alg;
-		this.phase = alg.construct(phase);
-		C len = alg.construct();
-		C oneEighty = alg.construct();
-		this.t1 = alg.construct();
-		this.k = new ThreadLocal<C>() {
-			@Override
-			protected C initialValue() {
-				return alg.construct();
-			}
-		};
-		this.tk = new ThreadLocal<C>() {
-			@Override
-			protected C initialValue() {
-				return alg.construct();
-			}
-		};
-		C pi = alg.construct();
-		C one = alg.construct();
-		C two = alg.construct();
-		alg.PI().call(pi);
-		alg.unity().call(one);
-		alg.add().call(one, one, two);
-		alg.divide().call(oneEighty, two, oneEighty);
-		len.setFromLong(signalLen);
-		alg.assign().call(oneEighty, t1);
-		alg.subtract().call(t1, phase, t1);
-		alg.divide().call(t1, len, t1);
+		this.apdz = new CosineBellApodizer<CA,C>(alg, phase, signalLen);
 	}
 
 	@Override
 	public void call(Long k, C ak) {
-		C tmp = this.k.get();
-		tmp.setFromLong(k);
-		C tk = this.tk.get();
-		alg.multiply().call(t1, tmp, tk);
-		alg.add().call(tk, phase, tk);
-		alg.cos().call(tk, tk);
-		alg.multiply().call(tk, tk, ak);
+		this.apdz.call(k, ak);
+		alg.multiply().call(ak, ak, ak);
 	}
-
 }

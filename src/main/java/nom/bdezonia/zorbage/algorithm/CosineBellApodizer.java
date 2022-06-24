@@ -40,6 +40,8 @@ import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
+// Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
+
 // TODO: I know SineBell is right but I may have messed this one up. Do I
 //   still do a sin() call and mess with phase? Or leave phase as is and
 //   call cos()?
