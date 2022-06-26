@@ -31,9 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -74,35 +76,35 @@ public class ParallelTransform2 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B>
 		void compute(AA algA, BB algB, Procedure2<A,B> proc, IndexedDataSource<A> a, IndexedDataSource<B> b)
 	{
-		long aSize = a.size();
-		int numProcs = Runtime.getRuntime().availableProcessors();
-		if (aSize < numProcs) {
-			numProcs = (int) aSize;
-		}
-		if (a.accessWithOneThread() || b.accessWithOneThread())
-			numProcs = 1;
-		final Thread[] threads = new Thread[numProcs];
-		long thOffset = 0;
-		long slice = aSize / numProcs;
-		for (int i = 0; i < numProcs; i++) {
-			long thSize;
-			if (i != numProcs-1) {
-				thSize = slice;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread() ||
+										b.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+	
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
 			}
 			else {
-				thSize = aSize;
+				count = a.size() - start;
 			}
-			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
-			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
 			Runnable r = new Computer<AA,A,BB,B>(algA, algB, proc, aTrimmed, bTrimmed);
 			threads[i] = new Thread(r);
-			thOffset += slice;
-			aSize -= slice;
+			start += count;
 		}
-		for (int i = 0; i < numProcs; i++) {
+
+		for (int i = 0; i < pieces; i++) {
 			threads[i].start();
 		}
-		for (int i = 0; i < numProcs; i++) {
+		
+		for (int i = 0; i < pieces; i++) {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {

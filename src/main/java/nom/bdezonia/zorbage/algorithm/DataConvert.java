@@ -31,11 +31,13 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConverter;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -69,16 +71,19 @@ public class DataConvert {
 		long toSize = toList.size();
 		if (fromSize > toSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-		int maxPieces = Runtime.getRuntime().availableProcessors();
-		if (maxPieces > fromSize)
-			maxPieces = 1;
-		if (fromList.accessWithOneThread() || toList.accessWithOneThread())
-			maxPieces = 1;
+		
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(fromSize,
+										fromList.accessWithOneThread() ||
+										toList.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+
 		long start = 0;
-		long count = fromSize / maxPieces;
-		Thread[] threads = new Thread[maxPieces];
-		for (int i = 0; i < maxPieces; i++) {
-			if (i == maxPieces - 1) {
+		long count = elemsPerPiece;
+		Thread[] threads = new Thread[pieces];
+		for (int i = 0; i < pieces; i++) {
+			if (i == pieces - 1) {
 				count = fromSize - start;
 			}
 			Computer<T,U,V,W> computer =

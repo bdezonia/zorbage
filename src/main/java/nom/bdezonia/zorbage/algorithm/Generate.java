@@ -31,9 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -57,34 +59,32 @@ public class Generate {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure<U> proc, IndexedDataSource<U> a, U...inputs)
 	{
-		long aSize = a.size();
-		int numProcs = Runtime.getRuntime().availableProcessors();
-		if (aSize < numProcs) {
-			numProcs = (int) aSize;
-		}
-		if (a.accessWithOneThread())
-			numProcs = 1;
-		final Thread[] threads = new Thread[numProcs];
-		long thOffset = 0;
-		long slice = aSize / numProcs;
-		for (int i = 0; i < numProcs; i++) {
-			long thSize;
-			if (i != numProcs-1) {
-				thSize = slice;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(), a.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
 			}
 			else {
-				thSize = aSize;
+				count = a.size() - start;
 			}
-			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
+			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, start, count);
 			Runnable r = new Computer<T,U>(algU, proc, aTrimmed, inputs);
 			threads[i] = new Thread(r);
-			thOffset += slice;
-			aSize -= slice;
+			start += count;
 		}
-		for (int i = 0; i < numProcs; i++) {
+
+		for (int i = 0; i < pieces; i++) {
 			threads[i].start();
 		}
-		for (int i = 0; i < numProcs; i++) {
+		
+		for (int i = 0; i < pieces; i++) {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {

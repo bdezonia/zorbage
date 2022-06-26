@@ -31,9 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -80,37 +82,39 @@ public class ParallelTransform4 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
 		void compute(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d)
 	{
-		long aSize = a.size();
-		int numProcs = Runtime.getRuntime().availableProcessors();
-		if (aSize < numProcs) {
-			numProcs = (int) aSize;
-		}
-		if (a.accessWithOneThread() || b.accessWithOneThread() || c.accessWithOneThread() || d.accessWithOneThread())
-			numProcs = 1;
-		final Thread[] threads = new Thread[numProcs];
-		long thOffset = 0;
-		long slice = aSize / numProcs;
-		for (int i = 0; i < numProcs; i++) {
-			long thSize;
-			if (i != numProcs-1) {
-				thSize = slice;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread() ||
+										b.accessWithOneThread() ||
+										c.accessWithOneThread() ||
+										d.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+	
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
 			}
 			else {
-				thSize = aSize;
+				count = a.size() - start;
 			}
-			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, thOffset, thSize);
-			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, thOffset, thSize);
-			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, thOffset, thSize);
-			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, thOffset, thSize);
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
+			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, start, count);
+			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, start, count);
 			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D>(algA, algB, algC, algD, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
 			threads[i] = new Thread(r);
-			thOffset += slice;
-			aSize -= slice;
+			start += count;
 		}
-		for (int i = 0; i < numProcs; i++) {
+
+		for (int i = 0; i < pieces; i++) {
 			threads[i].start();
 		}
-		for (int i = 0; i < numProcs; i++) {
+		
+		for (int i = 0; i < pieces; i++) {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {

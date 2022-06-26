@@ -33,12 +33,14 @@ package nom.bdezonia.zorbage.algorithm.corrconv;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -89,18 +91,14 @@ public class ParallelCorrND {
 		if (maxDim <= 0)
 			throw new IllegalArgumentException("invalid data dimensions");
 		
-		long pieces = maxPieces;
-		
-		if (a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
-			pieces = 1;
-		
-		if (pieces > maxDim)
-			pieces = maxDim; // 1 thread per piped
-		
-		if (pieces > Integer.MAX_VALUE)
-			pieces = Integer.MAX_VALUE;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(numD,
+										a.rawData().accessWithOneThread() ||
+										b.rawData().accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[(int)pieces];
+		final Thread[] threads = new Thread[pieces];
 		long start = 0;
 		for (int i = 0; i < pieces; i++) {
 			IntegerIndex minPt = new IntegerIndex(numD);
@@ -114,7 +112,7 @@ public class ParallelCorrND {
 				end = maxDim-1;
 			}
 			else {
-				end = start + (maxDim/pieces) - 1;
+				end = start + elemsPerPiece - 1;
 			}
 			minPt.set(index, start);
 			maxPt.set(index, end);
@@ -126,6 +124,7 @@ public class ParallelCorrND {
 		for (int i = 0; i < threads.length; i++) {
 			threads[i].start();
 		}
+		
 		for (int i = 0; i < threads.length; i++) {
 			try {
 				threads[i].join();

@@ -35,6 +35,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.MatrixMember;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 
 /**
  * 
@@ -59,48 +61,44 @@ public class ParallelMatrixMultiply {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>,U>
 		void compute(T algebra, MatrixMember<U> a, MatrixMember<U> b, MatrixMember<U> c)
 	{
-		if (c == a || c == b) throw new IllegalArgumentException("dangerous matrix multiply definition");
-		if (a.cols() != b.rows()) throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
+		if (c == a || c == b)
+			throw new IllegalArgumentException("dangerous matrix multiply definition");
+		
+		if (a.cols() != b.rows())
+			throw new IllegalArgumentException("incompatible matrix shapes in matrix multiply");
 		
 		long rows = a.rows();
 		long cols = b.cols();
 		c.alloc(rows, cols);
-
-		long numRows = rows;
-		long pieces = Runtime.getRuntime().availableProcessors();
-
-		// TODO: check if matrices can only support single thread access
 		
-		if (pieces > numRows)
-			pieces = numRows; // 1 thread per row
-		
-		if (pieces > Integer.MAX_VALUE)
-			pieces = Integer.MAX_VALUE;
-		
-		if (a.storageType() == StorageConstruction.MEM_VIRTUAL ||
-				b.storageType() == StorageConstruction.MEM_VIRTUAL ||
-				c.storageType() == StorageConstruction.MEM_VIRTUAL)
-			pieces = 1;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(rows,
+										a.storageType() == StorageConstruction.MEM_VIRTUAL ||
+										b.storageType() == StorageConstruction.MEM_VIRTUAL ||
+										c.storageType() == StorageConstruction.MEM_VIRTUAL);
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[(int)pieces];
+		final Thread[] threads = new Thread[pieces];
 		long start = 0;
 		for (int i = 0; i < pieces; i++) {
-			long end;
+			long endPlusOne;
 			// last piece?
 			if (i == pieces-1) {
-				end = numRows;
+				endPlusOne = rows;
 			}
 			else {
-				end = start + (numRows/pieces);
+				endPlusOne = start + elemsPerPiece;
 			}
-			Computer<T,U> computer = new Computer<T,U>(algebra, start, end, a, b, c);
+			Computer<T,U> computer = new Computer<T,U>(algebra, start, endPlusOne, a, b, c);
 			threads[i] = new Thread(computer);
-			start = end;
+			start = endPlusOne;
 		}
 
 		for (int i = 0; i < threads.length; i++) {
 			threads[i].start();
 		}
+		
 		for (int i = 0; i < threads.length; i++) {
 			try {
 				threads[i].join();

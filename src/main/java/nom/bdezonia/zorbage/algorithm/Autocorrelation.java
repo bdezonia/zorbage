@@ -38,7 +38,9 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.ScaleByHighPrec;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 // TODO:
@@ -72,22 +74,14 @@ public class Autocorrelation {
 	{
 		IndexedDataSource<C> b = Storage.allocate(alg.construct(), a.size());
 
-		long pieceSize = a.size() / Runtime.getRuntime().availableProcessors();
-		
-		if (pieceSize == 0) pieceSize = a.size();
-		
-		long pieces = a.size() / pieceSize;
-		
-		if (a.size() % pieceSize != 0)
-			pieces += 1;
-		
-		if (a.accessWithOneThread() || b.accessWithOneThread())
-			pieces = 1;
-		
-		if (pieces > Integer.MAX_VALUE)
-			pieces = Integer.MAX_VALUE;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread() ||
+										b.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[(int)pieces];
+		final Thread[] threads = new Thread[pieces];
 		long start = 0;
 		for (int i = 0; i < pieces; i++) {
 			long endPlusOne;
@@ -96,7 +90,7 @@ public class Autocorrelation {
 				endPlusOne = a.size();
 			}
 			else {
-				endPlusOne = start + pieceSize;
+				endPlusOne = start + elemsPerPiece;
 			}
 			Computer<CA,C> computer = new Computer<CA,C>(alg, start, endPlusOne, a, b);
 			threads[i] = new Thread(computer);

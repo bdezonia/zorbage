@@ -36,8 +36,10 @@ import nom.bdezonia.zorbage.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -91,18 +93,14 @@ public class ResampleLinear {
 		if (maxDim <= 0)
 			throw new IllegalArgumentException("invalid data dimensions");
 		
-		long pieces = maxPieces;
-		
-		if (input.rawData().accessWithOneThread() || output.rawData().accessWithOneThread())
-			pieces = 1;
-		
-		if (pieces > maxDim)
-			pieces = maxDim; // 1 thread per piped
-		
-		if (pieces > Integer.MAX_VALUE)
-			pieces = Integer.MAX_VALUE;
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(numD,
+										input.rawData().accessWithOneThread() ||
+										output.rawData().accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[(int)pieces];
+		final Thread[] threads = new Thread[pieces];
 		long start = 0;
 		for (int i = 0; i < pieces; i++) {
 			long[] min = new long[numD];
@@ -116,7 +114,7 @@ public class ResampleLinear {
 				end = maxDim-1;
 			}
 			else {
-				end = start + (maxDim/pieces) - 1;
+				end = start + elemsPerPiece - 1;
 			}
 			min[index] = start;
 			max[index] = end;
@@ -128,6 +126,7 @@ public class ResampleLinear {
 		for (int i = 0; i < threads.length; i++) {
 			threads[i].start();
 		}
+		
 		for (int i = 0; i < threads.length; i++) {
 			try {
 				threads[i].join();
@@ -135,6 +134,7 @@ public class ResampleLinear {
 				throw new IllegalArgumentException("Thread execution error in ParallelResampler");
 			}
 		}
+		
 		return output;
 	}
 	
