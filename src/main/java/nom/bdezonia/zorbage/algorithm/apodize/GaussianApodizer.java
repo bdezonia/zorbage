@@ -28,83 +28,68 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.apodize;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
 import nom.bdezonia.zorbage.algebra.SetFromLong;
-import nom.bdezonia.zorbage.algebra.Trigonometric;
-import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
-// Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
+// Source: NMR Data Processing, Hoch and Stern, 1996, p. 43
+
+// ak = e ^ (-w * (k * dt)^2)
 
 /**
  * 
  * @author Barry DeZonia
  *
+ * @param <CA>
+ * @param <C>
  */
-public class SineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
-											RealConstants<C> & Unity<C> & Addition<C> &
-											Invertible<C> & Multiplication<C>,
-								C extends SetFromLong>
+public class GaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
+												Addition<C> & Multiplication<C> &
+												Exponential<C>,
+									C extends SetFromLong>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
-	private final C phase;
-	private final C t1;
-	private final ThreadLocal<C> tk;
-	private final ThreadLocal<C> k;
+	private final C base;
+	private final ThreadLocal<C> termK;
 
 	/**
 	 * 
-	 * @param alg Algebra
-	 * @param phase An angle between 0 and pi/2 radians inclusive 
-	 * @param signalLen Total length of the signal you are apodizing.
+	 * @param algebra
+	 * @param w
+	 * @param dt
 	 */
-	public SineBellApodizer(CA alg, C phase, long signalLen) {
-		this.alg = alg;
-		this.phase = alg.construct(phase);
-		C len = alg.construct();
-		C oneEighty = alg.construct();
-		this.t1 = alg.construct();
-		this.k = new ThreadLocal<C>() {
+	public GaussianApodizer(CA algebra, C w, C dt) {
+		
+		this.alg = algebra;
+		this.base = alg.construct();
+		this.termK = new ThreadLocal<C>() {
+
 			@Override
 			protected C initialValue() {
 				return alg.construct();
 			}
+		
 		};
-		this.tk = new ThreadLocal<C>() {
-			@Override
-			protected C initialValue() {
-				return alg.construct();
-			}
-		};
-		C pi = alg.construct();
-		C one = alg.construct();
-		C two = alg.construct();
-		alg.PI().call(pi);
-		alg.unity().call(one);
-		alg.add().call(one, one, two);
-		alg.divide().call(oneEighty, two, oneEighty);
-		len.setFromLong(signalLen);
-		alg.assign().call(oneEighty, t1);
-		alg.subtract().call(t1, phase, t1);
-		alg.divide().call(t1, len, t1);
+		alg.assign().call(w, base);
+		alg.negate().call(base, base);
+		alg.multiply().call(base, dt, base);
+		alg.multiply().call(base, dt, base);
+		alg.exp().call(base, base);
 	}
 
 	@Override
 	public void call(Long k, C ak) {
-		C tmp = this.k.get();
-		tmp.setFromLong(k);
-		C tk = this.tk.get();
-		alg.multiply().call(t1, tmp, tk);
-		alg.add().call(tk, phase, ak);
-		alg.add().call(tk, phase, tk);
-		alg.sin().call(tk, ak);
+		C tk = termK.get();
+		tk.setFromLong(k);
+		alg.multiply().call(tk, tk, tk);
+		alg.exp().call(tk, tk);
+		alg.multiply().call(base, tk, ak);
 	}
-
 }

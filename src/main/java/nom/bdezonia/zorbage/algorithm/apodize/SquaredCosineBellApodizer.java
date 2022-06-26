@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.apodize;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -47,14 +47,14 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
  * @author Barry DeZonia
  *
  */
-public class SquaredSineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
+public class SquaredCosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
 											RealConstants<C> & Unity<C> & Addition<C> &
 											Invertible<C> & Multiplication<C>,
 										C extends SetFromLong>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
-	private final SineBellApodizer<CA,C> apdz;
+	private final CosineBellApodizer<CA,C> apdz;
 
 	/**
 	 * 
@@ -62,14 +62,14 @@ public class SquaredSineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C>
 	 * @param phase An angle between 0 and pi/2 radians inclusive 
 	 * @param signalLen Total length of the signal you are apodizing.
 	 */
-	public SquaredSineBellApodizer(CA alg, C phase, long signalLen) {
+	public SquaredCosineBellApodizer(CA alg, C phase, long signalLen) {
 		this.alg = alg;
-		this.apdz = new SineBellApodizer<CA,C>(alg, phase, signalLen);
+		this.apdz = new CosineBellApodizer<CA,C>(alg, phase, signalLen);
 	}
 
 	@Override
 	public void call(Long k, C ak) {
-		apdz.call(k, ak);
+		this.apdz.call(k, ak);
 		alg.multiply().call(ak, ak, ak);
 	}
 }

@@ -28,86 +28,88 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm;
+package nom.bdezonia.zorbage.algorithm.apodize;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Invertible;
+import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
 import nom.bdezonia.zorbage.algebra.SetFromLong;
-import nom.bdezonia.zorbage.algebra.Trigonometric;
-import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 // Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
 
-// TODO: I know SineBell is right but I may have messed this one up. Do I
-//   still do a sin() call and mess with phase? Or leave phase as is and
-//   call cos()?
+// ak = e ^ (pi * we * k * dt) * e ^ (-wg * (k * dt) ^ 2))
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class CosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
-											RealConstants<C> & Unity<C> & Addition<C> &
-											Invertible<C> & Multiplication<C>,
-								C extends SetFromLong>
+public class LorentzToGaussApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
+												Exponential<C> & Multiplication<C> &
+												Addition<C>,
+										C extends SetFromLong>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
-	private final C phase;
 	private final C t1;
-	private final ThreadLocal<C> tk;
+	private final C t2;
 	private final ThreadLocal<C> k;
+	private final ThreadLocal<C> t1k;
+	private final ThreadLocal<C> t2k;
 
 	/**
 	 * 
-	 * @param alg Algebra
-	 * @param phase An angle between 0 and pi/2 radians inclusive 
-	 * @param signalLen Total length of the signal you are apodizing.
+	 * @param alg
+	 * @param we
+	 * @param wg
+	 * @param dt
 	 */
-	public CosineBellApodizer(CA alg, C phase, long signalLen) {
+	public LorentzToGaussApodizer(CA alg, C we, C wg, C dt) {
 		this.alg = alg;
-		this.phase = alg.construct(phase);
-		C len = alg.construct();
-		C oneEighty = alg.construct();
 		this.t1 = alg.construct();
+		this.t2 = alg.construct();
 		this.k = new ThreadLocal<C>() {
 			@Override
 			protected C initialValue() {
 				return alg.construct();
 			}
 		};
-		this.tk = new ThreadLocal<C>() {
+		this.t1k = new ThreadLocal<C>() {
 			@Override
 			protected C initialValue() {
 				return alg.construct();
 			}
 		};
-		C pi = alg.construct();
-		C one = alg.construct();
-		C two = alg.construct();
-		alg.PI().call(pi);
-		alg.unity().call(one);
-		alg.add().call(one, one, two);
-		alg.divide().call(oneEighty, two, oneEighty);
-		len.setFromLong(signalLen);
-		alg.assign().call(oneEighty, t1);
-		alg.subtract().call(t1, phase, t1);
-		alg.divide().call(t1, len, t1);
+		this.t2k = new ThreadLocal<C>() {
+			@Override
+			protected C initialValue() {
+				return alg.construct();
+			}
+		};
+		alg.PI().call(t1);
+		alg.multiply().call(t1, we, t1);
+		alg.multiply().call(t1, dt, t1);
+		alg.assign().call(wg, t2);
+		alg.negate().call(t2, t2);
+		alg.multiply().call(t2, dt, t2);
+		alg.multiply().call(t2, dt, t2);
 	}
-
+	
 	@Override
-	public void call(Long k, C ak) {
-		C tmp = this.k.get();
-		tmp.setFromLong(k);
-		C tk = this.tk.get();
-		alg.multiply().call(t1, tmp, tk);
-		alg.add().call(tk, phase, tk);
-		alg.cos().call(tk, ak);
+	public void call(Long k, C ak)
+	{
+		C tk = this.k.get();
+		tk.setFromLong(k);
+		C t1k = this.t1k.get();
+		alg.multiply().call(t1, tk, t1k);
+		alg.exp().call(t1k, t1k);
+		C t2k = this.t2k.get();
+		alg.multiply().call(t2, tk, t2k);
+		alg.multiply().call(t2k, tk, t2k);
+		alg.exp().call(t2k, t2k);
+		alg.multiply().call(t1k, t2k, ak);
 	}
-
 }
