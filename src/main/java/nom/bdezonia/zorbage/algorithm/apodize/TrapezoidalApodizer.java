@@ -90,7 +90,7 @@ public class TrapezoidalApodizer<CA extends Algebra<CA,C> & Unity<C> & Invertibl
 		else if (index > rightPoint) {
 			C n = numer.get();
 			C d = denom.get();
-			n.setFromLong(index-rightPoint);
+			n.setFromLong(size-1-index);
 			d.setFromLong(size-1-rightPoint);
 			alg.divide().call(n, d, value);
 		}
