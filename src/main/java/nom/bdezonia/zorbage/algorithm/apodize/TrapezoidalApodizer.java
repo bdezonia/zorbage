@@ -60,6 +60,8 @@ public class TrapezoidalApodizer<CA extends Algebra<CA,C> & Unity<C> & Invertibl
 	 * @param size
 	 */
 	public TrapezoidalApodizer(CA alg, long leftPoint, long rightPoint, long size) {
+		if (leftPoint < 0 || rightPoint < leftPoint || size <= rightPoint)
+			throw new IllegalArgumentException("trapezoid apodizer: incompatible definition of left/right/size");
 		this.alg = alg;
 		this.leftPoint = leftPoint;
 		this.rightPoint = rightPoint;
@@ -80,6 +82,8 @@ public class TrapezoidalApodizer<CA extends Algebra<CA,C> & Unity<C> & Invertibl
 
 	@Override
 	public void call(Long index, C value) {
+		if (index < 0 || index >= size)
+			throw new IllegalArgumentException("index out of bounds");
 		if (index < leftPoint) {
 			C n = numer.get();
 			C d = denom.get();
