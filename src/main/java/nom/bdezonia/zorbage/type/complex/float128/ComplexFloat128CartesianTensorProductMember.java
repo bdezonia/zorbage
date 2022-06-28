@@ -49,6 +49,7 @@ import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.algebra.ThreadAccess;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.IndexUtils;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
@@ -79,7 +80,8 @@ public final class ComplexFloat128CartesianTensorProductMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member();
 
@@ -1006,5 +1008,11 @@ public final class ComplexFloat128CartesianTensorProductMember
 			values[k++] = value.i().v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

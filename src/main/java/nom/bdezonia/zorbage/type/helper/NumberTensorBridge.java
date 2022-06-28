@@ -147,4 +147,9 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

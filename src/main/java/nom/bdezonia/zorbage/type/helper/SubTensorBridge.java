@@ -236,4 +236,9 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 		}
 		return false;
 	}
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return tensor.accessWithOneThread();
+	}
 }

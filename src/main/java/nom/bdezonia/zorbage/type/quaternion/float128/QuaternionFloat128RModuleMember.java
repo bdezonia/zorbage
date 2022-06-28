@@ -62,7 +62,8 @@ public final class QuaternionFloat128RModuleMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat128Member>,
 		SetFromDouble, SetFromBigDecimal, SetFromBigInteger, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member(); 
 
@@ -1473,5 +1474,11 @@ public final class QuaternionFloat128RModuleMember
 			values[k++] = value.k().v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

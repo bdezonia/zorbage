@@ -61,7 +61,8 @@ public final class QuaternionFloat32MatrixMember
 		Settable<QuaternionFloat32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat32Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member();
 
@@ -1548,5 +1549,11 @@ public final class QuaternionFloat32MatrixMember
 			values[k++] = value.k();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

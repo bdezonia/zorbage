@@ -61,7 +61,8 @@ public final class ComplexFloat64VectorMember
 		Settable<ComplexFloat64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat64Member>,
-		SetFromDouble, GetAsDoubleArray
+		SetFromDouble, GetAsDoubleArray,
+		ThreadAccess
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
@@ -1040,5 +1041,11 @@ public final class ComplexFloat64VectorMember
 			values[k++] = value.i();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

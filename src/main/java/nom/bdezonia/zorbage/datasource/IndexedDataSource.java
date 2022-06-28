@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.datasource;
 
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.StorageType;
+import nom.bdezonia.zorbage.algebra.ThreadAccess;
 
 /**
  * 
@@ -40,10 +41,9 @@ import nom.bdezonia.zorbage.algebra.StorageType;
  * @param <U> the type of data elements that can be pushed to and pulled from the data source
  */
 public interface IndexedDataSource<U>
-	extends Duplicatable<IndexedDataSource<U>>, StorageType
+	extends Duplicatable<IndexedDataSource<U>>, StorageType, ThreadAccess
 {
 	void set(long index, U value);
 	void get(long index, U value);
 	long size();
-	boolean accessWithOneThread();
 }

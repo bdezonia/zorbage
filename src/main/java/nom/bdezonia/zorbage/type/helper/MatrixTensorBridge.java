@@ -175,4 +175,9 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		if (newDims[1] != size) return false;
 		return true;
 	}
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return mat.accessWithOneThread();
+	}
 }

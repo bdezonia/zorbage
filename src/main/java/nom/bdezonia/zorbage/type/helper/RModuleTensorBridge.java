@@ -149,4 +149,9 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 		if (newDims[0] != rmod.length()) return false;
 		return true;
 	}
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return rmod.accessWithOneThread();
+	}
 }

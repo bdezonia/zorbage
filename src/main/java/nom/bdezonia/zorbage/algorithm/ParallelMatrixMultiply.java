@@ -34,7 +34,6 @@ import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.MatrixMember;
 import nom.bdezonia.zorbage.algebra.Multiplication;
-import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.misc.ThreadingUtils;
 import nom.bdezonia.zorbage.tuple.Tuple2;
 
@@ -73,9 +72,9 @@ public class ParallelMatrixMultiply {
 		
 		Tuple2<Integer,Long> arrangement =
 				ThreadingUtils.arrange(rows,
-										a.storageType() == StorageConstruction.MEM_VIRTUAL ||
-										b.storageType() == StorageConstruction.MEM_VIRTUAL ||
-										c.storageType() == StorageConstruction.MEM_VIRTUAL);
+										a.accessWithOneThread() ||
+										b.accessWithOneThread() ||
+										c.accessWithOneThread());
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 

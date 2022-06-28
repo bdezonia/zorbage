@@ -37,7 +37,7 @@ package nom.bdezonia.zorbage.algebra;
  * @param <A>
  */
 public interface RModuleMember<A>
-	extends Dimensioned, StorageType
+	extends Dimensioned, StorageType, ThreadAccess
 {
 	// 1 dims
 	long length();

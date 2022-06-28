@@ -62,7 +62,8 @@ public final class OctonionFloat128MatrixMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat128Member>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 
@@ -2223,5 +2224,11 @@ public final class OctonionFloat128MatrixMember
 			values[k++] = value.k0().v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

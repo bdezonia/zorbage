@@ -46,6 +46,7 @@ import nom.bdezonia.zorbage.algebra.SetFromDouble;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.algebra.ThreadAccess;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.IndexUtils;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
@@ -75,7 +76,8 @@ public final class Float64CartesianTensorProductMember
 		Settable<Float64CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDouble, GetAsDoubleArray
+		SetFromDouble, GetAsDoubleArray,
+		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member();
 
@@ -836,5 +838,11 @@ public final class Float64CartesianTensorProductMember
 			values[i] = value.v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

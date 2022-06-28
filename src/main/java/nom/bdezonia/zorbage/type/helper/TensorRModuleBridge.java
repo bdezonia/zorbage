@@ -139,5 +139,9 @@ public class TensorRModuleBridge<U> implements RModuleMember<U> {
 	public StorageConstruction storageType() {
 		return tensor.storageType();
 	}
-
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return tensor.accessWithOneThread();
+	}
 }

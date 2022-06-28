@@ -109,4 +109,9 @@ public class NumberRModuleBridge<U> implements RModuleMember<U>{
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

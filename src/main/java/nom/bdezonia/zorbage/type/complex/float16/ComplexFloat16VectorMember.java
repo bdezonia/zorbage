@@ -61,7 +61,8 @@ public final class ComplexFloat16VectorMember
 		Settable<ComplexFloat16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat16Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0); 
 
@@ -1040,5 +1041,11 @@ public final class ComplexFloat16VectorMember
 			values[k++] = value.i();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

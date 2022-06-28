@@ -61,7 +61,8 @@ public final class OctonionFloat32RModuleMember
 		Settable<OctonionFloat32RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat32Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(); 
 
@@ -1999,5 +2000,11 @@ public final class OctonionFloat32RModuleMember
 			values[k++] = value.k0();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

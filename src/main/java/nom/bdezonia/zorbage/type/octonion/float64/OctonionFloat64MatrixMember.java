@@ -61,7 +61,8 @@ public final class OctonionFloat64MatrixMember
 		Settable<OctonionFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat64Member>,
-		SetFromDouble, GetAsDoubleArray
+		SetFromDouble, GetAsDoubleArray,
+		ThreadAccess
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
@@ -2144,5 +2145,11 @@ public final class OctonionFloat64MatrixMember
 			values[k++] = value.k0();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

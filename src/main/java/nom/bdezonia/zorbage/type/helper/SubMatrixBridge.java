@@ -142,5 +142,9 @@ public class SubMatrixBridge<U> implements MatrixMember<U>{
 	public StorageConstruction storageType() {
 		return mat.storageType();
 	}
-
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return mat.accessWithOneThread();
+	}
 }

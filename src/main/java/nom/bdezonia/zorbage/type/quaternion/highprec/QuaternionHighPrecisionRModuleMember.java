@@ -62,7 +62,8 @@ public final class QuaternionHighPrecisionRModuleMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionHighPrecisionMember>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 
@@ -1473,5 +1474,11 @@ public final class QuaternionHighPrecisionRModuleMember
 			values[k++] = value.k();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

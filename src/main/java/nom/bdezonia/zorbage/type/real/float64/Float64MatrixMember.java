@@ -61,7 +61,8 @@ public final class Float64MatrixMember
 		Gettable<Float64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDouble, GetAsDoubleArray
+		SetFromDouble, GetAsDoubleArray,
+		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -1117,5 +1118,11 @@ public final class Float64MatrixMember
 			values[i] = value.v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

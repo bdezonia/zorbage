@@ -62,7 +62,8 @@ public final class ComplexHighPrecisionVectorMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexHighPrecisionMember>,
 		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember(); 
 
@@ -1098,5 +1099,11 @@ public final class ComplexHighPrecisionVectorMember
 			values[k++] = value.i();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

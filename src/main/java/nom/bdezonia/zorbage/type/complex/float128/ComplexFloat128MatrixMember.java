@@ -62,7 +62,8 @@ public final class ComplexFloat128MatrixMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member();
 	
@@ -1247,5 +1248,11 @@ public final class ComplexFloat128MatrixMember
 			values[k++] = value.i().v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

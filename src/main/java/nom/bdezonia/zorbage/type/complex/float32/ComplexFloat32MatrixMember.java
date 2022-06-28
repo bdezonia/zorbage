@@ -61,7 +61,8 @@ public final class ComplexFloat32MatrixMember
 		Settable<ComplexFloat32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat32Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
 	
@@ -1186,5 +1187,11 @@ public final class ComplexFloat32MatrixMember
 			values[k++] = value.i();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

@@ -61,7 +61,8 @@ public final class QuaternionFloat16RModuleMember
 		Settable<QuaternionFloat16RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat16Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(); 
 
@@ -1403,5 +1404,11 @@ public final class QuaternionFloat16RModuleMember
 			values[k++] = value.k();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

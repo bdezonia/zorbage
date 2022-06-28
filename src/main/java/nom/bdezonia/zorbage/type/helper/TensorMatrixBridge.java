@@ -157,5 +157,9 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	public StorageConstruction storageType() {
 		return tensor.storageType();
 	}
-
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return tensor.accessWithOneThread();
+	}
 }

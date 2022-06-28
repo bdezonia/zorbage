@@ -61,7 +61,8 @@ public final class Float16MatrixMember
 		Gettable<Float16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member(0);
 
@@ -1117,5 +1118,11 @@ public final class Float16MatrixMember
 			values[i] = value.v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

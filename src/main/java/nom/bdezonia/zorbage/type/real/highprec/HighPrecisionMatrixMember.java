@@ -62,7 +62,8 @@ public final class HighPrecisionMatrixMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<HighPrecisionMember>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember();
 
@@ -1175,5 +1176,11 @@ public final class HighPrecisionMatrixMember
 			values[i] = value.v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

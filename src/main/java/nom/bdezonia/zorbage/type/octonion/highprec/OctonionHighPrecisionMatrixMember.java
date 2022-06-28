@@ -62,7 +62,8 @@ public final class OctonionHighPrecisionMatrixMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionHighPrecisionMember>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 
@@ -2223,5 +2224,11 @@ public final class OctonionHighPrecisionMatrixMember
 			values[k++] = value.k0();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

@@ -113,5 +113,9 @@ public class NumberMatrixBridge<U> implements MatrixMember<U> {
 	public StorageConstruction storageType() {
 		return StorageConstruction.MEM_ARRAY;
 	}
-
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return false;
+	}
 }

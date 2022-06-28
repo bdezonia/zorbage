@@ -61,7 +61,8 @@ public final class Float32VectorMember
 		Settable<Float32VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float32Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, GetAsFloatArray,
+		ThreadAccess
 {
 	private static final Float32Member ZERO = new Float32Member(0); 
 
@@ -972,5 +973,11 @@ public final class Float32VectorMember
 			values[i] = value.v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

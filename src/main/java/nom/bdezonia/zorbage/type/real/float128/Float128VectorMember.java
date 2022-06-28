@@ -62,7 +62,8 @@ public final class Float128VectorMember
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float128Member>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray,
+		ThreadAccess
 {
 	private static final Float128Member ZERO = new Float128Member(); 
 
@@ -1030,5 +1031,11 @@ public final class Float128VectorMember
 			values[i] = value.v();
 		}
 		return values;
+	}
+
+	@Override
+	public boolean accessWithOneThread() {
+
+		return storage.accessWithOneThread();
 	}
 }

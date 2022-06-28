@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @param <A>
  */
 public interface TensorMember<A>
-	extends Dimensioned, StorageType
+	extends Dimensioned, StorageType, ThreadAccess
 {
 	// n dims
 	long dimension();

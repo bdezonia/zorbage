@@ -114,4 +114,9 @@ public class MatrixColumnRModuleBridge<U> implements RModuleMember<U> {
 	public StorageConstruction storageType() {
 		return mat.storageType();
 	}
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return mat.accessWithOneThread();
+	}
 }

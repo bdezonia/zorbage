@@ -166,5 +166,9 @@ public class RModuleMatrixBridge<U> implements MatrixMember<U> {
 	public StorageConstruction storageType() {
 		return rmod.storageType();
 	}
-
+	
+	@Override
+	public boolean accessWithOneThread() {
+		return rmod.accessWithOneThread();
+	}
 }
