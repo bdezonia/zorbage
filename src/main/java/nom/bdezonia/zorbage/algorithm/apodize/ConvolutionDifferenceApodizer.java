@@ -66,11 +66,11 @@ public class ConvolutionDifferenceApodizer<CA extends Algebra<CA,C> & RealConsta
 	 * 
 	 * @param algebra
 	 * @param scale
-	 * @param w1
-	 * @param w2
+	 * @param width1
+	 * @param width2
 	 * @param dt
 	 */
-	public ConvolutionDifferenceApodizer(CA algebra, C scale, C w1, C w2, C dt) {
+	public ConvolutionDifferenceApodizer(CA algebra, C scale, C width1, C width2, C dt) {
 		
 		this.alg = algebra;
 		this.base1 = alg.construct();
@@ -102,13 +102,13 @@ public class ConvolutionDifferenceApodizer<CA extends Algebra<CA,C> & RealConsta
 		
 		alg.PI().call(base1);
 		alg.negate().call(base1, base1);
-		alg.multiply().call(base1, w1, base1);
+		alg.multiply().call(base1, width1, base1);
 		alg.multiply().call(base1, dt, base1);
 		alg.exp().call(base1, base1);
 		
 		alg.PI().call(base2);
 		alg.negate().call(base2, base2);
-		alg.multiply().call(base2, w2, base2);
+		alg.multiply().call(base2, width2, base2);
 		alg.multiply().call(base2,dt,base2);
 		alg.exp().call(base2, base2);
 		alg.multiply().call(scale, base2, base2);
