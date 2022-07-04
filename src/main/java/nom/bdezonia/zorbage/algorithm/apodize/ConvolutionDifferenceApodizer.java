@@ -109,7 +109,7 @@ public class ConvolutionDifferenceApodizer<CA extends Algebra<CA,C> & RealConsta
 		alg.PI().call(base2);
 		alg.negate().call(base2, base2);
 		alg.multiply().call(base2, width2, base2);
-		alg.multiply().call(base2,dt,base2);
+		alg.multiply().call(base2, dt, base2);
 		alg.exp().call(base2, base2);
 		alg.multiply().call(scale, base2, base2);
 	}

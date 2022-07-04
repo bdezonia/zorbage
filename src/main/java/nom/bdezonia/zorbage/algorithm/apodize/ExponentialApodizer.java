@@ -79,8 +79,8 @@ public class ExponentialApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 		};
 		alg.PI().call(base);
 		alg.negate().call(base, base);
-		alg.multiply().call(base,w,base);
-		alg.multiply().call(base,dt,base);
+		alg.multiply().call(base, w, base);
+		alg.multiply().call(base, dt, base);
 		alg.exp().call(base, base);
 	}
 
