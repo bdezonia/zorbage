@@ -45,8 +45,8 @@ public class TestParallelMatrixMultiply {
 
 	@Test
 	public void test1() {
-		Float64MatrixMember a = new Float64MatrixMember(743, 401, new double[743*401]);
-		Float64MatrixMember b = new Float64MatrixMember(401, 679, new double[401*679]);
+		Float64MatrixMember a = new Float64MatrixMember(217, 141);
+		Float64MatrixMember b = new Float64MatrixMember(141, 179);
 		Float64MatrixMember c1 = G.DBL_MAT.construct();
 		Float64MatrixMember c2 = G.DBL_MAT.construct();
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
@@ -68,8 +68,8 @@ public class TestParallelMatrixMultiply {
 
 	@Test
 	public void test2() {
-		Float64MatrixMember a = new Float64MatrixMember(743, 401, new double[743*401]);
-		Float64MatrixMember b = new Float64MatrixMember(401, 679, new double[401*679]);
+		Float64MatrixMember a = new Float64MatrixMember(217, 141);
+		Float64MatrixMember b = new Float64MatrixMember(141, 179);
 		Float64MatrixMember c1 = G.DBL_MAT.construct();
 		Float64MatrixMember c2 = G.DBL_MAT.construct();
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());

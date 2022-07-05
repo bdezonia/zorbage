@@ -54,11 +54,11 @@ public class TestParallelConvolveND {
 	public void test1() {
 		Float64Member value = G.DBL.construct();
 		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(value, new long[] {3, 3});
-		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(value, new long[] {400, 333});
+		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(value, new long[] {200, 133});
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
 		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
-		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(value, new long[] {400, 333});
-		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(value, new long[] {400, 333});
+		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(value, new long[] {200, 133});
+		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(value, new long[] {200, 133});
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
@@ -125,12 +125,12 @@ public class TestParallelConvolveND {
 	public void test2() {
 		Float64Member value = G.DBL.construct();
 		DimensionedDataSource<Float64Member> filter = DimensionedStorage.allocate(value, new long[] {3, 3});
-		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(value, new long[] {400, 333});
+		DimensionedDataSource<Float64Member> a = DimensionedStorage.allocate(value, new long[] {200, 133});
 		ZeroNdOOB<Float64Algebra, Float64Member> proc = new ZeroNdOOB<Float64Algebra, Float64Member>(G.DBL, a);
 		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded =
 				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
-		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(value, new long[] {400, 333});
-		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(value, new long[] {400, 333});
+		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(value, new long[] {200, 133});
+		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(value, new long[] {200, 133});
 		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
