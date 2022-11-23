@@ -27,7 +27,7 @@ import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
  * @author Barry DeZonia
  *
  */
-public class Main extends SimpleApplication {
+public class LorenzMain extends SimpleApplication {
 
 	@Override
 	public void simpleInitApp() {

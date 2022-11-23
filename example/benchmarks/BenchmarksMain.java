@@ -17,7 +17,7 @@ import nom.bdezonia.zorbage.type.real.float32.Float32Member;
  * @author Barry DeZonia
  *
  */
-public class Main {
+public class BenchmarksMain {
 
 	public static void main(String[] args) {
 

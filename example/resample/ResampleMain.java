@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.type.real.float32.Float32Member;
  * @author Barry DeZonia
  *
  */
-public class Main {
+public class ResampleMain {
 
 	private static final long[] DIMS = new long[] {300,300};
 	

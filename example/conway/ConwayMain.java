@@ -20,7 +20,7 @@ import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
  * @author Barry DeZonia
  *
  */
-public class Main {
+public class ConwayMain {
 
 	private static final int GENERATIONS = 20;
 	private static final int ROWS = 25;

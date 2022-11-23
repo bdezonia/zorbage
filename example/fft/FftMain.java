@@ -31,7 +31,7 @@ import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
  * @author Barry DeZonia
  *
  */
-public class Main {
+public class FftMain {
 
 	public static void main(String[] args) {
 		
