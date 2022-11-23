@@ -122,7 +122,7 @@ public class Main extends SimpleApplication {
 	}
 
 	public static void main(String[] args) {
-		Main app = new Main();
+		LorenzMain app = new LorenzMain();
 		app.start();  // start the viewer
 	}
 
