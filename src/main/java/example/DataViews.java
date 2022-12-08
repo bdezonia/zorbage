@@ -59,9 +59,9 @@ class DataViews {
 	// of dimensions and wrap a view around it.
 	
 	// Views come in many dimensions. There is one for every dimension (at the
-	// moment) between 1 and 21. A 1-d view is defined by the OneDView class.
+	// moment) between 1 and 40. A 1-d view is defined by the OneDView class.
 	// A 4-d view is defined by the FourDView class. You can probably guess
-	// what a 21-d view is defined as.
+	// what a 40-d view is defined as.
 	
 	// One reason to use views is because they are very simple to declare and
 	// use to make clear algorithms. Sometimes the regular DimensionedDataSource
@@ -86,7 +86,7 @@ class DataViews {
 		
 		// set every value to 3:
 		
-		//   note: you would never do it this way. use the Fill algo on DS.RawData.
+		//   note: you would never do it this way. use the Fill algo on dataSource.rawData().
 		
 		value.setV(3);
 		
@@ -125,7 +125,7 @@ class DataViews {
 		
 		// set every value to 3:
 		
-		//   note: much clearer and faster way: still use the Fill algo on DS.RawData.
+		//   note: much clearer and faster way: still use the Fill algo on dataSource.rawData().
 		
 		value.setV(3);
 		
