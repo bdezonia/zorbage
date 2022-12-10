@@ -38,7 +38,6 @@ import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
@@ -57,6 +56,7 @@ import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -256,7 +256,7 @@ public class ComplexFloat128CartesianTensorProduct
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128CartesianTensorProductMember a, ComplexFloat128CartesianTensorProductMember b) {
 			TensorShape.compute(a, b);
-			nom.bdezonia.zorbage.algorithm.Scale.compute(G.CQUAD, scalar, a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CQUAD, G.CQUAD.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -271,7 +271,7 @@ public class ComplexFloat128CartesianTensorProduct
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128CartesianTensorProductMember a, ComplexFloat128CartesianTensorProductMember b) {
 			TensorShape.compute(a, b);
-			FixedTransform2a.compute(G.CQUAD, scalar, G.CQUAD.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CQUAD, G.CQUAD.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

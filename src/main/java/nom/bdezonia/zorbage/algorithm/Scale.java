@@ -55,6 +55,6 @@ public class Scale {
 	public static <T extends Algebra<T,U> & Multiplication<U>, U>
 		void compute(T algebra, U factor, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		FixedTransform2a.compute(algebra, algebra, factor, algebra.multiply(), a, b);
+		TransformWithConstant.compute(algebra, algebra, algebra.multiply(), factor, a, b);
 	}
 }

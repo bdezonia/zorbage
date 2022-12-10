@@ -32,7 +32,7 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.algorithm.Scale;
 import nom.bdezonia.zorbage.algorithm.Sum;
@@ -274,7 +274,7 @@ public class WaysToComputeThings {
 				}
 			};
 		
-		FixedTransform2a.compute(G.FLT, scale, proc, list, list);
+		TransformWithConstant.compute(G.FLT, proc, scale, list, list);
 		
 		// a fourth method
 		

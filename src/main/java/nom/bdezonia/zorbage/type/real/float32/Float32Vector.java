@@ -37,7 +37,6 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -57,6 +56,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -498,7 +498,7 @@ public class Float32Vector
 		@Override
 		public void call(Float32Member scalar, Float32VectorMember a, Float32VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.FLT, scalar, G.FLT.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.FLT, G.FLT.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -513,7 +513,7 @@ public class Float32Vector
 		@Override
 		public void call(Float32Member scalar, Float32VectorMember a, Float32VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.FLT, scalar, G.FLT.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.FLT, G.FLT.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -528,7 +528,7 @@ public class Float32Vector
 		@Override
 		public void call(Float32Member scalar, Float32VectorMember a, Float32VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.FLT, scalar, G.FLT.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.FLT, G.FLT.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -543,7 +543,7 @@ public class Float32Vector
 		@Override
 		public void call(Float32Member scalar, Float32VectorMember a, Float32VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.FLT, scalar, G.FLT.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.FLT, G.FLT.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

@@ -39,7 +39,6 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -60,6 +59,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -524,7 +524,7 @@ public class Float128Vector
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.QUAD, G.QUAD.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -539,7 +539,7 @@ public class Float128Vector
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.QUAD, G.QUAD.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -554,7 +554,7 @@ public class Float128Vector
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.QUAD, G.QUAD.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -569,7 +569,7 @@ public class Float128Vector
 		@Override
 		public void call(Float128Member scalar, Float128VectorMember a, Float128VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.QUAD, scalar, G.QUAD.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.QUAD, G.QUAD.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

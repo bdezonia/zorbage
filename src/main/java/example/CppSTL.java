@@ -177,9 +177,9 @@ class CppSTL {
 		// ParallelTransform4.compute(algU, proc, a, b, c, d);
 		// ParallelTransform4.compute(algU, algW, algY, algA, proc, a, b, c, d);
 		
-		// FixedTransform2a.compute(algU, fixedValue, proc, a, b);
+		// TransformWithConstant.compute(algU, fixedValue, proc, a, b);
 		// FixedTransform2b.compute(algU, fixedValue, proc, a, b);
-		// FixedTransform2a.compute(algD, algF, fixedValue, proc, a, b);
+		// TransformWithConstant.compute(algD, algF, fixedValue, proc, a, b);
 		// FixedTransform2b.compute(algD, algF, fixedValue, proc, a, b);
 		
 		//  see https://en.cppreference.com/w/cpp/algorithm/transform

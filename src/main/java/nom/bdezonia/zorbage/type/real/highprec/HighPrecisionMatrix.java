@@ -31,7 +31,6 @@
 package nom.bdezonia.zorbage.type.real.highprec;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
@@ -65,6 +64,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -733,7 +733,7 @@ public class HighPrecisionMatrix
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.HP, scalar, G.HP.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.HP, G.HP.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -748,7 +748,7 @@ public class HighPrecisionMatrix
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.HP, scalar, G.HP.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.HP, G.HP.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -763,7 +763,7 @@ public class HighPrecisionMatrix
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.HP, scalar, G.HP.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.HP, G.HP.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -778,7 +778,7 @@ public class HighPrecisionMatrix
 		@Override
 		public void call(HighPrecisionMember scalar, HighPrecisionMatrixMember a, HighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.HP, scalar, G.HP.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.HP, G.HP.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

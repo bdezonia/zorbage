@@ -55,6 +55,6 @@ public class ScaleByDouble {
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.ScaleByDouble<U>, U>
 		void compute(T algebra, Double scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		FixedTransform2a.compute(algebra, algebra, scale, algebra.scaleByDouble(), a, b);
+		TransformWithConstant.compute(algebra, algebra, algebra.scaleByDouble(), scale, a, b);
 	}
 }

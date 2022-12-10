@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.type.complex.float128;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -74,6 +73,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -829,7 +829,7 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128MatrixMember a, ComplexFloat128MatrixMember b) {
-			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CQUAD, G.CQUAD.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -843,7 +843,7 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128MatrixMember a, ComplexFloat128MatrixMember b) {
-			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CQUAD, G.CQUAD.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -857,7 +857,7 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128MatrixMember a, ComplexFloat128MatrixMember b) {
-			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CQUAD, G.CQUAD.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -871,7 +871,7 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128Member scalar, ComplexFloat128MatrixMember a, ComplexFloat128MatrixMember b) {
-			FixedTransform2b.compute(G.CQUAD, scalar, G.CQUAD.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CQUAD, G.CQUAD.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

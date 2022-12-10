@@ -34,7 +34,6 @@ import java.lang.Integer;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -70,6 +69,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -748,7 +748,7 @@ public class OctonionHighPrecisionMatrix
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHP, scalar, G.OHP.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHP, G.OHP.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -763,7 +763,7 @@ public class OctonionHighPrecisionMatrix
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHP, scalar, G.OHP.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHP, G.OHP.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -778,7 +778,7 @@ public class OctonionHighPrecisionMatrix
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHP, scalar, G.OHP.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHP, G.OHP.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -793,7 +793,7 @@ public class OctonionHighPrecisionMatrix
 		@Override
 		public void call(OctonionHighPrecisionMember scalar, OctonionHighPrecisionMatrixMember a, OctonionHighPrecisionMatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHP, scalar, G.OHP.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHP, G.OHP.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

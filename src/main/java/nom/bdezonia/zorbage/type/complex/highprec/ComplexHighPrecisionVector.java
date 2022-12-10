@@ -38,7 +38,6 @@ import java.util.Arrays;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -56,6 +55,7 @@ import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -466,7 +466,7 @@ public class ComplexHighPrecisionVector
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.CHP, scalar, G.CHP.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHP, G.CHP.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -481,7 +481,7 @@ public class ComplexHighPrecisionVector
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.CHP, scalar, G.CHP.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHP, G.CHP.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -496,7 +496,7 @@ public class ComplexHighPrecisionVector
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.CHP, scalar, G.CHP.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHP, G.CHP.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -511,7 +511,7 @@ public class ComplexHighPrecisionVector
 		@Override
 		public void call(ComplexHighPrecisionMember scalar, ComplexHighPrecisionVectorMember a, ComplexHighPrecisionVectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.CHP, scalar, G.CHP.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHP, G.CHP.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

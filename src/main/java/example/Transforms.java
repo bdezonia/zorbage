@@ -32,13 +32,12 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.Map;
 import nom.bdezonia.zorbage.algorithm.ParallelTransform4;
 import nom.bdezonia.zorbage.algorithm.Reduce;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
@@ -209,17 +208,17 @@ class Transforms {
 		ParallelTransform4.compute(G.DBL, proc, a, b, c, results);
 	}
 	
-	// Fixed transforms
+	// Transforms with contants
 	//
 	//   Sometimes you want to transform data by passing in a list and a single value that
 	//   can be thought of as a parameter. The parameter is combined with every element in
-	//   the input data list and populates the output list. Zorbage has a couple of these:
-	//   FixedTransform2a and FixedTransform2b. They differ only in whether the passed value
-	//   is considered the left input argument or the right input argument. For most cases
-	//   it does not make a difference which you choose. But imagine you want to subtract
-	//   a value from a list of values. In this case it is easiest to treat the value as the
-	//   second parameter and pass the already defined subtract() method of the appropriate
-	//   algebra.
+	//   the input data list and populates the output list. Zorbage has
+	//   TransformWithConstant for this. It has two signatures differing only in whether
+	//   the passed value is considered the left input argument or the right input argument.
+	//   For most cases it does not make a difference which you choose. But imagine you want
+	//   to subtract a value from a list of values. In this case it is easiest to treat the
+	//   value as the second parameter and pass the already defined subtract() method of the
+	//   appropriate algebra.
 	
 	void example5() {
 		
@@ -237,23 +236,23 @@ class Transforms {
 
 		// set results to the scaling by 4.5 of the input data
 		
-		// 2a
+		// a
 		
-		FixedTransform2a.compute(G.FLT, new Float32Member(4.5f), G.FLT.multiply(), data, results);
+		TransformWithConstant.compute(G.FLT, G.FLT.multiply(), new Float32Member(4.5f), data, results);
 		
-		// 2b: exact same results with this approach
+		// b: exact same results with this approach
 		
-		FixedTransform2b.compute(G.FLT, new Float32Member(4.5f), G.FLT.multiply(), data, results);
+		TransformWithConstant.compute(G.FLT, G.FLT.multiply(), data, new Float32Member(4.5f), results);
 		
 		// now here is a case where the order matters: subtract 4.5
 
-		// 2a : result = 4.5 - input
+		// a : result = 4.5 - input
 		
-		FixedTransform2a.compute(G.FLT, new Float32Member(4.5f), G.FLT.subtract(), data, results);
+		TransformWithConstant.compute(G.FLT, G.FLT.subtract(), new Float32Member(4.5f), data, results);
 
-		// 2b : result = input - 4.5
+		// b : result = input - 4.5
 		
-		FixedTransform2b.compute(G.FLT, new Float32Member(4.5f), G.FLT.subtract(), data, results);
+		TransformWithConstant.compute(G.FLT, G.FLT.subtract(), data, new Float32Member(4.5f), results);
 		
 	}
 	

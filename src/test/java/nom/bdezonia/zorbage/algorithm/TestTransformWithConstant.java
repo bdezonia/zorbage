@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class TestFixedTransform2 {
+public class TestTransformWithConstant {
 
 	// This test shows an example of multiplying a constant against list a into list b
 	
@@ -64,7 +64,7 @@ public class TestFixedTransform2 {
 			}
 		};
 
-		FixedTransform2a.compute(G.INT32, seven, operation, a, b);
+		TransformWithConstant.compute(G.INT32, operation, seven, a, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);
@@ -95,7 +95,7 @@ public class TestFixedTransform2 {
 			}
 		};
 
-		FixedTransform2a.compute(G.INT32, seven, operation, a, b);
+		TransformWithConstant.compute(G.INT32, operation, a, seven, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);

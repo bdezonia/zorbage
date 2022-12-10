@@ -57,6 +57,6 @@ public class ScaleByRational {
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.ScaleByRational<U>, U>
 		void compute(T algebra, RationalMember scale, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		FixedTransform2a.compute(algebra, algebra, scale, algebra.scaleByRational(), a, b);
+		TransformWithConstant.compute(algebra, algebra, algebra.scaleByRational(), scale, a, b);
 	}
 }

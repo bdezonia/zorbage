@@ -39,55 +39,101 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class FixedTransform2b {
+public class TransformWithConstant {
 
 	// do not instantiate
 	
-	private FixedTransform2b() {}
+	private TransformWithConstant() {}
 
 	/**
 	 * 
 	 * @param <T>
 	 * @param <U>
 	 * @param algU
-	 * @param fixedValue
 	 * @param proc
-	 * @param a
-	 * @param b
+	 * @param fixedValue
+	 * @param src
+	 * @param dst
 	 */
 	public static <T extends Algebra<T,U>, U>
-		void compute(T algU, U fixedValue, Procedure3<U,U,U> proc, IndexedDataSource<U> a, IndexedDataSource<U> b)
+		void compute(T algU, Procedure3<U,U,U> proc, U fixedValue, IndexedDataSource<U> src, IndexedDataSource<U> dst)
 	{
-		compute(algU, algU, fixedValue, proc, a, b);
+		compute(algU, algU, proc, fixedValue, src, dst);
 	}
 
 	/**
 	 * 
+	 * @param <A>
+	 * @param <BA>
 	 * @param <B>
+	 * @param <CA>
 	 * @param <C>
-	 * @param <D>
-	 * @param <E>
-	 * @param <F>
-	 * @param algD
-	 * @param algF
-	 * @param fixedValue
+	 * @param algB
+	 * @param algC
 	 * @param proc
-	 * @param a
-	 * @param b
+	 * @param fixedValue
+	 * @param src
+	 * @param dst
 	 */
-	public static <B, C extends Algebra<C,D>, D, E extends Algebra<E,F>, F>
-		void compute(C algD, E algF, B fixedValue, Procedure3<D,B,F> proc, IndexedDataSource<D> a, IndexedDataSource<F> b)
+	public static <A, BA extends Algebra<BA,B>, B, CA extends Algebra<CA,C>, C>
+		void compute(BA algB, CA algC, Procedure3<A,B,C> proc, A fixedValue, IndexedDataSource<B> src, IndexedDataSource<C> dst)
 	{
-		long aSize = a.size();
-		long bSize = b.size();
-		if (aSize != bSize)
+		long sSize = src.size();
+		long dSize = dst.size();
+		if (sSize != dSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-		D tmp1 = algD.construct();
-		F tmp2 = algF.construct();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, tmp1);
-			proc.call(tmp1, fixedValue, tmp2);
-			b.set(i, tmp2);
+		B tmpB = algB.construct();
+		C tmpC = algC.construct();
+		for (long i = 0; i < sSize; i++) {
+			src.get(i, tmpB);
+			proc.call(fixedValue, tmpB, tmpC);
+			dst.set(i, tmpC);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param algU
+	 * @param proc
+	 * @param src
+	 * @param fixedValue
+	 * @param dst
+	 */
+	public static <T extends Algebra<T,U>, U>
+		void compute(T algU, Procedure3<U,U,U> proc, IndexedDataSource<U> src, U fixedValue, IndexedDataSource<U> dst)
+	{
+		compute(algU, algU, proc, src, fixedValue, dst);
+	}
+
+	/**
+	 * 
+	 * @param <AA>
+	 * @param <A>
+	 * @param <B>
+	 * @param <CA>
+	 * @param <C>
+	 * @param algA
+	 * @param algC
+	 * @param proc
+	 * @param src
+	 * @param fixedValue
+	 * @param dst
+	 */
+	public static <AA extends Algebra<AA,A>, A, B, CA extends Algebra<CA,C>, C>
+		void compute(AA algA, CA algC, Procedure3<A,B,C> proc, IndexedDataSource<A> src, B fixedValue, IndexedDataSource<C> dst)
+	{
+		long sSize = src.size();
+		long dSize = dst.size();
+		if (sSize != dSize)
+			throw new IllegalArgumentException("mismatched list sizes");
+		A tmpA = algA.construct();
+		C tmpC = algC.construct();
+		for (long i = 0; i < sSize; i++) {
+			src.get(i, tmpA);
+			proc.call(tmpA, fixedValue, tmpC);
+			dst.set(i, tmpC);
 		}
 	}
 }

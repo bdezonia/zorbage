@@ -37,7 +37,6 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -57,6 +56,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.SequenceIsInf;
 import nom.bdezonia.zorbage.function.Function1;
@@ -520,7 +520,7 @@ public class OctonionFloat16RModule
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -535,7 +535,7 @@ public class OctonionFloat16RModule
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -550,7 +550,7 @@ public class OctonionFloat16RModule
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -565,7 +565,7 @@ public class OctonionFloat16RModule
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16RModuleMember a, OctonionFloat16RModuleMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.type.complex.float64;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -74,6 +73,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -830,7 +830,7 @@ public class ComplexFloat64Matrix
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CDBL, G.CDBL.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -845,7 +845,7 @@ public class ComplexFloat64Matrix
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CDBL, G.CDBL.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -860,7 +860,7 @@ public class ComplexFloat64Matrix
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CDBL, G.CDBL.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -875,7 +875,7 @@ public class ComplexFloat64Matrix
 		@Override
 		public void call(ComplexFloat64Member scalar, ComplexFloat64MatrixMember a, ComplexFloat64MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CDBL, scalar, G.CDBL.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CDBL, G.CDBL.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

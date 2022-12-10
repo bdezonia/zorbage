@@ -35,7 +35,6 @@ import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2a;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
@@ -51,6 +50,7 @@ import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -246,7 +246,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
 			TensorShape.compute(a, b);
-			nom.bdezonia.zorbage.algorithm.Scale.compute(G.QHP, scalar, a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.QHP, G.QHP.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -261,7 +261,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		@Override
 		public void call(QuaternionHighPrecisionMember scalar, QuaternionHighPrecisionCartesianTensorProductMember a, QuaternionHighPrecisionCartesianTensorProductMember b) {
 			TensorShape.compute(a, b);
-			FixedTransform2a.compute(G.QHP, scalar, G.QHP.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.QHP, G.QHP.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

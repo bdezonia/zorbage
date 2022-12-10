@@ -35,7 +35,6 @@ import java.lang.Integer;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -75,6 +74,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
@@ -829,7 +829,7 @@ public class OctonionFloat16Matrix
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -844,7 +844,7 @@ public class OctonionFloat16Matrix
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -859,7 +859,7 @@ public class OctonionFloat16Matrix
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -874,7 +874,7 @@ public class OctonionFloat16Matrix
 		@Override
 		public void call(OctonionFloat16Member scalar, OctonionFloat16MatrixMember a, OctonionFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.OHLF, scalar, G.OHLF.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.OHLF, G.OHLF.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

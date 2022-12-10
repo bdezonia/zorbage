@@ -93,4 +93,38 @@ public class DotProduct {
 		memberAlgebra.scaleComponents().call(maxNorm, sum, sum);
 		memberAlgebra.assign().call(sum, c);
 	}
+	
+	/*
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, IndexedDataSource<U> a, IndexedDataSource<U> b, U result)
+	{
+		final long min = Math.min(a.length(), b.length());
+		U sum = alg.construct();
+		U tmpA = alg.construct();
+		U tmpB = alg.construct();
+		U normA = alg.construct();
+		U normB = alg.construct();
+		U maxNorm = alg.construct();
+		U scale = alg.construct();
+		rmodAlgebra.norm().call(a, normA);
+		rmodAlgebra.norm().call(b, normB);
+		alg.max().call(normA, normB, maxNorm);
+		if (alg.isZero().call(maxNorm)) {
+			alg.zero().call(result);
+			return;
+		}
+		alg.invert().call(maxNorm, scale);
+		for (long i = 0; i < min; i++) {
+			a.getV(i, tmpA);
+			b.getV(i, tmpB);
+			alg.multiply().call(scale, tmpA, tmpA);
+			alg.multiply().call(scale, tmpB, tmpB);
+			alg.multiply().call(tmpA, tmpB, tmpB);
+			alg.add().call(sum, tmpB, sum);
+		}
+		Scale.compute(alg, maxNorm, a, a);
+		Scale.compute(alg, maxNorm, b, b);
+		alg.assign().call(sum, result);
+	}
+	*/
 }

@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.type.complex.float16;
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -74,6 +73,7 @@ import nom.bdezonia.zorbage.algorithm.TaylorEstimateLog;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSin;
 import nom.bdezonia.zorbage.algorithm.TaylorEstimateSinh;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -829,7 +829,7 @@ public class ComplexFloat16Matrix
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHLF, G.CHLF.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -844,7 +844,7 @@ public class ComplexFloat16Matrix
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHLF, G.CHLF.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -859,7 +859,7 @@ public class ComplexFloat16Matrix
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHLF, G.CHLF.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -874,7 +874,7 @@ public class ComplexFloat16Matrix
 		@Override
 		public void call(ComplexFloat16Member scalar, ComplexFloat16MatrixMember a, ComplexFloat16MatrixMember b) {
 			b.alloc(a.rows(), a.cols());
-			FixedTransform2b.compute(G.CHLF, scalar, G.CHLF.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.CHLF, G.CHLF.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	

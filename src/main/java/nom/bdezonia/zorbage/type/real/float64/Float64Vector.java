@@ -37,7 +37,6 @@ import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
-import nom.bdezonia.zorbage.algorithm.FixedTransform2b;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
 import nom.bdezonia.zorbage.algorithm.RModuleAdd;
 import nom.bdezonia.zorbage.algorithm.RModuleAssign;
@@ -58,6 +57,7 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -498,7 +498,7 @@ public class Float64Vector
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.DBL, scalar, G.DBL.add(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.DBL, G.DBL.add(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -513,7 +513,7 @@ public class Float64Vector
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.DBL, scalar, G.DBL.subtract(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.DBL, G.DBL.subtract(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -528,7 +528,7 @@ public class Float64Vector
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.DBL, scalar, G.DBL.multiply(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.DBL, G.DBL.multiply(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
@@ -543,7 +543,7 @@ public class Float64Vector
 		@Override
 		public void call(Float64Member scalar, Float64VectorMember a, Float64VectorMember b) {
 			b.alloc(a.length());
-			FixedTransform2b.compute(G.DBL, scalar, G.DBL.divide(), a.rawData(), b.rawData());
+			TransformWithConstant.compute(G.DBL, G.DBL.divide(), a.rawData(), scalar, b.rawData());
 		}
 	};
 	
