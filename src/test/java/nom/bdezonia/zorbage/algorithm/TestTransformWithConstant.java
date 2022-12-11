@@ -32,9 +32,9 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
+import nom.bdezonia.zorbage.algebra.G;
 
-import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
