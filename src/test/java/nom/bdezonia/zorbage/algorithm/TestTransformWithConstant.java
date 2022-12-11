@@ -50,21 +50,17 @@ public class TestTransformWithConstant {
 	
 	@Test
 	public void test1() {
+		
 		SignedInt32Member value = G.INT32.construct();
+		
 		SignedInt32Member seven = G.INT32.construct("7");
+		
 		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4});
+		
 		IndexedDataSource<SignedInt32Member> b = Storage.allocate(value, a.size());
-		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
-				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
-		{
-			@Override
-			public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-				c.setV(a.v() * b.v());
-			}
-		};
-
-		TransformWithConstant.compute(G.INT32, operation, seven, a, b);
+		
+		TransformWithConstant.compute(G.INT32, G.INT32.multiply(), seven, a, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);
@@ -81,21 +77,17 @@ public class TestTransformWithConstant {
 	
 	@Test
 	public void test2() {
+		
 		SignedInt32Member value = G.INT32.construct();
+		
 		SignedInt32Member seven = G.INT32.construct("14");
+		
 		IndexedDataSource<SignedInt32Member> a = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,2,3,4});
+		
 		IndexedDataSource<SignedInt32Member> b = Storage.allocate(value, a.size());
-		Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member> operation =
-				new Procedure3<SignedInt32Member, SignedInt32Member, SignedInt32Member>()
-		{
-			@Override
-			public void call(SignedInt32Member a, SignedInt32Member b, SignedInt32Member c) {
-				c.setV(a.v() + b.v());
-			}
-		};
 
-		TransformWithConstant.compute(G.INT32, operation, a, seven, b);
+		TransformWithConstant.compute(G.INT32, G.INT32.add(), a, seven, b);
 		
 		assertEquals(4, b.size());
 		b.get(0, value);
