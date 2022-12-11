@@ -33,13 +33,17 @@ package nom.bdezonia.zorbage.algebra;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
+ * Note: all implementations so far apply the W scalar on the right of
+ * the U type. This is unimportant for something like Reals but very
+ * important for things like Octonions.
  * 
  * @author Barry DeZonia
  *
  */
 public interface ArrayLikeMethods<U,W> {
 
-	// TODO maybe this interface needs to be split into multiple because some algebras might not have multiply and divide
+	// TODO maybe this interface needs to be split into multiple
+	//      because some algebras might not have multiply and divide
 	
 	Procedure3<W,U,U> addScalar();
 	Procedure3<W,U,U> subtractScalar();
