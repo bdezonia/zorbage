@@ -148,6 +148,7 @@ public class Storage {
 				// or requested size is larger than any array can hold
 				// or others I might be too accepting of
 			}
+			
 			// if would be nice if we tested size and if too big for array we tried to
 			//   allocate a BigListDataSource. But that ctor needs an Algebra. At one
 			//   time I tried changing these signatures to take (numElem, algebra)
@@ -162,7 +163,8 @@ public class Storage {
 		
 			return FileStorage.allocate(type, numElements);
 		}
-		throw new IllegalArgumentException("Unknown storage strategy "+strategy);
+		
+		throw new IllegalArgumentException("Could not allocate storage for unknown reasons");
 	}
 	
 	/**
