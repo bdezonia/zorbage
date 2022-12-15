@@ -37,11 +37,6 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
- * Set an output list to the contents of an input list.
- * But the input list is filtered so that any values
- * greater than a max value are set to the max value in
- * the output list.
- * 
  * @author Barry DeZonia
  *
  */
@@ -52,6 +47,10 @@ public class ClampToMax {
 	private ClampToMax() { }
 
 	/**
+	 * Set an output list to the contents of an input list.
+	 * But the input list is filtered so that any values
+	 * greater than a max value are set to the max value in
+	 * the output list.
 	 * 
 	 * @param <T>
 	 * @param <U>
