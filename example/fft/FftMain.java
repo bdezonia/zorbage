@@ -84,7 +84,7 @@ public class FftMain {
 		BufferedImage planeI = new BufferedImage((int) subSize, (int) subSize, BufferedImage.TYPE_INT_ARGB);
 		double min = Double.POSITIVE_INFINITY;
 		double max = Double.NEGATIVE_INFINITY;
-		for (int i = 0; i < outData.size(); i++) {
+		for (long i = 0; i < outData.size(); i++) {
 			outData.get(i, value);
 			if (value.r() < min) min = value.r();
 			if (value.i() < min) min = value.i();
@@ -96,7 +96,7 @@ public class FftMain {
 		if (max > 1000) max = 1000;
 		int r = 0;
 		int c = 0;
-		for (int i = 0; i < outData.size(); i++) {
+		for (long i = 0; i < outData.size(); i++) {
 			outData.get(i, value);
 			int scaledR = (int) Math.round(255.0 * (value.r() - min) / (max - min));
 			int scaledI = (int) Math.round(255.0 * (value.i() - min) / (max - min));
