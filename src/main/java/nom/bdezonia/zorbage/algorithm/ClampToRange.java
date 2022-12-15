@@ -63,12 +63,20 @@ public class ClampToRange {
 	public static <T extends Algebra<T,U> & Ordered<U>, U>
 		void compute(T algebra, U smallestAllowed, U largestAllowed, IndexedDataSource<U> input, IndexedDataSource<U> output)
 	{
+		if (algebra.isLess().call(largestAllowed, smallestAllowed))
+			throw new IllegalArgumentException("Clamp boundaries are malformed");
+
 		Procedure2<U,U> replacer = new Procedure2<U, U>() {
 			
 			@Override
 			public void call(U in, U out) {
 
-				Clamp.compute(algebra, smallestAllowed, largestAllowed, in, out);
+				if (algebra.isLess().call(in, smallestAllowed))
+					algebra.assign().call(smallestAllowed, out);
+				else if (algebra.isGreater().call(in, largestAllowed))
+					algebra.assign().call(largestAllowed, out);
+				else
+					algebra.assign().call(in, out);
 			}
 		};
 
