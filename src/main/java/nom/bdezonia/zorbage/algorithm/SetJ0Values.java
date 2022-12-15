@@ -47,7 +47,7 @@ public class SetJ0Values {
 	private SetJ0Values() { }
 	
 	/**
-	 * Set the values of an output list using the J0 values from a list of Octonion numbers.
+	 * Set the J0 values of an output list using the J0 values from a list of Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW

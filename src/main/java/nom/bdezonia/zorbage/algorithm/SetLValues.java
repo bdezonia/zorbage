@@ -47,7 +47,7 @@ public class SetLValues {
 	private SetLValues() { }
 	
 	/**
-	 * Set the values of an output list using the L values from a list of Quaternion or Octonion numbers.
+	 * Set the L values of an output list using the L values from a list of Quaternion or Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW

@@ -47,7 +47,7 @@ public class SetIValues {
 	private SetIValues() { }
 	
 	/**
-	 * Set the values of an output list using the I values from a list of Complex, Quaternion,
+	 * Set the I values of an output list using the I values from a list of Complex, Quaternion,
 	 * or Octonion numbers.
 	 * 
 	 * @param algU

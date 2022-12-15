@@ -47,7 +47,7 @@ public class SetKValues {
 	private SetKValues() { }
 	
 	/**
-	 * Set the values of an output list using the K values from a list of Quaternion or Octonion numbers.
+	 * Set the K values of an output list using the K values from a list of Quaternion or Octonion numbers.
 	 * 
 	 * @param algU
 	 * @param algW
