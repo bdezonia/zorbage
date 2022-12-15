@@ -37,6 +37,11 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
+ * Set an output list to the contents of an input list.
+ * But the input list is filtered so that any values
+ * less than a min value are set to the min value in the
+ * output list.
+ * 
  * @author Barry DeZonia
  *
  */
@@ -62,11 +67,11 @@ public class ClampToMin {
 		Procedure2<U,U> replacer = new Procedure2<U, U>() {
 			
 			@Override
-			public void call(U a, U b) {
-				if (algebra.isLess().call(a, smallestAllowed))
-					algebra.assign().call(smallestAllowed, b);
+			public void call(U in, U out) {
+				if (algebra.isLess().call(in, smallestAllowed))
+					algebra.assign().call(smallestAllowed, out);
 				else
-					algebra.assign().call(a, b);
+					algebra.assign().call(in, out);
 			}
 		}; 
 

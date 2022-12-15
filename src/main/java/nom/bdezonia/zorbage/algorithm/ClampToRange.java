@@ -37,6 +37,10 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
+ * Set an output list to the contents of an input list.
+ * But the input list is filtered so that any values
+ * outside a specified min/max range are clamped to fit.
+ * 
  * @author Barry DeZonia
  *
  */
@@ -62,15 +66,11 @@ public class ClampToRange {
 		Procedure2<U,U> replacer = new Procedure2<U, U>() {
 			
 			@Override
-			public void call(U a, U b) {
-				if (algebra.isLess().call(a, smallestAllowed))
-					algebra.assign().call(smallestAllowed, b);
-				else if (algebra.isGreater().call(a, largestAllowed))
-					algebra.assign().call(largestAllowed, b);
-				else
-					algebra.assign().call(a, b);
+			public void call(U in, U out) {
+
+				Clamp.compute(algebra, smallestAllowed, largestAllowed, in, out);
 			}
-		}; 
+		};
 
 		Transform2.compute(algebra, replacer, input, output);
 	}

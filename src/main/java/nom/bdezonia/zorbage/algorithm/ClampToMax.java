@@ -37,6 +37,11 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
+ * Set an output list to the contents of an input list.
+ * But the input list is filtered so that any values
+ * greater than a max value are set to the max value in
+ * the output list.
+ * 
  * @author Barry DeZonia
  *
  */
@@ -61,11 +66,11 @@ public class ClampToMax {
 		Procedure2<U,U> replacer = new Procedure2<U, U>() {
 			
 			@Override
-			public void call(U a, U b) {
-				if (algebra.isGreater().call(a, largestAllowed))
-					algebra.assign().call(largestAllowed, b);
+			public void call(U in, U out) {
+				if (algebra.isGreater().call(in, largestAllowed))
+					algebra.assign().call(largestAllowed, out);
 				else
-					algebra.assign().call(a, b);
+					algebra.assign().call(in, out);
 			}
 		}; 
 
