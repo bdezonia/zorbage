@@ -69,6 +69,6 @@ public class GetKValues {
 			}
 		};
 		
-		Transform2.compute(algU, algW, xform, input, output);
+		ParallelTransform2.compute(algU, algW, xform, input, output);
 	}
 }

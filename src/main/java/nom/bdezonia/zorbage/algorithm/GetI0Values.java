@@ -68,6 +68,6 @@ public class GetI0Values {
 			}
 		};
 		
-		Transform2.compute(algU, algW, xform, input, output);
+		ParallelTransform2.compute(algU, algW, xform, input, output);
 	}
 }
