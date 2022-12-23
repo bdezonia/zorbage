@@ -90,8 +90,10 @@ public class Storage {
 			// uses little mem
 		}
 		
-		// 1st assume it was an array list max size exceeded error
-		// Try to break big array into smaller array pieces
+		// Assume it was an array list max size exceeded error
+		//   or that the system can't find one big piece of ram
+		//   for a large array. Maybe breaking it into smaller
+		//   pieces might work.
 		
 		try {
 			return ExtMemStorage.allocate(type, numElements);
@@ -142,7 +144,10 @@ public class Storage {
 				// uses little mem
 			}
 			
-			// assume it was a list too long problem. try a bigger in ram solution.
+			// Assume it was an array list max size exceeded error
+			//   or that the system can't find one big piece of ram
+			//   for a large array. Maybe breaking it into smaller
+			//   pieces might work.
 			
 			try {
 				return ExtMemStorage.allocate(type, numElements);
