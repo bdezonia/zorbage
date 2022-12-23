@@ -49,7 +49,7 @@ public class ArrayStorageString<U extends StringCoder & Allocatable<U>>
 	
 	public ArrayStorageString(U type, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageString cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > (Integer.MAX_VALUE / type.stringCount()))
 			throw new IllegalArgumentException("ArrayStorageString can handle at most " + (Integer.MAX_VALUE / type.stringCount()) + " of the type of requested String based entities");
 		this.type = type.allocate();

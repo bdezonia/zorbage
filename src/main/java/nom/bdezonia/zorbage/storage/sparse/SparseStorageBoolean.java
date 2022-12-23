@@ -52,6 +52,8 @@ public class SparseStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageBoolean(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new boolean[type.booleanCount()];

@@ -42,10 +42,11 @@ import nom.bdezonia.zorbage.storage.coder.LongCoder;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
 
 // TODO: notes that apply to all the file storage classes in this package:
-// I moved from RandomAccessFile ops to NIO buffered reads and writes. Speeds improved by a factor of 10 to 100,
-// Some further improvements possible
-//   1) use a MappedByteBuffer scheme and some kind of paging of multiple elements
-//   2) refactor all the package classes to eliminate duplicate code
+// I moved from RandomAccessFile ops to NIO buffered reads and writes. Speeds
+// improved by a factor of 10 to 100,
+//   Some further improvements possible
+//     1) use a MappedByteBuffer scheme and some kind of paging of multiple elements
+//     2) refactor all the package classes to eliminate duplicate code
 
 /**
  * 
@@ -76,9 +77,6 @@ public class FileStorage {
 	@SuppressWarnings({"unchecked","rawtypes"})
 	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(U type, long numElements) {
 		
-		if (numElements < 0)
-			throw new IllegalArgumentException("num elements must be >= 0");
-
 		if (type instanceof DoubleCoder) {
 			return new FileStorageFloat64((DoubleCoder)type, numElements);
 		}

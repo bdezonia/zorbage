@@ -52,6 +52,8 @@ public class SparseStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageFloat64(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new double[type.doubleCount()];

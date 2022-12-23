@@ -52,6 +52,8 @@ public class SparseStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageSignedInt8(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new byte[type.byteCount()];

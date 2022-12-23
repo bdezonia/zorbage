@@ -71,6 +71,8 @@ public class FileStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageSignedInt64(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new long[type.longCount()];

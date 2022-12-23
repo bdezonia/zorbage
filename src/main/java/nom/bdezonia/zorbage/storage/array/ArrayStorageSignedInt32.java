@@ -48,7 +48,7 @@ public class ArrayStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	
 	public ArrayStorageSignedInt32(U type, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt32 cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > (Integer.MAX_VALUE / type.intCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt32 can handle at most " + (Integer.MAX_VALUE / type.intCount()) + " of the type of requested int based entities");
 		this.type = type.allocate();

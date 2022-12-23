@@ -52,6 +52,8 @@ public class SparseStorageChar<U extends CharCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageChar(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new char[type.charCount()];

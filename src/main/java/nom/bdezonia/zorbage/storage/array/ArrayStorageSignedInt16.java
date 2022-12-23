@@ -48,7 +48,7 @@ public class ArrayStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	
 	public ArrayStorageSignedInt16(U type, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt16 cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > (Integer.MAX_VALUE / type.shortCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt16 can handle at most " + (Integer.MAX_VALUE / type.shortCount()) + " of the type of requested short based entities");
 		this.type = type.allocate();

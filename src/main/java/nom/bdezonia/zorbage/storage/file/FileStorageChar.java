@@ -71,6 +71,8 @@ public class FileStorageChar<U extends CharCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageChar(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new char[type.charCount()];

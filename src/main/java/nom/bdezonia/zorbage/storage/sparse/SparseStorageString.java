@@ -52,6 +52,8 @@ public class SparseStorageString<U extends StringCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageString(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new String[type.stringCount()];

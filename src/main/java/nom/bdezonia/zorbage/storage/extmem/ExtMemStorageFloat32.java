@@ -53,12 +53,14 @@ public class ExtMemStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	
 	public ExtMemStorageFloat32(U type, long numElements) {
 		super();
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.type = type.allocate();
 		this.numElements = numElements;
 		long totalPipeds = (numElements / ELEMENTS_PER_PIPED) + ( numElements % ELEMENTS_PER_PIPED > 0 ? 1 : 0);
 		if (totalPipeds > Integer.MAX_VALUE)
 			throw new IllegalArgumentException(
-					"storage cannot allocate enough RAM for this amy elements");
+					"storage cannot allocate enough RAM for this many elements");
 		pipedContainer = new float[(int)totalPipeds][];
 		for (int i = 0; i < totalPipeds; i++) {
 			pipedContainer[i] = new float[ELEMENTS_PER_PIPED * type.floatCount()];

@@ -53,6 +53,8 @@ public class SparseStorageBigDecimal<U extends BigDecimalCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageBigDecimal(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new BigDecimal[type.bigDecimalCount()];

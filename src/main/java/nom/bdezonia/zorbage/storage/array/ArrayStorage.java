@@ -69,9 +69,6 @@ public class ArrayStorage {
 	public static <U extends Allocatable<U>>
 		IndexedDataSource<U> allocate(U type, long numElements)
 	{
-		if (numElements < 0)
-			throw new IllegalArgumentException("num elements must be >= 0");
-
 		if (type instanceof DoubleCoder) {
 			return new ArrayStorageFloat64((DoubleCoder)type, numElements);
 		}

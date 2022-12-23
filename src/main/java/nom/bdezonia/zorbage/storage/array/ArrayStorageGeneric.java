@@ -50,7 +50,7 @@ public class ArrayStorageGeneric<T extends Algebra<T,U>,U>
 	
 	public ArrayStorageGeneric(T alg, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageGeneric cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > Integer.MAX_VALUE)
 			throw new IllegalArgumentException("ArrayStorageGeneric can handle at most " + Integer.MAX_VALUE + " objects");
 		this.alg = alg;

@@ -71,6 +71,8 @@ public class FileStorageFloat64<U extends DoubleCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageFloat64(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new double[type.doubleCount()];

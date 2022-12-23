@@ -52,6 +52,8 @@ public class SparseStorageSignedInt16<U extends ShortCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageSignedInt16(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new short[type.shortCount()];

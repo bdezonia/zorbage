@@ -56,7 +56,7 @@ abstract class AbstractJdbcStorage<U extends Allocatable<U>>
 	
 	protected AbstractJdbcStorage(long size, U type, Connection conn) {
 		if (size < 0)
-			throw new IllegalArgumentException("jdbc storage size must be >= 0");
+			throw new NegativeArraySizeException();
 		this.size = size;
 		this.type = type.allocate();
 		this.conn = conn;

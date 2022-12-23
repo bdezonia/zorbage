@@ -52,6 +52,8 @@ public class SparseStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageSignedInt64(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new long[type.longCount()];

@@ -71,6 +71,8 @@ public class FileStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageSignedInt32(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new int[type.intCount()];

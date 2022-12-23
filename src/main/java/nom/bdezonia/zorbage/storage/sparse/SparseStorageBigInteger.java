@@ -53,6 +53,8 @@ public class SparseStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageBigInteger(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new BigInteger[type.bigIntegerCount()];

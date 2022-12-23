@@ -52,7 +52,7 @@ public class ArrayStorageBigInteger<U extends BigIntegerCoder & Allocatable<U>>
 
 	public ArrayStorageBigInteger(U type, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBigInteger cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > (Integer.MAX_VALUE / type.bigIntegerCount()))
 			throw new IllegalArgumentException("ArrayStorageBigInteger can handle at most " + (Integer.MAX_VALUE / type.bigIntegerCount()) + " of the type of requested BigInteger based entities");
 		this.type = type.allocate();

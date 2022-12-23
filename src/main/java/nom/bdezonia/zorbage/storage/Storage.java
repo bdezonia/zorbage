@@ -71,38 +71,39 @@ public class Storage {
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
 		allocate(U type, long numElements)
 	{
-		// catch the most basic of errors
+		// catch the most basic error. this simplifies the logic below.
 		
 		if (numElements < 0)
-			throw new IllegalArgumentException("num elements must be >= 0");
+			throw new NegativeArraySizeException("num elements must be >= 0");
 		
 		// try the fastest simplest storage list type
 		
 		try {
 			return ArrayStorage.allocate(type, numElements);
 		}
-		catch (Exception e) {
-			// out of memory
-			// or requested size is larger than any array can hold
-			// or others I might be too accepting of
+		catch (IllegalArgumentException e) {
+			// entities can't fit in a single array:
+			//   fall through to something else
+		}
+		catch (OutOfMemoryError e) {
+			// out of memory: fall through to later since FileStorage
+			// uses little mem
 		}
 		
-		//System.out.println("GAVE UP ON ARRAY STORAGE");
-		
-		// assume it was a list too long problem. try a bigger in ram solution.
+		// 1st assume it was an array list max size exceeded error
+		// Try to break big array into smaller array pieces
 		
 		try {
 			return ExtMemStorage.allocate(type, numElements);
 		}
-		catch (OutOfMemoryError e) {
-			// out of memory
-			// or requested size is larger than any array can hold
-			// or others I might be too accepting of
+		catch (IllegalArgumentException e) {
+			// maybe entities still can't fit in a single array:
+			//   fall through to something else
 		}
-		
-		//System.out.println("GAVE UP ON EXTMEM STORAGE");
-		
-		//System.out.println("TRYING FILE STORAGE");
+		catch (OutOfMemoryError e) {
+			// out of memory: fall through to later since FileStorage
+			// uses little mem
+		}
 		
 		// fall back to a virtual file solution
 		
@@ -122,20 +123,23 @@ public class Storage {
 	public static <U extends Allocatable<U>> IndexedDataSource<U>
 		allocate(StorageConstruction strategy, U type, long numElements)
 	{
-		// catch the most basic of errors
+		// catch the most basic error: simplifies logic below
 		
 		if (numElements < 0)
-			throw new IllegalArgumentException("num elements must be >= 0");
+			throw new NegativeArraySizeException("num elements must be >= 0");
 		
 		if (strategy == StorageConstruction.MEM_ARRAY) {
 
 			try {
 				return ArrayStorage.allocate(type, numElements);
 			}
-			catch (Exception e) {
-				// out of memory
-				// or requested size is larger than any array can hold
-				// or others I might be too accepting of
+			catch (IllegalArgumentException e) {
+				// entities can't fit in a single array:
+				//   fall through to something else
+			}
+			catch (OutOfMemoryError e) {
+				// out of memory: fall through to later since FileStorage
+				// uses little mem
 			}
 			
 			// assume it was a list too long problem. try a bigger in ram solution.
@@ -143,10 +147,12 @@ public class Storage {
 			try {
 				return ExtMemStorage.allocate(type, numElements);
 			}
-			catch (Exception e) {
-				// out of memory
-				// or requested size is larger than any array can hold
-				// or others I might be too accepting of
+			catch (IllegalArgumentException e) {
+				// maybe entities still can't fit in a single array:
+				//   fall through to later
+			}
+			catch (OutOfMemoryError e) {
+				// out of memory: fall through to later
 			}
 			
 			// if would be nice if we tested size and if too big for array we tried to

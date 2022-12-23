@@ -52,7 +52,7 @@ public class ArrayStorageBit<U extends BitCoder & Allocatable<U>>
 	
 		final long maxElements = 64L * Integer.MAX_VALUE / type.bitCount();
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageBit cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > maxElements)
 			throw new IllegalArgumentException("ArrayStorageBit can handle at most " + maxElements + " elements of the given type.");
 		int count = (int)((size * type.bitCount()) / 64);

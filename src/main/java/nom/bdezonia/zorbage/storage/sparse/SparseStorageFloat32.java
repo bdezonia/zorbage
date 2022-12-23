@@ -52,6 +52,8 @@ public class SparseStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageFloat32(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new float[type.floatCount()];

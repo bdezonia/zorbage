@@ -52,12 +52,14 @@ public class ExtMemStorageGeneric<T extends Algebra<T,U>,U>
 	
 	public ExtMemStorageGeneric(T alg, long numElements) {
 		super();
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.alg = alg;
 		this.numElements = numElements;
 		long totalPipeds = (numElements / ELEMENTS_PER_PIPED) + ( numElements % ELEMENTS_PER_PIPED > 0 ? 1 : 0);
 		if (totalPipeds > Integer.MAX_VALUE)
 			throw new IllegalArgumentException(
-					"storage cannot allocate enough RAM for this amy elements");
+					"storage cannot allocate enough RAM for this many elements");
 		pipedContainer = new Object[(int)totalPipeds][];
 		for (int i = 0; i < totalPipeds; i++) {
 			pipedContainer[i] = new Object[ELEMENTS_PER_PIPED];

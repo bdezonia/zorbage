@@ -52,6 +52,8 @@ public class SparseStorageSignedInt32<U extends IntCoder & Allocatable<U>>
 	private final U type;
 	
 	public SparseStorageSignedInt32(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.zero = new int[type.intCount()];

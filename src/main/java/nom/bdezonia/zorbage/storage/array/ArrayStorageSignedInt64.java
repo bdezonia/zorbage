@@ -48,7 +48,7 @@ public class ArrayStorageSignedInt64<U extends LongCoder & Allocatable<U>>
 	
 	public ArrayStorageSignedInt64(U type, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageSignedInt64 cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > (Integer.MAX_VALUE / type.longCount()))
 			throw new IllegalArgumentException("ArrayStorageSignedInt64 can handle at most " + (Integer.MAX_VALUE / type.longCount()) + " of the type of requested long based entities");
 		this.type = type.allocate();

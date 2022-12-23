@@ -49,7 +49,7 @@ public class ArrayStorageChar<U extends CharCoder & Allocatable<U>>
 	
 	public ArrayStorageChar(U type, long size) {
 		if (size < 0)
-			throw new IllegalArgumentException("ArrayStorageChar cannot handle a negative request");
+			throw new NegativeArraySizeException();
 		if (size > (Integer.MAX_VALUE / type.charCount()))
 			throw new IllegalArgumentException("ArrayStorageChar can handle at most " + (Integer.MAX_VALUE / type.charCount()) + " of the type of requested boolean based entities");
 		this.type = type.allocate();

@@ -72,6 +72,8 @@ public class FileStorageFloat32<U extends FloatCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageFloat32(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new float[type.floatCount()];

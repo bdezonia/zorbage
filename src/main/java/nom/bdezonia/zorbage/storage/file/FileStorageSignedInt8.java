@@ -71,6 +71,8 @@ public class FileStorageSignedInt8<U extends ByteCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageSignedInt8(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new byte[type.byteCount()];

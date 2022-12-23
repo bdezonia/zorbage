@@ -71,6 +71,8 @@ public class FileStorageBoolean<U extends BooleanCoder & Allocatable<U>>
 	 * @param type
 	 */
 	public FileStorageBoolean(U type, long numElements) {
+		if (numElements < 0)
+			throw new NegativeArraySizeException();
 		this.numElements = numElements;
 		this.type = type.allocate();
 		this.tmpArray = new boolean[type.booleanCount()];
