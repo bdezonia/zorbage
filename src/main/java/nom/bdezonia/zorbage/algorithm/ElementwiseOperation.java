@@ -55,6 +55,6 @@ public class ElementwiseOperation {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Procedure3<U,U,U> op, IndexedDataSource<U> a, IndexedDataSource<U> b, IndexedDataSource<U> c)
 	{
-		ParallelTransform3.compute(algebra, op, a, b, c);
+		Transform3.compute(algebra, op, a, b, c);
 	}
 }

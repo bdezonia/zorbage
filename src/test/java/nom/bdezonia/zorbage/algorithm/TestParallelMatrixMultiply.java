@@ -49,10 +49,10 @@ public class TestParallelMatrixMultiply {
 		Float64MatrixMember b = new Float64MatrixMember(41, 79);
 		Float64MatrixMember c1 = G.DBL_MAT.construct();
 		Float64MatrixMember c2 = G.DBL_MAT.construct();
-		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
-		ParallelFill.compute(G.DBL, G.DBL.random(), b.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), b.rawData());
 		MatrixMultiply.compute(G.DBL, a, b, c1);
-		ParallelMatrixMultiply.compute(G.DBL, a, b, c2);
+		MatrixMultiply.compute(G.DBL, a, b, c2);
 		assertEquals(c1.rows(), c2.rows());
 		assertEquals(c1.cols(), c2.cols());
 		Float64Member t1 = G.DBL.construct();
@@ -72,8 +72,8 @@ public class TestParallelMatrixMultiply {
 		Float64MatrixMember b = new Float64MatrixMember(41, 79);
 		Float64MatrixMember c1 = G.DBL_MAT.construct();
 		Float64MatrixMember c2 = G.DBL_MAT.construct();
-		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
-		ParallelFill.compute(G.DBL, G.DBL.random(), b.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), b.rawData());
 		int numTrials = 20;
 		long t1 = System.currentTimeMillis();
 		for (int i = 0; i < numTrials; i++) {
@@ -81,7 +81,7 @@ public class TestParallelMatrixMultiply {
 		}
 		long t2 = System.currentTimeMillis();
 		for (int i = 0; i < numTrials; i++) {
-			ParallelMatrixMultiply.compute(G.DBL, a, b, c2);
+			MatrixMultiply.compute(G.DBL, a, b, c2);
 		}
 		long t3 = System.currentTimeMillis();
 		

@@ -48,10 +48,11 @@ public class CorrelateND {
 	// do not instantiate
 	
 	private CorrelateND() { }
-		
+	
 	/**
-	 * Correlate an n-d {@link DimensionedDataSource} by a given filter.
-	 * The input is passed as "a" and the results are stored in "b".
+	 * Correlate an n-d {@link DimensionedDataSource} by a filter using
+	 * a parallel algorithm which provides improved performance over a
+	 * single threaded approach.
 	 * 
 	 * @param alg
 	 * @param filter
@@ -61,7 +62,10 @@ public class CorrelateND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>, U>
 		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
-		ParallelCorrND.compute(alg, 1, new CorrelationIndexerND<U>(), filter, a, b);
+		int numProcs = Runtime.getRuntime().availableProcessors();
+		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
+			numProcs = 1;
+		ParallelCorrND.compute(alg, numProcs, new CorrelationIndexerND<U>(), filter, a, b);
 	}
 	
 }

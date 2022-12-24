@@ -31,8 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure7;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -44,11 +47,10 @@ public class Transform7 {
 	// do not instantiate
 	
 	private Transform7() { }
-
+	
 	/**
 	 * Transform six lists into a seventh list using a function/procedure call at each point
-	 * in the six lists. Uses a single threaded approach since certain data structures do not
-	 * handle parallel access very well.
+	 * in the six lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -63,13 +65,12 @@ public class Transform7 {
 	public static <AA extends Algebra<AA,A>, A>
 		void compute(AA alg, Procedure7<A,A,A,A,A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c, IndexedDataSource<A> d, IndexedDataSource<A> e, IndexedDataSource<A> f, IndexedDataSource<A> g)
 	{
-		compute(alg, alg, alg, alg, alg, alg, alg, proc, a, b, c, d, e, f, g);
+		compute(alg, alg, alg, alg, alg, alg, alg, proc, a, b, c, d, e, f, g);	
 	}
-
+	
 	/**
 	 * Transform six lists into a seventh list using a function/procedure call at each point
-	 * in the six lists. Uses a single threaded approach since certain data structures do not
-	 * handle parallel access very well.
+	 * in the six lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB
@@ -90,6 +91,98 @@ public class Transform7 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G>
 		void compute(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, Procedure7<A,B,C,D,E,F,G> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g)
 	{
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread() ||
+										b.accessWithOneThread() ||
+										c.accessWithOneThread() ||
+										d.accessWithOneThread() ||
+										e.accessWithOneThread() ||
+										f.accessWithOneThread() ||
+										g.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+	
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
+			}
+			else {
+				count = a.size() - start;
+			}
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
+			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, start, count);
+			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, start, count);
+			IndexedDataSource<E> eTrimmed = new TrimmedDataSource<>(e, start, count);
+			IndexedDataSource<F> fTrimmed = new TrimmedDataSource<>(f, start, count);
+			IndexedDataSource<G> gTrimmed = new TrimmedDataSource<>(g, start, count);
+			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G>(algA, algB, algC, algD, algE, algF, algG, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed, eTrimmed, fTrimmed, gTrimmed);
+			threads[i] = new Thread(r);
+			start += count;
+		}
+
+		for (int i = 0; i < pieces; i++) {
+			threads[i].start();
+		}
+		
+		for (int i = 0; i < pieces; i++) {
+			try {
+				threads[i].join();
+			} catch(InterruptedException ex) {
+				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+			}
+		}
+	}
+	
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G>
+		implements Runnable
+	{
+		private final AA algebraA;
+		private final BB algebraB;
+		private final CC algebraC;
+		private final DD algebraD;
+		private final EE algebraE;
+		private final FF algebraF;
+		private final GG algebraG;
+		private final IndexedDataSource<A> listA;
+		private final IndexedDataSource<B> listB;
+		private final IndexedDataSource<C> listC;
+		private final IndexedDataSource<D> listD;
+		private final IndexedDataSource<E> listE;
+		private final IndexedDataSource<F> listF;
+		private final IndexedDataSource<G> listG;
+		private final Procedure7<A,B,C,D,E,F,G> proc;
+		
+		Computer(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, Procedure7<A,B,C,D,E,F,G> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g) {
+			algebraA = algA;
+			algebraB = algB;
+			algebraC = algC;
+			algebraD = algD;
+			algebraE = algE;
+			algebraF = algF;
+			algebraG = algG;
+			listA = a;
+			listB = b;
+			listC = c;
+			listD = d;
+			listE = e;
+			listF = f;
+			listG = g;
+			this.proc = proc;
+		}
+		
+		public void run() {
+			transform(algebraA, algebraB, algebraC, algebraD, algebraE, algebraF, algebraG, proc, listA, listB, listC, listD, listE, listF, listG);
+		}
+	}
+
+	private static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G>
+		void transform(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, Procedure7<A,B,C,D,E,F,G> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g)
+	{
 		A valueA = algA.construct();
 		B valueB = algB.construct();
 		C valueC = algC.construct();
@@ -97,7 +190,7 @@ public class Transform7 {
 		E valueE = algE.construct();
 		F valueF = algF.construct();
 		G valueG = algG.construct();
-
+	
 		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
@@ -107,7 +200,7 @@ public class Transform7 {
 				f.size() != aSize ||
 				g.size() != aSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-
+	
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);
@@ -119,5 +212,4 @@ public class Transform7 {
 			g.set(i, valueG);
 		}
 	}
-
 }

@@ -60,7 +60,7 @@ public class TestParallelTransform1 {
 			}
 		};
 		
-		ParallelTransform1.compute(G.INT32, proc, a);
+		Transform1.compute(G.INT32, proc, a);
 		
 		for (int i = 0; i < a.size(); i++) {
 			a.get(i, value);

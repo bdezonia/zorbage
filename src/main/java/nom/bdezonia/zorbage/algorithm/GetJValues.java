@@ -69,6 +69,6 @@ public class GetJValues {
 			}
 		};
 		
-		ParallelTransform2.compute(algU, algW, xform, input, output);
+		Transform2.compute(algU, algW, xform, input, output);
 	}
 }

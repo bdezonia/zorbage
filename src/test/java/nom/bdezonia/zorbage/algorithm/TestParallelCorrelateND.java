@@ -59,7 +59,7 @@ public class TestParallelCorrelateND {
 		ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member> padded = new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
 		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(value, new long[] {100, 33});
 		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(value, new long[] {100, 33});
-		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
 		idx.set(1, 0);
@@ -99,7 +99,7 @@ public class TestParallelCorrelateND {
 		filter.set(idx, value);
 
 		CorrelateND.compute(G.DBL, filter, padded, b1);
-		ParallelCorrelateND.compute(G.DBL, filter, padded, b2);
+		CorrelateND.compute(G.DBL, filter, padded, b2);
 		
 		IntegerIndex dataMin = new IntegerIndex(filter.numDimensions());
 		IntegerIndex dataMax = new IntegerIndex(filter.numDimensions());
@@ -131,7 +131,7 @@ public class TestParallelCorrelateND {
 				new ProcedurePaddedDimensionedDataSource<Float64Algebra, Float64Member>(G.DBL, a, proc);
 		DimensionedDataSource<Float64Member> b1 = DimensionedStorage.allocate(value, new long[] {100, 33});
 		DimensionedDataSource<Float64Member> b2 = DimensionedStorage.allocate(value, new long[] {100, 33});
-		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
 		IntegerIndex idx = new IntegerIndex(filter.numDimensions());
 		idx.set(0, 0);
 		idx.set(1, 0);
@@ -178,7 +178,7 @@ public class TestParallelCorrelateND {
 		}
 		long t2 = System.currentTimeMillis();
 		for (int i = 0; i < numTrials; i++) {
-			ParallelCorrelateND.compute(G.DBL, filter, padded, b2);
+			CorrelateND.compute(G.DBL, filter, padded, b2);
 		}
 		long t3 = System.currentTimeMillis();
 		

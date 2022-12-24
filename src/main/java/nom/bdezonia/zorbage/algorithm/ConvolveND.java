@@ -49,8 +49,9 @@ public class ConvolveND {
 	private ConvolveND() { }
 	
 	/**
-	 * Convolve an n-d {@link DimensionedDataSource} by a given filter.
-	 * The input is passed as "a" and the results are stored in "b".
+	 * Convolve an n-d {@link DimensionedDataSource} by a filter using
+	 * a parallel algorithm which provides improved performance over a
+	 * single threaded approach.
 	 * 
 	 * @param alg
 	 * @param filter
@@ -60,7 +61,10 @@ public class ConvolveND {
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U>, U>
 		void compute(T alg, DimensionedDataSource<U> filter, DimensionedDataSource<U> a, DimensionedDataSource<U> b)
 	{
-		ParallelConvND.compute(alg, 1, new ConvolutionIndexerND<U>(), filter, a, b);
+		int numProcs = Runtime.getRuntime().availableProcessors();
+		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
+			numProcs = 1;
+		ParallelConvND.compute(alg, numProcs, new ConvolutionIndexerND<U>(), filter, a, b);
 	}
 	
 }

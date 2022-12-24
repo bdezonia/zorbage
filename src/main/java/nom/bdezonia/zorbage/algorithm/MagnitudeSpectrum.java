@@ -80,6 +80,6 @@ public class MagnitudeSpectrum {
 						IndexedDataSource<C> b)
 	{
 		PowerSpectrum.compute(complexAlg, realAlg, a, b);
-		ParallelTransform2.compute(complexAlg, complexAlg.sqrt(), b, b);
+		Transform2.compute(complexAlg, complexAlg.sqrt(), b, b);
 	}
 }

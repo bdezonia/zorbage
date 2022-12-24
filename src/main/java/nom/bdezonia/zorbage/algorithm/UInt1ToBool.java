@@ -62,7 +62,7 @@ public class UInt1ToBool {
 		if (boolsSize != intsSize)
 			throw new IllegalArgumentException("mismatched list sizes");
 		
-		ParallelTransform2.compute(G.UINT1, G.BOOL, converter, ints, bools);
+		Transform2.compute(G.UINT1, G.BOOL, converter, ints, bools);
 	}
 
 	private static final Procedure2<UnsignedInt1Member,BooleanMember> converter =

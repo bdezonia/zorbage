@@ -31,8 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure4;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -44,11 +47,10 @@ public class Transform4 {
 	// do not instantiate
 	
 	private Transform4() { }
-
+	
 	/**
 	 * Transform three lists into a fourth list using a function/procedure call at each point
-	 * in the three lists. Uses a single threaded approach since certain data structures do not
-	 * handle parallel access very well.
+	 * in the three lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -60,13 +62,12 @@ public class Transform4 {
 	public static <AA extends Algebra<AA,A>, A>
 		void compute(AA alg, Procedure4<A,A,A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b, IndexedDataSource<A> c, IndexedDataSource<A> d)
 	{
-		compute(alg, alg, alg, alg, proc, a, b, c, d);
+		compute(alg, alg, alg, alg, proc, a, b, c, d);	
 	}
-
+	
 	/**
 	 * Transform three lists into a fourth list using a function/procedure call at each point
-	 * in the three lists. Uses a single threaded approach since certain data structures do not
-	 * handle parallel access very well.
+	 * in the three lists. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB
@@ -81,18 +82,92 @@ public class Transform4 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
 		void compute(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d)
 	{
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread() ||
+										b.accessWithOneThread() ||
+										c.accessWithOneThread() ||
+										d.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+	
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
+			}
+			else {
+				count = a.size() - start;
+			}
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
+			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, start, count);
+			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, start, count);
+			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D>(algA, algB, algC, algD, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed);
+			threads[i] = new Thread(r);
+			start += count;
+		}
+
+		for (int i = 0; i < pieces; i++) {
+			threads[i].start();
+		}
+		
+		for (int i = 0; i < pieces; i++) {
+			try {
+				threads[i].join();
+			} catch(InterruptedException e) {
+				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+			}
+		}
+	}
+	
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
+		implements Runnable
+	{
+		private final AA algebraA;
+		private final BB algebraB;
+		private final CC algebraC;
+		private final DD algebraD;
+		private final IndexedDataSource<A> listA;
+		private final IndexedDataSource<B> listB;
+		private final IndexedDataSource<C> listC;
+		private final IndexedDataSource<D> listD;
+		private final Procedure4<A,B,C,D> proc;
+		
+		Computer(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d) {
+			algebraA = algA;
+			algebraB = algB;
+			algebraC = algC;
+			algebraD = algD;
+			listA = a;
+			listB = b;
+			listC = c;
+			listD = d;
+			this.proc = proc;
+		}
+		
+		public void run() {
+			transform(algebraA, algebraB, algebraC, algebraD, proc, listA, listB, listC, listD);
+		}
+	}
+
+	private static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D>
+		void transform(AA algA, BB algB, CC algC, DD algD, Procedure4<A,B,C,D> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d)
+	{
 		A valueA = algA.construct();
 		B valueB = algB.construct();
 		C valueC = algC.construct();
 		D valueD = algD.construct();
-
+	
 		final long aSize = a.size();
 		
 		if (b.size() != aSize ||
 				c.size() != aSize ||
 				d.size() != aSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-
+	
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			b.get(i, valueB);
@@ -101,5 +176,4 @@ public class Transform4 {
 			d.set(i, valueD);
 		}
 	}
-
 }

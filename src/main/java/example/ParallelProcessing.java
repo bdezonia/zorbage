@@ -35,14 +35,13 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algorithm.DataConvert;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.Generate;
-import nom.bdezonia.zorbage.algorithm.ParallelConvolveND;
-import nom.bdezonia.zorbage.algorithm.ParallelCorrelateND;
-import nom.bdezonia.zorbage.algorithm.ParallelFill;
-import nom.bdezonia.zorbage.algorithm.ParallelMatrixMultiply;
-import nom.bdezonia.zorbage.algorithm.ParallelTransform1;
-import nom.bdezonia.zorbage.algorithm.ParallelTransform2;
-import nom.bdezonia.zorbage.algorithm.ParallelTransform3;
-import nom.bdezonia.zorbage.algorithm.ParallelTransform4;
+import nom.bdezonia.zorbage.algorithm.ConvolveND;
+import nom.bdezonia.zorbage.algorithm.CorrelateND;
+import nom.bdezonia.zorbage.algorithm.MatrixMultiply;
+import nom.bdezonia.zorbage.algorithm.Transform1;
+import nom.bdezonia.zorbage.algorithm.Transform2;
+import nom.bdezonia.zorbage.algorithm.Transform3;
+import nom.bdezonia.zorbage.algorithm.Transform4;
 import nom.bdezonia.zorbage.algorithm.ResampleAveragedCubics;
 import nom.bdezonia.zorbage.algorithm.ResampleAveragedLinears;
 import nom.bdezonia.zorbage.algorithm.ResampleNearestNeighbor;
@@ -102,7 +101,7 @@ class ParallelProcessing {
 		
 		// fill it with as many threads as the computer can spare
 		
-		ParallelFill.compute(G.INT16, G.INT16.construct("300"), shortList);
+		Fill.compute(G.INT16, G.INT16.construct("300"), shortList);
 
 		// the shortList is now full of 300s
 	}
@@ -144,7 +143,7 @@ class ParallelProcessing {
 		
 		IndexedDataSource<SignedInt16Member> shortList = ArrayStorage.allocate(G.INT16.construct(), 10000000);
 		
-		ParallelTransform1.compute(G.INT16, G.INT16.maxBound(), shortList);
+		Transform1.compute(G.INT16, G.INT16.maxBound(), shortList);
 		
 		// the shortList has each value set to 32767
 	}
@@ -166,12 +165,12 @@ class ParallelProcessing {
 		
 		// fill the source list with random positive and negative 16-bit values
 		
-		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
+		Fill.compute(G.INT16, G.INT16.random(), shortList1);
 		
 		// now set the destination list to contain only the values in the source list each incremented by one.
 		// For integers succ(x) == x+1.
 		
-		ParallelTransform2.compute(G.INT16, G.INT16.succ(), shortList1, shortList2);
+		Transform2.compute(G.INT16, G.INT16.succ(), shortList1, shortList2);
 	}
 	
 	// ParallelTransform3 : transform a destination list by applying a Procedure3 to two source lists. A
@@ -194,12 +193,12 @@ class ParallelProcessing {
 		
 		// fill the source lists with random positive and negative 16-bit values
 		
-		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
-		ParallelFill.compute(G.INT16, G.INT16.random(), shortList2);
+		Fill.compute(G.INT16, G.INT16.random(), shortList1);
+		Fill.compute(G.INT16, G.INT16.random(), shortList2);
 		
 		// now set the destination list to contain the sum of the values in the source lists
 		
-		ParallelTransform3.compute(G.INT16, G.INT16.add(), shortList1, shortList2, shortList3);
+		Transform3.compute(G.INT16, G.INT16.add(), shortList1, shortList2, shortList3);
 	}
 	
 	// ParallelTransform4 : transform a destination list by applying a Procedure4 to three source lists.
@@ -226,9 +225,9 @@ class ParallelProcessing {
 		
 		// fill the source lists with random positive and negative values
 		
-		ParallelFill.compute(G.INT16, G.INT16.random(), shortList1);
-		ParallelFill.compute(G.INT16, G.INT16.random(), shortList2);
-		ParallelFill.compute(G.INT16, G.INT16.random(), shortList3);
+		Fill.compute(G.INT16, G.INT16.random(), shortList1);
+		Fill.compute(G.INT16, G.INT16.random(), shortList2);
+		Fill.compute(G.INT16, G.INT16.random(), shortList3);
 
 		// define a three way function
 		
@@ -246,7 +245,7 @@ class ParallelProcessing {
 		
 		// now set the destination list to contain a 3 way function of the values in the source lists
 		
-		ParallelTransform4.compute(G.INT16, proc, shortList1, shortList2, shortList3, shortList4);
+		Transform4.compute(G.INT16, proc, shortList1, shortList2, shortList3, shortList4);
 	}
 	
 	/* Zorbage also provides some specialized algorithms that use multiple threads for speed. */
@@ -259,10 +258,10 @@ class ParallelProcessing {
 		Float64MatrixMember b = new Float64MatrixMember(StorageConstruction.MEM_ARRAY, 1000, 1000);
 		Float64MatrixMember c = new Float64MatrixMember();
 		
-		ParallelFill.compute(G.DBL, G.DBL.random(), a.rawData());
-		ParallelFill.compute(G.DBL, G.DBL.random(), b.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), a.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), b.rawData());
 		
-		ParallelMatrixMultiply.compute(G.DBL, a, b, c);
+		MatrixMultiply.compute(G.DBL, a, b, c);
 	}
 	
 	// ParallelConvolveND : convolve a n-d dataset using multiple threads
@@ -285,7 +284,7 @@ class ParallelProcessing {
 		
 		// fill it
 		
-		ParallelFill.compute(G.DBL, G.DBL.random(), ds.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), ds.rawData());
 		
 		// pad it so that out of bounds accesses will still produce a value. Convolution will always poke out of bounds.
 		
@@ -322,7 +321,7 @@ class ParallelProcessing {
 		
 		// run the convolution in parallel
 		
-		ParallelConvolveND.compute(G.DBL, kernel, padded, result);
+		ConvolveND.compute(G.DBL, kernel, padded, result);
 	}
 	
 	// ParallelCorrelateND : correlate a n-d dataset using multiple threads
@@ -345,7 +344,7 @@ class ParallelProcessing {
 		
 		// fill it
 		
-		ParallelFill.compute(G.DBL, G.DBL.random(), ds.rawData());
+		Fill.compute(G.DBL, G.DBL.random(), ds.rawData());
 		
 		// pad it so that out of bounds accesses will still produce a value. Correlation will always poke out of bounds.
 		
@@ -382,7 +381,7 @@ class ParallelProcessing {
 		
 		// run the correlation in parallel
 		
-		ParallelCorrelateND.compute(G.DBL, kernel, padded, result);
+		CorrelateND.compute(G.DBL, kernel, padded, result);
 	}
 
 	// ResampleNearestNeighbor : resample a dataset to a different resolution using nearest neighbor interpolation

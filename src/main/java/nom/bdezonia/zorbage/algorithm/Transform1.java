@@ -31,8 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -44,9 +47,10 @@ public class Transform1 {
 	// do not instantiate
 	
 	private Transform1() { }
-
+	
 	/**
-	 * Initialization of a list by repeated computation of a Procedure1.
+	 * Transform one list in place by a function/procedure. Use a parallel
+	 * algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param proc
@@ -54,6 +58,62 @@ public class Transform1 {
 	 */
 	public static <AA extends Algebra<AA,A>, A>
 		void compute(AA algA, Procedure1<A> proc, IndexedDataSource<A> a)
+	{
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+	
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
+			}
+			else {
+				count = a.size() - start;
+			}
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+			Runnable r = new Computer<AA,A>(algA, proc, aTrimmed);
+			threads[i] = new Thread(r);
+			start += count;
+		}
+
+		for (int i = 0; i < pieces; i++) {
+			threads[i].start();
+		}
+		
+		for (int i = 0; i < pieces; i++) {
+			try {
+				threads[i].join();
+			} catch(InterruptedException e) {
+				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+			}
+		}
+	}
+	
+	private static class Computer<AA extends Algebra<AA,A>, A>
+		implements Runnable
+	{
+		private final AA algebraA;
+		private final IndexedDataSource<A> listA;
+		private final Procedure1<A> proc;
+		
+		Computer(AA algA, Procedure1<A> proc, IndexedDataSource<A> a) {
+			algebraA = algA;
+			listA = a;
+			this.proc = proc;
+		}
+		
+		public void run() {
+			transform(algebraA, proc, listA);
+		}
+	}
+	
+	private static <AA extends Algebra<AA,A>, A>
+		void transform(AA algA, Procedure1<A> proc, IndexedDataSource<A> a)
 	{
 		A valueA = algA.construct();
 		final long aSize = a.size();

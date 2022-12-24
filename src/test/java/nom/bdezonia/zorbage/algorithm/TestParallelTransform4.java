@@ -61,7 +61,7 @@ public class TestParallelTransform4 {
 			}
 		};
 		
-		ParallelTransform4.compute(G.INT32, proc, a, a, a, a);
+		Transform4.compute(G.INT32, proc, a, a, a, a);
 		
 		for (int i = 0; i < a.size(); i++) {
 			a.get(i, value);

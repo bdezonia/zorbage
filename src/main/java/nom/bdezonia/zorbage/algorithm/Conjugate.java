@@ -58,6 +58,6 @@ public class Conjugate {
 	public static <T extends Algebra<T,U> & nom.bdezonia.zorbage.algebra.Conjugate<U>,U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		ParallelTransform2.compute(algebra, algebra.conjugate(), a, b);
+		Transform2.compute(algebra, algebra.conjugate(), a, b);
 	}
 }

@@ -31,24 +31,25 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure1;
+import nom.bdezonia.zorbage.procedure.impl.Constant;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
- *
+ * 
  * @author Barry DeZonia
  *
  */
 public class Fill {
 
 	// do not instantiate
-
+	
 	private Fill() {}
-
+	
 	/**
-	 * Fill a target data source in a non-threaded fashion. This is
-	 * usually needed when you want to fill a virtual structure.
-	 *
+	 * Fill a list of values with a constant. Use a parallel algorithm
+	 * to improve performance over a single threaded implementation.
+	 * 
 	 * @param algebra
 	 * @param storage
 	 * @param value
@@ -56,14 +57,15 @@ public class Fill {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, U value, IndexedDataSource<U> storage)
 	{
-		long size = storage.size();
-		for (long i = 0; i < size; i++) {
-			storage.set(i, value);
-		}
+		Constant<T,U> proc = new Constant<>(algebra, value);
+		compute(algebra, proc, storage);
 	}
-
+	
 	/**
-	 *
+	 * Fill a list of values with values from a Function/Procedure. Use
+	 * a parallel algorithm to improve performance over a single threaded
+	 * implementation.
+	 * 
 	 * @param algebra
 	 * @param storage
 	 * @param proc

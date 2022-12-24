@@ -52,7 +52,7 @@ public class TestParallelFill {
 		
 		IndexedDataSource<Float64Member> data = Storage.allocate(type, 1000);
 		
-		ParallelFill.compute(G.DBL, new Float64Member(17.4), data);
+		Fill.compute(G.DBL, new Float64Member(17.4), data);
 		data.get(999, type);
 		assertEquals(17.4, type.v(), 0);
 	}
@@ -64,42 +64,42 @@ public class TestParallelFill {
 		
 		IndexedDataSource<Float64Member> data = Storage.allocate(type, 1000);
 		
-		ParallelFill.compute(G.DBL, G.DBL.zero(), data);
+		Fill.compute(G.DBL, G.DBL.zero(), data);
 		data.get(999, type);
 		assertEquals(0, type.v(), 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.unity(), data);
+		Fill.compute(G.DBL, G.DBL.unity(), data);
 		data.get(999, type);
 		assertEquals(1, type.v(), 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.minBound(), data);
+		Fill.compute(G.DBL, G.DBL.minBound(), data);
 		data.get(999, type);
 		assertEquals(-Double.MAX_VALUE, type.v(), 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.maxBound(), data);
+		Fill.compute(G.DBL, G.DBL.maxBound(), data);
 		data.get(999, type);
 		assertEquals(Double.MAX_VALUE, type.v(), 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.E(), data);
+		Fill.compute(G.DBL, G.DBL.E(), data);
 		data.get(999, type);
 		assertEquals(2.7182818284590452353602874713526624, type.v(), 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.PI(), data);
+		Fill.compute(G.DBL, G.DBL.PI(), data);
 		data.get(999, type);
 		assertEquals(3.1415926535897932384626433832795028, type.v(), 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.random(), data);
+		Fill.compute(G.DBL, G.DBL.random(), data);
 		
-		ParallelFill.compute(G.DBL, G.DBL.nan(), data);
+		Fill.compute(G.DBL, G.DBL.nan(), data);
 		data.get(999, type);
 		assertTrue(Double.isNaN(type.v()));
 		
-		ParallelFill.compute(G.DBL, G.DBL.infinite(), data);
+		Fill.compute(G.DBL, G.DBL.infinite(), data);
 		data.get(999, type);
 		assertTrue(Double.isInfinite(type.v()));
 		assertTrue(type.v() > 0);
 		
-		ParallelFill.compute(G.DBL, G.DBL.negInfinite(), data);
+		Fill.compute(G.DBL, G.DBL.negInfinite(), data);
 		data.get(999, type);
 		assertTrue(Double.isInfinite(type.v()));
 		assertTrue(type.v() < 0);

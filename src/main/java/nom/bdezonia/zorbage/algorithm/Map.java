@@ -62,7 +62,7 @@ public class Map {
 		IndexedDataSource<W> compute(T algU, V algW, Procedure2<U,W> proc, IndexedDataSource<U> input)
 	{
 		IndexedDataSource<W> output = Storage.allocate(algW.construct(), input.size());
-		ParallelTransform2.compute(algU, algW, proc, input, output);
+		Transform2.compute(algU, algW, proc, input, output);
 		return output;
 	}
 }

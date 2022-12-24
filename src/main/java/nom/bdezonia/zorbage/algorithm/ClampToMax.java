@@ -73,6 +73,6 @@ public class ClampToMax {
 			}
 		}; 
 
-		ParallelTransform2.compute(algebra, replacer, input, output);
+		Transform2.compute(algebra, replacer, input, output);
 	}
 }

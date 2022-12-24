@@ -74,6 +74,6 @@ public class ClampToMin {
 			}
 		}; 
 
-		ParallelTransform2.compute(algebra, replacer, input, output);
+		Transform2.compute(algebra, replacer, input, output);
 	}
 }

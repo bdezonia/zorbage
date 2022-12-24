@@ -31,7 +31,6 @@
 package example;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algorithm.ParallelFill;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.Find;
 import nom.bdezonia.zorbage.algorithm.Mean;
@@ -145,7 +144,7 @@ class BigData {
 		// Fill the list with random numbers. A memory based list will work faster with the multithreaded
 		// ParallelFill code.
 
-		ParallelFill.compute(G.INT16, G.INT16.random(), data);
+		Fill.compute(G.INT16, G.INT16.random(), data);
 
 		// Now count the number of fours we found.
 		//   Notice the list is indexed by a 64-bit integer. Lists can contain up to 2^63 elements.

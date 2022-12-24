@@ -31,8 +31,11 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -44,11 +47,10 @@ public class Transform2 {
 	// do not instantiate
 	
 	private Transform2() { }
-
+	
 	/**
 	 * Transform one list into a second list using a function/procedure call at each point
-	 * in the one list. Uses a single threaded approach since certain data structures do not
-	 * handle parallel access very well.
+	 * in the first list. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param alg
 	 * @param proc
@@ -58,13 +60,12 @@ public class Transform2 {
 	public static <AA extends Algebra<AA,A>, A>
 		void compute(AA alg, Procedure2<A,A> proc, IndexedDataSource<A> a, IndexedDataSource<A> b)
 	{
-		compute(alg, alg, proc, a, b);
+		compute(alg, alg, proc, a, b);	
 	}
 	
 	/**
 	 * Transform one list into a second list using a function/procedure call at each point
-	 * in the one list. Uses a single threaded approach since certain data structures do not
-	 * handle parallel access very well.
+	 * in the first list. Use a parallel algorithm for extra speed.
 	 * 
 	 * @param algA
 	 * @param algB
@@ -72,22 +73,83 @@ public class Transform2 {
 	 * @param a
 	 * @param b
 	 */
-	public static <AA extends Algebra<AA,A>,A,BB extends Algebra<BB,B>,B>
+	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B>
 		void compute(AA algA, BB algB, Procedure2<A,B> proc, IndexedDataSource<A> a, IndexedDataSource<B> b)
+	{
+		Tuple2<Integer,Long> arrangement =
+				ThreadingUtils.arrange(a.size(),
+										a.accessWithOneThread() ||
+										b.accessWithOneThread());
+		int pieces = arrangement.a();
+		long elemsPerPiece = arrangement.b();
+	
+		final Thread[] threads = new Thread[pieces];
+		long start = 0;
+		for (int i = 0; i < pieces; i++) {
+			long count;
+			if (i != pieces-1) {
+				count = elemsPerPiece;
+			}
+			else {
+				count = a.size() - start;
+			}
+			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
+			Runnable r = new Computer<AA,A,BB,B>(algA, algB, proc, aTrimmed, bTrimmed);
+			threads[i] = new Thread(r);
+			start += count;
+		}
+
+		for (int i = 0; i < pieces; i++) {
+			threads[i].start();
+		}
+		
+		for (int i = 0; i < pieces; i++) {
+			try {
+				threads[i].join();
+			} catch(InterruptedException e) {
+				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+			}
+		}
+	}
+	
+	private static class Computer<AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B>
+		implements Runnable
+	{
+		private final AA algebraA;
+		private final BB algebraB;
+		private final IndexedDataSource<A> listA;
+		private final IndexedDataSource<B> listB;
+		private final Procedure2<A,B> proc;
+		
+		Computer(AA algA, BB algB, Procedure2<A,B> proc, IndexedDataSource<A> a, IndexedDataSource<B> b) {
+			algebraA = algA;
+			algebraB = algB;
+			listA = a;
+			listB = b;
+			this.proc = proc;
+		}
+		
+		public void run() {
+			transform(algebraA, algebraB, proc, listA, listB);
+		}
+	}
+
+	private static <AA extends Algebra<AA,A>,A,BB extends Algebra<BB,B>,B>
+		void transform(AA algA, BB algB, Procedure2<A,B> proc, IndexedDataSource<A> a, IndexedDataSource<B> b)
 	{
 		A valueA = algA.construct();
 		B valueB = algB.construct();
-
+	
 		final long aSize = a.size();
 		
 		if (b.size() != aSize)
 			throw new IllegalArgumentException("mismatched list sizes");
-
+	
 		for (long i = 0; i < aSize; i++) {
 			a.get(i, valueA);
 			proc.call(valueA, valueB);
 			b.set(i, valueB);
 		}
 	}
-
 }

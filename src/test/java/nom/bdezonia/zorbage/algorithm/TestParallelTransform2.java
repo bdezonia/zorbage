@@ -76,10 +76,10 @@ public class TestParallelTransform2 {
 		IndexedDataSource<U> a = ArrayStorage.allocate(algebra.construct(), 100);
 		
 		// set values of storage to random values whose components are in [0,1)
-		ParallelTransform1.compute(algebra, algebra.random(), a);
+		Transform1.compute(algebra, algebra.random(), a);
 		
 		// transform each input[i] value to be the sin(input[i])
-		ParallelTransform2.compute(algebra, algebra, algebra.sin(), a, a);
+		Transform2.compute(algebra, algebra, algebra.sin(), a, a);
 
 		U value = algebra.construct();
 		for (long i = 0; i < a.size(); i++) {

@@ -69,6 +69,6 @@ public class GetK0Values {
 			}
 		};
 		
-		ParallelTransform2.compute(algU, algW, xform, input, output);
+		Transform2.compute(algU, algW, xform, input, output);
 	}
 }

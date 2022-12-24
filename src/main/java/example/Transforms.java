@@ -33,7 +33,7 @@ package example;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.Map;
-import nom.bdezonia.zorbage.algorithm.ParallelTransform4;
+import nom.bdezonia.zorbage.algorithm.Transform4;
 import nom.bdezonia.zorbage.algorithm.Reduce;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
@@ -205,7 +205,7 @@ class Transforms {
 		
 		// combine the data into results using as many threads as can be allocated to the app
 		
-		ParallelTransform4.compute(G.DBL, proc, a, b, c, results);
+		Transform4.compute(G.DBL, proc, a, b, c, results);
 	}
 	
 	// Transforms with contants
