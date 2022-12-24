@@ -102,7 +102,7 @@ public class MatrixMultiply {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error in ParallelMatrixMultiply");
+				throw new IllegalArgumentException("Thread execution error");
 			}
 		}
 	}

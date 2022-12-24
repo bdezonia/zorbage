@@ -127,7 +127,7 @@ public class ResampleNN {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error in ParallelResampler");
+				throw new IllegalArgumentException("Thread execution error");
 			}
 		}
 		

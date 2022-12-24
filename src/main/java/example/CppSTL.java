@@ -169,14 +169,6 @@ class CppSTL {
 		// Transform4.compute(algU, proc, a, b, c, d);
 		// Transform4.compute(algM, algO, algQ, algS, proc, a, b, c, d);
 		
-		// ParallelTransform1.compute(algU, proc, a);
-		// ParallelTransform2.compute(algU, proc, a, b);
-		// ParallelTransform2.compute(algU, algW, proc, a, b);
-		// ParallelTransform3.compute(algU, proc, a, b, c);
-		// ParallelTransform3.compute(algU, algW, algY, proc, a, b, c);
-		// ParallelTransform4.compute(algU, proc, a, b, c, d);
-		// ParallelTransform4.compute(algU, algW, algY, algA, proc, a, b, c, d);
-		
 		// TransformWithConstant.compute(algU, proc, fixedValue, a, b);
 		// TransformWithConstant.compute(algU, proc, a, fixedValue, b);
 		// TransformWithConstant.compute(algD, algF, proc, fixedValue, a, b);

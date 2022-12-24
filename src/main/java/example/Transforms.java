@@ -151,9 +151,7 @@ class Transforms {
 		
 	}
 	
-	// Parallel transforms: ParallelTransform1, ParallelTransform2, ParallelTransform3, etc.
-	//
-	//   Use multiple threads to transform data quickly
+	// Transforms use multiple threads when possible to transform data quickly
 	
 	void example3() {
 
@@ -208,7 +206,7 @@ class Transforms {
 		Transform4.compute(G.DBL, proc, a, b, c, results);
 	}
 	
-	// Transforms with contants
+	// Transforms with constants
 	//
 	//   Sometimes you want to transform data by passing in a list and a single value that
 	//   can be thought of as a parameter. The parameter is combined with every element in

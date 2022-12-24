@@ -113,7 +113,7 @@ public class TransformWithConstant {
 			try {
 				threads[i].join();
 			} catch(InterruptedException ex) {
-				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+				throw new IllegalArgumentException("Thread execution error");
 			}
 		}
 	}
@@ -183,7 +183,7 @@ public class TransformWithConstant {
 			try {
 				threads[i].join();
 			} catch(InterruptedException ex) {
-				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+				throw new IllegalArgumentException("Thread execution error");
 			}
 		}
 	}

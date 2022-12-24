@@ -68,8 +68,8 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 class ParallelProcessing {
 	
 	/*
-	 * Zorbage provides some precanned algorithms that use parallel processing to improve performance.
-	 *   Some of them are very general and reusable.
+	 * Zorbage provides some precanned algorithms that use parallel processing
+	 *   to improve performance. Some of them are very general and reusable.
 	 */
 	
 	// DataConvert : convert values in one list into values of a different type in another list
@@ -91,7 +91,7 @@ class ParallelProcessing {
 		// the highPrecList is now full of converted short values
 	}
 	
-	// ParallelFill : fill a list with data
+	// Fill : fill a list with data
 
 	void example2() {
 		
@@ -106,9 +106,9 @@ class ParallelProcessing {
 		// the shortList is now full of 300s
 	}
 	
-	// Generate : similar to ParallelFill. ParallelFill can take a Procedure1<U> as a parameter. Generate
+	// Generate : similar to Fill. Fill can take a Procedure1<U> as a parameter. Generate
 	//   can instead take a Procedure<U> as a parameter. Procedure<U>'s can be fed input parameters by
-	//   the caller. Generate is slightly more powerful than ParallelFill.
+	//   the caller. Generate is slightly more powerful than Fill.
 	
 	void example3() {
 
@@ -133,7 +133,7 @@ class ParallelProcessing {
 		// the shortList is now full of 44s
 	}
 	
-	// ParallelTransform1 : transform one list by setting values to the computation of a passed in Procedure1.
+	// Transform1 : transform one list by setting values to the computation of a passed in Procedure1.
 	//   A Procedure1 computes a value with no input form any source (except initialization provided to the
 	//   Procedure1 by the developer). This is in essence very similar to Generate.
 	
@@ -148,9 +148,9 @@ class ParallelProcessing {
 		// the shortList has each value set to 32767
 	}
 	
-	// ParallelTransform2 : transform a destination list by applying a Procedure2 to a source list. This is
+	// Transform2 : transform a destination list by applying a Procedure2 to a source list. This is
 	// an honest to goodness transformation. A Procedure2 takes an input value, calculates something, and
-	// sets an output value to the result. ParallelTransform2 uses as many threads as the cpu can spare to
+	// sets an output value to the result. Transform2 uses as many threads as the cpu can spare to
 	// do this transformation quickly. This algorithm is very similar to the Map algorithm.
 	
 	void example5() {
@@ -173,9 +173,9 @@ class ParallelProcessing {
 		Transform2.compute(G.INT16, G.INT16.succ(), shortList1, shortList2);
 	}
 	
-	// ParallelTransform3 : transform a destination list by applying a Procedure3 to two source lists. A
+	// Transform3 : transform a destination list by applying a Procedure3 to two source lists. A
 	// Procedure3 takes two input values, calculates something, and sets an output value to the result.
-	// ParallelTransform3 uses as many threads as the cpu can spare to do this transformation quickly.
+	// Transform3 uses as many threads as the cpu can spare to do this transformation quickly.
 	
 	void example6() {
 		
@@ -201,9 +201,9 @@ class ParallelProcessing {
 		Transform3.compute(G.INT16, G.INT16.add(), shortList1, shortList2, shortList3);
 	}
 	
-	// ParallelTransform4 : transform a destination list by applying a Procedure4 to three source lists.
+	// Transform4 : transform a destination list by applying a Procedure4 to three source lists.
 	// A Procedure4 takes three input values, calculates something, and sets an output value to the result.
-	// ParallelTransform4 uses as many threads as the cpu can spare to do this transformation quickly.
+	// Transform4 uses as many threads as the cpu can spare to do this transformation quickly.
 	
 	void example7() {
 		
@@ -250,7 +250,7 @@ class ParallelProcessing {
 	
 	/* Zorbage also provides some specialized algorithms that use multiple threads for speed. */
 	
-	// ParallelMatrixMultiply: multiple matrices quickly by utilizing multiple threads
+	// MatrixMultiply: multiple matrices quickly by utilizing multiple threads
 	
 	void example8() {
 		
@@ -264,7 +264,7 @@ class ParallelProcessing {
 		MatrixMultiply.compute(G.DBL, a, b, c);
 	}
 	
-	// ParallelConvolveND : convolve a n-d dataset using multiple threads
+	// ConvolveND : convolve a n-d dataset using multiple threads
 
 	void example9() {
 		
@@ -324,7 +324,7 @@ class ParallelProcessing {
 		ConvolveND.compute(G.DBL, kernel, padded, result);
 	}
 	
-	// ParallelCorrelateND : correlate a n-d dataset using multiple threads
+	// CorrelateND : correlate a n-d dataset using multiple threads
 	
 	void example10() {
 		

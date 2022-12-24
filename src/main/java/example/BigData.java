@@ -82,10 +82,7 @@ class BigData {
 
 		// Fill the list with random numbers
 		//   G.INT16.random() is the function that returns a random signed 16 bit integer when called
-		//   FillSerially will repeatedly call it; once per element in the array of data. We fill in
-		//   a serial (first to last order) fashion because the big data sources perform better
-		//   that way. The basic Fill algorithm works parallelly and is designed for in memory data
-		//   structures.
+		//   The Fill algorithm works in parallel and works best with in memory data structures.
 
 		Fill.compute(G.INT16, G.INT16.random(), data);
 
@@ -141,8 +138,7 @@ class BigData {
 		IndexedDataSource<SignedInt16Member> data =
 				new BigListDataSource<SignedInt16Algebra,SignedInt16Member>(G.INT16, 10L * 1000 * 1000 * 1000);
 
-		// Fill the list with random numbers. A memory based list will work faster with the multithreaded
-		// ParallelFill code.
+		// Fill the list with random numbers.
 
 		Fill.compute(G.INT16, G.INT16.random(), data);
 

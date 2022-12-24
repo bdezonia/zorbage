@@ -18,9 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algorithm.ParallelResampleAveragedCubics;
-import nom.bdezonia.zorbage.algorithm.ParallelResampleAveragedLinears;
-import nom.bdezonia.zorbage.algorithm.ParallelResampleNearestNeighbor;
+import nom.bdezonia.zorbage.algorithm.ResampleAveragedCubics;
+import nom.bdezonia.zorbage.algorithm.ResampleAveragedLinears;
+import nom.bdezonia.zorbage.algorithm.ResampleNearestNeighbor;
 import nom.bdezonia.zorbage.function.Function3;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
@@ -173,7 +173,7 @@ public class ResampleMain {
 		public DimensionedDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
 				DimensionedDataSource<Float32Member> data)
 		{
-			return ParallelResampleNearestNeighbor.compute(alg, dims, data);
+			return ResampleNearestNeighbor.compute(alg, dims, data);
 		}
 	};
 	
@@ -184,7 +184,7 @@ public class ResampleMain {
 		public DimensionedDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
 				DimensionedDataSource<Float32Member> data)
 		{
-			return ParallelResampleAveragedLinears.compute(alg, dims, data);
+			return ResampleAveragedLinears.compute(alg, dims, data);
 		}
 	};
 	
@@ -195,7 +195,7 @@ public class ResampleMain {
 		public DimensionedDataSource<Float32Member> call(Float32Algebra alg, long[] dims,
 				DimensionedDataSource<Float32Member> data)
 		{
-			return ParallelResampleAveragedCubics.compute(alg, dims, data);
+			return ResampleAveragedCubics.compute(alg, dims, data);
 		}
 	};
  }

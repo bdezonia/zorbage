@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algorithm.corrconv.CorrelationIndexerND;
-import nom.bdezonia.zorbage.algorithm.corrconv.ParallelCorrND;
+import nom.bdezonia.zorbage.algorithm.corrconv.CorrND;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
@@ -65,7 +65,7 @@ public class CorrelateND {
 		int numProcs = Runtime.getRuntime().availableProcessors();
 		if (filter.rawData().accessWithOneThread() || a.rawData().accessWithOneThread() || b.rawData().accessWithOneThread())
 			numProcs = 1;
-		ParallelCorrND.compute(alg, numProcs, new CorrelationIndexerND<U>(), filter, a, b);
+		CorrND.compute(alg, numProcs, new CorrelationIndexerND<U>(), filter, a, b);
 	}
 	
 }

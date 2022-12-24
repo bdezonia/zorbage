@@ -78,7 +78,6 @@ class SignalProcessing {
 	}
 	
 	// correlation in 1-d or n-d: n-d shown here
-	//   also note that parallel versions exists for speedy processing
 	
 	void example2() {
 		
@@ -125,7 +124,6 @@ class SignalProcessing {
 	}
 
 	// convolution in 1-d or n-d: n-d shown here
-	//   also note that parallel versions exists for speedy processing
 	
 	void example3() {
 		

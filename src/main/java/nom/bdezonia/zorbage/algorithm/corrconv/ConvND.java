@@ -46,11 +46,11 @@ import nom.bdezonia.zorbage.misc.ThreadingUtils;
  * @author Barry DeZonia
  *
  */
-public class ParallelConvND {
+public class ConvND {
 
 	// do not instantiate
 	
-	private ParallelConvND() { }
+	private ConvND() { }
 	
 	/**
 	 * 
@@ -128,7 +128,7 @@ public class ParallelConvND {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error in ParallelCorrConvND");
+				throw new IllegalArgumentException("Thread execution error");
 			}
 		}
 	}

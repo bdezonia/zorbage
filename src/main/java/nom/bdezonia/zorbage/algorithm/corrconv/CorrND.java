@@ -47,11 +47,11 @@ import nom.bdezonia.zorbage.misc.ThreadingUtils;
  * @author Barry DeZonia
  *
  */
-public class ParallelCorrND {
+public class CorrND {
 
 	// do not instantiate
 	
-	private ParallelCorrND() { }
+	private CorrND() { }
 	
 	/**
 	 * 
@@ -129,7 +129,7 @@ public class ParallelCorrND {
 			try {
 				threads[i].join();
 			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error in ParallelCorrConvND");
+				throw new IllegalArgumentException("Thread execution error");
 			}
 		}
 	}
