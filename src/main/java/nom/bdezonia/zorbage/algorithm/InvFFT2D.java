@@ -60,10 +60,10 @@ public class InvFFT2D {
 	/**
 	 * Do a 2-dimensional inverse fourier transform of 1 plane of a complex DataSource
 	 * 
-	 * @param <T>
-	 * @param <U>
-	 * @param <V>
-	 * @param <W>
+	 * @param <CC>
+	 * @param <C>
+	 * @param <RR>
+	 * @param <R>
 	 * @param cmplxAlg
 	 * @param realAlg
 	 * @param cmplxData
@@ -73,17 +73,17 @@ public class InvFFT2D {
 	 * @return
 	 */
 	public static
-		<T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Conjugate<U>,
-			U extends SetComplex<W> & Allocatable<U>,
-			V extends Algebra<V,W> & Trigonometric<W> & RealConstants<W> & Unity<W> &
-						Multiplication<W> & Addition<W> & Invertible<W>,
-			W>
-	DimensionedDataSource<U> compute(T complexAlg, V realAlg, DimensionedDataSource<U> complexData)
+		<CC extends Algebra<CC,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
+			C extends SetComplex<R> & Allocatable<C>,
+			RR extends Algebra<RR,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
+						Multiplication<R> & Addition<R> & Invertible<R>,
+			R>
+	DimensionedDataSource<C> compute(CC complexAlg, RR realAlg, DimensionedDataSource<C> complexData)
 	{
 		if (complexData.numDimensions() != 2)
 			throw new IllegalArgumentException("InvFFT2D input should be a single 2-d plane of complex values");
 		
-		U complexValue = complexAlg.construct();
+		C complexValue = complexAlg.construct();
 		
 		// calc some important variables
 		
@@ -95,22 +95,25 @@ public class InvFFT2D {
 
 		// create power of two square planes for calculations
 		
-		DimensionedDataSource<U> inputPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
+		DimensionedDataSource<C> inputPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
 
-		DimensionedDataSource<U> tmpPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
+		DimensionedDataSource<C> tmpPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
 
-		DimensionedDataSource<U> outputPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
+		DimensionedDataSource<C> outputPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
 
 		// Copy the rectangular input image into the square plane defined for it.
 		// The other (padded) values are zero.
 		
-		TwoDView<U> complexVw1 = new TwoDView<>(complexData);
+		TwoDView<C> complexVw1 = new TwoDView<>(complexData);
 		
-		TwoDView<U> complexVw2 = new TwoDView<>(inputPlane);
+		TwoDView<C> complexVw2 = new TwoDView<>(inputPlane);
 		
 		for (long y = 0; y < rows; y++) {
+
 			for (long x = 0; x < cols; x++) {
+			
 				complexVw1.get(x, y, complexValue);
+				
 				complexVw2.set(x, y, complexValue);
 			}
 		}
@@ -121,11 +124,11 @@ public class InvFFT2D {
 			
 			// setup the input col to do InvFFT on
 			
-			IndexedDataSource<U> inCol = new SequencedDataSource<>(inputPlane.rawData(), c, sz, sz);
+			IndexedDataSource<C> inCol = new SequencedDataSource<>(inputPlane.rawData(), c, sz, sz);
 			
 			// setup the tmp col to place InvFFT results in
 
-			IndexedDataSource<U> tmpCol = new SequencedDataSource<>(tmpPlane.rawData(), c, sz, sz);
+			IndexedDataSource<C> tmpCol = new SequencedDataSource<>(tmpPlane.rawData(), c, sz, sz);
 			
 			// do the InvFFT into from the input col into the tmp col
 			
@@ -138,11 +141,11 @@ public class InvFFT2D {
 					
 			// setup the tmp row to do InvFFT on
 
-			IndexedDataSource<U> tmpRow = new SequencedDataSource<>(tmpPlane.rawData(), r*sz, 1, sz);
+			IndexedDataSource<C> tmpRow = new SequencedDataSource<>(tmpPlane.rawData(), r*sz, 1, sz);
 			
 			// setup the output row to place InvFFT results in
 
-			IndexedDataSource<U> outRow = new SequencedDataSource<>(outputPlane.rawData(), r*sz, 1, sz);
+			IndexedDataSource<C> outRow = new SequencedDataSource<>(outputPlane.rawData(), r*sz, 1, sz);
 			
 			// do the InvFFT from the tmp row into the output row
 			
