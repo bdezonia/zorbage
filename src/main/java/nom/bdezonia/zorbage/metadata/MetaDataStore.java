@@ -466,7 +466,6 @@ public class MetaDataStore {
 	 * Get a blob from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Object getBlob(String identifier) {
 		
@@ -488,7 +487,6 @@ public class MetaDataStore {
 	 * Get a byte from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Byte getByte(String identifier) {
 		
@@ -510,7 +508,6 @@ public class MetaDataStore {
 	 * Get a byte array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public byte[] getByteArray(String identifier) {
 		
@@ -532,7 +529,6 @@ public class MetaDataStore {
 	 * Get a byte matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public byte[][] getByteMatrix(String identifier) {
 		
@@ -554,7 +550,6 @@ public class MetaDataStore {
 	 * Get a short from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Short getShort(String identifier) {
 		
@@ -576,7 +571,6 @@ public class MetaDataStore {
 	 * Get a short array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public short[] getShortArray(String identifier) {
 		
@@ -598,7 +592,6 @@ public class MetaDataStore {
 	 * Get a short matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public short[][] getShortMatrix(String identifier) {
 		
@@ -620,7 +613,6 @@ public class MetaDataStore {
 	 * Get an int from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Integer getInt(String identifier) {
 		
@@ -642,7 +634,6 @@ public class MetaDataStore {
 	 * Get an int array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public int[] getIntArray(String identifier) {
 		
@@ -664,7 +655,6 @@ public class MetaDataStore {
 	 * Get an int matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public int[][] getIntMatrix(String identifier) {
 		
@@ -686,7 +676,6 @@ public class MetaDataStore {
 	 * Get a long from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Long getLong(String identifier) {
 		
@@ -708,7 +697,6 @@ public class MetaDataStore {
 	 * Get a long array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public long[] getLongArray(String identifier) {
 		
@@ -730,7 +718,6 @@ public class MetaDataStore {
 	 * Get a long matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public long[][] getLongMatrix(String identifier) {
 		
@@ -752,7 +739,6 @@ public class MetaDataStore {
 	 * Get a float from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Float getFloat(String identifier) {
 		
@@ -774,7 +760,6 @@ public class MetaDataStore {
 	 * Get a float array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public float[] getFloatArray(String identifier) {
 		
@@ -796,7 +781,6 @@ public class MetaDataStore {
 	 * Get a float matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public float[][] getFloatMatrix(String identifier) {
 		
@@ -818,7 +802,6 @@ public class MetaDataStore {
 	 * Get a double from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Double getDouble(String identifier) {
 		
@@ -840,7 +823,6 @@ public class MetaDataStore {
 	 * Get a double array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public double[] getDoubleArray(String identifier) {
 		
@@ -862,7 +844,6 @@ public class MetaDataStore {
 	 * Get a double matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public double[][] getDoubleMatrix(String identifier) {
 		
@@ -884,7 +865,6 @@ public class MetaDataStore {
 	 * Get a BigInteger from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public BigInteger getBigInteger(String identifier) {
 		
@@ -906,7 +886,6 @@ public class MetaDataStore {
 	 * Get a BigInteger array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public BigInteger[] getBigIntegerArray(String identifier) {
 		
@@ -928,7 +907,6 @@ public class MetaDataStore {
 	 * Get a BigInteger matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public BigInteger[][] getBigIntegerMatrix(String identifier) {
 		
@@ -950,7 +928,6 @@ public class MetaDataStore {
 	 * Get a BigDecimal from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public BigDecimal getBigDecimal(String identifier) {
 		
@@ -972,7 +949,6 @@ public class MetaDataStore {
 	 * Get a BigDecimalArray from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public BigDecimal[] getBigDecimalArray(String identifier) {
 		
@@ -994,7 +970,6 @@ public class MetaDataStore {
 	 * Get a BigDecimal matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public BigDecimal[][] getBigDecimalMatrix(String identifier) {
 		
@@ -1016,7 +991,6 @@ public class MetaDataStore {
 	 * Get a String from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public String getString(String identifier) {
 		
@@ -1038,7 +1012,6 @@ public class MetaDataStore {
 	 * Get a String array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public String[] getStringArray(String identifier) {
 		
@@ -1060,7 +1033,6 @@ public class MetaDataStore {
 	 * Get a String matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public String[][] getStringMatrix(String identifier) {
 		
@@ -1082,7 +1054,6 @@ public class MetaDataStore {
 	 * Get a char from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Character getChar(String identifier) {
 		
@@ -1104,7 +1075,6 @@ public class MetaDataStore {
 	 * Get a char array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public char[] getCharArray(String identifier) {
 		
@@ -1126,7 +1096,6 @@ public class MetaDataStore {
 	 * Get a char matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public char[][] getCharMatrix(String identifier) {
 		
@@ -1148,7 +1117,6 @@ public class MetaDataStore {
 	 * Get a boolean from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public Boolean getBoolean(String identifier) {
 		
@@ -1170,7 +1138,6 @@ public class MetaDataStore {
 	 * Get a boolean array from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public boolean[] getBooleanArray(String identifier) {
 		
@@ -1192,7 +1159,6 @@ public class MetaDataStore {
 	 * Get a boolean matrix from the MetaDataStore.
 	 * 
 	 * @param identifier
-	 * @param value
 	 */
 	public boolean[][] getBooleanMatrix(String identifier) {
 		
