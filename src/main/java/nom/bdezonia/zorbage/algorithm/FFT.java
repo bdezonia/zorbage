@@ -124,6 +124,12 @@ public class FFT {
 	 			realAlg.cos().call(jth, cos);
 	 			realAlg.sin().call(jth, sin);
 	 			realAlg.negate().call(sin, sin);
+	 			// NOTE I am wondering if this FFT code would work if passed
+	 			//   a quaternion or octonion algebra and data set. Are these
+	 			//   equations still valid for those algebras? These next 2
+	 			//   lines might be key. Maybe set set other components too.
+	 			//   But we need to determine if people FFT those algebras in
+	 			//   reality and basically if the above code still makes sense.
 	 			w.setR(cos);
 	 			w.setI(sin);
 				for (long kay = 0; kay < aSize/el; kay++) {
