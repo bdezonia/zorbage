@@ -59,9 +59,9 @@ public class FFT2D {
 	/**
 	 * Do a 2-dimensional Fourier transform of 1 plane of a complex DataSource
 	 * 
-	 * @param <CC>
+	 * @param <CA>
 	 * @param <C>
-	 * @param <RR>
+	 * @param <RA>
 	 * @param <R>
 	 * @param cmplxAlg
 	 * @param realAlg
@@ -72,12 +72,12 @@ public class FFT2D {
 	 * @return
 	 */
 	public static
-		<CC extends Algebra<CC,C> & Addition<C> & Multiplication<C>,
+		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
 			C extends SetComplex<R> & Allocatable<C>,
-			RR extends Algebra<RR,R> & Trigonometric<R> & RealConstants<R> &
+			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
 				Multiplication<R> & Addition<R> & Invertible<R> & Unity<R>,
 			R>
-	DimensionedDataSource<C> compute(CC complexAlg, RR realAlg, DimensionedDataSource<C> complexData)
+	DimensionedDataSource<C> compute(CA complexAlg, RA realAlg, DimensionedDataSource<C> complexData)
 	{
 		if (complexData.numDimensions() != 2)
 			throw new IllegalArgumentException("FFT2D input should be a single 2-d plane of complex values");

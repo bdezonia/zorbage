@@ -56,7 +56,7 @@ public class InvFFT {
 	private InvFFT() {}
 
 	/**
-	 * Do an inverse fast fourier transform taking data from source a and putting
+	 * Do an inverse fast Fourier transform taking data from source a and putting
 	 * results in destination b. a and b can be the same list: in place transformation
 	 * works. a and b are lists of complex numbers. Their length must match and be a
 	 * power of 2.

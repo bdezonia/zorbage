@@ -58,11 +58,11 @@ public class InvFFT2D {
 	private InvFFT2D() { }
 
 	/**
-	 * Do a 2-dimensional inverse fourier transform of 1 plane of a complex DataSource
+	 * Do a 2-dimensional inverse Fourier transform of 1 plane of a complex DataSource
 	 * 
-	 * @param <CC>
+	 * @param <CA>
 	 * @param <C>
-	 * @param <RR>
+	 * @param <RA>
 	 * @param <R>
 	 * @param cmplxAlg
 	 * @param realAlg
@@ -73,12 +73,12 @@ public class InvFFT2D {
 	 * @return
 	 */
 	public static
-		<CC extends Algebra<CC,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
+		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
 			C extends SetComplex<R> & Allocatable<C>,
-			RR extends Algebra<RR,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
+			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
 						Multiplication<R> & Addition<R> & Invertible<R>,
 			R>
-	DimensionedDataSource<C> compute(CC complexAlg, RR realAlg, DimensionedDataSource<C> complexData)
+	DimensionedDataSource<C> compute(CA complexAlg, RA realAlg, DimensionedDataSource<C> complexData)
 	{
 		if (complexData.numDimensions() != 2)
 			throw new IllegalArgumentException("InvFFT2D input should be a single 2-d plane of complex values");
