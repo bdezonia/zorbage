@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.SetQuaternion;
+import nom.bdezonia.zorbage.algebra.SetK;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
@@ -57,7 +57,7 @@ public class SetKValues {
 	public static <T extends Algebra<T,U>,
 					U,
 					V extends Algebra<V,W>,
-					W extends SetQuaternion<U>>
+					W extends SetK<U>>
 		void compute(T algU, V algW, IndexedDataSource<U> input, IndexedDataSource<W> output)
 	{
 		Procedure2<U, W> xform = new Procedure2<U, W>() {

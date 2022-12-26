@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.GetQuaternion;
+import nom.bdezonia.zorbage.algebra.GetK;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
@@ -56,7 +56,7 @@ public class GetKValues {
 	 * @param output
 	 */
 	public static <T extends Algebra<T,U>,
-					U extends GetQuaternion<W>,
+					U extends GetK<W>,
 					V extends Algebra<V,W>,
 					W>
 		void compute(T algU, V algW, IndexedDataSource<U> input, IndexedDataSource<W> output)

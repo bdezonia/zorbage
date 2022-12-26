@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.GetOctonion;
+import nom.bdezonia.zorbage.algebra.GetJ0;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
@@ -56,7 +56,7 @@ public class GetJ0Values {
 	 * @param output
 	 */
 	public static <T extends Algebra<T,U>,
-					U extends GetOctonion<W>,
+					U extends GetJ0<W>,
 					V extends Algebra<V,W>,
 					W>
 		void compute(T algU, V algW, IndexedDataSource<U> input, IndexedDataSource<W> output)

@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetI;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
@@ -58,7 +58,7 @@ public class SetIValues {
 	public static <T extends Algebra<T,U>,
 					U,
 					V extends Algebra<V,W>,
-					W extends SetComplex<U>>
+					W extends SetI<U>>
 		void compute(T algU, V algW, IndexedDataSource<U> input, IndexedDataSource<W> output)
 	{
 		Procedure2<U, W> xform = new Procedure2<U, W>() {
