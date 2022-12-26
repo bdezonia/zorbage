@@ -36,7 +36,8 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetI;
+import nom.bdezonia.zorbage.algebra.SetR;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
@@ -73,7 +74,7 @@ public class FFT2D {
 	 */
 	public static
 		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
-			C extends SetComplex<R> & Allocatable<C>,
+			C extends SetR<R> & SetI<R> & Allocatable<C>,
 			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
 				Multiplication<R> & Addition<R> & Invertible<R> & Unity<R>,
 			R>

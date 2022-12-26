@@ -34,12 +34,12 @@ import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Conjugate;
-import nom.bdezonia.zorbage.algebra.GetReal;
+import nom.bdezonia.zorbage.algebra.GetR;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetComplex;
-import nom.bdezonia.zorbage.algebra.SetReal;
+import nom.bdezonia.zorbage.algebra.SetI;
+import nom.bdezonia.zorbage.algebra.SetR;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -69,10 +69,10 @@ public class BasicInvFFT {
 	 * @param output
 	 */
 	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
-					C extends SetComplex<R> & GetReal<R> & Allocatable<C>,
+					C extends SetR<R> & SetI<R> & GetR<R> & Allocatable<C>,
 					RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
 								Multiplication<R> & Addition<R> & Invertible<R>,
-					R extends SetReal<R>>
+					R extends SetR<R>>
 
 		void compute(CA algC, RA algR, IndexedDataSource<C> input, IndexedDataSource<R> output)
 	{
@@ -90,19 +90,6 @@ public class BasicInvFFT {
 		
 		IndexedDataSource<C> trimmedInvFFT = new TrimmedDataSource<>(invFFT, 0, output.size());
 		
-		// Want to do this but can't figure out how to get generics declared right:
-		
-		// SetRValues.compute(algC, algR, trimmedInvFFT, output);
-		
-		// instead do this
-		
-		C cVal = algC.construct();
-		R rVal = algR.construct();
-		
-		for (long i = 0; i < output.size(); i++) {
-			trimmedInvFFT.get(i, cVal);
-			cVal.getR(rVal);
-			output.set(i, rVal);
-		}
+		GetRValues.compute(algC, algR, trimmedInvFFT, output);
 	}
 }

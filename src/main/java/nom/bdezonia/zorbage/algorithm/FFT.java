@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetI;
+import nom.bdezonia.zorbage.algebra.SetR;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -67,7 +68,7 @@ public class FFT {
 	 * @param b Destination list of complex data
 	 */
 	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
-						C extends SetComplex<R>,
+						C extends SetR<R> & SetI<R>,
 						RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
 							Multiplication<R> & Addition<R> & Invertible<R> & Unity<R>,
 						R>
