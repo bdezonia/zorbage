@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.real.float64.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class FoldRTest {
+public class TestFoldL {
 
 	@Test
 	public void test() {
@@ -58,9 +58,9 @@ public class FoldRTest {
 		
 		Float64Member result = G.DBL.construct();
 		
-		FoldR.compute(G.DBL, G.DBL.divide(), one, nums, result);
+		FoldL.compute(G.DBL, G.DBL.divide(), one, nums, result);
 		
-		assertEquals(1.0/(2.0/(3.0/4.0)), result.v(), 0.000000000001);
+		assertEquals(((1.0/2.0)/3.0)/4.0, result.v(), 0.000000000001);
 	}
 
 }
