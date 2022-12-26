@@ -425,7 +425,7 @@ public class Float32CartesianTensorProduct
 	{
 		@Override
 		public void call(Float32CartesianTensorProductMember a) {
-			FillNaN.compute(G.FLT, a);
+			FillNaN.compute(G.FLT, a.rawData());
 		}
 	};
 	
@@ -453,7 +453,7 @@ public class Float32CartesianTensorProduct
 	{
 		@Override
 		public void call(Float32CartesianTensorProductMember a) {
-			FillInfinite.compute(G.FLT, a);
+			FillInfinite.compute(G.FLT, a.rawData());
 		}
 	};
 			

@@ -404,7 +404,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(QuaternionFloat32RModuleMember a) {
-			FillNaN.compute(G.QFLT, a);
+			FillNaN.compute(G.QFLT, a.rawData());
 		}
 	};
 	
@@ -432,7 +432,7 @@ public class QuaternionFloat32RModule
 	{
 		@Override
 		public void call(QuaternionFloat32RModuleMember a) {
-			FillInfinite.compute(G.QFLT, a);
+			FillInfinite.compute(G.QFLT, a.rawData());
 		}
 	};
 

@@ -393,7 +393,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a) {
-			FillNaN.compute(G.CHLF, a);
+			FillNaN.compute(G.CHLF, a.rawData());
 		}
 	};
 	
@@ -421,7 +421,7 @@ public class ComplexFloat16Vector
 	{
 		@Override
 		public void call(ComplexFloat16VectorMember a) {
-			FillInfinite.compute(G.CHLF, a);
+			FillInfinite.compute(G.CHLF, a.rawData());
 		}
 	};
 

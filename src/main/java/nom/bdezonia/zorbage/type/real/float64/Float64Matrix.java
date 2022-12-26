@@ -311,7 +311,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a) {
-			FillNaN.compute(G.DBL, a);
+			FillNaN.compute(G.DBL, a.rawData());
 		}
 	};
 
@@ -339,7 +339,7 @@ public class Float64Matrix
 	{
 		@Override
 		public void call(Float64MatrixMember a) {
-			FillInfinite.compute(G.DBL, a);
+			FillInfinite.compute(G.DBL, a.rawData());
 		}
 	};
 	

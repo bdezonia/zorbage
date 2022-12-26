@@ -437,7 +437,7 @@ public class ComplexFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(ComplexFloat32CartesianTensorProductMember a) {
-			FillNaN.compute(G.CFLT, a);
+			FillNaN.compute(G.CFLT, a.rawData());
 		}
 	};
 	
@@ -465,7 +465,7 @@ public class ComplexFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(ComplexFloat32CartesianTensorProductMember a) {
-			FillInfinite.compute(G.CFLT, a);
+			FillInfinite.compute(G.CFLT, a.rawData());
 		}
 	};
 			

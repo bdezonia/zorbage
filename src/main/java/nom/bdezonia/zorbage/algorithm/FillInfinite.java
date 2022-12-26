@@ -32,7 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Infinite;
-import nom.bdezonia.zorbage.datasource.RawData;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -46,16 +46,16 @@ public class FillInfinite {
 	private FillInfinite() { }
 	
 	/**
-	 * A helper method that allows a lot of multidim data types to be filled with Infinite values
+	 * A helper method that allows a list of data to be filled with Infinite values
 	 * 
 	 * @param alg
-	 * @param a
+	 * @param list
 	 */
-	public static <T extends Algebra<T,U> & Infinite<U>, U, W extends RawData<U>>
-		void compute(T alg, W a)
+	public static <T extends Algebra<T,U> & Infinite<U>, U>
+		void compute(T alg, IndexedDataSource<U> list)
 	{
 		U value = alg.construct();
 		alg.infinite().call(value);
-		Fill.compute(alg, value, a.rawData());
+		Fill.compute(alg, value, list);
 	}
 }

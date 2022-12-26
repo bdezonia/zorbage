@@ -314,7 +314,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a) {
-			FillNaN.compute(G.ODBL, a);
+			FillNaN.compute(G.ODBL, a.rawData());
 		}
 	};
 
@@ -342,7 +342,7 @@ public class OctonionFloat64Matrix
 	{
 		@Override
 		public void call(OctonionFloat64MatrixMember a) {
-			FillInfinite.compute(G.ODBL, a);
+			FillInfinite.compute(G.ODBL, a.rawData());
 		}
 	};
 	

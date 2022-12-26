@@ -437,7 +437,7 @@ public class ComplexFloat128CartesianTensorProduct
 	{
 		@Override
 		public void call(ComplexFloat128CartesianTensorProductMember a) {
-			FillNaN.compute(G.CQUAD, a);
+			FillNaN.compute(G.CQUAD, a.rawData());
 		}
 	};
 	
@@ -465,7 +465,7 @@ public class ComplexFloat128CartesianTensorProduct
 	{
 		@Override
 		public void call(ComplexFloat128CartesianTensorProductMember a) {
-			FillInfinite.compute(G.CQUAD, a);
+			FillInfinite.compute(G.CQUAD, a.rawData());
 		}
 	};
 			

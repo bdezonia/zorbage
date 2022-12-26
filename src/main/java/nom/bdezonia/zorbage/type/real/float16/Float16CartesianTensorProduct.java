@@ -427,7 +427,7 @@ public class Float16CartesianTensorProduct
 	{
 		@Override
 		public void call(Float16CartesianTensorProductMember a) {
-			FillNaN.compute(G.HLF, a);
+			FillNaN.compute(G.HLF, a.rawData());
 		}
 	};
 	
@@ -455,7 +455,7 @@ public class Float16CartesianTensorProduct
 	{
 		@Override
 		public void call(Float16CartesianTensorProductMember a) {
-			FillInfinite.compute(G.HLF, a);
+			FillInfinite.compute(G.HLF, a.rawData());
 		}
 	};
 			

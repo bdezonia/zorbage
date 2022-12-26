@@ -47,7 +47,7 @@ public class TestFillNaN {
 	public void test() {
 		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
 		assertFalse(SequenceIsNan.compute(G.DBL, a.rawData()));
-		FillNaN.compute(G.DBL, a);
+		FillNaN.compute(G.DBL, a.rawData());
 		assertTrue(SequenceIsNan.compute(G.DBL, a.rawData()));
 	}
 }

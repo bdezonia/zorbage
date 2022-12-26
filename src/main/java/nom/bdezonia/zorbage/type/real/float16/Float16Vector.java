@@ -371,7 +371,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a) {
-			FillNaN.compute(G.HLF, a);
+			FillNaN.compute(G.HLF, a.rawData());
 		}
 	};
 	
@@ -399,7 +399,7 @@ public class Float16Vector
 	{
 		@Override
 		public void call(Float16VectorMember a) {
-			FillInfinite.compute(G.HLF, a);
+			FillInfinite.compute(G.HLF, a.rawData());
 		}
 	};
 

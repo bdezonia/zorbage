@@ -314,7 +314,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16MatrixMember a) {
-			FillNaN.compute(G.OHLF, a);
+			FillNaN.compute(G.OHLF, a.rawData());
 		}
 	};
 
@@ -342,7 +342,7 @@ public class OctonionFloat16Matrix
 	{
 		@Override
 		public void call(OctonionFloat16MatrixMember a) {
-			FillInfinite.compute(G.OHLF, a);
+			FillInfinite.compute(G.OHLF, a.rawData());
 		}
 	};
 	

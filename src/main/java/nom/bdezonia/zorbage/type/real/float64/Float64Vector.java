@@ -371,7 +371,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a) {
-			FillNaN.compute(G.DBL, a);
+			FillNaN.compute(G.DBL, a.rawData());
 		}
 	};
 	
@@ -399,7 +399,7 @@ public class Float64Vector
 	{
 		@Override
 		public void call(Float64VectorMember a) {
-			FillInfinite.compute(G.DBL, a);
+			FillInfinite.compute(G.DBL, a.rawData());
 		}
 	};
 

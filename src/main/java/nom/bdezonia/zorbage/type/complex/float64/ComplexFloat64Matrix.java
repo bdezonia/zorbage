@@ -316,7 +316,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			FillNaN.compute(G.CDBL, a);
+			FillNaN.compute(G.CDBL, a.rawData());
 		}
 	};
 
@@ -344,7 +344,7 @@ public class ComplexFloat64Matrix
 	{
 		@Override
 		public void call(ComplexFloat64MatrixMember a) {
-			FillInfinite.compute(G.CDBL, a);
+			FillInfinite.compute(G.CDBL, a.rawData());
 		}
 	};
 	

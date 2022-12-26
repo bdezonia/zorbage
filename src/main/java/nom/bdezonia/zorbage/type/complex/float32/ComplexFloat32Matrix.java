@@ -316,7 +316,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a) {
-			FillNaN.compute(G.CFLT, a);
+			FillNaN.compute(G.CFLT, a.rawData());
 		}
 	};
 
@@ -344,7 +344,7 @@ public class ComplexFloat32Matrix
 	{
 		@Override
 		public void call(ComplexFloat32MatrixMember a) {
-			FillInfinite.compute(G.CFLT, a);
+			FillInfinite.compute(G.CFLT, a.rawData());
 		}
 	};
 	

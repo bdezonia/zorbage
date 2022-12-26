@@ -311,7 +311,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a) {
-			FillNaN.compute(G.HLF, a);
+			FillNaN.compute(G.HLF, a.rawData());
 		}
 	};
 
@@ -339,7 +339,7 @@ public class Float16Matrix
 	{
 		@Override
 		public void call(Float16MatrixMember a) {
-			FillInfinite.compute(G.HLF, a);
+			FillInfinite.compute(G.HLF, a.rawData());
 		}
 	};
 	

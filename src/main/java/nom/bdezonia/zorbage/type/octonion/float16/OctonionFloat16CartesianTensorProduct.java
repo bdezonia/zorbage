@@ -436,7 +436,7 @@ public class OctonionFloat16CartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16CartesianTensorProductMember a) {
-			FillNaN.compute(G.OHLF, a);
+			FillNaN.compute(G.OHLF, a.rawData());
 		}
 	};
 	
@@ -464,7 +464,7 @@ public class OctonionFloat16CartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16CartesianTensorProductMember a) {
-			FillInfinite.compute(G.OHLF, a);
+			FillInfinite.compute(G.OHLF, a.rawData());
 		}
 	};
 			

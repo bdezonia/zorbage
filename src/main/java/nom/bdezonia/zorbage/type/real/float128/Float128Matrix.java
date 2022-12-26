@@ -312,7 +312,7 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128MatrixMember a) {
-			FillNaN.compute(G.QUAD, a);
+			FillNaN.compute(G.QUAD, a.rawData());
 		}
 	};
 
@@ -340,7 +340,7 @@ public class Float128Matrix
 	{
 		@Override
 		public void call(Float128MatrixMember a) {
-			FillInfinite.compute(G.QUAD, a);
+			FillInfinite.compute(G.QUAD, a.rawData());
 		}
 	};
 	

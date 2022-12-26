@@ -393,7 +393,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a) {
-			FillNaN.compute(G.CDBL, a);
+			FillNaN.compute(G.CDBL, a.rawData());
 		}
 	};
 	
@@ -421,7 +421,7 @@ public class ComplexFloat64Vector
 	{
 		@Override
 		public void call(ComplexFloat64VectorMember a) {
-			FillInfinite.compute(G.CDBL, a);
+			FillInfinite.compute(G.CDBL, a.rawData());
 		}
 	};
 

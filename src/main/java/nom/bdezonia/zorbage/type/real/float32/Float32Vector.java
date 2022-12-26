@@ -371,7 +371,7 @@ public class Float32Vector
 	{
 		@Override
 		public void call(Float32VectorMember a) {
-			FillNaN.compute(G.FLT, a);
+			FillNaN.compute(G.FLT, a.rawData());
 		}
 	};
 	
@@ -399,7 +399,7 @@ public class Float32Vector
 	{
 		@Override
 		public void call(Float32VectorMember a) {
-			FillInfinite.compute(G.FLT, a);
+			FillInfinite.compute(G.FLT, a.rawData());
 		}
 	};
 

@@ -47,7 +47,7 @@ public class TestFillInfinite {
 	public void test() {
 		Float64VectorMember a = new Float64VectorMember(new double[] {1,2,3});
 		assertFalse(SequenceIsInf.compute(G.DBL, a.rawData()));
-		FillInfinite.compute(G.DBL, a);
+		FillInfinite.compute(G.DBL, a.rawData());
 		assertTrue(SequenceIsInf.compute(G.DBL, a.rawData()));
 	}
 }

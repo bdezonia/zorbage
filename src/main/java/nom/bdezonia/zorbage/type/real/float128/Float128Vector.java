@@ -397,7 +397,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128VectorMember a) {
-			FillNaN.compute(G.QUAD, a);
+			FillNaN.compute(G.QUAD, a.rawData());
 		}
 	};
 	
@@ -425,7 +425,7 @@ public class Float128Vector
 	{
 		@Override
 		public void call(Float128VectorMember a) {
-			FillInfinite.compute(G.QUAD, a);
+			FillInfinite.compute(G.QUAD, a.rawData());
 		}
 	};
 

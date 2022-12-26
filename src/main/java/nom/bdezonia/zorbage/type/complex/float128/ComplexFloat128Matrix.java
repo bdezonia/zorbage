@@ -316,7 +316,7 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128MatrixMember a) {
-			FillNaN.compute(G.CQUAD, a);
+			FillNaN.compute(G.CQUAD, a.rawData());
 		}
 	};
 
@@ -344,7 +344,7 @@ public class ComplexFloat128Matrix
 	{
 		@Override
 		public void call(ComplexFloat128MatrixMember a) {
-			FillInfinite.compute(G.CQUAD, a);
+			FillInfinite.compute(G.CQUAD, a.rawData());
 		}
 	};
 	

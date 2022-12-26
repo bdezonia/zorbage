@@ -426,7 +426,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128VectorMember a) {
-			FillNaN.compute(G.CQUAD, a);
+			FillNaN.compute(G.CQUAD, a.rawData());
 		}
 	};
 	
@@ -454,7 +454,7 @@ public class ComplexFloat128Vector
 	{
 		@Override
 		public void call(ComplexFloat128VectorMember a) {
-			FillInfinite.compute(G.CQUAD, a);
+			FillInfinite.compute(G.CQUAD, a.rawData());
 		}
 	};
 

@@ -322,7 +322,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			FillNaN.compute(G.QFLT, a);
+			FillNaN.compute(G.QFLT, a.rawData());
 		}
 	};
 
@@ -350,7 +350,7 @@ public class QuaternionFloat32Matrix
 	{
 		@Override
 		public void call(QuaternionFloat32MatrixMember a) {
-			FillInfinite.compute(G.QFLT, a);
+			FillInfinite.compute(G.QFLT, a.rawData());
 		}
 	};
 	

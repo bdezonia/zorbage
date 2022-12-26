@@ -393,7 +393,7 @@ public class OctonionFloat64RModule
 	{
 		@Override
 		public void call(OctonionFloat64RModuleMember a) {
-			FillNaN.compute(G.ODBL, a);
+			FillNaN.compute(G.ODBL, a.rawData());
 		}
 	};
 	
@@ -421,7 +421,7 @@ public class OctonionFloat64RModule
 	{
 		@Override
 		public void call(OctonionFloat64RModuleMember a) {
-			FillInfinite.compute(G.ODBL, a);
+			FillInfinite.compute(G.ODBL, a.rawData());
 		}
 	};
 

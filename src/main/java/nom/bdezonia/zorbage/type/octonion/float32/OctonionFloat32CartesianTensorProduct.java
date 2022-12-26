@@ -436,7 +436,7 @@ public class OctonionFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat32CartesianTensorProductMember a) {
-			FillNaN.compute(G.OFLT, a);
+			FillNaN.compute(G.OFLT, a.rawData());
 		}
 	};
 	
@@ -464,7 +464,7 @@ public class OctonionFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat32CartesianTensorProductMember a) {
-			FillInfinite.compute(G.OFLT, a);
+			FillInfinite.compute(G.OFLT, a.rawData());
 		}
 	};
 			

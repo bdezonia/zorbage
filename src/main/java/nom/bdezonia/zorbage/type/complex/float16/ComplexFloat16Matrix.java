@@ -315,7 +315,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a) {
-			FillNaN.compute(G.CHLF, a);
+			FillNaN.compute(G.CHLF, a.rawData());
 		}
 	};
 
@@ -343,7 +343,7 @@ public class ComplexFloat16Matrix
 	{
 		@Override
 		public void call(ComplexFloat16MatrixMember a) {
-			FillInfinite.compute(G.CHLF, a);
+			FillInfinite.compute(G.CHLF, a.rawData());
 		}
 	};
 	

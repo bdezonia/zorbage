@@ -32,7 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.NaN;
-import nom.bdezonia.zorbage.datasource.RawData;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
  * 
@@ -46,16 +46,16 @@ public class FillNaN {
 	private FillNaN() { }
 	
 	/**
-	 * A helper method that allows a lot of multidim data types to be filled with NaN values
+	 * A helper method that allows a list of data to be filled with NaN values
 	 * 
 	 * @param alg
-	 * @param a
+	 * @param list
 	 */
-	public static <T extends Algebra<T,U> & NaN<U>, U, W extends RawData<U>>
-		void compute(T alg, W a)
+	public static <T extends Algebra<T,U> & NaN<U>, U>
+		void compute(T alg, IndexedDataSource<U> list)
 	{
 		U value = alg.construct();
 		alg.nan().call(value);
-		Fill.compute(alg, value, a.rawData());
+		Fill.compute(alg, value, list);
 	}
 }

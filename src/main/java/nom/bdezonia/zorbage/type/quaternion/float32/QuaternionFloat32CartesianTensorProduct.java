@@ -436,7 +436,7 @@ public class QuaternionFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat32CartesianTensorProductMember a) {
-			FillNaN.compute(G.QFLT, a);
+			FillNaN.compute(G.QFLT, a.rawData());
 		}
 	};
 	
@@ -464,7 +464,7 @@ public class QuaternionFloat32CartesianTensorProduct
 	{
 		@Override
 		public void call(QuaternionFloat32CartesianTensorProductMember a) {
-			FillInfinite.compute(G.QFLT, a);
+			FillInfinite.compute(G.QFLT, a.rawData());
 		}
 	};
 			

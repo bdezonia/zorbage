@@ -311,7 +311,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			FillNaN.compute(G.FLT, a);
+			FillNaN.compute(G.FLT, a.rawData());
 		}
 	};
 
@@ -339,7 +339,7 @@ public class Float32Matrix
 	{
 		@Override
 		public void call(Float32MatrixMember a) {
-			FillInfinite.compute(G.FLT, a);
+			FillInfinite.compute(G.FLT, a.rawData());
 		}
 	};
 	
