@@ -57,7 +57,7 @@ public final class ComplexFloat32Member
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, SetFromLong, GetAsFloatArray
 {
 	private float r, i;
 	
@@ -768,6 +768,12 @@ public final class ComplexFloat32Member
 			return G.CFLT.isEqual().call(this, (ComplexFloat32Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
 	}
 
 	@Override

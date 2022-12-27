@@ -58,7 +58,7 @@ public final class Float32Member
 		Settable<Float32Member>, Gettable<Float32Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>,
-		SetFromFloat,
+		SetFromFloat, SetFromLong,
 		GetAsFloat, GetAsFloatArray
 {
 	private float v;
@@ -688,6 +688,11 @@ public final class Float32Member
 	@Override
 	public float getAsFloat() {
 		return v();
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setV(vals[0]);
 	}
 
 	@Override
