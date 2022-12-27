@@ -61,7 +61,7 @@ public final class Float16MatrixMember
 		Gettable<Float16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloat, GetAsFloatArray,
+		SetFromFloat, SetFromLong, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member(0);
@@ -1090,6 +1090,20 @@ public final class Float16MatrixMember
 			return G.HLF_MAT.isEqual().call(this, (Float16MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

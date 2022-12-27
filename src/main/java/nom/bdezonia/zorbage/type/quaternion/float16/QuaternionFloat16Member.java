@@ -59,7 +59,7 @@ public final class QuaternionFloat16Member
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
-		SetFromFloat, GetAsFloatArray
+		SetFromFloat, SetFromLong, GetAsFloatArray
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1173,6 +1173,14 @@ public final class QuaternionFloat16Member
 			return G.QHLF.isEqual().call(this, (QuaternionFloat16Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
 	}
 
 	@Override

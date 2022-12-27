@@ -61,7 +61,7 @@ public final class ComplexFloat16MatrixMember
 		Settable<ComplexFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat16Member>,
-		SetFromFloat, GetAsFloatArray,
+		SetFromFloat, SetFromLong, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
@@ -1157,6 +1157,21 @@ public final class ComplexFloat16MatrixMember
 			return G.CHLF_MAT.isEqual().call(this, (ComplexFloat16MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

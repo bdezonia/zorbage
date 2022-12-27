@@ -61,7 +61,7 @@ public final class ComplexFloat16VectorMember
 		Settable<ComplexFloat16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat16Member>,
-		SetFromFloat, GetAsFloatArray,
+		SetFromFloat, SetFromLong, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0); 
@@ -1012,6 +1012,20 @@ public final class ComplexFloat16VectorMember
 			return G.CHLF_VEC.isEqual().call(this, (ComplexFloat16VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

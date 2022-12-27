@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromFloat;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -76,7 +77,7 @@ public final class Float16CartesianTensorProductMember
 		Settable<Float16CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloat, GetAsFloatArray,
+		SetFromFloat, SetFromLong, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member();
@@ -810,6 +811,20 @@ public final class Float16CartesianTensorProductMember
 			return G.HLF_TEN.isEqual().call(this, (Float16CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

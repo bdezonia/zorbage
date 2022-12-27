@@ -62,7 +62,7 @@ public final class Float16Member
 		Settable<Float16Member>, Gettable<Float16Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>,
-		SetFromFloat,
+		SetFromFloat, SetFromLong,
 		GetAsFloat, GetAsFloatArray
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
@@ -693,6 +693,11 @@ public final class Float16Member
 			return G.HLF.isEqual().call(this, (Float16Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setV(vals[0]);
 	}
 
 	@Override

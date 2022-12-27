@@ -61,7 +61,7 @@ public final class QuaternionFloat16MatrixMember
 		Settable<QuaternionFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat16Member>,
-		SetFromFloat, GetAsFloatArray,
+		SetFromFloat, SetFromLong, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member();
@@ -1515,6 +1515,23 @@ public final class QuaternionFloat16MatrixMember
 			return G.QHLF_MAT.isEqual().call(this, (QuaternionFloat16MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override
