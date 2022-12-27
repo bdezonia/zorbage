@@ -58,7 +58,7 @@ public final class Float64Member
 		Settable<Float64Member>, Gettable<Float64Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float64Member>, GetReal<Float64Member>,
-		SetFromDouble,
+		SetFromDouble, SetFromLong,
 		GetAsDouble, GetAsDoubleArray
 {
 	private double v;
@@ -704,6 +704,11 @@ public final class Float64Member
 	@Override
 	public double getAsDouble() {
 		return v;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setV(vals[0]);
 	}
 
 	@Override

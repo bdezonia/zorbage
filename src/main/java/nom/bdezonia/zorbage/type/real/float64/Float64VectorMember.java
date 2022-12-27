@@ -61,7 +61,7 @@ public final class Float64VectorMember
 		Settable<Float64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDouble, GetAsDoubleArray,
+		SetFromDouble, SetFromLong, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member(0); 
@@ -946,6 +946,19 @@ public final class Float64VectorMember
 			return G.DBL_VEC.isEqual().call(this, (Float64VectorMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

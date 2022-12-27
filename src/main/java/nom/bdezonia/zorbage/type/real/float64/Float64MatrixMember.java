@@ -61,7 +61,7 @@ public final class Float64MatrixMember
 		Gettable<Float64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDouble, GetAsDoubleArray,
+		SetFromDouble, SetFromLong, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member(0);
@@ -1090,6 +1090,20 @@ public final class Float64MatrixMember
 			return G.DBL_MAT.isEqual().call(this, (Float64MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

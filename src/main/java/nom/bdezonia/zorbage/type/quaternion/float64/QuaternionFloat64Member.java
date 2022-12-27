@@ -58,7 +58,7 @@ public final class QuaternionFloat64Member
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>,
-		SetFromDouble, GetAsDoubleArray
+		SetFromDouble, SetFromLong, GetAsDoubleArray
 {
 
 	private double r, i, j, k;
@@ -1171,6 +1171,14 @@ public final class QuaternionFloat64Member
 			return G.QDBL.isEqual().call(this, (QuaternionFloat64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
 	}
 
 	@Override

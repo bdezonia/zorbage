@@ -58,7 +58,7 @@ public final class OctonionFloat64Member
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float64Member>, GetOctonion<Float64Member>,
-		SetFromDouble, GetAsDoubleArray
+		SetFromDouble, SetFromLong, GetAsDoubleArray
 {
 
 	private double r, i, j, k, l, i0, j0, k0;
@@ -1836,6 +1836,18 @@ public final class OctonionFloat64Member
 			return G.ODBL.isEqual().call(this, (OctonionFloat64Member) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		setR(vals[0]);
+		setI(vals[1]);
+		setJ(vals[2]);
+		setK(vals[3]);
+		setL(vals[4]);
+		setI0(vals[5]);
+		setJ0(vals[6]);
+		setK0(vals[7]);
 	}
 
 	@Override

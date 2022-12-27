@@ -61,7 +61,7 @@ public final class ComplexFloat64MatrixMember
 		Settable<ComplexFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat64Member>,
-		SetFromDouble, GetAsDoubleArray,
+		SetFromDouble, SetFromLong, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
@@ -1157,6 +1157,21 @@ public final class ComplexFloat64MatrixMember
 			return G.CDBL_MAT.isEqual().call(this, (ComplexFloat64MatrixMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override

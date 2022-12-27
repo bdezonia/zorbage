@@ -35,6 +35,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.apodize.ExponentialApodizer;
 import nom.bdezonia.zorbage.algorithm.apodize.TrapezoidalApodizer;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
@@ -48,10 +49,10 @@ import nom.bdezonia.zorbage.type.real.float64.Float64Member;
  */
 public class TestApodize {
 
+	private final double tol = 0.000000001;
+	
 	@Test
-	public void test() {
-		
-		double tol = 0.000000001;
+	public void test1() {
 		
 		IndexedDataSource<Float64Member> list =
 				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4,5,6,7,8});
@@ -86,5 +87,26 @@ public class TestApodize {
 
 		list.get(7, tmp);
 		assertEquals(8.0 * 0 / 3, tmp.v(), tol);
+	}
+	
+	@Test
+	public void test2() {
+		
+		IndexedDataSource<Float64Member> list =
+				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4,5,6,7,8});
+		
+		Float64Member w = G.DBL.construct("4.4");
+		
+		Float64Member dt = G.DBL.construct("0.25");
+		
+		ExponentialApodizer<Float64Algebra, Float64Member> apodizer =
+				new ExponentialApodizer<>(G.DBL, w, dt);
+		
+		Apodize.compute(G.DBL, apodizer, list, list);
+		
+		// I just wanted to make sure code compiled with doubles.
+		// No real testing here.
+		
+		assertTrue(true);
 	}
 }

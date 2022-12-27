@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -76,7 +77,7 @@ public final class OctonionFloat64CartesianTensorProductMember
 		Settable<OctonionFloat64CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat64Member>,
-		SetFromDouble, GetAsDoubleArray,
+		SetFromDouble, SetFromLong, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
@@ -1709,6 +1710,27 @@ public final class OctonionFloat64CartesianTensorProductMember
 			return G.ODBL_TEN.isEqual().call(this, (OctonionFloat64CartesianTensorProductMember) o);
 		}
 		return false;
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
 	}
 
 	@Override
