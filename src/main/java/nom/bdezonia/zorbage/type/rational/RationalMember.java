@@ -141,6 +141,10 @@ public class RationalMember
 		this.d = BigInteger.ONE;
 	}
 	
+	public void setV(long n, long d) {
+		setV(BigInteger.valueOf(n), BigInteger.valueOf(d));
+	}
+	
 	public void setV(BigInteger n, BigInteger d) {
 		int signum = d.signum();
 		if (signum == 0)
@@ -186,7 +190,6 @@ public class RationalMember
 	public String toString() {
 		return n.toString() + "/" + d.toString();
 	}
-	
 
 	@Override
 	public int bigIntegerCount() {

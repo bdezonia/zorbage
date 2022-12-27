@@ -28,66 +28,63 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.algorithm.apodize;
+package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Algebra;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import nom.bdezonia.zorbage.algebra.G;
-import nom.bdezonia.zorbage.algebra.ScaleByRational;
-import nom.bdezonia.zorbage.algebra.Unity;
-import nom.bdezonia.zorbage.procedure.Procedure2;
-import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.algorithm.apodize.TrapezoidalApodizer;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
+import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TrapezoidalApodizer<CA extends Algebra<CA,C> & Unity<C> &
-										ScaleByRational<C>,
-									C>
-	implements Procedure2<Long, C>
-{
-	private final CA alg;
-	private final long leftPoint;
-	private final long rightPoint;
-	private final long size;
-	private final ThreadLocal<RationalMember> ratio;
+public class TestApodize {
 
-	/**
-	 * 
-	 * @param alg
-	 * @param leftPoint
-	 * @param rightPoint
-	 * @param size
-	 */
-	public TrapezoidalApodizer(CA alg, long leftPoint, long rightPoint, long size) {
-		if (leftPoint < 0 || rightPoint < leftPoint || size <= rightPoint)
-			throw new IllegalArgumentException("trapezoid apodizer: incompatible definition of left/right/size");
-		this.alg = alg;
-		this.leftPoint = leftPoint;
-		this.rightPoint = rightPoint;
-		this.size = size;
-		this.ratio = new ThreadLocal<RationalMember>() {
-			
-			@Override
-			protected RationalMember initialValue() {
-				return G.RAT.construct();
-			}
-		};
-	}
+	@Test
+	public void test() {
+		
+		double tol = 0.000000001;
+		
+		IndexedDataSource<Float64Member> list =
+				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4,5,6,7,8});
+		
+		TrapezoidalApodizer<Float64Algebra, Float64Member> apodizer =
+				new TrapezoidalApodizer<>(G.DBL, 2, 4, list.size());
+		
+		Apodize.compute(G.DBL, apodizer, list, list);
 
-	@Override
-	public void call(Long index, C value) {
-		if (index < 0 || index >= size)
-			throw new IllegalArgumentException("index out of bounds");
-		alg.unity().call(value);
-		if (index < leftPoint) {
-			ratio.get().setV(index, leftPoint);
-			alg.scaleByRational().call(ratio.get(), value, value);
-		}
-		else if (index > rightPoint) {
-			ratio.get().setV(size-1-index, size-1-rightPoint);
-			alg.scaleByRational().call(ratio.get(), value, value);
-		}
+		Float64Member tmp = G.DBL.construct();
+		
+		list.get(0, tmp);
+		assertEquals(1.0 * 0 / 2, tmp.v(), tol);
+		
+		list.get(1, tmp);
+		assertEquals(2.0 * 1 / 2, tmp.v(), tol);
+
+		list.get(2, tmp);
+		assertEquals(3.0 * 1, tmp.v(), tol);
+		
+		list.get(3, tmp);
+		assertEquals(4.0 * 1, tmp.v(), tol);
+		
+		list.get(4, tmp);
+		assertEquals(5.0 * 1, tmp.v(), tol);
+		
+		list.get(5, tmp);
+		assertEquals(6.0 * 2 / 3, tmp.v(), tol);
+
+		list.get(6, tmp);
+		assertEquals(7.0 * 1 / 3, tmp.v(), tol);
+
+		list.get(7, tmp);
+		assertEquals(8.0 * 0 / 3, tmp.v(), tol);
 	}
 }
