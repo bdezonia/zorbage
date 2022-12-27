@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
@@ -39,11 +40,11 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
  * @author Barry DeZonia
  *
  */
-public class Reduce {
+public class ReduceR {
 
 	// do not instantiate
 	
-	private Reduce() { }
+	private ReduceR() { }
 	
 	/**
 	 * Reduce a list of values into one value using a reduction function.
@@ -58,16 +59,24 @@ public class Reduce {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T alg, Procedure3<U,U,U> reducer, IndexedDataSource<U> data, U reduction)
 	{
-		U accumulator = alg.construct();
-		U tmp = alg.construct();
 		long sz = data.size();
+
 		if (sz < 1)
 			throw new IllegalArgumentException("must have one or more values before you can reduce");
-		data.get(0, accumulator);
-		for (int i = 1; i < sz; i++) {
-			data.get(i, tmp);
-			reducer.call(accumulator, tmp, accumulator);
+		
+		if (sz == 1) {
+			data.get(0, reduction);
+			return;
 		}
-		alg.assign().call(accumulator, reduction);
+		
+		// if here sz == 2 or more
+		
+		U seed = alg.construct();
+		
+		data.get(sz-1, seed);
+		
+		IndexedDataSource<U> trimmed = new TrimmedDataSource<>(data, 0, sz-1);
+		
+		FoldR.compute(alg, reducer, seed, trimmed, reduction);
 	}
 }

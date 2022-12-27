@@ -34,7 +34,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.Map;
 import nom.bdezonia.zorbage.algorithm.Transform4;
-import nom.bdezonia.zorbage.algorithm.Reduce;
+import nom.bdezonia.zorbage.algorithm.ReduceR;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
 import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
@@ -308,11 +308,11 @@ class Transforms {
 
 		// reduce by summing values
 		
-		Reduce.compute(G.INT16, G.INT16.add(), input, reduction);  // reduction = 1+3+5+8+12+55+101
+		ReduceR.compute(G.INT16, G.INT16.add(), input, reduction);  // reduction = 1+3+5+8+12+55+101
 		
 		// reduce by multiplying values
 		
-		Reduce.compute(G.INT16, G.INT16.multiply(), input, reduction);  // reduction = 1*3*5*8*12*55*101
+		ReduceR.compute(G.INT16, G.INT16.multiply(), input, reduction);  // reduction = 1*3*5*8*12*55*101
 
 		// Let's do a compound interest problem by defining our own code. Imagine money compounds at an
 		// 8% annual interest rate. And we are going to deposit funds once every month and compound
@@ -341,6 +341,6 @@ class Transforms {
 		
 		Float64Member balance = G.DBL.construct();
 		
-		Reduce.compute(G.DBL, grow, monthlyDeposits, balance);
+		ReduceR.compute(G.DBL, grow, monthlyDeposits, balance);
 	}
 }

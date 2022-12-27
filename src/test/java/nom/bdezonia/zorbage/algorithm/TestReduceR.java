@@ -46,24 +46,19 @@ import nom.bdezonia.zorbage.type.real.float64.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestReduce {
+public class TestReduceR {
 
 	@Test
 	public void test1() {
 		
-		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
-				new double[] {1,2,3,4,5,6,7,8}
-				);
+		IndexedDataSource<Float64Member> nums =
+				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4});
 		
-		Float64Member reduction = G.DBL.construct();
+		Float64Member result = G.DBL.construct();
 		
-		Reduce.compute(G.DBL, G.DBL.add(), nums, reduction);
+		ReduceR.compute(G.DBL, G.DBL.divide(), nums, result);
 		
-		assertEquals(36, reduction.v(), 0);
-		
-		Reduce.compute(G.DBL, G.DBL.multiply(), nums, reduction);
-		
-		assertEquals(40320, reduction.v(), 0);
+		assertEquals(1.0/(2.0/(3.0/4.0)), result.v(), 0.000000000001);
 	}
 
 	@Test
@@ -75,11 +70,7 @@ public class TestReduce {
 		
 		Float64Member reduction = G.DBL.construct();
 		
-		Reduce.compute(G.DBL, G.DBL.add(), nums, reduction);
-		
-		assertEquals(5, reduction.v(), 0);
-		
-		Reduce.compute(G.DBL, G.DBL.multiply(), nums, reduction);
+		ReduceR.compute(G.DBL, G.DBL.add(), nums, reduction);
 		
 		assertEquals(5, reduction.v(), 0);
 	}
@@ -94,18 +85,10 @@ public class TestReduce {
 		Float64Member reduction = G.DBL.construct();
 		
 		try {
-			Reduce.compute(G.DBL, G.DBL.add(), nums, reduction);
+			ReduceR.compute(G.DBL, G.DBL.add(), nums, reduction);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-		
-		try {
-			Reduce.compute(G.DBL, G.DBL.multiply(), nums, reduction);
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		
 	}
 }

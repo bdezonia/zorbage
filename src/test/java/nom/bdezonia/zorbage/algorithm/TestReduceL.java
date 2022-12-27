@@ -30,7 +30,9 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -44,21 +46,49 @@ import nom.bdezonia.zorbage.type.real.float64.Float64Member;
  * @author Barry DeZonia
  *
  */
-public class TestFoldR {
+public class TestReduceL {
 
 	@Test
-	public void test() {
-
+	public void test1() {
+		
 		IndexedDataSource<Float64Member> nums =
 				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4});
 		
-		Float64Member six = G.DBL.construct("6");
-		
 		Float64Member result = G.DBL.construct();
 		
-		FoldR.compute(G.DBL, G.DBL.divide(), six, nums, result);
+		ReduceL.compute(G.DBL, G.DBL.divide(), nums, result);
 		
-		assertEquals(1.0/(2.0/(3.0/(4.0/6.0))), result.v(), 0.000000000001);
+		assertEquals(((1.0/2.0)/3.0)/4.0, result.v(), 0.000000000001);
 	}
 
+	@Test
+	public void test2() {
+		
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
+				new double[] {5}
+				);
+		
+		Float64Member reduction = G.DBL.construct();
+		
+		ReduceL.compute(G.DBL, G.DBL.add(), nums, reduction);
+		
+		assertEquals(5, reduction.v(), 0);
+	}
+
+	@Test
+	public void test3() {
+		
+		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 
+				new double[] {}
+				);
+		
+		Float64Member reduction = G.DBL.construct();
+		
+		try {
+			ReduceL.compute(G.DBL, G.DBL.add(), nums, reduction);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+	}
 }

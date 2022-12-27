@@ -30,35 +30,53 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
-import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.real.float64.Float64Member;
+import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class TestFoldR {
+public class ReduceL {
 
-	@Test
-	public void test() {
+	// do not instantiate
+	
+	private ReduceL() { }
+	
+	/**
+	 * Reduce a list of values into one value using a reduction function.
+	 * A sum of a list is a reduction using an add function. A product of
+	 * a list is a reduction using a multiply function.
+	 * 
+	 * @param alg
+	 * @param reducer
+	 * @param data
+	 * @param reduction
+	 */
+	public static <T extends Algebra<T,U>, U>
+		void compute(T alg, Procedure3<U,U,U> reducer, IndexedDataSource<U> data, U reduction)
+	{
+		long sz = data.size();
 
-		IndexedDataSource<Float64Member> nums =
-				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4});
+		if (sz < 1)
+			throw new IllegalArgumentException("must have one or more values before you can reduce");
 		
-		Float64Member six = G.DBL.construct("6");
+		if (sz == 1) {
+			data.get(0, reduction);
+			return;
+		}
 		
-		Float64Member result = G.DBL.construct();
+		// if here sz == 2 or more
 		
-		FoldR.compute(G.DBL, G.DBL.divide(), six, nums, result);
+		U seed = alg.construct();
 		
-		assertEquals(1.0/(2.0/(3.0/(4.0/6.0))), result.v(), 0.000000000001);
+		data.get(0, seed);
+		
+		IndexedDataSource<U> trimmed = new TrimmedDataSource<>(data, 1, sz-1);
+		
+		FoldL.compute(alg, reducer, seed, trimmed, reduction);
 	}
-
 }

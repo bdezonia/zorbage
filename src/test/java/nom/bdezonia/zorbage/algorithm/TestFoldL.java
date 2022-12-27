@@ -52,15 +52,13 @@ public class TestFoldL {
 		IndexedDataSource<Float64Member> nums =
 				Storage.allocate(G.DBL.construct(), new double[] {1,2,3,4});
 		
-		Float64Member one = G.DBL.construct();
-		
-		G.DBL.unity().call(one);
+		Float64Member six = G.DBL.construct("6");
 		
 		Float64Member result = G.DBL.construct();
 		
-		FoldL.compute(G.DBL, G.DBL.divide(), one, nums, result);
+		FoldL.compute(G.DBL, G.DBL.divide(), six, nums, result);
 		
-		assertEquals(((1.0/2.0)/3.0)/4.0, result.v(), 0.000000000001);
+		assertEquals((((6.0/1.0)/2.0)/3.0)/4.0, result.v(), 0.000000000001);
 	}
 
 }
