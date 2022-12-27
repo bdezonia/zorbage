@@ -121,13 +121,13 @@ public class Apodize {
 		
 		@Override
 		public void run() {
-			C tmp = alg.construct();
-			C ak = alg.construct();
+			C val = alg.construct();
+			C scale = alg.construct();
 			for (long i = start; i < endPlusOne; i++) {
-				windowFunc.call(i, ak);
-				a.get(i, tmp);
-				alg.multiply().call(tmp, ak, tmp);
-				b.set(i, tmp);
+				windowFunc.call(i, scale);
+				a.get(i, val);
+				alg.multiply().call(val, scale, val);
+				b.set(i, val);
 			}
 		}
 	}
