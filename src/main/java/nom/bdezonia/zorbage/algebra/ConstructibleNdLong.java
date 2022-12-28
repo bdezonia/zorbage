@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleNdLong<U>
 {
-	U construct(StorageConstruction s, long[] nd);
+	U construct(StorageConstruction s, long... dims);
 }

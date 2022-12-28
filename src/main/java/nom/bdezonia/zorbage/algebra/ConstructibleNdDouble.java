@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface ConstructibleNdDouble<U>
 {
-	U construct(double[] nd);
+	U construct(StorageConstruction s, double... dims);
 }
