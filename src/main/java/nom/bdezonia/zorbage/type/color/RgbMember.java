@@ -181,6 +181,8 @@ public class RgbMember
 
 	@Override
 	public void setFromInt(int... vals) {
+		if (vals.length != 3)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
 		setG(vals[1]);
 		setB(vals[2]);

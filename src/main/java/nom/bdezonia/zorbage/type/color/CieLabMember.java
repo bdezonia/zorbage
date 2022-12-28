@@ -185,6 +185,8 @@ public class CieLabMember
 
 	@Override
 	public void setFromDouble(double... vals) {
+		if (vals.length != 3)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setL(vals[0]);
 		setA(vals[1]);
 		setB(vals[2]);

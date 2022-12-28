@@ -113,6 +113,8 @@ public final class StringMember
 
 	@Override
 	public void setFromString(String... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 

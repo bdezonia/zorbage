@@ -727,6 +727,8 @@ public final class BooleanMember
 
 	@Override
 	public void setFromBoolean(boolean... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 

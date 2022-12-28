@@ -841,6 +841,8 @@ public final class UnsignedInt9Member
 
 	@Override
 	public void setFromInt(int... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 

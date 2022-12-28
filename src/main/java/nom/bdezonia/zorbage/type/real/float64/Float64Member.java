@@ -708,11 +708,15 @@ public final class Float64Member
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 

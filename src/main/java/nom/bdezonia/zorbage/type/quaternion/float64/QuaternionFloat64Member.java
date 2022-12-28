@@ -1175,6 +1175,8 @@ public final class QuaternionFloat64Member
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
 		setI(vals[1]);
 		setJ(vals[2]);
@@ -1183,6 +1185,8 @@ public final class QuaternionFloat64Member
 
 	@Override
 	public void setFromDouble(double... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
 		setI(vals[1]);
 		setJ(vals[2]);

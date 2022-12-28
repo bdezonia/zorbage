@@ -59,7 +59,8 @@ public final class SignedInt64Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Long>, GetReal<SignedInt64Member>,
 		SetFromLong,
-		GetAsLong, GetAsBigInteger, GetAsBigDecimal
+		GetAsLong, GetAsBigInteger, GetAsBigDecimal,
+		GetAsLongArray
 {
 
 	long v;
@@ -702,6 +703,13 @@ public final class SignedInt64Member
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {v()};
 	}
 }

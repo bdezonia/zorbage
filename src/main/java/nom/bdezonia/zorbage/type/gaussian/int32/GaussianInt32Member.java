@@ -782,6 +782,8 @@ public class GaussianInt32Member
 
 	@Override
 	public void setFromInt(int... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
 		setI(vals[1]);
 	}

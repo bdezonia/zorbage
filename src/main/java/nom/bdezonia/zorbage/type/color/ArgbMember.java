@@ -195,6 +195,8 @@ public class ArgbMember
 
 	@Override
 	public void setFromInt(int... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA(vals[0]);
 		setR(vals[1]);
 		setG(vals[2]);

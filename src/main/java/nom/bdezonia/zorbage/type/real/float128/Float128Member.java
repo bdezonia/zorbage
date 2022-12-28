@@ -176,21 +176,29 @@ public final class Float128Member
 	
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigDecimal.valueOf(vals[0]));
 	}
 	
 	@Override
 	public void setFromDouble(double... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigDecimal.valueOf(vals[0]));
 	}
 	
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(new BigDecimal(vals[0]));
 	}
 	
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 

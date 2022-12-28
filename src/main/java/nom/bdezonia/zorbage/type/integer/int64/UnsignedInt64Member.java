@@ -60,7 +60,7 @@ public final class UnsignedInt64Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigDecimal
+		GetAsBigInteger, GetAsBigDecimal, GetAsBigIntegerArray
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -717,11 +717,20 @@ public final class UnsignedInt64Member
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {v()};
 	}
 }

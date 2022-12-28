@@ -1840,6 +1840,8 @@ public final class OctonionFloat32Member
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
 		setI(vals[1]);
 		setJ(vals[2]);
@@ -1852,6 +1854,8 @@ public final class OctonionFloat32Member
 
 	@Override
 	public void setFromFloat(float... vals) {
+		if (vals.length != 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
 		setI(vals[1]);
 		setJ(vals[2]);

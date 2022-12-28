@@ -743,11 +743,15 @@ public class RationalMember
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0], vals[1]);
 	}
 
 	@Override
 	public void setFromLong(long... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]), BigInteger.valueOf(vals[1]));
 	}
 
