@@ -139,7 +139,7 @@ public class ComplexFloat64Algebra
 
 	@Override
 	public ComplexFloat64Member construct(double... vals) {
-		return new ComplexFloat64Member(vals[0], vals[1]);
+		return new ComplexFloat64Member(vals);
 	}
 	
 	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> MUL =

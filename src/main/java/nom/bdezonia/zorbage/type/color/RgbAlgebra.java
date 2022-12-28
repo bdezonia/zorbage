@@ -77,7 +77,7 @@ public class RgbAlgebra
 
 	@Override
 	public RgbMember construct(int... vals) {
-		return new RgbMember(vals[0], vals[1], vals[2]);
+		return new RgbMember(vals);
 	}
 
 	private final Function2<Boolean, RgbMember, RgbMember> EQ =

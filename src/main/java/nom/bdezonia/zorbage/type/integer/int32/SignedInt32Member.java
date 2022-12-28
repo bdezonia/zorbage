@@ -69,8 +69,8 @@ public final class SignedInt32Member
 		v = 0;
 	}
 	
-	public SignedInt32Member(int value) {
-		v = value;
+	public SignedInt32Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	public SignedInt32Member(SignedInt32Member value) {

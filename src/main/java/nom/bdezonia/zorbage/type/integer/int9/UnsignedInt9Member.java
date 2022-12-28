@@ -81,8 +81,8 @@ public final class UnsignedInt9Member
 		setV(x);
 	}
 	
-	public UnsignedInt9Member(int v) {
-		setV(v);
+	public UnsignedInt9Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	@Override

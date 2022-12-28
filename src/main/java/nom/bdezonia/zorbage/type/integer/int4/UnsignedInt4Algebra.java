@@ -91,7 +91,7 @@ public class UnsignedInt4Algebra
 
 	@Override
 	public UnsignedInt4Member construct(int... vals) {
-		return new UnsignedInt4Member(vals[0]);
+		return new UnsignedInt4Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt4Member, UnsignedInt4Member> EQ =

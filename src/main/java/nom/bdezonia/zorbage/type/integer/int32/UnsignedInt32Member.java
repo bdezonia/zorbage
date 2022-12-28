@@ -59,7 +59,7 @@ public final class UnsignedInt32Member
 		UniversalRepresentation, NumberMember<UnsignedInt32Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Long>, GetReal<SignedInt64Member>,
-		SetFromInt,
+		SetFromLong,
 		GetAsLong, GetAsLongArray
 {
 
@@ -69,8 +69,8 @@ public final class UnsignedInt32Member
 		v = 0;
 	}
 	
-	public UnsignedInt32Member(long value) {
-		v = (int) value;
+	public UnsignedInt32Member(long... vals) {
+		setFromLong(vals);
 	}
 	
 	public UnsignedInt32Member(UnsignedInt32Member value) {
@@ -696,7 +696,7 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromLong(long... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);

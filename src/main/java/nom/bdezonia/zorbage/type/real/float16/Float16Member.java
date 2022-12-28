@@ -73,8 +73,8 @@ public final class Float16Member
 		primitiveInit();
 	}
 	
-	public Float16Member(float value) {
-		setV(value);
+	public Float16Member(float... vals) {
+		setFromFloat(vals);
 	}
 	
 	public Float16Member(Float16Member value) {

@@ -94,7 +94,7 @@ public class SignedInt16Algebra
 
 	@Override
 	public SignedInt16Member construct(int... vals) {
-		return new SignedInt16Member(vals[0]);
+		return new SignedInt16Member(vals);
 	}
 
 	private final Function2<Boolean,SignedInt16Member,SignedInt16Member> EQ =

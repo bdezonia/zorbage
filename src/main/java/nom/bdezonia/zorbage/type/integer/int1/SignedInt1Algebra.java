@@ -90,7 +90,7 @@ public class SignedInt1Algebra
 
 	@Override
 	public SignedInt1Member construct(int... vals) {
-		return new SignedInt1Member(vals[0]);
+		return new SignedInt1Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt1Member, SignedInt1Member> EQ =

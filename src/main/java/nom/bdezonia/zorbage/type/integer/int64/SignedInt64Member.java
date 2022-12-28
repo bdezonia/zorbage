@@ -69,8 +69,8 @@ public final class SignedInt64Member
 		v = 0;
 	}
 	
-	public SignedInt64Member(long value) {
-		v = value;
+	public SignedInt64Member(long... vals) {
+		setFromLong(vals);
 	}
 	
 	public SignedInt64Member(SignedInt64Member value) {

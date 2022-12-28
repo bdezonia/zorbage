@@ -100,12 +100,12 @@ public class UnboundedIntAlgebra
 
 	@Override
 	public UnboundedIntMember construct(BigInteger... vals) {
-		return new UnboundedIntMember(vals[0]);
+		return new UnboundedIntMember(vals);
 	}
 
 	@Override
 	public UnboundedIntMember construct(long... vals) {
-		return new UnboundedIntMember(vals[0]);
+		return new UnboundedIntMember(vals);
 	}
 
 	private final Procedure2<UnboundedIntMember,UnboundedIntMember> ABS =

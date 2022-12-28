@@ -109,8 +109,8 @@ public final class Float128Member
 	// Prefer the previous ctor over this one since this cannot represent
 	// nan, inf, etc.
 	
-	public Float128Member(BigDecimal v) {
-		setV(v);
+	public Float128Member(BigDecimal... vals) {
+		setFromBigDecimal(vals);
 	}
 	
 	public Float128Member(String str) {
@@ -119,16 +119,16 @@ public final class Float128Member
 		setV(val.r());
 	}
 
-	public Float128Member(BigInteger v) {
-		this(new BigDecimal(v));
+	public Float128Member(BigInteger... vals) {
+		setFromBigInteger(vals);
 	}
 	
-	public Float128Member(long v) {
-		this(BigDecimal.valueOf(v));
+	public Float128Member(long... vals) {
+		setFromLong(vals);
 	}
 	
-	public Float128Member(double v) {
-		this(BigDecimal.valueOf(v));
+	public Float128Member(double... vals) {
+		setFromDouble(vals);
 	}
 	
 	@Override

@@ -81,8 +81,8 @@ public final class UnsignedInt6Member
 		setV(x);
 	}
 	
-	public UnsignedInt6Member(int v) {
-		setV(v);
+	public UnsignedInt6Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	@Override

@@ -81,8 +81,8 @@ public final class SignedInt12Member
 		setV(x);
 	}
 	
-	public SignedInt12Member(int v) {
-		setV(v);
+	public SignedInt12Member(int... vals) {
+		setFromInt(vals);
 	}
 
 	@Override

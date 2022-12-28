@@ -70,8 +70,8 @@ public final class UnsignedInt16Member
 		v = 0;
 	}
 	
-	public UnsignedInt16Member(int value) {
-		v = (short) value;
+	public UnsignedInt16Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	public UnsignedInt16Member(UnsignedInt16Member value) {

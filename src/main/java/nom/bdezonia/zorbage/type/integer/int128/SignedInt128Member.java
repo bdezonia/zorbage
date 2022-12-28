@@ -73,8 +73,12 @@ public final class SignedInt128Member
 		lo = hi = 0;
 	}
 	
-	public SignedInt128Member(BigInteger v) {
-		setV(v);
+	public SignedInt128Member(long... vals) {
+		setFromLong(vals);
+	}
+	
+	public SignedInt128Member(BigInteger... vals) {
+		setFromBigInteger(vals);
 	}
 	
 	public SignedInt128Member(SignedInt128Member value) {
@@ -86,10 +90,6 @@ public final class SignedInt128Member
 		OctonionRepresentation val = rep.firstValue();
 		BigInteger r = val.r().toBigInteger();
 		setV(r);
-	}
-
-	public SignedInt128Member(long val) {
-		this(BigInteger.valueOf(val));
 	}
 	
 	SignedInt128Member(long hi, long lo) {

@@ -107,12 +107,12 @@ public class UnsignedInt128Algebra
 
 	@Override
 	public UnsignedInt128Member construct(BigInteger... vals) {
-		return new UnsignedInt128Member(vals[0]);
+		return new UnsignedInt128Member(vals);
 	}
 
 	@Override
 	public UnsignedInt128Member construct(long... vals) {
-		return new UnsignedInt128Member(vals[0]);
+		return new UnsignedInt128Member(vals);
 	}
 
 	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> EQ =

@@ -97,7 +97,7 @@ public class SignedInt64Algebra
 
 	@Override
 	public SignedInt64Member construct(long... vals) {
-		return new SignedInt64Member(vals[0]);
+		return new SignedInt64Member(vals);
 	}
 	
 	private final Function2<Boolean,SignedInt64Member,SignedInt64Member> EQ =

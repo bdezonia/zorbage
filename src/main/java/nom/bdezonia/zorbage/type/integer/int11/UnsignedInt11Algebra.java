@@ -90,7 +90,7 @@ public class UnsignedInt11Algebra
 
 	@Override
 	public UnsignedInt11Member construct(int... vals) {
-		return new UnsignedInt11Member(vals[0]);
+		return new UnsignedInt11Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt11Member, UnsignedInt11Member> EQ =

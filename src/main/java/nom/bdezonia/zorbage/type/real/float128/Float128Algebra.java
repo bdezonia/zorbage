@@ -168,22 +168,22 @@ public class Float128Algebra
 
 	@Override
 	public Float128Member construct(long... vals) {
-		return new Float128Member(vals[0]);
+		return new Float128Member(vals);
 	}
 
 	@Override
 	public Float128Member construct(double... vals) {
-		return new Float128Member(vals[0]);
+		return new Float128Member(vals);
 	}
 
 	@Override
 	public Float128Member construct(BigInteger... vals) {
-		return new Float128Member(vals[0]);
+		return new Float128Member(vals);
 	}
 
 	@Override
 	public Float128Member construct(BigDecimal... vals) {
-		return new Float128Member(vals[0]);
+		return new Float128Member(vals);
 	}
 
 	private final Function2<Boolean, Float128Member, Float128Member> EQ =

@@ -95,7 +95,7 @@ public class UnsignedInt8Algebra
 
 	@Override
 	public UnsignedInt8Member construct(int... vals) {
-		return new UnsignedInt8Member(vals[0]);
+		return new UnsignedInt8Member(vals);
 	}
 	
 	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> EQ =

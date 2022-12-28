@@ -91,7 +91,7 @@ public class UnsignedInt6Algebra
 
 	@Override
 	public UnsignedInt6Member construct(int... vals) {
-		return new UnsignedInt6Member(vals[0]);
+		return new UnsignedInt6Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt6Member, UnsignedInt6Member> EQ =

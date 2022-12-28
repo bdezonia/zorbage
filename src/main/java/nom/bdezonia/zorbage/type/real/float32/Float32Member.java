@@ -67,8 +67,8 @@ public final class Float32Member
 		primitiveInit();
 	}
 	
-	public Float32Member(float value) {
-		setV(value);
+	public Float32Member(float... vals) {
+		setFromFloat(vals);
 	}
 	
 	public Float32Member(Float32Member value) {

@@ -81,8 +81,8 @@ public final class UnsignedInt14Member
 		setV(x);
 	}
 	
-	public UnsignedInt14Member(int v) {
-		setV(v);
+	public UnsignedInt14Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	@Override

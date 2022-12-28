@@ -151,7 +151,7 @@ public class Float16Algebra
 
 	@Override
 	public Float16Member construct(float... vals) {
-		return new Float16Member(vals[0]);
+		return new Float16Member(vals);
 	}
 
 	private final Procedure2<Float16Member,Float16Member> ASSIGN =

@@ -67,12 +67,12 @@ public final class UnboundedIntMember
 		v = BigInteger.ZERO;
 	}
 	
-	public UnboundedIntMember(long value) {
-		v = BigInteger.valueOf(value);
+	public UnboundedIntMember(long... vals) {
+		setFromLong(vals);
 	}
 	
-	public UnboundedIntMember(BigInteger value) {
-		v = value;
+	public UnboundedIntMember(BigInteger... vals) {
+		setFromBigInteger(vals);
 	}
 	
 	public UnboundedIntMember(UnboundedIntMember value) {

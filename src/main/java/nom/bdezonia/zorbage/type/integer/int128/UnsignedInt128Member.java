@@ -74,16 +74,16 @@ public final class UnsignedInt128Member
 		lo = hi = 0;
 	}
 	
-	public UnsignedInt128Member(BigInteger v) {
-		setV(v);
+	public UnsignedInt128Member(long... vals) {
+		setFromLong(vals);
+	}
+	
+	public UnsignedInt128Member(BigInteger... vals) {
+		setFromBigInteger(vals);
 	}
 	
 	public UnsignedInt128Member(UnsignedInt128Member value) {
 		set(value);
-	}
-	
-	public UnsignedInt128Member(long v) {
-		this(BigInteger.valueOf(v));
 	}
 	
 	public UnsignedInt128Member(String value) {

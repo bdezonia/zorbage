@@ -67,8 +67,8 @@ public final class Float64Member
 		primitiveInit();
 	}
 	
-	public Float64Member(double value) {
-		setV(value);
+	public Float64Member(double... vals) {
+		setFromDouble(vals);
 	}
 	
 	public Float64Member(Float64Member value) {

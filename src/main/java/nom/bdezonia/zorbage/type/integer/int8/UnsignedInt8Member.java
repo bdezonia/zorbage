@@ -70,8 +70,8 @@ public final class UnsignedInt8Member
 		v = 0;
 	}
 	
-	public UnsignedInt8Member(int value) {
-		v = (byte) value;
+	public UnsignedInt8Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	public UnsignedInt8Member(UnsignedInt8Member value) {

@@ -149,7 +149,7 @@ public class ComplexFloat128Algebra
 	@Override
 	public ComplexFloat128Member construct(BigDecimal... vals) {
 		
-		return new ComplexFloat128Member(vals[0], vals[1]);
+		return new ComplexFloat128Member(vals);
 	}
 	
 	private final Procedure3<ComplexFloat128Member,ComplexFloat128Member,ComplexFloat128Member> MUL =

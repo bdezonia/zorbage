@@ -81,8 +81,8 @@ public final class UnsignedInt3Member
 		setV(x);
 	}
 	
-	public UnsignedInt3Member(int v) {
-		setV(v);
+	public UnsignedInt3Member(int... vals) {
+		setFromInt(vals);
 	}
 	
 	@Override

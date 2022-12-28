@@ -95,7 +95,7 @@ public class SignedInt8Algebra
 
 	@Override
 	public SignedInt8Member construct(int... vals) {
-		return new SignedInt8Member(vals[0]);
+		return new SignedInt8Member(vals);
 	}
 
 	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> EQ =

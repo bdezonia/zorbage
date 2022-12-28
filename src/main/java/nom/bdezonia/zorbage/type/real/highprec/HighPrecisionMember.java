@@ -80,16 +80,20 @@ public final class HighPrecisionMember
 		setV(val.r());
 	}
 
-	public HighPrecisionMember(long val) {
-		setV(BigDecimal.valueOf(val));
+	public HighPrecisionMember(long... vals) {
+		setFromLong(vals);
 	}
 
-	public HighPrecisionMember(double val) {
-		setV(BigDecimal.valueOf(val));
+	public HighPrecisionMember(double... vals) {
+		setFromDouble(vals);
 	}
 
-	public HighPrecisionMember(BigInteger val) {
-		setV(new BigDecimal(val));
+	public HighPrecisionMember(BigInteger... vals) {
+		setFromBigInteger(vals);
+	}
+	
+	public HighPrecisionMember(BigDecimal... vals) {
+		setFromBigDecimal(vals);
 	}
 	
 	public BigDecimal v() { return v; }
