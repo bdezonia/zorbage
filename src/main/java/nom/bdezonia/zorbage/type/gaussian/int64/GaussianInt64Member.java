@@ -90,7 +90,7 @@ public class GaussianInt64Member
 		setI(val.i().longValue());
 	}
 	
-	public GaussianInt64Member(long ... vals) {
+	public GaussianInt64Member(long... vals) {
 		setFromLong(vals);
 	}
 	

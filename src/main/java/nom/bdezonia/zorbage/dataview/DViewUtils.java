@@ -44,7 +44,7 @@ public class DViewUtils {
 	 * @param targetSize
 	 * @param dims
 	 */
-	static void checkDims(long targetSize, long ... dims) {
+	static void checkDims(long targetSize, long... dims) {
 		BigInteger product = BigInteger.valueOf(dims[0]);
 		for (int i = 1; i < dims.length; i++) {
 			product = product.multiply(BigInteger.valueOf(dims[i]));

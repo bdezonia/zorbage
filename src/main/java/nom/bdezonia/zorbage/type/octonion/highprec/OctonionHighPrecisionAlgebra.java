@@ -120,22 +120,22 @@ public class OctonionHighPrecisionAlgebra
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(BigDecimal ... vals) {
+	public OctonionHighPrecisionMember construct(BigDecimal... vals) {
 		return new OctonionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(BigInteger ... vals) {
+	public OctonionHighPrecisionMember construct(BigInteger... vals) {
 		return new OctonionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(double ... vals) {
+	public OctonionHighPrecisionMember construct(double... vals) {
 		return new OctonionHighPrecisionMember(vals);
 	}
 
 	@Override
-	public OctonionHighPrecisionMember construct(long ... vals) {
+	public OctonionHighPrecisionMember construct(long... vals) {
 		return new OctonionHighPrecisionMember(vals);
 	}
 	

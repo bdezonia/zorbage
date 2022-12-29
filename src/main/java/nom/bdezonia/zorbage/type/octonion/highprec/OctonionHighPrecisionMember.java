@@ -85,19 +85,19 @@ public final class OctonionHighPrecisionMember
 		setK0(val.k0());
 	}
 	
-	public OctonionHighPrecisionMember(BigDecimal ... vals) {
+	public OctonionHighPrecisionMember(BigDecimal... vals) {
 		setFromBigDecimal(vals);
 	}
 	
-	public OctonionHighPrecisionMember(BigInteger ... vals) {
+	public OctonionHighPrecisionMember(BigInteger... vals) {
 		setFromBigInteger(vals);
 	}
 	
-	public OctonionHighPrecisionMember(double ... vals) {
+	public OctonionHighPrecisionMember(double... vals) {
 		setFromDouble(vals);
 	}
 	
-	public OctonionHighPrecisionMember(long ... vals) {
+	public OctonionHighPrecisionMember(long... vals) {
 		setFromLong(vals);
 	}
 
