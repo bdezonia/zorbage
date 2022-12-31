@@ -57,6 +57,7 @@ import nom.bdezonia.zorbage.algebra.OrderedField;
 import nom.bdezonia.zorbage.algebra.Power;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.RandomIsZeroToOne;
 import nom.bdezonia.zorbage.algebra.RealConstants;
 import nom.bdezonia.zorbage.algebra.RealUnreal;
 import nom.bdezonia.zorbage.algebra.Roots;
@@ -101,6 +102,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class Float128Algebra
 	implements
+		RandomIsZeroToOne,
 		OrderedField<Float128Algebra,Float128Member,Float128Member>,
 		Bounded<Float128Member>,
 		Norm<Float128Member,Float128Member>,

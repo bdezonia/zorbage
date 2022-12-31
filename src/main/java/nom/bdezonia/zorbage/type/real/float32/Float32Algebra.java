@@ -63,6 +63,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class Float32Algebra
 	implements
+		RandomIsZeroToOne,
 		OrderedField<Float32Algebra,Float32Member,Float32Member>,
 		Bounded<Float32Member>,
 		Norm<Float32Member,Float32Member>,

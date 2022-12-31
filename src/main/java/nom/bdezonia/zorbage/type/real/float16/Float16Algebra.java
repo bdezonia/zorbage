@@ -63,6 +63,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class Float16Algebra
 	implements
+		RandomIsZeroToOne,
 		OrderedField<Float16Algebra,Float16Member,Float16Member>,
 		Bounded<Float16Member>,
 		Norm<Float16Member,Float16Member>,

@@ -63,6 +63,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class Float64Algebra
 	implements
+		RandomIsZeroToOne,
 		OrderedField<Float64Algebra,Float64Member,Float64Member>,
 		Bounded<Float64Member>,
 		Norm<Float64Member,Float64Member>,
