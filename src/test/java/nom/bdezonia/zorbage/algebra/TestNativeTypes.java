@@ -88,7 +88,7 @@ public class TestNativeTypes {
 		
 		U value = alg.construct();
 		
-		// this will return a float between 0.0 and 1.0
+		// this will return a floating value between 0.0 and 1.0
 		
 		alg.random().call(value);
 		
@@ -111,7 +111,7 @@ public class TestNativeTypes {
 		
 		U value = alg.construct();
 		
-		// this will return a float between 0.0 and 1.0
+		// this will return a integral value between min and max
 		
 		alg.random().call(value);
 		
