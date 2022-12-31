@@ -61,7 +61,7 @@ public final class SignedInt1Member
 		UniversalRepresentation, NumberMember<SignedInt1Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
-		SetFromInt, GetAsByte, GetAsByteArray
+		SetFromInt, GetAsByte, GetAsByteArray, NativeGetSetByte
 {
 	byte v;
 
@@ -714,5 +714,17 @@ public final class SignedInt1Member
 	@Override
 	public byte[] getAsByteArray() {
 		return new byte[] {v()};
+	}
+
+	@Override
+	public byte getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(byte val) {
+
+		setV(val);
 	}
 }

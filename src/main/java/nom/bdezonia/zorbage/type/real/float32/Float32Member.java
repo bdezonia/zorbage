@@ -59,7 +59,7 @@ public final class Float32Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>,
 		SetFromFloat, SetFromLong,
-		GetAsFloat, GetAsFloatArray
+		GetAsFloat, GetAsFloatArray, NativeGetSetFloat
 {
 	private float v;
 	
@@ -707,5 +707,17 @@ public final class Float32Member
 	@Override
 	public float[] getAsFloatArray() {
 		return new float[] {v()};
+	}
+
+	@Override
+	public float getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(float val) {
+
+		setV(val);
 	}
 }

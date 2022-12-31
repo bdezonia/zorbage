@@ -60,7 +60,8 @@ public final class UnsignedInt64Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigDecimal, GetAsBigIntegerArray
+		GetAsBigInteger, GetAsBigDecimal, GetAsBigIntegerArray,
+		NativeGetSetBigInteger
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -732,5 +733,17 @@ public final class UnsignedInt64Member
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
 		return new BigInteger[] {v()};
+	}
+
+	@Override
+	public BigInteger getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(BigInteger val) {
+
+		setV(val);
 	}
 }

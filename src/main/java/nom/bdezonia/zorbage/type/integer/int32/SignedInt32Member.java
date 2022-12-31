@@ -60,7 +60,7 @@ public final class SignedInt32Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt32Member>,
 		SetFromInt,
-		GetAsInt, GetAsIntArray
+		GetAsInt, GetAsIntArray, NativeGetSetInt
 {
 
 	int v;
@@ -700,5 +700,17 @@ public final class SignedInt32Member
 	@Override
 	public int[] getAsIntArray() {
 		return new int[] {v()};
+	}
+
+	@Override
+	public int getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(int val) {
+
+		setV(val);
 	}
 }

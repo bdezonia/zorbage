@@ -61,7 +61,7 @@ public final class UnsignedInt16Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt32Member>,
 		SetFromInt,
-		GetAsInt, GetAsIntArray
+		GetAsInt, GetAsIntArray, NativeGetSetInt
 {
 
 	short v;
@@ -706,5 +706,17 @@ public final class UnsignedInt16Member
 	@Override
 	public int[] getAsIntArray() {
 		return new int[] {v()};
+	}
+
+	@Override
+	public int getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(int val) {
+
+		setV(val);
 	}
 }

@@ -42,7 +42,7 @@ public final class StringMember
 	implements
 		Allocatable<StringMember>, Duplicatable<StringMember>,
 		Settable<StringMember>, Gettable<StringMember>,
-		SetFromString, GetAsString, GetAsStringArray
+		SetFromString, GetAsString, GetAsStringArray, NativeGetSetString
 {
 	private String v;
 	
@@ -126,5 +126,17 @@ public final class StringMember
 	@Override
 	public String getAsString() {
 		return v();
+	}
+
+	@Override
+	public String getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(String val) {
+
+		setV(val);
 	}
 }

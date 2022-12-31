@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.GetAsCharArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.NativeGetSetChar;
 import nom.bdezonia.zorbage.algebra.SetFromChar;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -50,7 +51,7 @@ public class CharMember
 	implements
 		CharCoder, Gettable<CharMember>, Settable<CharMember>,
 		Allocatable<CharMember>, Duplicatable<CharMember>,
-		SetFromChar, GetAsChar, GetAsCharArray
+		SetFromChar, GetAsChar, GetAsCharArray, NativeGetSetChar
 {
 	private char v;
 	
@@ -151,5 +152,17 @@ public class CharMember
 	@Override
 	public char[] getAsCharArray() {
 		return new char[] {v()};
+	}
+
+	@Override
+	public char getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(char val) {
+
+		setV(val);
 	}
 }

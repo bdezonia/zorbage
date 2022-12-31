@@ -61,7 +61,7 @@ public final class UnsignedInt8Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
 		SetFromInt,
-		GetAsShort, GetAsShortArray
+		GetAsShort, GetAsShortArray, NativeGetSetShort
 {
 
 	byte v;
@@ -709,5 +709,17 @@ public final class UnsignedInt8Member
 	public short[] getAsShortArray() {
 		// normally a cast is a no-no but I am sure the range fits with no data loss
 		return new short[] {(short) v()};
+	}
+
+	@Override
+	public short getNative() {
+
+		return (short) v();
+	}
+
+	@Override
+	public void setNative(short val) {
+
+		setV(val);
 	}
 }

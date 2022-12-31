@@ -62,7 +62,7 @@ public final class UnsignedInt3Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
 		SetFromInt,
-		GetAsByte, GetAsByteArray
+		GetAsByte, GetAsByteArray, NativeGetSetByte
 {
 	byte v;
 
@@ -749,5 +749,17 @@ public final class UnsignedInt3Member
 	@Override
 	public byte[] getAsByteArray() {
 		return new byte[] {v()};
+	}
+
+	@Override
+	public byte getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(byte val) {
+
+		setV(val);
 	}
 }

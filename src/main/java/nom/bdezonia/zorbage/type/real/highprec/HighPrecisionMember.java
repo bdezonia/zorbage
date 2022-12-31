@@ -58,7 +58,8 @@ public final class HighPrecisionMember
 		HighPrecRepresentation, SetReal<HighPrecisionMember>, GetReal<HighPrecisionMember>,
 		BigDecimalCoder,
 		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
-		GetAsLong, GetAsDouble, GetAsBigInteger, GetAsBigDecimal, GetAsBigDecimalArray
+		GetAsLong, GetAsDouble, GetAsBigInteger, GetAsBigDecimal, GetAsBigDecimalArray,
+		NativeGetSetBigDecimal
 {
 	private BigDecimal v;
 	
@@ -756,4 +757,15 @@ public final class HighPrecisionMember
 		return v().longValue();
 	}
 
+	@Override
+	public BigDecimal getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(BigDecimal val) {
+
+		setV(val);
+	}
 }

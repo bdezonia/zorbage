@@ -58,7 +58,7 @@ public final class BooleanMember
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
 		PrimitiveConversion, SetFromBoolean, GetAsBoolean,
-		GetAsBooleanArray
+		GetAsBooleanArray, NativeGetSetBoolean
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -735,5 +735,17 @@ public final class BooleanMember
 	@Override
 	public boolean[] getAsBooleanArray() {
 		return new boolean[] {v()};
+	}
+
+	@Override
+	public boolean getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(boolean val) {
+		
+		setV(val);
 	}
 }

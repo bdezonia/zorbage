@@ -59,7 +59,7 @@ public final class UnboundedIntMember
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		BigIntegerCoder,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigIntegerArray
+		GetAsBigInteger, GetAsBigIntegerArray, NativeGetSetBigInteger
 {
 	private BigInteger v;
 	
@@ -709,5 +709,17 @@ public final class UnboundedIntMember
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
 		return new BigInteger[] {v()};
+	}
+
+	@Override
+	public BigInteger getNative() {
+
+		return v();
+	}
+
+	@Override
+	public void setNative(BigInteger val) {
+
+		setV(val);
 	}
 }
