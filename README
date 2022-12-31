@@ -18,12 +18,6 @@ How to include zorbage in a different build system
   for instructions on how to reference zorbage in build systems such as
   Gradle or others.
 
-(Note: I am looking to help some lab in remote sensing or other big data
- consumer by taking your slow analyses in Python or R or Matlab,
- reimplementing them to work with Zorbage, and iterating until the
- Zorbage implementation can outperform your current solutions. Create an
- issue if you are interested in pursuing something like this.)
-
 Project Goals:
   - provide a framework for reusable numeric algorithms
   - support numeric computing in Java in an efficient manner
