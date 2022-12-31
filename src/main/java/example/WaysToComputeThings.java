@@ -32,8 +32,10 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algorithm.Fill;
+import nom.bdezonia.zorbage.algorithm.FoldL;
 import nom.bdezonia.zorbage.algorithm.TransformWithConstant;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
+import nom.bdezonia.zorbage.algorithm.ReduceL;
 import nom.bdezonia.zorbage.algorithm.Scale;
 import nom.bdezonia.zorbage.algorithm.Sum;
 import nom.bdezonia.zorbage.algorithm.Transform1;
@@ -177,9 +179,17 @@ public class WaysToComputeThings {
 		OneDView<Float32Member> view = new OneDView<>(list.size(), list);
 		G.FLT.zero().call(sum);
 		for (long i = 0; i < view.d0(); i++) {
-			view.set(i, tmp);
+			view.get(i, tmp);
 			G.FLT.add().call(sum, tmp, sum);
 		}
+		
+		// a fourth method using a reduce algorithm
+		
+		ReduceL.compute(G.FLT, G.FLT.add(), list, sum);
+
+		// a fifth method using a fold algorithm
+		
+		FoldL.compute(G.FLT, G.FLT.add(), G.FLT.construct(), list, sum);
 	}
 	
 	void sumNdData() {
