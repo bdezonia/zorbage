@@ -223,6 +223,8 @@ Zorbage is fast
       - convolutions/correlations
       - fills
       - transforms
+      - data conversions
+      - apodizations
 
 Zorbage is flexible
   
