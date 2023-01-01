@@ -31,6 +31,8 @@
 package example;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.BasicFFT;
+import nom.bdezonia.zorbage.algorithm.BasicInvFFT;
 import nom.bdezonia.zorbage.algorithm.Fill;
 import nom.bdezonia.zorbage.algorithm.KMeans;
 import nom.bdezonia.zorbage.algorithm.RampFill;
@@ -41,10 +43,13 @@ import nom.bdezonia.zorbage.algorithm.SequenceL0Norm;
 import nom.bdezonia.zorbage.algorithm.SequenceL1Norm;
 import nom.bdezonia.zorbage.algorithm.SequenceL2Norm;
 import nom.bdezonia.zorbage.algorithm.SequenceLInfinityNorm;
+import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.WithinTolerance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function2;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.geom.point.Point;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
@@ -59,9 +64,62 @@ class MiscAlgorithms {
 	 * Zorbage has a few miscellaneous algorithms that aren't detailed elsewhere
 	 */
 
-	// KMeans is a common algorithm in data science for clustering data that is spatially distributed
+	// BasicFFT/BasicInvFFT: work in the complex domain very easily
 	
 	void example1() {
+
+		// I start with real data storage
+		
+		IndexedDataSource<Float64Member> data = Storage.allocate(G.DBL.construct(), 700);
+		
+		// ... at sone earlier point assume data has been filled with something valid
+
+		// move from the real domain to the frequency domain
+		
+		IndexedDataSource<ComplexFloat64Member> cData =
+				BasicFFT.compute(G.CDBL, G.DBL, data);
+		
+		// define a procedure that will scale any complex freq > 2000 to 2000
+		
+		Procedure2<ComplexFloat64Member,ComplexFloat64Member> freqLess2000 =
+				new Procedure2<ComplexFloat64Member, ComplexFloat64Member>()
+		{
+			private Float64Member twoThou = G.DBL.construct(2000);
+			private Float64Member norm = G.DBL.construct();
+			private Float64Member scale = G.DBL.construct();
+	
+			@Override
+			public void call(ComplexFloat64Member a, ComplexFloat64Member b) {
+				
+				G.CDBL.norm().call(a, norm);
+				
+				if (G.DBL.isLessEqual().call(norm, twoThou)) {
+					
+					b.set(a);
+				}
+				else {
+					
+					G.DBL.divide().call(norm, twoThou, scale);
+					G.DBL.invert().call(scale, scale);
+					G.CDBL.scaleByDouble().call(scale.v(), a, b);
+				}
+			}
+		};
+
+		// apply it to the complex data
+		
+		Transform2.compute(G.CDBL, freqLess2000, cData, cData);
+		
+		// transform out of the frequency domain and back into the real domain
+		
+		BasicInvFFT.compute(G.CDBL, G.DBL, cData, data);
+		
+		// now data contains the original values with high variability lessened
+	}
+	
+	// KMeans is a common algorithm in data science for clustering data that is spatially distributed
+	
+	void example2() {
 		
 		int numClusters = 22;
 		
@@ -88,7 +146,7 @@ class MiscAlgorithms {
 	
 	// make a ramped set of data values
 	
-	void example2() {
+	void example3() {
 
 		// make a bunch of numbers
 		IndexedDataSource<Float64Member> nums = Storage.allocate(G.DBL.construct(), 4500L);
@@ -105,7 +163,7 @@ class MiscAlgorithms {
 	
 	// Zorbage has a number of algorithms that compute values from sequences of numbers
 
-	void example3() {
+	void example4() {
 		
 		@SuppressWarnings("unused")
 		boolean result;
@@ -132,7 +190,7 @@ class MiscAlgorithms {
 	
 	// Zorbage has a tolerancing algorithm for checking nearness
 	
-	void example4() {
+	void example5() {
 		
 		Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> func =
 				new WithinTolerance<>(G.UINT8, G.UINT8, new UnsignedInt8Member(2));
