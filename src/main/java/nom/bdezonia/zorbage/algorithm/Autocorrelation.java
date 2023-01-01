@@ -81,34 +81,42 @@ public class Autocorrelation {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
-			long endPlusOne;
-			// last piece?
-			if (i == pieces-1) {
-				endPlusOne = a.size();
-			}
-			else {
-				endPlusOne = start + elemsPerPiece;
-			}
-			Computer<CA,C> computer = new Computer<CA,C>(alg, start, endPlusOne, a, b);
-			threads[i] = new Thread(computer);
-			start = endPlusOne;
+		if (pieces == 1) {
+			
+			Runnable r = new Computer<CA,C>(alg, 0, a.size(), a, b);
+			r.run();
 		}
-
-		for (int i = 0; i < threads.length; i++) {
-			threads[i].start();
-		}
-
-		for (int i = 0; i < threads.length; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error");
+		else {
+			
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				long endPlusOne;
+				// last piece?
+				if (i == pieces-1) {
+					endPlusOne = a.size();
+				}
+				else {
+					endPlusOne = start + elemsPerPiece;
+				}
+				Computer<CA,C> computer = new Computer<CA,C>(alg, start, endPlusOne, a, b);
+				threads[i] = new Thread(computer);
+				start = endPlusOne;
 			}
-		}
+	
+			for (int i = 0; i < threads.length; i++) {
+				threads[i].start();
+			}
+	
+			for (int i = 0; i < threads.length; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException e) {
+					throw new IllegalArgumentException("Thread execution error");
+				}
+			}
 		
+		}
 		return b;
 	}
 	

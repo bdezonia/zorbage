@@ -79,29 +79,38 @@ public class DataConvert {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 
-		long start = 0;
-		long count = elemsPerPiece;
-		Thread[] threads = new Thread[pieces];
-		for (int i = 0; i < pieces; i++) {
-			if (i == pieces - 1) {
-				count = fromSize - start;
+		if (pieces == 1) {
+			
+			Runnable r =
+					new Computer<>(fromAlgebra, toAlgebra, 0, fromSize, fromList, toList);
+			r.run();
+		}
+		else {
+			
+			long start = 0;
+			long count = elemsPerPiece;
+			Thread[] threads = new Thread[pieces];
+			for (int i = 0; i < pieces; i++) {
+				if (i == pieces - 1) {
+					count = fromSize - start;
+				}
+				Computer<T,U,V,W> computer =
+						new Computer<>(fromAlgebra, toAlgebra, start, count, fromList, toList);
+				threads[i] = new Thread(computer);
+				start += count;
 			}
-			Computer<T,U,V,W> computer =
-					new Computer<>(fromAlgebra, toAlgebra, start, count, fromList, toList);
-			threads[i] = new Thread(computer);
-			start += count;
-		}
-		
-		for (int i = 0; i < threads.length; i++) {
-			threads[i].start();
-		}
-		
-		try {
+			
 			for (int i = 0; i < threads.length; i++) {
-				threads[i].join();
+				threads[i].start();
 			}
-		} catch (InterruptedException e) {
-			throw new IllegalArgumentException("ouch");
+			
+			try {
+				for (int i = 0; i < threads.length; i++) {
+					threads[i].join();
+				}
+			} catch (InterruptedException e) {
+				throw new IllegalArgumentException("ouch");
+			}
 		}
 	}
 

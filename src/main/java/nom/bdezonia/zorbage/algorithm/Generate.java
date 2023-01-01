@@ -64,31 +64,39 @@ public class Generate {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
-			long count;
-			if (i != pieces-1) {
-				count = elemsPerPiece;
-			}
-			else {
-				count = a.size() - start;
-			}
-			IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, start, count);
-			Runnable r = new Computer<T,U>(algU, proc, aTrimmed, inputs);
-			threads[i] = new Thread(r);
-			start += count;
+		if (pieces == 1) {
+			
+			Runnable r = new Computer<T,U>(algU, proc, a, inputs);
+			r.run();
 		}
-
-		for (int i = 0; i < pieces; i++) {
-			threads[i].start();
-		}
-		
-		for (int i = 0; i < pieces; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error in Generate");
+		else {
+			
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				long count;
+				if (i != pieces-1) {
+					count = elemsPerPiece;
+				}
+				else {
+					count = a.size() - start;
+				}
+				IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, start, count);
+				Runnable r = new Computer<T,U>(algU, proc, aTrimmed, inputs);
+				threads[i] = new Thread(r);
+				start += count;
+			}
+	
+			for (int i = 0; i < pieces; i++) {
+				threads[i].start();
+			}
+			
+			for (int i = 0; i < pieces; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException e) {
+					throw new IllegalArgumentException("Thread execution error in Generate");
+				}
 			}
 		}
 	}

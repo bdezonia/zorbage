@@ -78,31 +78,39 @@ public class MatrixMultiply {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
-			long endPlusOne;
-			// last piece?
-			if (i == pieces-1) {
-				endPlusOne = rows;
-			}
-			else {
-				endPlusOne = start + elemsPerPiece;
-			}
-			Computer<T,U> computer = new Computer<T,U>(algebra, start, endPlusOne, a, b, c);
-			threads[i] = new Thread(computer);
-			start = endPlusOne;
+		if (pieces == 1) {
+			
+			Runnable r = new Computer<T,U>(algebra, 0, rows, a, b, c);
+			r.run();
 		}
-
-		for (int i = 0; i < threads.length; i++) {
-			threads[i].start();
-		}
-		
-		for (int i = 0; i < threads.length; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error");
+		else {
+			
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				long endPlusOne;
+				// last piece?
+				if (i == pieces-1) {
+					endPlusOne = rows;
+				}
+				else {
+					endPlusOne = start + elemsPerPiece;
+				}
+				Computer<T,U> computer = new Computer<T,U>(algebra, start, endPlusOne, a, b, c);
+				threads[i] = new Thread(computer);
+				start = endPlusOne;
+			}
+	
+			for (int i = 0; i < threads.length; i++) {
+				threads[i].start();
+			}
+			
+			for (int i = 0; i < threads.length; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException e) {
+					throw new IllegalArgumentException("Thread execution error");
+				}
 			}
 		}
 	}

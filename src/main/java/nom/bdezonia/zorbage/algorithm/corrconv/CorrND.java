@@ -98,38 +98,51 @@ public class CorrND {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
+		if (pieces == 1) {
+			
 			IntegerIndex minPt = new IntegerIndex(numD);
 			IntegerIndex maxPt = new IntegerIndex(numD);
 			for (int j = 0; j < numD; j++) {
 				maxPt.set(j, a.dimension(j) - 1);
 			}
-			long end;
-			// last piece?
-			if (i == pieces-1) {
-				end = maxDim-1;
-			}
-			else {
-				end = start + elemsPerPiece - 1;
-			}
-			minPt.set(index, start);
-			maxPt.set(index, end);
-			Computer<T,U> computer = new Computer<T,U>(alg, numD, indexer, filter, a, b, minPt, maxPt);
-			threads[i] = new Thread(computer);
-			start = end + 1;
+			Runnable r = new Computer<T,U>(alg, numD, indexer, filter, a, b, minPt, maxPt);
+			r.run();
 		}
-
-		for (int i = 0; i < threads.length; i++) {
-			threads[i].start();
-		}
-		
-		for (int i = 0; i < threads.length; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException e) {
-				throw new IllegalArgumentException("Thread execution error");
+		else {
+			
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				IntegerIndex minPt = new IntegerIndex(numD);
+				IntegerIndex maxPt = new IntegerIndex(numD);
+				for (int j = 0; j < numD; j++) {
+					maxPt.set(j, a.dimension(j) - 1);
+				}
+				long end;
+				// last piece?
+				if (i == pieces-1) {
+					end = maxDim-1;
+				}
+				else {
+					end = start + elemsPerPiece - 1;
+				}
+				minPt.set(index, start);
+				maxPt.set(index, end);
+				Computer<T,U> computer = new Computer<T,U>(alg, numD, indexer, filter, a, b, minPt, maxPt);
+				threads[i] = new Thread(computer);
+				start = end + 1;
+			}
+	
+			for (int i = 0; i < threads.length; i++) {
+				threads[i].start();
+			}
+			
+			for (int i = 0; i < threads.length; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException e) {
+					throw new IllegalArgumentException("Thread execution error");
+				}
 			}
 		}
 	}
