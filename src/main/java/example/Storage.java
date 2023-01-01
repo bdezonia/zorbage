@@ -55,7 +55,7 @@ import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 class Storage {
 	
 	/*
-	 *  Zorbage currently has four main types of data storage. Zorbage hides the implementation
+	 *  Zorbage currently has seven main types of data storage. Zorbage hides the implementation
 	 *  details of data storage behind the indexedDataSource interface. Algorithms rely on
 	 *  working through the IndexedDataSource to set and get values regardless of how they are
 	 *  stored. Indeed they have no idea how the data is stored.
@@ -71,6 +71,11 @@ class Storage {
 	 *  in RAM and list length can reach 2^62 elements. However this is all in RAM and thus it
 	 *  is actually limited by how much RAM is allocated to the JVM. This amount is tunable and
 	 *  you can find more information about this topic on the web.
+	 *  
+	 *  ExtMemStorage is another RAM based storage type that breaks a large allocation into
+	 *  a bunch of little allocations. You might find yourself in a situation where you
+	 *  want to allocate a bunch of ram to store data in but system memory is too fragmented
+	 *  to be able to allocate a single big chunk. ExtMemStorage can work around this.
 	 *  
 	 *  File storage is another type supported by Zorbage. Using file storage Zorbage can
 	 *  allocate lists containing up to 2^63 elements. File storage uses a small amount of
@@ -91,6 +96,10 @@ class Storage {
 	 *  storage is used to store big lists, vectors, matrices, and tensors completely in RAM.
 	 *  Only nonzero values are stored. The number of total elements can reach 2^63 and
 	 *  performance is proportional to the number of nonzero elements 
+	 *  
+	 *  Finally there is RaggedStorage. It allows one to store objects of varying size in
+	 *  a byte backed storage array. It maintains a separate index to locate the
+	 *  varying sized pieces stored within it.
 	 */
 	
 	// Let's show some examples:

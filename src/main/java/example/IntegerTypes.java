@@ -76,6 +76,8 @@ class IntegerTypes {
 	//
 	//   https://github.com/bdezonia/zorbage/blob/master/src/main/java/example/Numbers.java
 	
+	// Finally Zorbage supports gaussian integers of various precision as well.
+	
 	// Here are the supported calls for Integers (using int12s as an example)
 	
 	@SuppressWarnings("unused")

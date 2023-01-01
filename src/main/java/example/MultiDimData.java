@@ -48,13 +48,14 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.type.integer.int10.UnsignedInt10Member;
 import nom.bdezonia.zorbage.type.integer.int16.UnsignedInt16Algebra;
 import nom.bdezonia.zorbage.type.integer.int16.UnsignedInt16Member;
+import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
 /**
  * @author Barry DeZonia
  */
-class MultiDim {
+class MultiDimData {
 	
 	/*
 	 * Zorbage has built in support for multidimensional data.
@@ -178,6 +179,23 @@ class MultiDim {
 				new NdData<UnsignedInt10Member>(dims, list);
 	}
 	
+	// Zorbage has a very robust system of support for metadata of an n-dim dataset.
+	// You can associate all kinds of data with it. Metadata is stored with string
+	// keys and support many data types.
+	
+	@SuppressWarnings({"unused","null"})
+	void example3() {
+		
+		DimensionedDataSource<SignedInt8Member> data = null;
+		
+		data.metadata().putBoolean("compressed", false);
+		
+		data.metadata().putFloatArray("axis spacing", new float[] {5.0f, 7.5f, 2.0f});
+		
+		double[][] matrix = data.metadata().getDoubleMatrix("coord transform 1");
+		
+		Object mask = data.metadata().getBlob("mask");
+	}
 	
 	// Zorbage has a helper for manipulating multidim datasets. Sometimes when you
 	// import from elsewhere (using let's say zorbage-netcdf or zorbage-gdal) you
@@ -186,7 +204,7 @@ class MultiDim {
 	// by this transformation. Maybe this is best shown with an example.
 	
 	@SuppressWarnings("null")
-	void example3() {
+	void example4() {
 	
 		DimensionedDataSource<Float64Member> origSrc = null;
 		
