@@ -122,43 +122,51 @@ public class Transform12 {
 										l.accessWithOneThread());
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
-	
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
-			long count;
-			if (i != pieces-1) {
-				count = elemsPerPiece;
-			}
-			else {
-				count = a.size() - start;
-			}
-			IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
-			IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
-			IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, start, count);
-			IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, start, count);
-			IndexedDataSource<E> eTrimmed = new TrimmedDataSource<>(e, start, count);
-			IndexedDataSource<F> fTrimmed = new TrimmedDataSource<>(f, start, count);
-			IndexedDataSource<G> gTrimmed = new TrimmedDataSource<>(g, start, count);
-			IndexedDataSource<H> hTrimmed = new TrimmedDataSource<>(h, start, count);
-			IndexedDataSource<I> iTrimmed = new TrimmedDataSource<>(ii, start, count);
-			IndexedDataSource<J> jTrimmed = new TrimmedDataSource<>(j, start, count);
-			IndexedDataSource<K> kTrimmed = new TrimmedDataSource<>(k, start, count);
-			IndexedDataSource<L> lTrimmed = new TrimmedDataSource<>(l, start, count);
-			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L>(algA, algB, algC, algD, algE, algF, algG, algH, algI, algJ, algK, algL, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed, eTrimmed, fTrimmed, gTrimmed, hTrimmed, iTrimmed, jTrimmed, kTrimmed, lTrimmed);
-			threads[i] = new Thread(r);
-			start += count;
-		}
-
-		for (int i = 0; i < pieces; i++) {
-			threads[i].start();
-		}
 		
-		for (int i = 0; i < pieces; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException ex) {
-				throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+		if (pieces == 1) {
+
+			Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L>(algA, algB, algC, algD, algE, algF, algG, algH, algI, algJ, algK, algL, proc, a, b, c, d, e, f, g, h, ii, j, k, l);
+			r.run();
+		}
+		else {
+	
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				long count;
+				if (i != pieces-1) {
+					count = elemsPerPiece;
+				}
+				else {
+					count = a.size() - start;
+				}
+				IndexedDataSource<A> aTrimmed = new TrimmedDataSource<>(a, start, count);
+				IndexedDataSource<B> bTrimmed = new TrimmedDataSource<>(b, start, count);
+				IndexedDataSource<C> cTrimmed = new TrimmedDataSource<>(c, start, count);
+				IndexedDataSource<D> dTrimmed = new TrimmedDataSource<>(d, start, count);
+				IndexedDataSource<E> eTrimmed = new TrimmedDataSource<>(e, start, count);
+				IndexedDataSource<F> fTrimmed = new TrimmedDataSource<>(f, start, count);
+				IndexedDataSource<G> gTrimmed = new TrimmedDataSource<>(g, start, count);
+				IndexedDataSource<H> hTrimmed = new TrimmedDataSource<>(h, start, count);
+				IndexedDataSource<I> iTrimmed = new TrimmedDataSource<>(ii, start, count);
+				IndexedDataSource<J> jTrimmed = new TrimmedDataSource<>(j, start, count);
+				IndexedDataSource<K> kTrimmed = new TrimmedDataSource<>(k, start, count);
+				IndexedDataSource<L> lTrimmed = new TrimmedDataSource<>(l, start, count);
+				Runnable r = new Computer<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L>(algA, algB, algC, algD, algE, algF, algG, algH, algI, algJ, algK, algL, proc, aTrimmed, bTrimmed, cTrimmed, dTrimmed, eTrimmed, fTrimmed, gTrimmed, hTrimmed, iTrimmed, jTrimmed, kTrimmed, lTrimmed);
+				threads[i] = new Thread(r);
+				start += count;
+			}
+	
+			for (int i = 0; i < pieces; i++) {
+				threads[i].start();
+			}
+			
+			for (int i = 0; i < pieces; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException ex) {
+					throw new IllegalArgumentException("Thread execution error in ParallelTransform");
+				}
 			}
 		}
 	}

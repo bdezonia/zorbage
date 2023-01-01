@@ -88,32 +88,40 @@ public class TransformWithConstant {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 	
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
-			long count;
-			if (i != pieces-1) {
-				count = elemsPerPiece;
-			}
-			else {
-				count = src.size() - start;
-			}
-			IndexedDataSource<B> srcTrimmed = new TrimmedDataSource<>(src, start, count);
-			IndexedDataSource<C> dstTrimmed = new TrimmedDataSource<>(dst, start, count);
-			Runnable r = new LeftComputer<>(algB, algC, fixedValue, proc, srcTrimmed, dstTrimmed);
-			threads[i] = new Thread(r);
-			start += count;
+		if (pieces == 1) {
+			
+			Runnable r = new LeftComputer<>(algB, algC, fixedValue, proc, src, dst);
+			r.run();
 		}
-
-		for (int i = 0; i < pieces; i++) {
-			threads[i].start();
-		}
-		
-		for (int i = 0; i < pieces; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException ex) {
-				throw new IllegalArgumentException("Thread execution error");
+		else {
+			
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				long count;
+				if (i != pieces-1) {
+					count = elemsPerPiece;
+				}
+				else {
+					count = src.size() - start;
+				}
+				IndexedDataSource<B> srcTrimmed = new TrimmedDataSource<>(src, start, count);
+				IndexedDataSource<C> dstTrimmed = new TrimmedDataSource<>(dst, start, count);
+				Runnable r = new LeftComputer<>(algB, algC, fixedValue, proc, srcTrimmed, dstTrimmed);
+				threads[i] = new Thread(r);
+				start += count;
+			}
+	
+			for (int i = 0; i < pieces; i++) {
+				threads[i].start();
+			}
+			
+			for (int i = 0; i < pieces; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException ex) {
+					throw new IllegalArgumentException("Thread execution error");
+				}
 			}
 		}
 	}
@@ -158,32 +166,40 @@ public class TransformWithConstant {
 		int pieces = arrangement.a();
 		long elemsPerPiece = arrangement.b();
 	
-		final Thread[] threads = new Thread[pieces];
-		long start = 0;
-		for (int i = 0; i < pieces; i++) {
-			long count;
-			if (i != pieces-1) {
-				count = elemsPerPiece;
-			}
-			else {
-				count = src.size() - start;
-			}
-			IndexedDataSource<A> srcTrimmed = new TrimmedDataSource<>(src, start, count);
-			IndexedDataSource<C> dstTrimmed = new TrimmedDataSource<>(dst, start, count);
-			Runnable r = new RightComputer<>(algA, algC, fixedValue, proc, srcTrimmed, dstTrimmed);
-			threads[i] = new Thread(r);
-			start += count;
+		if (pieces == 1) {
+			
+			Runnable r = new RightComputer<>(algA, algC, fixedValue, proc, src, dst);
+			r.run();
 		}
-
-		for (int i = 0; i < pieces; i++) {
-			threads[i].start();
-		}
-		
-		for (int i = 0; i < pieces; i++) {
-			try {
-				threads[i].join();
-			} catch(InterruptedException ex) {
-				throw new IllegalArgumentException("Thread execution error");
+		else {
+			
+			final Thread[] threads = new Thread[pieces];
+			long start = 0;
+			for (int i = 0; i < pieces; i++) {
+				long count;
+				if (i != pieces-1) {
+					count = elemsPerPiece;
+				}
+				else {
+					count = src.size() - start;
+				}
+				IndexedDataSource<A> srcTrimmed = new TrimmedDataSource<>(src, start, count);
+				IndexedDataSource<C> dstTrimmed = new TrimmedDataSource<>(dst, start, count);
+				Runnable r = new RightComputer<>(algA, algC, fixedValue, proc, srcTrimmed, dstTrimmed);
+				threads[i] = new Thread(r);
+				start += count;
+			}
+	
+			for (int i = 0; i < pieces; i++) {
+				threads[i].start();
+			}
+			
+			for (int i = 0; i < pieces; i++) {
+				try {
+					threads[i].join();
+				} catch(InterruptedException ex) {
+					throw new IllegalArgumentException("Thread execution error");
+				}
 			}
 		}
 	}
