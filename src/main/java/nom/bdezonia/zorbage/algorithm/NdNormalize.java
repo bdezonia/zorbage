@@ -42,6 +42,10 @@ import nom.bdezonia.zorbage.data.DimensionedStorage;
  */
 public class NdNormalize {
 
+	// do not instantiate
+	
+	private NdNormalize() { }
+	
 	/**
 	 * Create a data source from one that might have some dimensions of size 1.
 	 * The created data source does not have any dimensions of size 1 but

@@ -49,6 +49,10 @@ import nom.bdezonia.zorbage.algebra.Unity;
  */
 public class PolarCoords {
 
+	// do not instantiate
+	
+	private PolarCoords() { }
+	
 	/**
 	 * Calculate the magnitude of a complex number given the real and imag
 	 * components as the inputs.

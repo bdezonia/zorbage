@@ -41,6 +41,10 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
  */
 public class NdSimilar {
 
+	// do not instantiate
+	
+	private NdSimilar() { }
+	
 	/**
 	 * Returns true if two n-d data sources have the same dimensions and their data
 	 * values are within a tolerance of each other. False otherwise. The tolerance

@@ -40,6 +40,10 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
  */
 public class NdEqual {
 
+	// do not instantiate
+	
+	private NdEqual() { }
+	
 	/**
 	 * Returns true if two n-d data sources have the same dimensions and their data
 	 * values are exactly equal.
