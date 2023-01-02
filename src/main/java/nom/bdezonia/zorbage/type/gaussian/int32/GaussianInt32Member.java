@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
 import nom.bdezonia.zorbage.algebra.SetFromInt;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -70,7 +71,7 @@ public class GaussianInt32Member
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt32Member>,
 		SetComplex<Integer>, GetComplex<SignedInt32Member>,
-		SetFromInt, GetAsIntArray
+		SetFromInt, SetFromLong, GetAsIntArray
 {
 	int r;
 	int i;
@@ -782,10 +783,30 @@ public class GaussianInt32Member
 
 	@Override
 	public void setFromInt(int... vals) {
-		if (vals.length != 2)
+
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
 		setR(vals[0]);
-		setI(vals[1]);
+		
+		if (vals.length == 2)
+			setI(vals[1]);
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR((int) vals[0]);
+		
+		if (vals.length == 2)
+			setI((int) vals[1]);
+		else
+			setI(0);
 	}
 
 	@Override

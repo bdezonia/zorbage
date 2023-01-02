@@ -32,7 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -54,22 +54,11 @@ public class SumWithCount {
 	 * @param sum
 	 * @param count
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U>, U extends SetFromLong>
 		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
 	{
 		Sum.compute(alg, storage, sum);
 
-		// This avoids a need to compute a value from a long size at the expense of calculation.
-		// Maybe this will get optimized away. If not then need to build a construct from long
-		// capability that succeeds if long fits in U's range else throws exception.
-
-		U tmp = alg.construct();
-		U one = alg.construct();
-		alg.unity().call(one);
-		long size = storage.size();
-		for (long i = 0; i < size; i++) {
-			alg.add().call(tmp, one, tmp);
-		}
-		alg.assign().call(tmp, count);
+		count.setFromLong(storage.size());
 	}
 }

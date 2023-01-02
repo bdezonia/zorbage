@@ -30,10 +30,10 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class Mean {
 	 * @param storage
 	 * @param result
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> & Addition<U>, U extends SetFromLong>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		U sum = alg.construct();

@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
@@ -68,7 +69,7 @@ public class SummaryStats {
 	 * @param noDataCount
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & Multiplication<U> & NaN<U>,
-					U extends Allocatable<U>>
+					U extends Allocatable<U> & SetFromLong>
 		void computeSafe(T alg, IndexedDataSource<U> data, U min, U q1, U median, U mean, U q3, U max, SignedInt64Member noDataCount)
 	{
 		IndexedDataSource<U> trimmed = NonNanValues.compute(alg, data);
@@ -88,7 +89,7 @@ public class SummaryStats {
 	 * @param max
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Unity<U> & Ordered<U> & Multiplication<U>,
-					U extends Allocatable<U>>
+					U extends Allocatable<U> & SetFromLong>
 		void compute(T alg, IndexedDataSource<U> data, U min, U q1, U median, U mean, U q3, U max)
 	{
 		long sz = data.size();

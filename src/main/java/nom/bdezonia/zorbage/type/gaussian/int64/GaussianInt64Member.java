@@ -782,10 +782,16 @@ public class GaussianInt64Member
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length != 2)
+
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
 		setR(vals[0]);
-		setI(vals[1]);
+		
+		if (vals.length == 2)
+			setI(vals[1]);
+		else
+			setI(0L);
 	}
 
 	@Override

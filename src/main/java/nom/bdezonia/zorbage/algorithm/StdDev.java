@@ -56,7 +56,12 @@ public class StdDev {
 	 * @param <T>
 	 * @param <U>
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> & Roots<U>, U>
+	public static <T extends Algebra<T,U> &
+								Addition<U> &
+								Multiplication<U> &
+								Unity<U> &
+								Roots<U>,
+					U extends SetFromLong>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		Variance.compute(alg, storage, result);

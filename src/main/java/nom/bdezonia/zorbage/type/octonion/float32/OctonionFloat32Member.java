@@ -1840,30 +1840,90 @@ public final class OctonionFloat32Member
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length != 8)
+		
+		if (vals.length == 0 || vals.length > 8)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(vals[0]);
-		setI(vals[1]);
-		setJ(vals[2]);
-		setK(vals[3]);
-		setL(vals[4]);
-		setI0(vals[5]);
-		setJ0(vals[6]);
-		setK0(vals[7]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4]);
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5]);
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6]);
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7]);
 	}
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length != 8)
+		
+		if (vals.length == 0 || vals.length > 8)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(vals[0]);
-		setI(vals[1]);
-		setJ(vals[2]);
-		setK(vals[3]);
-		setL(vals[4]);
-		setI0(vals[5]);
-		setJ0(vals[6]);
-		setK0(vals[7]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4]);
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5]);
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6]);
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7]);
 	}
 
 	@Override

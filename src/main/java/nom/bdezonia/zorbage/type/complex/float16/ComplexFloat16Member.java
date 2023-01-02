@@ -775,18 +775,30 @@ public final class ComplexFloat16Member
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length != 2)
+		
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(vals[0]);
-		setI(vals[1]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
 	}
 
 	@Override
 	public void setFromFloat(float... vals) {
-		if (vals.length != 2)
+		
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(vals[0]);
-		setI(vals[1]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
 	}
 
 	@Override

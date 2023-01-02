@@ -61,7 +61,7 @@ public final class UnsignedInt15Member
 		UniversalRepresentation, NumberMember<UnsignedInt15Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
-		SetFromInt,
+		SetFromInt, SetFromLong,
 		GetAsShort, GetAsShortArray, NativeGetSetShort
 {
 	short v;
@@ -946,6 +946,13 @@ public final class UnsignedInt15Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV((int) vals[0]);
 	}
 
 	@Override

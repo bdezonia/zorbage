@@ -62,7 +62,7 @@ public final class UnsignedInt1Member
 		UniversalRepresentation, NumberMember<UnsignedInt1Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
-		SetFromInt,
+		SetFromInt, SetFromLong,
 		GetAsByte, GetAsByteArray, NativeGetSetByte
 {
 	byte v;
@@ -726,6 +726,14 @@ public final class UnsignedInt1Member
 		setV(vals[0]);
 	}
 
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV((int) vals[0]);
+	}
+	
 	@Override
 	public byte[] getAsByteArray() {
 		return new byte[] {v()};

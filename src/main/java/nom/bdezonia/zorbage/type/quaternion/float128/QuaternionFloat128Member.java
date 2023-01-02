@@ -1206,42 +1206,98 @@ public final class QuaternionFloat128Member
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length != 4)
+		
+		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(BigDecimal.valueOf(vals[0]));
-		setI(BigDecimal.valueOf(vals[1]));
-		setJ(BigDecimal.valueOf(vals[2]));
-		setK(BigDecimal.valueOf(vals[3]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length != 4)
+		
+		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(BigDecimal.valueOf(vals[0]));
-		setI(BigDecimal.valueOf(vals[1]));
-		setJ(BigDecimal.valueOf(vals[2]));
-		setK(BigDecimal.valueOf(vals[3]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
-		if (vals.length != 4)
+		
+		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(new BigDecimal(vals[0]));
-		setI(new BigDecimal(vals[1]));
-		setJ(new BigDecimal(vals[2]));
-		setK(new BigDecimal(vals[3]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(new BigDecimal(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(new BigDecimal(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(new BigDecimal(vals[3]));
 	}
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
-		if (vals.length != 4)
+		
+		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(vals[0]);
-		setI(vals[1]);
-		setJ(vals[2]);
-		setK(vals[3]);
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(vals[3]);
 	}
 
 	@Override

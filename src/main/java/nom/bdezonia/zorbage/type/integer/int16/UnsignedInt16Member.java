@@ -60,7 +60,7 @@ public final class UnsignedInt16Member
 		UniversalRepresentation, NumberMember<UnsignedInt16Member>,
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt32Member>,
-		SetFromInt,
+		SetFromInt, SetFromLong,
 		GetAsInt, GetAsIntArray, NativeGetSetInt
 {
 
@@ -701,6 +701,13 @@ public final class UnsignedInt16Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV((int) vals[0]);
 	}
 
 	@Override

@@ -794,34 +794,58 @@ public final class ComplexFloat128Member
 
 	@Override
 	public void setFromLong(long... vals) {
-		if (vals.length != 2)
+		
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(BigDecimal.valueOf(vals[0]));
-		setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
 	}
 
 	@Override
 	public void setFromDouble(double... vals) {
-		if (vals.length != 2)
+		
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(BigDecimal.valueOf(vals[0]));
-		setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
 	}
 
 	@Override
 	public void setFromBigInteger(BigInteger... vals) {
-		if (vals.length != 2)
+		
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(new BigDecimal(vals[0]));
-		setI(new BigDecimal(vals[1]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(new BigDecimal(vals[1]));
 	}
 
 	@Override
 	public void setFromBigDecimal(BigDecimal... vals) {
-		if (vals.length != 2)
+		
+		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
+
 		setR(vals[0]);
-		setI(vals[1]);
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(vals[1]);
 	}
 
 	@Override

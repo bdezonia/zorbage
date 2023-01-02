@@ -56,7 +56,11 @@ public class Variance {
 	 * @param <T>
 	 * @param <U>
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U>, U>
+	public static <T extends Algebra<T,U> &
+								Addition<U> &
+								Multiplication<U> &
+								Unity<U>,
+					U extends SetFromLong>
 		void compute(T alg, IndexedDataSource<U> source, U result)
 	{
 		if (source.size() == 0)
