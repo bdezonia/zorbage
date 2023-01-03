@@ -55,10 +55,12 @@ public class ThreadingUtils {
 		
 		int numProcessors = Runtime.getRuntime().availableProcessors();
 
-		long numPieces = numElems / numProcessors;
+		long elemsPerPiece = numElems / numProcessors;
 	
 		if (numElems % numProcessors != 0)
-			numPieces++;
+			elemsPerPiece++;
+
+		long numPieces = numElems / elemsPerPiece;
 		
 		if (numPieces == 0)
 			numPieces = 1;
@@ -68,6 +70,8 @@ public class ThreadingUtils {
 		
 		if (numPieces > Integer.MAX_VALUE)
 			numPieces = Integer.MAX_VALUE;
+		
+		//System.out.println("for "+numProcessors+" processors: numPieces="+numPieces+" elements="+(numElems / numPieces));
 
 		return new Tuple2<>((int) numPieces, numElems / numPieces);
 	}
