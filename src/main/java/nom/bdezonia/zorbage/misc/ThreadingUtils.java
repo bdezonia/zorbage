@@ -47,32 +47,39 @@ public class ThreadingUtils {
 	 * 
 	 * @return A tuple (numPieces, elemsPerPiece)
 	 */
-	public static Tuple2<Integer,Long> arrange(long numElems, boolean useOneThread)
+	public static Tuple2<Integer,Long> arrange(long numElems, boolean useOneThread) {
+
+		return arrange(Runtime.getRuntime().availableProcessors(), numElems, useOneThread);
+	}
+
+	/**
+	 * 
+	 * @return A tuple (numPieces, elemsPerPiece)
+	 */
+	public static Tuple2<Integer,Long> arrange(int numThreads, long numElems, boolean useOneThread)
 	{
-		if (useOneThread) {
-			return new Tuple2<>(1, numElems);
-		}
+		if (numThreads <= 0)
+			throw new IllegalArgumentException("threading arrangement: num threads must be > 0");
 		
-		int numProcessors = Runtime.getRuntime().availableProcessors();
-
-		long elemsPerPiece = numElems / numProcessors;
+		if (numElems <= 0)
+			throw new IllegalArgumentException("threading arrangement: num elems must be > 0");
 	
-		if (numElems % numProcessors != 0)
-			elemsPerPiece++;
+		if (useOneThread)
+			return new Tuple2<>(1, numElems);
+					
+		if (numThreads > Integer.MAX_VALUE)
+			numThreads = Integer.MAX_VALUE;
+		
+		long elemsPerThread = numElems / numThreads;
+		
+		if (numElems % numThreads != 0)
+			elemsPerThread++;
+		
+		// not possible?
+		
+		if (elemsPerThread == 0)
+			elemsPerThread = 1;
 
-		long numPieces = numElems / elemsPerPiece;
-		
-		if (numPieces == 0)
-			numPieces = 1;
-		
-		if (numPieces > numElems)
-			numPieces = numElems;
-		
-		if (numPieces > Integer.MAX_VALUE)
-			numPieces = Integer.MAX_VALUE;
-		
-		//System.out.println("for "+numProcessors+" processors: numPieces="+numPieces+" elements="+(numElems / numPieces));
-
-		return new Tuple2<>((int) numPieces, numElems / numPieces);
+		return new Tuple2<>(numThreads, elemsPerThread);
 	}
 }
