@@ -66,7 +66,7 @@ public class ReplaceIf {
 			}
 		};
 		
-		Transform2.compute(algebra, proc, a, b);
+		Transform2.compute(algebra, proc, storage, storage);
 	}
 
 }
