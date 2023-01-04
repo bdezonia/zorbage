@@ -31,11 +31,9 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
-import nom.bdezonia.zorbage.tuple.Tuple2;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
-import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
-import nom.bdezonia.zorbage.misc.ThreadingUtils;
 
 /**
  * 
@@ -59,70 +57,15 @@ public class Generate {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algU, Procedure<U> proc, IndexedDataSource<U> a, U...inputs)
 	{
-		Tuple2<Integer,Long> arrangement =
-				ThreadingUtils.arrange(a.size(), a.accessWithOneThread());
-		int pieces = arrangement.a();
-		long elemsPerPiece = arrangement.b();
-
-		if (pieces == 1) {
+		Procedure1<U> procWrap = new Procedure1<U>() {
 			
-			Runnable r = new Computer<T,U>(algU, proc, a, inputs);
-			r.run();
-		}
-		else {
-			
-			final Thread[] threads = new Thread[pieces];
-			long start = 0;
-			for (int i = 0; i < pieces; i++) {
-				long count;
-				if (i != pieces-1) {
-					count = elemsPerPiece;
-				}
-				else {
-					count = a.size() - start;
-				}
-				IndexedDataSource<U> aTrimmed = new TrimmedDataSource<>(a, start, count);
-				Runnable r = new Computer<T,U>(algU, proc, aTrimmed, inputs);
-				threads[i] = new Thread(r);
-				start += count;
+			@Override
+			public void call(U result) {
+				
+				proc.call(result, inputs);
 			}
-	
-			for (int i = 0; i < pieces; i++) {
-				threads[i].start();
-			}
-			
-			for (int i = 0; i < pieces; i++) {
-				try {
-					threads[i].join();
-				} catch(InterruptedException e) {
-					throw new IllegalArgumentException("Thread execution error in Generate");
-				}
-			}
-		}
-	}
-
-	private static class Computer<T extends Algebra<T,U>, U>
-		implements Runnable
-	{
-		private final T algebraU;
-		private final IndexedDataSource<U> list;
-		private final Procedure<U> proc;
-		private final U[] inputs;
+		};
 		
-		Computer(T algU, Procedure<U> proc, IndexedDataSource<U> a, U[] inputs) {
-			this.algebraU = algU;
-			this.list = a;
-			this.proc = proc;
-			this.inputs = inputs;
-		}
-		
-		public void run() {
-			U tmp = algebraU.construct();
-			for (long i = 0; i < list.size(); i++) {
-				proc.call(tmp, inputs);
-				list.set(i, tmp);
-			}
-		}
+		Transform1.compute(algU, procWrap, a);
 	}
-
 }
