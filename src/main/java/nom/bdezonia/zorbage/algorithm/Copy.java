@@ -55,11 +55,6 @@ public class Copy {
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
 		if (a == b) return;
-		U tmp = algebra.construct();
-		long aSize = a.size();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, tmp);
-			b.set(i, tmp);
-		}
+		Transform2.compute(algebra, algebra.assign(), a, b);
 	}
 }

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.ReversedDataSource;
 
 /**
  * 
@@ -53,14 +54,7 @@ public class CopyBackward {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		if (a == b)
-			throw new IllegalArgumentException("in place reversal not done yet");
-		U tmp = algebra.construct();
-		long aSize = a.size();
-		long bSize = b.size();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, tmp);
-			b.set(bSize-1-i, tmp);
-		}
+		IndexedDataSource<U> bReverse = new ReversedDataSource<>(b);
+		Copy.compute(algebra, a, bReverse);
 	}
 }
