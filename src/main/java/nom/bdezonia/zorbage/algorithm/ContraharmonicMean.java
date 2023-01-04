@@ -71,7 +71,7 @@ public class ContraharmonicMean {
 		for (long i = 0; i < list.size(); i++) {
 			list.get(i, value);
 			alg.add().call(denomSum, value, denomSum);
-			alg.multiply().call(value,value,value);
+			alg.multiply().call(value, value, value);
 			alg.add().call(numerSum, value, numerSum);
 		}
 		
