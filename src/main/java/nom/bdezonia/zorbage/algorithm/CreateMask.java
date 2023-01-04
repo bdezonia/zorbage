@@ -30,7 +30,6 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.integer.int1.UnsignedInt1Member;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
@@ -38,6 +37,7 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
@@ -64,19 +64,25 @@ public class CreateMask {
 	public static <T extends Algebra<T,U>, U>
 		IndexedDataSource<UnsignedInt1Member> compute(T alg, Function1<Boolean,U> condition, IndexedDataSource<U> a)
 	{
-		U value = alg.construct();
 		UnsignedInt1Member zero = G.UINT1.construct();
+		
 		UnsignedInt1Member one = G.UINT1.construct();
+		
 		G.UINT1.unity().call(one);
-		IndexedDataSource<UnsignedInt1Member> result = Storage.allocate(zero, a.size());
-		for (long i = 0; i < a.size(); i++) {
-			a.get(i, value);
-			if (condition.call(value))
-				result.set(i, one);
-			else
-				result.set(i, zero);
-		}
-		return result;
+		
+		Procedure2<U,UnsignedInt1Member> proc = new Procedure2<U, UnsignedInt1Member>() {
+			
+			@Override
+			public void call(U a, UnsignedInt1Member b) {
+			
+				if (condition.call(a))
+					G.UINT1.assign().call(one, b);
+				else
+					G.UINT1.assign().call(zero, b);
+			}
+		};
+		
+		return Map.compute(alg, G.UINT1, proc, a);
 	}
 
 	/**
