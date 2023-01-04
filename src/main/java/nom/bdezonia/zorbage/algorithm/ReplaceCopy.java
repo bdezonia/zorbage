@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
@@ -55,15 +56,19 @@ public class ReplaceCopy {
 	public static <T extends Algebra<T,U>, U>
 		void compute(T algebra, U old_value, U new_value, IndexedDataSource<U> a, IndexedDataSource<U> b)
 	{
-		U tmp = algebra.construct();
-		long aSize = a.size();
-		for (long i = 0; i < aSize; i++) {
-			a.get(i, tmp);
-			if (algebra.isEqual().call(tmp, old_value))
-				b.set(i, new_value);
-			else
-				b.set(i, tmp);
-		}
+		Procedure2<U,U> proc = new Procedure2<U, U>() {
+			
+			@Override
+			public void call(U a, U b) {
+
+				if (algebra.isEqual().call(a, old_value))
+					algebra.assign().call(new_value, b);
+				else
+					algebra.assign().call(a, b);
+			}
+		};
+		
+		Transform2.compute(algebra, proc, a, b);
 	}
 
 }
