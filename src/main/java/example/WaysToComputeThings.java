@@ -56,7 +56,7 @@ import nom.bdezonia.zorbage.type.real.float32.Float32Member;
  * @author Barry DeZonia
  *
  */
-public class WaysToComputeThings {
+class WaysToComputeThings {
 
 	// Zorbage has a number of ways to calc similar things. We'll compare them here.
 	//   (Some day soon I will time these and show the surprising results)
