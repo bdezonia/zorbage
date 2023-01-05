@@ -195,6 +195,8 @@ class MultiDimData {
 		double[][] matrix = data.metadata().getDoubleMatrix("coord transform 1");
 		
 		Object mask = data.metadata().getBlob("mask");
+		
+		int[] colorTable = data.metadata().getIntArray("color table");
 	}
 	
 	// Zorbage has a helper for manipulating multidim datasets. Sometimes when you
