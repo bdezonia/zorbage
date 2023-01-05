@@ -46,7 +46,9 @@ import java.util.Map;
  */
 public class MetaDataStore {
 
-	private final Map<String, Object> blobs;;
+	private final Map<String, Object> blobs;
+	private final Map<String, Object[]> blobArrays;
+	private final Map<String, Object[][]> blobMatrices;
 	private final Map<String, Byte> bytes;
 	private final Map<String, byte[]> byteArrays;
 	private final Map<String, byte[][]> byteMatrices;
@@ -87,6 +89,8 @@ public class MetaDataStore {
 	public MetaDataStore() {
 		
 		blobs = new HashMap<>();
+		blobArrays = new HashMap<>();
+		blobMatrices = new HashMap<>();
 		bytes = new HashMap<>();
 		byteArrays = new HashMap<>();
 		byteMatrices = new HashMap<>();
@@ -137,6 +141,12 @@ public class MetaDataStore {
 		
 		if (blobs.containsKey(identifier))
 			entries.add(MetaDataType.BLOB);
+		
+		if (blobArrays.containsKey(identifier))
+			entries.add(MetaDataType.BLOB_ARRAY);
+		
+		if (blobMatrices.containsKey(identifier))
+			entries.add(MetaDataType.BLOB_MATRIX);
 		
 		if (bytes.containsKey(identifier))
 			entries.add(MetaDataType.BYTE);
@@ -249,6 +259,14 @@ public class MetaDataStore {
 
 		for (String key : other.blobs.keySet()) {
 			blobs.put(key, other.blobs.get(key));
+		}
+		
+		for (String key : other.blobArrays.keySet()) {
+			blobArrays.put(key, other.blobArrays.get(key));
+		}
+		
+		for (String key : other.blobMatrices.keySet()) {
+			blobMatrices.put(key, other.blobMatrices.get(key));
 		}
 		
 		for (String key : other.bytes.keySet()) {
@@ -412,6 +430,8 @@ public class MetaDataStore {
 		List<String> keys = new ArrayList<>();
 		
 		keys.addAll(blobs.keySet());
+		keys.addAll(blobArrays.keySet());
+		keys.addAll(blobMatrices.keySet());
 		keys.addAll(bytes.keySet());
 		keys.addAll(byteArrays.keySet());
 		keys.addAll(byteMatrices.keySet());
@@ -470,6 +490,48 @@ public class MetaDataStore {
 	public Object getBlob(String identifier) {
 		
 		return blobs.get(identifier);
+	}
+	
+	/**
+	 * Put a blob array into the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public void putBlobArray(String identifier, Object[] value) {
+		
+		blobArrays.put(identifier, value);
+	}
+
+	/**
+	 * Get a blob array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 */
+	public Object[] getBlobArray(String identifier) {
+		
+		return blobArrays.get(identifier);
+	}
+	
+	/**
+	 * Put a blob array into the MetaDataStore.
+	 * 
+	 * @param identifier
+	 * @param value
+	 */
+	public void putBlobMatrix(String identifier, Object[][] value) {
+		
+		blobMatrices.put(identifier, value);
+	}
+
+	/**
+	 * Get a blob array from the MetaDataStore.
+	 * 
+	 * @param identifier
+	 */
+	public Object[][] getBlobMatrix(String identifier) {
+		
+		return blobMatrices.get(identifier);
 	}
 	
 	/**

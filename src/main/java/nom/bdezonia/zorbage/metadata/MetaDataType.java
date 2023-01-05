@@ -38,6 +38,8 @@ package nom.bdezonia.zorbage.metadata;
 public enum MetaDataType {
 
 	BLOB,
+	BLOB_ARRAY,
+	BLOB_MATRIX,
 	BYTE,
 	BYTE_ARRAY,
 	BYTE_MATRIX,
