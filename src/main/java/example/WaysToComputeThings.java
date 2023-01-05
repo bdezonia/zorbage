@@ -315,7 +315,7 @@ class WaysToComputeThings {
 		Float32Member tmp = G.FLT.construct();
 		
 		// one way: pass the n-d data source's rawData() accessor to any of the 
-		//   four 1-d sum approaches shown above. Usually quite fast.
+		//   four 1-d scale approaches shown above. Usually quite fast.
 		//
 		// e.g. here is one example
 		//
