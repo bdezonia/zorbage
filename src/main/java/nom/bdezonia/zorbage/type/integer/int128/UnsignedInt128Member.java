@@ -60,7 +60,7 @@ public final class UnsignedInt128Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigIntegerArray, NativeGetSetBigInteger
+		GetAsBigInteger, GetAsBigIntegerArray, NativeBigIntegerSupport
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);
@@ -751,14 +751,34 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigInteger getNative() {
+	public BigInteger getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(BigInteger val) {
+	public void setNative(int component, BigInteger val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public BigInteger minNative() {
+
+		return BigInteger.ZERO;
+	}
+
+	@Override
+	public BigInteger maxNative() {
+
+		// TODO: test me!!!!!
+		
+		return new BigInteger("0ffffffffffffffffffffffffffffffff", 16);
 	}
 }

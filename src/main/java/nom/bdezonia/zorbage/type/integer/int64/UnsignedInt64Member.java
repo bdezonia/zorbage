@@ -61,7 +61,7 @@ public final class UnsignedInt64Member
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigDecimal, GetAsBigIntegerArray,
-		NativeGetSetBigInteger
+		NativeBigIntegerSupport
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -736,14 +736,34 @@ public final class UnsignedInt64Member
 	}
 
 	@Override
-	public BigInteger getNative() {
+	public BigInteger getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(BigInteger val) {
+	public void setNative(int component, BigInteger val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public BigInteger minNative() {
+
+		return BigInteger.ZERO;
+	}
+
+	@Override
+	public BigInteger maxNative() {
+
+		// TODO: test me!!!!!
+		
+		return new BigInteger("0ffffffffffffffff", 16);
 	}
 }

@@ -31,18 +31,22 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
- * NativeGetSetShort allows one to push and pull values
+ * NativeCharSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Shorts and my
+ * is specifying that I store my values as Chars and my
  * internal range is possibly just a subset of the full
- * Short range.
+ * Char range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetShort {
+public interface NativeCharSupport extends NativeTypeSupport {
 
-	short getNative();
+	char getNative(int component);
 	
-	void setNative(short val);
+	void setNative(int component, char val);
+	
+	Character minNative();  // null means there is no min
+	
+	Character maxNative();  // null means there is no max
 }

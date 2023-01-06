@@ -31,18 +31,22 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
- * NativeGetSetChar allows one to push and pull values
+ * NativeFloatSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Chars and my
+ * is specifying that I store my values as Floats and my
  * internal range is possibly just a subset of the full
- * Char range.
+ * Float range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetChar {
+public interface NativeFloatSupport extends NativeTypeSupport {
 
-	char getNative();
+	float getNative(int component);
 	
-	void setNative(char val);
+	void setNative(int component, float val);
+	
+	Float minNative();  // null means there is no min
+	
+	Float maxNative();  // null means there is no max
 }

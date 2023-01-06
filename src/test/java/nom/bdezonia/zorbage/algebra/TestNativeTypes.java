@@ -74,7 +74,7 @@ public class TestNativeTypes {
 		assertTrue(true);
 	}
 	
-	private <T extends Algebra<T,U> & Bounded<U> & Random<U>, U extends NativeGetSetFloat>
+	private <T extends Algebra<T,U> & Bounded<U> & Random<U>, U extends NativeFloatSupport>
 		void floatImplementation(T alg)
 	{
 		U minBound = alg.construct();
@@ -83,8 +83,11 @@ public class TestNativeTypes {
 		alg.minBound().call(minBound);
 		alg.maxBound().call(maxBound);
 		
-		float min = minBound.getNative();
-		float max = maxBound.getNative();
+		Float min = minBound.getNative(0);
+		Float max = maxBound.getNative(0);
+	
+		assertFalse(min == null);
+		assertFalse(max == null);
 		
 		U value = alg.construct();
 		
@@ -92,12 +95,12 @@ public class TestNativeTypes {
 		
 		alg.random().call(value);
 		
-		System.out.println(alg.typeDescription() + " " + min + " " + max + " " + value.getNative());
+		System.out.println(alg.typeDescription() + " " + min + " " + max + " " + value.getNative(0));
 		
 		assertTrue(alg instanceof RandomIsZeroToOne);
 	}
 	
-	private <T extends Algebra<T,U> & Bounded<U> & Random<U>, U extends NativeGetSetShort>
+	private <T extends Algebra<T,U> & Bounded<U> & Random<U>, U extends NativeShortSupport>
 		void shortImplementation(T alg)
 	{
 		U minBound = alg.construct();
@@ -106,8 +109,11 @@ public class TestNativeTypes {
 		alg.minBound().call(minBound);
 		alg.maxBound().call(maxBound);
 		
-		short min = minBound.getNative();
-		short max = maxBound.getNative();
+		Short min = minBound.getNative(0);
+		Short max = maxBound.getNative(0);
+		
+		assertFalse(min == null);
+		assertFalse(max == null);
 		
 		U value = alg.construct();
 		
@@ -115,7 +121,7 @@ public class TestNativeTypes {
 		
 		alg.random().call(value);
 		
-		System.out.println(alg.typeDescription() + "\t" + min + "\t" + max + "\t" + value.getNative());
+		System.out.println(alg.typeDescription() + "\t" + min + "\t" + max + "\t" + value.getNative(0));
 		
 		assertFalse(alg instanceof RandomIsZeroToOne);
 	}

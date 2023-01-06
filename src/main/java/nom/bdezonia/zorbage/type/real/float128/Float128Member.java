@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
-import nom.bdezonia.zorbage.algebra.NativeGetSetBigDecimal;
+import nom.bdezonia.zorbage.algebra.NativeBigDecimalSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
 import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
@@ -75,7 +75,7 @@ public final class Float128Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float128Member>, GetReal<Float128Member>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimal, GetAsBigDecimalArray, NativeGetSetBigDecimal
+		GetAsBigDecimal, GetAsBigDecimalArray, NativeBigDecimalSupport
 {
 	BigDecimal num;
 	byte classification;
@@ -1142,14 +1142,32 @@ public final class Float128Member
 	}
 
 	@Override
-	public BigDecimal getNative() {
+	public BigDecimal getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(BigDecimal val) {
+	public void setNative(int component, BigDecimal val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public BigDecimal minNative() {
+
+		return MIN_NORMAL;
+	}
+
+	@Override
+	public BigDecimal maxNative() {
+
+		return MAX_NORMAL;
 	}
 }

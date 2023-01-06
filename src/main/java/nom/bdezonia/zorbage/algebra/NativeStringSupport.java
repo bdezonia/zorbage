@@ -30,21 +30,23 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
-import java.math.BigDecimal;
-
 /**
- * NativeGetSetBigDecimal allows one to push and pull values
+ * NativeStringSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as BigDecimals and my
+ * is specifying that I store my values as Strings and my
  * internal range is possibly just a subset of the full
- * BigDecimal range.
+ * String range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetBigDecimal {
+public interface NativeStringSupport extends NativeTypeSupport {
 
-	BigDecimal getNative();
+	String getNative(int component);
 	
-	void setNative(BigDecimal val);
+	void setNative(int component, String val);
+	
+	String minNative();  // null means there is no min
+	
+	String maxNative();  // null means there is no max
 }

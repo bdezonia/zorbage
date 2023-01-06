@@ -61,7 +61,7 @@ public final class UnsignedInt16Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt32Member>,
 		SetFromInt, SetFromLong,
-		GetAsInt, GetAsIntArray, NativeGetSetInt
+		GetAsInt, GetAsIntArray, NativeIntSupport
 {
 
 	short v;
@@ -716,14 +716,32 @@ public final class UnsignedInt16Member
 	}
 
 	@Override
-	public int getNative() {
+	public int getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(int val) {
+	public void setNative(int component, int val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Integer minNative() {
+
+		return 0;
+	}
+
+	@Override
+	public Integer maxNative() {
+
+		return null;
 	}
 }

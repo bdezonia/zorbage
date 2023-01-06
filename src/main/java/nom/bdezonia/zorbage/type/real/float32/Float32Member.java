@@ -59,7 +59,7 @@ public final class Float32Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float32Member>, GetReal<Float32Member>,
 		SetFromFloat, SetFromLong,
-		GetAsFloat, GetAsFloatArray, NativeGetSetFloat
+		GetAsFloat, GetAsFloatArray, NativeFloatSupport
 {
 	private float v;
 	
@@ -710,14 +710,32 @@ public final class Float32Member
 	}
 
 	@Override
-	public float getNative() {
+	public float getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(float val) {
+	public void setNative(int component, float val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Float minNative() {
+
+		return -Float.MAX_VALUE;
+	}
+
+	@Override
+	public Float maxNative() {
+
+		return Float.MAX_VALUE;
 	}
 }

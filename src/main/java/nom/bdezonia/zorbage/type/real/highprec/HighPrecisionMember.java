@@ -59,7 +59,7 @@ public final class HighPrecisionMember
 		BigDecimalCoder,
 		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
 		GetAsLong, GetAsDouble, GetAsBigInteger, GetAsBigDecimal, GetAsBigDecimalArray,
-		NativeGetSetBigDecimal
+		NativeBigDecimalSupport
 {
 	private BigDecimal v;
 	
@@ -758,14 +758,32 @@ public final class HighPrecisionMember
 	}
 
 	@Override
-	public BigDecimal getNative() {
+	public BigDecimal getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(BigDecimal val) {
+	public void setNative(int component, BigDecimal val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public BigDecimal minNative() {
+
+		return null;  // unbounded numbers have no min
+	}
+
+	@Override
+	public BigDecimal maxNative() {
+
+		return null;  // unbounded numbers have no max
 	}
 }

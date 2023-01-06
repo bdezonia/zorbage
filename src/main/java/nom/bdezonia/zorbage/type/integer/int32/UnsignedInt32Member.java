@@ -60,7 +60,7 @@ public final class UnsignedInt32Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Long>, GetReal<SignedInt64Member>,
 		SetFromLong,
-		GetAsLong, GetAsLongArray, NativeGetSetLong
+		GetAsLong, GetAsLongArray, NativeLongSupport
 {
 
 	int v;
@@ -708,14 +708,32 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public long getNative() {
+	public long getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(long val) {
+	public void setNative(int component, long val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Long minNative() {
+
+		return 0L;
+	}
+
+	@Override
+	public Long maxNative() {
+
+		return 0xffffffffL;
 	}
 }

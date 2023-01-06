@@ -62,7 +62,7 @@ public final class UnsignedInt4Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
 		SetFromInt,
-		GetAsByte, GetAsByteArray, NativeGetSetByte
+		GetAsByte, GetAsByteArray, NativeByteSupport
 {
 	byte v;
 
@@ -715,14 +715,32 @@ public final class UnsignedInt4Member
 	}
 
 	@Override
-	public byte getNative() {
+	public byte getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(byte val) {
+	public void setNative(int component, byte val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Byte minNative() {
+
+		return 0;
+	}
+
+	@Override
+	public Byte maxNative() {
+
+		return 15;
 	}
 }

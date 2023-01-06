@@ -31,18 +31,22 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
- * NativeGetSetDouble allows one to push and pull values
+ * NativeLongSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Doubles and my
+ * is specifying that I store my values as Longs and my
  * internal range is possibly just a subset of the full
- * Double range.
+ * Long range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetDouble {
+public interface NativeLongSupport extends NativeTypeSupport {
 
-	double getNative();
+	long getNative(int component);
 	
-	void setNative(double val);
+	void setNative(int component, long val);
+	
+	Long minNative();  // null means there is no min
+	
+	Long maxNative();  // null means there is no max
 }

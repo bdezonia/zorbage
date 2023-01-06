@@ -31,18 +31,22 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
- * NativeGetSetFloat allows one to push and pull values
+ * NativeIntSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Floats and my
+ * is specifying that I store my values as Integers and my
  * internal range is possibly just a subset of the full
- * Float range.
+ * Integer range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetFloat {
+public interface NativeIntSupport extends NativeTypeSupport {
 
-	float getNative();
+	int getNative(int component);
 	
-	void setNative(float val);
+	void setNative(int component, int val);
+	
+	java.lang.Integer minNative();  // null means there is no min
+	
+	java.lang.Integer maxNative();  // null means there is no max
 }

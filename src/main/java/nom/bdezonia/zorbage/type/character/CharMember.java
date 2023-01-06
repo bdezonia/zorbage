@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.GetAsCharArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
-import nom.bdezonia.zorbage.algebra.NativeGetSetChar;
+import nom.bdezonia.zorbage.algebra.NativeCharSupport;
 import nom.bdezonia.zorbage.algebra.SetFromChar;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -51,7 +51,7 @@ public class CharMember
 	implements
 		CharCoder, Gettable<CharMember>, Settable<CharMember>,
 		Allocatable<CharMember>, Duplicatable<CharMember>,
-		SetFromChar, GetAsChar, GetAsCharArray, NativeGetSetChar
+		SetFromChar, GetAsChar, GetAsCharArray, NativeCharSupport
 {
 	private char v;
 	
@@ -155,14 +155,32 @@ public class CharMember
 	}
 
 	@Override
-	public char getNative() {
+	public char getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(char val) {
+	public void setNative(int component, char val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Character minNative() {
+
+		return null;  // I don't think characters have a min
+	}
+
+	@Override
+	public Character maxNative() {
+
+		return null;  // I don't think characters have a max
 	}
 }

@@ -31,7 +31,7 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
- * NativeGetSetByte allows one to push and pull values
+ * NativeByteSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
  * is specifying that I store my values as Bytes and my
  * internal range is possibly just a subset of the full
@@ -40,9 +40,13 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetByte {
+public interface NativeByteSupport extends NativeTypeSupport {
 
-	byte getNative();
+	byte getNative(int component);
 	
-	void setNative(byte val);
+	void setNative(int component, byte val);
+	
+	Byte minNative();  // null means there is no min
+	
+	Byte maxNative();  // null means there is no max
 }

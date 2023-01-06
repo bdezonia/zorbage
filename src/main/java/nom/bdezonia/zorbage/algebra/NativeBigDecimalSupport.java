@@ -30,19 +30,25 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
+import java.math.BigDecimal;
+
 /**
- * NativeGetSetBoolean allows one to push and pull values
+ * NativeBigDecimalSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Booleans and my
+ * is specifying that I store my values as BigDecimals and my
  * internal range is possibly just a subset of the full
- * Boolean range.
+ * BigDecimal range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetBoolean {
+public interface NativeBigDecimalSupport extends NativeTypeSupport {
 
-	boolean getNative();
+	BigDecimal getNative(int component);
 	
-	void setNative(boolean val);
+	void setNative(int component, BigDecimal val);
+	
+	BigDecimal minNative();  // null means there is no min
+	
+	BigDecimal maxNative();  // null means there is no max
 }

@@ -59,7 +59,7 @@ public final class UnboundedIntMember
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		BigIntegerCoder,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigIntegerArray, NativeGetSetBigInteger
+		GetAsBigInteger, GetAsBigIntegerArray, NativeBigIntegerSupport
 {
 	private BigInteger v;
 	
@@ -712,14 +712,32 @@ public final class UnboundedIntMember
 	}
 
 	@Override
-	public BigInteger getNative() {
+	public BigInteger getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(BigInteger val) {
+	public void setNative(int component, BigInteger val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public BigInteger minNative() {
+
+		return null; // unbounded ints have no min
+	}
+
+	@Override
+	public BigInteger maxNative() {
+
+		return null; // unbounded ints have no max
 	}
 }

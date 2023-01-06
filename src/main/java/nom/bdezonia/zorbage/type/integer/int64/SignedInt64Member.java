@@ -60,7 +60,7 @@ public final class SignedInt64Member
 		SetReal<Long>, GetReal<SignedInt64Member>,
 		SetFromLong,
 		GetAsLong, GetAsBigInteger, GetAsBigDecimal,
-		GetAsLongArray, NativeGetSetLong
+		GetAsLongArray, NativeLongSupport
 {
 
 	long v;
@@ -714,14 +714,32 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public long getNative() {
+	public long getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(long val) {
+	public void setNative(int component, long val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Long minNative() {
+
+		return Long.MIN_VALUE;
+	}
+
+	@Override
+	public Long maxNative() {
+
+		return Long.MAX_VALUE;
 	}
 }

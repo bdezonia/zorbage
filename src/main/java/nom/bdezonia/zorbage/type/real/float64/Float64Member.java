@@ -59,7 +59,7 @@ public final class Float64Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float64Member>, GetReal<Float64Member>,
 		SetFromDouble, SetFromLong,
-		GetAsDouble, GetAsDoubleArray, NativeGetSetDouble
+		GetAsDouble, GetAsDoubleArray, NativeDoubleSupport
 {
 	private double v;
 	
@@ -726,14 +726,32 @@ public final class Float64Member
 	}
 
 	@Override
-	public double getNative() {
+	public double getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(double val) {
+	public void setNative(int component, double val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Double minNative() {
+
+		return -Double.MAX_VALUE;
+	}
+
+	@Override
+	public Double maxNative() {
+
+		return Double.MAX_VALUE;
 	}
 }

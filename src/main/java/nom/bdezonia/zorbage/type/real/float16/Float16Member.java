@@ -63,7 +63,7 @@ public final class Float16Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>,
 		SetFromFloat, SetFromLong,
-		GetAsFloat, GetAsFloatArray, NativeGetSetFloat
+		GetAsFloat, GetAsFloatArray, NativeFloatSupport
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -720,14 +720,32 @@ public final class Float16Member
 	}
 
 	@Override
-	public float getNative() {
+	public float getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(float val) {
+	public void setNative(int component, float val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Float minNative() {
+
+		return Float16Util.convertHFloatToFloat((short) 0b1111101111111111);
+	}
+
+	@Override
+	public Float maxNative() {
+
+		return Float16Util.convertHFloatToFloat((short) 0b0111101111111111);
 	}
 }

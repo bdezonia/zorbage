@@ -60,7 +60,7 @@ public final class SignedInt128Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
-		GetAsBigInteger, GetAsBigIntegerArray, NativeGetSetBigInteger
+		GetAsBigInteger, GetAsBigIntegerArray, NativeBigIntegerSupport
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO63 = TWO.pow(63);
@@ -747,14 +747,36 @@ public final class SignedInt128Member
 	}
 
 	@Override
-	public BigInteger getNative() {
+	public BigInteger getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(BigInteger val) {
+	public void setNative(int component, BigInteger val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public BigInteger minNative() {
+
+		// TODO: test me!!!!!
+		
+		return new BigInteger("80000000000000000000000000000000", 16);
+	}
+
+	@Override
+	public BigInteger maxNative() {
+
+		// TODO: test me!!!!!
+		
+		return new BigInteger("7fffffffffffffffffffffffffffffff", 16);
 	}
 }

@@ -42,7 +42,7 @@ public final class StringMember
 	implements
 		Allocatable<StringMember>, Duplicatable<StringMember>,
 		Settable<StringMember>, Gettable<StringMember>,
-		SetFromString, GetAsString, GetAsStringArray, NativeGetSetString
+		SetFromString, GetAsString, GetAsStringArray, NativeStringSupport
 {
 	private String v;
 	
@@ -129,14 +129,32 @@ public final class StringMember
 	}
 
 	@Override
-	public String getNative() {
+	public String getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(String val) {
+	public void setNative(int component, String val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public String minNative() {
+
+		return null;  // there is no min string
+	}
+
+	@Override
+	public String maxNative() {
+
+		return null;  // there is no max string
 	}
 }

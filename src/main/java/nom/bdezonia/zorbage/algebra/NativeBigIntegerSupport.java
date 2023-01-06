@@ -30,19 +30,25 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
+import java.math.BigInteger;
+
 /**
- * NativeGetSetInt allows one to push and pull values
+ * NativeBigIntegerSupport allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Integers and my
+ * is specifying that I store my values as BigIntegers and my
  * internal range is possibly just a subset of the full
- * Integer range.
+ * BigInteger range.
  * 
  * @author Barry DeZonia
  *
  */
-public interface NativeGetSetInt {
+public interface NativeBigIntegerSupport extends NativeTypeSupport {
 
-	int getNative();
+	BigInteger getNative(int component);
 	
-	void setNative(int val);
+	void setNative(int component, BigInteger val);
+	
+	BigInteger minNative();  // null means there is no min
+	
+	BigInteger maxNative();  // null means there is no max
 }

@@ -58,7 +58,7 @@ public final class BooleanMember
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
 		PrimitiveConversion, SetFromBoolean, GetAsBoolean,
-		GetAsBooleanArray, NativeGetSetBoolean
+		GetAsBooleanArray, NativeBooleanSupport
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -738,14 +738,32 @@ public final class BooleanMember
 	}
 
 	@Override
-	public boolean getNative() {
+	public boolean getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(boolean val) {
+	public void setNative(int component, boolean val) {
 		
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Boolean minNative() {
+
+		return false;
+	}
+
+	@Override
+	public Boolean maxNative() {
+
+		return true;
 	}
 }

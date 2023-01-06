@@ -62,7 +62,7 @@ public final class SignedInt9Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
 		SetFromInt, SetFromLong,
-		GetAsShort, GetAsShortArray, NativeGetSetShort
+		GetAsShort, GetAsShortArray, NativeShortSupport
 {
 	short v;
 
@@ -863,14 +863,32 @@ public final class SignedInt9Member
 	}
 
 	@Override
-	public short getNative() {
+	public short getNative(int component) {
 
 		return v();
 	}
 
 	@Override
-	public void setNative(short val) {
+	public void setNative(int component, short val) {
 
 		setV(val);
+	}
+
+	@Override
+	public int nativeComponents() {
+
+		return 1;
+	}
+
+	@Override
+	public Short minNative() {
+
+		return -256;
+	}
+
+	@Override
+	public Short maxNative() {
+
+		return 255;
 	}
 }
