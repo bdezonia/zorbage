@@ -74,22 +74,16 @@ public class TestNativeTypes {
 		assertTrue(true);
 	}
 	
-	private <T extends Algebra<T,U> & Bounded<U> & Random<U>, U extends NativeFloatSupport>
+	private <T extends Algebra<T,U> & Random<U>, U extends NativeFloatSupport>
 		void floatImplementation(T alg)
 	{
-		U minBound = alg.construct();
-		U maxBound = alg.construct();
+		U value = alg.construct();
 		
-		alg.minBound().call(minBound);
-		alg.maxBound().call(maxBound);
-		
-		Float min = minBound.getNative(0);
-		Float max = maxBound.getNative(0);
+		Float min = value.minNative();
+		Float max = value.minNative();
 	
 		assertFalse(min == null);
 		assertFalse(max == null);
-		
-		U value = alg.construct();
 		
 		// this will return a floating value between 0.0 and 1.0
 		
@@ -100,22 +94,16 @@ public class TestNativeTypes {
 		assertTrue(alg instanceof RandomIsZeroToOne);
 	}
 	
-	private <T extends Algebra<T,U> & Bounded<U> & Random<U>, U extends NativeShortSupport>
+	private <T extends Algebra<T,U> & Random<U>, U extends NativeShortSupport>
 		void shortImplementation(T alg)
 	{
-		U minBound = alg.construct();
-		U maxBound = alg.construct();
+		U value = alg.construct();
 		
-		alg.minBound().call(minBound);
-		alg.maxBound().call(maxBound);
-		
-		Short min = minBound.getNative(0);
-		Short max = maxBound.getNative(0);
+		Short min = value.minNative();
+		Short max = value.maxNative();
 		
 		assertFalse(min == null);
 		assertFalse(max == null);
-		
-		U value = alg.construct();
 		
 		// this will return a integral value between min and max
 		
