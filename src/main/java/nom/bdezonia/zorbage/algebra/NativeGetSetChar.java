@@ -31,6 +31,11 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
+ * NativeGetSetChar allows one to push and pull values
+ * into the implementors of this interface. The implementor
+ * is specifying that I store my values as Char and my
+ * internal range is possibly just a subset of the full
+ * Char range.
  * 
  * @author Barry DeZonia
  *

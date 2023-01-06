@@ -33,6 +33,11 @@ package nom.bdezonia.zorbage.algebra;
 import java.math.BigInteger;
 
 /**
+ * NativeGetSetBigInteger allows one to push and pull values
+ * into the implementors of this interface. The implementor
+ * is specifying that I store my values as BigInteger and my
+ * internal range is possibly just a subset of the full
+ * BigInteger range.
  * 
  * @author Barry DeZonia
  *

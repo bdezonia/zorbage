@@ -31,6 +31,11 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
+ * NativeGetSetDouble allows one to push and pull values
+ * into the implementors of this interface. The implementor
+ * is specifying that I store my values as Doubles and my
+ * internal range is possibly just a subset of the full
+ * Double range.
  * 
  * @author Barry DeZonia
  *

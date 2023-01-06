@@ -31,6 +31,11 @@
 package nom.bdezonia.zorbage.algebra;
 
 /**
+ * NativeGetSetInt allows one to push and pull values
+ * into the implementors of this interface. The implementor
+ * is specifying that I store my values as Integers and my
+ * internal range is possibly just a subset of the full
+ * Integer range.
  * 
  * @author Barry DeZonia
  *
