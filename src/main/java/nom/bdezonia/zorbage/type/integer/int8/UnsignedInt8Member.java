@@ -731,12 +731,6 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Short minNative() {
 
 		return 0;

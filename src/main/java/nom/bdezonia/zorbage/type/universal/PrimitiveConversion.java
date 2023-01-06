@@ -35,13 +35,14 @@ import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.algebra.HasComponents;
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface PrimitiveConversion extends Dimensioned{
+public interface PrimitiveConversion extends Dimensioned, HasComponents {
 	
 	PrimitiveRepresentation preferredRepresentation();
 
@@ -57,14 +58,12 @@ public interface PrimitiveConversion extends Dimensioned{
 	
 	//long dimension(int i);  // from Dimensioned interface
 	
-	// Components
+	// Components  from HasComponents: int componentCount()
 	//
 	// 1: real
 	// 2: complex
 	// 4: quaternion
 	// 8: octonion
-	
-	int componentCount();
 	
 	// NOTE: index's numDims >= to dest object. dest only looks at dims it
 	// knows. If pushed outside the bounds in dims it knows it should throw

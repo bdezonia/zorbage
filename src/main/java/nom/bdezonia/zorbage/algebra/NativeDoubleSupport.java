@@ -40,7 +40,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface NativeDoubleSupport extends NativeTypeSupport {
+public interface NativeDoubleSupport extends HasComponents {
 
 	double getNative(int component);
 	

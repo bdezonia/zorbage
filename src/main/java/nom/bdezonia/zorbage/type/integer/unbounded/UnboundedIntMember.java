@@ -724,12 +724,6 @@ public final class UnboundedIntMember
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public BigInteger minNative() {
 
 		return null; // unbounded ints have no min

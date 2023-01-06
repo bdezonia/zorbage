@@ -141,12 +141,6 @@ public final class StringMember
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public String minNative() {
 
 		return null;  // there is no min string
@@ -156,5 +150,11 @@ public final class StringMember
 	public String maxNative() {
 
 		return null;  // there is no max string
+	}
+
+	@Override
+	public int componentCount() {
+
+		return 1;
 	}
 }

@@ -841,12 +841,6 @@ public final class SignedInt7Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Byte minNative() {
 
 		return -64;

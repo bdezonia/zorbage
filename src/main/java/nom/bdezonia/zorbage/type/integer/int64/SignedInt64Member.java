@@ -726,12 +726,6 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Long minNative() {
 
 		return Long.MIN_VALUE;

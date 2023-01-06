@@ -167,7 +167,7 @@ public class CharMember
 	}
 
 	@Override
-	public int nativeComponents() {
+	public int componentCount() {
 
 		return 1;
 	}

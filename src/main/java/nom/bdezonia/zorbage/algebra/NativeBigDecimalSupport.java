@@ -42,7 +42,7 @@ import java.math.BigDecimal;
  * @author Barry DeZonia
  *
  */
-public interface NativeBigDecimalSupport extends NativeTypeSupport {
+public interface NativeBigDecimalSupport extends HasComponents {
 
 	BigDecimal getNative(int component);
 	

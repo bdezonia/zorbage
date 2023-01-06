@@ -738,12 +738,6 @@ public final class Float64Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Double minNative() {
 
 		return -Double.MAX_VALUE;

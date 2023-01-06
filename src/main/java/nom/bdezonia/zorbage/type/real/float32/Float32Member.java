@@ -722,12 +722,6 @@ public final class Float32Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Float minNative() {
 
 		return -Float.MAX_VALUE;

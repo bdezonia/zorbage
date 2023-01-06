@@ -42,7 +42,7 @@ import java.math.BigInteger;
  * @author Barry DeZonia
  *
  */
-public interface NativeBigIntegerSupport extends NativeTypeSupport {
+public interface NativeBigIntegerSupport extends HasComponents {
 
 	BigInteger getNative(int component);
 	

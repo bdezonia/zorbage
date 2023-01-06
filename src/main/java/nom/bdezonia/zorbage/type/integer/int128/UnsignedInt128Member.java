@@ -763,12 +763,6 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public BigInteger minNative() {
 
 		return BigInteger.ZERO;

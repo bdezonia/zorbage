@@ -727,12 +727,6 @@ public final class UnsignedInt4Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Byte minNative() {
 
 		return 0;

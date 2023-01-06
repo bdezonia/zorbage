@@ -722,12 +722,6 @@ public final class SignedInt16Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Short minNative() {
 
 		return -32768;

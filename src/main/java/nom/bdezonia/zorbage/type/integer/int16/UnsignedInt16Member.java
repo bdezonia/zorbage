@@ -728,12 +728,6 @@ public final class UnsignedInt16Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Integer minNative() {
 
 		return 0;

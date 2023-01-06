@@ -720,12 +720,6 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Long minNative() {
 
 		return 0L;

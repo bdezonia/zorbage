@@ -750,12 +750,6 @@ public final class BooleanMember
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Boolean minNative() {
 
 		return false;

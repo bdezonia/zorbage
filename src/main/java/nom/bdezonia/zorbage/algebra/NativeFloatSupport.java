@@ -40,7 +40,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface NativeFloatSupport extends NativeTypeSupport {
+public interface NativeFloatSupport extends HasComponents {
 
 	float getNative(int component);
 	

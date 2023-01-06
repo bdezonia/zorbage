@@ -40,7 +40,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface NativeBooleanSupport extends NativeTypeSupport {
+public interface NativeBooleanSupport extends HasComponents {
 
 	boolean getNative(int component);
 	

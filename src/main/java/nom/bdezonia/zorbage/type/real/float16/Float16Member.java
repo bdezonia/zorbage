@@ -732,12 +732,6 @@ public final class Float16Member
 	}
 
 	@Override
-	public int nativeComponents() {
-
-		return 1;
-	}
-
-	@Override
 	public Float minNative() {
 
 		return Float16Util.convertHFloatToFloat((short) 0b1111101111111111);
