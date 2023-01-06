@@ -33,7 +33,7 @@ package nom.bdezonia.zorbage.algebra;
 /**
  * NativeGetSetByte allows one to push and pull values
  * into the implementors of this interface. The implementor
- * is specifying that I store my values as Byte and my
+ * is specifying that I store my values as Bytes and my
  * internal range is possibly just a subset of the full
  * Byte range.
  * 
