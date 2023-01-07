@@ -84,7 +84,7 @@ public class TensorPower {
 				tensAlg.multiply().call(tmp2, a, tmp1);
 			}
 			// an odd power
-			if (power > 2 && (power&1)==1) {
+			if (power > 2 && (power&1) == 1) {
 				tensAlg.assign().call(tmp1, tmp2);
 				tensAlg.multiply().call(tmp2, a, tmp1);
 			}

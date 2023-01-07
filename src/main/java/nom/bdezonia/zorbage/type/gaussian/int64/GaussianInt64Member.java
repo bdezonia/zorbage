@@ -805,7 +805,7 @@ public class GaussianInt64Member
 
 		if (component == 0)
 			return r;
-		else if (component ==1)
+		else if (component == 1)
 			return i;
 		else
 			throw new IllegalArgumentException("component number out of bounds");
@@ -816,7 +816,7 @@ public class GaussianInt64Member
 
 		if (component == 0)
 			r = val;
-		else if (component ==1)
+		else if (component == 1)
 			i = val;
 		else
 			throw new IllegalArgumentException("component number out of bounds");
