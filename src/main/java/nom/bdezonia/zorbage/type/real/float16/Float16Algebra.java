@@ -363,7 +363,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV( Float16Util.convertHFloatToFloat((short) 0b0111101111111111) );
+			a.setV( a.maxNative() );
 		}
 	};
 
@@ -377,7 +377,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.setV( Float16Util.convertHFloatToFloat((short) 0b1111101111111111) );
+			a.setV( a.minNative() );
 		}
 	};
 

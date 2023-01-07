@@ -482,7 +482,7 @@ public class SignedInt32Algebra
 	{
 		@Override
 		public void call(SignedInt32Member a) {
-			a.v = java.lang.Integer.MAX_VALUE;
+			a.v = a.maxNative();
 		}
 	};
 	
@@ -496,7 +496,7 @@ public class SignedInt32Algebra
 	{
 		@Override
 		public void call(SignedInt32Member a) {
-			a.v = java.lang.Integer.MIN_VALUE;
+			a.v = a.minNative();
 		}
 	};
 	

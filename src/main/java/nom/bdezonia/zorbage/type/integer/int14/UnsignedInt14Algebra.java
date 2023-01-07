@@ -639,7 +639,7 @@ public class UnsignedInt14Algebra
 	{
 		@Override
 		public void call(UnsignedInt14Member a) {
-			a.v = 16383;
+			a.v = a.maxNative();
 		}
 	};
 
@@ -653,7 +653,7 @@ public class UnsignedInt14Algebra
 	{
 		@Override
 		public void call(UnsignedInt14Member a) {
-			a.v = 0;
+			a.v = a.minNative();
 		}
 	};
 

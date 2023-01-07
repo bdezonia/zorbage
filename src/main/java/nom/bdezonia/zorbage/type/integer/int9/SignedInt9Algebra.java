@@ -687,7 +687,7 @@ public class SignedInt9Algebra
 	{
 		@Override
 		public void call(SignedInt9Member a) {
-			a.v = 255;
+			a.v = a.maxNative();
 		}
 	};
 
@@ -701,7 +701,7 @@ public class SignedInt9Algebra
 	{
 		@Override
 		public void call(SignedInt9Member a) {
-			a.v = -256;
+			a.v = a.minNative();
 		}
 	};
 

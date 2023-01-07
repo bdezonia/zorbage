@@ -640,7 +640,7 @@ public class UnsignedInt6Algebra
 	{
 		@Override
 		public void call(UnsignedInt6Member a) {
-			a.v = 63;
+			a.v = a.maxNative();
 		}
 	};
 
@@ -654,7 +654,7 @@ public class UnsignedInt6Algebra
 	{
 		@Override
 		public void call(UnsignedInt6Member a) {
-			a.v = 0;
+			a.v = a.minNative();
 		}
 	};
 

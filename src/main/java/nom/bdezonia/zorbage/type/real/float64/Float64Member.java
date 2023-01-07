@@ -61,7 +61,7 @@ public final class Float64Member
 		SetFromDouble, SetFromLong,
 		GetAsDouble, GetAsDoubleArray, NativeDoubleSupport
 {
-	private double v;
+	double v;
 	
 	public Float64Member() {
 		primitiveInit();

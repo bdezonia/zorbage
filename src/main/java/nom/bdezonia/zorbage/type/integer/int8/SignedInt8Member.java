@@ -724,12 +724,12 @@ public final class SignedInt8Member
 	@Override
 	public Byte minNative() {
 
-		return -128;
+		return Byte.MIN_VALUE;
 	}
 
 	@Override
 	public Byte maxNative() {
 
-		return 127;
+		return Byte.MAX_VALUE;
 	}
 }

@@ -641,7 +641,7 @@ public class UnsignedInt12Algebra
 	{
 		@Override
 		public void call(UnsignedInt12Member a) {
-			a.v = 0x0fff;
+			a.v = a.maxNative();
 		}
 	};
 
@@ -655,7 +655,7 @@ public class UnsignedInt12Algebra
 	{
 		@Override
 		public void call(UnsignedInt12Member a) {
-			a.v = 0;
+			a.v = a.minNative();
 		}
 	};
 

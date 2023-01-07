@@ -483,7 +483,7 @@ public class SignedInt8Algebra
 	{
 		@Override
 		public void call(SignedInt8Member a) {
-			a.v = java.lang.Byte.MAX_VALUE;
+			a.v = a.maxNative();
 		}
 	};
 	
@@ -497,7 +497,7 @@ public class SignedInt8Algebra
 	{
 		@Override
 		public void call(SignedInt8Member a) {
-			a.v = java.lang.Byte.MIN_VALUE;
+			a.v = a.minNative();
 		}
 	};
 	

@@ -485,7 +485,7 @@ public class SignedInt64Algebra
 	{
 		@Override
 		public void call(SignedInt64Member a) {
-			a.v = java.lang.Long.MAX_VALUE;
+			a.v = a.maxNative();
 		}
 	};
 	
@@ -499,7 +499,7 @@ public class SignedInt64Algebra
 	{
 		@Override
 		public void call(SignedInt64Member a) {
-			a.v = java.lang.Long.MIN_VALUE;
+			a.v = a.minNative();
 		}
 	};
 	

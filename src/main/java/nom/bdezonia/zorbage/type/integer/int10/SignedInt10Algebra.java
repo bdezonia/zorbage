@@ -686,7 +686,7 @@ public class SignedInt10Algebra
 	{
 		@Override
 		public void call(SignedInt10Member a) {
-			a.v = 511;
+			a.v = a.maxNative();
 		}
 	};
 
@@ -700,7 +700,7 @@ public class SignedInt10Algebra
 	{
 		@Override
 		public void call(SignedInt10Member a) {
-			a.v = -512;
+			a.v = a.minNative();
 		}
 	};
 

@@ -61,7 +61,7 @@ public final class Float32Member
 		SetFromFloat, SetFromLong,
 		GetAsFloat, GetAsFloatArray, NativeFloatSupport
 {
-	private float v;
+	float v;
 	
 	public Float32Member() {
 		primitiveInit();

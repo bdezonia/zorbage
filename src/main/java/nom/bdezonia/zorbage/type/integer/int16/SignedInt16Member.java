@@ -724,12 +724,12 @@ public final class SignedInt16Member
 	@Override
 	public Short minNative() {
 
-		return -32768;
+		return Short.MIN_VALUE;
 	}
 
 	@Override
 	public Short maxNative() {
 
-		return 32767;
+		return Short.MAX_VALUE;
 	}
 }
