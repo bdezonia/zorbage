@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.NativeShortSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
 import nom.bdezonia.zorbage.algebra.SetFromInt;
@@ -70,7 +71,7 @@ public class GaussianInt16Member
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt16Member>,
 		SetComplex<Integer>, GetComplex<SignedInt16Member>,
-		SetFromInt, GetAsIntArray
+		SetFromInt, GetAsIntArray, NativeShortSupport
 {
 	short r;
 	short i;
@@ -797,5 +798,39 @@ public class GaussianInt16Member
 	@Override
 	public int[] getAsIntArray() {
 		return new int[] {r(), i()};
+	}
+
+	@Override
+	public short getNative(int component) {
+
+		if (component == 0)
+			return r;
+		else if (component ==1)
+			return i;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, short val) {
+
+		if (component == 0)
+			r = val;
+		else if (component ==1)
+			i = val;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Short minNative() {
+
+		return Short.MIN_VALUE;
+	}
+
+	@Override
+	public Short maxNative() {
+
+		return Short.MAX_VALUE;
 	}
 }

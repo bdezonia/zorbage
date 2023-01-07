@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.NativeLongSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
 import nom.bdezonia.zorbage.algebra.SetFromLong;
@@ -70,7 +71,7 @@ public class GaussianInt64Member
 		PrimitiveConversion,
 		SetReal<Long>, GetReal<SignedInt64Member>,
 		SetComplex<Long>, GetComplex<SignedInt64Member>,
-		SetFromLong, GetAsLongArray
+		SetFromLong, GetAsLongArray, NativeLongSupport
 {
 	long r;
 	long i;
@@ -797,5 +798,39 @@ public class GaussianInt64Member
 	@Override
 	public long[] getAsLongArray() {
 		return new long[] {r(), i()};
+	}
+
+	@Override
+	public long getNative(int component) {
+
+		if (component == 0)
+			return r;
+		else if (component ==1)
+			return i;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, long val) {
+
+		if (component == 0)
+			r = val;
+		else if (component ==1)
+			i = val;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Long minNative() {
+
+		return Long.MIN_VALUE;
+	}
+
+	@Override
+	public Long maxNative() {
+
+		return Long.MAX_VALUE;
 	}
 }

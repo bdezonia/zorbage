@@ -58,7 +58,7 @@ public final class QuaternionFloat64Member
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray
+		SetFromDouble, SetFromLong, GetAsDoubleArray, NativeDoubleSupport
 {
 
 	private double r, i, j, k;
@@ -1224,5 +1224,47 @@ public final class QuaternionFloat64Member
 	@Override
 	public double[] getAsDoubleArray() {
 		return new double[] {r(), i(), j(), k()};
+	}
+
+	@Override
+	public double getNative(int component) {
+
+		if (component == 0)
+			return r;
+		else if (component == 1)
+			return i;
+		else if (component == 2)
+			return j;
+		else if (component == 3)
+			return k;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, double val) {
+
+		if (component == 0)
+			r = val;
+		else if (component == 1)
+			i = val;
+		else if (component == 2)
+			j = val;
+		else if (component == 3)
+			k = val;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Double minNative() {
+
+		return -Double.MAX_VALUE;
+	}
+
+	@Override
+	public Double maxNative() {
+
+		return Double.MAX_VALUE;
 	}
 }

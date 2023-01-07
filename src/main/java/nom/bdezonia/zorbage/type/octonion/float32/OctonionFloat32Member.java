@@ -58,7 +58,7 @@ public final class OctonionFloat32Member
 		Settable<OctonionFloat32Member>, Gettable<OctonionFloat32Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float32Member>, GetOctonion<Float32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray
+		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
 {
 
 	private float r, i, j, k, l, i0, j0, k0;
@@ -1929,5 +1929,63 @@ public final class OctonionFloat32Member
 	@Override
 	public float[] getAsFloatArray() {
 		return new float[] {r(), i(), j(), k(), l(), i0(), j0(), k0()};
+	}
+
+	@Override
+	public float getNative(int component) {
+
+		if (component == 0)
+			return r;
+		else if (component == 1)
+			return i;
+		else if (component == 2)
+			return j;
+		else if (component == 3)
+			return k;
+		else if (component == 4)
+			return l;
+		else if (component == 5)
+			return i0;
+		else if (component == 6)
+			return j0;
+		else if (component == 7)
+			return k0;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, float val) {
+
+		if (component == 0)
+			r = val;
+		else if (component == 1)
+			i = val;
+		else if (component == 2)
+			j = val;
+		else if (component == 3)
+			k = val;
+		else if (component == 4)
+			l = val;
+		else if (component == 5)
+			i0 = val;
+		else if (component == 6)
+			j0 = val;
+		else if (component == 7)
+			k0 = val;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Float minNative() {
+
+		return -Float.MAX_VALUE;
+	}
+
+	@Override
+	public Float maxNative() {
+
+		return Float.MAX_VALUE;
 	}
 }

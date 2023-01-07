@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.NativeByteSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
 import nom.bdezonia.zorbage.algebra.SetFromInt;
@@ -71,7 +72,7 @@ public class GaussianInt8Member
 		PrimitiveConversion,
 		SetReal<Integer>, GetReal<SignedInt8Member>,
 		SetComplex<Integer>, GetComplex<SignedInt8Member>,
-		SetFromInt, SetFromLong, GetAsIntArray
+		SetFromInt, SetFromLong, GetAsIntArray, NativeByteSupport
 {
 	byte r;
 	byte i;
@@ -812,5 +813,39 @@ public class GaussianInt8Member
 	@Override
 	public int[] getAsIntArray() {
 		return new int[] {r(), i()};
+	}
+
+	@Override
+	public byte getNative(int component) {
+
+		if (component == 0)
+			return r;
+		else if (component ==1)
+			return i;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, byte val) {
+
+		if (component == 0)
+			r = val;
+		else if (component ==1)
+			i = val;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Byte minNative() {
+
+		return Byte.MIN_VALUE;
+	}
+
+	@Override
+	public Byte maxNative() {
+
+		return Byte.MAX_VALUE;
 	}
 }

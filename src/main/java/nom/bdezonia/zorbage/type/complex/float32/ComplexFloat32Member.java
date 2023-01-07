@@ -57,7 +57,7 @@ public final class ComplexFloat32Member
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray
+		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
 {
 	private float r, i;
 	
@@ -801,5 +801,39 @@ public final class ComplexFloat32Member
 	@Override
 	public float[] getAsFloatArray() {
 		return new float[] {r(), i()};
+	}
+
+	@Override
+	public float getNative(int component) {
+
+		if (component == 0)
+			return r;
+		else if (component ==1)
+			return i;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, float val) {
+
+		if (component == 0)
+			r = val;
+		else if (component ==1)
+			i = val;
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Float minNative() {
+
+		return -Float.MAX_VALUE;
+	}
+
+	@Override
+	public Float maxNative() {
+
+		return Float.MAX_VALUE;
 	}
 }
