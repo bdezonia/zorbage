@@ -69,8 +69,8 @@ public class GaussianInt64Member
 		Settable<GaussianInt64Member>, Gettable<GaussianInt64Member>,
 		UniversalRepresentation, NumberMember<GaussianInt64Member>,
 		PrimitiveConversion,
-		SetReal<Long>, GetReal<SignedInt64Member>,
-		SetComplex<Long>, GetComplex<SignedInt64Member>,
+		SetReal<SignedInt64Member>, GetReal<SignedInt64Member>,
+		SetComplex<SignedInt64Member>, GetComplex<SignedInt64Member>,
 		SetFromLong, GetAsLongArray, NativeLongSupport
 {
 	long r;
@@ -108,10 +108,14 @@ public class GaussianInt64Member
 	public long r() { return r; }
 	
 	public long i() { return i; }
+
+	public void setR(long val) { r = val; }
+	
+	public void setI(long val) { i = val; }
 	
 	@Override
-	public void setR(Long val) {
-		r = val;
+	public void setR(SignedInt64Member val) {
+		r = val.v();
 	}
 
 	@Override
@@ -120,8 +124,8 @@ public class GaussianInt64Member
 	}
 
 	@Override
-	public void setI(Long val) {
-		i = val;
+	public void setI(SignedInt64Member val) {
+		i = val.v();
 	}
 
 	@Override
@@ -804,9 +808,9 @@ public class GaussianInt64Member
 	public long getNative(int component) {
 
 		if (component == 0)
-			return r;
+			return r();
 		else if (component == 1)
-			return i;
+			return i();
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}
@@ -815,9 +819,9 @@ public class GaussianInt64Member
 	public void setNative(int component, long val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

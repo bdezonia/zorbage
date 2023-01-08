@@ -70,8 +70,8 @@ public class GaussianInt8Member
 		Settable<GaussianInt8Member>, Gettable<GaussianInt8Member>,
 		UniversalRepresentation, NumberMember<GaussianInt8Member>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt8Member>,
-		SetComplex<Integer>, GetComplex<SignedInt8Member>,
+		SetReal<SignedInt8Member>, GetReal<SignedInt8Member>,
+		SetComplex<SignedInt8Member>, GetComplex<SignedInt8Member>,
 		SetFromInt, SetFromLong, GetAsIntArray, NativeByteSupport
 {
 	byte r;
@@ -110,9 +110,13 @@ public class GaussianInt8Member
 	
 	public int i() { return i; }
 	
+	public void setR(int val) { r = (byte) val; }
+	
+	public void setI(int val) { i = (byte) val; }
+	
 	@Override
-	public void setR(Integer val) {
-		r = (byte) (int) val;
+	public void setR(SignedInt8Member val) {
+		r = val.v();
 	}
 
 	@Override
@@ -121,8 +125,8 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setI(Integer val) {
-		i = (byte) (int) val;
+	public void setI(SignedInt8Member val) {
+		i = val.v();
 	}
 
 	@Override
@@ -830,9 +834,9 @@ public class GaussianInt8Member
 	public void setNative(int component, byte val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

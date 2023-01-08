@@ -69,8 +69,8 @@ public class GaussianInt16Member
 		Settable<GaussianInt16Member>, Gettable<GaussianInt16Member>,
 		UniversalRepresentation, NumberMember<GaussianInt16Member>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt16Member>,
-		SetComplex<Integer>, GetComplex<SignedInt16Member>,
+		SetReal<SignedInt16Member>, GetReal<SignedInt16Member>,
+		SetComplex<SignedInt16Member>, GetComplex<SignedInt16Member>,
 		SetFromInt, GetAsIntArray, NativeShortSupport
 {
 	short r;
@@ -109,9 +109,13 @@ public class GaussianInt16Member
 	
 	public int i() { return i; }
 	
+	public void setR(int val) { r = (short) val; }
+	
+	public void setI(int val) { i = (short) val; }
+	
 	@Override
-	public void setR(Integer val) {
-		r = (short) (int) val;
+	public void setR(SignedInt16Member val) {
+		r = val.v();
 	}
 
 	@Override
@@ -120,8 +124,8 @@ public class GaussianInt16Member
 	}
 
 	@Override
-	public void setI(Integer val) {
-		i = (short) (int) val;
+	public void setI(SignedInt16Member val) {
+		i = val.v();
 	}
 
 	@Override
@@ -815,9 +819,9 @@ public class GaussianInt16Member
 	public void setNative(int component, short val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

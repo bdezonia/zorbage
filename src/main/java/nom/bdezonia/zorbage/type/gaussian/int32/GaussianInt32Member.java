@@ -70,8 +70,8 @@ public class GaussianInt32Member
 		Settable<GaussianInt32Member>, Gettable<GaussianInt32Member>,
 		UniversalRepresentation, NumberMember<GaussianInt32Member>,
 		PrimitiveConversion,
-		SetReal<Integer>, GetReal<SignedInt32Member>,
-		SetComplex<Integer>, GetComplex<SignedInt32Member>,
+		SetReal<SignedInt32Member>, GetReal<SignedInt32Member>,
+		SetComplex<SignedInt32Member>, GetComplex<SignedInt32Member>,
 		SetFromInt, SetFromLong, GetAsIntArray, NativeIntSupport
 {
 	int r;
@@ -110,9 +110,13 @@ public class GaussianInt32Member
 	
 	public int i() { return i; }
 	
+	public void setR(int val) { r = val; }
+	
+	public void setI(int val) { i = val; }
+
 	@Override
-	public void setR(Integer val) {
-		r = val;
+	public void setR(SignedInt32Member val) {
+		r = val.v();
 	}
 
 	@Override
@@ -121,8 +125,8 @@ public class GaussianInt32Member
 	}
 
 	@Override
-	public void setI(Integer val) {
-		i = val;
+	public void setI(SignedInt32Member val) {
+		i = val.v();
 	}
 
 	@Override
@@ -819,9 +823,9 @@ public class GaussianInt32Member
 	public int getNative(int component) {
 
 		if (component == 0)
-			return r;
+			return r();
 		else if (component == 1)
-			return i;
+			return i();
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}
@@ -830,9 +834,9 @@ public class GaussianInt32Member
 	public void setNative(int component, int val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

@@ -70,8 +70,8 @@ public class GaussianIntUnboundedMember
 		Settable<GaussianIntUnboundedMember>, Gettable<GaussianIntUnboundedMember>,
 		UniversalRepresentation, NumberMember<GaussianIntUnboundedMember>,
 		PrimitiveConversion,
-		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
-		SetComplex<BigInteger>, GetComplex<UnboundedIntMember>,
+		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
+		SetComplex<UnboundedIntMember>, GetComplex<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong, GetAsBigIntegerArray,
 		NativeBigIntegerSupport
 {
@@ -115,9 +115,13 @@ public class GaussianIntUnboundedMember
 	
 	public BigInteger i() { return i; }
 	
+	public void setR(BigInteger val) { r = val; }
+	
+	public void setI(BigInteger val) { i = val; }
+	
 	@Override
-	public void setR(BigInteger val) {
-		r = val;
+	public void setR(UnboundedIntMember val) {
+		r = val.v();
 	}
 
 	@Override
@@ -126,8 +130,8 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setI(BigInteger val) {
-		i = val;
+	public void setI(UnboundedIntMember val) {
+		i = val.v();
 	}
 
 	@Override
