@@ -734,20 +734,12 @@ public final class Float16Member
 	@Override
 	public Float minNative() {
 
-		return Float16Util.convertHFloatToFloat(internalMin());
+		return Float16Util.convertHFloatToFloat(Float16Util.internalMin());
 	}
 
 	@Override
 	public Float maxNative() {
 
-		return Float16Util.convertHFloatToFloat(internalMax());
-	}
-	
-	public short internalMin() {
-		return (short) 0b1111101111111111;
-	}
-	
-	public short internalMax() {
-		return (short) 0b0111101111111111;
+		return Float16Util.convertHFloatToFloat(Float16Util.internalMax());
 	}
 }

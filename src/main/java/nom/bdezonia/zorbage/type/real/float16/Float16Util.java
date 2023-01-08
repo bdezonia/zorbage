@@ -282,4 +282,11 @@ public class Float16Util {
 		throw new IllegalArgumentException("bad boundary problem");
 	}
 	
+	static short internalMin() {
+		return (short) 0b1111101111111111;
+	}
+	
+	static short internalMax() {
+		return (short) 0b0111101111111111;
+	}
 }

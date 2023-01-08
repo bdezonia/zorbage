@@ -363,7 +363,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.v = a.internalMax();
+			a.v = Float16Util.internalMax();
 		}
 	};
 
@@ -377,7 +377,7 @@ public class Float16Algebra
 	{
 		@Override
 		public void call(Float16Member a) {
-			a.v = a.internalMin();
+			a.v = Float16Util.internalMin();
 		}
 	};
 
