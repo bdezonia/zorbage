@@ -59,7 +59,7 @@ public final class QuaternionHighPrecisionMember
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<HighPrecisionMember>, GetQuaternion<HighPrecisionMember>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray, NativeBigDecimalSupport
 {
 	private BigDecimal r, i, j, k;
 	
@@ -1284,5 +1284,47 @@ public final class QuaternionHighPrecisionMember
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
 		return new BigDecimal[] {r(), i(), j(), k()};
+	}
+
+	@Override
+	public BigDecimal getNative(int component) {
+
+		if (component == 0)
+			return r();
+		else if (component == 1)
+			return i();
+		else if (component == 2)
+			return j();
+		else if (component == 3)
+			return k();
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, BigDecimal val) {
+
+		if (component == 0)
+			setR(val);
+		else if (component == 1)
+			setI(val);
+		else if (component == 2)
+			setJ(val);
+		else if (component == 3)
+			setK(val);
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public BigDecimal minNative() {
+
+		return null;  // a bigdecimal does not have a min value
+	}
+
+	@Override
+	public BigDecimal maxNative() {
+
+		return null;  // a bigdecimal does not have a max value
 	}
 }

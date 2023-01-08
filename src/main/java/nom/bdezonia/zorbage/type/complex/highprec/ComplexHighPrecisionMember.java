@@ -58,7 +58,7 @@ public final class ComplexHighPrecisionMember
 		NumberMember<ComplexHighPrecisionMember>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<HighPrecisionMember>, GetComplex<HighPrecisionMember>,
 		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		GetAsBigDecimalArray, NativeBigDecimalSupport
 {
 	private BigDecimal r, i;
 	
@@ -842,5 +842,39 @@ public final class ComplexHighPrecisionMember
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
 		return new BigDecimal[] {r(), i()};
+	}
+
+	@Override
+	public BigDecimal getNative(int component) {
+
+		if (component == 0)
+			return r();
+		else if (component == 1)
+			return i();
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, BigDecimal val) {
+
+		if (component == 0)
+			setR(val);
+		else if (component == 1)
+			setI(val);
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public BigDecimal minNative() {
+
+		return null;  // a bigdecimal does not have a min value
+	}
+
+	@Override
+	public BigDecimal maxNative() {
+
+		return null;  // a bigdecimal does not have a max value
 	}
 }
