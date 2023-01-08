@@ -44,9 +44,23 @@ public class TestNativeTypes {
 	@Test
 	public void test1() {
 
-		floatImplementation(G.HLF);
-		floatImplementation(G.FLT);
+		byteImplementation(G.UINT1);
+		byteImplementation(G.UINT2);
+		byteImplementation(G.UINT3);
+		byteImplementation(G.UINT4);
+		byteImplementation(G.UINT5);
+		byteImplementation(G.UINT6);
+		byteImplementation(G.UINT7);
 		
+		byteImplementation(G.INT1);
+		byteImplementation(G.INT2);
+		byteImplementation(G.INT3);
+		byteImplementation(G.INT4);
+		byteImplementation(G.INT5);
+		byteImplementation(G.INT6);
+		byteImplementation(G.INT7);
+		byteImplementation(G.INT8);
+
 		assertTrue(true);
 	}
 
@@ -73,7 +87,16 @@ public class TestNativeTypes {
 
 		assertTrue(true);
 	}
-	
+
+	@Test
+	public void test3() {
+
+		floatImplementation(G.HLF);
+		floatImplementation(G.FLT);
+		
+		assertTrue(true);
+	}
+
 	private <T extends Algebra<T,U> & Random<U>, U extends NativeFloatSupport>
 		void floatImplementation(T alg)
 	{
@@ -89,7 +112,7 @@ public class TestNativeTypes {
 		
 		alg.random().call(value);
 		
-		System.out.println(alg.typeDescription() + " " + min + " " + max + " " + value.getNative(0));
+		System.out.println(alg.typeDescription() + "\t" + min + "\t" + max + "\t" + value.getNative(0));
 		
 		assertTrue(alg instanceof RandomIsZeroToOne);
 	}
@@ -101,6 +124,26 @@ public class TestNativeTypes {
 		
 		Short min = value.minNative();
 		Short max = value.maxNative();
+		
+		assertFalse(min == null);
+		assertFalse(max == null);
+		
+		// this will return a integral value between min and max
+		
+		alg.random().call(value);
+		
+		System.out.println(alg.typeDescription() + "\t" + min + "\t" + max + "\t" + value.getNative(0));
+		
+		assertFalse(alg instanceof RandomIsZeroToOne);
+	}
+	
+	private <T extends Algebra<T,U> & Random<U>, U extends NativeByteSupport>
+		void byteImplementation(T alg)
+	{
+		U value = alg.construct();
+		
+		Byte min = value.minNative();
+		Byte max = value.maxNative();
 		
 		assertFalse(min == null);
 		assertFalse(max == null);
