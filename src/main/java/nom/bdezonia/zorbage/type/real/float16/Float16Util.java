@@ -34,14 +34,6 @@ package nom.bdezonia.zorbage.type.real.float16;
  */
 public class Float16Util {
 	
-	public static short INTERNAL_MIN = (short) 0b1111101111111111;
-
-	public static short INTERNAL_MAX = (short) 0b0111101111111111;
-	
-	public static float FLOAT_MIN = convertHFloatToFloat(INTERNAL_MIN);
-	
-	public static float FLOAT_MAX = convertHFloatToFloat(INTERNAL_MAX);
-	
 	/***
 	 * Convert IEEE single-precision to half-precision (encoded in a short).
 	 * Credit for this goes to [Jeroen van der Zijp](ftp://ftp.fox-toolkit.org/pub/fasthalffloatconversion.pdf).
@@ -289,4 +281,12 @@ public class Float16Util {
 		if (num == 64512) return (short) num;
 		throw new IllegalArgumentException("bad boundary problem");
 	}
+	
+	public static short INTERNAL_MIN = (short) 0b1111101111111111;
+
+	public static short INTERNAL_MAX = (short) 0b0111101111111111;
+	
+	public static float FLOAT_MIN = convertHFloatToFloat(INTERNAL_MIN);
+	
+	public static float FLOAT_MAX = convertHFloatToFloat(INTERNAL_MAX);
 }
