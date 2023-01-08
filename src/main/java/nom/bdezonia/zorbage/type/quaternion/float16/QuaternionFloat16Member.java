@@ -59,7 +59,7 @@ public final class QuaternionFloat16Member
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray
+		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1226,5 +1226,47 @@ public final class QuaternionFloat16Member
 	@Override
 	public float[] getAsFloatArray() {
 		return new float[] {r(), i(), j(), k()};
+	}
+
+	@Override
+	public float getNative(int component) {
+		
+		if (component == 0)
+			return r();
+		else if (component == 1)
+			return i();
+		else if (component == 2)
+			return j();
+		else if (component == 3)
+			return k();
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, float val) {
+		
+		if (component == 0)
+			setR(val);
+		else if (component == 1)
+			setI(val);
+		else if (component == 2)
+			setJ(val);
+		else if (component == 3)
+			setK(val);
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Float minNative() {
+
+		return Float16Util.FLOAT_MIN;
+	}
+
+	@Override
+	public Float maxNative() {
+
+		return Float16Util.FLOAT_MAX;
 	}
 }

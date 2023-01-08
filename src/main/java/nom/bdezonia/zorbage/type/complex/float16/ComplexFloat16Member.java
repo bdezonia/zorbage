@@ -58,7 +58,7 @@ public final class ComplexFloat16Member
 		Settable<ComplexFloat16Member>, Gettable<ComplexFloat16Member>,
 		NumberMember<ComplexFloat16Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float16Member>, GetComplex<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray
+		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -804,5 +804,39 @@ public final class ComplexFloat16Member
 	@Override
 	public float[] getAsFloatArray() {
 		return new float[] {r(), i()};
+	}
+
+	@Override
+	public float getNative(int component) {
+		
+		if (component == 0)
+			return r();
+		else if (component == 1)
+			return i();
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, float val) {
+		
+		if (component == 0)
+			setR(val);
+		else if (component == 1)
+			setI(val);
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public Float minNative() {
+
+		return Float16Util.FLOAT_MIN;
+	}
+
+	@Override
+	public Float maxNative() {
+
+		return Float16Util.FLOAT_MAX;
 	}
 }
