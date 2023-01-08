@@ -1935,21 +1935,21 @@ public final class OctonionFloat32Member
 	public float getNative(int component) {
 
 		if (component == 0)
-			return r;
+			return r();
 		else if (component == 1)
-			return i;
+			return i();
 		else if (component == 2)
-			return j;
+			return j();
 		else if (component == 3)
-			return k;
+			return k();
 		else if (component == 4)
-			return l;
+			return l();
 		else if (component == 5)
-			return i0;
+			return i0();
 		else if (component == 6)
-			return j0;
+			return j0();
 		else if (component == 7)
-			return k0;
+			return k0();
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}
@@ -1958,21 +1958,21 @@ public final class OctonionFloat32Member
 	public void setNative(int component, float val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else if (component == 2)
-			j = val;
+			setJ(val);
 		else if (component == 3)
-			k = val;
+			setK(val);
 		else if (component == 4)
-			l = val;
+			setL(val);
 		else if (component == 5)
-			i0 = val;
+			setI0(val);
 		else if (component == 6)
-			j0 = val;
+			setJ0(val);
 		else if (component == 7)
-			k0 = val;
+			setK0(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

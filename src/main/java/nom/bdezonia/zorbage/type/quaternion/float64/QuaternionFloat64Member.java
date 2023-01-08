@@ -1230,13 +1230,13 @@ public final class QuaternionFloat64Member
 	public double getNative(int component) {
 
 		if (component == 0)
-			return r;
+			return r();
 		else if (component == 1)
-			return i;
+			return i();
 		else if (component == 2)
-			return j;
+			return j();
 		else if (component == 3)
-			return k;
+			return k();
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}
@@ -1245,13 +1245,13 @@ public final class QuaternionFloat64Member
 	public void setNative(int component, double val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else if (component == 2)
-			j = val;
+			setJ(val);
 		else if (component == 3)
-			k = val;
+			setK(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

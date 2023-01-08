@@ -807,9 +807,9 @@ public final class ComplexFloat32Member
 	public float getNative(int component) {
 
 		if (component == 0)
-			return r;
+			return r();
 		else if (component == 1)
-			return i;
+			return i();
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}
@@ -818,9 +818,9 @@ public final class ComplexFloat32Member
 	public void setNative(int component, float val) {
 
 		if (component == 0)
-			r = val;
+			setR(val);
 		else if (component == 1)
-			i = val;
+			setI(val);
 		else
 			throw new IllegalArgumentException("component number out of bounds");
 	}

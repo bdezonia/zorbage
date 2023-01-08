@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.NativeBigIntegerSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
 import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
@@ -71,7 +72,8 @@ public class GaussianIntUnboundedMember
 		PrimitiveConversion,
 		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
 		SetComplex<BigInteger>, GetComplex<UnboundedIntMember>,
-		SetFromBigInteger, SetFromLong, GetAsBigIntegerArray
+		SetFromBigInteger, SetFromLong, GetAsBigIntegerArray,
+		NativeBigIntegerSupport
 {
 	BigInteger r;
 	BigInteger i;
@@ -816,5 +818,39 @@ public class GaussianIntUnboundedMember
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
 		return new BigInteger[] {r(), i()};
+	}
+
+	@Override
+	public BigInteger getNative(int component) {
+		
+		if (component == 0)
+			return r();
+		else if (component == 1)
+			return i();
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, BigInteger val) {
+
+		if (component == 0)
+			setR(val);
+		else if (component == 1)
+			setI(val);
+		else
+			throw new IllegalArgumentException("component number out of bounds");
+	}
+
+	@Override
+	public BigInteger componentMin() {
+
+		return null; // bigintegers do not have a bound
+	}
+
+	@Override
+	public BigInteger componentMax() {
+
+		return null; // bigintegers do not have a bound
 	}
 }
