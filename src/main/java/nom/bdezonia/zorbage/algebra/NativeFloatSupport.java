@@ -46,7 +46,7 @@ public interface NativeFloatSupport extends HasComponents {
 	
 	void setNative(int component, float val);
 	
-	Float minNative();  // null means there is no min
+	Float componentMin();  // null means there is no min
 	
-	Float maxNative();  // null means there is no max
+	Float componentMax();  // null means there is no max
 }

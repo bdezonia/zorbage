@@ -807,13 +807,13 @@ public final class SignedInt5Member
 	}
 
 	@Override
-	public Byte minNative() {
+	public Byte componentMin() {
 
 		return -16;
 	}
 
 	@Override
-	public Byte maxNative() {
+	public Byte componentMax() {
 
 		return 15;
 	}

@@ -888,13 +888,13 @@ public final class UnsignedInt10Member
 	}
 
 	@Override
-	public Short minNative() {
+	public Short componentMin() {
 
 		return 0;
 	}
 
 	@Override
-	public Short maxNative() {
+	public Short componentMax() {
 
 		return 1023;
 	}

@@ -770,13 +770,13 @@ public final class HighPrecisionMember
 	}
 
 	@Override
-	public BigDecimal minNative() {
+	public BigDecimal componentMin() {
 
 		return null;  // unbounded numbers have no min
 	}
 
 	@Override
-	public BigDecimal maxNative() {
+	public BigDecimal componentMax() {
 
 		return null;  // unbounded numbers have no max
 	}

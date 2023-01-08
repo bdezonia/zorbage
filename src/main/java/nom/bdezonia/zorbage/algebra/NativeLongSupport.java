@@ -46,7 +46,7 @@ public interface NativeLongSupport extends HasComponents {
 	
 	void setNative(int component, long val);
 	
-	Long minNative();  // null means there is no min
+	Long componentMin();  // null means there is no min
 	
-	Long maxNative();  // null means there is no max
+	Long componentMax();  // null means there is no max
 }

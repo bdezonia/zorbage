@@ -46,7 +46,7 @@ public interface NativeDoubleSupport extends HasComponents {
 	
 	void setNative(int component, double val);
 	
-	Double minNative();  // null means there is no min
+	Double componentMin();  // null means there is no min
 	
-	Double maxNative();  // null means there is no max
+	Double componentMax();  // null means there is no max
 }

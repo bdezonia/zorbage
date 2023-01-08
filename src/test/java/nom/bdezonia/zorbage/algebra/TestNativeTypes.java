@@ -102,8 +102,8 @@ public class TestNativeTypes {
 	{
 		U value = alg.construct();
 		
-		Float min = value.minNative();
-		Float max = value.minNative();
+		Float min = value.componentMin();
+		Float max = value.componentMin();
 	
 		assertFalse(min == null);
 		assertFalse(max == null);
@@ -122,8 +122,8 @@ public class TestNativeTypes {
 	{
 		U value = alg.construct();
 		
-		Short min = value.minNative();
-		Short max = value.maxNative();
+		Short min = value.componentMin();
+		Short max = value.componentMax();
 		
 		assertFalse(min == null);
 		assertFalse(max == null);
@@ -142,8 +142,8 @@ public class TestNativeTypes {
 	{
 		U value = alg.construct();
 		
-		Byte min = value.minNative();
-		Byte max = value.maxNative();
+		Byte min = value.componentMin();
+		Byte max = value.componentMax();
 		
 		assertFalse(min == null);
 		assertFalse(max == null);

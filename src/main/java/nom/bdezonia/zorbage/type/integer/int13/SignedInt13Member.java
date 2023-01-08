@@ -943,13 +943,13 @@ public final class SignedInt13Member
 	}
 
 	@Override
-	public Short minNative() {
+	public Short componentMin() {
 
 		return -4096;
 	}
 
 	@Override
-	public Short maxNative() {
+	public Short componentMax() {
 
 		return 4095;
 	}

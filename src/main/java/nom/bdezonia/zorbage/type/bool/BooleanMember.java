@@ -750,13 +750,13 @@ public final class BooleanMember
 	}
 
 	@Override
-	public Boolean minNative() {
+	public Boolean componentMin() {
 
 		return false;
 	}
 
 	@Override
-	public Boolean maxNative() {
+	public Boolean componentMax() {
 
 		return true;
 	}

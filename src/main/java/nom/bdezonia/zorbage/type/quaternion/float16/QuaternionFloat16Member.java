@@ -1259,13 +1259,13 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public Float minNative() {
+	public Float componentMin() {
 
 		return Float16Util.FLOAT_MIN;
 	}
 
 	@Override
-	public Float maxNative() {
+	public Float componentMax() {
 
 		return Float16Util.FLOAT_MAX;
 	}

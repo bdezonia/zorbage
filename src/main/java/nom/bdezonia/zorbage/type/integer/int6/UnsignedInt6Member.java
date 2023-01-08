@@ -822,13 +822,13 @@ public final class UnsignedInt6Member
 	}
 
 	@Override
-	public Byte minNative() {
+	public Byte componentMin() {
 
 		return 0;
 	}
 
 	@Override
-	public Byte maxNative() {
+	public Byte componentMax() {
 
 		return 63;
 	}

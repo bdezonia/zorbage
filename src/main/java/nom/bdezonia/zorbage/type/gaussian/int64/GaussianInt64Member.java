@@ -823,13 +823,13 @@ public class GaussianInt64Member
 	}
 
 	@Override
-	public Long minNative() {
+	public Long componentMin() {
 
 		return Long.MIN_VALUE;
 	}
 
 	@Override
-	public Long maxNative() {
+	public Long componentMax() {
 
 		return Long.MAX_VALUE;
 	}

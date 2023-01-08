@@ -46,7 +46,7 @@ public interface NativeStringSupport extends HasComponents {
 	
 	void setNative(int component, String val);
 	
-	String minNative();  // null means there is no min
+	String componentMin();  // null means there is no min
 	
-	String maxNative();  // null means there is no max
+	String componentMax();  // null means there is no max
 }

@@ -838,13 +838,13 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public Byte minNative() {
+	public Byte componentMin() {
 
 		return Byte.MIN_VALUE;
 	}
 
 	@Override
-	public Byte maxNative() {
+	public Byte componentMax() {
 
 		return Byte.MAX_VALUE;
 	}

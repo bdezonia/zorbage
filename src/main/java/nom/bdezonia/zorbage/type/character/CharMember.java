@@ -173,13 +173,13 @@ public class CharMember
 	}
 
 	@Override
-	public Character minNative() {
+	public Character componentMin() {
 
 		return null;  // I don't think characters have a min
 	}
 
 	@Override
-	public Character maxNative() {
+	public Character componentMax() {
 
 		return null;  // I don't think characters have a max
 	}

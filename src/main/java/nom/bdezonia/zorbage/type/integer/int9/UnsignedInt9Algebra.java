@@ -642,7 +642,7 @@ public class UnsignedInt9Algebra
 	{
 		@Override
 		public void call(UnsignedInt9Member a) {
-			a.v = a.maxNative();
+			a.v = a.componentMax();
 		}
 	};
 
@@ -656,7 +656,7 @@ public class UnsignedInt9Algebra
 	{
 		@Override
 		public void call(UnsignedInt9Member a) {
-			a.v = a.minNative();
+			a.v = a.componentMin();
 		}
 	};
 

@@ -772,13 +772,13 @@ public final class SignedInt3Member
 	}
 
 	@Override
-	public Byte minNative() {
+	public Byte componentMin() {
 
 		return -4;
 	}
 
 	@Override
-	public Byte maxNative() {
+	public Byte componentMax() {
 
 		return 3;
 	}

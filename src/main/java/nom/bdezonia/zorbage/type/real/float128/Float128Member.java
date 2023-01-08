@@ -1154,13 +1154,13 @@ public final class Float128Member
 	}
 
 	@Override
-	public BigDecimal minNative() {
+	public BigDecimal componentMin() {
 
 		return MIN_NORMAL;
 	}
 
 	@Override
-	public BigDecimal maxNative() {
+	public BigDecimal componentMax() {
 
 		return MAX_NORMAL;
 	}

@@ -839,13 +839,13 @@ public final class UnsignedInt7Member
 	}
 
 	@Override
-	public Byte minNative() {
+	public Byte componentMin() {
 
 		return 0;
 	}
 
 	@Override
-	public Byte maxNative() {
+	public Byte componentMax() {
 
 		return 127;
 	}

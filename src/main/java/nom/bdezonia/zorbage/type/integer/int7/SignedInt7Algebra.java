@@ -687,7 +687,7 @@ public class SignedInt7Algebra
 	{
 		@Override
 		public void call(SignedInt7Member a) {
-			a.v = a.maxNative();
+			a.v = a.componentMax();
 		}
 	};
 
@@ -701,7 +701,7 @@ public class SignedInt7Algebra
 	{
 		@Override
 		public void call(SignedInt7Member a) {
-			a.v = a.minNative();
+			a.v = a.componentMin();
 		}
 	};
 

@@ -905,13 +905,13 @@ public final class UnsignedInt11Member
 	}
 
 	@Override
-	public Short minNative() {
+	public Short componentMin() {
 
 		return 0;
 	}
 
 	@Override
-	public Short maxNative() {
+	public Short componentMax() {
 
 		return 2047;
 	}

@@ -939,13 +939,13 @@ public final class UnsignedInt13Member
 	}
 
 	@Override
-	public Short minNative() {
+	public Short componentMin() {
 
 		return 0;
 	}
 
 	@Override
-	public Short maxNative() {
+	public Short componentMax() {
 
 		return 8191;
 	}

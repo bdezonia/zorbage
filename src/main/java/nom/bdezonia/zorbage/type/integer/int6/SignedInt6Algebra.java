@@ -687,7 +687,7 @@ public class SignedInt6Algebra
 	{
 		@Override
 		public void call(SignedInt6Member a) {
-			a.v = a.maxNative();
+			a.v = a.componentMax();
 		}
 	};
 
@@ -701,7 +701,7 @@ public class SignedInt6Algebra
 	{
 		@Override
 		public void call(SignedInt6Member a) {
-			a.v = a.minNative();
+			a.v = a.componentMin();
 		}
 	};
 

@@ -867,13 +867,13 @@ public final class ComplexHighPrecisionMember
 	}
 
 	@Override
-	public BigDecimal minNative() {
+	public BigDecimal componentMin() {
 
 		return null;  // a bigdecimal does not have a min value
 	}
 
 	@Override
-	public BigDecimal maxNative() {
+	public BigDecimal componentMax() {
 
 		return null;  // a bigdecimal does not have a max value
 	}

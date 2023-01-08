@@ -46,7 +46,7 @@ public interface NativeByteSupport extends HasComponents {
 	
 	void setNative(int component, byte val);
 	
-	Byte minNative();  // null means there is no min
+	Byte componentMin();  // null means there is no min
 	
-	Byte maxNative();  // null means there is no max
+	Byte componentMax();  // null means there is no max
 }

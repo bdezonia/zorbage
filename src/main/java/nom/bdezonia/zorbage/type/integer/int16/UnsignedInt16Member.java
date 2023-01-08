@@ -728,13 +728,13 @@ public final class UnsignedInt16Member
 	}
 
 	@Override
-	public Integer minNative() {
+	public Integer componentMin() {
 
 		return 0;
 	}
 
 	@Override
-	public Integer maxNative() {
+	public Integer componentMax() {
 
 		return null;
 	}

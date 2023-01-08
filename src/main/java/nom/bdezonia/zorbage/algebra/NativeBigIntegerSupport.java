@@ -48,7 +48,7 @@ public interface NativeBigIntegerSupport extends HasComponents {
 	
 	void setNative(int component, BigInteger val);
 	
-	BigInteger minNative();  // null means there is no min
+	BigInteger componentMin();  // null means there is no min
 	
-	BigInteger maxNative();  // null means there is no max
+	BigInteger componentMax();  // null means there is no max
 }

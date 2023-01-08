@@ -360,7 +360,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a) {
-			a.v = a.maxNative();
+			a.v = a.componentMax();
 		}
 	};
 
@@ -374,7 +374,7 @@ public class Float32Algebra
 	{
 		@Override
 		public void call(Float32Member a) {
-			a.v = a.minNative();
+			a.v = a.componentMin();
 		}
 	};
 

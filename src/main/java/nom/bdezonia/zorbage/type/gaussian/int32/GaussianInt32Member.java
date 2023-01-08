@@ -838,13 +838,13 @@ public class GaussianInt32Member
 	}
 
 	@Override
-	public Integer minNative() {
+	public Integer componentMin() {
 
 		return Integer.MIN_VALUE;
 	}
 
 	@Override
-	public Integer maxNative() {
+	public Integer componentMax() {
 
 		return Integer.MAX_VALUE;
 	}

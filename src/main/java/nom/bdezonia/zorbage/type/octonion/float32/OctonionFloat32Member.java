@@ -1978,13 +1978,13 @@ public final class OctonionFloat32Member
 	}
 
 	@Override
-	public Float minNative() {
+	public Float componentMin() {
 
 		return -Float.MAX_VALUE;
 	}
 
 	@Override
-	public Float maxNative() {
+	public Float componentMax() {
 
 		return Float.MAX_VALUE;
 	}

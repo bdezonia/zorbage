@@ -46,7 +46,7 @@ public interface NativeIntSupport extends HasComponents {
 	
 	void setNative(int component, int val);
 	
-	java.lang.Integer minNative();  // null means there is no min
+	java.lang.Integer componentMin();  // null means there is no min
 	
-	java.lang.Integer maxNative();  // null means there is no max
+	java.lang.Integer componentMax();  // null means there is no max
 }

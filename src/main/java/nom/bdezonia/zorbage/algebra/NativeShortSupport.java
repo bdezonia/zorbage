@@ -46,7 +46,7 @@ public interface NativeShortSupport extends HasComponents {
 	
 	void setNative(int component, short val);
 	
-	Short minNative();  // null means there is no min
+	Short componentMin();  // null means there is no min
 	
-	Short maxNative();  // null means there is no max
+	Short componentMax();  // null means there is no max
 }

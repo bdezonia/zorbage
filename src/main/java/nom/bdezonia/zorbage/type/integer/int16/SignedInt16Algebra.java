@@ -482,7 +482,7 @@ public class SignedInt16Algebra
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.v = a.maxNative();
+			a.v = a.componentMax();
 		}
 	};
 	
@@ -496,7 +496,7 @@ public class SignedInt16Algebra
 	{
 		@Override
 		public void call(SignedInt16Member a) {
-			a.v = a.minNative();
+			a.v = a.componentMin();
 		}
 	};
 	

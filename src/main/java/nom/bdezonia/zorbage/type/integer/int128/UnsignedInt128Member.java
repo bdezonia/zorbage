@@ -763,13 +763,13 @@ public final class UnsignedInt128Member
 	}
 
 	@Override
-	public BigInteger minNative() {
+	public BigInteger componentMin() {
 
 		return BigInteger.ZERO;
 	}
 
 	@Override
-	public BigInteger maxNative() {
+	public BigInteger componentMax() {
 
 		// TODO: test me!!!!!
 		

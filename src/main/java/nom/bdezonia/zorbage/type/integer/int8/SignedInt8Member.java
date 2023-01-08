@@ -722,13 +722,13 @@ public final class SignedInt8Member
 	}
 
 	@Override
-	public Byte minNative() {
+	public Byte componentMin() {
 
 		return Byte.MIN_VALUE;
 	}
 
 	@Override
-	public Byte maxNative() {
+	public Byte componentMax() {
 
 		return Byte.MAX_VALUE;
 	}

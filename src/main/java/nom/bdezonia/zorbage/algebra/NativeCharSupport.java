@@ -46,7 +46,7 @@ public interface NativeCharSupport extends HasComponents {
 	
 	void setNative(int component, char val);
 	
-	Character minNative();  // null means there is no min
+	Character componentMin();  // null means there is no min
 	
-	Character maxNative();  // null means there is no max
+	Character componentMax();  // null means there is no max
 }

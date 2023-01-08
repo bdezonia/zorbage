@@ -360,7 +360,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a) {
-			a.v = a.maxNative();
+			a.v = a.componentMax();
 		}
 	};
 
@@ -374,7 +374,7 @@ public class Float64Algebra
 	{
 		@Override
 		public void call(Float64Member a) {
-			a.v = a.minNative();
+			a.v = a.componentMin();
 		}
 	};
 

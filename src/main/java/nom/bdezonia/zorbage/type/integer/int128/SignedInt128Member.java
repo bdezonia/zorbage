@@ -759,7 +759,7 @@ public final class SignedInt128Member
 	}
 
 	@Override
-	public BigInteger minNative() {
+	public BigInteger componentMin() {
 
 		// TODO: test me!!!!!
 		
@@ -767,7 +767,7 @@ public final class SignedInt128Member
 	}
 
 	@Override
-	public BigInteger maxNative() {
+	public BigInteger componentMax() {
 
 		// TODO: test me!!!!!
 		

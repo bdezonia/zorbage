@@ -46,7 +46,7 @@ public interface NativeBooleanSupport extends HasComponents {
 	
 	void setNative(int component, boolean val);
 	
-	Boolean minNative();  // null means there is no min
+	Boolean componentMin();  // null means there is no min
 	
-	Boolean maxNative();  // null means there is no max
+	Boolean componentMax();  // null means there is no max
 }

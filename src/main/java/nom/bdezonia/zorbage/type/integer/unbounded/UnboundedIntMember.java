@@ -724,13 +724,13 @@ public final class UnboundedIntMember
 	}
 
 	@Override
-	public BigInteger minNative() {
+	public BigInteger componentMin() {
 
 		return null; // unbounded ints have no min
 	}
 
 	@Override
-	public BigInteger maxNative() {
+	public BigInteger componentMax() {
 
 		return null; // unbounded ints have no max
 	}

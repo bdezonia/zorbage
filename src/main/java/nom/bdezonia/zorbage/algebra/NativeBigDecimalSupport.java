@@ -48,7 +48,7 @@ public interface NativeBigDecimalSupport extends HasComponents {
 	
 	void setNative(int component, BigDecimal val);
 	
-	BigDecimal minNative();  // null means there is no min
+	BigDecimal componentMin();  // null means there is no min
 	
-	BigDecimal maxNative();  // null means there is no max
+	BigDecimal componentMax();  // null means there is no max
 }
