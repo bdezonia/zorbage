@@ -63,6 +63,8 @@ public class ReplaceIf {
 
 				if (cond.call(a))
 					algebra.assign().call(replacement, b);
+				else
+					algebra.assign().call(a, b);
 			}
 		};
 		
