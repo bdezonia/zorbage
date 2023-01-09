@@ -56,19 +56,7 @@ public class ReplaceIf {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Function1<Boolean,U> cond, U replacement, IndexedDataSource<U> storage)
 	{
-		Procedure2<U,U> proc = new Procedure2<U, U>() {
-			
-			@Override
-			public void call(U a, U b) {
-
-				if (cond.call(a))
-					algebra.assign().call(replacement, b);
-				else
-					algebra.assign().call(a, b);
-			}
-		};
-		
-		Transform2.compute(algebra, proc, storage, storage);
+		ReplaceCopyIf.compute(algebra, cond, replacement, storage, storage);
 	}
 
 }
