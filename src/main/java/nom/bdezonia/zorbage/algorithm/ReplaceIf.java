@@ -33,7 +33,6 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
-import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * 
