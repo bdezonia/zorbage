@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface GetAsLongArrayLossy {
 
-	short getAsLongArrayLossy();
+	long[] getAsLongArrayLossy();
 }
