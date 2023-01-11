@@ -57,7 +57,7 @@ public final class SignedInt64Member
 		Settable<SignedInt64Member>, Gettable<SignedInt64Member>,
 		UniversalRepresentation, NumberMember<SignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Long>, GetReal<SignedInt64Member>,
+		SetReal<SignedInt64Member>, GetReal<SignedInt64Member>,
 		SetFromLong,
 		GetAsLong, GetAsBigInteger, GetAsBigDecimal,
 		GetAsLongArray, NativeLongSupport
@@ -662,7 +662,7 @@ public final class SignedInt64Member
 	}
 
 	@Override
-	public void setR(Long val) {
+	public void setR(SignedInt64Member val) {
 		setV(val);
 	}
 

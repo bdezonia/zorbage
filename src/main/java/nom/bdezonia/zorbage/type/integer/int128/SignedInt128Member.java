@@ -58,7 +58,7 @@ public final class SignedInt128Member
 		Settable<SignedInt128Member>, Gettable<SignedInt128Member>,
 		UniversalRepresentation, NumberMember<SignedInt128Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
+		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigIntegerArray, NativeBigIntegerSupport
 {
@@ -697,8 +697,8 @@ public final class SignedInt128Member
 	}
 
 	@Override
-	public void setR(BigInteger val) {
-		setV(val);
+	public void setR(UnboundedIntMember val) {
+		setV(val.v());
 	}
 
 	@Override

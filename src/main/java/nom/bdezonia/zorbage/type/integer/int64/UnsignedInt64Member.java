@@ -58,7 +58,7 @@ public final class UnsignedInt64Member
 		Settable<UnsignedInt64Member>, Gettable<UnsignedInt64Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt64Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
+		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
 		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigDecimal, GetAsBigIntegerArray,
 		NativeBigIntegerSupport
@@ -682,8 +682,8 @@ public final class UnsignedInt64Member
 	}
 
 	@Override
-	public void setR(BigInteger val) {
-		setV(val);
+	public void setR(UnboundedIntMember val) {
+		setV(val.v());
 	}
 
 	@Override

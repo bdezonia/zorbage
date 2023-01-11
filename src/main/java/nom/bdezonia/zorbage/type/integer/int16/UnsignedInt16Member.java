@@ -59,7 +59,7 @@ public final class UnsignedInt16Member
 		Settable<UnsignedInt16Member>, Gettable<UnsignedInt16Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt16Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt32Member>,
+		SetReal<SignedInt32Member>, GetReal<SignedInt32Member>,
 		SetFromInt, SetFromLong,
 		GetAsInt, GetAsIntArray, NativeIntSupport
 {
@@ -667,8 +667,8 @@ public final class UnsignedInt16Member
 	}
 
 	@Override
-	public void setR(Integer val) {
-		setV(val);
+	public void setR(SignedInt32Member val) {
+		setV(val.v());
 	}
 
 	@Override

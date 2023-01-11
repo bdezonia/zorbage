@@ -58,7 +58,7 @@ public final class SignedInt32Member
 		Settable<SignedInt32Member>, Gettable<SignedInt32Member>,
 		UniversalRepresentation, NumberMember<SignedInt32Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt32Member>,
+		SetReal<SignedInt32Member>, GetReal<SignedInt32Member>,
 		SetFromInt, SetFromLong,
 		GetAsInt, GetAsIntArray, NativeIntSupport
 {
@@ -661,7 +661,7 @@ public final class SignedInt32Member
 	}
 
 	@Override
-	public void setR(Integer val) {
+	public void setR(SignedInt32Member val) {
 		setV(val);
 	}
 

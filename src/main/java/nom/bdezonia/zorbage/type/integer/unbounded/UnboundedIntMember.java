@@ -56,7 +56,7 @@ public final class UnboundedIntMember
 		Settable<UnboundedIntMember>, Gettable<UnboundedIntMember>,
 		UniversalRepresentation, NumberMember<UnboundedIntMember>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<BigInteger>, GetReal<UnboundedIntMember>,
+		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
 		BigIntegerCoder,
 		SetFromBigInteger, SetFromLong,
 		GetAsBigInteger, GetAsBigIntegerArray, NativeBigIntegerSupport
@@ -648,7 +648,7 @@ public final class UnboundedIntMember
 	}
 
 	@Override
-	public void setR(BigInteger val) {
+	public void setR(UnboundedIntMember val) {
 		setV(val);
 	}
 

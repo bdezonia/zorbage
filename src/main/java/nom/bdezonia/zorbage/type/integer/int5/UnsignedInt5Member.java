@@ -30,7 +30,6 @@
  */
 package nom.bdezonia.zorbage.type.integer.int5;
 
-import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +59,7 @@ public final class UnsignedInt5Member
 		Settable<UnsignedInt5Member>, Gettable<UnsignedInt5Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt5Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt8Member>,
+		SetReal<SignedInt8Member>, GetReal<SignedInt8Member>,
 		SetFromInt, SetFromLong,
 		GetAsByte, GetAsByteArray, NativeByteSupport
 {
@@ -744,8 +743,8 @@ public final class UnsignedInt5Member
 	}
 
 	@Override
-	public void setR(Integer val) {
-		setV(val);
+	public void setR(SignedInt8Member val) {
+		setV(val.v());
 	}
 
 	@Override

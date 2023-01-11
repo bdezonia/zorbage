@@ -30,7 +30,6 @@
  */
 package nom.bdezonia.zorbage.type.integer.int13;
 
-import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -60,7 +59,7 @@ public final class UnsignedInt13Member
 		Settable<UnsignedInt13Member>, Gettable<UnsignedInt13Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt13Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt16Member>,
+		SetReal<SignedInt16Member>, GetReal<SignedInt16Member>,
 		SetFromInt, SetFromLong,
 		GetAsShort, GetAsShortArray, NativeShortSupport
 {
@@ -878,8 +877,8 @@ public final class UnsignedInt13Member
 	}
 
 	@Override
-	public void setR(Integer val) {
-		setV(val);
+	public void setR(SignedInt16Member val) {
+		setV(val.v());
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public final class UnsignedInt32Member
 		Settable<UnsignedInt32Member>, Gettable<UnsignedInt32Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt32Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Long>, GetReal<SignedInt64Member>,
+		SetReal<SignedInt64Member>, GetReal<SignedInt64Member>,
 		SetFromLong,
 		GetAsLong, GetAsLongArray, NativeLongSupport
 {
@@ -666,8 +666,8 @@ public final class UnsignedInt32Member
 	}
 
 	@Override
-	public void setR(Long val) {
-		setV(val);
+	public void setR(SignedInt64Member val) {
+		setV(val.v());
 	}
 
 	@Override

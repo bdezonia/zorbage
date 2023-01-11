@@ -30,7 +30,6 @@
  */
 package nom.bdezonia.zorbage.type.integer.int8;
 
-import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -59,7 +58,7 @@ public final class UnsignedInt8Member
 		Settable<UnsignedInt8Member>, Gettable<UnsignedInt8Member>,
 		UniversalRepresentation, NumberMember<UnsignedInt8Member>,
 		PrimitiveConversion, HighPrecRepresentation,
-		SetReal<Integer>, GetReal<SignedInt16Member>,
+		SetReal<SignedInt16Member>, GetReal<SignedInt16Member>,
 		SetFromInt, SetFromLong,
 		GetAsShort, GetAsShortArray, NativeShortSupport
 {
@@ -668,8 +667,8 @@ public final class UnsignedInt8Member
 	}
 
 	@Override
-	public void setR(Integer val) {
-		setV(val);
+	public void setR(SignedInt16Member val) {
+		setV(val.v());
 	}
 
 	@Override
