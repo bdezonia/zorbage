@@ -80,6 +80,11 @@ public class ThreadingUtils {
 		if (elemsPerThread == 0)
 			elemsPerThread = 1;
 
-		return new Tuple2<>(numThreads, elemsPerThread);
+		int threads = (int) (numElems / elemsPerThread);
+		
+		if (numElems % elemsPerThread != 0)
+			threads++;
+		
+		return new Tuple2<>(threads, elemsPerThread);
 	}
 }
