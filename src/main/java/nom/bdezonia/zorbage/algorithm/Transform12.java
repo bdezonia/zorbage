@@ -106,6 +106,17 @@ public class Transform12 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G, HH extends Algebra<HH,H>, H, II extends Algebra<II,I>, I, JJ extends Algebra<JJ,J>, J, KK extends Algebra<KK,K>, K, LL extends Algebra<LL,L>, L>
 		void compute(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, HH algH, II algI, JJ algJ, KK algK, LL algL, Procedure12<A,B,C,D,E,F,G,H,I,J,K,L> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g, IndexedDataSource<H> h, IndexedDataSource<I> ii, IndexedDataSource<J> j, IndexedDataSource<K> k, IndexedDataSource<L> l)
 	{
+		long sz = a.size();
+		
+		if (sz == 0)
+			return;
+
+		if (b.size() != sz || c.size() != sz || d.size() != sz ||
+				e.size() != sz || f.size() != sz || g.size() != sz ||
+				h.size() != sz || ii.size() != sz || j.size() != sz ||
+				k.size() != sz || l.size() != sz)
+			throw new IllegalArgumentException("mismatched list sizes");
+		
 		Tuple2<Integer,Long> arrangement =
 				ThreadingUtils.arrange(a.size(),
 										a.accessWithOneThread() ||

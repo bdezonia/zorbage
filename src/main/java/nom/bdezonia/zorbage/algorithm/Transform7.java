@@ -91,6 +91,15 @@ public class Transform7 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C, DD extends Algebra<DD,D>, D, EE extends Algebra<EE,E>, E, FF extends Algebra<FF,F>, F, GG extends Algebra<GG,G>, G>
 		void compute(AA algA, BB algB, CC algC, DD algD, EE algE, FF algF, GG algG, Procedure7<A,B,C,D,E,F,G> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c, IndexedDataSource<D> d, IndexedDataSource<E> e, IndexedDataSource<F> f, IndexedDataSource<G> g)
 	{
+		long sz = a.size();
+		
+		if (sz == 0)
+			return;
+
+		if (b.size() != sz || c.size() != sz || d.size() != sz ||
+				e.size() != sz || f.size() != sz || g.size() != sz)
+			throw new IllegalArgumentException("mismatched list sizes");
+		
 		Tuple2<Integer,Long> arrangement =
 				ThreadingUtils.arrange(a.size(),
 										a.accessWithOneThread() ||
