@@ -30,12 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
+import java.math.BigInteger;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface SetFromDoubleLossy {
+public interface GetAsBigIntegerArrayExact {
 
-	void setFromDoubleLossy(double... vals);
+	BigInteger[] getAsBigIntegerArrayExact();
 }

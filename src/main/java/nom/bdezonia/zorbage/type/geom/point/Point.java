@@ -48,7 +48,30 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class Point
 	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>,
 		Allocatable<Point>, Duplicatable<Point>, NumberMember<Point>,
-		SetFromDouble, GetAsDoubleArray
+		NativeDoubleSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private double[] vector;
 	

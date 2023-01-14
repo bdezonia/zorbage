@@ -58,9 +58,31 @@ public final class QuaternionFloat64Member
 		Settable<QuaternionFloat64Member>, Gettable<QuaternionFloat64Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray, NativeDoubleSupport
+		NativeDoubleSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private double r, i, j, k;
 	
 	public QuaternionFloat64Member() {

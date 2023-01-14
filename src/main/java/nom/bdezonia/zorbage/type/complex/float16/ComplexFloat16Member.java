@@ -58,7 +58,26 @@ public final class ComplexFloat16Member
 		Settable<ComplexFloat16Member>, Gettable<ComplexFloat16Member>,
 		NumberMember<ComplexFloat16Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float16Member>, GetComplex<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromShort,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	

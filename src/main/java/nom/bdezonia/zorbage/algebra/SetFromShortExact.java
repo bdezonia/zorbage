@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface GetAsLongLossy {
+public interface SetFromShortExact {
 
-	long getAsLongLossy();
+	void setFromShortExact(short... vals);
 }

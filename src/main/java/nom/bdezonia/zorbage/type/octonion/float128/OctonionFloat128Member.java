@@ -58,10 +58,31 @@ public final class OctonionFloat128Member
 		Settable<OctonionFloat128Member>, Gettable<OctonionFloat128Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float128Member>, GetOctonion<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsLongArrayExact,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private final Float128Member r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat128Member() {

@@ -57,7 +57,30 @@ public final class ComplexFloat32Member
 		Settable<ComplexFloat32Member>, Gettable<ComplexFloat32Member>,
 		NumberMember<ComplexFloat32Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float32Member>, GetComplex<Float32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigIntegerArrayExact,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private float r, i;
 	

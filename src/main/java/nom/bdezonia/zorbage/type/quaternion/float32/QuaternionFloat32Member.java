@@ -58,9 +58,30 @@ public final class QuaternionFloat32Member
 		Settable<QuaternionFloat32Member>, Gettable<QuaternionFloat32Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float32Member>, GetQuaternion<Float32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private float r, i, j, k;
 	
 	public QuaternionFloat32Member() {

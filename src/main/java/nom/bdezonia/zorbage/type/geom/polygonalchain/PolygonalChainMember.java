@@ -51,7 +51,9 @@ public class PolygonalChainMember
 	implements
 		ByteCoder, Settable<PolygonalChainMember>, Gettable<PolygonalChainMember>,
 		Allocatable<PolygonalChainMember>, Duplicatable<PolygonalChainMember>,
-		SetFromFloat, GetAsFloatArray, NumberMember<PolygonalChainMember>
+		NumberMember<PolygonalChainMember>,
+		SetFromFloat,
+		GetAsFloatArray
 {
 	float boundsValid;
 	float minx, miny, minz, maxx, maxy, maxz;

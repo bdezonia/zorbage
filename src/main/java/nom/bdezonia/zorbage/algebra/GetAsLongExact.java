@@ -30,14 +30,12 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
-import java.math.BigInteger;
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface GetAsBigIntegerLossy {
+public interface GetAsLongExact {
 
-	BigInteger getAsBigIntegerLossy();
+	long getAsLongExact();
 }

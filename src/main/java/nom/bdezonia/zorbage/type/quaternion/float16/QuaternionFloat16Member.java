@@ -59,7 +59,26 @@ public final class QuaternionFloat16Member
 		Settable<QuaternionFloat16Member>, Gettable<QuaternionFloat16Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromShort,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	

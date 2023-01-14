@@ -57,7 +57,30 @@ public final class ComplexFloat64Member
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float64Member>, GetComplex<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray, NativeDoubleSupport
+		NativeDoubleSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private double r, i;
 	

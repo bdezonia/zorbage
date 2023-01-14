@@ -59,7 +59,26 @@ public final class OctonionFloat16Member
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromShort,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	

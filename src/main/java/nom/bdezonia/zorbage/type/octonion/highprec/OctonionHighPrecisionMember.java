@@ -58,10 +58,33 @@ public final class OctonionHighPrecisionMember
 		Settable<OctonionHighPrecisionMember>, Gettable<OctonionHighPrecisionMember>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<HighPrecisionMember>, GetOctonion<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray, NativeBigDecimalSupport
+		NativeBigDecimalSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigIntegerExact,
+		SetFromBigDecimal,
+		SetFromBigDecimalExact,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionHighPrecisionMember() {

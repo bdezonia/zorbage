@@ -30,6 +30,9 @@
  */
 package nom.bdezonia.zorbage.type.color;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -45,7 +48,29 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
 public class ArgbMember
 	implements ByteCoder, Allocatable<ArgbMember>, Duplicatable<ArgbMember>,
 		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>,
-		SetFromInt, GetAsIntArray
+		SetFromByte,
+		SetFromShort,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsShortArrayExact,
+		GetAsIntArray,
+		GetAsIntArrayExact,
+		GetAsLongArray,
+		GetAsLongArrayExact,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigIntegerArrayExact,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private byte a, r, g, b;
 	
@@ -206,5 +231,161 @@ public class ArgbMember
 	@Override
 	public int[] getAsIntArray() {
 		return new int[] {a(), r(), g(), b()};
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+
+		return new BigDecimal[] {BigDecimal.valueOf(a()), BigDecimal.valueOf(r()),
+									BigDecimal.valueOf(g()), BigDecimal.valueOf(b())};
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArrayExact() {
+
+		return getAsBigIntegerArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+
+		return new BigInteger[] {BigInteger.valueOf(a()), BigInteger.valueOf(r()),
+									BigInteger.valueOf(g()), BigInteger.valueOf(b())};
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		
+		return new double[] {a(), r(), g(), b()};
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+
+		return getAsFloatArray();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+
+		return new float[] {a(), r(), g(), b()};
+	}
+
+	@Override
+	public long[] getAsLongArrayExact() {
+
+		return getAsLongArray();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		
+		return new long[] {a(), r(), g(), b()};
+	}
+
+	@Override
+	public int[] getAsIntArrayExact() {
+
+		return getAsIntArray();
+	}
+
+	@Override
+	public short[] getAsShortArrayExact() {
+
+		return getAsShortArray();
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+
+		return new short[] {(short)a(), (short)r(), (short) g(), (short)b()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		
+		return new byte[] {(byte) a(), (byte) r(), (byte) g(), (byte) b()};
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA(vals[0].intValue());
+		setR(vals[1].intValue());
+		setG(vals[2].intValue());
+		setB(vals[3].intValue());
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA(vals[0].intValue());
+		setR(vals[1].intValue());
+		setG(vals[2].intValue());
+		setB(vals[3].intValue());
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA((int) vals[0]);
+		setR((int) vals[1]);
+		setG((int) vals[2]);
+		setB((int) vals[3]);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA((int) vals[0]);
+		setR((int) vals[1]);
+		setG((int) vals[2]);
+		setB((int) vals[3]);
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA((int) vals[0]);
+		setR((int) vals[1]);
+		setG((int) vals[2]);
+		setB((int) vals[3]);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA(vals[0]);
+		setR(vals[1]);
+		setG(vals[2]);
+		setB(vals[3]);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		if (vals.length != 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setA(vals[0]);
+		setR(vals[1]);
+		setG(vals[2]);
+		setB(vals[3]);
 	}
 }

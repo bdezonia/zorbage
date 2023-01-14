@@ -58,9 +58,32 @@ public final class OctonionFloat64Member
 		Settable<OctonionFloat64Member>, Gettable<OctonionFloat64Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float64Member>, GetOctonion<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray, NativeDoubleSupport
+		NativeDoubleSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private double r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat64Member() {

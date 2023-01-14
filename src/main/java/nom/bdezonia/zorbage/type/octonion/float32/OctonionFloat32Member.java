@@ -58,9 +58,30 @@ public final class OctonionFloat32Member
 		Settable<OctonionFloat32Member>, Gettable<OctonionFloat32Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float32Member>, GetOctonion<Float32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private float r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat32Member() {

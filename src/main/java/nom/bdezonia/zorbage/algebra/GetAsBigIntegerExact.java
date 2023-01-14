@@ -37,7 +37,7 @@ import java.math.BigInteger;
  * @author Barry DeZonia
  *
  */
-public interface SetFromBigIntegerLossy {
+public interface GetAsBigIntegerExact {
 
-	void setFromBigIntegerLossy(BigInteger... vals);
+	BigInteger getAsBigIntegerExact();
 }
