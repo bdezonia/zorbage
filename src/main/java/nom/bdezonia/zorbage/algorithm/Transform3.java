@@ -79,6 +79,14 @@ public class Transform3 {
 	public static <AA extends Algebra<AA,A>, A, BB extends Algebra<BB,B>, B, CC extends Algebra<CC,C>, C>
 		void compute(AA algA, BB algB, CC algC, Procedure3<A,B,C> proc, IndexedDataSource<A> a, IndexedDataSource<B> b, IndexedDataSource<C> c)
 	{
+		long sz = a.size();
+		
+		if (sz == 0)
+			return;
+
+		if (b.size() != sz || c.size() != sz)
+			throw new IllegalArgumentException("mismatched list sizes");
+		
 		Tuple2<Integer,Long> arrangement =
 				ThreadingUtils.arrange(a.size(),
 										a.accessWithOneThread() ||

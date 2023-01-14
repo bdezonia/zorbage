@@ -159,6 +159,14 @@ public class TransformWithConstant {
 	public static <AA extends Algebra<AA,A>, A, B, CA extends Algebra<CA,C>, C>
 		void compute(AA algA, CA algC, Procedure3<A,B,C> proc, IndexedDataSource<A> src, B fixedValue, IndexedDataSource<C> dst)
 	{
+		long sz = src.size();
+		
+		if (sz == 0)
+			return;
+
+		if (dst.size() != sz)
+			throw new IllegalArgumentException("mismatched list sizes");
+		
 		Tuple2<Integer,Long> arrangement =
 				ThreadingUtils.arrange(src.size(),
 										src.accessWithOneThread() ||
