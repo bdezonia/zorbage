@@ -59,6 +59,11 @@ public class Transform1 {
 	public static <AA extends Algebra<AA,A>, A>
 		void compute(AA algA, Procedure1<A> proc, IndexedDataSource<A> a)
 	{
+		long sz = a.size();
+		
+		if (sz == 0)
+			return;
+
 		Tuple2<Integer,Long> arrangement =
 				ThreadingUtils.arrange(a.size(),
 										a.accessWithOneThread());
@@ -71,7 +76,7 @@ public class Transform1 {
 			r.run();
 		}
 		else {
-	
+			
 			final Thread[] threads = new Thread[pieces];
 			long start = 0;
 			for (int i = 0; i < pieces; i++) {
@@ -126,6 +131,7 @@ public class Transform1 {
 		A valueA = algA.construct();
 		final long aSize = a.size();
 		for (long i = 0; i < aSize; i++) {
+			a.get(i, valueA);
 			proc.call(valueA);
 			a.set(i, valueA);
 		}
