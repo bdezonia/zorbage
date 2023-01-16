@@ -871,7 +871,7 @@ public final class ComplexFloat128Member
 
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
-		return new BigDecimal[] {r().v(), i().v()};
+		return new BigDecimal[] {r().getAsBigDecimal(), i().getAsBigDecimal()};
 	}
 
 	@Override
@@ -881,37 +881,37 @@ public final class ComplexFloat128Member
 
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
-		return new BigInteger[] {r().v().toBigInteger(), i().v().toBigInteger()};
+		return new BigInteger[] {r().getAsBigInteger(), i().getAsBigInteger()};
 	}
 
 	@Override
 	public double[] getAsDoubleArray() {
-		return new double[] {r().v().doubleValue(), i().v().doubleValue()};
+		return new double[] {r().getAsDouble(), i().getAsDouble()};
 	}
 
 	@Override
 	public float[] getAsFloatArray() {
-		return new float[] {r().v().floatValue(), i().v().floatValue()};
+		return new float[] {r().getAsFloat(), i().getAsFloat()};
 	}
 
 	@Override
 	public long[] getAsLongArray() {
-		return new long[] {r().v().longValue(), i().v().longValue()};
+		return new long[] {r().getAsLong(), i().getAsLong()};
 	}
 
 	@Override
 	public int[] getAsIntArray() {
-		return new int[] {r().v().intValue(), i().v().intValue()};
+		return new int[] {r().getAsInt(), i().getAsInt()};
 	}
 
 	@Override
 	public short[] getAsShortArray() {
-		return new short[] {r().v().shortValue(), i().v().shortValue()};
+		return new short[] {r().getAsShort(), i().getAsShort()};
 	}
 
 	@Override
 	public byte[] getAsByteArray() {
-		return new byte[] {r().v().byteValue(), i().v().byteValue()};
+		return new byte[] {r().getAsByte(), i().getAsByte()};
 	}
 
 	@Override
