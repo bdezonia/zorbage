@@ -268,10 +268,7 @@ public final class Float128Member
 
 	@Override
 	public void toHighPrec(HighPrecisionMember output) {
-		if (classification == POSINF || classification == NEGINF || classification == NAN)
-			throw new java.lang.NumberFormatException("nan/posinf/neginf cannot encode as a high precision decimal");
-		// can use num with classifications NORMAL, POSZERO, and NEGZERO because they are all accurate
-		output.setV(num);
+		output.setV(getAsBigDecimal());
 	}
 
 	@Override
@@ -526,7 +523,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().byteValue();
+		if (component == 0) return getAsByte();
 		return 0;
 	}
 
@@ -535,7 +532,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().shortValue();
+		if (component == 0) return getAsShort();
 		return 0;
 	}
 
@@ -544,7 +541,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().intValue();
+		if (component == 0) return getAsInt();
 		return 0;
 	}
 
@@ -553,7 +550,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().longValue();
+		if (component == 0) return getAsLong();
 		return 0;
 	}
 
@@ -562,7 +559,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().floatValue();
+		if (component == 0) return getAsFloat();
 		return 0;
 	}
 
@@ -571,7 +568,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().doubleValue();
+		if (component == 0) return getAsDouble();
 		return 0;
 	}
 
@@ -580,7 +577,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().toBigInteger();
+		if (component == 0) return getAsBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -589,7 +586,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v();
+		if (component == 0) return getAsBigDecimal();
 		return BigDecimal.ZERO;
 	}
 
@@ -611,7 +608,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().byteValue();
+			return getAsByte();
 		}
 	}
 
@@ -633,7 +630,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().shortValue();
+			return getAsShort();
 		}
 	}
 
@@ -655,7 +652,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().intValue();
+			return getAsInt();
 		}
 	}
 
@@ -677,7 +674,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().longValue();
+			return getAsLong();
 		}
 	}
 
@@ -699,7 +696,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().floatValue();
+			return getAsFloat();
 		}
 	}
 
@@ -721,7 +718,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().doubleValue();
+			return getAsDouble();
 		}
 	}
 
@@ -743,7 +740,7 @@ public final class Float128Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return v().toBigInteger();
+			return getAsBigInteger();
 		}
 	}
 
@@ -765,7 +762,7 @@ public final class Float128Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return v();
+			return getAsBigDecimal();
 		}
 	}
 
