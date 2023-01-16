@@ -1288,4 +1288,194 @@ public final class QuaternionFloat32Member
 
 		return Float.MAX_VALUE;
 	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] { BigDecimal.valueOf(r()), BigDecimal.valueOf(i()), BigDecimal.valueOf(j()), BigDecimal.valueOf(k()) };
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] { BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger(), BigDecimal.valueOf(j()).toBigInteger(), BigDecimal.valueOf(k()).toBigInteger() };
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {(double) r(), (double) i(), (double) j(), (double) k() };
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {(long) r(), (long) i(), (long) j(), (long) k() };
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {(int) r(), (int) i(), (int) j(), (int) k() };
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {(short) r(), (short) i(), (short) j(), (short) k() };
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {(byte) r(), (byte) i(), (byte) j(), (byte) k() };
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0].floatValue());
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1].floatValue());
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2].floatValue());
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3].floatValue());
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0].floatValue());
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1].floatValue());
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2].floatValue());
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3].floatValue());
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+	}
 }
