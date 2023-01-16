@@ -227,8 +227,13 @@ public final class Float128Member
 	
 	@Override
 	public BigDecimal getAsBigDecimal() {
-		if (isNan()) {
-			return BigDecimal.ZERO;
+		if (!isFinite()) {
+			if (isNegative())
+				return MIN_NORMAL;
+			else if (isPositive())
+				return MAX_NORMAL;
+			else
+				return BigDecimal.ZERO; // NAN
 		}
 		return v();
 	}
@@ -1235,8 +1240,13 @@ public final class Float128Member
 
 	@Override
 	public BigInteger getAsBigInteger() {
-		if (isNan()) {
-			return BigInteger.ZERO;
+		if (!isFinite()) {
+			if (isNegative())
+				return MIN_NORMAL.toBigInteger();
+			else if (isPositive())
+				return MAX_NORMAL.toBigInteger();
+			else
+				return BigInteger.ZERO; // NAN
 		}
 		return v().toBigInteger();
 	}
