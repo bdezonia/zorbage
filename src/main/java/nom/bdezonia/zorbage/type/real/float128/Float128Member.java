@@ -227,6 +227,9 @@ public final class Float128Member
 	
 	@Override
 	public BigDecimal getAsBigDecimal() {
+		if (isNan()) {
+			return BigDecimal.ZERO;
+		}
 		return v();
 	}
 	
@@ -1232,6 +1235,9 @@ public final class Float128Member
 
 	@Override
 	public BigInteger getAsBigInteger() {
+		if (isNan()) {
+			return BigInteger.ZERO;
+		}
 		return v().toBigInteger();
 	}
 
@@ -1242,6 +1248,14 @@ public final class Float128Member
 
 	@Override
 	public double getAsDouble() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Double.NEGATIVE_INFINITY;
+			else if (isPositive())
+				return Double.POSITIVE_INFINITY;
+			else
+				return Double.NaN; // NAN
+		}
 		return v().doubleValue();
 	}
 
@@ -1252,6 +1266,14 @@ public final class Float128Member
 
 	@Override
 	public float getAsFloat() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Float.NEGATIVE_INFINITY;
+			else if (isPositive())
+				return Float.POSITIVE_INFINITY;
+			else
+				return Float.NaN; // NAN
+		}
 		return v().floatValue();
 	}
 
@@ -1262,6 +1284,14 @@ public final class Float128Member
 
 	@Override
 	public long getAsLong() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Long.MIN_VALUE;
+			else if (isPositive())
+				return Long.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
 		return v().longValue();
 	}
 
@@ -1272,6 +1302,14 @@ public final class Float128Member
 
 	@Override
 	public int getAsInt() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Integer.MIN_VALUE;
+			else if (isPositive())
+				return Integer.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
 		return v().intValue();
 	}
 
@@ -1282,6 +1320,14 @@ public final class Float128Member
 
 	@Override
 	public short getAsShort() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Short.MIN_VALUE;
+			else if (isPositive())
+				return Short.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
 		return v().shortValue();
 	}
 
@@ -1292,6 +1338,14 @@ public final class Float128Member
 
 	@Override
 	public byte getAsByte() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Byte.MIN_VALUE;
+			else if (isPositive())
+				return Byte.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
 		return v().byteValue();
 	}
 
