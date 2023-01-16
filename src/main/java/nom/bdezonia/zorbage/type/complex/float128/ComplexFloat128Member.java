@@ -512,8 +512,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().byteValue();
-		if (component == 1) return i.v().byteValue();
+		if (component == 0) return r.getAsByte();
+		if (component == 1) return i.getAsByte();
 		return 0;
 	}
 
@@ -522,8 +522,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().shortValue();
-		if (component == 1) return i.v().shortValue();
+		if (component == 0) return r.getAsShort();
+		if (component == 1) return i.getAsShort();
 		return 0;
 	}
 
@@ -532,8 +532,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().intValue();
-		if (component == 1) return i.v().intValue();
+		if (component == 0) return r.getAsInt();
+		if (component == 1) return i.getAsInt();
 		return 0;
 	}
 
@@ -542,8 +542,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().longValue();
-		if (component == 1) return i.v().longValue();
+		if (component == 0) return r.getAsLong();
+		if (component == 1) return i.getAsLong();
 		return 0;
 	}
 
@@ -552,8 +552,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().floatValue();
-		if (component == 1) return i.v().floatValue();
+		if (component == 0) return r.getAsFloat();
+		if (component == 1) return i.getAsFloat();
 		return 0;
 	}
 
@@ -562,8 +562,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().doubleValue();
-		if (component == 1) return i.v().doubleValue();
+		if (component == 0) return r.getAsDouble();
+		if (component == 1) return i.getAsDouble();
 		return 0;
 	}
 
@@ -572,8 +572,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().toBigInteger();
-		if (component == 1) return i.v().toBigInteger();
+		if (component == 0) return r.getAsBigInteger();
+		if (component == 1) return i.getAsBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -582,8 +582,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v();
-		if (component == 1) return i.v();
+		if (component == 0) return r.getAsBigDecimal();
+		if (component == 1) return i.getAsBigDecimal();
 		return BigDecimal.ZERO;
 	}
 
@@ -605,8 +605,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().byteValue();
-			else return i.v().byteValue();
+			if (component == 0) return r.getAsByte();
+			else return i.getAsByte();
 		}
 	}
 
@@ -628,8 +628,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().shortValue();
-			else return i.v().shortValue();
+			if (component == 0) return r.getAsShort();
+			else return i.getAsShort();
 		}
 	}
 
@@ -651,8 +651,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().intValue();
-			else return i.v().intValue();
+			if (component == 0) return r.getAsInt();
+			else return i.getAsInt();
 		}
 	}
 
@@ -674,8 +674,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().longValue();
-			else return i.v().longValue();
+			if (component == 0) return r.getAsLong();
+			else return i.getAsLong();
 		}
 	}
 
@@ -697,8 +697,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().floatValue();
-			else return i.v().floatValue();
+			if (component == 0) return r.getAsFloat();
+			else return i.getAsFloat();
 		}
 	}
 
@@ -720,8 +720,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().doubleValue();
-			else return i.v().doubleValue();
+			if (component == 0) return r.getAsDouble();
+			else return i.getAsDouble();
 		}
 	}
 
@@ -743,8 +743,8 @@ public final class ComplexFloat128Member
 			return BigInteger.ZERO;
 		}
 		else {
-			if (component == 0) return r.v().toBigInteger();
-			else return i.v().toBigInteger();
+			if (component == 0) return r.getAsBigInteger();
+			else return i.getAsBigInteger();
 		}
 	}
 
@@ -766,8 +766,8 @@ public final class ComplexFloat128Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			if (component == 0) return r.v();
-			else return i.v();
+			if (component == 0) return r.getAsBigDecimal();
+			else return i.getAsBigDecimal();
 		}
 	}
 
