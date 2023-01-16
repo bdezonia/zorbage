@@ -58,6 +58,7 @@ public class RationalMember
 		Settable<RationalMember>, Gettable<RationalMember>,
 		UniversalRepresentation, NumberMember<RationalMember>,
 		PrimitiveConversion,
+		NativeBigIntegerSupport,
 		SetFromByte,
 		SetFromByteExact,
 		SetFromShort,
@@ -266,7 +267,7 @@ public class RationalMember
 
 	@Override
 	public int componentCount() {
-		return 1;
+		return 2;
 	}
 
 	@Override
@@ -940,5 +941,39 @@ public class RationalMember
 		if (vals.length != 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]), BigInteger.valueOf(vals[1]));
+	}
+
+	@Override
+	public BigInteger getNative(int component) {
+		
+		if (component == 0)
+			return n();
+		else if (component == 1)
+			return d();
+		else
+			throw new IllegalArgumentException("componenet number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, BigInteger val) {
+		
+		if (component == 0)
+			setV(val, d());
+		else if (component == 1)
+			setV(n(), val);
+		else
+			throw new IllegalArgumentException("componenet number out of bounds");
+	}
+
+	@Override
+	public BigInteger componentMin() {
+
+		return null; // bigintegers have no min
+	}
+
+	@Override
+	public BigInteger componentMax() {
+
+		return null; // bigintegers have no max
 	}
 }
