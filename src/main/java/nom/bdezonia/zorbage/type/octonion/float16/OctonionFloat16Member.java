@@ -61,6 +61,7 @@ public final class OctonionFloat16Member
 		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>,
 		NativeFloatSupport,
 		SetFromByte,
+		SetFromByteExact,
 		SetFromShort,
 		SetFromInt,
 		SetFromLong,
@@ -2323,5 +2324,10 @@ public final class OctonionFloat16Member
 			setK0(0);
 		else
 			setK0(vals[7]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
 	}
 }

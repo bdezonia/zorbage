@@ -60,6 +60,7 @@ public final class ComplexFloat16Member
 		UniversalRepresentation, SetComplex<Float16Member>, GetComplex<Float16Member>,
 		NativeFloatSupport,
 		SetFromByte,
+		SetFromByteExact,
 		SetFromShort,
 		SetFromInt,
 		SetFromLong,
@@ -991,5 +992,10 @@ public final class ComplexFloat16Member
 			setI(0);
 		else
 			setI(vals[1]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
 	}
 }

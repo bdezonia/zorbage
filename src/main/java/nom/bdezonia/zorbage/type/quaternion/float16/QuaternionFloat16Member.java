@@ -61,6 +61,7 @@ public final class QuaternionFloat16Member
 		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
 		NativeFloatSupport,
 		SetFromByte,
+		SetFromByteExact,
 		SetFromShort,
 		SetFromInt,
 		SetFromLong,
@@ -1481,5 +1482,10 @@ public final class QuaternionFloat16Member
 			setK(0);
 		else
 			setK(vals[3]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
 	}
 }

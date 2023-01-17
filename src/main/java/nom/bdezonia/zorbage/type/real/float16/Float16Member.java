@@ -63,7 +63,8 @@ public final class Float16Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>,
 		NativeFloatSupport,
-		SetFromByte,  // TODO - write a test and see if signed bytes are exact
+		SetFromByte,
+		SetFromByteExact,
 		SetFromShort,
 		SetFromInt,
 		SetFromLong,
@@ -912,5 +913,10 @@ public final class Float16Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
 	}
 }
