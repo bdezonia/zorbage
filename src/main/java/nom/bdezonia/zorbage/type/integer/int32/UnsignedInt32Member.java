@@ -65,7 +65,6 @@ public final class UnsignedInt32Member
 		SetFromShort,
 		SetFromShortExact,
 		SetFromInt,
-		SetFromIntExact,
 		SetFromLong,
 		SetFromFloat,
 		SetFromDouble,

@@ -66,7 +66,6 @@ public final class OctonionFloat64Member
 		SetFromInt,
 		SetFromIntExact,
 		SetFromLong,
-		SetFromLongExact,
 		SetFromFloat,
 		SetFromFloatExact,
 		SetFromDouble,
