@@ -2199,11 +2199,6 @@ public final class OctonionFloat64Member
 	}
 
 	@Override
-	public void setFromLongExact(long... vals) {
-		setFromLong(vals);
-	}
-
-	@Override
 	public void setFromIntExact(int... vals) {
 		setFromInt(vals);
 	}
