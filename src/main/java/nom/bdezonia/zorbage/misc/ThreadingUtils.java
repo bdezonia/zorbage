@@ -64,27 +64,20 @@ public class ThreadingUtils {
 		if (numElems <= 0)
 			throw new IllegalArgumentException("threading arrangement: num elems must be > 0");
 	
-		if (useOneThread)
+		if (numThreads == 1 || useOneThread)
 			return new Tuple2<>(1, numElems);
-					
-		if (numThreads > Integer.MAX_VALUE)
-			numThreads = Integer.MAX_VALUE;
-		
+
 		long elemsPerThread = numElems / numThreads;
 		
-		if (numElems % numThreads != 0)
-			elemsPerThread++;
+		long extraElems = numElems % numThreads;
 		
-		// not possible?
+		if (extraElems == 0) {
 		
-		if (elemsPerThread == 0)
-			elemsPerThread = 1;
-
-		int threads = (int) (numElems / elemsPerThread);
-		
-		if (numElems % elemsPerThread != 0)
-			threads++;
-		
-		return new Tuple2<>(threads, elemsPerThread);
+			return new Tuple2<>(numThreads, elemsPerThread);
+		}
+		else {
+			
+			return new Tuple2<>(numThreads, elemsPerThread+1);
+		}
 	}
 }

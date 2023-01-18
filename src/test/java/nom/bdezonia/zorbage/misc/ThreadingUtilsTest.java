@@ -47,56 +47,78 @@ public class ThreadingUtilsTest {
 	public void test() {
 
 		Tuple2<Integer,Long> tuple;
+		int numThreads;
+		long numElems;
 		
 		tuple = ThreadingUtils.arrange(1, 1, false);
-		assertTrue(tuple.a() * tuple.b() >= 1);
-		assertEquals(1, (int) tuple.a());
-		assertEquals(1, (long) tuple.b());
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 1);
+		assertEquals(1, numThreads);
+		assertEquals(1, numElems);
 		
 		tuple = ThreadingUtils.arrange(1, 50, false);
-		assertTrue(tuple.a() * tuple.b() >= 50);
-		assertEquals(1, (int) tuple.a());
-		assertEquals(50, (long) tuple.b());
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 50);
+		assertEquals(1, numThreads);
+		assertEquals(50, numElems);
 		
 		tuple = ThreadingUtils.arrange(2, 50, false);
-		assertTrue(tuple.a() * tuple.b() >= 50);
-		assertEquals(2, (int) tuple.a());
-		assertEquals(25, (long) tuple.b());
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 50);
+		assertEquals(2, numThreads);
+		assertEquals(25, numElems);
 		
 		tuple = ThreadingUtils.arrange(2, 51, false);
-		assertTrue(tuple.a() * tuple.b() >= 51);
-		assertEquals(2, (int) tuple.a());
-		assertEquals(26, (long) tuple.b());
-
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 51);
+		assertEquals(2, numThreads);
+		assertEquals(26, numElems);
+		
 		tuple = ThreadingUtils.arrange(400, 51, false);
-		assertTrue(tuple.a() * tuple.b() >= 51);
-		assertEquals(400, (int) tuple.a());
-		assertEquals(1, (long) tuple.b());
-
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 51);
+		assertEquals(400, numThreads);
+		assertEquals(1, numElems);
+		
 		tuple = ThreadingUtils.arrange(400, 451, false);
-		assertTrue(tuple.a() * tuple.b() >= 451);
-		assertEquals(400, (int) tuple.a());
-		assertEquals(2, (long) tuple.b());
-
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 451);
+		assertEquals(400, numThreads);
+		assertEquals(2, numElems);
+		
 		tuple = ThreadingUtils.arrange(10, 501, false);
-		assertTrue(tuple.a() * tuple.b() >= 501);
-		assertEquals(10, (int) tuple.a());
-		assertEquals(51, (long) tuple.b());
-
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 501);
+		assertEquals(10, numThreads);
+		assertEquals(51, numElems);
+		
 		tuple = ThreadingUtils.arrange(Integer.MAX_VALUE, 100L*Integer.MAX_VALUE, false);
-		assertTrue(tuple.a() * tuple.b() >= 100L*Integer.MAX_VALUE);
-		assertEquals(Integer.MAX_VALUE, (int) tuple.a());
-		assertEquals(100, (long) tuple.b());
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 100L*Integer.MAX_VALUE);
+		assertEquals(Integer.MAX_VALUE, numThreads);
+		assertEquals(100, numElems);
 
 		tuple = ThreadingUtils.arrange(12345, 100L*Integer.MAX_VALUE, false);
-		assertTrue(tuple.a() * tuple.b() >= 100L*Integer.MAX_VALUE);
-		assertEquals(12345, (int) tuple.a());
-		assertEquals(100L*Integer.MAX_VALUE/12345+1, (long) tuple.b());
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 100L*Integer.MAX_VALUE);
+		assertEquals(12345, numThreads);
+		assertEquals(100L*Integer.MAX_VALUE/12345+1, numElems);
 
 		tuple = ThreadingUtils.arrange(12345, 100L*Integer.MAX_VALUE, true);
-		assertTrue(tuple.a() * tuple.b() >= 100L*Integer.MAX_VALUE);
-		assertEquals(1, (int) tuple.a());
-		assertEquals(100L*Integer.MAX_VALUE, (long) tuple.b());
+		numThreads = tuple.a();
+		numElems = tuple.b();
+		assertTrue(numThreads * numElems >= 100L*Integer.MAX_VALUE);
+		assertEquals(1, numThreads);
+		assertEquals(100L*Integer.MAX_VALUE, numElems);
 	}
 
 }
