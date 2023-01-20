@@ -38,6 +38,21 @@ import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimal;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsBigInteger;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsByte;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
+import nom.bdezonia.zorbage.algebra.GetAsDouble;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloat;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsInt;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsLong;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsShort;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.HighPrecRepresentation;
@@ -45,8 +60,18 @@ import nom.bdezonia.zorbage.algebra.NativeBigDecimalSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
 import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromByte;
+import nom.bdezonia.zorbage.algebra.SetFromByteExact;
 import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromDoubleExact;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
+import nom.bdezonia.zorbage.algebra.SetFromFloatExact;
+import nom.bdezonia.zorbage.algebra.SetFromInt;
+import nom.bdezonia.zorbage.algebra.SetFromIntExact;
 import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongExact;
+import nom.bdezonia.zorbage.algebra.SetFromShort;
+import nom.bdezonia.zorbage.algebra.SetFromShortExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
@@ -74,8 +99,38 @@ public final class Float128Member
 		Settable<Float128Member>, Gettable<Float128Member>,
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float128Member>, GetReal<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimal, GetAsBigDecimalArray, NativeBigDecimalSupport
+		NativeBigDecimalSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByte,
+		GetAsByteArray,
+		GetAsShort,
+		GetAsShortArray,
+		GetAsInt,
+		GetAsIntArray,
+		GetAsLong,
+		GetAsLongArray,
+		GetAsFloat,
+		GetAsFloatArray,
+		GetAsDouble,
+		GetAsDoubleArray,
+		GetAsBigInteger,
+		GetAsBigIntegerArray,
+		GetAsBigDecimal,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	BigDecimal num;
 	byte classification;
@@ -172,6 +227,14 @@ public final class Float128Member
 	
 	@Override
 	public BigDecimal getAsBigDecimal() {
+		if (!isFinite()) {
+			if (isNegative())
+				return MIN_NORMAL;
+			else if (isPositive())
+				return MAX_NORMAL;
+			else
+				return BigDecimal.ZERO; // NAN
+		}
 		return v();
 	}
 	
@@ -205,10 +268,7 @@ public final class Float128Member
 
 	@Override
 	public void toHighPrec(HighPrecisionMember output) {
-		if (classification == POSINF || classification == NEGINF || classification == NAN)
-			throw new java.lang.NumberFormatException("nan/posinf/neginf cannot encode as a high precision decimal");
-		// can use num with classifications NORMAL, POSZERO, and NEGZERO because they are all accurate
-		output.setV(num);
+		output.setV(getAsBigDecimal());
 	}
 
 	@Override
@@ -463,7 +523,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().byteValue();
+		if (component == 0) return getAsByte();
 		return 0;
 	}
 
@@ -472,7 +532,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().shortValue();
+		if (component == 0) return getAsShort();
 		return 0;
 	}
 
@@ -481,7 +541,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().intValue();
+		if (component == 0) return getAsInt();
 		return 0;
 	}
 
@@ -490,7 +550,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().longValue();
+		if (component == 0) return getAsLong();
 		return 0;
 	}
 
@@ -499,7 +559,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().floatValue();
+		if (component == 0) return getAsFloat();
 		return 0;
 	}
 
@@ -508,7 +568,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().doubleValue();
+		if (component == 0) return getAsDouble();
 		return 0;
 	}
 
@@ -517,7 +577,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v().toBigInteger();
+		if (component == 0) return getAsBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -526,7 +586,7 @@ public final class Float128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return v();
+		if (component == 0) return getAsBigDecimal();
 		return BigDecimal.ZERO;
 	}
 
@@ -548,7 +608,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().byteValue();
+			return getAsByte();
 		}
 	}
 
@@ -570,7 +630,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().shortValue();
+			return getAsShort();
 		}
 	}
 
@@ -592,7 +652,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().intValue();
+			return getAsInt();
 		}
 	}
 
@@ -614,7 +674,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().longValue();
+			return getAsLong();
 		}
 	}
 
@@ -636,7 +696,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().floatValue();
+			return getAsFloat();
 		}
 	}
 
@@ -658,7 +718,7 @@ public final class Float128Member
 			return 0;
 		}
 		else {
-			return v().doubleValue();
+			return getAsDouble();
 		}
 	}
 
@@ -680,7 +740,7 @@ public final class Float128Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return v().toBigInteger();
+			return getAsBigInteger();
 		}
 	}
 
@@ -702,7 +762,7 @@ public final class Float128Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			return v();
+			return getAsBigDecimal();
 		}
 	}
 
@@ -1163,5 +1223,194 @@ public final class Float128Member
 	public BigDecimal componentMax() {
 
 		return MAX_NORMAL;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] { getAsBigInteger()};
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		if (!isFinite()) {
+			if (isNegative())
+				return MIN_NORMAL.toBigInteger();
+			else if (isPositive())
+				return MAX_NORMAL.toBigInteger();
+			else
+				return BigInteger.ZERO; // NAN
+		}
+		return v().toBigInteger();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] { getAsDouble()};
+	}
+
+	@Override
+	public double getAsDouble() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Double.NEGATIVE_INFINITY;
+			else if (isPositive())
+				return Double.POSITIVE_INFINITY;
+			else
+				return Double.NaN; // NAN
+		}
+		return v().doubleValue();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] { getAsFloat()};
+	}
+
+	@Override
+	public float getAsFloat() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Float.NEGATIVE_INFINITY;
+			else if (isPositive())
+				return Float.POSITIVE_INFINITY;
+			else
+				return Float.NaN; // NAN
+		}
+		return v().floatValue();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] { getAsLong()};
+	}
+
+	@Override
+	public long getAsLong() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Long.MIN_VALUE;
+			else if (isPositive())
+				return Long.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
+		return v().longValue();
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] { getAsInt()};
+	}
+
+	@Override
+	public int getAsInt() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Integer.MIN_VALUE;
+			else if (isPositive())
+				return Integer.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
+		return v().intValue();
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] { getAsShort()};
+	}
+
+	@Override
+	public short getAsShort() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Short.MIN_VALUE;
+			else if (isPositive())
+				return Short.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
+		return v().shortValue();
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] { getAsByte()};
+	}
+
+	@Override
+	public byte getAsByte() {
+		if (!isFinite()) {
+			if (isNegative())
+				return Byte.MIN_VALUE;
+			else if (isPositive())
+				return Byte.MAX_VALUE;
+			else
+				return 0; // NAN
+		}
+		return v().byteValue();
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
 	}
 }

@@ -58,10 +58,30 @@ public final class OctonionFloat128Member
 		Settable<OctonionFloat128Member>, Gettable<OctonionFloat128Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float128Member>, GetOctonion<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
-
 	private final Float128Member r, i, j, k, l, i0, j0, k0;
 	
 	public OctonionFloat128Member() {
@@ -1045,32 +1065,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().byteValue();
+					return r().getAsByte();
 				else // component == 1
-					return i().v().byteValue();
+					return i().getAsByte();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().byteValue();
+					return j().getAsByte();
 				else // component == 3
-					return k().v().byteValue();
+					return k().getAsByte();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().byteValue();
+					return l().getAsByte();
 				else // component == 5
-					return i0().v().byteValue();
+					return i0().getAsByte();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().byteValue();
+					return j0().getAsByte();
 				else // component == 7
-					return k0().v().byteValue();
+					return k0().getAsByte();
 			}
 		}
 	}
@@ -1084,32 +1104,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().shortValue();
+					return r().getAsShort();
 				else // component == 1
-					return i().v().shortValue();
+					return i().getAsShort();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().shortValue();
+					return j().getAsShort();
 				else // component == 3
-					return k().v().shortValue();
+					return k().getAsShort();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().shortValue();
+					return l().getAsShort();
 				else // component == 5
-					return i0().v().shortValue();
+					return i0().getAsShort();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().shortValue();
+					return j0().getAsShort();
 				else // component == 7
-					return k0().v().shortValue();
+					return k0().getAsShort();
 			}
 		}
 	}
@@ -1123,32 +1143,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().intValue();
+					return r().getAsInt();
 				else // component == 1
-					return i().v().intValue();
+					return i().getAsInt();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().intValue();
+					return j().getAsInt();
 				else // component == 3
-					return k().v().intValue();
+					return k().getAsInt();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().intValue();
+					return l().getAsInt();
 				else // component == 5
-					return i0().v().intValue();
+					return i0().getAsInt();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().intValue();
+					return j0().getAsInt();
 				else // component == 7
-					return k0().v().intValue();
+					return k0().getAsInt();
 			}
 		}
 	}
@@ -1162,32 +1182,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().longValue();
+					return r().getAsLong();
 				else // component == 1
-					return i().v().longValue();
+					return i().getAsLong();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().longValue();
+					return j().getAsLong();
 				else // component == 3
-					return k().v().longValue();
+					return k().getAsLong();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().longValue();
+					return l().getAsLong();
 				else // component == 5
-					return i0().v().longValue();
+					return i0().getAsLong();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().longValue();
+					return j0().getAsLong();
 				else // component == 7
-					return k0().v().longValue();
+					return k0().getAsLong();
 			}
 		}
 	}
@@ -1201,32 +1221,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().floatValue();
+					return r().getAsFloat();
 				else // component == 1
-					return i().v().floatValue();
+					return i().getAsFloat();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().floatValue();
+					return j().getAsFloat();
 				else // component == 3
-					return k().v().floatValue();
+					return k().getAsFloat();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().floatValue();
+					return l().getAsFloat();
 				else // component == 5
-					return i0().v().floatValue();
+					return i0().getAsFloat();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().floatValue();
+					return j0().getAsFloat();
 				else // component == 7
-					return k0().v().floatValue();
+					return k0().getAsFloat();
 			}
 		}
 	}
@@ -1240,32 +1260,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().doubleValue();
+					return r().getAsDouble();
 				else // component == 1
-					return i().v().doubleValue();
+					return i().getAsDouble();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().doubleValue();
+					return j().getAsDouble();
 				else // component == 3
-					return k().v().doubleValue();
+					return k().getAsDouble();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().doubleValue();
+					return l().getAsDouble();
 				else // component == 5
-					return i0().v().doubleValue();
+					return i0().getAsDouble();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().doubleValue();
+					return j0().getAsDouble();
 				else // component == 7
-					return k0().v().doubleValue();
+					return k0().getAsDouble();
 			}
 		}
 	}
@@ -1279,32 +1299,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().toBigInteger();
+					return r().getAsBigInteger();
 				else // component == 1
-					return i().v().toBigInteger();
+					return i().getAsBigInteger();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().toBigInteger();
+					return j().getAsBigInteger();
 				else // component == 3
-					return k().v().toBigInteger();
+					return k().getAsBigInteger();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v().toBigInteger();
+					return l().getAsBigInteger();
 				else // component == 5
-					return i0().v().toBigInteger();
+					return i0().getAsBigInteger();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v().toBigInteger();
+					return j0().getAsBigInteger();
 				else // component == 7
-					return k0().v().toBigInteger();
+					return k0().getAsBigInteger();
 			}
 		}
 	}
@@ -1318,32 +1338,32 @@ public final class OctonionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v();
+					return r().getAsBigDecimal();
 				else // component == 1
-					return i().v();
+					return i().getAsBigDecimal();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v();
+					return j().getAsBigDecimal();
 				else // component == 3
-					return k().v();
+					return k().getAsBigDecimal();
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return l().v();
+					return l().getAsBigDecimal();
 				else // component == 5
-					return i0().v();
+					return i0().getAsBigDecimal();
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return j0().v();
+					return j0().getAsBigDecimal();
 				else // component == 7
-					return k0().v();
+					return k0().getAsBigDecimal();
 			}
 		}
 	}
@@ -1370,32 +1390,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().byteValue();
+						return r().getAsByte();
 					else // component == 1
-						return i().v().byteValue();
+						return i().getAsByte();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().byteValue();
+						return j().getAsByte();
 					else // component == 3
-						return k().v().byteValue();
+						return k().getAsByte();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().byteValue();
+						return l().getAsByte();
 					else // component == 5
-						return i0().v().byteValue();
+						return i0().getAsByte();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().byteValue();
+						return j0().getAsByte();
 					else // component == 7
-						return k0().v().byteValue();
+						return k0().getAsByte();
 				}
 			}
 		}
@@ -1423,32 +1443,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().shortValue();
+						return r().getAsShort();
 					else // component == 1
-						return i().v().shortValue();
+						return i().getAsShort();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().shortValue();
+						return j().getAsShort();
 					else // component == 3
-						return k().v().shortValue();
+						return k().getAsShort();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().shortValue();
+						return l().getAsShort();
 					else // component == 5
-						return i0().v().shortValue();
+						return i0().getAsShort();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().shortValue();
+						return j0().getAsShort();
 					else // component == 7
-						return k0().v().shortValue();
+						return k0().getAsShort();
 				}
 			}
 		}
@@ -1476,32 +1496,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().intValue();
+						return r().getAsInt();
 					else // component == 1
-						return i().v().intValue();
+						return i().getAsInt();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().intValue();
+						return j().getAsInt();
 					else // component == 3
-						return k().v().intValue();
+						return k().getAsInt();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().intValue();
+						return l().getAsInt();
 					else // component == 5
-						return i0().v().intValue();
+						return i0().getAsInt();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().intValue();
+						return j0().getAsInt();
 					else // component == 7
-						return k0().v().intValue();
+						return k0().getAsInt();
 				}
 			}
 		}
@@ -1529,32 +1549,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().longValue();
+						return r().getAsLong();
 					else // component == 1
-						return i().v().longValue();
+						return i().getAsLong();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().longValue();
+						return j().getAsLong();
 					else // component == 3
-						return k().v().longValue();
+						return k().getAsLong();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().longValue();
+						return l().getAsLong();
 					else // component == 5
-						return i0().v().longValue();
+						return i0().getAsLong();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().longValue();
+						return j0().getAsLong();
 					else // component == 7
-						return k0().v().longValue();
+						return k0().getAsLong();
 				}
 			}
 		}
@@ -1582,32 +1602,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().floatValue();
+						return r().getAsFloat();
 					else // component == 1
-						return i().v().floatValue();
+						return i().getAsFloat();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().floatValue();
+						return j().getAsFloat();
 					else // component == 3
-						return k().v().floatValue();
+						return k().getAsFloat();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().floatValue();
+						return l().getAsFloat();
 					else // component == 5
-						return i0().v().floatValue();
+						return i0().getAsFloat();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().floatValue();
+						return j0().getAsFloat();
 					else // component == 7
-						return k0().v().floatValue();
+						return k0().getAsFloat();
 				}
 			}
 		}
@@ -1635,32 +1655,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().doubleValue();
+						return r().getAsDouble();
 					else // component == 1
-						return i().v().doubleValue();
+						return i().getAsDouble();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().doubleValue();
+						return j().getAsDouble();
 					else // component == 3
-						return k().v().doubleValue();
+						return k().getAsDouble();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().doubleValue();
+						return l().getAsDouble();
 					else // component == 5
-						return i0().v().doubleValue();
+						return i0().getAsDouble();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().doubleValue();
+						return j0().getAsDouble();
 					else // component == 7
-						return k0().v().doubleValue();
+						return k0().getAsDouble();
 				}
 			}
 		}
@@ -1688,32 +1708,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v().toBigInteger();
+						return r().getAsBigInteger();
 					else // component == 1
-						return i().v().toBigInteger();
+						return i().getAsBigInteger();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v().toBigInteger();
+						return j().getAsBigInteger();
 					else // component == 3
-						return k().v().toBigInteger();
+						return k().getAsBigInteger();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v().toBigInteger();
+						return l().getAsBigInteger();
 					else // component == 5
-						return i0().v().toBigInteger();
+						return i0().getAsBigInteger();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v().toBigInteger();
+						return j0().getAsBigInteger();
 					else // component == 7
-						return k0().v().toBigInteger();
+						return k0().getAsBigInteger();
 				}
 			}
 		}
@@ -1741,32 +1761,32 @@ public final class OctonionFloat128Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return r().v();
+						return r().getAsBigDecimal();
 					else // component == 1
-						return i().v();
+						return i().getAsBigDecimal();
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return j().v();
+						return j().getAsBigDecimal();
 					else // component == 3
-						return k().v();
+						return k().getAsBigDecimal();
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return l().v();
+						return l().getAsBigDecimal();
 					else // component == 5
-						return i0().v();
+						return i0().getAsBigDecimal();
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return j0().v();
+						return j0().getAsBigDecimal();
 					else // component == 7
-						return k0().v();
+						return k0().getAsBigDecimal();
 				}
 			}
 		}
@@ -2064,6 +2084,252 @@ public final class OctonionFloat128Member
 
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
-		return new BigDecimal[] {r().v(), i().v(), j().v(), k().v(), l().v(), i0().v(), j0().v(), k0().v()};
+		return new BigDecimal[] {r().getAsBigDecimal(), i().getAsBigDecimal(), j().getAsBigDecimal(), k().getAsBigDecimal(), l().getAsBigDecimal(), i0().getAsBigDecimal(), j0().getAsBigDecimal(), k0().getAsBigDecimal()};
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] { r().getAsBigInteger(), i().getAsBigInteger(), j().getAsBigInteger(), k().getAsBigInteger(), l().getAsBigInteger(), i0().getAsBigInteger(), j0().getAsBigInteger(), k0().getAsBigInteger() };
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] { r().getAsDouble(), i().getAsDouble(), j().getAsDouble(), k().getAsDouble(), l().getAsDouble(), i0().getAsDouble(), j0().getAsDouble(), k0().getAsDouble() };
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] { r().getAsFloat(), i().getAsFloat(), j().getAsFloat(), k().getAsFloat(), l().getAsFloat(), i0().getAsFloat(), j0().getAsFloat(), k0().getAsFloat() };
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] { r().getAsLong(), i().getAsLong(), j().getAsLong(), k().getAsLong(), l().getAsLong(), i0().getAsLong(), j0().getAsLong(), k0().getAsLong() };
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] { r().getAsInt(), i().getAsInt(), j().getAsInt(), k().getAsInt(), l().getAsInt(), i0().getAsInt(), j0().getAsInt(), k0().getAsInt() };
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] { r().getAsShort(), i().getAsShort(), j().getAsShort(), k().getAsShort(), l().getAsShort(), i0().getAsShort(), j0().getAsShort(), k0().getAsShort() };
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] { r().getAsByte(), i().getAsByte(), j().getAsByte(), k().getAsByte(), l().getAsByte(), i0().getAsByte(), j0().getAsByte(), k0().getAsByte() };
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+		
+		if (vals.length < 5)
+			setL(BigDecimal.ZERO);
+		else
+			setL(BigDecimal.valueOf(vals[4]));
+		
+		if (vals.length < 6)
+			setI0(BigDecimal.ZERO);
+		else
+			setI0(BigDecimal.valueOf(vals[5]));
+		
+		if (vals.length < 7)
+			setJ0(BigDecimal.ZERO);
+		else
+			setJ0(BigDecimal.valueOf(vals[6]));
+		
+		if (vals.length < 8)
+			setK0(BigDecimal.ZERO);
+		else
+			setK0(BigDecimal.valueOf(vals[7]));
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+		
+		if (vals.length < 5)
+			setL(BigDecimal.ZERO);
+		else
+			setL(BigDecimal.valueOf(vals[4]));
+		
+		if (vals.length < 6)
+			setI0(BigDecimal.ZERO);
+		else
+			setI0(BigDecimal.valueOf(vals[5]));
+		
+		if (vals.length < 7)
+			setJ0(BigDecimal.ZERO);
+		else
+			setJ0(BigDecimal.valueOf(vals[6]));
+		
+		if (vals.length < 8)
+			setK0(BigDecimal.ZERO);
+		else
+			setK0(BigDecimal.valueOf(vals[7]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+		
+		if (vals.length < 5)
+			setL(BigDecimal.ZERO);
+		else
+			setL(BigDecimal.valueOf(vals[4]));
+		
+		if (vals.length < 6)
+			setI0(BigDecimal.ZERO);
+		else
+			setI0(BigDecimal.valueOf(vals[5]));
+		
+		if (vals.length < 7)
+			setJ0(BigDecimal.ZERO);
+		else
+			setJ0(BigDecimal.valueOf(vals[6]));
+		
+		if (vals.length < 8)
+			setK0(BigDecimal.ZERO);
+		else
+			setK0(BigDecimal.valueOf(vals[7]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+		
+		if (vals.length < 5)
+			setL(BigDecimal.ZERO);
+		else
+			setL(BigDecimal.valueOf(vals[4]));
+		
+		if (vals.length < 6)
+			setI0(BigDecimal.ZERO);
+		else
+			setI0(BigDecimal.valueOf(vals[5]));
+		
+		if (vals.length < 7)
+			setJ0(BigDecimal.ZERO);
+		else
+			setJ0(BigDecimal.valueOf(vals[6]));
+		
+		if (vals.length < 8)
+			setK0(BigDecimal.ZERO);
+		else
+			setK0(BigDecimal.valueOf(vals[7]));
 	}
 }

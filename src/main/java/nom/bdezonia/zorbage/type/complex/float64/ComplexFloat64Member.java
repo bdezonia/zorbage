@@ -57,7 +57,30 @@ public final class ComplexFloat64Member
 		Settable<ComplexFloat64Member>, Gettable<ComplexFloat64Member>,
 		NumberMember<ComplexFloat64Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float64Member>, GetComplex<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray, NativeDoubleSupport
+		NativeDoubleSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private double r, i;
 	
@@ -835,5 +858,159 @@ public final class ComplexFloat64Member
 	public Double componentMax() {
 
 		return Double.MAX_VALUE;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {BigDecimal.valueOf(r()), BigDecimal.valueOf(i())};
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger()};
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {(float) r(), (float) i()};
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {(long) r(), (long) i()};
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {(int) r(), (int) i()};
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {(short) r(), (short) i()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {(byte) r(), (byte) i()};
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0].doubleValue());
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1].doubleValue());
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0].doubleValue());
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1].doubleValue());
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
 	}
 }

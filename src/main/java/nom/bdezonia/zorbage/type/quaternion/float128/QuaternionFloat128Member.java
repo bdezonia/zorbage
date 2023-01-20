@@ -58,8 +58,29 @@ public final class QuaternionFloat128Member
 		Settable<QuaternionFloat128Member>, Gettable<QuaternionFloat128Member>,
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float128Member>, GetQuaternion<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private final Float128Member r, i, j, k;
 	
@@ -698,16 +719,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().byteValue();
+				return r().getAsByte();
 			else // component == 1
-				return i().v().byteValue();
+				return i().getAsByte();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().byteValue();
+				return j().getAsByte();
 			else // component == 3
-				return k().v().byteValue();
+				return k().getAsByte();
 		}
 	}
 
@@ -719,16 +740,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().shortValue();
+				return r().getAsShort();
 			else // component == 1
-				return i().v().shortValue();
+				return i().getAsShort();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().shortValue();
+				return j().getAsShort();
 			else // component == 3
-				return k().v().shortValue();
+				return k().getAsShort();
 		}
 	}
 
@@ -740,16 +761,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().intValue();
+				return r().getAsInt();
 			else // component == 1
-				return i().v().intValue();
+				return i().getAsInt();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().intValue();
+				return j().getAsInt();
 			else // component == 3
-				return k().v().intValue();
+				return k().getAsInt();
 		}
 	}
 
@@ -761,16 +782,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().longValue();
+				return r().getAsLong();
 			else // component == 1
-				return i().v().longValue();
+				return i().getAsLong();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().longValue();
+				return j().getAsLong();
 			else // component == 3
-				return k().v().longValue();
+				return k().getAsLong();
 		}
 	}
 
@@ -782,16 +803,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().floatValue();
+				return r().getAsFloat();
 			else // component == 1
-				return i().v().floatValue();
+				return i().getAsFloat();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().floatValue();
+				return j().getAsFloat();
 			else // component == 3
-				return k().v().floatValue();
+				return k().getAsFloat();
 		}
 	}
 
@@ -803,16 +824,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().doubleValue();
+				return r().getAsDouble();
 			else // component == 1
-				return i().v().doubleValue();
+				return i().getAsDouble();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().doubleValue();
+				return j().getAsDouble();
 			else // component == 3
-				return k().v().doubleValue();
+				return k().getAsDouble();
 		}
 	}
 
@@ -824,16 +845,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v().toBigInteger();
+				return r().getAsBigInteger();
 			else // component == 1
-				return i().v().toBigInteger();
+				return i().getAsBigInteger();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v().toBigInteger();
+				return j().getAsBigInteger();
 			else // component == 3
-				return k().v().toBigInteger();
+				return k().getAsBigInteger();
 		}
 	}
 
@@ -845,16 +866,16 @@ public final class QuaternionFloat128Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return r().v();
+				return r().getAsBigDecimal();
 			else // component == 1
-				return i().v();
+				return i().getAsBigDecimal();
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return j().v();
+				return j().getAsBigDecimal();
 			else // component == 3
-				return k().v();
+				return k().getAsBigDecimal();
 		}
 	}
 
@@ -879,16 +900,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().byteValue();
+					return r().getAsByte();
 				else // component == 1
-					return i().v().byteValue();
+					return i().getAsByte();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().byteValue();
+					return j().getAsByte();
 				else // component == 3
-					return k().v().byteValue();
+					return k().getAsByte();
 			}
 		}
 	}
@@ -914,16 +935,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().shortValue();
+					return r().getAsShort();
 				else // component == 1
-					return i().v().shortValue();
+					return i().getAsShort();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().shortValue();
+					return j().getAsShort();
 				else // component == 3
-					return k().v().shortValue();
+					return k().getAsShort();
 			}
 		}
 	}
@@ -949,16 +970,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().intValue();
+					return r().getAsInt();
 				else // component == 1
-					return i().v().intValue();
+					return i().getAsInt();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().intValue();
+					return j().getAsInt();
 				else // component == 3
-					return k().v().intValue();
+					return k().getAsInt();
 			}
 		}
 	}
@@ -984,16 +1005,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().longValue();
+					return r().getAsLong();
 				else // component == 1
-					return i().v().longValue();
+					return i().getAsLong();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().longValue();
+					return j().getAsLong();
 				else // component == 3
-					return k().v().longValue();
+					return k().getAsLong();
 			}
 		}
 	}
@@ -1019,16 +1040,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().floatValue();
+					return r().getAsFloat();
 				else // component == 1
-					return i().v().floatValue();
+					return i().getAsFloat();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().floatValue();
+					return j().getAsFloat();
 				else // component == 3
-					return k().v().floatValue();
+					return k().getAsFloat();
 			}
 		}
 	}
@@ -1054,16 +1075,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().doubleValue();
+					return r().getAsDouble();
 				else // component == 1
-					return i().v().doubleValue();
+					return i().getAsDouble();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().doubleValue();
+					return j().getAsDouble();
 				else // component == 3
-					return k().v().doubleValue();
+					return k().getAsDouble();
 			}
 		}
 	}
@@ -1089,16 +1110,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v().toBigInteger();
+					return r().getAsBigInteger();
 				else // component == 1
-					return i().v().toBigInteger();
+					return i().getAsBigInteger();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v().toBigInteger();
+					return j().getAsBigInteger();
 				else // component == 3
-					return k().v().toBigInteger();
+					return k().getAsBigInteger();
 			}
 		}
 	}
@@ -1124,16 +1145,16 @@ public final class QuaternionFloat128Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return r().v();
+					return r().getAsBigDecimal();
 				else // component == 1
-					return i().v();
+					return i().getAsBigDecimal();
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return j().v();
+					return j().getAsBigDecimal();
 				else // component == 3
-					return k().v();
+					return k().getAsBigDecimal();
 			}
 		}
 	}
@@ -1302,6 +1323,172 @@ public final class QuaternionFloat128Member
 
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
-		return new BigDecimal[] {r().v(), i().v(), j().v(), k().v()};
+		return new BigDecimal[] { r().getAsBigDecimal(), i().getAsBigDecimal(), j().getAsBigDecimal(), k().getAsBigDecimal() };
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] { r().getAsBigInteger(), i().getAsBigInteger(), j().getAsBigInteger(), k().getAsBigInteger() };
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] { r().getAsDouble(), i().getAsDouble(), j().getAsDouble(), k().getAsDouble() };
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] { r().getAsFloat(), i().getAsFloat(), j().getAsFloat(), k().getAsFloat() };
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] { r().getAsLong(), i().getAsLong(), j().getAsLong(), k().getAsLong() };
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] { r().getAsInt(), i().getAsInt(), j().getAsInt(), k().getAsInt() };
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] { r().getAsShort(), i().getAsShort(), j().getAsShort(), k().getAsShort() };
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] { r().getAsByte(), i().getAsByte(), j().getAsByte(), k().getAsByte() };
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		
+		if (vals.length == 0 || vals.length > 4)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+		
+		if (vals.length < 3)
+			setJ(BigDecimal.ZERO);
+		else
+			setJ(BigDecimal.valueOf(vals[2]));
+		
+		if (vals.length < 4)
+			setK(BigDecimal.ZERO);
+		else
+			setK(BigDecimal.valueOf(vals[3]));
 	}
 }

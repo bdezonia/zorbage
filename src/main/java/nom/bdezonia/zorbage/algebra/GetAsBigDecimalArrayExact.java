@@ -30,12 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
+import java.math.BigDecimal;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface GetAsByteArrayLossy {
+public interface GetAsBigDecimalArrayExact {
 
-	byte[] getAsByteArrayLossy();
+	BigDecimal[] getAsBigDecimalArrayExact();
 }

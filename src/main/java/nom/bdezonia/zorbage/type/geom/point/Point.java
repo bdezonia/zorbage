@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.geom.point;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -48,7 +50,30 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class Point
 	implements ByteCoder, DoubleCoder, Settable<Point>, Gettable<Point>,
 		Allocatable<Point>, Duplicatable<Point>, NumberMember<Point>,
-		SetFromDouble, GetAsDoubleArray
+		NativeDoubleSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private double[] vector;
 	
@@ -250,17 +275,215 @@ public class Point
 	@Override
 	public void setFromDouble(double... vals) {
 		if (vals.length != vector.length) {
-			vector = vals.clone();
+			vector = new double[vals.length];
 		}
-		else {
-			for (int i = 0; i < vals.length; i++) {
-				vector[i] = vals[i];
-			}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i];
 		}
 	}
 
 	@Override
 	public double[] getAsDoubleArray() {
 		return vector.clone();
+	}
+
+	@Override
+	public int componentCount() {
+		return vector.length;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		BigDecimal[] vals = new BigDecimal[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = BigDecimal.valueOf(vector[i]);
+		}
+		return vals;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		BigInteger[] vals = new BigInteger[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = BigDecimal.valueOf(vector[i]).toBigInteger();
+		}
+		return vals;
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		float[] vals = new float[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = (float) vector[i];
+		}
+		return vals;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		long[] vals = new long[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = (long) vector[i];
+		}
+		return vals;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		int[] vals = new int[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = (int) vector[i];
+		}
+		return vals;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		short[] vals = new short[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = (short) vector[i];
+		}
+		return vals;
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		byte[] vals = new byte[vector.length];
+		for (int i = 0; i < vector.length; i++) {
+			vals[i] = (byte) vector[i];
+		}
+		return vals;
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i].doubleValue();
+		}
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i].doubleValue();
+		}
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i];
+		}
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i];
+		}
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i];
+		}
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i];
+		}
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+
+		if (vals.length != vector.length) {
+			vector = new double[vals.length];
+		}
+		for (int i = 0; i < vals.length; i++) {
+			vector[i] = vals[i];
+		}
+	}
+
+	@Override
+	public double getNative(int component) {
+		return vector[component];
+	}
+
+	@Override
+	public void setNative(int component, double val) {
+		vector[component] = val;
+	}
+
+	@Override
+	public Double componentMin() {
+		return -Double.MAX_VALUE;
+	}
+
+	@Override
+	public Double componentMax() {
+		return Double.MAX_VALUE;
 	}
 }

@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface GetAsDoubleArrayLossy {
+public interface GetAsDoubleExact {
 
-	double[] getAsDoubleArrayLossy();
+	double getAsDoubleExact();
 }

@@ -36,15 +36,35 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeBigIntegerSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
 import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegerExact;
+import nom.bdezonia.zorbage.algebra.SetFromByte;
+import nom.bdezonia.zorbage.algebra.SetFromByteExact;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
+import nom.bdezonia.zorbage.algebra.SetFromInt;
+import nom.bdezonia.zorbage.algebra.SetFromIntExact;
 import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongExact;
+import nom.bdezonia.zorbage.algebra.SetFromShort;
+import nom.bdezonia.zorbage.algebra.SetFromShortExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -72,8 +92,30 @@ public class GaussianIntUnboundedMember
 		PrimitiveConversion,
 		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
 		SetComplex<UnboundedIntMember>, GetComplex<UnboundedIntMember>,
-		SetFromBigInteger, SetFromLong, GetAsBigIntegerArray,
-		NativeBigIntegerSupport
+		NativeBigIntegerSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigIntegerExact,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigIntegerArrayExact,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	BigInteger r;
 	BigInteger i;
@@ -856,5 +898,159 @@ public class GaussianIntUnboundedMember
 	public BigInteger componentMax() {
 
 		return null; // bigintegers do not have a bound
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {new BigDecimal(r()), new BigDecimal(i())};
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArrayExact() {
+		return new BigInteger[] {r(), i()};
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r().doubleValue(), i().doubleValue()};
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r().floatValue(), i().floatValue()};
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {r().longValue(), i().longValue()};
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {r().intValue(), i().intValue()};
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {r().shortValue(), i().shortValue()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {r().byteValue(), i().byteValue()};
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(vals[0].toBigInteger());
+		
+		if (vals.length == 2)
+			setI(vals[1].toBigInteger());
+		else
+			setI(BigInteger.ZERO);
+	}
+
+	@Override
+	public void setFromBigIntegerExact(BigInteger... vals) {
+		setFromBigInteger(vals);
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(BigDecimal.valueOf(vals[0]).toBigInteger());
+		
+		if (vals.length == 2)
+			setI(BigDecimal.valueOf(vals[1]).toBigInteger());
+		else
+			setI(BigInteger.ZERO);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(BigDecimal.valueOf(vals[0]).toBigInteger());
+		
+		if (vals.length == 2)
+			setI(BigDecimal.valueOf(vals[1]).toBigInteger());
+		else
+			setI(BigInteger.ZERO);
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(BigInteger.valueOf(vals[0]));
+		
+		if (vals.length == 2)
+			setI(BigInteger.valueOf(vals[1]));
+		else
+			setI(BigInteger.ZERO);
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(BigInteger.valueOf(vals[0]));
+		
+		if (vals.length == 2)
+			setI(BigInteger.valueOf(vals[1]));
+		else
+			setI(BigInteger.ZERO);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(BigInteger.valueOf(vals[0]));
+		
+		if (vals.length == 2)
+			setI(BigInteger.valueOf(vals[1]));
+		else
+			setI(BigInteger.ZERO);
 	}
 }

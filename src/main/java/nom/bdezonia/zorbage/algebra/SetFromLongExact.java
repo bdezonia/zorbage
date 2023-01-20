@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface GetAsLongArrayLossy {
+public interface SetFromLongExact {
 
-	long[] getAsLongArrayLossy();
+	void setFromLongExact(long... vals);
 }

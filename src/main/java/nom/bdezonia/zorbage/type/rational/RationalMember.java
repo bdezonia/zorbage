@@ -57,8 +57,39 @@ public class RationalMember
 		Allocatable<RationalMember>, Duplicatable<RationalMember>,
 		Settable<RationalMember>, Gettable<RationalMember>,
 		UniversalRepresentation, NumberMember<RationalMember>,
-		PrimitiveConversion, SetFromBigInteger, SetFromLong,
-		GetAsBigIntegerArray
+		PrimitiveConversion,
+		NativeBigIntegerSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigIntegerExact,
+		SetFromBigDecimal,
+		GetAsByte,
+		GetAsByteArray,
+		GetAsShort,
+		GetAsShortArray,
+		GetAsInt,
+		GetAsIntArray,
+		GetAsLong,
+		GetAsLongArray,
+		GetAsFloat,
+		GetAsFloatArray,
+		GetAsDouble,
+		GetAsDoubleArray,
+		GetAsBigInteger,
+		GetAsBigIntegerArray,
+		GetAsBigIntegerArrayExact,
+		GetAsBigDecimal,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	// this is how many decimal places of accuracy the BigDecimal values will contain
 	private static final int PLACES = 24;
@@ -236,7 +267,7 @@ public class RationalMember
 
 	@Override
 	public int componentCount() {
-		return 1;
+		return 2;
 	}
 
 	@Override
@@ -758,5 +789,191 @@ public class RationalMember
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
 		return new BigInteger[] {n(), d()};
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {new BigDecimal(n()), new BigDecimal(d())};
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return v();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArrayExact() {
+		return getAsBigIntegerArray();
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return v().toBigInteger();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {n().doubleValue(), d().doubleValue()};
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v().doubleValue();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {n().floatValue(), d().floatValue()};
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v().floatValue();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {n().longValue(), d().longValue()};
+	}
+
+	@Override
+	public long getAsLong() {
+		return v().longValue();
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {n().intValue(), d().intValue()};
+	}
+
+	@Override
+	public int getAsInt() {
+		return v().intValue();
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {n().shortValue(), d().shortValue()};
+	}
+
+	@Override
+	public short getAsShort() {
+		return v().shortValue();
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {n().byteValue(), d().byteValue()};
+	}
+
+	@Override
+	public byte getAsByte() {
+		return v().byteValue();
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(vals[0].toBigInteger(), vals[1].toBigInteger());
+	}
+
+	@Override
+	public void setFromBigIntegerExact(BigInteger... vals) {
+		setFromBigInteger(vals);
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]).toBigInteger(), BigDecimal.valueOf(vals[1]).toBigInteger());
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]).toBigInteger(), BigDecimal.valueOf(vals[1]).toBigInteger());
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigInteger.valueOf(vals[0]), BigInteger.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigInteger.valueOf(vals[0]), BigInteger.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		if (vals.length != 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigInteger.valueOf(vals[0]), BigInteger.valueOf(vals[1]));
+	}
+
+	@Override
+	public BigInteger getNative(int component) {
+		
+		if (component == 0)
+			return n();
+		else if (component == 1)
+			return d();
+		else
+			throw new IllegalArgumentException("componenet number out of bounds");
+	}
+
+	@Override
+	public void setNative(int component, BigInteger val) {
+		
+		if (component == 0)
+			setV(val, d());
+		else if (component == 1)
+			setV(n(), val);
+		else
+			throw new IllegalArgumentException("componenet number out of bounds");
+	}
+
+	@Override
+	public BigInteger componentMin() {
+
+		return null; // bigintegers have no min
+	}
+
+	@Override
+	public BigInteger componentMax() {
+
+		return null; // bigintegers have no max
 	}
 }

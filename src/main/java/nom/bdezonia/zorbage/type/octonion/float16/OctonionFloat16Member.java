@@ -59,7 +59,27 @@ public final class OctonionFloat16Member
 		Settable<OctonionFloat16Member>, Gettable<OctonionFloat16Member>,
 		PrimitiveConversion,
 		UniversalRepresentation, SetOctonion<Float16Member>, GetOctonion<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray, NativeFloatSupport
+		NativeFloatSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1990,5 +2010,324 @@ public final class OctonionFloat16Member
 	public Float componentMax() {
 
 		return Float16Util.FLOAT_MAX;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {BigDecimal.valueOf(r()), BigDecimal.valueOf(i()), BigDecimal.valueOf(j()), BigDecimal.valueOf(k()), BigDecimal.valueOf(l()), BigDecimal.valueOf(i0()), BigDecimal.valueOf(j0()), BigDecimal.valueOf(k0())};
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger(), BigDecimal.valueOf(j()).toBigInteger(), BigDecimal.valueOf(k()).toBigInteger(), BigDecimal.valueOf(l()).toBigInteger(), BigDecimal.valueOf(i0()).toBigInteger(), BigDecimal.valueOf(j0()).toBigInteger(), BigDecimal.valueOf(k0()).toBigInteger()};
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r(), i(), j(), k(), l(), i0(), j0(), k0()};
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {(long) r(), (long) i(), (long) j(), (long) k(), (long) l(), (long) i0(), (long) j0(), (long) k0()};
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {(int) r(), (int) i(), (int) j(), (int) k(), (int) l(), (int) i0(), (int) j0(), (int) k0()};
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {(short) r(), (short) i(), (short) j(), (short) k(), (short) l(), (short) i0(), (short) j0(), (short) k0()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {(byte) r(), (byte) i(), (byte) j(), (byte) k(), (byte) l(), (byte) i0(), (byte) j0(), (byte) k0()};
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0].floatValue());
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1].floatValue());
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2].floatValue());
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3].floatValue());
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4].floatValue());
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5].floatValue());
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6].floatValue());
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7].floatValue());
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0].floatValue());
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1].floatValue());
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2].floatValue());
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3].floatValue());
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4].floatValue());
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5].floatValue());
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6].floatValue());
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7].floatValue());
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR((float) vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI((float) vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ((float) vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK((float) vals[3]);
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL((float) vals[4]);
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0((float) vals[5]);
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0((float)vals[6]);
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0((float) vals[7]);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4]);
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5]);
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6]);
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7]);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4]);
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5]);
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6]);
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7]);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		
+		if (vals.length == 0 || vals.length > 8)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(vals[0]);
+		
+		if (vals.length < 2)
+			setI(0);
+		else
+			setI(vals[1]);
+		
+		if (vals.length < 3)
+			setJ(0);
+		else
+			setJ(vals[2]);
+		
+		if (vals.length < 4)
+			setK(0);
+		else
+			setK(vals[3]);
+		
+		if (vals.length < 5)
+			setL(0);
+		else
+			setL(vals[4]);
+		
+		if (vals.length < 6)
+			setI0(0);
+		else
+			setI0(vals[5]);
+		
+		if (vals.length < 7)
+			setJ0(0);
+		else
+			setJ0(vals[6]);
+		
+		if (vals.length < 8)
+			setK0(0);
+		else
+			setK0(vals[7]);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
 	}
 }

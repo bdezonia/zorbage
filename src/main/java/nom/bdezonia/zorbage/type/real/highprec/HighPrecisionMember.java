@@ -57,9 +57,41 @@ public final class HighPrecisionMember
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<HighPrecisionMember>, GetReal<HighPrecisionMember>,
 		BigDecimalCoder,
-		SetFromLong, SetFromDouble, SetFromBigInteger, SetFromBigDecimal,
-		GetAsLong, GetAsDouble, GetAsBigInteger, GetAsBigDecimal, GetAsBigDecimalArray,
-		NativeBigDecimalSupport
+		NativeBigDecimalSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigIntegerExact,
+		SetFromBigDecimal,
+		SetFromBigDecimalExact,
+		GetAsByte,
+		GetAsByteArray,
+		GetAsShort,
+		GetAsShortArray,
+		GetAsInt,
+		GetAsIntArray,
+		GetAsLong,
+		GetAsLongArray,
+		GetAsFloat,
+		GetAsFloatArray,
+		GetAsDouble,
+		GetAsDoubleArray,
+		GetAsBigInteger,
+		GetAsBigIntegerArray,
+		GetAsBigDecimal,
+		GetAsBigDecimalExact,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private BigDecimal v;
 	
@@ -779,5 +811,138 @@ public final class HighPrecisionMember
 	public BigDecimal componentMax() {
 
 		return null;  // unbounded numbers have no max
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimalExact() {
+		return getAsBigDecimal();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] { getAsBigInteger() };
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] { getAsDouble() };
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] { getAsFloat() };
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v().floatValue();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] { getAsLong() };
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] { getAsInt() };
+	}
+
+	@Override
+	public int getAsInt() {
+		return v().intValue();
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] { getAsShort() };
+	}
+
+	@Override
+	public short getAsShort() {
+		return v().shortValue();
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] { getAsByte() };
+	}
+
+	@Override
+	public byte getAsByte() {
+		return v().byteValue();
+	}
+
+	@Override
+	public void setFromBigDecimalExact(BigDecimal... vals) {
+		setFromBigDecimal(vals);
+	}
+
+	@Override
+	public void setFromBigIntegerExact(BigInteger... vals) {
+		setFromBigInteger(vals);
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(BigDecimal.valueOf(vals[0]));
 	}
 }

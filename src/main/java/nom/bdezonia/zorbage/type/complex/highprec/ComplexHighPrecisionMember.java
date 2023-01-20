@@ -57,8 +57,32 @@ public final class ComplexHighPrecisionMember
 		Settable<ComplexHighPrecisionMember>, Gettable<ComplexHighPrecisionMember>,
 		NumberMember<ComplexHighPrecisionMember>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<HighPrecisionMember>, GetComplex<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray, NativeBigDecimalSupport
+		NativeBigDecimalSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigIntegerExact,
+		SetFromBigDecimal,
+		SetFromBigDecimalExact,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private BigDecimal r, i;
 	
@@ -876,5 +900,141 @@ public final class ComplexHighPrecisionMember
 	public BigDecimal componentMax() {
 
 		return null;  // a bigdecimal does not have a max value
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {r().toBigInteger(), i().toBigInteger()};
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r().doubleValue(), i().doubleValue()};
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r().floatValue(), i().floatValue()};
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {r().longValue(), i().longValue()};
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {r().intValue(), i().intValue()};
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {r().shortValue(), i().shortValue()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {r().byteValue(), i().byteValue()};
+	}
+
+	@Override
+	public void setFromBigDecimalExact(BigDecimal... vals) {
+		setFromBigDecimal(vals);
+	}
+
+	@Override
+	public void setFromBigIntegerExact(BigInteger... vals) {
+		setFromBigInteger(vals);
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
 	}
 }

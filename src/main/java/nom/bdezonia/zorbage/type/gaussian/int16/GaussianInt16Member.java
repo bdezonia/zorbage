@@ -36,14 +36,37 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsIntArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsLongArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
+import nom.bdezonia.zorbage.algebra.GetAsShortArrayExact;
 import nom.bdezonia.zorbage.algebra.GetComplex;
 import nom.bdezonia.zorbage.algebra.GetReal;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeShortSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
+import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
+import nom.bdezonia.zorbage.algebra.SetFromByte;
+import nom.bdezonia.zorbage.algebra.SetFromByteExact;
+import nom.bdezonia.zorbage.algebra.SetFromDouble;
+import nom.bdezonia.zorbage.algebra.SetFromFloat;
 import nom.bdezonia.zorbage.algebra.SetFromInt;
+import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromShort;
+import nom.bdezonia.zorbage.algebra.SetFromShortExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -71,7 +94,32 @@ public class GaussianInt16Member
 		PrimitiveConversion,
 		SetReal<SignedInt16Member>, GetReal<SignedInt16Member>,
 		SetComplex<SignedInt16Member>, GetComplex<SignedInt16Member>,
-		SetFromInt, GetAsIntArray, NativeShortSupport
+		NativeShortSupport,
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromLong,
+		SetFromFloat,
+		SetFromDouble,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsShortArrayExact,
+		GetAsIntArray,
+		GetAsIntArrayExact,
+		GetAsLongArray,
+		GetAsLongArrayExact,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigIntegerArrayExact,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	short r;
 	short i;
@@ -836,5 +884,183 @@ public class GaussianInt16Member
 	public Short componentMax() {
 
 		return Short.MAX_VALUE;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] {BigDecimal.valueOf(r()), BigDecimal.valueOf(i())};
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArrayExact() {
+		return getAsBigIntegerArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger()};
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {(double) r(), (double) i()};
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {(float) r(), (float) i()};
+	}
+
+	@Override
+	public long[] getAsLongArrayExact() {
+		return getAsLongArray();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {(long) r(), (long) i()};
+	}
+
+	@Override
+	public int[] getAsIntArrayExact() {
+		return getAsIntArray();
+	}
+
+	@Override
+	public short[] getAsShortArrayExact() {
+		return getAsShortArray();
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {(short) r(), (short) i()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {(byte) r(), (byte) i()};
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(vals[0].shortValue());
+		
+		if (vals.length == 2)
+			setI(vals[1].shortValue());
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(vals[0].shortValue());
+		
+		if (vals.length == 2)
+			setI(vals[1].shortValue());
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR((short) vals[0]);
+		
+		if (vals.length == 2)
+			setI((short) vals[1]);
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR((short) vals[0]);
+		
+		if (vals.length == 2)
+			setI((short) vals[1]);
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromLong(long... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR((short) vals[0]);
+		
+		if (vals.length == 2)
+			setI((short) vals[1]);
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(vals[0]);
+		
+		if (vals.length == 2)
+			setI(vals[1]);
+		else
+			setI(0);
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		
+		setR(vals[0]);
+		
+		if (vals.length == 2)
+			setI(vals[1]);
+		else
+			setI(0);
 	}
 }

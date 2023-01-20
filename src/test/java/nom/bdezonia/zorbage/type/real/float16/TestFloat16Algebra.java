@@ -34,7 +34,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 
@@ -800,4 +802,15 @@ public class TestFloat16Algebra {
 		 */
 		
 	}
+	
+	/*
+	@Test
+	public void test1() {
+		Float16Member val = G.HLF.construct();
+		for (int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++) {
+			val.setV(i);
+			System.out.println(i + " == hlf "+val);
+		}
+	}
+	*/
 }

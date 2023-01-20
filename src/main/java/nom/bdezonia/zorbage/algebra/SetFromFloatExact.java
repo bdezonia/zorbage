@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface GetAsShortLossy {
+public interface SetFromFloatExact {
 
-	short getAsShortLossy();
+	void setFromFloatExact(float... vals);
 }

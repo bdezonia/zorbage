@@ -57,8 +57,29 @@ public final class ComplexFloat128Member
 		Settable<ComplexFloat128Member>, Gettable<ComplexFloat128Member>,
 		NumberMember<ComplexFloat128Member>, PrimitiveConversion,
 		UniversalRepresentation, SetComplex<Float128Member>, GetComplex<Float128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
-		GetAsBigDecimalArray
+		SetFromByte,
+		SetFromByteExact,
+		SetFromShort,
+		SetFromShortExact,
+		SetFromInt,
+		SetFromIntExact,
+		SetFromLong,
+		SetFromLongExact,
+		SetFromFloat,
+		SetFromFloatExact,
+		SetFromDouble,
+		SetFromDoubleExact,
+		SetFromBigInteger,
+		SetFromBigDecimal,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	private final Float128Member r, i;
 	
@@ -491,8 +512,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().byteValue();
-		if (component == 1) return i.v().byteValue();
+		if (component == 0) return r.getAsByte();
+		if (component == 1) return i.getAsByte();
 		return 0;
 	}
 
@@ -501,8 +522,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().shortValue();
-		if (component == 1) return i.v().shortValue();
+		if (component == 0) return r.getAsShort();
+		if (component == 1) return i.getAsShort();
 		return 0;
 	}
 
@@ -511,8 +532,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().intValue();
-		if (component == 1) return i.v().intValue();
+		if (component == 0) return r.getAsInt();
+		if (component == 1) return i.getAsInt();
 		return 0;
 	}
 
@@ -521,8 +542,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().longValue();
-		if (component == 1) return i.v().longValue();
+		if (component == 0) return r.getAsLong();
+		if (component == 1) return i.getAsLong();
 		return 0;
 	}
 
@@ -531,8 +552,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().floatValue();
-		if (component == 1) return i.v().floatValue();
+		if (component == 0) return r.getAsFloat();
+		if (component == 1) return i.getAsFloat();
 		return 0;
 	}
 
@@ -541,8 +562,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().doubleValue();
-		if (component == 1) return i.v().doubleValue();
+		if (component == 0) return r.getAsDouble();
+		if (component == 1) return i.getAsDouble();
 		return 0;
 	}
 
@@ -551,8 +572,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v().toBigInteger();
-		if (component == 1) return i.v().toBigInteger();
+		if (component == 0) return r.getAsBigInteger();
+		if (component == 1) return i.getAsBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -561,8 +582,8 @@ public final class ComplexFloat128Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return r.v();
-		if (component == 1) return i.v();
+		if (component == 0) return r.getAsBigDecimal();
+		if (component == 1) return i.getAsBigDecimal();
 		return BigDecimal.ZERO;
 	}
 
@@ -584,8 +605,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().byteValue();
-			else return i.v().byteValue();
+			if (component == 0) return r.getAsByte();
+			else return i.getAsByte();
 		}
 	}
 
@@ -607,8 +628,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().shortValue();
-			else return i.v().shortValue();
+			if (component == 0) return r.getAsShort();
+			else return i.getAsShort();
 		}
 	}
 
@@ -630,8 +651,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().intValue();
-			else return i.v().intValue();
+			if (component == 0) return r.getAsInt();
+			else return i.getAsInt();
 		}
 	}
 
@@ -653,8 +674,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().longValue();
-			else return i.v().longValue();
+			if (component == 0) return r.getAsLong();
+			else return i.getAsLong();
 		}
 	}
 
@@ -676,8 +697,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().floatValue();
-			else return i.v().floatValue();
+			if (component == 0) return r.getAsFloat();
+			else return i.getAsFloat();
 		}
 	}
 
@@ -699,8 +720,8 @@ public final class ComplexFloat128Member
 			return 0;
 		}
 		else {
-			if (component == 0) return r.v().doubleValue();
-			else return i.v().doubleValue();
+			if (component == 0) return r.getAsDouble();
+			else return i.getAsDouble();
 		}
 	}
 
@@ -722,8 +743,8 @@ public final class ComplexFloat128Member
 			return BigInteger.ZERO;
 		}
 		else {
-			if (component == 0) return r.v().toBigInteger();
-			else return i.v().toBigInteger();
+			if (component == 0) return r.getAsBigInteger();
+			else return i.getAsBigInteger();
 		}
 	}
 
@@ -745,8 +766,8 @@ public final class ComplexFloat128Member
 			return BigDecimal.ZERO;
 		}
 		else {
-			if (component == 0) return r.v();
-			else return i.v();
+			if (component == 0) return r.getAsBigDecimal();
+			else return i.getAsBigDecimal();
 		}
 	}
 
@@ -850,6 +871,128 @@ public final class ComplexFloat128Member
 
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
-		return new BigDecimal[] {r().v(), i().v()};
+		return new BigDecimal[] {r().getAsBigDecimal(), i().getAsBigDecimal()};
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] {r().getAsBigInteger(), i().getAsBigInteger()};
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] {r().getAsDouble(), i().getAsDouble()};
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] {r().getAsFloat(), i().getAsFloat()};
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] {r().getAsLong(), i().getAsLong()};
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] {r().getAsInt(), i().getAsInt()};
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] {r().getAsShort(), i().getAsShort()};
+	}
+
+	@Override
+	public byte[] getAsByteArray() {
+		return new byte[] {r().getAsByte(), i().getAsByte()};
+	}
+
+	@Override
+	public void setFromDoubleExact(double... vals) {
+		setFromDouble(vals);
+	}
+
+	@Override
+	public void setFromFloatExact(float... vals) {
+		setFromFloat(vals);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromLongExact(long... vals) {
+		setFromLong(vals);
+	}
+
+	@Override
+	public void setFromIntExact(int... vals) {
+		setFromInt(vals);
+	}
+
+	@Override
+	public void setFromInt(int... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromShortExact(short... vals) {
+		setFromShort(vals);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromByteExact(byte... vals) {
+		setFromByte(vals);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
 	}
 }
