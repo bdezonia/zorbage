@@ -820,4 +820,196 @@ public final class SignedInt3Member
 
 		return 3;
 	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		return new BigDecimal[] { getAsBigDecimal() };
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimalExact() {
+		return getAsBigDecimal();
+	}
+
+	@Override
+	public BigDecimal getAsBigDecimal() {
+		return BigDecimal.valueOf(v());
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArrayExact() {
+		return getAsBigIntegerArray();
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		return new BigInteger[] { getAsBigInteger() };
+	}
+
+	@Override
+	public BigInteger getAsBigIntegerExact() {
+		return getAsBigInteger();
+	}
+
+	@Override
+	public BigInteger getAsBigInteger() {
+		return BigInteger.valueOf(v());
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		return new double[] { v() };
+	}
+
+	@Override
+	public double getAsDoubleExact() {
+		return getAsDouble();
+	}
+
+	@Override
+	public double getAsDouble() {
+		return v();
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		return new float[] { v() };
+	}
+
+	@Override
+	public float getAsFloatExact() {
+		return getAsFloat();
+	}
+
+	@Override
+	public float getAsFloat() {
+		return v();
+	}
+
+	@Override
+	public long[] getAsLongArrayExact() {
+		return getAsLongArray();
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		return new long[] { v() };
+	}
+
+	@Override
+	public long getAsLongExact() {
+		return getAsLong();
+	}
+
+	@Override
+	public long getAsLong() {
+		return v();
+	}
+
+	@Override
+	public int[] getAsIntArrayExact() {
+		return getAsIntArray();
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		return new int[] { v() };
+	}
+
+	@Override
+	public int getAsIntExact() {
+		return getAsInt();
+	}
+
+	@Override
+	public int getAsInt() {
+		return v();
+	}
+
+	@Override
+	public short[] getAsShortArrayExact() {
+		return getAsShortArray();
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		return new short[] { v() };
+	}
+
+	@Override
+	public short getAsShortExact() {
+		return getAsShort();
+	}
+
+	@Override
+	public short getAsShort() {
+		return v();
+	}
+
+	@Override
+	public byte[] getAsByteArrayExact() {
+		return getAsByteArray();
+	}
+
+	@Override
+	public byte getAsByteExact() {
+		return v();
+	}
+
+	@Override
+	public void setFromBigDecimal(BigDecimal... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(vals[0].intValue());
+	}
+
+	@Override
+	public void setFromBigInteger(BigInteger... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(vals[0].intValue());
+	}
+
+	@Override
+	public void setFromDouble(double... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV((int) vals[0]);
+	}
+
+	@Override
+	public void setFromFloat(float... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV((int) vals[0]);
+	}
+
+	@Override
+	public void setFromShort(short... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(vals[0]);
+	}
+
+	@Override
+	public void setFromByte(byte... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		setV(vals[0]);
+	}
 }
