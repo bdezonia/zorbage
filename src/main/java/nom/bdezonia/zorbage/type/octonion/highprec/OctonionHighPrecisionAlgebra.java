@@ -81,10 +81,10 @@ public class OctonionHighPrecisionAlgebra
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionMember>,
 		ScaleByOneHalf<OctonionHighPrecisionMember>,
 		ScaleByTwo<OctonionHighPrecisionMember>,
-		ConstructibleFromBigDecimal<OctonionHighPrecisionMember>,
-		ConstructibleFromBigInteger<OctonionHighPrecisionMember>,
-		ConstructibleFromDouble<OctonionHighPrecisionMember>,
-		ConstructibleFromLong<OctonionHighPrecisionMember>
+		ConstructibleFromBigDecimals<OctonionHighPrecisionMember>,
+		ConstructibleFromBigIntegers<OctonionHighPrecisionMember>,
+		ConstructibleFromDoubles<OctonionHighPrecisionMember>,
+		ConstructibleFromLongs<OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);

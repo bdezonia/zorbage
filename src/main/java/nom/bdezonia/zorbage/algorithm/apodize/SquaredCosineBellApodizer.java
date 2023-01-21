@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
@@ -50,7 +50,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 public class SquaredCosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
 											RealConstants<C> & Unity<C> & Addition<C> &
 											Invertible<C> & Multiplication<C>,
-										C extends SetFromLong>
+										C extends SetFromLongs>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;

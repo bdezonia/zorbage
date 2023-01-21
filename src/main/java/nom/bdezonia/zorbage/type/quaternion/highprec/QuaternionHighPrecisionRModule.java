@@ -85,10 +85,10 @@ public class QuaternionHighPrecisionRModule
 		ScaleByTwo<QuaternionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>,
 		ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>,
-		ConstructibleFromBigDecimal<QuaternionHighPrecisionRModuleMember>,
-		ConstructibleFromBigInteger<QuaternionHighPrecisionRModuleMember>,
-		ConstructibleFromDouble<QuaternionHighPrecisionRModuleMember>,
-		ConstructibleFromLong<QuaternionHighPrecisionRModuleMember>
+		ConstructibleFromBigDecimals<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromBigIntegers<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromDoubles<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromLongs<QuaternionHighPrecisionRModuleMember>
 {
 	@Override
 	public String typeDescription() {

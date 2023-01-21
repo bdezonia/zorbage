@@ -91,7 +91,7 @@ public class OctonionFloat32RModule
 		ScaleByTwo<OctonionFloat32RModuleMember>,
 		Tolerance<Float32Member,OctonionFloat32RModuleMember>,
 		ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>,
-		ConstructibleFromFloat<OctonionFloat32RModuleMember>
+		ConstructibleFromFloats<OctonionFloat32RModuleMember>
 {
 	@Override
 	public String typeDescription() {

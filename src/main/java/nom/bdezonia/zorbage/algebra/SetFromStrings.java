@@ -30,16 +30,12 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
-import java.math.BigInteger;
-
-
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface ConstructibleFromBigInteger<U> {
+public interface SetFromStrings {
 
-	U construct(BigInteger... vals);
+	void setFromStrings(String... vals);
 }

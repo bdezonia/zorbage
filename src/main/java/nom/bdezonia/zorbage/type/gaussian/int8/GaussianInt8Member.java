@@ -58,15 +58,15 @@ import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeByteSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
-import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
-import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
-import nom.bdezonia.zorbage.algebra.SetFromByte;
-import nom.bdezonia.zorbage.algebra.SetFromByteExact;
-import nom.bdezonia.zorbage.algebra.SetFromDouble;
-import nom.bdezonia.zorbage.algebra.SetFromFloat;
-import nom.bdezonia.zorbage.algebra.SetFromInt;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
-import nom.bdezonia.zorbage.algebra.SetFromShort;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBytes;
+import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
+import nom.bdezonia.zorbage.algebra.SetFromDoubles;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromInts;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -95,15 +95,15 @@ public class GaussianInt8Member
 		SetReal<SignedInt8Member>, GetReal<SignedInt8Member>,
 		SetComplex<SignedInt8Member>, GetComplex<SignedInt8Member>,
 		NativeByteSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromInt,
-		SetFromLong,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByteArray,
 		GetAsByteArrayExact,
 		GetAsShortArray,
@@ -140,7 +140,7 @@ public class GaussianInt8Member
 	}
 	
 	public GaussianInt8Member(int... vals) {
-		setFromInt(vals);
+		setFromInts(vals);
 	}
 	
 	@Override
@@ -834,7 +834,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -848,7 +848,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -976,7 +976,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -990,7 +990,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1004,7 +1004,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1018,7 +1018,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1032,7 +1032,7 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1046,12 +1046,12 @@ public class GaussianInt8Member
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");

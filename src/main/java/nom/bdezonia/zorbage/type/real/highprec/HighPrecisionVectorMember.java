@@ -61,7 +61,7 @@ public final class HighPrecisionVectorMember
 		Settable<HighPrecisionVectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<HighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -78,25 +78,25 @@ public final class HighPrecisionVectorMember
 	public HighPrecisionVectorMember(BigDecimal... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public HighPrecisionVectorMember(BigInteger... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public HighPrecisionVectorMember(double... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public HighPrecisionVectorMember(long... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new HighPrecisionMember(), vals.length);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public HighPrecisionVectorMember(HighPrecisionVectorMember other) {
@@ -968,7 +968,7 @@ public final class HighPrecisionVectorMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -981,7 +981,7 @@ public final class HighPrecisionVectorMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -994,7 +994,7 @@ public final class HighPrecisionVectorMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1007,7 +1007,7 @@ public final class HighPrecisionVectorMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

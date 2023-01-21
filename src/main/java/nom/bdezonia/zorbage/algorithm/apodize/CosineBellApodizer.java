@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.procedure.Procedure2;
@@ -54,7 +54,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 public class CosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
 											RealConstants<C> & Unity<C> & Addition<C> &
 											Invertible<C> & Multiplication<C>,
-								C extends SetFromLong>
+								C extends SetFromLongs>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
@@ -94,7 +94,7 @@ public class CosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
 		alg.unity().call(one);
 		alg.add().call(one, one, two);
 		alg.divide().call(oneEighty, two, oneEighty);
-		len.setFromLong(signalLen);
+		len.setFromLongs(signalLen);
 		alg.assign().call(oneEighty, t1);
 		alg.subtract().call(t1, phase, t1);
 		alg.divide().call(t1, len, t1);
@@ -103,7 +103,7 @@ public class CosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
 	@Override
 	public void call(Long k, C ak) {
 		C tmp = this.k.get();
-		tmp.setFromLong(k);
+		tmp.setFromLongs(k);
 		C tk = this.tk.get();
 		alg.multiply().call(t1, tmp, tk);
 		alg.add().call(tk, phase, tk);

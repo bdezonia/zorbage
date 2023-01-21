@@ -61,7 +61,7 @@ public final class OctonionFloat128RModuleMember
 		Settable<OctonionFloat128RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -79,28 +79,28 @@ public final class OctonionFloat128RModuleMember
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionFloat128Member(), count);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public OctonionFloat128RModuleMember(BigInteger... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionFloat128Member(), count);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public OctonionFloat128RModuleMember(double... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionFloat128Member(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public OctonionFloat128RModuleMember(long... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionFloat128Member(), count);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public OctonionFloat128RModuleMember(OctonionFloat128RModuleMember other) {
@@ -1984,7 +1984,7 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -2004,7 +2004,7 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -2024,7 +2024,7 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -2044,7 +2044,7 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

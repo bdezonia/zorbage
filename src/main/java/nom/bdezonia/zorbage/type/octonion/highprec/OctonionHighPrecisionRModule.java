@@ -85,10 +85,10 @@ public class OctonionHighPrecisionRModule
 		ScaleByTwo<OctonionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
 		ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>,
-		ConstructibleFromBigDecimal<OctonionHighPrecisionRModuleMember>,
-		ConstructibleFromBigInteger<OctonionHighPrecisionRModuleMember>,
-		ConstructibleFromDouble<OctonionHighPrecisionRModuleMember>,
-		ConstructibleFromLong<OctonionHighPrecisionRModuleMember>
+		ConstructibleFromBigDecimals<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromBigIntegers<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromDoubles<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromLongs<OctonionHighPrecisionRModuleMember>
 {
 	@Override
 	public String typeDescription() {

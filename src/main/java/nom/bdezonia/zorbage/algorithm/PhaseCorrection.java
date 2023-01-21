@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.ImaginaryConstants;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.SetR;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -73,7 +73,7 @@ public class PhaseCorrection {
 					C extends SetR<R>,
 					RA extends Algebra<RA,R> & Addition<R> & Multiplication<R> &
 								Invertible<R>,
-					R extends SetFromLong>
+					R extends SetFromLongs>
 		void compute(CA cAlg, RA rAlg, long pivot, R theta0, R theta1,
 						IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
@@ -91,9 +91,9 @@ public class PhaseCorrection {
 		C correction = cAlg.construct();
 		C tmp = cAlg.construct();
 		cAlg.I().call(I);
-		n.setFromLong(N);
+		n.setFromLongs(N);
 		for (long i = 0; i < N; i++) {
-			scaleTerm.setFromLong(i - pivot);
+			scaleTerm.setFromLongs(i - pivot);
 			rAlg.multiply().call(scaleTerm, theta1, scaleTerm);
 			rAlg.divide().call(scaleTerm, n, scaleTerm);
 			rAlg.add().call(theta0, scaleTerm, linTerm);

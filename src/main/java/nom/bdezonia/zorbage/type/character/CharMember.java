@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.GetAsCharArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeCharSupport;
-import nom.bdezonia.zorbage.algebra.SetFromChar;
+import nom.bdezonia.zorbage.algebra.SetFromChars;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
@@ -51,7 +51,7 @@ public class CharMember
 	implements
 		CharCoder, Gettable<CharMember>, Settable<CharMember>,
 		Allocatable<CharMember>, Duplicatable<CharMember>,
-		SetFromChar, GetAsChar, GetAsCharArray, NativeCharSupport
+		SetFromChars, GetAsChar, GetAsCharArray, NativeCharSupport
 {
 	private char v;
 	
@@ -60,7 +60,7 @@ public class CharMember
 	}
 	
 	public CharMember(char... vals) {
-		setFromChar(vals);
+		setFromChars(vals);
 	}
 	
 	public CharMember(CharMember other) {
@@ -143,7 +143,7 @@ public class CharMember
 	}
 
 	@Override
-	public void setFromChar(char... vals) {
+	public void setFromChars(char... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);

@@ -97,7 +97,7 @@ public class ComplexFloat64Algebra
 		Tolerance<Float64Member,ComplexFloat64Member>,
 		ScaleByOneHalf<ComplexFloat64Member>,
 		ScaleByTwo<ComplexFloat64Member>,
-		ConstructibleFromDouble<ComplexFloat64Member>
+		ConstructibleFromDoubles<ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);

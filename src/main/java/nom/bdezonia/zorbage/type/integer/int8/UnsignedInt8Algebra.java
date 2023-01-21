@@ -67,7 +67,7 @@ public class UnsignedInt8Algebra
 		Tolerance<UnsignedInt8Member,UnsignedInt8Member>,
 		ScaleByOneHalf<UnsignedInt8Member>,
 		ScaleByTwo<UnsignedInt8Member>,
-		ConstructibleFromInt<UnsignedInt8Member>,
+		ConstructibleFromInts<UnsignedInt8Member>,
 		Conjugate<UnsignedInt8Member>
 {
 

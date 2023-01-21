@@ -42,10 +42,10 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
-import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
-import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
-import nom.bdezonia.zorbage.algebra.SetFromDouble;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromDoubles;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -79,7 +79,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 		Settable<QuaternionHighPrecisionCartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionHighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -153,22 +153,22 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	
 	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
 		this(rank, dimCount);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, double... vals) {
 		this(rank, dimCount);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public QuaternionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, long... vals) {
 		this(rank, dimCount);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 
 	public QuaternionHighPrecisionCartesianTensorProductMember(QuaternionHighPrecisionCartesianTensorProductMember other) {
@@ -1199,7 +1199,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1216,7 +1216,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1233,7 +1233,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1250,7 +1250,7 @@ public final class QuaternionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

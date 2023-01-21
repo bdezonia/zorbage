@@ -171,7 +171,7 @@ public class TestFloat128Vector {
 
 		// addScalar()
 		
-		value.setFromDouble(44);
+		value.setFromDoubles(44);
 		G.QUAD_VEC.addScalar().call(value, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -245,7 +245,7 @@ public class TestFloat128Vector {
 		
 		// divideByScalar()
 
-		value.setFromDouble(1.5);
+		value.setFromDoubles(1.5);
 		a = G.QUAD_VEC.construct(1, 2, 3, 4);
 		c = G.QUAD_VEC.construct(0, 0, 0, 0);
 		G.QUAD_VEC.divideByScalar().call(value, a, c);
@@ -321,7 +321,7 @@ public class TestFloat128Vector {
 
 		a = G.QUAD_VEC.construct(1, 2, 3, 4);
 		c = new Float128VectorMember(a.length());
-		value.setFromDouble(-2);
+		value.setFromDoubles(-2);
 		G.QUAD_VEC.multiplyByScalar().call(value, a, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -376,7 +376,7 @@ public class TestFloat128Vector {
 		// round()
 		
 		b = G.QUAD_VEC.construct(1.00001, 2, 2.4, -3.6);
-		value.setFromDouble(1);
+		value.setFromDoubles(1);
 		G.QUAD_VEC.round().call(Round.Mode.AWAY_FROM_ORIGIN, value, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -399,7 +399,7 @@ public class TestFloat128Vector {
 		
 		// scale()
 		
-		value.setFromLong(14);
+		value.setFromLongs(14);
 		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		G.QUAD_VEC.scale().call(value, b, c);
 		assertEquals(4, c.length());
@@ -544,7 +544,7 @@ public class TestFloat128Vector {
 
 		// subtractScalar()
 
-		value.setFromDouble(44);
+		value.setFromDoubles(44);
 		G.QUAD_VEC.subtractScalar().call(value, b, c);
 		assertEquals(4, c.length());
 		c.getV(0, value);
@@ -590,16 +590,16 @@ public class TestFloat128Vector {
 		
 		// within()
 		
-		value.setFromDouble(0);
+		value.setFromDoubles(0);
 		a = G.QUAD_VEC.construct(1, 2, 3, 4);
 		b = G.QUAD_VEC.construct(1, 2, 3, 4);
 		assertTrue(G.QUAD_VEC.within().call(value, a, b));
 		b = G.QUAD_VEC.construct(1.1, 2.25, 3.0, 4.1);
-		value.setFromDouble(0.1);
+		value.setFromDoubles(0.1);
 		assertFalse(G.QUAD_VEC.within().call(value, a, b));
-		value.setFromDouble(0.2499999999999999);
+		value.setFromDoubles(0.2499999999999999);
 		assertFalse(G.QUAD_VEC.within().call(value, a, b));
-		value.setFromDouble(0.25);
+		value.setFromDoubles(0.25);
 		assertTrue(G.QUAD_VEC.within().call(value, a, b));
 
 		// zero(), isZero()

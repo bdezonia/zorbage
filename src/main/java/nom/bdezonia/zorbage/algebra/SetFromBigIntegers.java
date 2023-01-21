@@ -30,12 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
+import java.math.BigInteger;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface SetFromBoolean {
+public interface SetFromBigIntegers {
 
-	void setFromBoolean(boolean... vals);
+	void setFromBigIntegers(BigInteger... vals);
 }

@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetFromLong {
+public interface SetFromLongsExact {
 
-	void setFromLong(long... vals);
+	void setFromLongsExact(long... vals);
 }

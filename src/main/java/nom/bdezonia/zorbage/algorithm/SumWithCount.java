@@ -32,7 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
 /**
@@ -54,11 +54,11 @@ public class SumWithCount {
 	 * @param sum
 	 * @param count
 	 */
-	public static <T extends Algebra<T,U> & Addition<U>, U extends SetFromLong>
+	public static <T extends Algebra<T,U> & Addition<U>, U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U sum, U count)
 	{
 		Sum.compute(alg, storage, sum);
 
-		count.setFromLong(storage.size());
+		count.setFromLongs(storage.size());
 	}
 }

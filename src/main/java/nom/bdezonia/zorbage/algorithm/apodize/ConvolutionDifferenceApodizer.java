@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 // Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 public class ConvolutionDifferenceApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 												Addition<C> & Multiplication<C> &
 												Exponential<C>,
-									C extends SetFromLong>
+									C extends SetFromLongs>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
@@ -119,7 +119,7 @@ public class ConvolutionDifferenceApodizer<CA extends Algebra<CA,C> & RealConsta
 		C tk = termK.get();
 		C tmp1 = temp1.get();
 		C tmp2 = temp2.get();
-		tk.setFromLong(k);
+		tk.setFromLongs(k);
 		alg.exp().call(tk, tk);
 		alg.multiply().call(base1, tk, tmp1);
 		alg.multiply().call(base2, tk, tmp2);

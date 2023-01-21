@@ -61,7 +61,7 @@ public final class QuaternionFloat32MatrixMember
 		Settable<QuaternionFloat32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member();
@@ -84,7 +84,7 @@ public final class QuaternionFloat32MatrixMember
 	
 	public QuaternionFloat32MatrixMember(long r, long c, float... vals) {
 		this(r,c);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 	
 	public QuaternionFloat32MatrixMember(QuaternionFloat32MatrixMember other) {
@@ -1518,7 +1518,7 @@ public final class QuaternionFloat32MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1535,7 +1535,7 @@ public final class QuaternionFloat32MatrixMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

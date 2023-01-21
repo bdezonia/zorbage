@@ -97,7 +97,7 @@ public class ComplexFloat16Algebra
 		Tolerance<Float16Member,ComplexFloat16Member>,
 		ScaleByOneHalf<ComplexFloat16Member>,
 		ScaleByTwo<ComplexFloat16Member>,
-		ConstructibleFromFloat<ComplexFloat16Member>
+		ConstructibleFromFloats<ComplexFloat16Member>
 {
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);

@@ -68,8 +68,8 @@ public class UnsignedInt64Algebra
 		Tolerance<UnsignedInt64Member,UnsignedInt64Member>,
 		ScaleByOneHalf<UnsignedInt64Member>,
 		ScaleByTwo<UnsignedInt64Member>,
-		ConstructibleFromBigInteger<UnsignedInt64Member>,
-		ConstructibleFromLong<UnsignedInt64Member>,
+		ConstructibleFromBigIntegers<UnsignedInt64Member>,
+		ConstructibleFromLongs<UnsignedInt64Member>,
 		Conjugate<UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();

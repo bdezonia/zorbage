@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromInt;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -89,7 +89,7 @@ public class GaussianInt8Algebra
 		ScaleByHighPrecAndRound<GaussianInt8Member>,
 		ScaleByRational<GaussianInt8Member>,
 		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>,
-		ConstructibleFromInt<GaussianInt8Member>
+		ConstructibleFromInts<GaussianInt8Member>
 {
 	@Override
 	public String typeDescription() {

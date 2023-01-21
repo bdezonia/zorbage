@@ -78,10 +78,10 @@ public class HighPrecisionAlgebra
 		ScaleByOneHalf<HighPrecisionMember>,
 		ScaleByTwo<HighPrecisionMember>,
 		MiscFloat<HighPrecisionMember>,
-		ConstructibleFromLong<HighPrecisionMember>,
-		ConstructibleFromDouble<HighPrecisionMember>,
-		ConstructibleFromBigInteger<HighPrecisionMember>,
-		ConstructibleFromBigDecimal<HighPrecisionMember>
+		ConstructibleFromLongs<HighPrecisionMember>,
+		ConstructibleFromDoubles<HighPrecisionMember>,
+		ConstructibleFromBigIntegers<HighPrecisionMember>,
+		ConstructibleFromBigDecimals<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);

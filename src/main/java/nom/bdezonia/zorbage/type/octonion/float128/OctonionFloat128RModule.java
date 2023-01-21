@@ -93,10 +93,10 @@ public class OctonionFloat128RModule
 		ScaleByTwo<OctonionFloat128RModuleMember>,
 		Tolerance<Float128Member,OctonionFloat128RModuleMember>,
 		ArrayLikeMethods<OctonionFloat128RModuleMember,OctonionFloat128Member>,
-		ConstructibleFromBigDecimal<OctonionFloat128RModuleMember>,
-		ConstructibleFromBigInteger<OctonionFloat128RModuleMember>,
-		ConstructibleFromDouble<OctonionFloat128RModuleMember>,
-		ConstructibleFromLong<OctonionFloat128RModuleMember>
+		ConstructibleFromBigDecimals<OctonionFloat128RModuleMember>,
+		ConstructibleFromBigIntegers<OctonionFloat128RModuleMember>,
+		ConstructibleFromDoubles<OctonionFloat128RModuleMember>,
+		ConstructibleFromLongs<OctonionFloat128RModuleMember>
 {
 
 	@Override

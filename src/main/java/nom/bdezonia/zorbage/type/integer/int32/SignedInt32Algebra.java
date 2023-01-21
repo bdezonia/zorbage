@@ -67,7 +67,7 @@ public class SignedInt32Algebra
 		Tolerance<SignedInt32Member,SignedInt32Member>,
 		ScaleByOneHalf<SignedInt32Member>,
 		ScaleByTwo<SignedInt32Member>,
-		ConstructibleFromInt<SignedInt32Member>,
+		ConstructibleFromInts<SignedInt32Member>,
 		Conjugate<SignedInt32Member>
 {
 	@Override

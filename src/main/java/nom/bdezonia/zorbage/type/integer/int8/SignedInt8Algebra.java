@@ -67,7 +67,7 @@ public class SignedInt8Algebra
 		Tolerance<SignedInt8Member,SignedInt8Member>,
 		ScaleByOneHalf<SignedInt8Member>,
 		ScaleByTwo<SignedInt8Member>,
-		ConstructibleFromInt<SignedInt8Member>,
+		ConstructibleFromInts<SignedInt8Member>,
 		Conjugate<SignedInt8Member>
 {
 

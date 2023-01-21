@@ -57,7 +57,7 @@ public class BooleanAlgebra
 		LogicalOperations<BooleanMember>,
 		PredSucc<BooleanMember>,
 		Random<BooleanMember>,
-		ConstructibleFromBoolean<BooleanMember>
+		ConstructibleFromBooleans<BooleanMember>
 {
 	@Override
 	public String typeDescription() {

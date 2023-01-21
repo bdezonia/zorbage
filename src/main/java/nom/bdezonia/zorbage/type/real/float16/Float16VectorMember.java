@@ -61,7 +61,7 @@ public final class Float16VectorMember
 		Settable<Float16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member(0); 
@@ -77,7 +77,7 @@ public final class Float16VectorMember
 	public Float16VectorMember(float... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new Float16Member(), vals.length);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 	
 	public Float16VectorMember(Float16VectorMember other) {
@@ -949,7 +949,7 @@ public final class Float16VectorMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -962,7 +962,7 @@ public final class Float16VectorMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

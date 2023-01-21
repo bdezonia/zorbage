@@ -63,15 +63,15 @@ public final class Float16Member
 		UniversalRepresentation, PrimitiveConversion,
 		HighPrecRepresentation, SetReal<Float16Member>, GetReal<Float16Member>,
 		NativeFloatSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromInt,
-		SetFromLong,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByte,
 		GetAsByteArray,
 		GetAsShort,
@@ -104,7 +104,7 @@ public final class Float16Member
 	}
 	
 	public Float16Member(float... vals) {
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 	
 	public Float16Member(Float16Member value) {
@@ -726,14 +726,14 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
@@ -874,49 +874,49 @@ public final class Float16Member
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0].floatValue());
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0].floatValue());
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV((float) vals[0]);
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 }

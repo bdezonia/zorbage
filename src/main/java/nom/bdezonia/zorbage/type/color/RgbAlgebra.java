@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.ColorMethods;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromInt;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
 
@@ -53,7 +53,7 @@ public class RgbAlgebra
 	implements
 		Algebra<RgbAlgebra, RgbMember>, Bounded<RgbMember>, Random<RgbMember>,
 		PredSucc<RgbMember>, ColorMethods<Double, RgbMember>,
-		ConstructibleFromInt<RgbMember>
+		ConstructibleFromInts<RgbMember>
 {
 	@Override
 	public String typeDescription() {

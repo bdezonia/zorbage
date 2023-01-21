@@ -61,7 +61,7 @@ public final class ComplexFloat64VectorMember
 		Settable<ComplexFloat64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray,
+		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
@@ -78,7 +78,7 @@ public final class ComplexFloat64VectorMember
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat64Member(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public ComplexFloat64VectorMember(ComplexFloat64VectorMember other) {
@@ -1015,7 +1015,7 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1029,7 +1029,7 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

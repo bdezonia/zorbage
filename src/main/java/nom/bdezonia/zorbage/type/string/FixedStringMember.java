@@ -44,7 +44,7 @@ public final class FixedStringMember
 	implements
 		IntCoder, Allocatable<FixedStringMember>, Duplicatable<FixedStringMember>,
 		Settable<FixedStringMember>, Gettable<FixedStringMember>,
-		SetFromString, GetAsString, GetAsStringArray
+		SetFromStrings, GetAsString, GetAsStringArray
 {
 	private int[] codePoints;
 	
@@ -220,7 +220,7 @@ public final class FixedStringMember
 	}
 
 	@Override
-	public void setFromString(String... vals) {
+	public void setFromStrings(String... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);

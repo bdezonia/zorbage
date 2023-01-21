@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.Ordered;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -62,7 +62,7 @@ public class ApproxVariance {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U> &
-								Invertible<U> & Ordered<U>, U extends SetFromLong>
+								Invertible<U> & Ordered<U>, U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		long storageSize = storage.size();

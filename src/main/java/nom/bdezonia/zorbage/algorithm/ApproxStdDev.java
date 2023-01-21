@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Roots;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -68,7 +68,7 @@ public class ApproxStdDev {
 								Invertible<U> &
 								Roots<U> &
 								Ordered<U>,
-					U extends SetFromLong>
+					U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		ApproxVariance.compute(alg, storage, result);

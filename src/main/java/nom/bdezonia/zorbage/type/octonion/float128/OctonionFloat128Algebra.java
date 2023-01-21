@@ -90,10 +90,10 @@ public class OctonionFloat128Algebra
 		Tolerance<Float128Member,OctonionFloat128Member>,
 		ScaleByOneHalf<OctonionFloat128Member>,
 		ScaleByTwo<OctonionFloat128Member>,
-		ConstructibleFromBigDecimal<OctonionFloat128Member>,
-		ConstructibleFromBigInteger<OctonionFloat128Member>,
-		ConstructibleFromDouble<OctonionFloat128Member>,
-		ConstructibleFromLong<OctonionFloat128Member>
+		ConstructibleFromBigDecimals<OctonionFloat128Member>,
+		ConstructibleFromBigIntegers<OctonionFloat128Member>,
+		ConstructibleFromDoubles<OctonionFloat128Member>,
+		ConstructibleFromLongs<OctonionFloat128Member>
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 	private static final OctonionFloat128Member ONE_THIRD = new OctonionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);

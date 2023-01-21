@@ -65,7 +65,7 @@ public class SignedInt2Algebra
 		Tolerance<SignedInt2Member,SignedInt2Member>,
 		ScaleByOneHalf<SignedInt2Member>,
 		ScaleByTwo<SignedInt2Member>,
-		ConstructibleFromInt<SignedInt2Member>,
+		ConstructibleFromInts<SignedInt2Member>,
 		Conjugate<SignedInt2Member>
 {
 	@Override

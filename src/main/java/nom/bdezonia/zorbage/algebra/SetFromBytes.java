@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetFromByteExact {
+public interface SetFromBytes {
 
-	void setFromByteExact(byte... vals);
+	void setFromBytes(byte... vals);
 }

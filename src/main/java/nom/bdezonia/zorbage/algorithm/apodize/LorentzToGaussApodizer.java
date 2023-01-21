@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 // Source: NMR Data Processing, Hoch and Stern, 1996, p. 47
@@ -50,7 +50,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 public class LorentzToGaussApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 												Exponential<C> & Multiplication<C> &
 												Addition<C>,
-										C extends SetFromLong>
+										C extends SetFromLongs>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
@@ -102,7 +102,7 @@ public class LorentzToGaussApodizer<CA extends Algebra<CA,C> & RealConstants<C> 
 	public void call(Long k, C ak)
 	{
 		C tk = this.k.get();
-		tk.setFromLong(k);
+		tk.setFromLongs(k);
 		C t1k = this.t1k.get();
 		alg.multiply().call(t1, tk, t1k);
 		alg.exp().call(t1k, t1k);

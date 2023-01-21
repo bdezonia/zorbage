@@ -93,7 +93,7 @@ public class Float16Algebra
 		ScaleByTwo<Float16Member>,
 		MiscFloat<Float16Member>,
 		PredSucc<Float16Member>,
-		ConstructibleFromFloat<Float16Member>
+		ConstructibleFromFloats<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);

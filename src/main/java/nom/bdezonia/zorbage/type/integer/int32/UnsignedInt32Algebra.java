@@ -67,7 +67,7 @@ public class UnsignedInt32Algebra
 		Tolerance<UnsignedInt32Member,UnsignedInt32Member>,
 		ScaleByOneHalf<UnsignedInt32Member>,
 		ScaleByTwo<UnsignedInt32Member>,
-		ConstructibleFromLong<UnsignedInt32Member>,
+		ConstructibleFromLongs<UnsignedInt32Member>,
 		Conjugate<UnsignedInt32Member>
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);

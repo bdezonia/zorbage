@@ -78,8 +78,8 @@ public class SignedInt128Algebra
 		Tolerance<SignedInt128Member,SignedInt128Member>,
 		ScaleByOneHalf<SignedInt128Member>,
 		ScaleByTwo<SignedInt128Member>,
-		ConstructibleFromBigInteger<SignedInt128Member>,
-		ConstructibleFromLong<SignedInt128Member>,
+		ConstructibleFromBigIntegers<SignedInt128Member>,
+		ConstructibleFromLongs<SignedInt128Member>,
 		Conjugate<SignedInt128Member>
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();

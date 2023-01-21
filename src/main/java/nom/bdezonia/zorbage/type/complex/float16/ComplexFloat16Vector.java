@@ -91,7 +91,7 @@ public class ComplexFloat16Vector
 		ScaleByTwo<ComplexFloat16VectorMember>,
 		Tolerance<Float16Member,ComplexFloat16VectorMember>,
 		ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>,
-		ConstructibleFromFloat<ComplexFloat16VectorMember>
+		ConstructibleFromFloats<ComplexFloat16VectorMember>
 {
 	@Override
 	public String typeDescription() {

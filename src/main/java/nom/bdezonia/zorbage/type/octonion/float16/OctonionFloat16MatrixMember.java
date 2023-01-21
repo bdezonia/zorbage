@@ -61,7 +61,7 @@ public final class OctonionFloat16MatrixMember
 		Settable<OctonionFloat16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
@@ -84,7 +84,7 @@ public final class OctonionFloat16MatrixMember
 	
 	public OctonionFloat16MatrixMember(long r, long c, float... vals) {
 		this(r,c);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 	
 	public OctonionFloat16MatrixMember(OctonionFloat16MatrixMember other) {
@@ -2106,7 +2106,7 @@ public final class OctonionFloat16MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -2127,7 +2127,7 @@ public final class OctonionFloat16MatrixMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

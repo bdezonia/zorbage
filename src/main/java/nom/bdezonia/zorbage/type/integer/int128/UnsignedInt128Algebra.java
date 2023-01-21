@@ -78,8 +78,8 @@ public class UnsignedInt128Algebra
 		Tolerance<UnsignedInt128Member,UnsignedInt128Member>,
 		ScaleByOneHalf<UnsignedInt128Member>,
 		ScaleByTwo<UnsignedInt128Member>,
-		ConstructibleFromBigInteger<UnsignedInt128Member>,
-		ConstructibleFromLong<UnsignedInt128Member>,
+		ConstructibleFromBigIntegers<UnsignedInt128Member>,
+		ConstructibleFromLongs<UnsignedInt128Member>,
 		Conjugate<UnsignedInt128Member>
 {
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();

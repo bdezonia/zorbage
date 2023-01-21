@@ -62,7 +62,7 @@ public class UnsignedInt1Algebra
 		Random<UnsignedInt1Member>,
 		LogicalOperations<UnsignedInt1Member>,
 		Tolerance<UnsignedInt1Member,UnsignedInt1Member>,
-		ConstructibleFromInt<UnsignedInt1Member>,
+		ConstructibleFromInts<UnsignedInt1Member>,
 		Conjugate<UnsignedInt1Member>
 {
 	@Override

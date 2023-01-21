@@ -49,14 +49,14 @@ public class RgbMember
 	implements
 		ByteCoder, Allocatable<RgbMember>, Duplicatable<RgbMember>,
 		Settable<RgbMember>, Gettable<RgbMember>, NumberMember<RgbMember>,
-		SetFromByte,
-		SetFromShort,
-		SetFromInt,
-		SetFromLong,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsShortArrayExact,
@@ -93,7 +93,7 @@ public class RgbMember
 	}
 	
 	public RgbMember(int... vals) {
-		setFromInt(vals);
+		setFromInts(vals);
 	}
 	
 	public void setR(int r) {
@@ -204,7 +204,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
@@ -302,7 +302,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0].intValue());
@@ -311,7 +311,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0].intValue());
@@ -320,7 +320,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR((int) vals[0]);
@@ -329,7 +329,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR((int) vals[0]);
@@ -338,7 +338,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR((int) vals[0]);
@@ -347,7 +347,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);
@@ -356,7 +356,7 @@ public class RgbMember
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setR(vals[0]);

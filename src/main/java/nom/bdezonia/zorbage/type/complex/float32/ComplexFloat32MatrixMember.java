@@ -61,7 +61,7 @@ public final class ComplexFloat32MatrixMember
 		Settable<ComplexFloat32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
@@ -88,7 +88,7 @@ public final class ComplexFloat32MatrixMember
 	
 	public ComplexFloat32MatrixMember(long r, long c, float... vals) {
 		this(r,c);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 
 	public ComplexFloat32MatrixMember(String s) {
@@ -1160,7 +1160,7 @@ public final class ComplexFloat32MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1175,7 +1175,7 @@ public final class ComplexFloat32MatrixMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

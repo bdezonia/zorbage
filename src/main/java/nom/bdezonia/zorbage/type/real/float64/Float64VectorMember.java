@@ -61,7 +61,7 @@ public final class Float64VectorMember
 		Settable<Float64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray,
+		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member(0); 
@@ -77,7 +77,7 @@ public final class Float64VectorMember
 	public Float64VectorMember(double... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new Float64Member(), vals.length);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public Float64VectorMember(Float64VectorMember other) {
@@ -949,7 +949,7 @@ public final class Float64VectorMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -962,7 +962,7 @@ public final class Float64VectorMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

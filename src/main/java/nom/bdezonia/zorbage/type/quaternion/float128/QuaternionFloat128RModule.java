@@ -93,10 +93,10 @@ public class QuaternionFloat128RModule
 		ScaleByTwo<QuaternionFloat128RModuleMember>,
 		Tolerance<Float128Member,QuaternionFloat128RModuleMember>,
 		ArrayLikeMethods<QuaternionFloat128RModuleMember,QuaternionFloat128Member>,
-		ConstructibleFromLong<QuaternionFloat128RModuleMember>,
-		ConstructibleFromDouble<QuaternionFloat128RModuleMember>,
-		ConstructibleFromBigInteger<QuaternionFloat128RModuleMember>,
-		ConstructibleFromBigDecimal<QuaternionFloat128RModuleMember>
+		ConstructibleFromLongs<QuaternionFloat128RModuleMember>,
+		ConstructibleFromDoubles<QuaternionFloat128RModuleMember>,
+		ConstructibleFromBigIntegers<QuaternionFloat128RModuleMember>,
+		ConstructibleFromBigDecimals<QuaternionFloat128RModuleMember>
 {
 	@Override
 	public String typeDescription() {

@@ -86,7 +86,7 @@ public class QuaternionFloat64Algebra
 		Tolerance<Float64Member,QuaternionFloat64Member>,
 		ScaleByOneHalf<QuaternionFloat64Member>,
 		ScaleByTwo<QuaternionFloat64Member>,
-		ConstructibleFromDouble<QuaternionFloat64Member>
+		ConstructibleFromDoubles<QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE_THIRD = new QuaternionFloat64Member(1.0/3,0,0,0);

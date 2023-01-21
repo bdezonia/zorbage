@@ -65,7 +65,7 @@ public class UnsignedInt6Algebra
 		Tolerance<UnsignedInt6Member,UnsignedInt6Member>,
 		ScaleByOneHalf<UnsignedInt6Member>,
 		ScaleByTwo<UnsignedInt6Member>,
-		ConstructibleFromInt<UnsignedInt6Member>,
+		ConstructibleFromInts<UnsignedInt6Member>,
 		Conjugate<UnsignedInt6Member>
 {
 

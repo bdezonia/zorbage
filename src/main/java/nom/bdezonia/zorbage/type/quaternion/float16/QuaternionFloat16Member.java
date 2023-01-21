@@ -60,15 +60,15 @@ public final class QuaternionFloat16Member
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float16Member>, GetQuaternion<Float16Member>,
 		NativeFloatSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromInt,
-		SetFromLong,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
@@ -110,7 +110,7 @@ public final class QuaternionFloat16Member
 	}
 
 	public QuaternionFloat16Member(float... vals) {
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 	
 	public float r() { return Float16Util.convertHFloatToFloat(r); }
@@ -1196,7 +1196,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1220,7 +1220,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1341,7 +1341,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1365,7 +1365,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1389,7 +1389,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1413,7 +1413,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1437,7 +1437,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1461,7 +1461,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1485,7 +1485,7 @@ public final class QuaternionFloat16Member
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 }

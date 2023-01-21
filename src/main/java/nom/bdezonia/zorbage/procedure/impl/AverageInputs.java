@@ -33,7 +33,7 @@ package nom.bdezonia.zorbage.procedure.impl;
 import nom.bdezonia.zorbage.procedure.Procedure;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algorithm.Mean;
 import nom.bdezonia.zorbage.datasource.ArrayDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  *
  */
 public class AverageInputs<T extends Algebra<T,U> & Addition<U>,
-							U extends SetFromLong>
+							U extends SetFromLongs>
 	implements Procedure<U>
 {
 	private final T algebra;

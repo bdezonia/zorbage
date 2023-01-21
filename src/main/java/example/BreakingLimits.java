@@ -169,7 +169,7 @@ class BreakingLimits {
 		
 		Float128Member value128 = G.QUAD.construct();
 		
-		value128.setFromLong(1234567890123456L);
+		value128.setFromLongs(1234567890123456L);
 		
 		System.out.println(value128.v()); // prints 1234567890123456.0
 	}

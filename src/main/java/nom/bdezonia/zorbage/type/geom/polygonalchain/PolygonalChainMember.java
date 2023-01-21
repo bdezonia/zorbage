@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
-import nom.bdezonia.zorbage.algebra.SetFromFloat;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -52,7 +52,7 @@ public class PolygonalChainMember
 		ByteCoder, Settable<PolygonalChainMember>, Gettable<PolygonalChainMember>,
 		Allocatable<PolygonalChainMember>, Duplicatable<PolygonalChainMember>,
 		NumberMember<PolygonalChainMember>,
-		SetFromFloat,
+		SetFromFloats,
 		GetAsFloatArray
 {
 	float boundsValid;
@@ -529,7 +529,7 @@ public class PolygonalChainMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 
 		if (vals.length % 3 != 0)
 			throw new IllegalArgumentException("Tracts require 3 floats per point");

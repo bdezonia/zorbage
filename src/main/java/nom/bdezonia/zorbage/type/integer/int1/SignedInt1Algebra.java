@@ -65,7 +65,7 @@ public class SignedInt1Algebra
 		ScaleByRational<SignedInt1Member>,
 		ScaleByDouble<SignedInt1Member>,
 		ScaleByDoubleAndRound<SignedInt1Member>,
-		ConstructibleFromInt<SignedInt1Member>,
+		ConstructibleFromInts<SignedInt1Member>,
 		Conjugate<SignedInt1Member>
 {
 	@Override

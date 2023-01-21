@@ -65,7 +65,7 @@ public class SignedInt6Algebra
 		Tolerance<SignedInt6Member,SignedInt6Member>,
 		ScaleByOneHalf<SignedInt6Member>,
 		ScaleByTwo<SignedInt6Member>,
-		ConstructibleFromInt<SignedInt6Member>,
+		ConstructibleFromInts<SignedInt6Member>,
 		Conjugate<SignedInt6Member>
 {
 

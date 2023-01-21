@@ -61,7 +61,7 @@ public final class OctonionFloat32RModuleMember
 		Settable<OctonionFloat32RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(); 
@@ -112,7 +112,7 @@ public final class OctonionFloat32RModuleMember
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionFloat32Member(), count);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 
 	@Override
@@ -1962,7 +1962,7 @@ public final class OctonionFloat32RModuleMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1982,7 +1982,7 @@ public final class OctonionFloat32RModuleMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

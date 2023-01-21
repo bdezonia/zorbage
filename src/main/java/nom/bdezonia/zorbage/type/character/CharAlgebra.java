@@ -34,7 +34,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromChar;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromChars;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
@@ -56,7 +56,7 @@ public class CharAlgebra
 		PredSucc<CharMember>,
 		Random<CharMember>,
 		Bounded<CharMember>,
-		ConstructibleFromChar<CharMember>
+		ConstructibleFromChars<CharMember>
 {
 	@Override
 	public String typeDescription() {

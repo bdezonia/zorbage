@@ -61,7 +61,7 @@ public final class QuaternionFloat64MatrixMember
 		Settable<QuaternionFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray,
+		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member();
@@ -84,7 +84,7 @@ public final class QuaternionFloat64MatrixMember
 	
 	public QuaternionFloat64MatrixMember(long r, long c, double... vals) {
 		this(r,c);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public QuaternionFloat64MatrixMember(QuaternionFloat64MatrixMember other) {
@@ -1518,7 +1518,7 @@ public final class QuaternionFloat64MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1535,7 +1535,7 @@ public final class QuaternionFloat64MatrixMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

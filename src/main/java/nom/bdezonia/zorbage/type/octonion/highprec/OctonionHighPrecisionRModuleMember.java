@@ -61,7 +61,7 @@ public final class OctonionHighPrecisionRModuleMember
 		Settable<OctonionHighPrecisionRModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionHighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -79,28 +79,28 @@ public final class OctonionHighPrecisionRModuleMember
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public OctonionHighPrecisionRModuleMember(BigInteger... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public OctonionHighPrecisionRModuleMember(double... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public OctonionHighPrecisionRModuleMember(long... vals) {
 		final int count = vals.length / 8;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), count);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public OctonionHighPrecisionRModuleMember(OctonionHighPrecisionRModuleMember other) {
@@ -1985,7 +1985,7 @@ public final class OctonionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -2005,7 +2005,7 @@ public final class OctonionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -2025,7 +2025,7 @@ public final class OctonionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -2045,7 +2045,7 @@ public final class OctonionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

@@ -61,7 +61,7 @@ public final class ComplexFloat64MatrixMember
 		Settable<ComplexFloat64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray,
+		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
@@ -88,7 +88,7 @@ public final class ComplexFloat64MatrixMember
 	
 	public ComplexFloat64MatrixMember(long r, long c, double... vals) {
 		this(r,c);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 
 	public ComplexFloat64MatrixMember(String s) {
@@ -1160,7 +1160,7 @@ public final class ComplexFloat64MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1175,7 +1175,7 @@ public final class ComplexFloat64MatrixMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

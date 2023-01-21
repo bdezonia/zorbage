@@ -65,7 +65,7 @@ public class SignedInt9Algebra
 		Tolerance<SignedInt9Member,SignedInt9Member>,
 		ScaleByOneHalf<SignedInt9Member>,
 		ScaleByTwo<SignedInt9Member>,
-		ConstructibleFromInt<SignedInt9Member>,
+		ConstructibleFromInts<SignedInt9Member>,
 		Conjugate<SignedInt9Member>
 {
 

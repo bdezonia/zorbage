@@ -61,7 +61,7 @@ public class StdDev {
 								Multiplication<U> &
 								Unity<U> &
 								Roots<U>,
-					U extends SetFromLong>
+					U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		Variance.compute(alg, storage, result);

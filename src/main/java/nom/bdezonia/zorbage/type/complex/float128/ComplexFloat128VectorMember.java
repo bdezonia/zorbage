@@ -61,7 +61,7 @@ public final class ComplexFloat128VectorMember
 		Settable<ComplexFloat128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -79,28 +79,28 @@ public final class ComplexFloat128VectorMember
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public ComplexFloat128VectorMember(BigInteger... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public ComplexFloat128VectorMember(double... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public ComplexFloat128VectorMember(long... vals) {
 		final int count = vals.length / 2;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new ComplexFloat128Member(), count);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public ComplexFloat128VectorMember(ComplexFloat128VectorMember other) {
@@ -1037,7 +1037,7 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1051,7 +1051,7 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1065,7 +1065,7 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1079,7 +1079,7 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

@@ -36,7 +36,7 @@ package nom.bdezonia.zorbage.algebra;
  *
  * @param <U>
  */
-public interface ConstructibleFromByte<U> {
+public interface ConstructibleFromShorts<U> {
 
-	U construct(byte... vals);
+	U construct(short... vals);
 }

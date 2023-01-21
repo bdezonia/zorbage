@@ -67,7 +67,7 @@ public class SignedInt64Algebra
 		Tolerance<SignedInt64Member,SignedInt64Member>,
 		ScaleByOneHalf<SignedInt64Member>,
 		ScaleByTwo<SignedInt64Member>,
-		ConstructibleFromLong<SignedInt64Member>,
+		ConstructibleFromLongs<SignedInt64Member>,
 		Conjugate<SignedInt64Member>
 {
 	private static final SignedInt64Member ZERO = new SignedInt64Member();

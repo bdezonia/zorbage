@@ -34,8 +34,9 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public interface SetFromByte {
+public interface ConstructibleFromBooleans<U> {
 
-	void setFromByte(byte... vals);
+	U construct(boolean... vals);
 }

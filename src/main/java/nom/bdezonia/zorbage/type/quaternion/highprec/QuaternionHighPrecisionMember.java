@@ -59,22 +59,22 @@ public final class QuaternionHighPrecisionMember
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<HighPrecisionMember>, GetQuaternion<HighPrecisionMember>,
 		NativeBigDecimalSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromShortExact,
-		SetFromInt,
-		SetFromIntExact,
-		SetFromLong,
-		SetFromLongExact,
-		SetFromFloat,
-		SetFromFloatExact,
-		SetFromDouble,
-		SetFromDoubleExact,
-		SetFromBigInteger,
-		SetFromBigIntegerExact,
-		SetFromBigDecimal,
-		SetFromBigDecimalExact,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromLongsExact,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigIntegersExact,
+		SetFromBigDecimals,
+		SetFromBigDecimalsExact,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
@@ -112,19 +112,19 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	public QuaternionHighPrecisionMember(BigDecimal... vals) {
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 
 	public QuaternionHighPrecisionMember(BigInteger... vals) {
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 
 	public QuaternionHighPrecisionMember(double... vals) {
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 
 	public QuaternionHighPrecisionMember(long... vals) {
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public BigDecimal r() { return r; }
@@ -1210,7 +1210,7 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1234,7 +1234,7 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1258,7 +1258,7 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1282,7 +1282,7 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1393,27 +1393,27 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromBigDecimalExact(BigDecimal... vals) {
-		setFromBigDecimal(vals);
+	public void setFromBigDecimalsExact(BigDecimal... vals) {
+		setFromBigDecimals(vals);
 	}
 
 	@Override
-	public void setFromBigIntegerExact(BigInteger... vals) {
-		setFromBigInteger(vals);
+	public void setFromBigIntegersExact(BigInteger... vals) {
+		setFromBigIntegers(vals);
 	}
 
 	@Override
-	public void setFromDoubleExact(double... vals) {
-		setFromDouble(vals);
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
 	}
 
 	@Override
-	public void setFromFloatExact(float... vals) {
-		setFromFloat(vals);
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1437,17 +1437,17 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromLongExact(long... vals) {
-		setFromLong(vals);
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
 	}
 
 	@Override
-	public void setFromIntExact(int... vals) {
-		setFromInt(vals);
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1471,12 +1471,12 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromShortExact(short... vals) {
-		setFromShort(vals);
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1500,12 +1500,12 @@ public final class QuaternionHighPrecisionMember
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");

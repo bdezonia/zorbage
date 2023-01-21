@@ -85,10 +85,10 @@ public class ComplexHighPrecisionVector
 		ScaleByTwo<ComplexHighPrecisionVectorMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionVectorMember>,
 		ArrayLikeMethods<ComplexHighPrecisionVectorMember,ComplexHighPrecisionMember>,
-		ConstructibleFromBigDecimal<ComplexHighPrecisionVectorMember>,
-		ConstructibleFromBigInteger<ComplexHighPrecisionVectorMember>,
-		ConstructibleFromDouble<ComplexHighPrecisionVectorMember>,
-		ConstructibleFromLong<ComplexHighPrecisionVectorMember>
+		ConstructibleFromBigDecimals<ComplexHighPrecisionVectorMember>,
+		ConstructibleFromBigIntegers<ComplexHighPrecisionVectorMember>,
+		ConstructibleFromDoubles<ComplexHighPrecisionVectorMember>,
+		ConstructibleFromLongs<ComplexHighPrecisionVectorMember>
 {
 	@Override
 	public String typeDescription() {

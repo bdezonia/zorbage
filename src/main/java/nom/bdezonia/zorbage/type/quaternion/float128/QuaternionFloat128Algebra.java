@@ -87,10 +87,10 @@ public class QuaternionFloat128Algebra
 		Tolerance<Float128Member,QuaternionFloat128Member>,
 		ScaleByOneHalf<QuaternionFloat128Member>,
 		ScaleByTwo<QuaternionFloat128Member>,
-		ConstructibleFromBigDecimal<QuaternionFloat128Member>,
-		ConstructibleFromBigInteger<QuaternionFloat128Member>,
-		ConstructibleFromDouble<QuaternionFloat128Member>,
-		ConstructibleFromLong<QuaternionFloat128Member>
+		ConstructibleFromBigDecimals<QuaternionFloat128Member>,
+		ConstructibleFromBigIntegers<QuaternionFloat128Member>,
+		ConstructibleFromDoubles<QuaternionFloat128Member>,
+		ConstructibleFromLongs<QuaternionFloat128Member>
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member();
 	private static final QuaternionFloat128Member ONE_THIRD = new QuaternionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);

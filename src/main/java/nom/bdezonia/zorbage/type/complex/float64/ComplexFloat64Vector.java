@@ -91,7 +91,7 @@ public class ComplexFloat64Vector
 		ScaleByTwo<ComplexFloat64VectorMember>,
 		Tolerance<Float64Member,ComplexFloat64VectorMember>,
 		ArrayLikeMethods<ComplexFloat64VectorMember,ComplexFloat64Member>,
-		ConstructibleFromDouble<ComplexFloat64VectorMember>
+		ConstructibleFromDoubles<ComplexFloat64VectorMember>
 {
 	@Override
 	public String typeDescription() {

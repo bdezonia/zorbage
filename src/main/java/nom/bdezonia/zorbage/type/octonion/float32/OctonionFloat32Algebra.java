@@ -89,7 +89,7 @@ public class OctonionFloat32Algebra
 		Tolerance<Float32Member,OctonionFloat32Member>,
 		ScaleByOneHalf<OctonionFloat32Member>,
 		ScaleByTwo<OctonionFloat32Member>,
-		ConstructibleFromFloat<OctonionFloat32Member>
+		ConstructibleFromFloats<OctonionFloat32Member>
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member ONE_THIRD = new OctonionFloat32Member(1.0f/3, 0, 0, 0, 0, 0, 0, 0);

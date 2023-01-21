@@ -30,12 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
+import java.math.BigDecimal;
+
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface SetFromChar {
+public interface SetFromBigDecimalsExact {
 
-	void setFromChar(char... vals);
+	void setFromBigDecimalsExact(BigDecimal... vals);
 }

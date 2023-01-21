@@ -65,8 +65,8 @@ public class RationalAlgebra
 		Tolerance<RationalMember,RationalMember>,
 		ScaleByOneHalf<RationalMember>,
 		ScaleByTwo<RationalMember>,
-		ConstructibleFromBigInteger<RationalMember>,
-		ConstructibleFromLong<RationalMember>
+		ConstructibleFromBigIntegers<RationalMember>,
+		ConstructibleFromLongs<RationalMember>
 {
 	@Override
 	public String typeDescription() {

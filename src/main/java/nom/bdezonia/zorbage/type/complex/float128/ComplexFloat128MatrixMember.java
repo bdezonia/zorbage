@@ -61,7 +61,7 @@ public final class ComplexFloat128MatrixMember
 		Settable<ComplexFloat128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -89,22 +89,22 @@ public final class ComplexFloat128MatrixMember
 	
 	public ComplexFloat128MatrixMember(long r, long c, BigDecimal... vals) {
 		this(r,c);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public ComplexFloat128MatrixMember(long r, long c, BigInteger... vals) {
 		this(r,c);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public ComplexFloat128MatrixMember(long r, long c, double... vals) {
 		this(r,c);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public ComplexFloat128MatrixMember(long r, long c, long... vals) {
 		this(r,c);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 
 	public ComplexFloat128MatrixMember(String s) {
@@ -1176,7 +1176,7 @@ public final class ComplexFloat128MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1191,7 +1191,7 @@ public final class ComplexFloat128MatrixMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1206,7 +1206,7 @@ public final class ComplexFloat128MatrixMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1221,7 +1221,7 @@ public final class ComplexFloat128MatrixMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

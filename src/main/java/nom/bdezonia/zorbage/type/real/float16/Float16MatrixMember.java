@@ -61,7 +61,7 @@ public final class Float16MatrixMember
 		Gettable<Float16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member(0);
@@ -84,7 +84,7 @@ public final class Float16MatrixMember
 	
 	public Float16MatrixMember(long r, long c, float... vals) {
 		this(r,c);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 	
 	public Float16MatrixMember(Float16MatrixMember other) {
@@ -1093,7 +1093,7 @@ public final class Float16MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1107,7 +1107,7 @@ public final class Float16MatrixMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetFromFloatExact {
+public interface SetFromBooleans {
 
-	void setFromFloatExact(float... vals);
+	void setFromBooleans(boolean... vals);
 }

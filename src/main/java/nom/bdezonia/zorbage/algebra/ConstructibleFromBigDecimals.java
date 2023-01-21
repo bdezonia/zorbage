@@ -36,8 +36,9 @@ import java.math.BigDecimal;
  * 
  * @author Barry DeZonia
  *
+ * @param <U>
  */
-public interface SetFromBigDecimal {
+public interface ConstructibleFromBigDecimals<U> {
 
-	void setFromBigDecimal(BigDecimal... vals);
+	U construct(BigDecimal... vals);
 }

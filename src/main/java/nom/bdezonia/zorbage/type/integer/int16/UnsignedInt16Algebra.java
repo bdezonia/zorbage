@@ -67,7 +67,7 @@ public class UnsignedInt16Algebra
 		Tolerance<UnsignedInt16Member,UnsignedInt16Member>,
 		ScaleByOneHalf<UnsignedInt16Member>,
 		ScaleByTwo<UnsignedInt16Member>,
-		ConstructibleFromInt<UnsignedInt16Member>,
+		ConstructibleFromInts<UnsignedInt16Member>,
 		Conjugate<UnsignedInt16Member>
 {
 	@Override

@@ -137,7 +137,7 @@ public class TestComplexFloat64Matrix {
 
 		// addScalar()
 		
-		value.setFromDouble(2,1);
+		value.setFromDoubles(2,1);
 		b = new ComplexFloat64MatrixMember(3, 1, 2,1, 0,9, -2,-5);
 		c = new ComplexFloat64MatrixMember();
 		G.CDBL_MAT.addScalar().call(value, b, c);
@@ -155,7 +155,7 @@ public class TestComplexFloat64Matrix {
 		
 		// subtractScalar()
 		
-		value.setFromDouble(2,1);
+		value.setFromDoubles(2,1);
 		b = new ComplexFloat64MatrixMember(3, 1, 2,1, 0,9, -2,-5);
 		c = new ComplexFloat64MatrixMember();
 		G.CDBL_MAT.subtractScalar().call(value, b, c);

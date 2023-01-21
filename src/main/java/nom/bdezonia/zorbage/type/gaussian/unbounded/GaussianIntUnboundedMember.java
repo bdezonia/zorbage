@@ -52,19 +52,19 @@ import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeBigIntegerSupport;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.SetComplex;
-import nom.bdezonia.zorbage.algebra.SetFromBigDecimal;
-import nom.bdezonia.zorbage.algebra.SetFromBigInteger;
-import nom.bdezonia.zorbage.algebra.SetFromBigIntegerExact;
-import nom.bdezonia.zorbage.algebra.SetFromByte;
-import nom.bdezonia.zorbage.algebra.SetFromByteExact;
-import nom.bdezonia.zorbage.algebra.SetFromDouble;
-import nom.bdezonia.zorbage.algebra.SetFromFloat;
-import nom.bdezonia.zorbage.algebra.SetFromInt;
-import nom.bdezonia.zorbage.algebra.SetFromIntExact;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
-import nom.bdezonia.zorbage.algebra.SetFromLongExact;
-import nom.bdezonia.zorbage.algebra.SetFromShort;
-import nom.bdezonia.zorbage.algebra.SetFromShortExact;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegersExact;
+import nom.bdezonia.zorbage.algebra.SetFromBytes;
+import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
+import nom.bdezonia.zorbage.algebra.SetFromDoubles;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromInts;
+import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromLongsExact;
+import nom.bdezonia.zorbage.algebra.SetFromShorts;
+import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -93,19 +93,19 @@ public class GaussianIntUnboundedMember
 		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
 		SetComplex<UnboundedIntMember>, GetComplex<UnboundedIntMember>,
 		NativeBigIntegerSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromShortExact,
-		SetFromInt,
-		SetFromIntExact,
-		SetFromLong,
-		SetFromLongExact,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigIntegerExact,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromLongsExact,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigIntegersExact,
+		SetFromBigDecimals,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
@@ -136,11 +136,11 @@ public class GaussianIntUnboundedMember
 	}
 	
 	public GaussianIntUnboundedMember(BigInteger... vals) {
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public GaussianIntUnboundedMember(long... vals) {
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	@Override
@@ -834,7 +834,7 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -848,7 +848,7 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -946,7 +946,7 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -960,12 +960,12 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromBigIntegerExact(BigInteger... vals) {
-		setFromBigInteger(vals);
+	public void setFromBigIntegersExact(BigInteger... vals) {
+		setFromBigIntegers(vals);
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -979,7 +979,7 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -993,17 +993,17 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromLongExact(long... vals) {
-		setFromLong(vals);
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
 	}
 
 	@Override
-	public void setFromIntExact(int... vals) {
-		setFromInt(vals);
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1017,12 +1017,12 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromShortExact(short... vals) {
-		setFromShort(vals);
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1036,12 +1036,12 @@ public class GaussianIntUnboundedMember
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");

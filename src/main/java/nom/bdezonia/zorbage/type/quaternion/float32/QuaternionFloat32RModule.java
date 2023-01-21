@@ -91,7 +91,7 @@ public class QuaternionFloat32RModule
 		ScaleByTwo<QuaternionFloat32RModuleMember>,
 		Tolerance<Float32Member,QuaternionFloat32RModuleMember>,
 		ArrayLikeMethods<QuaternionFloat32RModuleMember, QuaternionFloat32Member>,
-		ConstructibleFromFloat<QuaternionFloat32RModuleMember>
+		ConstructibleFromFloats<QuaternionFloat32RModuleMember>
 {
 	@Override
 	public String typeDescription() {

@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 // Source: NMR Data Processing, Hoch and Stern, 1996, p. 43
@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 public class GaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 												Addition<C> & Multiplication<C> &
 												Exponential<C>,
-									C extends SetFromLong>
+									C extends SetFromLongs>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
@@ -87,7 +87,7 @@ public class GaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 	@Override
 	public void call(Long k, C ak) {
 		C tk = termK.get();
-		tk.setFromLong(k);
+		tk.setFromLongs(k);
 		alg.multiply().call(tk, tk, tk);
 		alg.exp().call(tk, tk);
 		alg.multiply().call(base, tk, ak);

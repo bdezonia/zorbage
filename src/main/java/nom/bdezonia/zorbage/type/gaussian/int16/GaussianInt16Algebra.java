@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromInt;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -89,7 +89,7 @@ public class GaussianInt16Algebra
 		ScaleByHighPrecAndRound<GaussianInt16Member>,
 		ScaleByRational<GaussianInt16Member>,
 		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>,
-		ConstructibleFromInt<GaussianInt16Member>
+		ConstructibleFromInts<GaussianInt16Member>
 {
 
 	@Override

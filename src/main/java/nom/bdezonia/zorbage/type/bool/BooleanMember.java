@@ -57,7 +57,7 @@ public final class BooleanMember
 		Allocatable<BooleanMember>, Duplicatable<BooleanMember>,
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
-		PrimitiveConversion, SetFromBoolean, GetAsBoolean,
+		PrimitiveConversion, SetFromBooleans, GetAsBoolean,
 		GetAsBooleanArray, NativeBooleanSupport
 {	
 	private static final String ZERO = "0";
@@ -70,7 +70,7 @@ public final class BooleanMember
 	}
 	
 	public BooleanMember(boolean... vals) {
-		setFromBoolean(vals);
+		setFromBooleans(vals);
 	}
 	
 	public BooleanMember(BooleanMember value) {
@@ -726,7 +726,7 @@ public final class BooleanMember
 	}
 
 	@Override
-	public void setFromBoolean(boolean... vals) {
+	public void setFromBooleans(boolean... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);

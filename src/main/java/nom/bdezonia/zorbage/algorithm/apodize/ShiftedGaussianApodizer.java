@@ -36,7 +36,7 @@ import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.RealConstants;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 // Source: NMR Data Processing, Hoch and Stern, 1996, p. 43
@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 public class ShiftedGaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C> &
 												Addition<C> & Multiplication<C> &
 												Invertible<C> & Exponential<C>,
-									C extends SetFromLong>
+									C extends SetFromLongs>
 	implements Procedure2<Long,C>
 {
 	private final CA alg;
@@ -86,9 +86,9 @@ public class ShiftedGaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C>
 		alg.negate().call(base, base);
 		alg.exp().call(base, base);
 		C numEls = alg.construct();
-		numEls.setFromLong(numElems);
+		numEls.setFromLongs(numElems);
 		C totEls = alg.construct();
-		totEls.setFromLong(totElems);
+		totEls.setFromLongs(totElems);
 		alg.multiply().call(dt, numEls, shift);
 		alg.divide().call(shift, totEls, shift);
 	}
@@ -96,7 +96,7 @@ public class ShiftedGaussianApodizer<CA extends Algebra<CA,C> & RealConstants<C>
 	@Override
 	public void call(Long k, C ak) {
 		C tk = termK.get();
-		tk.setFromLong(k);
+		tk.setFromLongs(k);
 		alg.multiply().call(tk, dt, tk);
 		alg.subtract().call(tk, shift, tk);
 		alg.multiply().call(tk, tk, tk);

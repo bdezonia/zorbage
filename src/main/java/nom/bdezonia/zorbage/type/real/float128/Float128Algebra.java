@@ -38,10 +38,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.Conjugate;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimal;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromDouble;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromLong;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
 import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Hyperbolic;
@@ -132,10 +132,10 @@ public class Float128Algebra
 		Tolerance<Float128Member,Float128Member>,
 		ScaleByOneHalf<Float128Member>,
 		ScaleByTwo<Float128Member>,
-		ConstructibleFromLong<Float128Member>,
-		ConstructibleFromDouble<Float128Member>,
-		ConstructibleFromBigInteger<Float128Member>,
-		ConstructibleFromBigDecimal<Float128Member>
+		ConstructibleFromLongs<Float128Member>,
+		ConstructibleFromDoubles<Float128Member>,
+		ConstructibleFromBigIntegers<Float128Member>,
+		ConstructibleFromBigDecimals<Float128Member>
 {
 	public static final MathContext CONTEXT = new MathContext(38);
 

@@ -65,7 +65,7 @@ public class UnsignedInt9Algebra
 		Tolerance<UnsignedInt9Member,UnsignedInt9Member>,
 		ScaleByOneHalf<UnsignedInt9Member>,
 		ScaleByTwo<UnsignedInt9Member>,
-		ConstructibleFromInt<UnsignedInt9Member>,
+		ConstructibleFromInts<UnsignedInt9Member>,
 		Conjugate<UnsignedInt9Member>
 {
 

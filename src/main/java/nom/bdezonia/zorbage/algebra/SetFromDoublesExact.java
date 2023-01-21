@@ -30,14 +30,12 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
-import java.math.BigInteger;
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public interface SetFromBigInteger {
+public interface SetFromDoublesExact {
 
-	void setFromBigInteger(BigInteger... vals);
+	void setFromDoublesExact(double... vals);
 }

@@ -61,7 +61,7 @@ public final class QuaternionFloat128RModuleMember
 		Settable<QuaternionFloat128RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat128Member>,
-		SetFromDouble, SetFromBigDecimal, SetFromBigInteger, SetFromLong,
+		SetFromDoubles, SetFromBigDecimals, SetFromBigIntegers, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -79,28 +79,28 @@ public final class QuaternionFloat128RModuleMember
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat128Member(), count);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public QuaternionFloat128RModuleMember(BigInteger... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat128Member(), count);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public QuaternionFloat128RModuleMember(double... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat128Member(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public QuaternionFloat128RModuleMember(long... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat128Member(), count);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public QuaternionFloat128RModuleMember(QuaternionFloat128RModuleMember other) {
@@ -1396,7 +1396,7 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1412,7 +1412,7 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1428,7 +1428,7 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1444,7 +1444,7 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

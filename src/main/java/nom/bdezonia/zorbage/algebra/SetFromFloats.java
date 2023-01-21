@@ -34,9 +34,8 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface ConstructibleFromDouble<U> {
+public interface SetFromFloats {
 
-	U construct(double... vals);
+	void setFromFloats(float... vals);
 }

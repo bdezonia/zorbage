@@ -61,7 +61,7 @@ public final class QuaternionHighPrecisionRModuleMember
 		Settable<QuaternionHighPrecisionRModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionHighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -79,28 +79,28 @@ public final class QuaternionHighPrecisionRModuleMember
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public QuaternionHighPrecisionRModuleMember(BigInteger... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public QuaternionHighPrecisionRModuleMember(double... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public QuaternionHighPrecisionRModuleMember(long... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), count);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public QuaternionHighPrecisionRModuleMember(QuaternionHighPrecisionRModuleMember other) {
@@ -1396,7 +1396,7 @@ public final class QuaternionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1412,7 +1412,7 @@ public final class QuaternionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1428,7 +1428,7 @@ public final class QuaternionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1444,7 +1444,7 @@ public final class QuaternionHighPrecisionRModuleMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

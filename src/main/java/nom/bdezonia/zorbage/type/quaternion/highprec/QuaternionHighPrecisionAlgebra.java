@@ -79,10 +79,10 @@ public class QuaternionHighPrecisionAlgebra
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>,
 		ScaleByOneHalf<QuaternionHighPrecisionMember>,
 		ScaleByTwo<QuaternionHighPrecisionMember>,
-		ConstructibleFromBigDecimal<QuaternionHighPrecisionMember>,
-		ConstructibleFromBigInteger<QuaternionHighPrecisionMember>,
-		ConstructibleFromDouble<QuaternionHighPrecisionMember>,
-		ConstructibleFromLong<QuaternionHighPrecisionMember>
+		ConstructibleFromBigDecimals<QuaternionHighPrecisionMember>,
+		ConstructibleFromBigIntegers<QuaternionHighPrecisionMember>,
+		ConstructibleFromDoubles<QuaternionHighPrecisionMember>,
+		ConstructibleFromLongs<QuaternionHighPrecisionMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);

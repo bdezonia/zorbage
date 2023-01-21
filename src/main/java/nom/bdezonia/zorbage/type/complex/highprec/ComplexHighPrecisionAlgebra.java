@@ -90,10 +90,10 @@ public class ComplexHighPrecisionAlgebra
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>,
 		ScaleByOneHalf<ComplexHighPrecisionMember>,
 		ScaleByTwo<ComplexHighPrecisionMember>,
-		ConstructibleFromBigDecimal<ComplexHighPrecisionMember>,
-		ConstructibleFromBigInteger<ComplexHighPrecisionMember>,
-		ConstructibleFromDouble<ComplexHighPrecisionMember>,
-		ConstructibleFromLong<ComplexHighPrecisionMember>
+		ConstructibleFromBigDecimals<ComplexHighPrecisionMember>,
+		ConstructibleFromBigIntegers<ComplexHighPrecisionMember>,
+		ConstructibleFromDoubles<ComplexHighPrecisionMember>,
+		ConstructibleFromLongs<ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);

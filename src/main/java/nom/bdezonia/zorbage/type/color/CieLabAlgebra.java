@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromDouble;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
 import nom.bdezonia.zorbage.algebra.Random;
 
 /**
@@ -49,7 +49,7 @@ public class CieLabAlgebra
 	implements
 		Algebra<CieLabAlgebra, CieLabMember>,
 		Random<CieLabMember>,
-		ConstructibleFromDouble<CieLabMember>
+		ConstructibleFromDoubles<CieLabMember>
 {
 	@Override
 	public String typeDescription() {

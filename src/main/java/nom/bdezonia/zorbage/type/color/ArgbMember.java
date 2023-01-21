@@ -48,14 +48,14 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
 public class ArgbMember
 	implements ByteCoder, Allocatable<ArgbMember>, Duplicatable<ArgbMember>,
 		Settable<ArgbMember>, Gettable<ArgbMember>, NumberMember<ArgbMember>,
-		SetFromByte,
-		SetFromShort,
-		SetFromInt,
-		SetFromLong,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsShortArrayExact,
@@ -77,7 +77,7 @@ public class ArgbMember
 	public ArgbMember() { }
 	
 	public ArgbMember(int... vals) {
-		setFromInt(vals);
+		setFromInts(vals);
 	}
 	
 	public ArgbMember(String str) {
@@ -219,7 +219,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA(vals[0]);
@@ -320,7 +320,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA(vals[0].intValue());
@@ -330,7 +330,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA(vals[0].intValue());
@@ -340,7 +340,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA((int) vals[0]);
@@ -350,7 +350,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA((int) vals[0]);
@@ -360,7 +360,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA((int) vals[0]);
@@ -370,7 +370,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA(vals[0]);
@@ -380,7 +380,7 @@ public class ArgbMember
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		if (vals.length != 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setA(vals[0]);

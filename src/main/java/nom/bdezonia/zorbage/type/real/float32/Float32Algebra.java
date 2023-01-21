@@ -93,7 +93,7 @@ public class Float32Algebra
 		Tolerance<Float32Member,Float32Member>,
 		ScaleByOneHalf<Float32Member>,
 		ScaleByTwo<Float32Member>,
-		ConstructibleFromFloat<Float32Member>
+		ConstructibleFromFloats<Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);

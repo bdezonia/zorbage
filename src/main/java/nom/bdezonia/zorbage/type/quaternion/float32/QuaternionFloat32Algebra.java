@@ -86,7 +86,7 @@ public class QuaternionFloat32Algebra
 		Tolerance<Float32Member,QuaternionFloat32Member>,
 		ScaleByOneHalf<QuaternionFloat32Member>,
 		ScaleByTwo<QuaternionFloat32Member>,
-		ConstructibleFromFloat<QuaternionFloat32Member>
+		ConstructibleFromFloats<QuaternionFloat32Member>
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member(0,0,0,0);
 	private static final QuaternionFloat32Member ONE_THIRD = new QuaternionFloat32Member(1.0f/3,0,0,0);

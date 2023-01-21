@@ -36,8 +36,8 @@ import java.math.BigInteger;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromBigInteger;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromLong;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -87,8 +87,8 @@ public class GaussianIntUnboundedAlgebra
 		ScaleByHighPrecAndRound<GaussianIntUnboundedMember>,
 		ScaleByRational<GaussianIntUnboundedMember>,
 		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>,
-		ConstructibleFromLong<GaussianIntUnboundedMember>,
-		ConstructibleFromBigInteger<GaussianIntUnboundedMember>
+		ConstructibleFromLongs<GaussianIntUnboundedMember>,
+		ConstructibleFromBigIntegers<GaussianIntUnboundedMember>
 {
 	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	

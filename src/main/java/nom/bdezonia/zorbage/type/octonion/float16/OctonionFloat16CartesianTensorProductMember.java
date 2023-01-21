@@ -42,8 +42,8 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
-import nom.bdezonia.zorbage.algebra.SetFromFloat;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -77,7 +77,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		Settable<OctonionFloat16CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat16Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
@@ -146,7 +146,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 	
 	public OctonionFloat16CartesianTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 
 	public OctonionFloat16CartesianTensorProductMember(OctonionFloat16CartesianTensorProductMember other) {
@@ -1713,7 +1713,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1734,7 +1734,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

@@ -61,7 +61,7 @@ public final class QuaternionFloat64RModuleMember
 		Settable<QuaternionFloat64RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray,
+		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
@@ -78,7 +78,7 @@ public final class QuaternionFloat64RModuleMember
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat64Member(), count);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public QuaternionFloat64RModuleMember(QuaternionFloat64RModuleMember other) {
@@ -1374,7 +1374,7 @@ public final class QuaternionFloat64RModuleMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1390,7 +1390,7 @@ public final class QuaternionFloat64RModuleMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);

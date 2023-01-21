@@ -65,7 +65,7 @@ public class UnsignedInt12Algebra
 		Tolerance<UnsignedInt12Member,UnsignedInt12Member>,
 		ScaleByOneHalf<UnsignedInt12Member>,
 		ScaleByTwo<UnsignedInt12Member>,
-		ConstructibleFromInt<UnsignedInt12Member>,
+		ConstructibleFromInts<UnsignedInt12Member>,
 		Conjugate<UnsignedInt12Member>
 {
 	@Override

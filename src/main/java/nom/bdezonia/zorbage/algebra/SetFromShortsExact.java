@@ -34,9 +34,8 @@ package nom.bdezonia.zorbage.algebra;
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface ConstructibleFromString<U> {
-	
-	U construct(String... vals);
+public interface SetFromShortsExact {
+
+	void setFromShortsExact(short... vals);
 }

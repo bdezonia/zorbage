@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NaN;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -59,7 +59,7 @@ public class NanVariance {
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Unity<U>
 								& NaN<U>,
-					U extends Allocatable<U> & SetFromLong>
+					U extends Allocatable<U> & SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		if (storage.size() == 0)

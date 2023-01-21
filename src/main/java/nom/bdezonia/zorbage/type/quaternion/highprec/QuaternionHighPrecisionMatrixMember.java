@@ -61,7 +61,7 @@ public final class QuaternionHighPrecisionMatrixMember
 		Settable<QuaternionHighPrecisionMatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionHighPrecisionMember>,
-		SetFromBigDecimal, SetFromBigInteger, SetFromDouble, SetFromLong,
+		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -85,22 +85,22 @@ public final class QuaternionHighPrecisionMatrixMember
 	
 	public QuaternionHighPrecisionMatrixMember(long r, long c, BigDecimal... vals) {
 		this(r,c);
-		setFromBigDecimal(vals);
+		setFromBigDecimals(vals);
 	}
 	
 	public QuaternionHighPrecisionMatrixMember(long r, long c, BigInteger... vals) {
 		this(r,c);
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public QuaternionHighPrecisionMatrixMember(long r, long c, double... vals) {
 		this(r,c);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public QuaternionHighPrecisionMatrixMember(long r, long c, long... vals) {
 		this(r,c);
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public QuaternionHighPrecisionMatrixMember(QuaternionHighPrecisionMatrixMember other) {
@@ -1534,7 +1534,7 @@ public final class QuaternionHighPrecisionMatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1551,7 +1551,7 @@ public final class QuaternionHighPrecisionMatrixMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1568,7 +1568,7 @@ public final class QuaternionHighPrecisionMatrixMember
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1585,7 +1585,7 @@ public final class QuaternionHighPrecisionMatrixMember
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

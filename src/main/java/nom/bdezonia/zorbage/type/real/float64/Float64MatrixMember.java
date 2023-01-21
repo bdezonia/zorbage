@@ -61,7 +61,7 @@ public final class Float64MatrixMember
 		Gettable<Float64MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDouble, SetFromLong, GetAsDoubleArray,
+		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member(0);
@@ -84,7 +84,7 @@ public final class Float64MatrixMember
 	
 	public Float64MatrixMember(long r, long c, double... vals) {
 		this(r,c);
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 	
 	public Float64MatrixMember(Float64MatrixMember other) {
@@ -1093,7 +1093,7 @@ public final class Float64MatrixMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1107,7 +1107,7 @@ public final class Float64MatrixMember
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

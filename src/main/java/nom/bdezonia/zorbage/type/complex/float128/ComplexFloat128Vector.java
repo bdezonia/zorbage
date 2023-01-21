@@ -93,10 +93,10 @@ public class ComplexFloat128Vector
 		ScaleByTwo<ComplexFloat128VectorMember>,
 		Tolerance<Float128Member,ComplexFloat128VectorMember>,
 		ArrayLikeMethods<ComplexFloat128VectorMember,ComplexFloat128Member>,
-		ConstructibleFromBigDecimal<ComplexFloat128VectorMember>,
-		ConstructibleFromBigInteger<ComplexFloat128VectorMember>,
-		ConstructibleFromDouble<ComplexFloat128VectorMember>,
-		ConstructibleFromLong<ComplexFloat128VectorMember>
+		ConstructibleFromBigDecimals<ComplexFloat128VectorMember>,
+		ConstructibleFromBigIntegers<ComplexFloat128VectorMember>,
+		ConstructibleFromDoubles<ComplexFloat128VectorMember>,
+		ConstructibleFromLongs<ComplexFloat128VectorMember>
 {
 	@Override
 	public String typeDescription() {

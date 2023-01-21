@@ -42,7 +42,7 @@ public final class StringMember
 	implements
 		Allocatable<StringMember>, Duplicatable<StringMember>,
 		Settable<StringMember>, Gettable<StringMember>,
-		SetFromString, GetAsString, GetAsStringArray, NativeStringSupport
+		SetFromStrings, GetAsString, GetAsStringArray, NativeStringSupport
 {
 	private String v;
 	
@@ -112,7 +112,7 @@ public final class StringMember
 	}
 
 	@Override
-	public void setFromString(String... vals) {
+	public void setFromStrings(String... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);

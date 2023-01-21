@@ -42,8 +42,8 @@ import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
-import nom.bdezonia.zorbage.algebra.SetFromFloat;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -77,7 +77,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 		Settable<ComplexFloat32CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat32Member>,
-		SetFromFloat, SetFromLong, GetAsFloatArray,
+		SetFromFloats, SetFromLongs, GetAsFloatArray,
 		ThreadAccess
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member();
@@ -146,7 +146,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 	
 	public ComplexFloat32CartesianTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		setFromFloat(vals);
+		setFromFloats(vals);
 	}
 
 	public ComplexFloat32CartesianTensorProductMember(ComplexFloat32CartesianTensorProductMember other) {
@@ -918,7 +918,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -933,7 +933,7 @@ public final class ComplexFloat32CartesianTensorProductMember
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(

@@ -98,7 +98,7 @@ public class ComplexFloat128Algebra
 		Tolerance<Float128Member,ComplexFloat128Member>,
 		ScaleByOneHalf<ComplexFloat128Member>,
 		ScaleByTwo<ComplexFloat128Member>,
-		ConstructibleFromBigDecimal<ComplexFloat128Member>
+		ConstructibleFromBigDecimals<ComplexFloat128Member>
 {
 	private static final ComplexFloat128Member ONE = new ComplexFloat128Member(BigDecimal.valueOf(1),BigDecimal.ZERO);
 	private static final ComplexFloat128Member TWO = new ComplexFloat128Member(BigDecimal.valueOf(2),BigDecimal.ZERO);

@@ -60,18 +60,18 @@ public final class SignedInt128Member
 		PrimitiveConversion, HighPrecRepresentation,
 		SetReal<UnboundedIntMember>, GetReal<UnboundedIntMember>,
 		NativeBigIntegerSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromShortExact,
-		SetFromInt,
-		SetFromIntExact,
-		SetFromLong,
-		SetFromLongExact,
-		SetFromFloat,
-		SetFromDouble,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromLongsExact,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByte,
 		GetAsByteArray,
 		GetAsShort,
@@ -105,11 +105,11 @@ public final class SignedInt128Member
 	}
 	
 	public SignedInt128Member(long... vals) {
-		setFromLong(vals);
+		setFromLongs(vals);
 	}
 	
 	public SignedInt128Member(BigInteger... vals) {
-		setFromBigInteger(vals);
+		setFromBigIntegers(vals);
 	}
 	
 	public SignedInt128Member(SignedInt128Member value) {
@@ -759,14 +759,14 @@ public final class SignedInt128Member
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));
@@ -896,62 +896,62 @@ public final class SignedInt128Member
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0].toBigInteger());
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigDecimal.valueOf(vals[0]).toBigInteger());
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigDecimal.valueOf(vals[0]).toBigInteger());
 	}
 
 	@Override
-	public void setFromLongExact(long... vals) {
-		setFromLong(vals);
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
 	}
 
 	@Override
-	public void setFromIntExact(int... vals) {
-		setFromInt(vals);
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));
 	}
 
 	@Override
-	public void setFromShortExact(short... vals) {
-		setFromShort(vals);
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));

@@ -93,7 +93,7 @@ public class Float64Algebra
 		Tolerance<Float64Member,Float64Member>,
 		ScaleByOneHalf<Float64Member>,
 		ScaleByTwo<Float64Member>,
-		ConstructibleFromDouble<Float64Member>
+		ConstructibleFromDoubles<Float64Member>
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);

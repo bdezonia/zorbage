@@ -59,19 +59,19 @@ public final class QuaternionFloat64Member
 		PrimitiveConversion, UniversalRepresentation,
 		SetQuaternion<Float64Member>, GetQuaternion<Float64Member>,
 		NativeDoubleSupport,
-		SetFromByte,
-		SetFromByteExact,
-		SetFromShort,
-		SetFromShortExact,
-		SetFromInt,
-		SetFromIntExact,
-		SetFromLong,
-		SetFromFloat,
-		SetFromFloatExact,
-		SetFromDouble,
-		SetFromDoubleExact,
-		SetFromBigInteger,
-		SetFromBigDecimal,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
@@ -110,7 +110,7 @@ public final class QuaternionFloat64Member
 	}
 
 	public QuaternionFloat64Member(double... vals) {
-		setFromDouble(vals);
+		setFromDoubles(vals);
 	}
 
 	public double r() { return r; }
@@ -1196,7 +1196,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromLong(long... vals) {
+	public void setFromLongs(long... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1220,7 +1220,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromDouble(double... vals) {
+	public void setFromDoubles(double... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1336,7 +1336,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromBigDecimal(BigDecimal... vals) {
+	public void setFromBigDecimals(BigDecimal... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1360,7 +1360,7 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromBigInteger(BigInteger... vals) {
+	public void setFromBigIntegers(BigInteger... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1384,17 +1384,17 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromDoubleExact(double... vals) {
-		setFromDouble(vals);
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
 	}
 
 	@Override
-	public void setFromFloatExact(float... vals) {
-		setFromFloat(vals);
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
 	}
 
 	@Override
-	public void setFromFloat(float... vals) {
+	public void setFromFloats(float... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1418,12 +1418,12 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromIntExact(int... vals) {
-		setFromInt(vals);
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
 	}
 
 	@Override
-	public void setFromInt(int... vals) {
+	public void setFromInts(int... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1447,12 +1447,12 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromShortExact(short... vals) {
-		setFromShort(vals);
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
 	}
 
 	@Override
-	public void setFromShort(short... vals) {
+	public void setFromShorts(short... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -1476,12 +1476,12 @@ public final class QuaternionFloat64Member
 	}
 
 	@Override
-	public void setFromByteExact(byte... vals) {
-		setFromByte(vals);
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
 	}
 
 	@Override
-	public void setFromByte(byte... vals) {
+	public void setFromBytes(byte... vals) {
 		
 		if (vals.length == 0 || vals.length > 4)
 			throw new IllegalArgumentException("mismatch between component count and input values count");

@@ -43,7 +43,7 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.ConstructibleFromDouble;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NegInfinite;
 import nom.bdezonia.zorbage.algebra.NaN;
@@ -80,7 +80,7 @@ public class PointAlgebra
 		NegInfinite<Point>,
 		NaN<Point>,
 		Random<Point>,
-		ConstructibleFromDouble<Point>
+		ConstructibleFromDoubles<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	

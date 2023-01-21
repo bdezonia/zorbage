@@ -35,7 +35,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.Ordered;
-import nom.bdezonia.zorbage.algebra.SetFromLong;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 
@@ -71,7 +71,7 @@ public class ApproxSumOfSquaredDeviationsWithCount {
 								Unity<U> &
 								Ordered<U> &
 								Invertible<U>,
-					U extends SetFromLong>
+					U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U avg, U sumSqDevs, U count)
 	{
 		/* original: impl 1: naive but quick

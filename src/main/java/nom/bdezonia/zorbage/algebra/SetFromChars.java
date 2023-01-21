@@ -30,15 +30,12 @@
  */
 package nom.bdezonia.zorbage.algebra;
 
-import java.math.BigDecimal;
-
 /**
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
-public interface ConstructibleFromBigDecimal<U> {
+public interface SetFromChars {
 
-	U construct(BigDecimal... vals);
+	void setFromChars(char... vals);
 }

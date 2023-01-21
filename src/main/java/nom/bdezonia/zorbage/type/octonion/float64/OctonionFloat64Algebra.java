@@ -89,7 +89,7 @@ public class OctonionFloat64Algebra
 		Tolerance<Float64Member,OctonionFloat64Member>,
 		ScaleByOneHalf<OctonionFloat64Member>,
 		ScaleByTwo<OctonionFloat64Member>,
-		ConstructibleFromDouble<OctonionFloat64Member>
+		ConstructibleFromDoubles<OctonionFloat64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);

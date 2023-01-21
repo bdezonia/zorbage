@@ -60,7 +60,7 @@ public class Variance {
 								Addition<U> &
 								Multiplication<U> &
 								Unity<U>,
-					U extends SetFromLong>
+					U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> source, U result)
 	{
 		if (source.size() == 0)

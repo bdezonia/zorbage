@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra;
  * @author Barry DeZonia
  *
  */
-public interface SetFromIntExact {
+public interface SetFromShorts {
 
-	void setFromIntExact(int... vals);
+	void setFromShorts(short... vals);
 }
