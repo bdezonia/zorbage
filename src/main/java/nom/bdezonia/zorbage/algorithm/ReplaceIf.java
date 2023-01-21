@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.procedure.Procedure1;
 
 /**
  * 
@@ -55,7 +56,16 @@ public class ReplaceIf {
 	public static <T extends Algebra<T,U>,U>
 		void compute(T algebra, Function1<Boolean,U> cond, U replacement, IndexedDataSource<U> storage)
 	{
-		ReplaceCopyIf.compute(algebra, cond, replacement, storage, storage);
-	}
+		Procedure1<U> proc = new Procedure1<U>() {
+			
+			@Override
+			public void call(U a) {
 
+				if (cond.call(a))
+					algebra.assign().call(replacement, a);
+			}
+		};
+
+		Transform1.compute(algebra, proc, storage);
+	}
 }
