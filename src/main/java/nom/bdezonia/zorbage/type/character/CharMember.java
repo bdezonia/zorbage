@@ -35,9 +35,12 @@ import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.GetAsCharArray;
+import nom.bdezonia.zorbage.algebra.GetAsString;
+import nom.bdezonia.zorbage.algebra.GetAsStringArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeCharSupport;
 import nom.bdezonia.zorbage.algebra.SetFromChars;
+import nom.bdezonia.zorbage.algebra.SetFromCharsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
@@ -51,7 +54,8 @@ public class CharMember
 	implements
 		CharCoder, Gettable<CharMember>, Settable<CharMember>,
 		Allocatable<CharMember>, Duplicatable<CharMember>,
-		SetFromChars, GetAsChar, GetAsCharArray, NativeCharSupport
+		SetFromChars, GetAsChar, GetAsCharArray, NativeCharSupport,
+		SetFromCharsExact, GetAsString, GetAsStringArray
 {
 	private char v;
 	
@@ -143,6 +147,11 @@ public class CharMember
 	}
 
 	@Override
+	public void setFromCharsExact(char... vals) {
+		setFromChars(vals);
+	}
+	
+	@Override
 	public void setFromChars(char... vals) {
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
@@ -182,5 +191,15 @@ public class CharMember
 	public Character componentMax() {
 
 		return null;  // I don't think characters have a max
+	}
+
+	@Override
+	public String[] getAsStringArray() {
+		return new String[] { getAsString() };
+	}
+
+	@Override
+	public String getAsString() {
+		return String.valueOf(v);
 	}
 }

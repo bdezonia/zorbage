@@ -42,7 +42,9 @@ public final class StringMember
 	implements
 		Allocatable<StringMember>, Duplicatable<StringMember>,
 		Settable<StringMember>, Gettable<StringMember>,
-		SetFromStrings, GetAsString, GetAsStringArray, NativeStringSupport
+		SetFromStrings, GetAsString, GetAsStringArray, NativeStringSupport,
+		SetFromStringsExact, SetFromChars, SetFromCharsExact,
+		GetAsCharArray
 {
 	private String v;
 	
@@ -156,5 +158,25 @@ public final class StringMember
 	public int componentCount() {
 
 		return 1;
+	}
+
+	@Override
+	public void setFromCharsExact(char... vals) {
+		setFromChars(vals);
+	}
+
+	@Override
+	public void setFromChars(char... vals) {
+		setV(String.valueOf(vals));
+	}
+
+	@Override
+	public void setFromStringsExact(String... vals) {
+		setFromStrings(vals);
+	}
+
+	@Override
+	public char[] getAsCharArray() {
+		return v.toCharArray();
 	}
 }

@@ -44,7 +44,7 @@ public final class FixedStringMember
 	implements
 		IntCoder, Allocatable<FixedStringMember>, Duplicatable<FixedStringMember>,
 		Settable<FixedStringMember>, Gettable<FixedStringMember>,
-		SetFromStrings, GetAsString, GetAsStringArray
+		SetFromStrings, GetAsString, GetAsStringArray, SetFromChars
 {
 	private int[] codePoints;
 	
@@ -234,5 +234,10 @@ public final class FixedStringMember
 	@Override
 	public String getAsString() {
 		return v();
+	}
+
+	@Override
+	public void setFromChars(char... vals) {
+		setV(String.valueOf(vals));
 	}
 }

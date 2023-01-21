@@ -58,7 +58,7 @@ public final class BooleanMember
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
 		PrimitiveConversion, SetFromBooleans, GetAsBoolean,
-		GetAsBooleanArray, NativeBooleanSupport
+		GetAsBooleanArray, NativeBooleanSupport, SetFromBooleansExact
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -723,6 +723,11 @@ public final class BooleanMember
 	@Override
 	public boolean getAsBoolean() {
 		return v();
+	}
+	
+	@Override
+	public void setFromBooleansExact(boolean... vals) {
+		setFromBooleans(vals);
 	}
 
 	@Override
