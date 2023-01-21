@@ -66,6 +66,6 @@ public class Generate {
 			}
 		};
 		
-		Transform1.compute(algU, procWrap, a);
+		Fill.compute(algU, procWrap, a);
 	}
 }
