@@ -73,9 +73,23 @@ public class ThreadingUtils {
 		
 		if (extraElems == 0) {
 		
+			// perfect fit
+			
 			return new Tuple2<>(numThreads, elemsPerThread);
 		}
 		else {
+			
+			// not a perfect fit: choose the best thread count 
+			//   we can actually pull off
+			
+			long minElemSlice = elemsPerThread + 1;
+			
+			while (numThreads * minElemSlice > numElems) {
+			
+				numThreads--;
+			}
+			
+			numThreads++;
 			
 			return new Tuple2<>(numThreads, elemsPerThread+1);
 		}
