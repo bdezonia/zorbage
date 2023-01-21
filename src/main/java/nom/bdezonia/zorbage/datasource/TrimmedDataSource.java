@@ -52,11 +52,14 @@ public class TrimmedDataSource<U>
 	 * @param count
 	 */
 	public TrimmedDataSource(IndexedDataSource<U> list, long first, long count) {
+		System.out.println("size = "+list.size()+" first = "+first+" count = "+count);
 		long listSize = list.size();
 		if (first < 0 || count < 0 || 
-				first >= listSize || count > listSize ||
-				(first + count) > listSize)
+				first >= listSize || count > listSize)
 			throw new IllegalArgumentException("poor definition of first/count/list size");
+		if (first + count > listSize) {
+			count = listSize - first;
+		}
 		this.list = list;
 		this.first = first;
 		this.count = count;
