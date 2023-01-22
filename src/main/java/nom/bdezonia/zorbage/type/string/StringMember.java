@@ -44,7 +44,8 @@ public final class StringMember
 		Settable<StringMember>, Gettable<StringMember>,
 		SetFromStrings, GetAsString, GetAsStringArray, NativeStringSupport,
 		SetFromStringsExact, SetFromChars, SetFromCharsExact,
-		GetAsCharArray
+		GetAsCharArray, GetAsCharArrayExact,
+		GetAsStringExact, GetAsStringArrayExact
 {
 	private String v;
 	
@@ -178,5 +179,20 @@ public final class StringMember
 	@Override
 	public char[] getAsCharArray() {
 		return v.toCharArray();
+	}
+
+	@Override
+	public String[] getAsStringArrayExact() {
+		return getAsStringArray();
+	}
+
+	@Override
+	public String getAsStringExact() {
+		return getAsString();
+	}
+
+	@Override
+	public char[] getAsCharArrayExact() {
+		return getAsCharArray();
 	}
 }

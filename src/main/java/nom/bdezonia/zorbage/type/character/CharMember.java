@@ -35,12 +35,17 @@ import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.GetAsCharArray;
+import nom.bdezonia.zorbage.algebra.GetAsCharArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsCharExact;
 import nom.bdezonia.zorbage.algebra.GetAsString;
 import nom.bdezonia.zorbage.algebra.GetAsStringArray;
+import nom.bdezonia.zorbage.algebra.GetAsStringArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsStringExact;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NativeCharSupport;
 import nom.bdezonia.zorbage.algebra.SetFromChars;
 import nom.bdezonia.zorbage.algebra.SetFromCharsExact;
+import nom.bdezonia.zorbage.algebra.SetFromStrings;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
@@ -55,7 +60,10 @@ public class CharMember
 		CharCoder, Gettable<CharMember>, Settable<CharMember>,
 		Allocatable<CharMember>, Duplicatable<CharMember>,
 		SetFromChars, GetAsChar, GetAsCharArray, NativeCharSupport,
-		SetFromCharsExact, GetAsString, GetAsStringArray
+		SetFromCharsExact, GetAsString, GetAsStringArray,
+		GetAsCharExact, GetAsCharArrayExact,
+		GetAsStringExact, GetAsStringArrayExact,
+		SetFromStrings
 {
 	private char v;
 	
@@ -201,5 +209,36 @@ public class CharMember
 	@Override
 	public String getAsString() {
 		return String.valueOf(v);
+	}
+
+	@Override
+	public void setFromStrings(String... vals) {
+		if (vals.length != 1)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+		String s = vals[0];
+		if (s.length() == 0)
+			v = 0;
+		else
+			v = s.charAt(0);
+	}
+
+	@Override
+	public String[] getAsStringArrayExact() {
+		return getAsStringArray();
+	}
+
+	@Override
+	public String getAsStringExact() {
+		return getAsString();
+	}
+
+	@Override
+	public char[] getAsCharArrayExact() {
+		return getAsCharArray();
+	}
+
+	@Override
+	public char getAsCharExact() {
+		return getAsChar();
 	}
 }

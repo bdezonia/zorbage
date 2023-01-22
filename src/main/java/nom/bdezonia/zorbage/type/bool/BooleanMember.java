@@ -58,7 +58,8 @@ public final class BooleanMember
 		Settable<BooleanMember>, Gettable<BooleanMember>,
 		UniversalRepresentation, NumberMember<BooleanMember>,
 		PrimitiveConversion, SetFromBooleans, GetAsBoolean,
-		GetAsBooleanArray, NativeBooleanSupport, SetFromBooleansExact
+		GetAsBooleanArray, NativeBooleanSupport, SetFromBooleansExact,
+		GetAsBooleanExact, GetAsBooleanArrayExact
 {	
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
@@ -764,5 +765,15 @@ public final class BooleanMember
 	public Boolean componentMax() {
 
 		return true;
+	}
+
+	@Override
+	public boolean[] getAsBooleanArrayExact() {
+		return getAsBooleanArray();
+	}
+
+	@Override
+	public boolean getAsBooleanExact() {
+		return getAsBoolean();
 	}
 }
