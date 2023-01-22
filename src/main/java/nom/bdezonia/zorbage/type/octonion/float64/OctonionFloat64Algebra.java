@@ -89,7 +89,12 @@ public class OctonionFloat64Algebra
 		Tolerance<Float64Member,OctonionFloat64Member>,
 		ScaleByOneHalf<OctonionFloat64Member>,
 		ScaleByTwo<OctonionFloat64Member>,
-		ConstructibleFromDoubles<OctonionFloat64Member>
+		ConstructibleFromDoubles<OctonionFloat64Member>,
+		ExactlyConstructibleFromBytes<OctonionFloat64Member>,
+		ExactlyConstructibleFromShorts<OctonionFloat64Member>,
+		ExactlyConstructibleFromInts<OctonionFloat64Member>,
+		ExactlyConstructibleFromFloats<OctonionFloat64Member>,
+		ExactlyConstructibleFromDoubles<OctonionFloat64Member>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat64Member ONE_THIRD = new OctonionFloat64Member(1.0/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1483,5 +1488,40 @@ public class OctonionFloat64Algebra
 	@Override
 	public OctonionFloat64Member construct(double... vals) {
 		return new OctonionFloat64Member(vals);
+	}
+
+	@Override
+	public OctonionFloat64Member constructExactly(byte... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member constructExactly(short... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member constructExactly(int... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member constructExactly(float... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member constructExactly(double... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 }

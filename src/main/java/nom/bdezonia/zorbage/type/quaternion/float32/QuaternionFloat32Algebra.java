@@ -86,7 +86,10 @@ public class QuaternionFloat32Algebra
 		Tolerance<Float32Member,QuaternionFloat32Member>,
 		ScaleByOneHalf<QuaternionFloat32Member>,
 		ScaleByTwo<QuaternionFloat32Member>,
-		ConstructibleFromFloats<QuaternionFloat32Member>
+		ConstructibleFromFloats<QuaternionFloat32Member>,
+		ExactlyConstructibleFromBytes<QuaternionFloat32Member>,
+		ExactlyConstructibleFromShorts<QuaternionFloat32Member>,
+		ExactlyConstructibleFromFloats<QuaternionFloat32Member>
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member(0,0,0,0);
 	private static final QuaternionFloat32Member ONE_THIRD = new QuaternionFloat32Member(1.0f/3,0,0,0);
@@ -1114,5 +1117,26 @@ public class QuaternionFloat32Algebra
 	@Override
 	public Function1<Boolean, QuaternionFloat32Member> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public QuaternionFloat32Member constructExactly(byte... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member constructExactly(short... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member constructExactly(float... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
 	}
 }

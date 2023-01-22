@@ -97,7 +97,8 @@ public class ComplexFloat16Algebra
 		Tolerance<Float16Member,ComplexFloat16Member>,
 		ScaleByOneHalf<ComplexFloat16Member>,
 		ScaleByTwo<ComplexFloat16Member>,
-		ConstructibleFromFloats<ComplexFloat16Member>
+		ConstructibleFromFloats<ComplexFloat16Member>,
+		ExactlyConstructibleFromBytes<ComplexFloat16Member>
 {
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);
@@ -1480,4 +1481,10 @@ public class ComplexFloat16Algebra
 		return ISUNITY;
 	}
 
+	@Override
+	public ComplexFloat16Member constructExactly(byte... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
 }

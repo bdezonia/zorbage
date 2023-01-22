@@ -98,7 +98,13 @@ public class ComplexFloat128Algebra
 		Tolerance<Float128Member,ComplexFloat128Member>,
 		ScaleByOneHalf<ComplexFloat128Member>,
 		ScaleByTwo<ComplexFloat128Member>,
-		ConstructibleFromBigDecimals<ComplexFloat128Member>
+		ConstructibleFromBigDecimals<ComplexFloat128Member>,
+		ExactlyConstructibleFromBytes<ComplexFloat128Member>,
+		ExactlyConstructibleFromShorts<ComplexFloat128Member>,
+		ExactlyConstructibleFromInts<ComplexFloat128Member>,
+		ExactlyConstructibleFromLongs<ComplexFloat128Member>,
+		ExactlyConstructibleFromFloats<ComplexFloat128Member>,
+		ExactlyConstructibleFromDoubles<ComplexFloat128Member>
 {
 	private static final ComplexFloat128Member ONE = new ComplexFloat128Member(BigDecimal.valueOf(1),BigDecimal.ZERO);
 	private static final ComplexFloat128Member TWO = new ComplexFloat128Member(BigDecimal.valueOf(2),BigDecimal.ZERO);
@@ -1616,5 +1622,47 @@ public class ComplexFloat128Algebra
 	@Override
 	public Function1<Boolean, ComplexFloat128Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public ComplexFloat128Member constructExactly(byte... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member constructExactly(short... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member constructExactly(int... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member constructExactly(long... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member constructExactly(float... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member constructExactly(double... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 }

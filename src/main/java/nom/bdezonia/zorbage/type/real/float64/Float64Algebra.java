@@ -93,7 +93,12 @@ public class Float64Algebra
 		Tolerance<Float64Member,Float64Member>,
 		ScaleByOneHalf<Float64Member>,
 		ScaleByTwo<Float64Member>,
-		ConstructibleFromDoubles<Float64Member>
+		ConstructibleFromDoubles<Float64Member>,
+		ExactlyConstructibleFromBytes<Float64Member>,
+		ExactlyConstructibleFromShorts<Float64Member>,
+		ExactlyConstructibleFromInts<Float64Member>,
+		ExactlyConstructibleFromFloats<Float64Member>,
+		ExactlyConstructibleFromDoubles<Float64Member>
 {
 	private static final Float64Member PI = new Float64Member(Math.PI);
 	private static final Float64Member E = new Float64Member(Math.E);
@@ -1598,4 +1603,38 @@ public class Float64Algebra
 		return ISUNITY;
 	}
 
+	@Override
+	public Float64Member constructExactly(byte... vals) {
+		Float64Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member constructExactly(short... vals) {
+		Float64Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member constructExactly(int... vals) {
+		Float64Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member constructExactly(float... vals) {
+		Float64Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member constructExactly(double... vals) {
+		Float64Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
 }

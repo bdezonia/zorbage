@@ -86,7 +86,12 @@ public class QuaternionFloat64Algebra
 		Tolerance<Float64Member,QuaternionFloat64Member>,
 		ScaleByOneHalf<QuaternionFloat64Member>,
 		ScaleByTwo<QuaternionFloat64Member>,
-		ConstructibleFromDoubles<QuaternionFloat64Member>
+		ConstructibleFromDoubles<QuaternionFloat64Member>,
+		ExactlyConstructibleFromBytes<QuaternionFloat64Member>,
+		ExactlyConstructibleFromShorts<QuaternionFloat64Member>,
+		ExactlyConstructibleFromInts<QuaternionFloat64Member>,
+		ExactlyConstructibleFromFloats<QuaternionFloat64Member>,
+		ExactlyConstructibleFromDoubles<QuaternionFloat64Member>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(0,0,0,0);
 	private static final QuaternionFloat64Member ONE_THIRD = new QuaternionFloat64Member(1.0/3,0,0,0);
@@ -1114,5 +1119,40 @@ public class QuaternionFloat64Algebra
 	@Override
 	public Function1<Boolean, QuaternionFloat64Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public QuaternionFloat64Member constructExactly(byte... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member constructExactly(short... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member constructExactly(int... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member constructExactly(float... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member constructExactly(double... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 }

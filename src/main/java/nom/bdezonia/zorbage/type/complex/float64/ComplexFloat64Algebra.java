@@ -97,7 +97,12 @@ public class ComplexFloat64Algebra
 		Tolerance<Float64Member,ComplexFloat64Member>,
 		ScaleByOneHalf<ComplexFloat64Member>,
 		ScaleByTwo<ComplexFloat64Member>,
-		ConstructibleFromDoubles<ComplexFloat64Member>
+		ConstructibleFromDoubles<ComplexFloat64Member>,
+		ExactlyConstructibleFromBytes<ComplexFloat64Member>,
+		ExactlyConstructibleFromShorts<ComplexFloat64Member>,
+		ExactlyConstructibleFromInts<ComplexFloat64Member>,
+		ExactlyConstructibleFromFloats<ComplexFloat64Member>,
+		ExactlyConstructibleFromDoubles<ComplexFloat64Member>
 {
 	private static final ComplexFloat64Member ONE = new ComplexFloat64Member(1,0);
 	private static final ComplexFloat64Member TWO = new ComplexFloat64Member(2,0);
@@ -1480,4 +1485,38 @@ public class ComplexFloat64Algebra
 		return ISUNITY;
 	}
 
+	@Override
+	public ComplexFloat64Member constructExactly(byte... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member constructExactly(short... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member constructExactly(int... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member constructExactly(float... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member constructExactly(double... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
 }

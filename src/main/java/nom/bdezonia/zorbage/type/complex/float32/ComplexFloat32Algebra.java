@@ -97,7 +97,10 @@ public class ComplexFloat32Algebra
 		Tolerance<Float32Member,ComplexFloat32Member>,
 		ScaleByOneHalf<ComplexFloat32Member>,
 		ScaleByTwo<ComplexFloat32Member>,
-		ConstructibleFromFloats<ComplexFloat32Member>
+		ConstructibleFromFloats<ComplexFloat32Member>,
+		ExactlyConstructibleFromBytes<ComplexFloat32Member>,
+		ExactlyConstructibleFromShorts<ComplexFloat32Member>,
+		ExactlyConstructibleFromFloats<ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ONE = new ComplexFloat32Member(1,0);
 	private static final ComplexFloat32Member TWO = new ComplexFloat32Member(2,0);
@@ -1479,4 +1482,25 @@ public class ComplexFloat32Algebra
 		return ISUNITY;
 	}
 
+	
+	@Override
+	public ComplexFloat32Member constructExactly(byte... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member constructExactly(short... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member constructExactly(float... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
 }

@@ -93,7 +93,13 @@ public class OctonionFloat128Algebra
 		ConstructibleFromBigDecimals<OctonionFloat128Member>,
 		ConstructibleFromBigIntegers<OctonionFloat128Member>,
 		ConstructibleFromDoubles<OctonionFloat128Member>,
-		ConstructibleFromLongs<OctonionFloat128Member>
+		ConstructibleFromLongs<OctonionFloat128Member>,
+		ExactlyConstructibleFromBytes<OctonionFloat128Member>,
+		ExactlyConstructibleFromShorts<OctonionFloat128Member>,
+		ExactlyConstructibleFromInts<OctonionFloat128Member>,
+		ExactlyConstructibleFromLongs<OctonionFloat128Member>,
+		ExactlyConstructibleFromFloats<OctonionFloat128Member>,
+		ExactlyConstructibleFromDoubles<OctonionFloat128Member>
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 	private static final OctonionFloat128Member ONE_THIRD = new OctonionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -1630,5 +1636,47 @@ public class OctonionFloat128Algebra
 	@Override
 	public Function1<Boolean, OctonionFloat128Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public OctonionFloat128Member constructExactly(byte... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member constructExactly(short... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member constructExactly(int... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member constructExactly(long... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member constructExactly(float... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member constructExactly(double... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 }

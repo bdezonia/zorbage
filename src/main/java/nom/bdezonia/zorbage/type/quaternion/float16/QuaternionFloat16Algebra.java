@@ -86,7 +86,8 @@ public class QuaternionFloat16Algebra
 		Tolerance<Float16Member,QuaternionFloat16Member>,
 		ScaleByOneHalf<QuaternionFloat16Member>,
 		ScaleByTwo<QuaternionFloat16Member>,
-		ConstructibleFromFloats<QuaternionFloat16Member>
+		ConstructibleFromFloats<QuaternionFloat16Member>,
+		ExactlyConstructibleFromBytes<QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
 	private static final QuaternionFloat16Member ONE_THIRD = new QuaternionFloat16Member((float)1.0/3,0,0,0);
@@ -1114,5 +1115,12 @@ public class QuaternionFloat16Algebra
 	@Override
 	public Function1<Boolean, QuaternionFloat16Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public QuaternionFloat16Member constructExactly(byte... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

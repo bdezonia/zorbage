@@ -42,6 +42,12 @@ import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.Exponential;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Hyperbolic;
@@ -135,7 +141,13 @@ public class Float128Algebra
 		ConstructibleFromLongs<Float128Member>,
 		ConstructibleFromDoubles<Float128Member>,
 		ConstructibleFromBigIntegers<Float128Member>,
-		ConstructibleFromBigDecimals<Float128Member>
+		ConstructibleFromBigDecimals<Float128Member>,
+		ExactlyConstructibleFromBytes<Float128Member>,
+		ExactlyConstructibleFromShorts<Float128Member>,
+		ExactlyConstructibleFromInts<Float128Member>,
+		ExactlyConstructibleFromLongs<Float128Member>,
+		ExactlyConstructibleFromFloats<Float128Member>,
+		ExactlyConstructibleFromDoubles<Float128Member>
 {
 	public static final MathContext CONTEXT = new MathContext(38);
 
@@ -3304,5 +3316,47 @@ public class Float128Algebra
 	@Override
 	public Procedure1<Float128Member> minBound() {
 		return MINB;
+	}
+
+	@Override
+	public Float128Member constructExactly(byte... vals) {
+		Float128Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member constructExactly(short... vals) {
+		Float128Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member constructExactly(int... vals) {
+		Float128Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member constructExactly(long... vals) {
+		Float128Member v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member constructExactly(float... vals) {
+		Float128Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member constructExactly(double... vals) {
+		Float128Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 }

@@ -81,7 +81,15 @@ public class HighPrecisionAlgebra
 		ConstructibleFromLongs<HighPrecisionMember>,
 		ConstructibleFromDoubles<HighPrecisionMember>,
 		ConstructibleFromBigIntegers<HighPrecisionMember>,
-		ConstructibleFromBigDecimals<HighPrecisionMember>
+		ConstructibleFromBigDecimals<HighPrecisionMember>,
+		ExactlyConstructibleFromBigDecimals<HighPrecisionMember>,
+		ExactlyConstructibleFromBigIntegers<HighPrecisionMember>,
+		ExactlyConstructibleFromDoubles<HighPrecisionMember>,
+		ExactlyConstructibleFromFloats<HighPrecisionMember>,
+		ExactlyConstructibleFromLongs<HighPrecisionMember>,
+		ExactlyConstructibleFromInts<HighPrecisionMember>,
+		ExactlyConstructibleFromShorts<HighPrecisionMember>,
+		ExactlyConstructibleFromBytes<HighPrecisionMember>
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);
@@ -1089,5 +1097,61 @@ public class HighPrecisionAlgebra
 	@Override
 	public Function1<Boolean, HighPrecisionMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(byte... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(short... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(int... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(long... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(float... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(double... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(BigInteger... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember constructExactly(BigDecimal... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromBigDecimalsExact(vals);
+		return v;
 	}
 }

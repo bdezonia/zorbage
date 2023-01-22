@@ -93,7 +93,10 @@ public class Float32Algebra
 		Tolerance<Float32Member,Float32Member>,
 		ScaleByOneHalf<Float32Member>,
 		ScaleByTwo<Float32Member>,
-		ConstructibleFromFloats<Float32Member>
+		ConstructibleFromFloats<Float32Member>,
+		ExactlyConstructibleFromBytes<Float32Member>,
+		ExactlyConstructibleFromShorts<Float32Member>,
+		ExactlyConstructibleFromFloats<Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);
@@ -1562,5 +1565,26 @@ public class Float32Algebra
 	@Override
 	public Function1<Boolean, Float32Member> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Float32Member constructExactly(byte... vals) {
+		Float32Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member constructExactly(short... vals) {
+		Float32Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member constructExactly(float... vals) {
+		Float32Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
 	}
 }

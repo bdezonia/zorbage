@@ -89,7 +89,8 @@ public class OctonionFloat16Algebra
 		Tolerance<Float16Member,OctonionFloat16Member>,
 		ScaleByOneHalf<OctonionFloat16Member>,
 		ScaleByTwo<OctonionFloat16Member>,
-		ConstructibleFromFloats<OctonionFloat16Member>
+		ConstructibleFromFloats<OctonionFloat16Member>,
+		ExactlyConstructibleFromBytes<OctonionFloat16Member>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member ONE_THIRD = new OctonionFloat16Member((float)1.0/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1483,5 +1484,12 @@ public class OctonionFloat16Algebra
 	@Override
 	public Function1<Boolean, OctonionFloat16Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public OctonionFloat16Member constructExactly(byte... vals) {
+		OctonionFloat16Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

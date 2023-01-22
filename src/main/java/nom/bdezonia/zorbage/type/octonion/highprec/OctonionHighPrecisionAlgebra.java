@@ -84,7 +84,15 @@ public class OctonionHighPrecisionAlgebra
 		ConstructibleFromBigDecimals<OctonionHighPrecisionMember>,
 		ConstructibleFromBigIntegers<OctonionHighPrecisionMember>,
 		ConstructibleFromDoubles<OctonionHighPrecisionMember>,
-		ConstructibleFromLongs<OctonionHighPrecisionMember>
+		ConstructibleFromLongs<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromBytes<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromShorts<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromInts<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromLongs<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromFloats<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromDoubles<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromBigIntegers<OctonionHighPrecisionMember>,
+		ExactlyConstructibleFromBigDecimals<OctonionHighPrecisionMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 	private static final OctonionHighPrecisionMember ONE = new OctonionHighPrecisionMember(BigDecimal.ONE, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
@@ -1428,5 +1436,61 @@ public class OctonionHighPrecisionAlgebra
 	@Override
 	public Function1<Boolean, OctonionHighPrecisionMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(byte... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(short... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(int... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(long... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(float... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(double... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(BigInteger... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionMember constructExactly(BigDecimal... vals) {
+		OctonionHighPrecisionMember v = construct();
+		v.setFromBigDecimalsExact(vals);
+		return v;
 	}
 }

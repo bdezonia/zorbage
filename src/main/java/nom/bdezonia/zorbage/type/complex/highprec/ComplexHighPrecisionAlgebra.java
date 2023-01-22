@@ -93,7 +93,15 @@ public class ComplexHighPrecisionAlgebra
 		ConstructibleFromBigDecimals<ComplexHighPrecisionMember>,
 		ConstructibleFromBigIntegers<ComplexHighPrecisionMember>,
 		ConstructibleFromDoubles<ComplexHighPrecisionMember>,
-		ConstructibleFromLongs<ComplexHighPrecisionMember>
+		ConstructibleFromLongs<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromBytes<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromShorts<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromInts<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromLongs<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromFloats<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromDoubles<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromBigIntegers<ComplexHighPrecisionMember>,
+		ExactlyConstructibleFromBigDecimals<ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);
@@ -1424,5 +1432,61 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public Function1<Boolean, ComplexHighPrecisionMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(byte... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(short... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(int... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(long... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(float... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(double... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(BigInteger... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember constructExactly(BigDecimal... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromBigDecimalsExact(vals);
+		return v;
 	}
 }

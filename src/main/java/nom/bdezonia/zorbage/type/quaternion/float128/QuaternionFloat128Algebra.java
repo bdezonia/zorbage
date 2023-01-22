@@ -90,7 +90,13 @@ public class QuaternionFloat128Algebra
 		ConstructibleFromBigDecimals<QuaternionFloat128Member>,
 		ConstructibleFromBigIntegers<QuaternionFloat128Member>,
 		ConstructibleFromDoubles<QuaternionFloat128Member>,
-		ConstructibleFromLongs<QuaternionFloat128Member>
+		ConstructibleFromLongs<QuaternionFloat128Member>,
+		ExactlyConstructibleFromBytes<QuaternionFloat128Member>,
+		ExactlyConstructibleFromShorts<QuaternionFloat128Member>,
+		ExactlyConstructibleFromInts<QuaternionFloat128Member>,
+		ExactlyConstructibleFromLongs<QuaternionFloat128Member>,
+		ExactlyConstructibleFromFloats<QuaternionFloat128Member>,
+		ExactlyConstructibleFromDoubles<QuaternionFloat128Member>
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member();
 	private static final QuaternionFloat128Member ONE_THIRD = new QuaternionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);
@@ -1209,5 +1215,47 @@ public class QuaternionFloat128Algebra
 	@Override
 	public Function1<Boolean, QuaternionFloat128Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public QuaternionFloat128Member constructExactly(byte... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member constructExactly(short... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member constructExactly(int... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member constructExactly(long... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member constructExactly(float... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member constructExactly(double... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 }

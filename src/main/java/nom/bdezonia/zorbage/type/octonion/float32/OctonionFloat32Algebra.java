@@ -89,7 +89,10 @@ public class OctonionFloat32Algebra
 		Tolerance<Float32Member,OctonionFloat32Member>,
 		ScaleByOneHalf<OctonionFloat32Member>,
 		ScaleByTwo<OctonionFloat32Member>,
-		ConstructibleFromFloats<OctonionFloat32Member>
+		ConstructibleFromFloats<OctonionFloat32Member>,
+		ExactlyConstructibleFromBytes<OctonionFloat32Member>,
+		ExactlyConstructibleFromShorts<OctonionFloat32Member>,
+		ExactlyConstructibleFromFloats<OctonionFloat32Member>
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat32Member ONE_THIRD = new OctonionFloat32Member(1.0f/3, 0, 0, 0, 0, 0, 0, 0);
@@ -1483,5 +1486,26 @@ public class OctonionFloat32Algebra
 	@Override
 	public Function1<Boolean, OctonionFloat32Member> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public OctonionFloat32Member constructExactly(byte... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member constructExactly(short... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member constructExactly(float... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
 	}
 }

@@ -93,7 +93,8 @@ public class Float16Algebra
 		ScaleByTwo<Float16Member>,
 		MiscFloat<Float16Member>,
 		PredSucc<Float16Member>,
-		ConstructibleFromFloats<Float16Member>
+		ConstructibleFromFloats<Float16Member>,
+		ExactlyConstructibleFromBytes<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
 	private static final Float16Member E = new Float16Member((float)Math.E);
@@ -1598,5 +1599,12 @@ public class Float16Algebra
 	@Override
 	public Function1<Boolean, Float16Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public Float16Member constructExactly(byte... vals) {
+		Float16Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }
