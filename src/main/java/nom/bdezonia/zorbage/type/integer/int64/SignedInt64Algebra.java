@@ -68,7 +68,11 @@ public class SignedInt64Algebra
 		ScaleByOneHalf<SignedInt64Member>,
 		ScaleByTwo<SignedInt64Member>,
 		ConstructibleFromLongs<SignedInt64Member>,
-		Conjugate<SignedInt64Member>
+		Conjugate<SignedInt64Member>,
+		ExactlyConstructibleFromBytes<SignedInt64Member>,
+		ExactlyConstructibleFromShorts<SignedInt64Member>,
+		ExactlyConstructibleFromInts<SignedInt64Member>,
+		ExactlyConstructibleFromLongs<SignedInt64Member>
 {
 	private static final SignedInt64Member ZERO = new SignedInt64Member();
 	private static final SignedInt64Member ONE = new SignedInt64Member(1);
@@ -869,5 +873,33 @@ public class SignedInt64Algebra
 	@Override
 	public Procedure2<SignedInt64Member, SignedInt64Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt64Member constructExactly(long... vals) {
+		SignedInt64Member v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member constructExactly(int... vals) {
+		SignedInt64Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member constructExactly(short... vals) {
+		SignedInt64Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member constructExactly(byte... vals) {
+		SignedInt64Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

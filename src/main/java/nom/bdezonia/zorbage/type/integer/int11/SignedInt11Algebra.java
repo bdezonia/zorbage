@@ -66,7 +66,8 @@ public class SignedInt11Algebra
 		ScaleByOneHalf<SignedInt11Member>,
 		ScaleByTwo<SignedInt11Member>,
 		ConstructibleFromInts<SignedInt11Member>,
-		Conjugate<SignedInt11Member>
+		Conjugate<SignedInt11Member>,
+		ExactlyConstructibleFromBytes<SignedInt11Member>
 {
 	@Override
 	public String typeDescription() {
@@ -870,5 +871,12 @@ public class SignedInt11Algebra
 	@Override
 	public Procedure2<SignedInt11Member, SignedInt11Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt11Member constructExactly(byte... vals) {
+		SignedInt11Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

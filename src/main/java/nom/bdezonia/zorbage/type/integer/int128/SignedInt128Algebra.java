@@ -80,7 +80,11 @@ public class SignedInt128Algebra
 		ScaleByTwo<SignedInt128Member>,
 		ConstructibleFromBigIntegers<SignedInt128Member>,
 		ConstructibleFromLongs<SignedInt128Member>,
-		Conjugate<SignedInt128Member>
+		Conjugate<SignedInt128Member>,
+		ExactlyConstructibleFromBytes<SignedInt128Member>,
+		ExactlyConstructibleFromShorts<SignedInt128Member>,
+		ExactlyConstructibleFromInts<SignedInt128Member>,
+		ExactlyConstructibleFromLongs<SignedInt128Member>
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);
@@ -1021,5 +1025,33 @@ public class SignedInt128Algebra
 	@Override
 	public Procedure2<SignedInt128Member, SignedInt128Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt128Member constructExactly(long... vals) {
+		SignedInt128Member v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member constructExactly(int... vals) {
+		SignedInt128Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member constructExactly(short... vals) {
+		SignedInt128Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member constructExactly(byte... vals) {
+		SignedInt128Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

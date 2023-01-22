@@ -68,7 +68,10 @@ public class SignedInt32Algebra
 		ScaleByOneHalf<SignedInt32Member>,
 		ScaleByTwo<SignedInt32Member>,
 		ConstructibleFromInts<SignedInt32Member>,
-		Conjugate<SignedInt32Member>
+		Conjugate<SignedInt32Member>,
+		ExactlyConstructibleFromBytes<SignedInt32Member>,
+		ExactlyConstructibleFromShorts<SignedInt32Member>,
+		ExactlyConstructibleFromInts<SignedInt32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -846,5 +849,26 @@ public class SignedInt32Algebra
 	@Override
 	public Procedure2<SignedInt32Member, SignedInt32Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt32Member constructExactly(int... vals) {
+		SignedInt32Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member constructExactly(short... vals) {
+		SignedInt32Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member constructExactly(byte... vals) {
+		SignedInt32Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

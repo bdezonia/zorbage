@@ -68,7 +68,9 @@ public class SignedInt16Algebra
 		ScaleByOneHalf<SignedInt16Member>,
 		ScaleByTwo<SignedInt16Member>,
 		ConstructibleFromInts<SignedInt16Member>,
-		Conjugate<SignedInt16Member>
+		Conjugate<SignedInt16Member>,
+		ExactlyConstructibleFromBytes<SignedInt16Member>,
+		ExactlyConstructibleFromShorts<SignedInt16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -847,5 +849,19 @@ public class SignedInt16Algebra
 	@Override
 	public Procedure2<SignedInt16Member, SignedInt16Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt16Member constructExactly(short... vals) {
+		SignedInt16Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member constructExactly(byte... vals) {
+		SignedInt16Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

@@ -68,7 +68,8 @@ public class SignedInt8Algebra
 		ScaleByOneHalf<SignedInt8Member>,
 		ScaleByTwo<SignedInt8Member>,
 		ConstructibleFromInts<SignedInt8Member>,
-		Conjugate<SignedInt8Member>
+		Conjugate<SignedInt8Member>,
+		ExactlyConstructibleFromBytes<SignedInt8Member>
 {
 
 	@Override
@@ -847,5 +848,12 @@ public class SignedInt8Algebra
 	@Override
 	public Procedure2<SignedInt8Member, SignedInt8Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt8Member constructExactly(byte... vals) {
+		SignedInt8Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

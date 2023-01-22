@@ -48,6 +48,11 @@ import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Integer;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
@@ -70,7 +75,12 @@ public class UnboundedIntAlgebra
 		ScaleByTwo<UnboundedIntMember>,
 		ConstructibleFromBigIntegers<UnboundedIntMember>,
 		ConstructibleFromLongs<UnboundedIntMember>,
-		Conjugate<UnboundedIntMember>
+		Conjugate<UnboundedIntMember>,
+		ExactlyConstructibleFromBytes<UnboundedIntMember>,
+		ExactlyConstructibleFromShorts<UnboundedIntMember>,
+		ExactlyConstructibleFromInts<UnboundedIntMember>,
+		ExactlyConstructibleFromLongs<UnboundedIntMember>,
+		ExactlyConstructibleFromBigIntegers<UnboundedIntMember>
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);
@@ -986,5 +996,45 @@ public class UnboundedIntAlgebra
 	@Override
 	public Procedure2<UnboundedIntMember, UnboundedIntMember> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnboundedIntMember constructExactly(BigInteger... vals) {
+
+		UnboundedIntMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember constructExactly(long... vals) {
+
+		UnboundedIntMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember constructExactly(int... vals) {
+
+		UnboundedIntMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember constructExactly(short... vals) {
+
+		UnboundedIntMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember constructExactly(byte... vals) {
+
+		UnboundedIntMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }
