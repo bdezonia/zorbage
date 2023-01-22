@@ -42,6 +42,7 @@ package nom.bdezonia.zorbage.type.complex.float64;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -97,7 +98,14 @@ public class ComplexFloat64Algebra
 		Tolerance<Float64Member,ComplexFloat64Member>,
 		ScaleByOneHalf<ComplexFloat64Member>,
 		ScaleByTwo<ComplexFloat64Member>,
+		ConstructibleFromBytes<ComplexFloat64Member>,
+		ConstructibleFromShorts<ComplexFloat64Member>,
+		ConstructibleFromInts<ComplexFloat64Member>,
+		ConstructibleFromLongs<ComplexFloat64Member>,
+		ConstructibleFromFloats<ComplexFloat64Member>,
 		ConstructibleFromDoubles<ComplexFloat64Member>,
+		ConstructibleFromBigIntegers<ComplexFloat64Member>,
+		ConstructibleFromBigDecimals<ComplexFloat64Member>,
 		ExactlyConstructibleFromBytes<ComplexFloat64Member>,
 		ExactlyConstructibleFromShorts<ComplexFloat64Member>,
 		ExactlyConstructibleFromInts<ComplexFloat64Member>,
@@ -140,11 +148,6 @@ public class ComplexFloat64Algebra
 	@Override
 	public ComplexFloat64Member construct(String s) {
 		return new ComplexFloat64Member(s);
-	}
-
-	@Override
-	public ComplexFloat64Member construct(double... vals) {
-		return new ComplexFloat64Member(vals);
 	}
 	
 	private final Procedure3<ComplexFloat64Member,ComplexFloat64Member,ComplexFloat64Member> MUL =
@@ -1517,6 +1520,62 @@ public class ComplexFloat64Algebra
 	public ComplexFloat64Member constructExactly(double... vals) {
 		ComplexFloat64Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(BigDecimal... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(BigInteger... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(double... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(float... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(long... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(int... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(short... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat64Member construct(byte... vals) {
+		ComplexFloat64Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

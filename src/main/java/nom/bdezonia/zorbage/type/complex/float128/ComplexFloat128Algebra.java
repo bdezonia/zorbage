@@ -42,6 +42,7 @@ package nom.bdezonia.zorbage.type.complex.float128;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
@@ -98,6 +99,13 @@ public class ComplexFloat128Algebra
 		Tolerance<Float128Member,ComplexFloat128Member>,
 		ScaleByOneHalf<ComplexFloat128Member>,
 		ScaleByTwo<ComplexFloat128Member>,
+		ConstructibleFromBytes<ComplexFloat128Member>,
+		ConstructibleFromShorts<ComplexFloat128Member>,
+		ConstructibleFromInts<ComplexFloat128Member>,
+		ConstructibleFromLongs<ComplexFloat128Member>,
+		ConstructibleFromFloats<ComplexFloat128Member>,
+		ConstructibleFromDoubles<ComplexFloat128Member>,
+		ConstructibleFromBigIntegers<ComplexFloat128Member>,
 		ConstructibleFromBigDecimals<ComplexFloat128Member>,
 		ExactlyConstructibleFromBytes<ComplexFloat128Member>,
 		ExactlyConstructibleFromShorts<ComplexFloat128Member>,
@@ -152,12 +160,6 @@ public class ComplexFloat128Algebra
 		return new ComplexFloat128Member(s);
 	}
 
-	@Override
-	public ComplexFloat128Member construct(BigDecimal... vals) {
-		
-		return new ComplexFloat128Member(vals);
-	}
-	
 	private final Procedure3<ComplexFloat128Member,ComplexFloat128Member,ComplexFloat128Member> MUL =
 			new Procedure3<ComplexFloat128Member, ComplexFloat128Member, ComplexFloat128Member>()
 	{
@@ -1663,6 +1665,62 @@ public class ComplexFloat128Algebra
 	public ComplexFloat128Member constructExactly(double... vals) {
 		ComplexFloat128Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(BigDecimal... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+	
+	@Override
+	public ComplexFloat128Member construct(BigInteger... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(double... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(float... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(long... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(int... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(short... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128Member construct(byte... vals) {
+		ComplexFloat128Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.type.color;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
@@ -40,7 +42,14 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.ColorMethods;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
 
@@ -53,7 +62,14 @@ public class RgbAlgebra
 	implements
 		Algebra<RgbAlgebra, RgbMember>, Bounded<RgbMember>, Random<RgbMember>,
 		PredSucc<RgbMember>, ColorMethods<Double, RgbMember>,
-		ConstructibleFromInts<RgbMember>
+		ConstructibleFromBytes<RgbMember>,
+		ConstructibleFromShorts<RgbMember>,
+		ConstructibleFromInts<RgbMember>,
+		ConstructibleFromLongs<RgbMember>,
+		ConstructibleFromFloats<RgbMember>,
+		ConstructibleFromDoubles<RgbMember>,
+		ConstructibleFromBigIntegers<RgbMember>,
+		ConstructibleFromBigDecimals<RgbMember>
 {
 	@Override
 	public String typeDescription() {
@@ -73,11 +89,6 @@ public class RgbAlgebra
 	@Override
 	public RgbMember construct(String str) {
 		return new RgbMember(str);
-	}
-
-	@Override
-	public RgbMember construct(int... vals) {
-		return new RgbMember(vals);
 	}
 
 	private final Function2<Boolean, RgbMember, RgbMember> EQ =
@@ -283,5 +294,61 @@ public class RgbAlgebra
 	@Override
 	public Procedure2<RgbMember, RgbMember> succ() {
 		return SUCC;
+	}
+
+	@Override
+	public RgbMember construct(BigDecimal... vals) {
+		RgbMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(BigInteger... vals) {
+		RgbMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(double... vals) {
+		RgbMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(float... vals) {
+		RgbMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(long... vals) {
+		RgbMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(int... vals) {
+		RgbMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(short... vals) {
+		RgbMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public RgbMember construct(byte... vals) {
+		RgbMember v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

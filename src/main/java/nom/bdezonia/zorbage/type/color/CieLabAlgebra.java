@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.type.color;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
@@ -37,7 +39,14 @@ import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.Random;
 
 /**
@@ -49,7 +58,14 @@ public class CieLabAlgebra
 	implements
 		Algebra<CieLabAlgebra, CieLabMember>,
 		Random<CieLabMember>,
-		ConstructibleFromDoubles<CieLabMember>
+		ConstructibleFromBytes<CieLabMember>,
+		ConstructibleFromShorts<CieLabMember>,
+		ConstructibleFromInts<CieLabMember>,
+		ConstructibleFromLongs<CieLabMember>,
+		ConstructibleFromFloats<CieLabMember>,
+		ConstructibleFromDoubles<CieLabMember>,
+		ConstructibleFromBigIntegers<CieLabMember>,
+		ConstructibleFromBigDecimals<CieLabMember>
 {
 	@Override
 	public String typeDescription() {
@@ -71,11 +87,6 @@ public class CieLabAlgebra
 	@Override
 	public CieLabMember construct(String str) {
 		return new CieLabMember(str);
-	}
-	
-	@Override
-	public CieLabMember construct(double... vals) {
-		return new CieLabMember(vals[0], vals[1], vals[2]);
 	}
 
 	private final Function2<Boolean, CieLabMember, CieLabMember> EQ =
@@ -165,5 +176,61 @@ public class CieLabAlgebra
 	@Override
 	public Procedure1<CieLabMember> zero() {
 		return ZERO;
+	}
+
+	@Override
+	public CieLabMember construct(BigDecimal... vals) {
+		CieLabMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(BigInteger... vals) {
+		CieLabMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(double... vals) {
+		CieLabMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(float... vals) {
+		CieLabMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(long... vals) {
+		CieLabMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(int... vals) {
+		CieLabMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(short... vals) {
+		CieLabMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public CieLabMember construct(byte... vals) {
+		CieLabMember v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

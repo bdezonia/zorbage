@@ -42,6 +42,7 @@ package nom.bdezonia.zorbage.type.complex.float16;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -97,7 +98,14 @@ public class ComplexFloat16Algebra
 		Tolerance<Float16Member,ComplexFloat16Member>,
 		ScaleByOneHalf<ComplexFloat16Member>,
 		ScaleByTwo<ComplexFloat16Member>,
+		ConstructibleFromBytes<ComplexFloat16Member>,
+		ConstructibleFromShorts<ComplexFloat16Member>,
+		ConstructibleFromInts<ComplexFloat16Member>,
+		ConstructibleFromLongs<ComplexFloat16Member>,
 		ConstructibleFromFloats<ComplexFloat16Member>,
+		ConstructibleFromDoubles<ComplexFloat16Member>,
+		ConstructibleFromBigIntegers<ComplexFloat16Member>,
+		ConstructibleFromBigDecimals<ComplexFloat16Member>,
 		ExactlyConstructibleFromBytes<ComplexFloat16Member>
 {
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
@@ -136,11 +144,6 @@ public class ComplexFloat16Algebra
 	@Override
 	public ComplexFloat16Member construct(String s) {
 		return new ComplexFloat16Member(s);
-	}
-
-	@Override
-	public ComplexFloat16Member construct(float... vals) {
-		return new ComplexFloat16Member(vals);
 	}
 	
 	private final Procedure3<ComplexFloat16Member,ComplexFloat16Member,ComplexFloat16Member> MUL =
@@ -1485,6 +1488,62 @@ public class ComplexFloat16Algebra
 	public ComplexFloat16Member constructExactly(byte... vals) {
 		ComplexFloat16Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(BigDecimal... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(BigInteger... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(double... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(float... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(long... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(int... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(short... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16Member construct(byte... vals) {
+		ComplexFloat16Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

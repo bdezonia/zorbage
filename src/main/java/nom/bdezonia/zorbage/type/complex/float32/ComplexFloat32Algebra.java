@@ -42,6 +42,7 @@ package nom.bdezonia.zorbage.type.complex.float32;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -97,7 +98,14 @@ public class ComplexFloat32Algebra
 		Tolerance<Float32Member,ComplexFloat32Member>,
 		ScaleByOneHalf<ComplexFloat32Member>,
 		ScaleByTwo<ComplexFloat32Member>,
+		ConstructibleFromBytes<ComplexFloat32Member>,
+		ConstructibleFromShorts<ComplexFloat32Member>,
+		ConstructibleFromInts<ComplexFloat32Member>,
+		ConstructibleFromLongs<ComplexFloat32Member>,
 		ConstructibleFromFloats<ComplexFloat32Member>,
+		ConstructibleFromDoubles<ComplexFloat32Member>,
+		ConstructibleFromBigIntegers<ComplexFloat32Member>,
+		ConstructibleFromBigDecimals<ComplexFloat32Member>,
 		ExactlyConstructibleFromBytes<ComplexFloat32Member>,
 		ExactlyConstructibleFromShorts<ComplexFloat32Member>,
 		ExactlyConstructibleFromFloats<ComplexFloat32Member>
@@ -138,11 +146,6 @@ public class ComplexFloat32Algebra
 	@Override
 	public ComplexFloat32Member construct(String s) {
 		return new ComplexFloat32Member(s);
-	}
-
-	@Override
-	public ComplexFloat32Member construct(float... vals) {
-		return new ComplexFloat32Member(vals);
 	}
 	
 	private final Procedure3<ComplexFloat32Member,ComplexFloat32Member,ComplexFloat32Member> MUL =
@@ -1501,6 +1504,62 @@ public class ComplexFloat32Algebra
 	public ComplexFloat32Member constructExactly(float... vals) {
 		ComplexFloat32Member v = construct();
 		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(BigDecimal... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(BigInteger... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(double... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(float... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(long... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(int... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(short... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat32Member construct(byte... vals) {
+		ComplexFloat32Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

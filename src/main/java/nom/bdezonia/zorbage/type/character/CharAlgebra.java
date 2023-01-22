@@ -35,6 +35,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromChars;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromStrings;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromChars;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.PredSucc;
@@ -58,6 +59,7 @@ public class CharAlgebra
 		Random<CharMember>,
 		Bounded<CharMember>,
 		ConstructibleFromChars<CharMember>,
+		ConstructibleFromStrings<CharMember>,
 		ExactlyConstructibleFromChars<CharMember>
 {
 	@Override
@@ -688,6 +690,13 @@ public class CharAlgebra
 	public CharMember constructExactly(char... vals) {
 		CharMember v = construct();
 		v.setFromCharsExact(vals);
+		return v;
+	}
+
+	@Override
+	public CharMember construct(String... vals) {
+		CharMember v = construct();
+		v.setFromStrings(vals);
 		return v;
 	}
 	

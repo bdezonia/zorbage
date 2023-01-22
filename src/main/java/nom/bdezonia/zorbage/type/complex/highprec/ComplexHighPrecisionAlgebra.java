@@ -90,10 +90,14 @@ public class ComplexHighPrecisionAlgebra
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMember>,
 		ScaleByOneHalf<ComplexHighPrecisionMember>,
 		ScaleByTwo<ComplexHighPrecisionMember>,
-		ConstructibleFromBigDecimals<ComplexHighPrecisionMember>,
-		ConstructibleFromBigIntegers<ComplexHighPrecisionMember>,
-		ConstructibleFromDoubles<ComplexHighPrecisionMember>,
+		ConstructibleFromBytes<ComplexHighPrecisionMember>,
+		ConstructibleFromShorts<ComplexHighPrecisionMember>,
+		ConstructibleFromInts<ComplexHighPrecisionMember>,
 		ConstructibleFromLongs<ComplexHighPrecisionMember>,
+		ConstructibleFromFloats<ComplexHighPrecisionMember>,
+		ConstructibleFromDoubles<ComplexHighPrecisionMember>,
+		ConstructibleFromBigIntegers<ComplexHighPrecisionMember>,
+		ConstructibleFromBigDecimals<ComplexHighPrecisionMember>,
 		ExactlyConstructibleFromBytes<ComplexHighPrecisionMember>,
 		ExactlyConstructibleFromShorts<ComplexHighPrecisionMember>,
 		ExactlyConstructibleFromInts<ComplexHighPrecisionMember>,
@@ -130,26 +134,6 @@ public class ComplexHighPrecisionAlgebra
 	@Override
 	public ComplexHighPrecisionMember construct(String s) {
 		return new ComplexHighPrecisionMember(s);
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct(BigDecimal... vals) {
-		return new ComplexHighPrecisionMember(vals);
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct(BigInteger... vals) {
-		return new ComplexHighPrecisionMember(vals);
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct(double... vals) {
-		return new ComplexHighPrecisionMember(vals);
-	}
-
-	@Override
-	public ComplexHighPrecisionMember construct(long... vals) {
-		return new ComplexHighPrecisionMember(vals);
 	}
 	
 	private final Procedure3<ComplexHighPrecisionMember,ComplexHighPrecisionMember,ComplexHighPrecisionMember> MUL =
@@ -1487,6 +1471,62 @@ public class ComplexHighPrecisionAlgebra
 	public ComplexHighPrecisionMember constructExactly(BigDecimal... vals) {
 		ComplexHighPrecisionMember v = construct();
 		v.setFromBigDecimalsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(BigDecimal... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(BigInteger... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(double... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(float... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(long... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(int... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(short... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexHighPrecisionMember construct(byte... vals) {
+		ComplexHighPrecisionMember v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

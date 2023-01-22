@@ -30,6 +30,8 @@
  */
 package nom.bdezonia.zorbage.type.color;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.function.Function1;
@@ -40,7 +42,14 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.ColorMethods;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
 
@@ -53,7 +62,14 @@ public class ArgbAlgebra
 	implements
 		Algebra<ArgbAlgebra, ArgbMember>, Bounded<ArgbMember>, Random<ArgbMember>,
 		PredSucc<ArgbMember>, ColorMethods<Double, ArgbMember>,
-		ConstructibleFromInts<ArgbMember>
+		ConstructibleFromBytes<ArgbMember>,
+		ConstructibleFromShorts<ArgbMember>,
+		ConstructibleFromInts<ArgbMember>,
+		ConstructibleFromLongs<ArgbMember>,
+		ConstructibleFromFloats<ArgbMember>,
+		ConstructibleFromDoubles<ArgbMember>,
+		ConstructibleFromBigIntegers<ArgbMember>,
+		ConstructibleFromBigDecimals<ArgbMember>
 {
 	@Override
 	public String typeDescription() {
@@ -290,5 +306,54 @@ public class ArgbAlgebra
 	@Override
 	public Procedure2<ArgbMember, ArgbMember> succ() {
 		return SUCC;
+	}
+
+	@Override
+	public ArgbMember construct(BigDecimal... vals) {
+		ArgbMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public ArgbMember construct(BigInteger... vals) {
+		ArgbMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ArgbMember construct(double... vals) {
+		ArgbMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ArgbMember construct(float... vals) {
+		ArgbMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ArgbMember construct(long... vals) {
+		ArgbMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ArgbMember construct(short... vals) {
+		ArgbMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ArgbMember construct(byte... vals) {
+		ArgbMember v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

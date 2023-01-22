@@ -37,7 +37,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromShorts;
@@ -91,11 +98,17 @@ public class GaussianInt16Algebra
 		ScaleByHighPrecAndRound<GaussianInt16Member>,
 		ScaleByRational<GaussianInt16Member>,
 		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>,
+		ConstructibleFromBytes<GaussianInt16Member>,
+		ConstructibleFromShorts<GaussianInt16Member>,
 		ConstructibleFromInts<GaussianInt16Member>,
+		ConstructibleFromLongs<GaussianInt16Member>,
+		ConstructibleFromFloats<GaussianInt16Member>,
+		ConstructibleFromDoubles<GaussianInt16Member>,
+		ConstructibleFromBigIntegers<GaussianInt16Member>,
+		ConstructibleFromBigDecimals<GaussianInt16Member>,
 		ExactlyConstructibleFromBytes<GaussianInt16Member>,
 		ExactlyConstructibleFromShorts<GaussianInt16Member>
 {
-
 	@Override
 	public String typeDescription() {
 		return "16-bit based gaussian int";
@@ -115,12 +128,7 @@ public class GaussianInt16Algebra
 	public GaussianInt16Member construct(String str) {
 		return new GaussianInt16Member(str);
 	}
-	
-	@Override
-	public GaussianInt16Member construct(int... vals) {
-		return new GaussianInt16Member(vals);
-	}
-	
+
 	private final Function2<Boolean, GaussianInt16Member, GaussianInt16Member> EQ =
 		new Function2<Boolean, GaussianInt16Member, GaussianInt16Member>()
 	{
@@ -645,6 +653,62 @@ public class GaussianInt16Algebra
 	public GaussianInt16Member constructExactly(byte... vals) {
 		GaussianInt16Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(BigDecimal... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(BigInteger... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(double... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(float... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(long... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(int... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(short... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member construct(byte... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }
