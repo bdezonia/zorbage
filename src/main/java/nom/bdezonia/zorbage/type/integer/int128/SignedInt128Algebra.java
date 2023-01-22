@@ -78,8 +78,14 @@ public class SignedInt128Algebra
 		Tolerance<SignedInt128Member,SignedInt128Member>,
 		ScaleByOneHalf<SignedInt128Member>,
 		ScaleByTwo<SignedInt128Member>,
-		ConstructibleFromBigIntegers<SignedInt128Member>,
+		ConstructibleFromBytes<SignedInt128Member>,
+		ConstructibleFromShorts<SignedInt128Member>,
+		ConstructibleFromInts<SignedInt128Member>,
 		ConstructibleFromLongs<SignedInt128Member>,
+		ConstructibleFromFloats<SignedInt128Member>,
+		ConstructibleFromDoubles<SignedInt128Member>,
+		ConstructibleFromBigIntegers<SignedInt128Member>,
+		ConstructibleFromBigDecimals<SignedInt128Member>,
 		Conjugate<SignedInt128Member>,
 		ExactlyConstructibleFromBytes<SignedInt128Member>,
 		ExactlyConstructibleFromShorts<SignedInt128Member>,
@@ -107,16 +113,6 @@ public class SignedInt128Algebra
 	@Override
 	public SignedInt128Member construct(String str) {
 		return new SignedInt128Member(str);
-	}
-
-	@Override
-	public SignedInt128Member construct(BigInteger... vals) {
-		return new SignedInt128Member(vals);
-	}
-
-	@Override
-	public SignedInt128Member construct(long... vals) {
-		return new SignedInt128Member(vals);
 	}
 
 	private final Function2<Boolean,SignedInt128Member,SignedInt128Member> EQ =
@@ -1052,6 +1048,62 @@ public class SignedInt128Algebra
 	public SignedInt128Member constructExactly(byte... vals) {
 		SignedInt128Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(BigDecimal... vals) {
+		SignedInt128Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(BigInteger... vals) {
+		SignedInt128Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(double... vals) {
+		SignedInt128Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(float... vals) {
+		SignedInt128Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(long... vals) {
+		SignedInt128Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(int... vals) {
+		SignedInt128Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(short... vals) {
+		SignedInt128Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt128Member construct(byte... vals) {
+		SignedInt128Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

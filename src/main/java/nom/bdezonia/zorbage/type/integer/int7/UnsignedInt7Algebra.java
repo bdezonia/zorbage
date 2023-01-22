@@ -65,7 +65,14 @@ public class UnsignedInt7Algebra
 		Tolerance<UnsignedInt7Member,UnsignedInt7Member>,
 		ScaleByOneHalf<UnsignedInt7Member>,
 		ScaleByTwo<UnsignedInt7Member>,
+		ConstructibleFromBytes<UnsignedInt7Member>,
+		ConstructibleFromShorts<UnsignedInt7Member>,
 		ConstructibleFromInts<UnsignedInt7Member>,
+		ConstructibleFromLongs<UnsignedInt7Member>,
+		ConstructibleFromFloats<UnsignedInt7Member>,
+		ConstructibleFromDoubles<UnsignedInt7Member>,
+		ConstructibleFromBigIntegers<UnsignedInt7Member>,
+		ConstructibleFromBigDecimals<UnsignedInt7Member>,
 		Conjugate<UnsignedInt7Member>
 {
 
@@ -87,11 +94,6 @@ public class UnsignedInt7Algebra
 	@Override
 	public UnsignedInt7Member construct(String str) {
 		return new UnsignedInt7Member(str);
-	}
-
-	@Override
-	public UnsignedInt7Member construct(int... vals) {
-		return new UnsignedInt7Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt7Member, UnsignedInt7Member> EQ =
@@ -824,5 +826,61 @@ public class UnsignedInt7Algebra
 	@Override
 	public Procedure2<UnsignedInt7Member, UnsignedInt7Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(BigDecimal... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(BigInteger... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(double... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(float... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(long... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(int... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(short... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt7Member construct(byte... vals) {
+		UnsignedInt7Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

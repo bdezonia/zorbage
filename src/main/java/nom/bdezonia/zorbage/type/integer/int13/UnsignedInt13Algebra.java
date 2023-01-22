@@ -65,7 +65,14 @@ public class UnsignedInt13Algebra
 		Tolerance<UnsignedInt13Member,UnsignedInt13Member>,
 		ScaleByOneHalf<UnsignedInt13Member>,
 		ScaleByTwo<UnsignedInt13Member>,
+		ConstructibleFromBytes<UnsignedInt13Member>,
+		ConstructibleFromShorts<UnsignedInt13Member>,
 		ConstructibleFromInts<UnsignedInt13Member>,
+		ConstructibleFromLongs<UnsignedInt13Member>,
+		ConstructibleFromFloats<UnsignedInt13Member>,
+		ConstructibleFromDoubles<UnsignedInt13Member>,
+		ConstructibleFromBigIntegers<UnsignedInt13Member>,
+		ConstructibleFromBigDecimals<UnsignedInt13Member>,
 		Conjugate<UnsignedInt13Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class UnsignedInt13Algebra
 	@Override
 	public UnsignedInt13Member construct(String str) {
 		return new UnsignedInt13Member(str);
-	}
-
-	@Override
-	public UnsignedInt13Member construct(int... vals) {
-		return new UnsignedInt13Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt13Member, UnsignedInt13Member> EQ =
@@ -825,5 +827,61 @@ public class UnsignedInt13Algebra
 	@Override
 	public Procedure2<UnsignedInt13Member, UnsignedInt13Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(BigDecimal... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(BigInteger... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(double... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(float... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(long... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(int... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(short... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt13Member construct(byte... vals) {
+		UnsignedInt13Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

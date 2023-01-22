@@ -46,8 +46,14 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.algebra.BitOperations;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromInts;
@@ -73,8 +79,14 @@ public class UnboundedIntAlgebra
 		Tolerance<UnboundedIntMember,UnboundedIntMember>,
 		ScaleByOneHalf<UnboundedIntMember>,
 		ScaleByTwo<UnboundedIntMember>,
-		ConstructibleFromBigIntegers<UnboundedIntMember>,
+		ConstructibleFromBytes<UnboundedIntMember>,
+		ConstructibleFromShorts<UnboundedIntMember>,
+		ConstructibleFromInts<UnboundedIntMember>,
 		ConstructibleFromLongs<UnboundedIntMember>,
+		ConstructibleFromFloats<UnboundedIntMember>,
+		ConstructibleFromDoubles<UnboundedIntMember>,
+		ConstructibleFromBigIntegers<UnboundedIntMember>,
+		ConstructibleFromBigDecimals<UnboundedIntMember>,
 		Conjugate<UnboundedIntMember>,
 		ExactlyConstructibleFromBytes<UnboundedIntMember>,
 		ExactlyConstructibleFromShorts<UnboundedIntMember>,
@@ -106,16 +118,6 @@ public class UnboundedIntAlgebra
 	@Override
 	public UnboundedIntMember construct(String s) {
 		return new UnboundedIntMember(s);
-	}
-
-	@Override
-	public UnboundedIntMember construct(BigInteger... vals) {
-		return new UnboundedIntMember(vals);
-	}
-
-	@Override
-	public UnboundedIntMember construct(long... vals) {
-		return new UnboundedIntMember(vals);
 	}
 
 	private final Procedure2<UnboundedIntMember,UnboundedIntMember> ABS =
@@ -1035,6 +1037,62 @@ public class UnboundedIntAlgebra
 
 		UnboundedIntMember v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(BigDecimal... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(BigInteger... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(double... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(float... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(long... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(int... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(short... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnboundedIntMember construct(byte... vals) {
+		UnboundedIntMember v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

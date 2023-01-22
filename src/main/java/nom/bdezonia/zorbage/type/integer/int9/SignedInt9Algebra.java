@@ -65,7 +65,14 @@ public class SignedInt9Algebra
 		Tolerance<SignedInt9Member,SignedInt9Member>,
 		ScaleByOneHalf<SignedInt9Member>,
 		ScaleByTwo<SignedInt9Member>,
+		ConstructibleFromBytes<SignedInt9Member>,
+		ConstructibleFromShorts<SignedInt9Member>,
 		ConstructibleFromInts<SignedInt9Member>,
+		ConstructibleFromLongs<SignedInt9Member>,
+		ConstructibleFromFloats<SignedInt9Member>,
+		ConstructibleFromDoubles<SignedInt9Member>,
+		ConstructibleFromBigIntegers<SignedInt9Member>,
+		ConstructibleFromBigDecimals<SignedInt9Member>,
 		Conjugate<SignedInt9Member>,
 		ExactlyConstructibleFromBytes<SignedInt9Member>
 {
@@ -88,11 +95,6 @@ public class SignedInt9Algebra
 	@Override
 	public SignedInt9Member construct(String str) {
 		return new SignedInt9Member(str);
-	}
-
-	@Override
-	public SignedInt9Member construct(int... vals) {
-		return new SignedInt9Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt9Member, SignedInt9Member> EQ =
@@ -878,6 +880,62 @@ public class SignedInt9Algebra
 	public SignedInt9Member constructExactly(byte... vals) {
 		SignedInt9Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(BigDecimal... vals) {
+		SignedInt9Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(BigInteger... vals) {
+		SignedInt9Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(double... vals) {
+		SignedInt9Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(float... vals) {
+		SignedInt9Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(long... vals) {
+		SignedInt9Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(int... vals) {
+		SignedInt9Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(short... vals) {
+		SignedInt9Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt9Member construct(byte... vals) {
+		SignedInt9Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

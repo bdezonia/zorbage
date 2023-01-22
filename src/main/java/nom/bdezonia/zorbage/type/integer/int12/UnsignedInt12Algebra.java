@@ -65,7 +65,14 @@ public class UnsignedInt12Algebra
 		Tolerance<UnsignedInt12Member,UnsignedInt12Member>,
 		ScaleByOneHalf<UnsignedInt12Member>,
 		ScaleByTwo<UnsignedInt12Member>,
+		ConstructibleFromBytes<UnsignedInt12Member>,
+		ConstructibleFromShorts<UnsignedInt12Member>,
 		ConstructibleFromInts<UnsignedInt12Member>,
+		ConstructibleFromLongs<UnsignedInt12Member>,
+		ConstructibleFromFloats<UnsignedInt12Member>,
+		ConstructibleFromDoubles<UnsignedInt12Member>,
+		ConstructibleFromBigIntegers<UnsignedInt12Member>,
+		ConstructibleFromBigDecimals<UnsignedInt12Member>,
 		Conjugate<UnsignedInt12Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class UnsignedInt12Algebra
 	@Override
 	public UnsignedInt12Member construct(String str) {
 		return new UnsignedInt12Member(str);
-	}
-
-	@Override
-	public UnsignedInt12Member construct(int... vals) {
-		return new UnsignedInt12Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt12Member, UnsignedInt12Member> EQ =
@@ -825,5 +827,61 @@ public class UnsignedInt12Algebra
 	@Override
 	public Procedure2<UnsignedInt12Member, UnsignedInt12Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(BigDecimal... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(BigInteger... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(double... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(float... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(long... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(int... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(short... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt12Member construct(byte... vals) {
+		UnsignedInt12Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

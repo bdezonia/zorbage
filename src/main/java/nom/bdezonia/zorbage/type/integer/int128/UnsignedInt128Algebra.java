@@ -78,8 +78,14 @@ public class UnsignedInt128Algebra
 		Tolerance<UnsignedInt128Member,UnsignedInt128Member>,
 		ScaleByOneHalf<UnsignedInt128Member>,
 		ScaleByTwo<UnsignedInt128Member>,
-		ConstructibleFromBigIntegers<UnsignedInt128Member>,
+		ConstructibleFromBytes<UnsignedInt128Member>,
+		ConstructibleFromShorts<UnsignedInt128Member>,
+		ConstructibleFromInts<UnsignedInt128Member>,
 		ConstructibleFromLongs<UnsignedInt128Member>,
+		ConstructibleFromFloats<UnsignedInt128Member>,
+		ConstructibleFromDoubles<UnsignedInt128Member>,
+		ConstructibleFromBigIntegers<UnsignedInt128Member>,
+		ConstructibleFromBigDecimals<UnsignedInt128Member>,
 		Conjugate<UnsignedInt128Member>
 {
 	private static final UnsignedInt128Member ZERO = new UnsignedInt128Member();
@@ -103,16 +109,6 @@ public class UnsignedInt128Algebra
 	@Override
 	public UnsignedInt128Member construct(String str) {
 		return new UnsignedInt128Member(str);
-	}
-
-	@Override
-	public UnsignedInt128Member construct(BigInteger... vals) {
-		return new UnsignedInt128Member(vals);
-	}
-
-	@Override
-	public UnsignedInt128Member construct(long... vals) {
-		return new UnsignedInt128Member(vals);
 	}
 
 	private final Function2<Boolean,UnsignedInt128Member,UnsignedInt128Member> EQ =
@@ -962,5 +958,61 @@ public class UnsignedInt128Algebra
 	@Override
 	public Procedure2<UnsignedInt128Member, UnsignedInt128Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(BigDecimal... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(BigInteger... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(double... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(float... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(long... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(int... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(short... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt128Member construct(byte... vals) {
+		UnsignedInt128Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

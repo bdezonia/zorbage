@@ -65,8 +65,15 @@ public class SignedInt10Algebra
 		Tolerance<SignedInt10Member,SignedInt10Member>,
 		ScaleByOneHalf<SignedInt10Member>,
 		ScaleByTwo<SignedInt10Member>,
-		ConstructibleFromInts<SignedInt10Member>,
 		Conjugate<SignedInt10Member>,
+		ConstructibleFromBytes<SignedInt10Member>,
+		ConstructibleFromShorts<SignedInt10Member>,
+		ConstructibleFromInts<SignedInt10Member>,
+		ConstructibleFromLongs<SignedInt10Member>,
+		ConstructibleFromFloats<SignedInt10Member>,
+		ConstructibleFromDoubles<SignedInt10Member>,
+		ConstructibleFromBigIntegers<SignedInt10Member>,
+		ConstructibleFromBigDecimals<SignedInt10Member>,
 		ExactlyConstructibleFromBytes<SignedInt10Member>
 {
 	@Override
@@ -87,11 +94,6 @@ public class SignedInt10Algebra
 	@Override
 	public SignedInt10Member construct(String str) {
 		return new SignedInt10Member(str);
-	}
-
-	@Override
-	public SignedInt10Member construct(int... vals) {
-		return new SignedInt10Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt10Member, SignedInt10Member> EQ =
@@ -877,6 +879,62 @@ public class SignedInt10Algebra
 	public SignedInt10Member constructExactly(byte... vals) {
 		SignedInt10Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(BigDecimal... vals) {
+		SignedInt10Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(BigInteger... vals) {
+		SignedInt10Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(double... vals) {
+		SignedInt10Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(float... vals) {
+		SignedInt10Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(long... vals) {
+		SignedInt10Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(int... vals) {
+		SignedInt10Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(short... vals) {
+		SignedInt10Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt10Member construct(byte... vals) {
+		SignedInt10Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

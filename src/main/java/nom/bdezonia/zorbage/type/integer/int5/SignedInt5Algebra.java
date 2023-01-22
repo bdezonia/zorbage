@@ -65,7 +65,14 @@ public class SignedInt5Algebra
 		Tolerance<SignedInt5Member,SignedInt5Member>,
 		ScaleByOneHalf<SignedInt5Member>,
 		ScaleByTwo<SignedInt5Member>,
+		ConstructibleFromBytes<SignedInt5Member>,
+		ConstructibleFromShorts<SignedInt5Member>,
 		ConstructibleFromInts<SignedInt5Member>,
+		ConstructibleFromLongs<SignedInt5Member>,
+		ConstructibleFromFloats<SignedInt5Member>,
+		ConstructibleFromDoubles<SignedInt5Member>,
+		ConstructibleFromBigIntegers<SignedInt5Member>,
+		ConstructibleFromBigDecimals<SignedInt5Member>,
 		Conjugate<SignedInt5Member>
 {
 
@@ -87,11 +94,6 @@ public class SignedInt5Algebra
 	@Override
 	public SignedInt5Member construct(String str) {
 		return new SignedInt5Member(str);
-	}
-
-	@Override
-	public SignedInt5Member construct(int... vals) {
-		return new SignedInt5Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt5Member, SignedInt5Member> EQ =
@@ -871,5 +873,61 @@ public class SignedInt5Algebra
 	@Override
 	public Procedure2<SignedInt5Member, SignedInt5Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt5Member construct(BigDecimal... vals) {
+		SignedInt5Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(BigInteger... vals) {
+		SignedInt5Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(double... vals) {
+		SignedInt5Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(float... vals) {
+		SignedInt5Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(long... vals) {
+		SignedInt5Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(int... vals) {
+		SignedInt5Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(short... vals) {
+		SignedInt5Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt5Member construct(byte... vals) {
+		SignedInt5Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

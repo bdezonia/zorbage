@@ -65,7 +65,14 @@ public class SignedInt6Algebra
 		Tolerance<SignedInt6Member,SignedInt6Member>,
 		ScaleByOneHalf<SignedInt6Member>,
 		ScaleByTwo<SignedInt6Member>,
+		ConstructibleFromBytes<SignedInt6Member>,
+		ConstructibleFromShorts<SignedInt6Member>,
 		ConstructibleFromInts<SignedInt6Member>,
+		ConstructibleFromLongs<SignedInt6Member>,
+		ConstructibleFromFloats<SignedInt6Member>,
+		ConstructibleFromDoubles<SignedInt6Member>,
+		ConstructibleFromBigIntegers<SignedInt6Member>,
+		ConstructibleFromBigDecimals<SignedInt6Member>,
 		Conjugate<SignedInt6Member>
 {
 
@@ -87,11 +94,6 @@ public class SignedInt6Algebra
 	@Override
 	public SignedInt6Member construct(String str) {
 		return new SignedInt6Member(str);
-	}
-
-	@Override
-	public SignedInt6Member construct(int... vals) {
-		return new SignedInt6Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt6Member, SignedInt6Member> EQ =
@@ -871,5 +873,61 @@ public class SignedInt6Algebra
 	@Override
 	public Procedure2<SignedInt6Member, SignedInt6Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt6Member construct(BigDecimal... vals) {
+		SignedInt6Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(BigInteger... vals) {
+		SignedInt6Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(double... vals) {
+		SignedInt6Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(float... vals) {
+		SignedInt6Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(long... vals) {
+		SignedInt6Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(int... vals) {
+		SignedInt6Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(short... vals) {
+		SignedInt6Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt6Member construct(byte... vals) {
+		SignedInt6Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

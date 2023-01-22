@@ -67,7 +67,14 @@ public class SignedInt64Algebra
 		Tolerance<SignedInt64Member,SignedInt64Member>,
 		ScaleByOneHalf<SignedInt64Member>,
 		ScaleByTwo<SignedInt64Member>,
+		ConstructibleFromBytes<SignedInt64Member>,
+		ConstructibleFromShorts<SignedInt64Member>,
+		ConstructibleFromInts<SignedInt64Member>,
 		ConstructibleFromLongs<SignedInt64Member>,
+		ConstructibleFromFloats<SignedInt64Member>,
+		ConstructibleFromDoubles<SignedInt64Member>,
+		ConstructibleFromBigIntegers<SignedInt64Member>,
+		ConstructibleFromBigDecimals<SignedInt64Member>,
 		Conjugate<SignedInt64Member>,
 		ExactlyConstructibleFromBytes<SignedInt64Member>,
 		ExactlyConstructibleFromShorts<SignedInt64Member>,
@@ -97,11 +104,6 @@ public class SignedInt64Algebra
 	@Override
 	public SignedInt64Member construct(String s) {
 		return new SignedInt64Member(s);
-	}
-
-	@Override
-	public SignedInt64Member construct(long... vals) {
-		return new SignedInt64Member(vals);
 	}
 	
 	private final Function2<Boolean,SignedInt64Member,SignedInt64Member> EQ =
@@ -900,6 +902,62 @@ public class SignedInt64Algebra
 	public SignedInt64Member constructExactly(byte... vals) {
 		SignedInt64Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(BigDecimal... vals) {
+		SignedInt64Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(BigInteger... vals) {
+		SignedInt64Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(double... vals) {
+		SignedInt64Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(float... vals) {
+		SignedInt64Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(long... vals) {
+		SignedInt64Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(int... vals) {
+		SignedInt64Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(short... vals) {
+		SignedInt64Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt64Member construct(byte... vals) {
+		SignedInt64Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

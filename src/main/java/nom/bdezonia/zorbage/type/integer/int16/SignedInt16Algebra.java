@@ -67,7 +67,14 @@ public class SignedInt16Algebra
 		Tolerance<SignedInt16Member,SignedInt16Member>,
 		ScaleByOneHalf<SignedInt16Member>,
 		ScaleByTwo<SignedInt16Member>,
+		ConstructibleFromBytes<SignedInt16Member>,
+		ConstructibleFromShorts<SignedInt16Member>,
 		ConstructibleFromInts<SignedInt16Member>,
+		ConstructibleFromLongs<SignedInt16Member>,
+		ConstructibleFromFloats<SignedInt16Member>,
+		ConstructibleFromDoubles<SignedInt16Member>,
+		ConstructibleFromBigIntegers<SignedInt16Member>,
+		ConstructibleFromBigDecimals<SignedInt16Member>,
 		Conjugate<SignedInt16Member>,
 		ExactlyConstructibleFromBytes<SignedInt16Member>,
 		ExactlyConstructibleFromShorts<SignedInt16Member>
@@ -92,11 +99,6 @@ public class SignedInt16Algebra
 	@Override
 	public SignedInt16Member construct(String s) {
 		return new SignedInt16Member(s);
-	}
-
-	@Override
-	public SignedInt16Member construct(int... vals) {
-		return new SignedInt16Member(vals);
 	}
 
 	private final Function2<Boolean,SignedInt16Member,SignedInt16Member> EQ =
@@ -862,6 +864,62 @@ public class SignedInt16Algebra
 	public SignedInt16Member constructExactly(byte... vals) {
 		SignedInt16Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(BigDecimal... vals) {
+		SignedInt16Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(BigInteger... vals) {
+		SignedInt16Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(double... vals) {
+		SignedInt16Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(float... vals) {
+		SignedInt16Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(long... vals) {
+		SignedInt16Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(int... vals) {
+		SignedInt16Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(short... vals) {
+		SignedInt16Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt16Member construct(byte... vals) {
+		SignedInt16Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -65,10 +65,16 @@ public class UnsignedInt4Algebra
 		Tolerance<UnsignedInt4Member,UnsignedInt4Member>,
 		ScaleByOneHalf<UnsignedInt4Member>,
 		ScaleByTwo<UnsignedInt4Member>,
+		ConstructibleFromBytes<UnsignedInt4Member>,
+		ConstructibleFromShorts<UnsignedInt4Member>,
 		ConstructibleFromInts<UnsignedInt4Member>,
+		ConstructibleFromLongs<UnsignedInt4Member>,
+		ConstructibleFromFloats<UnsignedInt4Member>,
+		ConstructibleFromDoubles<UnsignedInt4Member>,
+		ConstructibleFromBigIntegers<UnsignedInt4Member>,
+		ConstructibleFromBigDecimals<UnsignedInt4Member>,
 		Conjugate<UnsignedInt4Member>
 {
-
 	@Override
 	public String typeDescription() {
 		return "4-bit unsigned int";
@@ -87,11 +93,6 @@ public class UnsignedInt4Algebra
 	@Override
 	public UnsignedInt4Member construct(String str) {
 		return new UnsignedInt4Member(str);
-	}
-
-	@Override
-	public UnsignedInt4Member construct(int... vals) {
-		return new UnsignedInt4Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt4Member, UnsignedInt4Member> EQ =
@@ -826,5 +827,61 @@ public class UnsignedInt4Algebra
 	@Override
 	public Procedure2<UnsignedInt4Member, UnsignedInt4Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(BigDecimal... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(BigInteger... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(double... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(float... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(long... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(int... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(short... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt4Member construct(byte... vals) {
+		UnsignedInt4Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

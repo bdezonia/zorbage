@@ -67,7 +67,14 @@ public class SignedInt32Algebra
 		Tolerance<SignedInt32Member,SignedInt32Member>,
 		ScaleByOneHalf<SignedInt32Member>,
 		ScaleByTwo<SignedInt32Member>,
+		ConstructibleFromBytes<SignedInt32Member>,
+		ConstructibleFromShorts<SignedInt32Member>,
 		ConstructibleFromInts<SignedInt32Member>,
+		ConstructibleFromLongs<SignedInt32Member>,
+		ConstructibleFromFloats<SignedInt32Member>,
+		ConstructibleFromDoubles<SignedInt32Member>,
+		ConstructibleFromBigIntegers<SignedInt32Member>,
+		ConstructibleFromBigDecimals<SignedInt32Member>,
 		Conjugate<SignedInt32Member>,
 		ExactlyConstructibleFromBytes<SignedInt32Member>,
 		ExactlyConstructibleFromShorts<SignedInt32Member>,
@@ -93,11 +100,6 @@ public class SignedInt32Algebra
 	@Override
 	public SignedInt32Member construct(String s) {
 		return new SignedInt32Member(s);
-	}
-
-	@Override
-	public SignedInt32Member construct(int... vals) {
-		return new SignedInt32Member(vals);
 	}
 	
 	private final Function2<Boolean,SignedInt32Member,SignedInt32Member> EQ =
@@ -869,6 +871,62 @@ public class SignedInt32Algebra
 	public SignedInt32Member constructExactly(byte... vals) {
 		SignedInt32Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(BigDecimal... vals) {
+		SignedInt32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(BigInteger... vals) {
+		SignedInt32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(double... vals) {
+		SignedInt32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(float... vals) {
+		SignedInt32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(long... vals) {
+		SignedInt32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(int... vals) {
+		SignedInt32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(short... vals) {
+		SignedInt32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt32Member construct(byte... vals) {
+		SignedInt32Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

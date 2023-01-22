@@ -67,7 +67,14 @@ public class UnsignedInt8Algebra
 		Tolerance<UnsignedInt8Member,UnsignedInt8Member>,
 		ScaleByOneHalf<UnsignedInt8Member>,
 		ScaleByTwo<UnsignedInt8Member>,
+		ConstructibleFromBytes<UnsignedInt8Member>,
+		ConstructibleFromShorts<UnsignedInt8Member>,
 		ConstructibleFromInts<UnsignedInt8Member>,
+		ConstructibleFromLongs<UnsignedInt8Member>,
+		ConstructibleFromFloats<UnsignedInt8Member>,
+		ConstructibleFromDoubles<UnsignedInt8Member>,
+		ConstructibleFromBigIntegers<UnsignedInt8Member>,
+		ConstructibleFromBigDecimals<UnsignedInt8Member>,
 		Conjugate<UnsignedInt8Member>
 {
 
@@ -91,11 +98,6 @@ public class UnsignedInt8Algebra
 	@Override
 	public UnsignedInt8Member construct(String s) {
 		return new UnsignedInt8Member(s);
-	}
-
-	@Override
-	public UnsignedInt8Member construct(int... vals) {
-		return new UnsignedInt8Member(vals);
 	}
 	
 	private final Function2<Boolean,UnsignedInt8Member,UnsignedInt8Member> EQ =
@@ -818,5 +820,61 @@ public class UnsignedInt8Algebra
 	@Override
 	public Procedure2<UnsignedInt8Member, UnsignedInt8Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(BigDecimal... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(BigInteger... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(double... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(float... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(long... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(int... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(short... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt8Member construct(byte... vals) {
+		UnsignedInt8Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

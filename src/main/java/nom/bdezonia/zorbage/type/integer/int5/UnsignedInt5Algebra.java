@@ -65,7 +65,14 @@ public class UnsignedInt5Algebra
 		Tolerance<UnsignedInt5Member,UnsignedInt5Member>,
 		ScaleByOneHalf<UnsignedInt5Member>,
 		ScaleByTwo<UnsignedInt5Member>,
+		ConstructibleFromBytes<UnsignedInt5Member>,
+		ConstructibleFromShorts<UnsignedInt5Member>,
 		ConstructibleFromInts<UnsignedInt5Member>,
+		ConstructibleFromLongs<UnsignedInt5Member>,
+		ConstructibleFromFloats<UnsignedInt5Member>,
+		ConstructibleFromDoubles<UnsignedInt5Member>,
+		ConstructibleFromBigIntegers<UnsignedInt5Member>,
+		ConstructibleFromBigDecimals<UnsignedInt5Member>,
 		Conjugate<UnsignedInt5Member>
 {
 
@@ -87,11 +94,6 @@ public class UnsignedInt5Algebra
 	@Override
 	public UnsignedInt5Member construct(String str) {
 		return new UnsignedInt5Member(str);
-	}
-
-	@Override
-	public UnsignedInt5Member construct(int... vals) {
-		return new UnsignedInt5Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt5Member, UnsignedInt5Member> EQ =
@@ -824,5 +826,61 @@ public class UnsignedInt5Algebra
 	@Override
 	public Procedure2<UnsignedInt5Member, UnsignedInt5Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(BigDecimal... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(BigInteger... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(double... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(float... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(long... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(int... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(short... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt5Member construct(byte... vals) {
+		UnsignedInt5Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

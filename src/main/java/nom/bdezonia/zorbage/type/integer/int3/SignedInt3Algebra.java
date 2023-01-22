@@ -65,7 +65,14 @@ public class SignedInt3Algebra
 		Tolerance<SignedInt3Member,SignedInt3Member>,
 		ScaleByOneHalf<SignedInt3Member>,
 		ScaleByTwo<SignedInt3Member>,
+		ConstructibleFromBytes<SignedInt3Member>,
+		ConstructibleFromShorts<SignedInt3Member>,
 		ConstructibleFromInts<SignedInt3Member>,
+		ConstructibleFromLongs<SignedInt3Member>,
+		ConstructibleFromFloats<SignedInt3Member>,
+		ConstructibleFromDoubles<SignedInt3Member>,
+		ConstructibleFromBigIntegers<SignedInt3Member>,
+		ConstructibleFromBigDecimals<SignedInt3Member>,
 		Conjugate<SignedInt3Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class SignedInt3Algebra
 	@Override
 	public SignedInt3Member construct(String str) {
 		return new SignedInt3Member(str);
-	}
-
-	@Override
-	public SignedInt3Member construct(int... vals) {
-		return new SignedInt3Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt3Member, SignedInt3Member> EQ =
@@ -870,5 +872,61 @@ public class SignedInt3Algebra
 	@Override
 	public Procedure2<SignedInt3Member, SignedInt3Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt3Member construct(BigDecimal... vals) {
+		SignedInt3Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(BigInteger... vals) {
+		SignedInt3Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(double... vals) {
+		SignedInt3Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(float... vals) {
+		SignedInt3Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(long... vals) {
+		SignedInt3Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(int... vals) {
+		SignedInt3Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(short... vals) {
+		SignedInt3Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt3Member construct(byte... vals) {
+		SignedInt3Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

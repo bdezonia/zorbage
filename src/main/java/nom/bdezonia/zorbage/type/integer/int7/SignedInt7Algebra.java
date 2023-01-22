@@ -65,7 +65,14 @@ public class SignedInt7Algebra
 		Tolerance<SignedInt7Member,SignedInt7Member>,
 		ScaleByOneHalf<SignedInt7Member>,
 		ScaleByTwo<SignedInt7Member>,
+		ConstructibleFromBytes<SignedInt7Member>,
+		ConstructibleFromShorts<SignedInt7Member>,
 		ConstructibleFromInts<SignedInt7Member>,
+		ConstructibleFromLongs<SignedInt7Member>,
+		ConstructibleFromFloats<SignedInt7Member>,
+		ConstructibleFromDoubles<SignedInt7Member>,
+		ConstructibleFromBigIntegers<SignedInt7Member>,
+		ConstructibleFromBigDecimals<SignedInt7Member>,
 		Conjugate<SignedInt7Member>
 {
 
@@ -87,11 +94,6 @@ public class SignedInt7Algebra
 	@Override
 	public SignedInt7Member construct(String str) {
 		return new SignedInt7Member(str);
-	}
-
-	@Override
-	public SignedInt7Member construct(int... vals) {
-		return new SignedInt7Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt7Member, SignedInt7Member> EQ =
@@ -871,5 +873,61 @@ public class SignedInt7Algebra
 	@Override
 	public Procedure2<SignedInt7Member, SignedInt7Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt7Member construct(BigDecimal... vals) {
+		SignedInt7Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(BigInteger... vals) {
+		SignedInt7Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(double... vals) {
+		SignedInt7Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(float... vals) {
+		SignedInt7Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(long... vals) {
+		SignedInt7Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(int... vals) {
+		SignedInt7Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(short... vals) {
+		SignedInt7Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt7Member construct(byte... vals) {
+		SignedInt7Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

@@ -65,7 +65,14 @@ public class UnsignedInt2Algebra
 		Tolerance<UnsignedInt2Member,UnsignedInt2Member>,
 		ScaleByOneHalf<UnsignedInt2Member>,
 		ScaleByTwo<UnsignedInt2Member>,
+		ConstructibleFromBytes<UnsignedInt2Member>,
+		ConstructibleFromShorts<UnsignedInt2Member>,
 		ConstructibleFromInts<UnsignedInt2Member>,
+		ConstructibleFromLongs<UnsignedInt2Member>,
+		ConstructibleFromFloats<UnsignedInt2Member>,
+		ConstructibleFromDoubles<UnsignedInt2Member>,
+		ConstructibleFromBigIntegers<UnsignedInt2Member>,
+		ConstructibleFromBigDecimals<UnsignedInt2Member>,
 		Conjugate<UnsignedInt2Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class UnsignedInt2Algebra
 	@Override
 	public UnsignedInt2Member construct(String str) {
 		return new UnsignedInt2Member(str);
-	}
-
-	@Override
-	public UnsignedInt2Member construct(int... vals) {
-		return new UnsignedInt2Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt2Member, UnsignedInt2Member> EQ =
@@ -825,5 +827,61 @@ public class UnsignedInt2Algebra
 	@Override
 	public Procedure2<UnsignedInt2Member, UnsignedInt2Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(BigDecimal... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(BigInteger... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(double... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(float... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(long... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(int... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(short... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt2Member construct(byte... vals) {
+		UnsignedInt2Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

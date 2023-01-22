@@ -65,7 +65,14 @@ public class UnsignedInt3Algebra
 		Tolerance<UnsignedInt3Member,UnsignedInt3Member>,
 		ScaleByOneHalf<UnsignedInt3Member>,
 		ScaleByTwo<UnsignedInt3Member>,
+		ConstructibleFromBytes<UnsignedInt3Member>,
+		ConstructibleFromShorts<UnsignedInt3Member>,
 		ConstructibleFromInts<UnsignedInt3Member>,
+		ConstructibleFromLongs<UnsignedInt3Member>,
+		ConstructibleFromFloats<UnsignedInt3Member>,
+		ConstructibleFromDoubles<UnsignedInt3Member>,
+		ConstructibleFromBigIntegers<UnsignedInt3Member>,
+		ConstructibleFromBigDecimals<UnsignedInt3Member>,
 		Conjugate<UnsignedInt3Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class UnsignedInt3Algebra
 	@Override
 	public UnsignedInt3Member construct(String str) {
 		return new UnsignedInt3Member(str);
-	}
-
-	@Override
-	public UnsignedInt3Member construct(int... vals) {
-		return new UnsignedInt3Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt3Member, UnsignedInt3Member> EQ =
@@ -823,5 +825,61 @@ public class UnsignedInt3Algebra
 	@Override
 	public Procedure2<UnsignedInt3Member, UnsignedInt3Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(BigDecimal... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(BigInteger... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(double... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(float... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(long... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(int... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(short... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt3Member construct(byte... vals) {
+		UnsignedInt3Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

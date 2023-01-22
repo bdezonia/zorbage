@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.geom.point;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,7 +44,14 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromDoubles;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NegInfinite;
@@ -81,7 +89,14 @@ public class PointAlgebra
 		NegInfinite<Point>,
 		NaN<Point>,
 		Random<Point>,
+		ConstructibleFromBytes<Point>,
+		ConstructibleFromShorts<Point>,
+		ConstructibleFromInts<Point>,
+		ConstructibleFromLongs<Point>,
+		ConstructibleFromFloats<Point>,
 		ConstructibleFromDoubles<Point>,
+		ConstructibleFromBigIntegers<Point>,
+		ConstructibleFromBigDecimals<Point>,
 		ExactlyConstructibleFromDoubles<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
@@ -104,11 +119,6 @@ public class PointAlgebra
 	@Override
 	public Point construct(String str) {
 		return new Point(str);
-	}
-
-	@Override
-	public Point construct(double... vals) {
-		return new Point(vals);
 	}
 
 	private final Function2<Boolean, Point, Point> EQ =
@@ -505,4 +515,59 @@ public class PointAlgebra
 		return v;
 	}
 
+	@Override
+	public Point construct(BigDecimal... vals) {
+		Point v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(BigInteger... vals) {
+		Point v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(double... vals) {
+		Point v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(float... vals) {
+		Point v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(long... vals) {
+		Point v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(int... vals) {
+		Point v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(short... vals) {
+		Point v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public Point construct(byte... vals) {
+		Point v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
 }

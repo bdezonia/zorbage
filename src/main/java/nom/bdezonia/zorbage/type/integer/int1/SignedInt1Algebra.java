@@ -65,7 +65,14 @@ public class SignedInt1Algebra
 		ScaleByRational<SignedInt1Member>,
 		ScaleByDouble<SignedInt1Member>,
 		ScaleByDoubleAndRound<SignedInt1Member>,
+		ConstructibleFromBytes<SignedInt1Member>,
+		ConstructibleFromShorts<SignedInt1Member>,
 		ConstructibleFromInts<SignedInt1Member>,
+		ConstructibleFromLongs<SignedInt1Member>,
+		ConstructibleFromFloats<SignedInt1Member>,
+		ConstructibleFromDoubles<SignedInt1Member>,
+		ConstructibleFromBigIntegers<SignedInt1Member>,
+		ConstructibleFromBigDecimals<SignedInt1Member>,
 		Conjugate<SignedInt1Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class SignedInt1Algebra
 	@Override
 	public SignedInt1Member construct(String str) {
 		return new SignedInt1Member(str);
-	}
-
-	@Override
-	public SignedInt1Member construct(int... vals) {
-		return new SignedInt1Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt1Member, SignedInt1Member> EQ =
@@ -729,4 +731,59 @@ public class SignedInt1Algebra
 		return ASSIGN;
 	}
 
+	@Override
+	public SignedInt1Member construct(BigDecimal... vals) {
+		SignedInt1Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(BigInteger... vals) {
+		SignedInt1Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(double... vals) {
+		SignedInt1Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(float... vals) {
+		SignedInt1Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(long... vals) {
+		SignedInt1Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(int... vals) {
+		SignedInt1Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(short... vals) {
+		SignedInt1Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt1Member construct(byte... vals) {
+		SignedInt1Member v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
 }

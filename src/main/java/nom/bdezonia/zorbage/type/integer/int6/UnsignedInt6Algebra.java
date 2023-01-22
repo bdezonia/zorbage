@@ -65,10 +65,16 @@ public class UnsignedInt6Algebra
 		Tolerance<UnsignedInt6Member,UnsignedInt6Member>,
 		ScaleByOneHalf<UnsignedInt6Member>,
 		ScaleByTwo<UnsignedInt6Member>,
+		ConstructibleFromBytes<UnsignedInt6Member>,
+		ConstructibleFromShorts<UnsignedInt6Member>,
 		ConstructibleFromInts<UnsignedInt6Member>,
+		ConstructibleFromLongs<UnsignedInt6Member>,
+		ConstructibleFromFloats<UnsignedInt6Member>,
+		ConstructibleFromDoubles<UnsignedInt6Member>,
+		ConstructibleFromBigIntegers<UnsignedInt6Member>,
+		ConstructibleFromBigDecimals<UnsignedInt6Member>,
 		Conjugate<UnsignedInt6Member>
 {
-
 	@Override
 	public String typeDescription() {
 		return "6-bit unsigned int";
@@ -87,11 +93,6 @@ public class UnsignedInt6Algebra
 	@Override
 	public UnsignedInt6Member construct(String str) {
 		return new UnsignedInt6Member(str);
-	}
-
-	@Override
-	public UnsignedInt6Member construct(int... vals) {
-		return new UnsignedInt6Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt6Member, UnsignedInt6Member> EQ =
@@ -824,5 +825,61 @@ public class UnsignedInt6Algebra
 	@Override
 	public Procedure2<UnsignedInt6Member, UnsignedInt6Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(BigDecimal... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(BigInteger... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(double... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(float... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(long... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(int... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(short... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt6Member construct(byte... vals) {
+		UnsignedInt6Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

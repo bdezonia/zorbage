@@ -65,7 +65,14 @@ public class SignedInt14Algebra
 		Tolerance<SignedInt14Member,SignedInt14Member>,
 		ScaleByOneHalf<SignedInt14Member>,
 		ScaleByTwo<SignedInt14Member>,
+		ConstructibleFromBytes<SignedInt14Member>,
+		ConstructibleFromShorts<SignedInt14Member>,
 		ConstructibleFromInts<SignedInt14Member>,
+		ConstructibleFromLongs<SignedInt14Member>,
+		ConstructibleFromFloats<SignedInt14Member>,
+		ConstructibleFromDoubles<SignedInt14Member>,
+		ConstructibleFromBigIntegers<SignedInt14Member>,
+		ConstructibleFromBigDecimals<SignedInt14Member>,
 		Conjugate<SignedInt14Member>,
 		ExactlyConstructibleFromBytes<SignedInt14Member>
 {
@@ -87,11 +94,6 @@ public class SignedInt14Algebra
 	@Override
 	public SignedInt14Member construct(String str) {
 		return new SignedInt14Member(str);
-	}
-
-	@Override
-	public SignedInt14Member construct(int... vals) {
-		return new SignedInt14Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt14Member, SignedInt14Member> EQ =
@@ -877,6 +879,62 @@ public class SignedInt14Algebra
 	public SignedInt14Member constructExactly(byte... vals) {
 		SignedInt14Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(BigDecimal... vals) {
+		SignedInt14Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(BigInteger... vals) {
+		SignedInt14Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(double... vals) {
+		SignedInt14Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(float... vals) {
+		SignedInt14Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(long... vals) {
+		SignedInt14Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(int... vals) {
+		SignedInt14Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(short... vals) {
+		SignedInt14Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt14Member construct(byte... vals) {
+		SignedInt14Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

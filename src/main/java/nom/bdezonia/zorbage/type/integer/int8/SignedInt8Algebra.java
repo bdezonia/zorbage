@@ -67,7 +67,14 @@ public class SignedInt8Algebra
 		Tolerance<SignedInt8Member,SignedInt8Member>,
 		ScaleByOneHalf<SignedInt8Member>,
 		ScaleByTwo<SignedInt8Member>,
+		ConstructibleFromBytes<SignedInt8Member>,
+		ConstructibleFromShorts<SignedInt8Member>,
 		ConstructibleFromInts<SignedInt8Member>,
+		ConstructibleFromLongs<SignedInt8Member>,
+		ConstructibleFromFloats<SignedInt8Member>,
+		ConstructibleFromDoubles<SignedInt8Member>,
+		ConstructibleFromBigIntegers<SignedInt8Member>,
+		ConstructibleFromBigDecimals<SignedInt8Member>,
 		Conjugate<SignedInt8Member>,
 		ExactlyConstructibleFromBytes<SignedInt8Member>
 {
@@ -92,11 +99,6 @@ public class SignedInt8Algebra
 	@Override
 	public SignedInt8Member construct(String s) {
 		return new SignedInt8Member(s);
-	}
-
-	@Override
-	public SignedInt8Member construct(int... vals) {
-		return new SignedInt8Member(vals);
 	}
 
 	private final Function2<Boolean,SignedInt8Member,SignedInt8Member> EQ =
@@ -854,6 +856,62 @@ public class SignedInt8Algebra
 	public SignedInt8Member constructExactly(byte... vals) {
 		SignedInt8Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(BigDecimal... vals) {
+		SignedInt8Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(BigInteger... vals) {
+		SignedInt8Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(double... vals) {
+		SignedInt8Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(float... vals) {
+		SignedInt8Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(long... vals) {
+		SignedInt8Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(int... vals) {
+		SignedInt8Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(short... vals) {
+		SignedInt8Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt8Member construct(byte... vals) {
+		SignedInt8Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

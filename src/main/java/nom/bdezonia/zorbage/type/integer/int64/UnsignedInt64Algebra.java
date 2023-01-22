@@ -68,8 +68,14 @@ public class UnsignedInt64Algebra
 		Tolerance<UnsignedInt64Member,UnsignedInt64Member>,
 		ScaleByOneHalf<UnsignedInt64Member>,
 		ScaleByTwo<UnsignedInt64Member>,
-		ConstructibleFromBigIntegers<UnsignedInt64Member>,
+		ConstructibleFromBytes<UnsignedInt64Member>,
+		ConstructibleFromShorts<UnsignedInt64Member>,
+		ConstructibleFromInts<UnsignedInt64Member>,
 		ConstructibleFromLongs<UnsignedInt64Member>,
+		ConstructibleFromFloats<UnsignedInt64Member>,
+		ConstructibleFromDoubles<UnsignedInt64Member>,
+		ConstructibleFromBigIntegers<UnsignedInt64Member>,
+		ConstructibleFromBigDecimals<UnsignedInt64Member>,
 		Conjugate<UnsignedInt64Member>
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
@@ -95,16 +101,6 @@ public class UnsignedInt64Algebra
 	@Override
 	public UnsignedInt64Member construct(String s) {
 		return new UnsignedInt64Member(s);
-	}
-
-	@Override
-	public UnsignedInt64Member construct(BigInteger... vals) {
-		return new UnsignedInt64Member(vals);
-	}
-
-	@Override
-	public UnsignedInt64Member construct(long... vals) {
-		return new UnsignedInt64Member(vals);
 	}
 
 	private final Function2<Boolean,UnsignedInt64Member,UnsignedInt64Member> EQ =
@@ -859,5 +855,61 @@ public class UnsignedInt64Algebra
 	@Override
 	public Procedure2<UnsignedInt64Member, UnsignedInt64Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(BigDecimal... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(BigInteger... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(double... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(float... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(long... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(int... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(short... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt64Member construct(byte... vals) {
+		UnsignedInt64Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

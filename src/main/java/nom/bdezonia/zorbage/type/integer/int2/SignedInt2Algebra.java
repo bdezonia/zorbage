@@ -65,7 +65,14 @@ public class SignedInt2Algebra
 		Tolerance<SignedInt2Member,SignedInt2Member>,
 		ScaleByOneHalf<SignedInt2Member>,
 		ScaleByTwo<SignedInt2Member>,
+		ConstructibleFromBytes<SignedInt2Member>,
+		ConstructibleFromShorts<SignedInt2Member>,
 		ConstructibleFromInts<SignedInt2Member>,
+		ConstructibleFromLongs<SignedInt2Member>,
+		ConstructibleFromFloats<SignedInt2Member>,
+		ConstructibleFromDoubles<SignedInt2Member>,
+		ConstructibleFromBigIntegers<SignedInt2Member>,
+		ConstructibleFromBigDecimals<SignedInt2Member>,
 		Conjugate<SignedInt2Member>
 {
 	@Override
@@ -86,11 +93,6 @@ public class SignedInt2Algebra
 	@Override
 	public SignedInt2Member construct(String str) {
 		return new SignedInt2Member(str);
-	}
-
-	@Override
-	public SignedInt2Member construct(int... vals) {
-		return new SignedInt2Member(vals);
 	}
 
 	private final Function2<Boolean, SignedInt2Member, SignedInt2Member> EQ =
@@ -870,5 +872,61 @@ public class SignedInt2Algebra
 	@Override
 	public Procedure2<SignedInt2Member, SignedInt2Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public SignedInt2Member construct(BigDecimal... vals) {
+		SignedInt2Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(BigInteger... vals) {
+		SignedInt2Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(double... vals) {
+		SignedInt2Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(float... vals) {
+		SignedInt2Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(long... vals) {
+		SignedInt2Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(int... vals) {
+		SignedInt2Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(short... vals) {
+		SignedInt2Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public SignedInt2Member construct(byte... vals) {
+		SignedInt2Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

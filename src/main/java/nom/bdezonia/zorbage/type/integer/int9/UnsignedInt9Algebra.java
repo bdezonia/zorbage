@@ -65,7 +65,14 @@ public class UnsignedInt9Algebra
 		Tolerance<UnsignedInt9Member,UnsignedInt9Member>,
 		ScaleByOneHalf<UnsignedInt9Member>,
 		ScaleByTwo<UnsignedInt9Member>,
+		ConstructibleFromBytes<UnsignedInt9Member>,
+		ConstructibleFromShorts<UnsignedInt9Member>,
 		ConstructibleFromInts<UnsignedInt9Member>,
+		ConstructibleFromLongs<UnsignedInt9Member>,
+		ConstructibleFromFloats<UnsignedInt9Member>,
+		ConstructibleFromDoubles<UnsignedInt9Member>,
+		ConstructibleFromBigIntegers<UnsignedInt9Member>,
+		ConstructibleFromBigDecimals<UnsignedInt9Member>,
 		Conjugate<UnsignedInt9Member>
 {
 
@@ -87,11 +94,6 @@ public class UnsignedInt9Algebra
 	@Override
 	public UnsignedInt9Member construct(String str) {
 		return new UnsignedInt9Member(str);
-	}
-
-	@Override
-	public UnsignedInt9Member construct(int... vals) {
-		return new UnsignedInt9Member(vals);
 	}
 
 	private final Function2<Boolean, UnsignedInt9Member, UnsignedInt9Member> EQ =
@@ -826,5 +828,61 @@ public class UnsignedInt9Algebra
 	@Override
 	public Procedure2<UnsignedInt9Member, UnsignedInt9Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(BigDecimal... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(BigInteger... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(double... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(float... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(long... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(int... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(short... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt9Member construct(byte... vals) {
+		UnsignedInt9Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

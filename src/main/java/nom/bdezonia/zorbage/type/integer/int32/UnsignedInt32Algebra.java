@@ -67,7 +67,14 @@ public class UnsignedInt32Algebra
 		Tolerance<UnsignedInt32Member,UnsignedInt32Member>,
 		ScaleByOneHalf<UnsignedInt32Member>,
 		ScaleByTwo<UnsignedInt32Member>,
+		ConstructibleFromBytes<UnsignedInt32Member>,
+		ConstructibleFromShorts<UnsignedInt32Member>,
+		ConstructibleFromInts<UnsignedInt32Member>,
 		ConstructibleFromLongs<UnsignedInt32Member>,
+		ConstructibleFromFloats<UnsignedInt32Member>,
+		ConstructibleFromDoubles<UnsignedInt32Member>,
+		ConstructibleFromBigIntegers<UnsignedInt32Member>,
+		ConstructibleFromBigDecimals<UnsignedInt32Member>,
 		Conjugate<UnsignedInt32Member>
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
@@ -93,11 +100,6 @@ public class UnsignedInt32Algebra
 	@Override
 	public UnsignedInt32Member construct(String s) {
 		return new UnsignedInt32Member(s);
-	}
-
-	@Override
-	public UnsignedInt32Member construct(long... vals) {
-		return new UnsignedInt32Member(vals);
 	}
 	
 	private final Function2<Boolean,UnsignedInt32Member,UnsignedInt32Member> EQ =
@@ -829,5 +831,61 @@ public class UnsignedInt32Algebra
 	@Override
 	public Procedure2<UnsignedInt32Member, UnsignedInt32Member> conjugate() {
 		return ASSIGN;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(BigDecimal... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(BigInteger... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(double... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(float... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(long... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(int... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(short... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public UnsignedInt32Member construct(byte... vals) {
+		UnsignedInt32Member v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }
