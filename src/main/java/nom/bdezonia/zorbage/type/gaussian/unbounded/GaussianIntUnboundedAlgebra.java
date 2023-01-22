@@ -39,6 +39,11 @@ import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Scale;
@@ -88,7 +93,12 @@ public class GaussianIntUnboundedAlgebra
 		ScaleByRational<GaussianIntUnboundedMember>,
 		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>,
 		ConstructibleFromLongs<GaussianIntUnboundedMember>,
-		ConstructibleFromBigIntegers<GaussianIntUnboundedMember>
+		ConstructibleFromBigIntegers<GaussianIntUnboundedMember>,
+		ExactlyConstructibleFromBytes<GaussianIntUnboundedMember>,
+		ExactlyConstructibleFromShorts<GaussianIntUnboundedMember>,
+		ExactlyConstructibleFromInts<GaussianIntUnboundedMember>,
+		ExactlyConstructibleFromLongs<GaussianIntUnboundedMember>,
+		ExactlyConstructibleFromBigIntegers<GaussianIntUnboundedMember>
 {
 	private static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	
@@ -619,5 +629,40 @@ public class GaussianIntUnboundedAlgebra
 	@Override
 	public Function1<Boolean,GaussianIntUnboundedMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember constructExactly(BigInteger... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember constructExactly(long... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember constructExactly(int... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember constructExactly(short... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember constructExactly(byte... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

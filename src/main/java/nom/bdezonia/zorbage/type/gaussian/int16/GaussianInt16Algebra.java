@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
@@ -89,7 +91,9 @@ public class GaussianInt16Algebra
 		ScaleByHighPrecAndRound<GaussianInt16Member>,
 		ScaleByRational<GaussianInt16Member>,
 		AbsoluteValue<GaussianInt16Member, HighPrecisionMember>,
-		ConstructibleFromInts<GaussianInt16Member>
+		ConstructibleFromInts<GaussianInt16Member>,
+		ExactlyConstructibleFromBytes<GaussianInt16Member>,
+		ExactlyConstructibleFromShorts<GaussianInt16Member>
 {
 
 	@Override
@@ -628,5 +632,19 @@ public class GaussianInt16Algebra
 	@Override
 	public Function1<Boolean,GaussianInt16Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public GaussianInt16Member constructExactly(short... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt16Member constructExactly(byte... vals) {
+		GaussianInt16Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

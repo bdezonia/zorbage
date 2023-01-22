@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromDoubles;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NegInfinite;
 import nom.bdezonia.zorbage.algebra.NaN;
@@ -80,7 +81,8 @@ public class PointAlgebra
 		NegInfinite<Point>,
 		NaN<Point>,
 		Random<Point>,
-		ConstructibleFromDoubles<Point>
+		ConstructibleFromDoubles<Point>,
+		ExactlyConstructibleFromDoubles<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	
@@ -494,6 +496,13 @@ public class PointAlgebra
 	@Override
 	public Procedure1<Point> negInfinite() {
 		return NEGINF;
+	}
+
+	@Override
+	public Point constructExactly(double... vals) {
+		Point v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 
 }

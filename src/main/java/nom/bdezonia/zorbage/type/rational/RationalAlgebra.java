@@ -66,7 +66,12 @@ public class RationalAlgebra
 		ScaleByOneHalf<RationalMember>,
 		ScaleByTwo<RationalMember>,
 		ConstructibleFromBigIntegers<RationalMember>,
-		ConstructibleFromLongs<RationalMember>
+		ConstructibleFromLongs<RationalMember>,
+		ExactlyConstructibleFromBytes<RationalMember>,
+		ExactlyConstructibleFromShorts<RationalMember>,
+		ExactlyConstructibleFromInts<RationalMember>,
+		ExactlyConstructibleFromLongs<RationalMember>,
+		ExactlyConstructibleFromBigIntegers<RationalMember>
 {
 	@Override
 	public String typeDescription() {
@@ -562,5 +567,40 @@ public class RationalAlgebra
 	@Override
 	public Function1<Boolean, RationalMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public RationalMember constructExactly(BigInteger... vals) {
+		RationalMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember constructExactly(long... vals) {
+		RationalMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember constructExactly(int... vals) {
+		RationalMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember constructExactly(short... vals) {
+		RationalMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember constructExactly(byte... vals) {
+		RationalMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

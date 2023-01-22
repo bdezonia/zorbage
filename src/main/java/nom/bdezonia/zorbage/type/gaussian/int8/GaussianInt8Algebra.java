@@ -39,6 +39,7 @@ import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
@@ -89,7 +90,8 @@ public class GaussianInt8Algebra
 		ScaleByHighPrecAndRound<GaussianInt8Member>,
 		ScaleByRational<GaussianInt8Member>,
 		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>,
-		ConstructibleFromInts<GaussianInt8Member>
+		ConstructibleFromInts<GaussianInt8Member>,
+		ExactlyConstructibleFromBytes<GaussianInt8Member>
 {
 	@Override
 	public String typeDescription() {
@@ -627,5 +629,12 @@ public class GaussianInt8Algebra
 	@Override
 	public Function1<Boolean,GaussianInt8Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public GaussianInt8Member constructExactly(byte... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

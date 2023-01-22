@@ -39,6 +39,9 @@ import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Random;
@@ -89,7 +92,10 @@ public class GaussianInt32Algebra
 		ScaleByHighPrecAndRound<GaussianInt32Member>,
 		ScaleByRational<GaussianInt32Member>,
 		AbsoluteValue<GaussianInt32Member, HighPrecisionMember>,
-		ConstructibleFromInts<GaussianInt32Member>
+		ConstructibleFromInts<GaussianInt32Member>,
+		ExactlyConstructibleFromBytes<GaussianInt32Member>,
+		ExactlyConstructibleFromShorts<GaussianInt32Member>,
+		ExactlyConstructibleFromInts<GaussianInt32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -633,5 +639,26 @@ public class GaussianInt32Algebra
 	@Override
 	public Function1<Boolean,GaussianInt32Member> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public GaussianInt32Member constructExactly(int... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member constructExactly(short... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member constructExactly(byte... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 }

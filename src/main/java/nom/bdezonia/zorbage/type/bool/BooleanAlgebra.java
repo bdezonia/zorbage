@@ -57,7 +57,8 @@ public class BooleanAlgebra
 		LogicalOperations<BooleanMember>,
 		PredSucc<BooleanMember>,
 		Random<BooleanMember>,
-		ConstructibleFromBooleans<BooleanMember>
+		ConstructibleFromBooleans<BooleanMember>,
+		ExactlyConstructibleFromBooleans<BooleanMember>
 {
 	@Override
 	public String typeDescription() {
@@ -445,6 +446,13 @@ public class BooleanAlgebra
 	@Override
 	public Function1<Boolean, BooleanMember> isUnity() {
 		return ISUNITY;
+	}
+
+	@Override
+	public BooleanMember constructExactly(boolean... vals) {
+		BooleanMember v = construct();
+		v.setFromBooleansExact(vals);
+		return v;
 	}
 
 }
