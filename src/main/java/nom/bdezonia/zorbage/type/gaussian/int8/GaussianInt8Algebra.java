@@ -37,7 +37,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.G;
@@ -90,7 +97,14 @@ public class GaussianInt8Algebra
 		ScaleByHighPrecAndRound<GaussianInt8Member>,
 		ScaleByRational<GaussianInt8Member>,
 		AbsoluteValue<GaussianInt8Member, HighPrecisionMember>,
+		ConstructibleFromBytes<GaussianInt8Member>,
+		ConstructibleFromShorts<GaussianInt8Member>,
 		ConstructibleFromInts<GaussianInt8Member>,
+		ConstructibleFromLongs<GaussianInt8Member>,
+		ConstructibleFromFloats<GaussianInt8Member>,
+		ConstructibleFromDoubles<GaussianInt8Member>,
+		ConstructibleFromBigIntegers<GaussianInt8Member>,
+		ConstructibleFromBigDecimals<GaussianInt8Member>,
 		ExactlyConstructibleFromBytes<GaussianInt8Member>
 {
 	@Override
@@ -111,11 +125,6 @@ public class GaussianInt8Algebra
 	@Override
 	public GaussianInt8Member construct(String str) {
 		return new GaussianInt8Member(str);
-	}
-	
-	@Override
-	public GaussianInt8Member construct(int... vals) {
-		return new GaussianInt8Member(vals);
 	}
 	
 	private final Function2<Boolean, GaussianInt8Member, GaussianInt8Member> EQ =
@@ -635,6 +644,62 @@ public class GaussianInt8Algebra
 	public GaussianInt8Member constructExactly(byte... vals) {
 		GaussianInt8Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(BigDecimal... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(BigInteger... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(double... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(float... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(long... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(int... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(short... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt8Member construct(byte... vals) {
+		GaussianInt8Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -36,8 +36,14 @@ import java.math.BigInteger;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
@@ -92,8 +98,14 @@ public class GaussianIntUnboundedAlgebra
 		ScaleByHighPrecAndRound<GaussianIntUnboundedMember>,
 		ScaleByRational<GaussianIntUnboundedMember>,
 		AbsoluteValue<GaussianIntUnboundedMember, HighPrecisionMember>,
+		ConstructibleFromBytes<GaussianIntUnboundedMember>,
+		ConstructibleFromShorts<GaussianIntUnboundedMember>,
+		ConstructibleFromInts<GaussianIntUnboundedMember>,
 		ConstructibleFromLongs<GaussianIntUnboundedMember>,
+		ConstructibleFromFloats<GaussianIntUnboundedMember>,
+		ConstructibleFromDoubles<GaussianIntUnboundedMember>,
 		ConstructibleFromBigIntegers<GaussianIntUnboundedMember>,
+		ConstructibleFromBigDecimals<GaussianIntUnboundedMember>,
 		ExactlyConstructibleFromBytes<GaussianIntUnboundedMember>,
 		ExactlyConstructibleFromShorts<GaussianIntUnboundedMember>,
 		ExactlyConstructibleFromInts<GaussianIntUnboundedMember>,
@@ -122,16 +134,6 @@ public class GaussianIntUnboundedAlgebra
 		return new GaussianIntUnboundedMember(str);
 	}
 
-	@Override
-	public GaussianIntUnboundedMember construct(BigInteger... vals) {
-		return new GaussianIntUnboundedMember(vals);
-	}
-
-	@Override
-	public GaussianIntUnboundedMember construct(long... vals) {
-		return new GaussianIntUnboundedMember(vals);
-	}
-	
 	private final Function2<Boolean, GaussianIntUnboundedMember, GaussianIntUnboundedMember> EQ =
 		new Function2<Boolean, GaussianIntUnboundedMember, GaussianIntUnboundedMember>()
 	{
@@ -663,6 +665,62 @@ public class GaussianIntUnboundedAlgebra
 	public GaussianIntUnboundedMember constructExactly(byte... vals) {
 		GaussianIntUnboundedMember v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(BigDecimal... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(BigInteger... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(double... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(float... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(long... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(int... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(short... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianIntUnboundedMember construct(byte... vals) {
+		GaussianIntUnboundedMember v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

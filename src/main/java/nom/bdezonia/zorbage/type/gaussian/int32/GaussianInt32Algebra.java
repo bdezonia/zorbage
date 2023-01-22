@@ -37,7 +37,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Conjugate;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.EuclideanDomain;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromInts;
@@ -92,7 +99,14 @@ public class GaussianInt32Algebra
 		ScaleByHighPrecAndRound<GaussianInt32Member>,
 		ScaleByRational<GaussianInt32Member>,
 		AbsoluteValue<GaussianInt32Member, HighPrecisionMember>,
+		ConstructibleFromBytes<GaussianInt32Member>,
+		ConstructibleFromShorts<GaussianInt32Member>,
 		ConstructibleFromInts<GaussianInt32Member>,
+		ConstructibleFromLongs<GaussianInt32Member>,
+		ConstructibleFromFloats<GaussianInt32Member>,
+		ConstructibleFromDoubles<GaussianInt32Member>,
+		ConstructibleFromBigIntegers<GaussianInt32Member>,
+		ConstructibleFromBigDecimals<GaussianInt32Member>,
 		ExactlyConstructibleFromBytes<GaussianInt32Member>,
 		ExactlyConstructibleFromShorts<GaussianInt32Member>,
 		ExactlyConstructibleFromInts<GaussianInt32Member>
@@ -115,11 +129,6 @@ public class GaussianInt32Algebra
 	@Override
 	public GaussianInt32Member construct(String str) {
 		return new GaussianInt32Member(str);
-	}
-	
-	@Override
-	public GaussianInt32Member construct(int... vals) {
-		return new GaussianInt32Member(vals);
 	}
 	
 	private final Function2<Boolean, GaussianInt32Member, GaussianInt32Member> EQ =
@@ -659,6 +668,62 @@ public class GaussianInt32Algebra
 	public GaussianInt32Member constructExactly(byte... vals) {
 		GaussianInt32Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(BigDecimal... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(BigInteger... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(double... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(float... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(long... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(int... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(short... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public GaussianInt32Member construct(byte... vals) {
+		GaussianInt32Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }
