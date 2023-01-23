@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.quaternion.float64;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -86,7 +87,14 @@ public class QuaternionFloat64Algebra
 		Tolerance<Float64Member,QuaternionFloat64Member>,
 		ScaleByOneHalf<QuaternionFloat64Member>,
 		ScaleByTwo<QuaternionFloat64Member>,
+		ConstructibleFromBytes<QuaternionFloat64Member>,
+		ConstructibleFromShorts<QuaternionFloat64Member>,
+		ConstructibleFromInts<QuaternionFloat64Member>,
+		ConstructibleFromLongs<QuaternionFloat64Member>,
+		ConstructibleFromFloats<QuaternionFloat64Member>,
 		ConstructibleFromDoubles<QuaternionFloat64Member>,
+		ConstructibleFromBigIntegers<QuaternionFloat64Member>,
+		ConstructibleFromBigDecimals<QuaternionFloat64Member>,
 		ExactlyConstructibleFromBytes<QuaternionFloat64Member>,
 		ExactlyConstructibleFromShorts<QuaternionFloat64Member>,
 		ExactlyConstructibleFromInts<QuaternionFloat64Member>,
@@ -128,11 +136,6 @@ public class QuaternionFloat64Algebra
 		return new QuaternionFloat64Member(s);
 	}
 
-	@Override
-	public QuaternionFloat64Member construct(double... vals) {
-		return new QuaternionFloat64Member(vals);
-	}
-	
 	private final Procedure1<QuaternionFloat64Member> UNITY =
 			new Procedure1<QuaternionFloat64Member>()
 	{
@@ -1153,6 +1156,62 @@ public class QuaternionFloat64Algebra
 	public QuaternionFloat64Member constructExactly(double... vals) {
 		QuaternionFloat64Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(BigDecimal... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(BigInteger... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(double... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(float... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(long... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(int... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(short... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64Member construct(byte... vals) {
+		QuaternionFloat64Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.float32;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -93,7 +94,14 @@ public class Float32Algebra
 		Tolerance<Float32Member,Float32Member>,
 		ScaleByOneHalf<Float32Member>,
 		ScaleByTwo<Float32Member>,
+		ConstructibleFromBytes<Float32Member>,
+		ConstructibleFromShorts<Float32Member>,
+		ConstructibleFromInts<Float32Member>,
+		ConstructibleFromLongs<Float32Member>,
 		ConstructibleFromFloats<Float32Member>,
+		ConstructibleFromDoubles<Float32Member>,
+		ConstructibleFromBigIntegers<Float32Member>,
+		ConstructibleFromBigDecimals<Float32Member>,
 		ExactlyConstructibleFromBytes<Float32Member>,
 		ExactlyConstructibleFromShorts<Float32Member>,
 		ExactlyConstructibleFromFloats<Float32Member>
@@ -123,11 +131,6 @@ public class Float32Algebra
 	@Override
 	public Float32Member construct(String s) {
 		return new Float32Member(s);
-	}
-	
-	@Override
-	public Float32Member construct(float... vals) {
-		return new Float32Member(vals);
 	}
 
 	private final Function2<Boolean,Float32Member,Float32Member> EQ =
@@ -1585,6 +1588,62 @@ public class Float32Algebra
 	public Float32Member constructExactly(float... vals) {
 		Float32Member v = construct();
 		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(BigDecimal... vals) {
+		Float32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(BigInteger... vals) {
+		Float32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(double... vals) {
+		Float32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(float... vals) {
+		Float32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(long... vals) {
+		Float32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(int... vals) {
+		Float32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(short... vals) {
+		Float32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public Float32Member construct(byte... vals) {
+		Float32Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

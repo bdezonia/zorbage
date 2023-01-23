@@ -78,7 +78,11 @@ public class HighPrecisionAlgebra
 		ScaleByOneHalf<HighPrecisionMember>,
 		ScaleByTwo<HighPrecisionMember>,
 		MiscFloat<HighPrecisionMember>,
+		ConstructibleFromBytes<HighPrecisionMember>,
+		ConstructibleFromShorts<HighPrecisionMember>,
+		ConstructibleFromInts<HighPrecisionMember>,
 		ConstructibleFromLongs<HighPrecisionMember>,
+		ConstructibleFromFloats<HighPrecisionMember>,
 		ConstructibleFromDoubles<HighPrecisionMember>,
 		ConstructibleFromBigIntegers<HighPrecisionMember>,
 		ConstructibleFromBigDecimals<HighPrecisionMember>,
@@ -147,26 +151,6 @@ public class HighPrecisionAlgebra
 	@Override
 	public HighPrecisionMember construct(String s) {
 		return new HighPrecisionMember(s);
-	}
-
-	@Override
-	public HighPrecisionMember construct(BigDecimal... vals) {
-		return new HighPrecisionMember(vals);
-	}
-
-	@Override
-	public HighPrecisionMember construct(BigInteger... vals) {
-		return new HighPrecisionMember(vals);
-	}
-
-	@Override
-	public HighPrecisionMember construct(double... vals) {
-		return new HighPrecisionMember(vals);
-	}
-
-	@Override
-	public HighPrecisionMember construct(long... vals) {
-		return new HighPrecisionMember(vals);
 	}
 
 	private final Function2<Boolean,HighPrecisionMember,HighPrecisionMember> EQ =
@@ -1152,6 +1136,62 @@ public class HighPrecisionAlgebra
 	public HighPrecisionMember constructExactly(BigDecimal... vals) {
 		HighPrecisionMember v = construct();
 		v.setFromBigDecimalsExact(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(BigDecimal... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(BigInteger... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(double... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(float... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(long... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(int... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(short... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public HighPrecisionMember construct(byte... vals) {
+		HighPrecisionMember v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

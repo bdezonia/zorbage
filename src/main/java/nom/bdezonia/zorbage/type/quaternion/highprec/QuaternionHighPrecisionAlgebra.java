@@ -79,10 +79,14 @@ public class QuaternionHighPrecisionAlgebra
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMember>,
 		ScaleByOneHalf<QuaternionHighPrecisionMember>,
 		ScaleByTwo<QuaternionHighPrecisionMember>,
-		ConstructibleFromBigDecimals<QuaternionHighPrecisionMember>,
-		ConstructibleFromBigIntegers<QuaternionHighPrecisionMember>,
-		ConstructibleFromDoubles<QuaternionHighPrecisionMember>,
+		ConstructibleFromBytes<QuaternionHighPrecisionMember>,
+		ConstructibleFromShorts<QuaternionHighPrecisionMember>,
+		ConstructibleFromInts<QuaternionHighPrecisionMember>,
 		ConstructibleFromLongs<QuaternionHighPrecisionMember>,
+		ConstructibleFromFloats<QuaternionHighPrecisionMember>,
+		ConstructibleFromDoubles<QuaternionHighPrecisionMember>,
+		ConstructibleFromBigIntegers<QuaternionHighPrecisionMember>,
+		ConstructibleFromBigDecimals<QuaternionHighPrecisionMember>,
 		ExactlyConstructibleFromBytes<QuaternionHighPrecisionMember>,
 		ExactlyConstructibleFromShorts<QuaternionHighPrecisionMember>,
 		ExactlyConstructibleFromInts<QuaternionHighPrecisionMember>,
@@ -120,26 +124,6 @@ public class QuaternionHighPrecisionAlgebra
 	@Override
 	public QuaternionHighPrecisionMember construct(String s) {
 		return new QuaternionHighPrecisionMember(s);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct(BigDecimal... vals) {
-		return new QuaternionHighPrecisionMember(vals);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct(BigInteger... vals) {
-		return new QuaternionHighPrecisionMember(vals);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct(double... vals) {
-		return new QuaternionHighPrecisionMember(vals);
-	}
-
-	@Override
-	public QuaternionHighPrecisionMember construct(long... vals) {
-		return new QuaternionHighPrecisionMember(vals);
 	}
 	
 	private final Procedure1<QuaternionHighPrecisionMember> UNITY =
@@ -1115,6 +1099,62 @@ public class QuaternionHighPrecisionAlgebra
 	public QuaternionHighPrecisionMember constructExactly(BigDecimal... vals) {
 		QuaternionHighPrecisionMember v = construct();
 		v.setFromBigDecimalsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(BigDecimal... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(BigInteger... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(double... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(float... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(long... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(int... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(short... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionMember construct(byte... vals) {
+		QuaternionHighPrecisionMember v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.octonion.float64;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -89,7 +90,14 @@ public class OctonionFloat64Algebra
 		Tolerance<Float64Member,OctonionFloat64Member>,
 		ScaleByOneHalf<OctonionFloat64Member>,
 		ScaleByTwo<OctonionFloat64Member>,
+		ConstructibleFromBytes<OctonionFloat64Member>,
+		ConstructibleFromShorts<OctonionFloat64Member>,
+		ConstructibleFromInts<OctonionFloat64Member>,
+		ConstructibleFromLongs<OctonionFloat64Member>,
+		ConstructibleFromFloats<OctonionFloat64Member>,
 		ConstructibleFromDoubles<OctonionFloat64Member>,
+		ConstructibleFromBigIntegers<OctonionFloat64Member>,
+		ConstructibleFromBigDecimals<OctonionFloat64Member>,
 		ExactlyConstructibleFromBytes<OctonionFloat64Member>,
 		ExactlyConstructibleFromShorts<OctonionFloat64Member>,
 		ExactlyConstructibleFromInts<OctonionFloat64Member>,
@@ -1486,11 +1494,6 @@ public class OctonionFloat64Algebra
 	}
 
 	@Override
-	public OctonionFloat64Member construct(double... vals) {
-		return new OctonionFloat64Member(vals);
-	}
-
-	@Override
 	public OctonionFloat64Member constructExactly(byte... vals) {
 		OctonionFloat64Member v = construct();
 		v.setFromBytesExact(vals);
@@ -1522,6 +1525,62 @@ public class OctonionFloat64Algebra
 	public OctonionFloat64Member constructExactly(double... vals) {
 		OctonionFloat64Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(BigDecimal... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(BigInteger... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(double... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(float... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(long... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(int... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(short... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat64Member construct(byte... vals) {
+		OctonionFloat64Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.quaternion.float32;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -86,7 +87,14 @@ public class QuaternionFloat32Algebra
 		Tolerance<Float32Member,QuaternionFloat32Member>,
 		ScaleByOneHalf<QuaternionFloat32Member>,
 		ScaleByTwo<QuaternionFloat32Member>,
+		ConstructibleFromBytes<QuaternionFloat32Member>,
+		ConstructibleFromShorts<QuaternionFloat32Member>,
+		ConstructibleFromInts<QuaternionFloat32Member>,
+		ConstructibleFromLongs<QuaternionFloat32Member>,
 		ConstructibleFromFloats<QuaternionFloat32Member>,
+		ConstructibleFromDoubles<QuaternionFloat32Member>,
+		ConstructibleFromBigIntegers<QuaternionFloat32Member>,
+		ConstructibleFromBigDecimals<QuaternionFloat32Member>,
 		ExactlyConstructibleFromBytes<QuaternionFloat32Member>,
 		ExactlyConstructibleFromShorts<QuaternionFloat32Member>,
 		ExactlyConstructibleFromFloats<QuaternionFloat32Member>
@@ -124,11 +132,6 @@ public class QuaternionFloat32Algebra
 	@Override
 	public QuaternionFloat32Member construct(String s) {
 		return new QuaternionFloat32Member(s);
-	}
-
-	@Override
-	public QuaternionFloat32Member construct(float... vals) {
-		return new QuaternionFloat32Member(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat32Member> UNITY =
@@ -1137,6 +1140,62 @@ public class QuaternionFloat32Algebra
 	public QuaternionFloat32Member constructExactly(float... vals) {
 		QuaternionFloat32Member v = construct();
 		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(BigDecimal... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(BigInteger... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(double... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(float... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(long... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(int... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(short... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32Member construct(byte... vals) {
+		QuaternionFloat32Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

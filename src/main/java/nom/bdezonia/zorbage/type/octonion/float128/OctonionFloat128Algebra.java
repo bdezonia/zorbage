@@ -90,10 +90,14 @@ public class OctonionFloat128Algebra
 		Tolerance<Float128Member,OctonionFloat128Member>,
 		ScaleByOneHalf<OctonionFloat128Member>,
 		ScaleByTwo<OctonionFloat128Member>,
-		ConstructibleFromBigDecimals<OctonionFloat128Member>,
-		ConstructibleFromBigIntegers<OctonionFloat128Member>,
-		ConstructibleFromDoubles<OctonionFloat128Member>,
+		ConstructibleFromBytes<OctonionFloat128Member>,
+		ConstructibleFromShorts<OctonionFloat128Member>,
+		ConstructibleFromInts<OctonionFloat128Member>,
 		ConstructibleFromLongs<OctonionFloat128Member>,
+		ConstructibleFromFloats<OctonionFloat128Member>,
+		ConstructibleFromDoubles<OctonionFloat128Member>,
+		ConstructibleFromBigIntegers<OctonionFloat128Member>,
+		ConstructibleFromBigDecimals<OctonionFloat128Member>,
 		ExactlyConstructibleFromBytes<OctonionFloat128Member>,
 		ExactlyConstructibleFromShorts<OctonionFloat128Member>,
 		ExactlyConstructibleFromInts<OctonionFloat128Member>,
@@ -138,26 +142,6 @@ public class OctonionFloat128Algebra
 	@Override
 	public OctonionFloat128Member construct(String s) {
 		return new OctonionFloat128Member(s);
-	}
-
-	@Override
-	public OctonionFloat128Member construct(long... vals) {
-		return new OctonionFloat128Member(vals);
-	}
-
-	@Override
-	public OctonionFloat128Member construct(double... vals) {
-		return new OctonionFloat128Member(vals);
-	}
-
-	@Override
-	public OctonionFloat128Member construct(BigInteger... vals) {
-		return new OctonionFloat128Member(vals);
-	}
-
-	@Override
-	public OctonionFloat128Member construct(BigDecimal... vals) {
-		return new OctonionFloat128Member(vals);
 	}
 
 	private final Procedure1<OctonionFloat128Member> UNITY =
@@ -1677,6 +1661,62 @@ public class OctonionFloat128Algebra
 	public OctonionFloat128Member constructExactly(double... vals) {
 		OctonionFloat128Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(BigDecimal... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(BigInteger... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(double... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(float... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(long... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(int... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(short... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128Member construct(byte... vals) {
+		OctonionFloat128Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -87,10 +87,14 @@ public class QuaternionFloat128Algebra
 		Tolerance<Float128Member,QuaternionFloat128Member>,
 		ScaleByOneHalf<QuaternionFloat128Member>,
 		ScaleByTwo<QuaternionFloat128Member>,
-		ConstructibleFromBigDecimals<QuaternionFloat128Member>,
-		ConstructibleFromBigIntegers<QuaternionFloat128Member>,
-		ConstructibleFromDoubles<QuaternionFloat128Member>,
+		ConstructibleFromBytes<QuaternionFloat128Member>,
+		ConstructibleFromShorts<QuaternionFloat128Member>,
+		ConstructibleFromInts<QuaternionFloat128Member>,
 		ConstructibleFromLongs<QuaternionFloat128Member>,
+		ConstructibleFromFloats<QuaternionFloat128Member>,
+		ConstructibleFromDoubles<QuaternionFloat128Member>,
+		ConstructibleFromBigIntegers<QuaternionFloat128Member>,
+		ConstructibleFromBigDecimals<QuaternionFloat128Member>,
 		ExactlyConstructibleFromBytes<QuaternionFloat128Member>,
 		ExactlyConstructibleFromShorts<QuaternionFloat128Member>,
 		ExactlyConstructibleFromInts<QuaternionFloat128Member>,
@@ -133,26 +137,6 @@ public class QuaternionFloat128Algebra
 		return new QuaternionFloat128Member(s);
 	}
 
-	@Override
-	public QuaternionFloat128Member construct(long... vals) {
-		return new QuaternionFloat128Member(vals);
-	}
-
-	@Override
-	public QuaternionFloat128Member construct(double... vals) {
-		return new QuaternionFloat128Member(vals);
-	}
-
-	@Override
-	public QuaternionFloat128Member construct(BigInteger... vals) {
-		return new QuaternionFloat128Member(vals);
-	}
-
-	@Override
-	public QuaternionFloat128Member construct(BigDecimal... vals) {
-		return new QuaternionFloat128Member(vals);
-	}
-	
 	private final Procedure1<QuaternionFloat128Member> UNITY =
 			new Procedure1<QuaternionFloat128Member>()
 	{
@@ -1256,6 +1240,62 @@ public class QuaternionFloat128Algebra
 	public QuaternionFloat128Member constructExactly(double... vals) {
 		QuaternionFloat128Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(BigDecimal... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(BigInteger... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(double... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(float... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(long... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(int... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(short... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat128Member construct(byte... vals) {
+		QuaternionFloat128Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

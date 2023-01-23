@@ -35,6 +35,8 @@ import java.util.Locale;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromChars;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromStrings;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromChars;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromStrings;
 import nom.bdezonia.zorbage.algebra.Norm;
@@ -61,6 +63,8 @@ public class StringAlgebra
 		Addition<StringMember>,
 		Norm<StringMember, SignedInt32Member>,
 		Ordered<StringMember>,
+		ConstructibleFromChars<StringMember>,
+		ConstructibleFromStrings<StringMember>,
 		ExactlyConstructibleFromStrings<StringMember>,
 		ExactlyConstructibleFromChars<StringMember>
 {
@@ -979,6 +983,20 @@ public class StringAlgebra
 
 	@Override
 	public StringMember constructExactly(String... vals) {
+		StringMember v = construct();
+		v.setFromStrings(vals);
+		return v;
+	}
+
+	@Override
+	public StringMember construct(char... vals) {
+		StringMember v = construct();
+		v.setFromChars(vals);
+		return v;
+	}
+
+	@Override
+	public StringMember construct(String... vals) {
 		StringMember v = construct();
 		v.setFromStrings(vals);
 		return v;

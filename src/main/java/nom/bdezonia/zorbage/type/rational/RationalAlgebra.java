@@ -65,8 +65,11 @@ public class RationalAlgebra
 		Tolerance<RationalMember,RationalMember>,
 		ScaleByOneHalf<RationalMember>,
 		ScaleByTwo<RationalMember>,
-		ConstructibleFromBigIntegers<RationalMember>,
+		ConstructibleFromBytes<RationalMember>,
+		ConstructibleFromShorts<RationalMember>,
+		ConstructibleFromInts<RationalMember>,
 		ConstructibleFromLongs<RationalMember>,
+		ConstructibleFromBigIntegers<RationalMember>,
 		ExactlyConstructibleFromBytes<RationalMember>,
 		ExactlyConstructibleFromShorts<RationalMember>,
 		ExactlyConstructibleFromInts<RationalMember>,
@@ -91,16 +94,6 @@ public class RationalAlgebra
 	@Override
 	public RationalMember construct(String str) {
 		return new RationalMember(str);
-	}
-
-	@Override
-	public RationalMember construct(BigInteger... vals) {
-		return new RationalMember(vals);
-	}
-
-	@Override
-	public RationalMember construct(long... vals) {
-		return new RationalMember(vals);
 	}
 
 	private final Function2<Boolean, RationalMember, RationalMember> EQ =
@@ -601,6 +594,41 @@ public class RationalAlgebra
 	public RationalMember constructExactly(byte... vals) {
 		RationalMember v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember construct(BigInteger... vals) {
+		RationalMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember construct(long... vals) {
+		RationalMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember construct(int... vals) {
+		RationalMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember construct(short... vals) {
+		RationalMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public RationalMember construct(byte... vals) {
+		RationalMember v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

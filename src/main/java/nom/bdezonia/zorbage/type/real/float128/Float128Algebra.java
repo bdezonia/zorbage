@@ -40,8 +40,12 @@ import nom.bdezonia.zorbage.algebra.Bounded;
 import nom.bdezonia.zorbage.algebra.Conjugate;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromBytes;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromDoubles;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromFloats;
@@ -138,7 +142,11 @@ public class Float128Algebra
 		Tolerance<Float128Member,Float128Member>,
 		ScaleByOneHalf<Float128Member>,
 		ScaleByTwo<Float128Member>,
+		ConstructibleFromBytes<Float128Member>,
+		ConstructibleFromShorts<Float128Member>,
+		ConstructibleFromInts<Float128Member>,
 		ConstructibleFromLongs<Float128Member>,
+		ConstructibleFromFloats<Float128Member>,
 		ConstructibleFromDoubles<Float128Member>,
 		ConstructibleFromBigIntegers<Float128Member>,
 		ConstructibleFromBigDecimals<Float128Member>,
@@ -178,26 +186,6 @@ public class Float128Algebra
 	@Override
 	public Float128Member construct(String str) {
 		return new Float128Member(str);
-	}
-
-	@Override
-	public Float128Member construct(long... vals) {
-		return new Float128Member(vals);
-	}
-
-	@Override
-	public Float128Member construct(double... vals) {
-		return new Float128Member(vals);
-	}
-
-	@Override
-	public Float128Member construct(BigInteger... vals) {
-		return new Float128Member(vals);
-	}
-
-	@Override
-	public Float128Member construct(BigDecimal... vals) {
-		return new Float128Member(vals);
 	}
 
 	private final Function2<Boolean, Float128Member, Float128Member> EQ =
@@ -3357,6 +3345,62 @@ public class Float128Algebra
 	public Float128Member constructExactly(double... vals) {
 		Float128Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(BigDecimal... vals) {
+		Float128Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(BigInteger... vals) {
+		Float128Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(double... vals) {
+		Float128Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(float... vals) {
+		Float128Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(long... vals) {
+		Float128Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(int... vals) {
+		Float128Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(short... vals) {
+		Float128Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public Float128Member construct(byte... vals) {
+		Float128Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.float64;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -93,7 +94,14 @@ public class Float64Algebra
 		Tolerance<Float64Member,Float64Member>,
 		ScaleByOneHalf<Float64Member>,
 		ScaleByTwo<Float64Member>,
+		ConstructibleFromBytes<Float64Member>,
+		ConstructibleFromShorts<Float64Member>,
+		ConstructibleFromInts<Float64Member>,
+		ConstructibleFromLongs<Float64Member>,
+		ConstructibleFromFloats<Float64Member>,
 		ConstructibleFromDoubles<Float64Member>,
+		ConstructibleFromBigIntegers<Float64Member>,
+		ConstructibleFromBigDecimals<Float64Member>,
 		ExactlyConstructibleFromBytes<Float64Member>,
 		ExactlyConstructibleFromShorts<Float64Member>,
 		ExactlyConstructibleFromInts<Float64Member>,
@@ -153,11 +161,6 @@ public class Float64Algebra
 	@Override
 	public Float64Member construct(String s) {
 		return new Float64Member(s);
-	}
-
-	@Override
-	public Float64Member construct(double... vals) {
-		return new Float64Member(vals);
 	}
 
 	private final Procedure2<Float64Member,Float64Member> ASSIGN =
@@ -1635,6 +1638,62 @@ public class Float64Algebra
 	public Float64Member constructExactly(double... vals) {
 		Float64Member v = construct();
 		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(BigDecimal... vals) {
+		Float64Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(BigInteger... vals) {
+		Float64Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(double... vals) {
+		Float64Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(float... vals) {
+		Float64Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(long... vals) {
+		Float64Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(int... vals) {
+		Float64Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(short... vals) {
+		Float64Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public Float64Member construct(byte... vals) {
+		Float64Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

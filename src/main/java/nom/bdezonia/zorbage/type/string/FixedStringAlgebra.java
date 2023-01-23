@@ -35,6 +35,8 @@ import java.util.Locale;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromChars;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromStrings;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.function.Function1;
@@ -58,7 +60,9 @@ public class FixedStringAlgebra
 		Algebra<FixedStringAlgebra, FixedStringMember>,
 		Addition<FixedStringMember>,
 		Norm<FixedStringMember, SignedInt32Member>,
-		Ordered<FixedStringMember>
+		Ordered<FixedStringMember>,
+		ConstructibleFromStrings<FixedStringMember>,
+		ConstructibleFromChars<FixedStringMember>
 {
 	@Override
 	public String typeDescription() {
@@ -968,5 +972,19 @@ public class FixedStringAlgebra
 	
 	public Function2<Boolean, FixedStringMember, FixedStringMember> matches() {
 		return MATCHES;
+	}
+
+	@Override
+	public FixedStringMember construct(char... vals) {
+		FixedStringMember v = construct();
+		v.setFromChars(vals);
+		return v;
+	}
+
+	@Override
+	public FixedStringMember construct(String... vals) {
+		FixedStringMember v = construct();
+		v.setFromStrings(vals);
+		return v;
 	}
 }

@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.octonion.float32;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -89,7 +90,14 @@ public class OctonionFloat32Algebra
 		Tolerance<Float32Member,OctonionFloat32Member>,
 		ScaleByOneHalf<OctonionFloat32Member>,
 		ScaleByTwo<OctonionFloat32Member>,
+		ConstructibleFromBytes<OctonionFloat32Member>,
+		ConstructibleFromShorts<OctonionFloat32Member>,
+		ConstructibleFromInts<OctonionFloat32Member>,
+		ConstructibleFromLongs<OctonionFloat32Member>,
 		ConstructibleFromFloats<OctonionFloat32Member>,
+		ConstructibleFromDoubles<OctonionFloat32Member>,
+		ConstructibleFromBigIntegers<OctonionFloat32Member>,
+		ConstructibleFromBigDecimals<OctonionFloat32Member>,
 		ExactlyConstructibleFromBytes<OctonionFloat32Member>,
 		ExactlyConstructibleFromShorts<OctonionFloat32Member>,
 		ExactlyConstructibleFromFloats<OctonionFloat32Member>
@@ -131,11 +139,6 @@ public class OctonionFloat32Algebra
 	@Override
 	public OctonionFloat32Member construct(String s) {
 		return new OctonionFloat32Member(s);
-	}
-
-	@Override
-	public OctonionFloat32Member construct(float... vals) {
-		return new OctonionFloat32Member(vals);
 	}
 
 	private final Procedure1<OctonionFloat32Member> UNITY =
@@ -1506,6 +1509,62 @@ public class OctonionFloat32Algebra
 	public OctonionFloat32Member constructExactly(float... vals) {
 		OctonionFloat32Member v = construct();
 		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(BigDecimal... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(BigInteger... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(double... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(float... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(long... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(int... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(short... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32Member construct(byte... vals) {
+		OctonionFloat32Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.float16;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -93,7 +94,14 @@ public class Float16Algebra
 		ScaleByTwo<Float16Member>,
 		MiscFloat<Float16Member>,
 		PredSucc<Float16Member>,
+		ConstructibleFromBytes<Float16Member>,
+		ConstructibleFromShorts<Float16Member>,
+		ConstructibleFromInts<Float16Member>,
+		ConstructibleFromLongs<Float16Member>,
 		ConstructibleFromFloats<Float16Member>,
+		ConstructibleFromDoubles<Float16Member>,
+		ConstructibleFromBigIntegers<Float16Member>,
+		ConstructibleFromBigDecimals<Float16Member>,
 		ExactlyConstructibleFromBytes<Float16Member>
 {
 	private static final Float16Member PI = new Float16Member((float)Math.PI);
@@ -149,11 +157,6 @@ public class Float16Algebra
 	@Override
 	public Float16Member construct(String s) {
 		return new Float16Member(s);
-	}
-
-	@Override
-	public Float16Member construct(float... vals) {
-		return new Float16Member(vals);
 	}
 
 	private final Procedure2<Float16Member,Float16Member> ASSIGN =
@@ -1605,6 +1608,62 @@ public class Float16Algebra
 	public Float16Member constructExactly(byte... vals) {
 		Float16Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(BigDecimal... vals) {
+		Float16Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(BigInteger... vals) {
+		Float16Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(double... vals) {
+		Float16Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(float... vals) {
+		Float16Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(long... vals) {
+		Float16Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(int... vals) {
+		Float16Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(short... vals) {
+		Float16Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public Float16Member construct(byte... vals) {
+		Float16Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.quaternion.float16;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
@@ -86,7 +87,14 @@ public class QuaternionFloat16Algebra
 		Tolerance<Float16Member,QuaternionFloat16Member>,
 		ScaleByOneHalf<QuaternionFloat16Member>,
 		ScaleByTwo<QuaternionFloat16Member>,
+		ConstructibleFromBytes<QuaternionFloat16Member>,
+		ConstructibleFromShorts<QuaternionFloat16Member>,
+		ConstructibleFromInts<QuaternionFloat16Member>,
+		ConstructibleFromLongs<QuaternionFloat16Member>,
 		ConstructibleFromFloats<QuaternionFloat16Member>,
+		ConstructibleFromDoubles<QuaternionFloat16Member>,
+		ConstructibleFromBigIntegers<QuaternionFloat16Member>,
+		ConstructibleFromBigDecimals<QuaternionFloat16Member>,
 		ExactlyConstructibleFromBytes<QuaternionFloat16Member>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(0,0,0,0);
@@ -122,11 +130,6 @@ public class QuaternionFloat16Algebra
 	@Override
 	public QuaternionFloat16Member construct(String s) {
 		return new QuaternionFloat16Member(s);
-	}
-
-	@Override
-	public QuaternionFloat16Member construct(float... vals) {
-		return new QuaternionFloat16Member(vals);
 	}
 	
 	private final Procedure1<QuaternionFloat16Member> UNITY =
@@ -1121,6 +1124,62 @@ public class QuaternionFloat16Algebra
 	public QuaternionFloat16Member constructExactly(byte... vals) {
 		QuaternionFloat16Member v = construct();
 		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(BigDecimal... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(BigInteger... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(double... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(float... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(long... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(int... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(short... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat16Member construct(byte... vals) {
+		QuaternionFloat16Member v = construct();
+		v.setFromBytes(vals);
 		return v;
 	}
 }
