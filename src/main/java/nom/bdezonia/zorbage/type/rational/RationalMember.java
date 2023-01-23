@@ -132,14 +132,6 @@ public class RationalMember
 		setV(BigInteger.valueOf(n), BigInteger.valueOf(d));
 	}
 
-	public RationalMember(BigInteger... vals) {
-		setFromBigIntegers(vals);
-	}
-
-	public RationalMember(long... vals) {
-		setFromLongs(vals);
-	}
-
 	@Override
 	public void getV(RationalMember value) {
 		value.set(this);

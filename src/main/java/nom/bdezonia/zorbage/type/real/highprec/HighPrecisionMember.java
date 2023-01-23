@@ -99,10 +99,6 @@ public final class HighPrecisionMember
 		primitiveInit();
 	}
 	
-	public HighPrecisionMember(BigDecimal value) {
-		setV(value);
-	}
-	
 	public HighPrecisionMember(HighPrecisionMember value) {
 		set(value);
 	}

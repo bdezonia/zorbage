@@ -104,10 +104,6 @@ public final class SignedInt128Member
 		lo = hi = 0;
 	}
 	
-	public SignedInt128Member(long... vals) {
-		setFromLongs(vals);
-	}
-	
 	public SignedInt128Member(BigInteger... vals) {
 		setFromBigIntegers(vals);
 	}

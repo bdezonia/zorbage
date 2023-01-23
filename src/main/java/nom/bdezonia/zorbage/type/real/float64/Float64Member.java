@@ -112,23 +112,6 @@ public final class Float64Member
 		OctonionRepresentation val = rep.firstValue();
 		setV(val.r().doubleValue());
 	}
-
-	public Float64Member(byte value) {
-		setV(value);
-	}
-
-	public Float64Member(short value) {
-		setV(value);
-	}
-
-	public Float64Member(int value) {
-		setV(value);
-	}
-
-	public Float64Member(float value) {
-		setV(value);
-	}
-	
 	public double v() { return v; }
 
 	public void setV(double val) { v = val; }

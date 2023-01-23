@@ -139,10 +139,6 @@ public class GaussianIntUnboundedMember
 		setFromBigIntegers(vals);
 	}
 	
-	public GaussianIntUnboundedMember(long... vals) {
-		setFromLongs(vals);
-	}
-	
 	@Override
 	public long dimension(int d) {
 		return 0;

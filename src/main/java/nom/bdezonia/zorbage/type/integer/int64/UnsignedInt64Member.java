@@ -106,10 +106,6 @@ public final class UnsignedInt64Member
 		setFromBigIntegers(vals);
 	}
 	
-	public UnsignedInt64Member(long... vals) {
-		setFromLongs(vals);
-	}
-	
 	public UnsignedInt64Member(UnsignedInt64Member value) {
 		set(value);
 	}
