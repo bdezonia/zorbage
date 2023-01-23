@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.algebra.ScaleByDouble;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
 import nom.bdezonia.zorbage.misc.ThreadingUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
@@ -176,10 +177,7 @@ public class ResampleCubic {
 			U value = alg.construct();
 			IntegerIndex inputPoint = new IntegerIndex(numD);
 			IntegerIndex outputPoint = new IntegerIndex(numD);
-			long[] inputDims = new long[numD];
-			for (int i = 0; i < numD; i++) {
-				inputDims[i] = input.dimension(i);
-			}
+			long[] inputDims = DataSourceUtils.dimensions(input);
 			SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
 			while (iter.hasNext()) {
 				iter.next(outputPoint);

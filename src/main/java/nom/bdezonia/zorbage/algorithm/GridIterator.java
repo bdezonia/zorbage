@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingCartesianIntegerGrid;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
@@ -106,13 +107,7 @@ public class GridIterator {
 	public static
 		SamplingIterator<IntegerIndex> compute(Dimensioned entity)
 	{
-		int numD = entity.numDimensions();
-		
-		long[] dims = new long[numD];
-		
-		for (int i = 0; i < numD; i++) {
-			dims[i] = entity.dimension(i);
-		}
+		long[] dims = DataSourceUtils.dimensions(entity);
 		
 		return compute(dims);
 	}

@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.NdData;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.function.Function1;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
@@ -97,11 +98,9 @@ public class CreateMask {
 	public static <T extends Algebra<T,U>, U>
 		DimensionedDataSource<UnsignedInt1Member> compute(T alg, Function1<Boolean,U> condition, DimensionedDataSource<U> a)
 	{
-		long[] dims = new long[a.numDimensions()];
-		for (int i = 0; i < dims.length; i++) {
-			dims[i] = a.dimension(i);
-		}
-		IndexedDataSource<UnsignedInt1Member> data = compute(alg, condition, a.rawData());
+		long[] dims = DataSourceUtils.dimensions(a);
+		IndexedDataSource<UnsignedInt1Member> data =
+				compute(alg, condition, a.rawData());
 		return new NdData<>(dims, data);
 	}
 }

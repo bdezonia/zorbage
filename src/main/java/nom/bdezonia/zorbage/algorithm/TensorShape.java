@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
 
 /**
  * 
@@ -53,10 +54,7 @@ public class TensorShape {
 		void compute(TensorMember<?> input, TensorMember<?> output)
 	{
 		if (input == output) return;
-		long[] dims = new long[input.numDimensions()];
-		for (int i = 0; i < dims.length; i++) {
-			dims[i] = input.dimension(i);
-		}
+		long[] dims = DataSourceUtils.dimensions(input);
 		output.alloc(dims);
 	}
 

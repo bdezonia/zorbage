@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.coordinates.IdentityCoordinateSpace;
 import nom.bdezonia.zorbage.coordinates.LinearNdCoordinateSpace;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.data.DimensionedStorage;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
@@ -87,10 +88,7 @@ public class DimensionalPermutation {
 
 		int numD = input.numDimensions();
 		
-		long[] origDims = new long[numD];
-		for (int i = 0; i < numD; i++) {
-			origDims[i] = input.dimension(i);
-		}
+		long[] origDims = DataSourceUtils.dimensions(input);
 		
 		// test the correctness of the input data
 		

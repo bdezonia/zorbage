@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.SequencedDataSource;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
 
 /**
  * 
@@ -74,10 +75,7 @@ public class PipedDataSource<U> implements IndexedDataSource<U> {
 		for (int i = 0; i < coords.numDimensions(); i++) {
 			this.coords.set(i, coords.get(i));
 		}
-		this.parentDims = new long[d.numDimensions()];
-		for (int i = 0; i < d.numDimensions(); i++) {
-			this.parentDims[i] = d.dimension(i);
-		}
+		this.parentDims = DataSourceUtils.dimensions(d);
 		this.data = findSubset();
 	}
 	

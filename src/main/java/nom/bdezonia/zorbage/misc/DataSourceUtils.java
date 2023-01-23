@@ -30,7 +30,7 @@
  */
 package nom.bdezonia.zorbage.misc;
 
-import nom.bdezonia.zorbage.data.DimensionedDataSource;
+import nom.bdezonia.zorbage.algebra.Dimensioned;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class DataSourceUtils {
 	 * 
 	 * @return The dimensions of the data
 	 */
-	public static long[] dimensions(DimensionedDataSource<?> ds) {
+	public static long[] dimensions(Dimensioned ds) {
 		
 		long[] dims = new long[ds.numDimensions()];
 		
