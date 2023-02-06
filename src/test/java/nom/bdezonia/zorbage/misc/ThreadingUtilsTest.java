@@ -82,14 +82,14 @@ public class ThreadingUtilsTest {
 		numThreads = tuple.a();
 		numElems = tuple.b();
 		assertTrue(numThreads * numElems >= 51);
-		assertEquals(400, numThreads);
+		assertEquals(51, numThreads);
 		assertEquals(1, numElems);
 		
 		tuple = ThreadingUtils.arrange(400, 451, false);
 		numThreads = tuple.a();
 		numElems = tuple.b();
 		assertTrue(numThreads * numElems >= 451);
-		assertEquals(400, numThreads);
+		assertEquals(226, numThreads);
 		assertEquals(2, numElems);
 		
 		tuple = ThreadingUtils.arrange(10, 501, false);

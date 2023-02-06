@@ -89,9 +89,10 @@ public class ThreadingUtils {
 				numThreads--;
 			}
 			
-			numThreads++;
+			if (numThreads * minElemSlice != numElems)
+				numThreads++;
 			
-			return new Tuple2<>(numThreads, elemsPerThread+1);
+			return new Tuple2<>(numThreads, minElemSlice);
 		}
 	}
 }
