@@ -104,7 +104,6 @@ public class OctonionFloat128RModule
 		ExactlyConstructibleFromBytes<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromShorts<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromInts<OctonionFloat128RModuleMember>,
-		ExactlyConstructibleFromLongs<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromFloats<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromDoubles<OctonionFloat128RModuleMember>
 {
@@ -138,32 +137,37 @@ public class OctonionFloat128RModule
 
 	@Override
 	public OctonionFloat128RModuleMember constructExactly(byte... vals) {
-		return construct(vals);
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 
 	@Override
 	public OctonionFloat128RModuleMember constructExactly(short... vals) {
-		return construct(vals);
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
 	}
 
 	@Override
 	public OctonionFloat128RModuleMember constructExactly(int... vals) {
-		return construct(vals);
-	}
-
-	@Override
-	public OctonionFloat128RModuleMember constructExactly(long... vals) {
-		return construct(vals);
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
 	}
 
 	@Override
 	public OctonionFloat128RModuleMember constructExactly(float... vals) {
-		return construct(vals);
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
 	}
 
 	@Override
 	public OctonionFloat128RModuleMember constructExactly(double... vals) {
-		return construct(vals);
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 
 	@Override

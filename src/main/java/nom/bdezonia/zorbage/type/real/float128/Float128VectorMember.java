@@ -68,7 +68,6 @@ public final class Float128VectorMember
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
-		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -1045,11 +1044,6 @@ public final class Float128VectorMember
 			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromLongsExact(long... vals) {
-		setFromLongs(vals);
 	}
 
 	@Override

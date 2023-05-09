@@ -102,7 +102,6 @@ public class Float128Vector
 		ExactlyConstructibleFromBytes<Float128VectorMember>,
 		ExactlyConstructibleFromShorts<Float128VectorMember>,
 		ExactlyConstructibleFromInts<Float128VectorMember>,
-		ExactlyConstructibleFromLongs<Float128VectorMember>,
 		ExactlyConstructibleFromFloats<Float128VectorMember>,
 		ExactlyConstructibleFromDoubles<Float128VectorMember>
 {
@@ -142,7 +141,9 @@ public class Float128Vector
 	
 	@Override
 	public Float128VectorMember constructExactly(byte... vals) {
-		return construct(vals);
+		Float128VectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 
 	@Override
@@ -154,7 +155,9 @@ public class Float128Vector
 	
 	@Override
 	public Float128VectorMember constructExactly(short... vals) {
-		return construct(vals);
+		Float128VectorMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
 	}
 
 	@Override
@@ -166,7 +169,9 @@ public class Float128Vector
 	
 	@Override
 	public Float128VectorMember constructExactly(int... vals) {
-		return construct(vals);
+		Float128VectorMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
 	}
 
 	@Override
@@ -177,11 +182,6 @@ public class Float128Vector
 	}
 	
 	@Override
-	public Float128VectorMember constructExactly(long... vals) {
-		return construct(vals);
-	}
-
-	@Override
 	public Float128VectorMember construct(float... vals) {
 		Float128VectorMember v = construct();
 		v.setFromFloats(vals);
@@ -190,7 +190,9 @@ public class Float128Vector
 	
 	@Override
 	public Float128VectorMember constructExactly(float... vals) {
-		return construct(vals);
+		Float128VectorMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
 	}
 
 	@Override
@@ -202,7 +204,9 @@ public class Float128Vector
 	
 	@Override
 	public Float128VectorMember constructExactly(double... vals) {
-		return construct(vals);
+		Float128VectorMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 
 	@Override

@@ -64,7 +64,6 @@ public final class ComplexFloat128Member
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
-		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -935,11 +934,6 @@ public final class ComplexFloat128Member
 			setI(BigDecimal.ZERO);
 		else
 			setI(BigDecimal.valueOf(vals[1]));
-	}
-
-	@Override
-	public void setFromLongsExact(long... vals) {
-		setFromLongs(vals);
 	}
 
 	@Override

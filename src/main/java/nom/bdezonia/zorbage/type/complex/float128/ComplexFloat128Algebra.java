@@ -110,7 +110,6 @@ public class ComplexFloat128Algebra
 		ExactlyConstructibleFromBytes<ComplexFloat128Member>,
 		ExactlyConstructibleFromShorts<ComplexFloat128Member>,
 		ExactlyConstructibleFromInts<ComplexFloat128Member>,
-		ExactlyConstructibleFromLongs<ComplexFloat128Member>,
 		ExactlyConstructibleFromFloats<ComplexFloat128Member>,
 		ExactlyConstructibleFromDoubles<ComplexFloat128Member>
 {
@@ -1644,13 +1643,6 @@ public class ComplexFloat128Algebra
 	public ComplexFloat128Member constructExactly(int... vals) {
 		ComplexFloat128Member v = construct();
 		v.setFromIntsExact(vals);
-		return v;
-	}
-
-	@Override
-	public ComplexFloat128Member constructExactly(long... vals) {
-		ComplexFloat128Member v = construct();
-		v.setFromLongsExact(vals);
 		return v;
 	}
 

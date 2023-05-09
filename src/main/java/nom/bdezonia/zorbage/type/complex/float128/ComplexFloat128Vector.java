@@ -104,7 +104,6 @@ public class ComplexFloat128Vector
 		ExactlyConstructibleFromBytes<ComplexFloat128VectorMember>,
 		ExactlyConstructibleFromShorts<ComplexFloat128VectorMember>,
 		ExactlyConstructibleFromInts<ComplexFloat128VectorMember>,
-		ExactlyConstructibleFromLongs<ComplexFloat128VectorMember>,
 		ExactlyConstructibleFromFloats<ComplexFloat128VectorMember>,
 		ExactlyConstructibleFromDoubles<ComplexFloat128VectorMember>
 {
@@ -660,13 +659,6 @@ public class ComplexFloat128Vector
 	public ComplexFloat128VectorMember constructExactly(int... vals) {
 		ComplexFloat128VectorMember v = construct();
 		v.setFromIntsExact(vals);
-		return v;
-	}
-
-	@Override
-	public ComplexFloat128VectorMember constructExactly(long... vals) {
-		ComplexFloat128VectorMember v = construct();
-		v.setFromLongsExact(vals);
 		return v;
 	}
 

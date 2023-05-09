@@ -104,7 +104,6 @@ public class QuaternionFloat128RModule
 		ExactlyConstructibleFromBytes<QuaternionFloat128RModuleMember>,
 		ExactlyConstructibleFromShorts<QuaternionFloat128RModuleMember>,
 		ExactlyConstructibleFromInts<QuaternionFloat128RModuleMember>,
-		ExactlyConstructibleFromLongs<QuaternionFloat128RModuleMember>,
 		ExactlyConstructibleFromFloats<QuaternionFloat128RModuleMember>,
 		ExactlyConstructibleFromDoubles<QuaternionFloat128RModuleMember>
 {
@@ -144,7 +143,9 @@ public class QuaternionFloat128RModule
 	
 	@Override
 	public QuaternionFloat128RModuleMember constructExactly(byte... vals) {
-		return construct(vals);
+		QuaternionFloat128RModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
 	}
 
 	@Override
@@ -156,7 +157,9 @@ public class QuaternionFloat128RModule
 	
 	@Override
 	public QuaternionFloat128RModuleMember constructExactly(short... vals) {
-		return construct(vals);
+		QuaternionFloat128RModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
 	}
 
 	@Override
@@ -168,7 +171,9 @@ public class QuaternionFloat128RModule
 	
 	@Override
 	public QuaternionFloat128RModuleMember constructExactly(int... vals) {
-		return construct(vals);
+		QuaternionFloat128RModuleMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
 	}
 
 	@Override
@@ -179,11 +184,6 @@ public class QuaternionFloat128RModule
 	}
 	
 	@Override
-	public QuaternionFloat128RModuleMember constructExactly(long... vals) {
-		return construct(vals);
-	}
-
-	@Override
 	public QuaternionFloat128RModuleMember construct(float... vals) {
 		QuaternionFloat128RModuleMember v = construct();
 		v.setFromFloats(vals);
@@ -192,7 +192,9 @@ public class QuaternionFloat128RModule
 	
 	@Override
 	public QuaternionFloat128RModuleMember constructExactly(float... vals) {
-		return construct(vals);
+		QuaternionFloat128RModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
 	}
 
 	@Override
@@ -204,7 +206,9 @@ public class QuaternionFloat128RModule
 	
 	@Override
 	public QuaternionFloat128RModuleMember constructExactly(double... vals) {
-		return construct(vals);
+		QuaternionFloat128RModuleMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
 	}
 
 	@Override

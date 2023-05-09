@@ -68,7 +68,6 @@ public final class QuaternionFloat128RModuleMember
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
-		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -1485,11 +1484,6 @@ public final class QuaternionFloat128RModuleMember
 			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromLongsExact(long... vals) {
-		setFromLongs(vals);
 	}
 
 	@Override
