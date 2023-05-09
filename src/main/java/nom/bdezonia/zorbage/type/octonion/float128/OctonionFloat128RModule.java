@@ -93,10 +93,20 @@ public class OctonionFloat128RModule
 		ScaleByTwo<OctonionFloat128RModuleMember>,
 		Tolerance<Float128Member,OctonionFloat128RModuleMember>,
 		ArrayLikeMethods<OctonionFloat128RModuleMember,OctonionFloat128Member>,
-		ConstructibleFromBigDecimals<OctonionFloat128RModuleMember>,
-		ConstructibleFromBigIntegers<OctonionFloat128RModuleMember>,
+		ConstructibleFromBytes<OctonionFloat128RModuleMember>,
+		ConstructibleFromShorts<OctonionFloat128RModuleMember>,
+		ConstructibleFromInts<OctonionFloat128RModuleMember>,
+		ConstructibleFromLongs<OctonionFloat128RModuleMember>,
+		ConstructibleFromFloats<OctonionFloat128RModuleMember>,
 		ConstructibleFromDoubles<OctonionFloat128RModuleMember>,
-		ConstructibleFromLongs<OctonionFloat128RModuleMember>
+		ConstructibleFromBigIntegers<OctonionFloat128RModuleMember>,
+		ConstructibleFromBigDecimals<OctonionFloat128RModuleMember>,
+		ExactlyConstructibleFromBytes<OctonionFloat128RModuleMember>,
+		ExactlyConstructibleFromShorts<OctonionFloat128RModuleMember>,
+		ExactlyConstructibleFromInts<OctonionFloat128RModuleMember>,
+		ExactlyConstructibleFromLongs<OctonionFloat128RModuleMember>,
+		ExactlyConstructibleFromFloats<OctonionFloat128RModuleMember>,
+		ExactlyConstructibleFromDoubles<OctonionFloat128RModuleMember>
 {
 
 	@Override
@@ -127,25 +137,91 @@ public class OctonionFloat128RModule
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(double... vals) {
-		return new OctonionFloat128RModuleMember(vals);
+	public OctonionFloat128RModuleMember constructExactly(byte... vals) {
+		return construct(vals);
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(long... vals) {
-		return new OctonionFloat128RModuleMember(vals);
+	public OctonionFloat128RModuleMember constructExactly(short... vals) {
+		return construct(vals);
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(BigInteger... vals) {
-		return new OctonionFloat128RModuleMember(vals);
+	public OctonionFloat128RModuleMember constructExactly(int... vals) {
+		return construct(vals);
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember constructExactly(long... vals) {
+		return construct(vals);
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember constructExactly(float... vals) {
+		return construct(vals);
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember constructExactly(double... vals) {
+		return construct(vals);
 	}
 
 	@Override
 	public OctonionFloat128RModuleMember construct(BigDecimal... vals) {
-		return new OctonionFloat128RModuleMember(vals);
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 	
+	@Override
+	public OctonionFloat128RModuleMember construct(BigInteger... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(double... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(float... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(long... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(int... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(short... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(byte... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+
 	private final Procedure1<OctonionFloat128RModuleMember> ZER =
 			new Procedure1<OctonionFloat128RModuleMember>()
 	{

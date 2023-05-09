@@ -93,10 +93,20 @@ public class ComplexFloat128Vector
 		ScaleByTwo<ComplexFloat128VectorMember>,
 		Tolerance<Float128Member,ComplexFloat128VectorMember>,
 		ArrayLikeMethods<ComplexFloat128VectorMember,ComplexFloat128Member>,
-		ConstructibleFromBigDecimals<ComplexFloat128VectorMember>,
-		ConstructibleFromBigIntegers<ComplexFloat128VectorMember>,
+		ConstructibleFromBytes<ComplexFloat128VectorMember>,
+		ConstructibleFromShorts<ComplexFloat128VectorMember>,
+		ConstructibleFromInts<ComplexFloat128VectorMember>,
+		ConstructibleFromLongs<ComplexFloat128VectorMember>,
+		ConstructibleFromFloats<ComplexFloat128VectorMember>,
 		ConstructibleFromDoubles<ComplexFloat128VectorMember>,
-		ConstructibleFromLongs<ComplexFloat128VectorMember>
+		ConstructibleFromBigIntegers<ComplexFloat128VectorMember>,
+		ConstructibleFromBigDecimals<ComplexFloat128VectorMember>,
+		ExactlyConstructibleFromBytes<ComplexFloat128VectorMember>,
+		ExactlyConstructibleFromShorts<ComplexFloat128VectorMember>,
+		ExactlyConstructibleFromInts<ComplexFloat128VectorMember>,
+		ExactlyConstructibleFromLongs<ComplexFloat128VectorMember>,
+		ExactlyConstructibleFromFloats<ComplexFloat128VectorMember>,
+		ExactlyConstructibleFromDoubles<ComplexFloat128VectorMember>
 {
 	@Override
 	public String typeDescription() {
@@ -125,39 +135,6 @@ public class ComplexFloat128Vector
 		return new ComplexFloat128VectorMember(s, d1);
 	}
 	
-
-	@Override
-	public ComplexFloat128VectorMember construct(long... vals) {
-		BigDecimal[] bigds = new BigDecimal[vals.length];
-		for (int i = 0; i < vals.length; i++) {
-			bigds[i] = BigDecimal.valueOf(vals[i]);
-		}
-		return new ComplexFloat128VectorMember(bigds);
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct(double... vals) {
-		BigDecimal[] bigds = new BigDecimal[vals.length];
-		for (int i = 0; i < vals.length; i++) {
-			bigds[i] = BigDecimal.valueOf(vals[i]);
-		}
-		return new ComplexFloat128VectorMember(bigds);
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct(BigInteger... vals) {
-		BigDecimal[] bigds = new BigDecimal[vals.length];
-		for (int i = 0; i < vals.length; i++) {
-			bigds[i] = new BigDecimal(vals[i]);
-		}
-		return new ComplexFloat128VectorMember(bigds);
-	}
-
-	@Override
-	public ComplexFloat128VectorMember construct(BigDecimal... vals) {
-		return new ComplexFloat128VectorMember(vals);
-	}
-
 	private final Procedure1<ComplexFloat128VectorMember> ZER =
 			new Procedure1<ComplexFloat128VectorMember>()
 	{
@@ -663,5 +640,103 @@ public class ComplexFloat128Vector
 	@Override
 	public Procedure3<Integer, ComplexFloat128VectorMember, ComplexFloat128VectorMember> scaleByOneHalf() {
 		return SCBH;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember constructExactly(byte... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember constructExactly(short... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember constructExactly(int... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember constructExactly(long... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember constructExactly(float... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember constructExactly(double... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(BigDecimal... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+	
+	@Override
+	public ComplexFloat128VectorMember construct(BigInteger... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(double... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(float... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(long... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(int... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(short... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat128VectorMember construct(byte... vals) {
+		ComplexFloat128VectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 }

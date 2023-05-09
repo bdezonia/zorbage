@@ -61,7 +61,20 @@ public final class QuaternionFloat128RModuleMember
 		Settable<QuaternionFloat128RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat128Member>,
-		SetFromDoubles, SetFromBigDecimals, SetFromBigIntegers, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromLongsExact,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -1396,6 +1409,69 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1412,6 +1488,32 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	@Override
 	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1425,6 +1527,11 @@ public final class QuaternionFloat128RModuleMember
 			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
 	}
 
 	@Override

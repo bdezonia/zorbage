@@ -61,7 +61,20 @@ public final class Float128VectorMember
 		Settable<Float128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float128Member>,
-		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromLongsExact,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -968,6 +981,60 @@ public final class Float128VectorMember
 	}
 
 	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -981,6 +1048,29 @@ public final class Float128VectorMember
 	}
 
 	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	@Override
 	public void setFromDoubles(double... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -991,6 +1081,11 @@ public final class Float128VectorMember
 			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
 	}
 
 	@Override

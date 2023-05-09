@@ -91,10 +91,20 @@ public class Float128Vector
 		ScaleByTwo<Float128VectorMember>,
 		Tolerance<Float128Member,Float128VectorMember>,
 		ArrayLikeMethods<Float128VectorMember,Float128Member>,
-		ConstructibleFromBigDecimals<Float128VectorMember>,
-		ConstructibleFromBigIntegers<Float128VectorMember>,
+		ConstructibleFromBytes<Float128VectorMember>,
+		ConstructibleFromShorts<Float128VectorMember>,
+		ConstructibleFromInts<Float128VectorMember>,
+		ConstructibleFromLongs<Float128VectorMember>,
+		ConstructibleFromFloats<Float128VectorMember>,
 		ConstructibleFromDoubles<Float128VectorMember>,
-		ConstructibleFromLongs<Float128VectorMember>
+		ConstructibleFromBigIntegers<Float128VectorMember>,
+		ConstructibleFromBigDecimals<Float128VectorMember>,
+		ExactlyConstructibleFromBytes<Float128VectorMember>,
+		ExactlyConstructibleFromShorts<Float128VectorMember>,
+		ExactlyConstructibleFromInts<Float128VectorMember>,
+		ExactlyConstructibleFromLongs<Float128VectorMember>,
+		ExactlyConstructibleFromFloats<Float128VectorMember>,
+		ExactlyConstructibleFromDoubles<Float128VectorMember>
 {
 	@Override
 	public String typeDescription() {
@@ -124,23 +134,89 @@ public class Float128Vector
 	}
 
 	@Override
-	public Float128VectorMember construct(BigDecimal... vals) {
-		return new Float128VectorMember(vals);
+	public Float128VectorMember construct(byte... vals) {
+		Float128VectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+	
+	@Override
+	public Float128VectorMember constructExactly(byte... vals) {
+		return construct(vals);
 	}
 
 	@Override
-	public Float128VectorMember construct(BigInteger... vals) {
-		return new Float128VectorMember(vals);
+	public Float128VectorMember construct(short... vals) {
+		Float128VectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+	
+	@Override
+	public Float128VectorMember constructExactly(short... vals) {
+		return construct(vals);
 	}
 
 	@Override
-	public Float128VectorMember construct(double... vals) {
-		return new Float128VectorMember(vals);
+	public Float128VectorMember construct(int... vals) {
+		Float128VectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+	
+	@Override
+	public Float128VectorMember constructExactly(int... vals) {
+		return construct(vals);
 	}
 
 	@Override
 	public Float128VectorMember construct(long... vals) {
-		return new Float128VectorMember(vals);
+		Float128VectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+	
+	@Override
+	public Float128VectorMember constructExactly(long... vals) {
+		return construct(vals);
+	}
+
+	@Override
+	public Float128VectorMember construct(float... vals) {
+		Float128VectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+	
+	@Override
+	public Float128VectorMember constructExactly(float... vals) {
+		return construct(vals);
+	}
+
+	@Override
+	public Float128VectorMember construct(double... vals) {
+		Float128VectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+	
+	@Override
+	public Float128VectorMember constructExactly(double... vals) {
+		return construct(vals);
+	}
+
+	@Override
+	public Float128VectorMember construct(BigInteger... vals) {
+		Float128VectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Float128VectorMember construct(BigDecimal... vals) {
+		Float128VectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure1<Float128VectorMember> ZER =

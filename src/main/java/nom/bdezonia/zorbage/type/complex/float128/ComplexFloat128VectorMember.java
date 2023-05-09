@@ -61,7 +61,20 @@ public final class ComplexFloat128VectorMember
 		Settable<ComplexFloat128VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
-		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromLongsExact,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
 		GetAsBigDecimalArray,
 		ThreadAccess
 {
@@ -1037,6 +1050,63 @@ public final class ComplexFloat128VectorMember
 	}
 
 	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+	
+	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
@@ -1048,6 +1118,30 @@ public final class ComplexFloat128VectorMember
 			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
 			storage.set(i/componentCount, value);
 		}
+	}
+	
+	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
 	}
 
 	@Override
@@ -1062,6 +1156,10 @@ public final class ComplexFloat128VectorMember
 			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
 	}
 
 	@Override
