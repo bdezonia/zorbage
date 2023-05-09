@@ -171,44 +171,9 @@ public class OctonionFloat128RModule
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(BigDecimal... vals) {
+	public OctonionFloat128RModuleMember construct(byte... vals) {
 		OctonionFloat128RModuleMember v = construct();
-		v.setFromBigDecimals(vals);
-		return v;
-	}
-	
-	@Override
-	public OctonionFloat128RModuleMember construct(BigInteger... vals) {
-		OctonionFloat128RModuleMember v = construct();
-		v.setFromBigIntegers(vals);
-		return v;
-	}
-
-	@Override
-	public OctonionFloat128RModuleMember construct(double... vals) {
-		OctonionFloat128RModuleMember v = construct();
-		v.setFromDoubles(vals);
-		return v;
-	}
-
-	@Override
-	public OctonionFloat128RModuleMember construct(float... vals) {
-		OctonionFloat128RModuleMember v = construct();
-		v.setFromFloats(vals);
-		return v;
-	}
-
-	@Override
-	public OctonionFloat128RModuleMember construct(long... vals) {
-		OctonionFloat128RModuleMember v = construct();
-		v.setFromLongs(vals);
-		return v;
-	}
-
-	@Override
-	public OctonionFloat128RModuleMember construct(int... vals) {
-		OctonionFloat128RModuleMember v = construct();
-		v.setFromInts(vals);
+		v.setFromBytes(vals);
 		return v;
 	}
 
@@ -220,9 +185,43 @@ public class OctonionFloat128RModule
 	}
 
 	@Override
-	public OctonionFloat128RModuleMember construct(byte... vals) {
+	public OctonionFloat128RModuleMember construct(int... vals) {
 		OctonionFloat128RModuleMember v = construct();
-		v.setFromBytes(vals);
+		v.setFromInts(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionFloat128RModuleMember construct(long... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(float... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(double... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat128RModuleMember construct(BigInteger... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+	@Override
+	public OctonionFloat128RModuleMember construct(BigDecimal... vals) {
+		OctonionFloat128RModuleMember v = construct();
+		v.setFromBigDecimals(vals);
 		return v;
 	}
 

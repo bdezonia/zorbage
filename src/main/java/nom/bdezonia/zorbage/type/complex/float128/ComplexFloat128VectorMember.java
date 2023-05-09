@@ -68,7 +68,6 @@ public final class ComplexFloat128VectorMember
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
-		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -1048,6 +1047,30 @@ public final class ComplexFloat128VectorMember
 		}
 		return false;
 	}
+	
+	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
 
 	@Override
 	public void setFromBytes(byte... vals) {
@@ -1061,11 +1084,6 @@ public final class ComplexFloat128VectorMember
 			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-	
-	@Override
-	public void setFromBytesExact(byte... vals) {
-		setFromBytes(vals);
 	}
 
 	@Override
@@ -1081,11 +1099,6 @@ public final class ComplexFloat128VectorMember
 			storage.set(i/componentCount, value);
 		}
 	}
-	
-	@Override
-	public void setFromShortsExact(short... vals) {
-		setFromShorts(vals);
-	}
 
 	@Override
 	public void setFromInts(int... vals) {
@@ -1099,11 +1112,6 @@ public final class ComplexFloat128VectorMember
 			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-	
-	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
 	}
 
 	@Override
@@ -1119,11 +1127,6 @@ public final class ComplexFloat128VectorMember
 			storage.set(i/componentCount, value);
 		}
 	}
-	
-	@Override
-	public void setFromLongsExact(long... vals) {
-		setFromLongs(vals);
-	}
 
 	@Override
 	public void setFromFloats(float... vals) {
@@ -1138,11 +1141,6 @@ public final class ComplexFloat128VectorMember
 			storage.set(i/componentCount, value);
 		}
 	}
-	
-	@Override
-	public void setFromFloatsExact(float... vals) {
-		setFromFloats(vals);
-	}
 
 	@Override
 	public void setFromDoubles(double... vals) {
@@ -1156,10 +1154,6 @@ public final class ComplexFloat128VectorMember
 			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
 	}
 
 	@Override

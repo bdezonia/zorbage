@@ -813,8 +813,85 @@ public final class ComplexFloat128Member
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+
+	@Override
+	public void setFromBytes(byte... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		
+		if (vals.length == 0 || vals.length > 2)
+			throw new IllegalArgumentException("mismatch between component count and input values count");
+
+		setR(BigDecimal.valueOf(vals[0]));
+		
+		if (vals.length < 2)
+			setI(BigDecimal.ZERO);
+		else
+			setI(BigDecimal.valueOf(vals[1]));
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		if (vals.length == 0 || vals.length > 2)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 
@@ -911,82 +988,5 @@ public final class ComplexFloat128Member
 	@Override
 	public byte[] getAsByteArray() {
 		return new byte[] {r().getAsByte(), i().getAsByte()};
-	}
-
-	@Override
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
-	}
-
-	@Override
-	public void setFromFloatsExact(float... vals) {
-		setFromFloats(vals);
-	}
-
-	@Override
-	public void setFromFloats(float... vals) {
-		if (vals.length == 0 || vals.length > 2)
-			throw new IllegalArgumentException("mismatch between component count and input values count");
-
-		setR(BigDecimal.valueOf(vals[0]));
-		
-		if (vals.length < 2)
-			setI(BigDecimal.ZERO);
-		else
-			setI(BigDecimal.valueOf(vals[1]));
-	}
-
-	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
-	}
-
-	@Override
-	public void setFromInts(int... vals) {
-		if (vals.length == 0 || vals.length > 2)
-			throw new IllegalArgumentException("mismatch between component count and input values count");
-
-		setR(BigDecimal.valueOf(vals[0]));
-		
-		if (vals.length < 2)
-			setI(BigDecimal.ZERO);
-		else
-			setI(BigDecimal.valueOf(vals[1]));
-	}
-
-	@Override
-	public void setFromShortsExact(short... vals) {
-		setFromShorts(vals);
-	}
-
-	@Override
-	public void setFromShorts(short... vals) {
-		if (vals.length == 0 || vals.length > 2)
-			throw new IllegalArgumentException("mismatch between component count and input values count");
-
-		setR(BigDecimal.valueOf(vals[0]));
-		
-		if (vals.length < 2)
-			setI(BigDecimal.ZERO);
-		else
-			setI(BigDecimal.valueOf(vals[1]));
-	}
-
-	@Override
-	public void setFromBytesExact(byte... vals) {
-		setFromBytes(vals);
-	}
-
-	@Override
-	public void setFromBytes(byte... vals) {
-		if (vals.length == 0 || vals.length > 2)
-			throw new IllegalArgumentException("mismatch between component count and input values count");
-
-		setR(BigDecimal.valueOf(vals[0]));
-		
-		if (vals.length < 2)
-			setI(BigDecimal.ZERO);
-		else
-			setI(BigDecimal.valueOf(vals[1]));
 	}
 }

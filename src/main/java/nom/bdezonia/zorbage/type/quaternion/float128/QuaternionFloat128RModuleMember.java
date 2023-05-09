@@ -1408,6 +1408,31 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+
+	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1421,11 +1446,6 @@ public final class QuaternionFloat128RModuleMember
 			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromBytesExact(byte... vals) {
-		setFromBytes(vals);
 	}
 	
 	@Override
@@ -1445,11 +1465,6 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromShortsExact(short... vals) {
-		setFromShorts(vals);
-	}
-
-	@Override
 	public void setFromInts(int... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1463,11 +1478,6 @@ public final class QuaternionFloat128RModuleMember
 			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
 	}
 
 	@Override
@@ -1503,11 +1513,6 @@ public final class QuaternionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromFloatsExact(float... vals) {
-		setFromFloats(vals);
-	}
-
-	@Override
 	public void setFromDoubles(double... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1521,11 +1526,6 @@ public final class QuaternionFloat128RModuleMember
 			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
 	}
 
 	@Override

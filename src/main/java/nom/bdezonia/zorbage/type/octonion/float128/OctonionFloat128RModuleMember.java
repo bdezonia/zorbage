@@ -1996,6 +1996,31 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+
+	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
@@ -2015,11 +2040,6 @@ public final class OctonionFloat128RModuleMember
 		}
 	}
 
-	@Override
-	public void setFromBytesExact(byte... vals) {
-		setFromBytes(vals);
-	}
-	
 	@Override
 	public void setFromShorts(short... vals) {
 		int componentCount = 8;
@@ -2041,11 +2061,6 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromShortsExact(short... vals) {
-		setFromShorts(vals);
-	}
-
-	@Override
 	public void setFromInts(int... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
@@ -2063,11 +2078,6 @@ public final class OctonionFloat128RModuleMember
 			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
 	}
 
 	@Override
@@ -2111,11 +2121,6 @@ public final class OctonionFloat128RModuleMember
 	}
 
 	@Override
-	public void setFromFloatsExact(float... vals) {
-		setFromFloats(vals);
-	}
-
-	@Override
 	public void setFromDoubles(double... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
@@ -2133,11 +2138,6 @@ public final class OctonionFloat128RModuleMember
 			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
 	}
 
 	@Override

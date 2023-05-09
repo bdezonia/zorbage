@@ -980,6 +980,31 @@ public final class Float128VectorMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+
+	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -990,11 +1015,6 @@ public final class Float128VectorMember
 			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromBytesExact(byte... vals) {
-		setFromBytes(vals);
 	}
 	
 	@Override
@@ -1011,11 +1031,6 @@ public final class Float128VectorMember
 	}
 
 	@Override
-	public void setFromShortsExact(short... vals) {
-		setFromShorts(vals);
-	}
-
-	@Override
 	public void setFromInts(int... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -1026,11 +1041,6 @@ public final class Float128VectorMember
 			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
 	}
 
 	@Override
@@ -1060,11 +1070,6 @@ public final class Float128VectorMember
 	}
 
 	@Override
-	public void setFromFloatsExact(float... vals) {
-		setFromFloats(vals);
-	}
-
-	@Override
 	public void setFromDoubles(double... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -1075,11 +1080,6 @@ public final class Float128VectorMember
 			value.setV(  BigDecimal.valueOf(vals[i + 0]) );
 			storage.set(i/componentCount, value);
 		}
-	}
-
-	@Override
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
 	}
 
 	@Override
