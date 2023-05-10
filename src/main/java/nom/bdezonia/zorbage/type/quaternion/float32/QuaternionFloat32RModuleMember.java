@@ -61,7 +61,18 @@ public final class QuaternionFloat32RModuleMember
 		Settable<QuaternionFloat32RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat32Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsFloatArray,
 		ThreadAccess
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member(); 
@@ -1374,6 +1385,69 @@ public final class QuaternionFloat32RModuleMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1401,6 +1475,54 @@ public final class QuaternionFloat32RModuleMember
 			value.setI(  vals[i + 1] );
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			value.setJ(  (float) vals[i + 2] );
+			value.setK(  (float) vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat32Member value = G.QFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

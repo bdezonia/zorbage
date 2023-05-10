@@ -61,7 +61,18 @@ public final class Float32VectorMember
 		Settable<Float32VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float32Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsFloatArray,
 		ThreadAccess
 {
 	private static final Float32Member ZERO = new Float32Member(0); 
@@ -949,6 +960,60 @@ public final class Float32VectorMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -970,6 +1035,45 @@ public final class Float32VectorMember
 		Float32Member value = G.FLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  (float) vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float32Member value = G.FLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

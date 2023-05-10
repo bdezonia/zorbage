@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.real.float32;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -88,7 +90,18 @@ public class Float32Vector
 		ScaleByOneHalf<Float32VectorMember>,
 		ScaleByTwo<Float32VectorMember>,
 		Tolerance<Float32Member, Float32VectorMember>,
-		ArrayLikeMethods<Float32VectorMember,Float32Member>
+		ArrayLikeMethods<Float32VectorMember,Float32Member>,
+		ConstructibleFromBytes<Float32VectorMember>,
+		ConstructibleFromShorts<Float32VectorMember>,
+		ConstructibleFromInts<Float32VectorMember>,
+		ConstructibleFromLongs<Float32VectorMember>,
+		ConstructibleFromFloats<Float32VectorMember>,
+		ConstructibleFromDoubles<Float32VectorMember>,
+		ConstructibleFromBigIntegers<Float32VectorMember>,
+		ConstructibleFromBigDecimals<Float32VectorMember>,
+		ExactlyConstructibleFromBytes<Float32VectorMember>,
+		ExactlyConstructibleFromShorts<Float32VectorMember>,
+		ExactlyConstructibleFromFloats<Float32VectorMember>
 {
 	@Override
 	public String typeDescription() {
@@ -201,6 +214,83 @@ public class Float32Vector
 		return new Float32VectorMember(s, d1);
 	}
 
+	@Override
+	public Float32VectorMember constructExactly(byte... vals) {
+		Float32VectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember constructExactly(short... vals) {
+		Float32VectorMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember constructExactly(float... vals) {
+		Float32VectorMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(byte... vals) {
+		Float32VectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(short... vals) {
+		Float32VectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(int... vals) {
+		Float32VectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(long... vals) {
+		Float32VectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(float... vals) {
+		Float32VectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(double... vals) {
+		Float32VectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(BigInteger... vals) {
+		Float32VectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+	
+	@Override
+	public Float32VectorMember construct(BigDecimal... vals) {
+		Float32VectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
+	}
+	
 	private final Procedure2<Float32VectorMember,Float32VectorMember> ASSIGN =
 			new Procedure2<Float32VectorMember, Float32VectorMember>()
 	{

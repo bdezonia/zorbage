@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.octonion.float32;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -91,7 +93,17 @@ public class OctonionFloat32RModule
 		ScaleByTwo<OctonionFloat32RModuleMember>,
 		Tolerance<Float32Member,OctonionFloat32RModuleMember>,
 		ArrayLikeMethods<OctonionFloat32RModuleMember,OctonionFloat32Member>,
-		ConstructibleFromFloats<OctonionFloat32RModuleMember>
+		ConstructibleFromBytes<OctonionFloat32RModuleMember>,
+		ConstructibleFromShorts<OctonionFloat32RModuleMember>,
+		ConstructibleFromInts<OctonionFloat32RModuleMember>,
+		ConstructibleFromLongs<OctonionFloat32RModuleMember>,
+		ConstructibleFromFloats<OctonionFloat32RModuleMember>,
+		ConstructibleFromDoubles<OctonionFloat32RModuleMember>,
+		ConstructibleFromBigIntegers<OctonionFloat32RModuleMember>,
+		ConstructibleFromBigDecimals<OctonionFloat32RModuleMember>,
+		ExactlyConstructibleFromBytes<OctonionFloat32RModuleMember>,
+		ExactlyConstructibleFromShorts<OctonionFloat32RModuleMember>,
+		ExactlyConstructibleFromFloats<OctonionFloat32RModuleMember>
 {
 	@Override
 	public String typeDescription() {
@@ -121,8 +133,80 @@ public class OctonionFloat32RModule
 	}
 
 	@Override
+	public OctonionFloat32RModuleMember constructExactly(byte... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionFloat32RModuleMember constructExactly(short... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionFloat32RModuleMember constructExactly(float... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(byte... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(short... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(int... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(long... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
 	public OctonionFloat32RModuleMember construct(float... vals) {
-		return new OctonionFloat32RModuleMember(vals);
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(double... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(BigInteger... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionFloat32RModuleMember construct(BigDecimal... vals) {
+		OctonionFloat32RModuleMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 	
 	private final Procedure1<OctonionFloat32RModuleMember> ZER =

@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.quaternion.float32;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -91,7 +93,17 @@ public class QuaternionFloat32RModule
 		ScaleByTwo<QuaternionFloat32RModuleMember>,
 		Tolerance<Float32Member,QuaternionFloat32RModuleMember>,
 		ArrayLikeMethods<QuaternionFloat32RModuleMember, QuaternionFloat32Member>,
-		ConstructibleFromFloats<QuaternionFloat32RModuleMember>
+		ConstructibleFromBytes<QuaternionFloat32RModuleMember>,
+		ConstructibleFromShorts<QuaternionFloat32RModuleMember>,
+		ConstructibleFromInts<QuaternionFloat32RModuleMember>,
+		ConstructibleFromLongs<QuaternionFloat32RModuleMember>,
+		ConstructibleFromFloats<QuaternionFloat32RModuleMember>,
+		ConstructibleFromDoubles<QuaternionFloat32RModuleMember>,
+		ConstructibleFromBigIntegers<QuaternionFloat32RModuleMember>,
+		ConstructibleFromBigDecimals<QuaternionFloat32RModuleMember>,
+		ExactlyConstructibleFromBytes<QuaternionFloat32RModuleMember>,
+		ExactlyConstructibleFromShorts<QuaternionFloat32RModuleMember>,
+		ExactlyConstructibleFromFloats<QuaternionFloat32RModuleMember>
 {
 	@Override
 	public String typeDescription() {
@@ -121,8 +133,80 @@ public class QuaternionFloat32RModule
 	}
 
 	@Override
+	public QuaternionFloat32RModuleMember constructExactly(byte... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat32RModuleMember constructExactly(short... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat32RModuleMember constructExactly(float... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
 	public QuaternionFloat32RModuleMember construct(float... vals) {
-		return new QuaternionFloat32RModuleMember(vals);
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(byte... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(short... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(int... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(long... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(double... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(BigInteger... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat32RModuleMember construct(BigDecimal... vals) {
+		QuaternionFloat32RModuleMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure1<QuaternionFloat32RModuleMember> ZER = 
