@@ -61,7 +61,16 @@ public final class Float16VectorMember
 		Settable<Float16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsFloatArray,
 		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member(0); 
@@ -74,14 +83,14 @@ public final class Float16VectorMember
 		storage = Storage.allocate(s, new Float16Member(), 0);
 	}
 	
+	public Float16VectorMember(Float16VectorMember other) {
+		set(other);
+	}
+	
 	public Float16VectorMember(float... vals) {
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new Float16Member(), vals.length);
 		setFromFloats(vals);
-	}
-	
-	public Float16VectorMember(Float16VectorMember other) {
-		set(other);
 	}
 	
 	public Float16VectorMember(String value) {
@@ -949,6 +958,50 @@ public final class Float16VectorMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
@@ -970,6 +1023,45 @@ public final class Float16VectorMember
 		Float16Member value = G.HLF.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  (float) vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

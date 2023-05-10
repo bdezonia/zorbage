@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.complex.float16;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -91,7 +93,15 @@ public class ComplexFloat16Vector
 		ScaleByTwo<ComplexFloat16VectorMember>,
 		Tolerance<Float16Member,ComplexFloat16VectorMember>,
 		ArrayLikeMethods<ComplexFloat16VectorMember, ComplexFloat16Member>,
-		ConstructibleFromFloats<ComplexFloat16VectorMember>
+		ConstructibleFromBytes<ComplexFloat16VectorMember>,
+		ConstructibleFromShorts<ComplexFloat16VectorMember>,
+		ConstructibleFromInts<ComplexFloat16VectorMember>,
+		ConstructibleFromLongs<ComplexFloat16VectorMember>,
+		ConstructibleFromFloats<ComplexFloat16VectorMember>,
+		ConstructibleFromDoubles<ComplexFloat16VectorMember>,
+		ConstructibleFromBigIntegers<ComplexFloat16VectorMember>,
+		ConstructibleFromBigDecimals<ComplexFloat16VectorMember>,
+		ExactlyConstructibleFromBytes<ComplexFloat16VectorMember>
 {
 	@Override
 	public String typeDescription() {
@@ -121,8 +131,66 @@ public class ComplexFloat16Vector
 	}
 
 	@Override
+	public ComplexFloat16VectorMember constructExactly(byte... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(byte... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(short... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(int... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(long... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
 	public ComplexFloat16VectorMember construct(float... vals) {
-		return new ComplexFloat16VectorMember(vals);
+		ComplexFloat16VectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(double... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(BigInteger... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public ComplexFloat16VectorMember construct(BigDecimal... vals) {
+		ComplexFloat16VectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure1<ComplexFloat16VectorMember> ZER =

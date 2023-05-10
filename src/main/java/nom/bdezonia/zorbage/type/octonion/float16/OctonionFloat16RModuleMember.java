@@ -61,7 +61,16 @@ public final class OctonionFloat16RModuleMember
 		Settable<OctonionFloat16RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat16Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsFloatArray,
 		ThreadAccess
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(); 
@@ -78,6 +87,13 @@ public final class OctonionFloat16RModuleMember
 		set(other);
 	}
 	
+	public OctonionFloat16RModuleMember(float... vals) {
+		final int count = vals.length / 8;
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionFloat16Member(), count);
+		setFromFloats(vals);
+	}
+
 	public OctonionFloat16RModuleMember(String value) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(value);
 		BigList<OctonionRepresentation> data = rep.firstVectorValues();
@@ -108,13 +124,6 @@ public final class OctonionFloat16RModuleMember
 		this(StorageConstruction.MEM_ARRAY, d1);
 	}
 	
-	public OctonionFloat16RModuleMember(float... vals) {
-		final int count = vals.length / 8;
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionFloat16Member(), count);
-		setFromFloats(vals);
-	}
-
 	@Override
 	public StorageConstruction storageType() {
 		return s;
@@ -1962,6 +1971,71 @@ public final class OctonionFloat16RModuleMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != length()) {
@@ -1997,6 +2071,66 @@ public final class OctonionFloat16RModuleMember
 			value.setI0( vals[i + 5] );
 			value.setJ0( vals[i + 6] );
 			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			value.setJ(  (float) vals[i + 2] );
+			value.setK(  (float) vals[i + 3] );
+			value.setL(  (float) vals[i + 4] );
+			value.setI0( (float) vals[i + 5] );
+			value.setJ0( (float) vals[i + 6] );
+			value.setK0( (float) vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			value.setL(  vals[i + 4].floatValue() );
+			value.setI0( vals[i + 5].floatValue() );
+			value.setJ0( vals[i + 6].floatValue() );
+			value.setK0( vals[i + 7].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			value.setL(  vals[i + 4].floatValue() );
+			value.setI0( vals[i + 5].floatValue() );
+			value.setJ0( vals[i + 6].floatValue() );
+			value.setK0( vals[i + 7].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

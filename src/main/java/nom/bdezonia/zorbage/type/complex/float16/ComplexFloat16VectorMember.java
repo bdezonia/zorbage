@@ -61,7 +61,16 @@ public final class ComplexFloat16VectorMember
 		Settable<ComplexFloat16VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat16Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsFloatArray,
 		ThreadAccess
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0); 
@@ -1015,6 +1024,53 @@ public final class ComplexFloat16VectorMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
@@ -1038,6 +1094,48 @@ public final class ComplexFloat16VectorMember
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat16Member value = G.CHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

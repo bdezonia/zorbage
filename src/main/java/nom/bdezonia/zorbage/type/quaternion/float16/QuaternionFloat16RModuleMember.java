@@ -61,7 +61,16 @@ public final class QuaternionFloat16RModuleMember
 		Settable<QuaternionFloat16RModuleMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat16Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsFloatArray,
 		ThreadAccess
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member(); 
@@ -74,15 +83,15 @@ public final class QuaternionFloat16RModuleMember
 		storage = Storage.allocate(s, new QuaternionFloat16Member(), 0);
 	}
 	
+	public QuaternionFloat16RModuleMember(QuaternionFloat16RModuleMember other) {
+		set(other);
+	}
+	
 	public QuaternionFloat16RModuleMember(float... vals) {
 		final int count = vals.length / 4;
 		s = StorageConstruction.MEM_ARRAY;
 		storage = Storage.allocate(s, new QuaternionFloat16Member(), count);
 		setFromFloats(vals);
-	}
-	
-	public QuaternionFloat16RModuleMember(QuaternionFloat16RModuleMember other) {
-		set(other);
 	}
 	
 	public QuaternionFloat16RModuleMember(String value) {
@@ -1374,6 +1383,59 @@ public final class QuaternionFloat16RModuleMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != length()) {
@@ -1401,6 +1463,54 @@ public final class QuaternionFloat16RModuleMember
 			value.setI(  vals[i + 1] );
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			value.setJ(  (float) vals[i + 2] );
+			value.setK(  (float) vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

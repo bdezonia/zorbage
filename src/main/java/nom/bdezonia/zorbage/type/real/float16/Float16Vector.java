@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.real.float16;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -77,6 +79,15 @@ public class Float16Vector
 	implements
 		VectorSpace<Float16Vector,Float16VectorMember,Float16Algebra,Float16Member>,
 		Constructible1dLong<Float16VectorMember>,
+		ConstructibleFromBytes<Float16VectorMember>,
+		ConstructibleFromShorts<Float16VectorMember>,
+		ConstructibleFromInts<Float16VectorMember>,
+		ConstructibleFromLongs<Float16VectorMember>,
+		ConstructibleFromFloats<Float16VectorMember>,
+		ConstructibleFromDoubles<Float16VectorMember>,
+		ConstructibleFromBigIntegers<Float16VectorMember>,
+		ConstructibleFromBigDecimals<Float16VectorMember>,
+		ExactlyConstructibleFromBytes<Float16VectorMember>,
 		Norm<Float16VectorMember,Float16Member>,
 		Products<Float16VectorMember, Float16Member, Float16MatrixMember>,
 		DirectProduct<Float16VectorMember, Float16MatrixMember>,
@@ -199,6 +210,69 @@ public class Float16Vector
 	@Override
 	public Float16VectorMember construct(StorageConstruction s, long d1) {
 		return new Float16VectorMember(s, d1);
+	}
+
+	@Override
+	public Float16VectorMember constructExactly(byte...vals) {
+		Float16VectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(byte...vals) {
+		Float16VectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(short...vals) {
+		Float16VectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(int...vals) {
+		Float16VectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(long...vals) {
+		Float16VectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(float...vals) {
+		Float16VectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(double...vals) {
+		Float16VectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(BigInteger... vals) {
+		Float16VectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public Float16VectorMember construct(BigDecimal... vals) {
+		Float16VectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure2<Float16VectorMember,Float16VectorMember> ASSIGN =
