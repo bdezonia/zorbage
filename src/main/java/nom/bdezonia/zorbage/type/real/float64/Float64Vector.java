@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.real.float64;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -88,7 +90,20 @@ public class Float64Vector
 		ScaleByOneHalf<Float64VectorMember>,
 		ScaleByTwo<Float64VectorMember>,
 		Tolerance<Float64Member,Float64VectorMember>,
-		ArrayLikeMethods<Float64VectorMember,Float64Member>
+		ArrayLikeMethods<Float64VectorMember,Float64Member>,
+		ConstructibleFromBytes<Float64VectorMember>,
+		ConstructibleFromShorts<Float64VectorMember>,
+		ConstructibleFromInts<Float64VectorMember>,
+		ConstructibleFromLongs<Float64VectorMember>,
+		ConstructibleFromFloats<Float64VectorMember>,
+		ConstructibleFromDoubles<Float64VectorMember>,
+		ConstructibleFromBigIntegers<Float64VectorMember>,
+		ConstructibleFromBigDecimals<Float64VectorMember>,
+		ExactlyConstructibleFromBytes<Float64VectorMember>,
+		ExactlyConstructibleFromShorts<Float64VectorMember>,
+		ExactlyConstructibleFromInts<Float64VectorMember>,
+		ExactlyConstructibleFromFloats<Float64VectorMember>,
+		ExactlyConstructibleFromDoubles<Float64VectorMember>
 {
 	@Override
 	public String typeDescription() {
@@ -199,6 +214,97 @@ public class Float64Vector
 	@Override
 	public Float64VectorMember construct(StorageConstruction s, long d1) {
 		return new Float64VectorMember(s, d1);
+	}
+	
+	@Override
+	public Float64VectorMember constructExactly(byte... vals) {
+		Float64VectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember constructExactly(short... vals) {
+		Float64VectorMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember constructExactly(int... vals) {
+		Float64VectorMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember constructExactly(float... vals) {
+		Float64VectorMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember constructExactly(double... vals) {
+		Float64VectorMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(byte... vals) {
+		Float64VectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(short... vals) {
+		Float64VectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(int... vals) {
+		Float64VectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(long... vals) {
+		Float64VectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(float... vals) {
+		Float64VectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(double... vals) {
+		Float64VectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(BigInteger... vals) {
+		Float64VectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+	
+	@Override
+	public Float64VectorMember construct(BigDecimal... vals) {
+		Float64VectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure2<Float64VectorMember,Float64VectorMember> ASSIGN =

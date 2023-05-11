@@ -61,7 +61,20 @@ public final class Float64VectorMember
 		Settable<Float64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float64Member>,
-		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final Float64Member ZERO = new Float64Member(0); 
@@ -949,7 +962,84 @@ public final class Float64VectorMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -970,6 +1060,32 @@ public final class Float64VectorMember
 		Float64Member value = G.DBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].doubleValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		Float64Member value = G.DBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].doubleValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

@@ -61,7 +61,20 @@ public final class ComplexFloat64VectorMember
 		Settable<ComplexFloat64VectorMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat64Member>,
-		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsDoubleArray,
 		ThreadAccess
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
@@ -1015,7 +1028,88 @@ public final class ComplexFloat64VectorMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != length()) {
 			reshape(vals.length/componentCount);
@@ -1038,6 +1132,34 @@ public final class ComplexFloat64VectorMember
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].doubleValue() );
+			value.setI(  vals[i + 1].doubleValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != length()) {
+			reshape(vals.length/componentCount);
+		}
+		ComplexFloat64Member value = G.CDBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].doubleValue() );
+			value.setI(  vals[i + 1].doubleValue() );
 			storage.set(i/componentCount, value);
 		}
 	}

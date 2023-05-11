@@ -31,6 +31,8 @@
 package nom.bdezonia.zorbage.type.quaternion.float64;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -91,7 +93,19 @@ public class QuaternionFloat64RModule
 		ScaleByTwo<QuaternionFloat64RModuleMember>,
 		Tolerance<Float64Member,QuaternionFloat64RModuleMember>,
 		ArrayLikeMethods<QuaternionFloat64RModuleMember,QuaternionFloat64Member>,
-		ConstructibleFromDoubles<QuaternionFloat64RModuleMember>
+		ConstructibleFromBytes<QuaternionFloat64RModuleMember>,
+		ConstructibleFromShorts<QuaternionFloat64RModuleMember>,
+		ConstructibleFromInts<QuaternionFloat64RModuleMember>,
+		ConstructibleFromLongs<QuaternionFloat64RModuleMember>,
+		ConstructibleFromFloats<QuaternionFloat64RModuleMember>,
+		ConstructibleFromDoubles<QuaternionFloat64RModuleMember>,
+		ConstructibleFromBigIntegers<QuaternionFloat64RModuleMember>,
+		ConstructibleFromBigDecimals<QuaternionFloat64RModuleMember>,
+		ExactlyConstructibleFromBytes<QuaternionFloat64RModuleMember>,
+		ExactlyConstructibleFromShorts<QuaternionFloat64RModuleMember>,
+		ExactlyConstructibleFromInts<QuaternionFloat64RModuleMember>,
+		ExactlyConstructibleFromFloats<QuaternionFloat64RModuleMember>,
+		ExactlyConstructibleFromDoubles<QuaternionFloat64RModuleMember>
 {
 	@Override
 	public String typeDescription() {
@@ -121,8 +135,94 @@ public class QuaternionFloat64RModule
 	}
 
 	@Override
+	public QuaternionFloat64RModuleMember constructExactly(byte... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat64RModuleMember constructExactly(short... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat64RModuleMember constructExactly(int... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat64RModuleMember constructExactly(float... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat64RModuleMember constructExactly(double... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionFloat64RModuleMember construct(byte... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64RModuleMember construct(short... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64RModuleMember construct(int... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64RModuleMember construct(long... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64RModuleMember construct(float... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
 	public QuaternionFloat64RModuleMember construct(double... vals) {
-		return new QuaternionFloat64RModuleMember(vals);
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64RModuleMember construct(BigInteger... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionFloat64RModuleMember construct(BigDecimal... vals) {
+		QuaternionFloat64RModuleMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 	
 	private final Procedure1<QuaternionFloat64RModuleMember> ZER = 
