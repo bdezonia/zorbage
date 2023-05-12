@@ -85,10 +85,22 @@ public class QuaternionHighPrecisionRModule
 		ScaleByTwo<QuaternionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionRModuleMember>,
 		ArrayLikeMethods<QuaternionHighPrecisionRModuleMember,QuaternionHighPrecisionMember>,
-		ConstructibleFromBigDecimals<QuaternionHighPrecisionRModuleMember>,
-		ConstructibleFromBigIntegers<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromBytes<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromShorts<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromInts<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromLongs<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromFloats<QuaternionHighPrecisionRModuleMember>,
 		ConstructibleFromDoubles<QuaternionHighPrecisionRModuleMember>,
-		ConstructibleFromLongs<QuaternionHighPrecisionRModuleMember>
+		ConstructibleFromBigIntegers<QuaternionHighPrecisionRModuleMember>,
+		ConstructibleFromBigDecimals<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromBytes<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromShorts<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromInts<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromLongs<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromFloats<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromDoubles<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromBigIntegers<QuaternionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromBigDecimals<QuaternionHighPrecisionRModuleMember>
 {
 	@Override
 	public String typeDescription() {
@@ -118,23 +130,115 @@ public class QuaternionHighPrecisionRModule
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(BigDecimal... vals) {
-		return new QuaternionHighPrecisionRModuleMember(vals);
+	public QuaternionHighPrecisionRModuleMember constructExactly(byte... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(short... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(int... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(long... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(float... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(double... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(BigInteger... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+	
+	@Override
+	public QuaternionHighPrecisionRModuleMember constructExactly(BigDecimal... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromBigDecimalsExact(vals);
+		return v;
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(BigInteger... vals) {
-		return new QuaternionHighPrecisionRModuleMember(vals);
+	public QuaternionHighPrecisionRModuleMember construct(byte... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 
 	@Override
-	public QuaternionHighPrecisionRModuleMember construct(double... vals) {
-		return new QuaternionHighPrecisionRModuleMember(vals);
+	public QuaternionHighPrecisionRModuleMember construct(short... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(int... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromInts(vals);
+		return v;
 	}
 
 	@Override
 	public QuaternionHighPrecisionRModuleMember construct(long... vals) {
-		return new QuaternionHighPrecisionRModuleMember(vals);
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(float... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(double... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(BigInteger... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public QuaternionHighPrecisionRModuleMember construct(BigDecimal... vals) {
+		QuaternionHighPrecisionRModuleMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure1<QuaternionHighPrecisionRModuleMember> ZER = 

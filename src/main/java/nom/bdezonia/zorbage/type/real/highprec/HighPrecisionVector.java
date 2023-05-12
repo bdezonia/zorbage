@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.real.highprec;
 
 import java.lang.Integer;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
@@ -80,7 +81,23 @@ public class HighPrecisionVector
 		ScaleByOneHalf<HighPrecisionVectorMember>,
 		ScaleByTwo<HighPrecisionVectorMember>,
 		Tolerance<HighPrecisionMember,HighPrecisionVectorMember>,
-		ArrayLikeMethods<HighPrecisionVectorMember,HighPrecisionMember>
+		ArrayLikeMethods<HighPrecisionVectorMember,HighPrecisionMember>,
+		ConstructibleFromBytes<HighPrecisionVectorMember>,
+		ConstructibleFromShorts<HighPrecisionVectorMember>,
+		ConstructibleFromInts<HighPrecisionVectorMember>,
+		ConstructibleFromLongs<HighPrecisionVectorMember>,
+		ConstructibleFromFloats<HighPrecisionVectorMember>,
+		ConstructibleFromDoubles<HighPrecisionVectorMember>,
+		ConstructibleFromBigIntegers<HighPrecisionVectorMember>,
+		ConstructibleFromBigDecimals<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromBigDecimals<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromBigIntegers<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromDoubles<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromFloats<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromLongs<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromInts<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromShorts<HighPrecisionVectorMember>,
+		ExactlyConstructibleFromBytes<HighPrecisionVectorMember>
 {
 	@Override
 	public String typeDescription() {
@@ -191,6 +208,118 @@ public class HighPrecisionVector
 	@Override
 	public HighPrecisionVectorMember construct(StorageConstruction s, long d1) {
 		return new HighPrecisionVectorMember(s, d1);
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(byte... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(short... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(int... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(long... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(float... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(double... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(BigInteger... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember constructExactly(BigDecimal... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromBigDecimalsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(byte... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(short... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(int... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(long... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(float... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(double... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(BigInteger... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+	
+	@Override
+	public HighPrecisionVectorMember construct(BigDecimal... vals) {
+		HighPrecisionVectorMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure2<HighPrecisionVectorMember,HighPrecisionVectorMember> ASSIGN =

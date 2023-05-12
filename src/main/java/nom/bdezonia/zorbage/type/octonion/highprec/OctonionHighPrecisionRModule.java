@@ -85,10 +85,22 @@ public class OctonionHighPrecisionRModule
 		ScaleByTwo<OctonionHighPrecisionRModuleMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionRModuleMember>,
 		ArrayLikeMethods<OctonionHighPrecisionRModuleMember,OctonionHighPrecisionMember>,
-		ConstructibleFromBigDecimals<OctonionHighPrecisionRModuleMember>,
-		ConstructibleFromBigIntegers<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromBytes<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromShorts<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromInts<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromLongs<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromFloats<OctonionHighPrecisionRModuleMember>,
 		ConstructibleFromDoubles<OctonionHighPrecisionRModuleMember>,
-		ConstructibleFromLongs<OctonionHighPrecisionRModuleMember>
+		ConstructibleFromBigIntegers<OctonionHighPrecisionRModuleMember>,
+		ConstructibleFromBigDecimals<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromBytes<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromShorts<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromInts<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromLongs<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromFloats<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromDoubles<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromBigIntegers<OctonionHighPrecisionRModuleMember>,
+		ExactlyConstructibleFromBigDecimals<OctonionHighPrecisionRModuleMember>
 {
 	@Override
 	public String typeDescription() {
@@ -118,23 +130,115 @@ public class OctonionHighPrecisionRModule
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(BigDecimal... vals) {
-		return new OctonionHighPrecisionRModuleMember(vals);
+	public OctonionHighPrecisionRModuleMember constructExactly(byte... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromBytesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(short... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromShortsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(int... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromIntsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(long... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromLongsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(float... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromFloatsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(double... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromDoublesExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(BigInteger... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromBigIntegersExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember constructExactly(BigDecimal... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromBigDecimalsExact(vals);
+		return v;
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(byte... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromBytes(vals);
+		return v;
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(BigInteger... vals) {
-		return new OctonionHighPrecisionRModuleMember(vals);
+	public OctonionHighPrecisionRModuleMember construct(short... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromShorts(vals);
+		return v;
 	}
 
 	@Override
-	public OctonionHighPrecisionRModuleMember construct(double... vals) {
-		return new OctonionHighPrecisionRModuleMember(vals);
+	public OctonionHighPrecisionRModuleMember construct(int... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromInts(vals);
+		return v;
 	}
 
 	@Override
 	public OctonionHighPrecisionRModuleMember construct(long... vals) {
-		return new OctonionHighPrecisionRModuleMember(vals);
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(float... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(double... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(BigInteger... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+
+	@Override
+	public OctonionHighPrecisionRModuleMember construct(BigDecimal... vals) {
+		OctonionHighPrecisionRModuleMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Procedure1<OctonionHighPrecisionRModuleMember> ZER =
