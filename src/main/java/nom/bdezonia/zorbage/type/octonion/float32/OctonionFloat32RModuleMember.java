@@ -72,7 +72,17 @@ public final class OctonionFloat32RModuleMember
 		SetFromDoubles,
 		SetFromBigIntegers,
 		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
 		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member(); 
@@ -2148,6 +2158,105 @@ public final class OctonionFloat32RModuleMember
 	}
 
 	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		byte[] values = new byte[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
+			values[k++] = (byte) value.j();
+			values[k++] = (byte) value.k();
+			values[k++] = (byte) value.l();
+			values[k++] = (byte) value.i0();
+			values[k++] = (byte) value.j0();
+			values[k++] = (byte) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		short[] values = new short[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
+			values[k++] = (short) value.j();
+			values[k++] = (short) value.k();
+			values[k++] = (short) value.l();
+			values[k++] = (short) value.i0();
+			values[k++] = (short) value.j0();
+			values[k++] = (short) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		int[] values = new int[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
+			values[k++] = (int) value.j();
+			values[k++] = (int) value.k();
+			values[k++] = (int) value.l();
+			values[k++] = (int) value.i0();
+			values[k++] = (int) value.j0();
+			values[k++] = (int) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		long[] values = new long[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
+			values[k++] = (long) value.j();
+			values[k++] = (long) value.k();
+			values[k++] = (long) value.l();
+			values[k++] = (long) value.i0();
+			values[k++] = (long) value.j0();
+			values[k++] = (long) value.k0();
+		}
+		return values;
+	}
+
+	@Override
 	public float[] getAsFloatArray() {
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
@@ -2164,6 +2273,69 @@ public final class OctonionFloat32RModuleMember
 			values[k++] = value.i0();
 			values[k++] = value.j0();
 			values[k++] = value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		double[] values = new double[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+			values[k++] = value.l();
+			values[k++] = value.i0();
+			values[k++] = value.j0();
+			values[k++] = value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.l()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i0()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j0()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k0()).toBigInteger();
+		}
+		return values;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat32Member value = G.OFLT.construct();
+		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
+			values[k++] = BigDecimal.valueOf(value.j());
+			values[k++] = BigDecimal.valueOf(value.k());
+			values[k++] = BigDecimal.valueOf(value.l());
+			values[k++] = BigDecimal.valueOf(value.i0());
+			values[k++] = BigDecimal.valueOf(value.j0());
+			values[k++] = BigDecimal.valueOf(value.k0());
 		}
 		return values;
 	}
