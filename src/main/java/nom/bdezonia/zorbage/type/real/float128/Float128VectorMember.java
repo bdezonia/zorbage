@@ -74,7 +74,15 @@ public final class Float128VectorMember
 		SetFromDoublesExact,
 		SetFromBigIntegers,
 		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final Float128Member ZERO = new Float128Member(); 
@@ -1106,6 +1114,109 @@ public final class Float128VectorMember
 			value.setV(  vals[i + 0] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		byte[] values = new byte[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		short[] values = new short[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		int[] values = new int[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		long[] values = new long[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		float[] values = new float[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		double[] values = new double[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		BigInteger[] values = new BigInteger[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override

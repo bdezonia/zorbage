@@ -74,7 +74,15 @@ public final class QuaternionFloat128RModuleMember
 		SetFromDoublesExact,
 		SetFromBigIntegers,
 		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member(); 
@@ -1558,6 +1566,130 @@ public final class QuaternionFloat128RModuleMember
 			value.setK(  vals[i + 3] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		byte[] values = new byte[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().byteValue();
+			values[k++] = value.i().v().byteValue();
+			values[k++] = value.j().v().byteValue();
+			values[k++] = value.k().v().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		short[] values = new short[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().shortValue();
+			values[k++] = value.i().v().shortValue();
+			values[k++] = value.j().v().shortValue();
+			values[k++] = value.k().v().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		int[] values = new int[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().intValue();
+			values[k++] = value.i().v().intValue();
+			values[k++] = value.j().v().intValue();
+			values[k++] = value.k().v().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		long[] values = new long[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().longValue();
+			values[k++] = value.i().v().longValue();
+			values[k++] = value.j().v().longValue();
+			values[k++] = value.k().v().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		float[] values = new float[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().floatValue();
+			values[k++] = value.i().v().floatValue();
+			values[k++] = value.j().v().floatValue();
+			values[k++] = value.k().v().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		double[] values = new double[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().doubleValue();
+			values[k++] = value.i().v().doubleValue();
+			values[k++] = value.j().v().doubleValue();
+			values[k++] = value.k().v().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat128Member value = G.QQUAD.construct();
+		BigInteger[] values = new BigInteger[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().toBigInteger();
+			values[k++] = value.i().v().toBigInteger();
+			values[k++] = value.j().v().toBigInteger();
+			values[k++] = value.k().v().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override
