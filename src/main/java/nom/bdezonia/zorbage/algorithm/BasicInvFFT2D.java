@@ -78,27 +78,37 @@ public class BasicInvFFT2D {
 						DimensionedDataSource<C> input,
 						DimensionedDataSource<R> output)
 	{
-		long xSize = input.dimension(0);
-		
-		if (FFT.enclosingPowerOf2(xSize) != xSize) {
-			throw new IllegalArgumentException("input complex data length is not a power of 2");
+		if (input.numDimensions() != 2) {
+			
+			throw new IllegalArgumentException("BasicInvFFT2D requires 2d input");
 		}
-		
-		if (input.dimension(1) != xSize) {
-			throw new IllegalArgumentException("input complex data does not have the right square shape");
-		}
-		
-		if (output.dimension(0) != xSize) {
-			throw new IllegalArgumentException("output complex data does not have the right square shape");
-		}
-		
-		if (output.dimension(1) != xSize) {
-			throw new IllegalArgumentException("output complex data does not have the right square shape");
-		}
-		
-		DimensionedDataSource<C> tmpData = InvFFT2D.compute(algC, algR, input);
 
-		TwoDView<C> complex2dView = new TwoDView<>(tmpData); 
+		if (output.numDimensions() != 2) {
+			
+			throw new IllegalArgumentException("BasicInvFFT2D requires 2d output");
+		}
+
+		long xSize = output.dimension(0);
+		
+		long ySize = output.dimension(1);
+
+		long pow2XSize = FFT.enclosingPowerOf2(xSize);
+		
+		long pow2YSize = FFT.enclosingPowerOf2(ySize);
+		
+		long pow2Size = Math.max(pow2XSize, pow2YSize);
+		
+		if (pow2Size != input.dimension(0)) {
+			throw new IllegalArgumentException("input complex data xSize is not correct power of 2");
+		}
+		
+		if (pow2Size != input.dimension(1)) {
+			throw new IllegalArgumentException("input complex data ySize is not correct power of 2");
+		}
+		
+		DimensionedDataSource<C> complexData = InvFFT2D.compute(algC, algR, input);
+
+		TwoDView<C> complex2dView = new TwoDView<>(complexData); 
 
 		TwoDView<R> real2dView = new TwoDView<>(output); 
 		
@@ -106,7 +116,7 @@ public class BasicInvFFT2D {
 		
 		R real = algR.construct();
 		
-		for (long y = 0; y < xSize; y++) {
+		for (long y = 0; y < ySize; y++) {
 		
 			for (long x = 0; x < xSize; x++) {
 				
