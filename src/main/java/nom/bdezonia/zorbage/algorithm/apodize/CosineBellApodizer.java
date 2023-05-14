@@ -103,8 +103,8 @@ public class CosineBellApodizer<CA extends Algebra<CA,C> & Trigonometric<C> &
 	@Override
 	public void call(Long k, C ak) {
 		C tmp = this.k.get();
-		tmp.setFromLongs(k);
 		C tk = this.tk.get();
+		tmp.setFromLongs(k);
 		alg.multiply().call(t1, tmp, tk);
 		alg.add().call(tk, phase, tk);
 		alg.cos().call(tk, ak);

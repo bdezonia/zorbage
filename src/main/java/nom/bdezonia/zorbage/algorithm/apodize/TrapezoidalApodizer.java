@@ -80,14 +80,15 @@ public class TrapezoidalApodizer<CA extends Algebra<CA,C> & Unity<C> &
 	public void call(Long index, C value) {
 		if (index < 0 || index >= size)
 			throw new IllegalArgumentException("index out of bounds");
+		RationalMember rat = ratio.get();
 		alg.unity().call(value);
 		if (index < leftPoint) {
-			ratio.get().setV(index, leftPoint);
-			alg.scaleByRational().call(ratio.get(), value, value);
+			rat.setV(index, leftPoint);
+			alg.scaleByRational().call(rat, value, value);
 		}
 		else if (index > rightPoint) {
-			ratio.get().setV(size-1-index, size-1-rightPoint);
-			alg.scaleByRational().call(ratio.get(), value, value);
+			rat.setV(size-1-index, size-1-rightPoint);
+			alg.scaleByRational().call(rat, value, value);
 		}
 	}
 }

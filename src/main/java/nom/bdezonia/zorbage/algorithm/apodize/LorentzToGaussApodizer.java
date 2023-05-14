@@ -102,11 +102,11 @@ public class LorentzToGaussApodizer<CA extends Algebra<CA,C> & RealConstants<C> 
 	public void call(Long k, C ak)
 	{
 		C tk = this.k.get();
-		tk.setFromLongs(k);
 		C t1k = this.t1k.get();
+		C t2k = this.t2k.get();
+		tk.setFromLongs(k);
 		alg.multiply().call(t1, tk, t1k);
 		alg.exp().call(t1k, t1k);
-		C t2k = this.t2k.get();
 		alg.multiply().call(t2, tk, t2k);
 		alg.multiply().call(t2k, tk, t2k);
 		alg.exp().call(t2k, t2k);
