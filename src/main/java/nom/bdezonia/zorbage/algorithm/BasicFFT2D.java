@@ -82,17 +82,17 @@ public class BasicFFT2D {
 			throw new IllegalArgumentException("BasicFFT2D only works with 2d input data");
 		}
 		
-		long xSize = FFT.enclosingPowerOf2(inputData.dimension(0));
+		long xSize = inputData.dimension(0);
 
-		long ySize = FFT.enclosingPowerOf2(inputData.dimension(1));
+		long ySize = inputData.dimension(1);
 		
-		long size = Math.max(xSize, ySize);
+		long size = FFT.enclosingPowerOf2(Math.max(xSize, ySize));
 		
 		BigInteger bigSize = BigInteger.valueOf(size);
 		
-		BigInteger bigMaxLong = BigInteger.valueOf(Long.MAX_VALUE);
+		BigInteger bigMaxValue = BigInteger.valueOf(Long.MAX_VALUE);
 		
-		if (bigSize.multiply(bigSize).compareTo(bigMaxLong) > 0) {
+		if (bigSize.multiply(bigSize).compareTo(bigMaxValue) > 0) {
 			
 			throw new IllegalArgumentException("Destination complex data size is too big");
 		}
