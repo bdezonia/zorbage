@@ -77,7 +77,15 @@ public final class ComplexHighPrecisionVectorMember
 		SetFromBigIntegersExact,
 		SetFromBigDecimals,
 		SetFromBigDecimalsExact,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember(); 
@@ -1195,6 +1203,116 @@ public final class ComplexHighPrecisionVectorMember
 			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		byte[] values = new byte[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().byteValue();
+			values[k++] = value.i().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		short[] values = new short[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().shortValue();
+			values[k++] = value.i().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		int[] values = new int[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().intValue();
+			values[k++] = value.i().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		long[] values = new long[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().longValue();
+			values[k++] = value.i().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		float[] values = new float[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().floatValue();
+			values[k++] = value.i().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		double[] values = new double[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().doubleValue();
+			values[k++] = value.i().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexHighPrecisionMember value = G.CHP.construct();
+		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().toBigInteger();
+			values[k++] = value.i().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override

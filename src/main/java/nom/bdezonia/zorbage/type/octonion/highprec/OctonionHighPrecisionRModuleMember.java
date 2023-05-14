@@ -77,7 +77,15 @@ public final class OctonionHighPrecisionRModuleMember
 		SetFromBigIntegersExact,
 		SetFromBigDecimals,
 		SetFromBigDecimalsExact,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember(); 
@@ -2197,6 +2205,158 @@ public final class OctonionHighPrecisionRModuleMember
 			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		byte[] values = new byte[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().byteValue();
+			values[k++] = value.i().byteValue();
+			values[k++] = value.j().byteValue();
+			values[k++] = value.k().byteValue();
+			values[k++] = value.l().byteValue();
+			values[k++] = value.i0().byteValue();
+			values[k++] = value.j0().byteValue();
+			values[k++] = value.k0().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		short[] values = new short[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().shortValue();
+			values[k++] = value.i().shortValue();
+			values[k++] = value.j().shortValue();
+			values[k++] = value.k().shortValue();
+			values[k++] = value.l().shortValue();
+			values[k++] = value.i0().shortValue();
+			values[k++] = value.j0().shortValue();
+			values[k++] = value.k0().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		int[] values = new int[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().intValue();
+			values[k++] = value.i().intValue();
+			values[k++] = value.j().intValue();
+			values[k++] = value.k().intValue();
+			values[k++] = value.l().intValue();
+			values[k++] = value.i0().intValue();
+			values[k++] = value.j0().intValue();
+			values[k++] = value.k0().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		long[] values = new long[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().longValue();
+			values[k++] = value.i().longValue();
+			values[k++] = value.j().longValue();
+			values[k++] = value.k().longValue();
+			values[k++] = value.l().longValue();
+			values[k++] = value.i0().longValue();
+			values[k++] = value.j0().longValue();
+			values[k++] = value.k0().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		float[] values = new float[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().floatValue();
+			values[k++] = value.i().floatValue();
+			values[k++] = value.j().floatValue();
+			values[k++] = value.k().floatValue();
+			values[k++] = value.l().floatValue();
+			values[k++] = value.i0().floatValue();
+			values[k++] = value.j0().floatValue();
+			values[k++] = value.k0().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		double[] values = new double[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().doubleValue();
+			values[k++] = value.i().doubleValue();
+			values[k++] = value.j().doubleValue();
+			values[k++] = value.k().doubleValue();
+			values[k++] = value.l().doubleValue();
+			values[k++] = value.i0().doubleValue();
+			values[k++] = value.j0().doubleValue();
+			values[k++] = value.k0().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionHighPrecisionMember value = G.OHP.construct();
+		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().toBigInteger();
+			values[k++] = value.i().toBigInteger();
+			values[k++] = value.j().toBigInteger();
+			values[k++] = value.k().toBigInteger();
+			values[k++] = value.l().toBigInteger();
+			values[k++] = value.i0().toBigInteger();
+			values[k++] = value.j0().toBigInteger();
+			values[k++] = value.k0().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override
