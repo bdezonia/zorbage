@@ -61,8 +61,28 @@ public final class Float128MatrixMember
 		Gettable<Float128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float128Member>,
-		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final Float128Member ZERO = new Float128Member();
@@ -1109,7 +1129,80 @@ public final class Float128MatrixMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		if (vals.length != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
@@ -1154,6 +1247,109 @@ public final class Float128MatrixMember
 			tmp.setV(vals[i]);
 			storage.set(i, tmp);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		byte[] values = new byte[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		short[] values = new short[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		int[] values = new int[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		long[] values = new long[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		float[] values = new float[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		double[] values = new double[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		BigInteger[] values = new BigInteger[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override

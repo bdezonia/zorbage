@@ -61,8 +61,28 @@ public final class OctonionFloat128MatrixMember
 		Settable<OctonionFloat128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat128Member>,
-		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
@@ -2120,9 +2140,118 @@ public final class OctonionFloat128MatrixMember
 		}
 		return false;
 	}
+	
+	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member value = G.OQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
+			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
+			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
+			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member value = G.OQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
+			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
+			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
+			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member value = G.OQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
+			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
+			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
+			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			storage.set(i/componentCount, value);
+		}
+	}
 
 	@Override
 	public void setFromLongs(long... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat128Member value = G.OQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
+			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
+			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
+			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
+			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -2203,6 +2332,158 @@ public final class OctonionFloat128MatrixMember
 			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		byte[] values = new byte[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().byteValue();
+			values[k++] = value.i().v().byteValue();
+			values[k++] = value.j().v().byteValue();
+			values[k++] = value.k().v().byteValue();
+			values[k++] = value.l().v().byteValue();
+			values[k++] = value.i0().v().byteValue();
+			values[k++] = value.j0().v().byteValue();
+			values[k++] = value.k0().v().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		short[] values = new short[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().shortValue();
+			values[k++] = value.i().v().shortValue();
+			values[k++] = value.j().v().shortValue();
+			values[k++] = value.k().v().shortValue();
+			values[k++] = value.l().v().shortValue();
+			values[k++] = value.i0().v().shortValue();
+			values[k++] = value.j0().v().shortValue();
+			values[k++] = value.k0().v().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		int[] values = new int[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().intValue();
+			values[k++] = value.i().v().intValue();
+			values[k++] = value.j().v().intValue();
+			values[k++] = value.k().v().intValue();
+			values[k++] = value.l().v().intValue();
+			values[k++] = value.i0().v().intValue();
+			values[k++] = value.j0().v().intValue();
+			values[k++] = value.k0().v().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		long[] values = new long[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().longValue();
+			values[k++] = value.i().v().longValue();
+			values[k++] = value.j().v().longValue();
+			values[k++] = value.k().v().longValue();
+			values[k++] = value.l().v().longValue();
+			values[k++] = value.i0().v().longValue();
+			values[k++] = value.j0().v().longValue();
+			values[k++] = value.k0().v().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		float[] values = new float[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().floatValue();
+			values[k++] = value.i().v().floatValue();
+			values[k++] = value.j().v().floatValue();
+			values[k++] = value.k().v().floatValue();
+			values[k++] = value.l().v().floatValue();
+			values[k++] = value.i0().v().floatValue();
+			values[k++] = value.j0().v().floatValue();
+			values[k++] = value.k0().v().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		double[] values = new double[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().doubleValue();
+			values[k++] = value.i().v().doubleValue();
+			values[k++] = value.j().v().doubleValue();
+			values[k++] = value.k().v().doubleValue();
+			values[k++] = value.l().v().doubleValue();
+			values[k++] = value.i0().v().doubleValue();
+			values[k++] = value.j0().v().doubleValue();
+			values[k++] = value.k0().v().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat128Member value = G.OQUAD.construct();
+		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().toBigInteger();
+			values[k++] = value.i().v().toBigInteger();
+			values[k++] = value.j().v().toBigInteger();
+			values[k++] = value.k().v().toBigInteger();
+			values[k++] = value.l().v().toBigInteger();
+			values[k++] = value.i0().v().toBigInteger();
+			values[k++] = value.j0().v().toBigInteger();
+			values[k++] = value.k0().v().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override

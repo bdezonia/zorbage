@@ -61,8 +61,28 @@ public final class ComplexFloat128MatrixMember
 		Settable<ComplexFloat128MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat128Member>,
-		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member();
@@ -1176,7 +1196,92 @@ public final class ComplexFloat128MatrixMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat128Member value = G.CQUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1233,6 +1338,116 @@ public final class ComplexFloat128MatrixMember
 			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		byte[] values = new byte[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().byteValue();
+			values[k++] = value.i().v().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		short[] values = new short[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().shortValue();
+			values[k++] = value.i().v().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		int[] values = new int[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().intValue();
+			values[k++] = value.i().v().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		long[] values = new long[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().longValue();
+			values[k++] = value.i().v().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		float[] values = new float[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().floatValue();
+			values[k++] = value.i().v().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		double[] values = new double[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().doubleValue();
+			values[k++] = value.i().v().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat128Member value = G.CQUAD.construct();
+		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r().v().toBigInteger();
+			values[k++] = value.i().v().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override
