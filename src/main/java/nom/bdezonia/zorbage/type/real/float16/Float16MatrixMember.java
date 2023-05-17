@@ -61,7 +61,26 @@ public final class Float16MatrixMember
 		Gettable<Float16MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float16Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final Float16Member ZERO = new Float16Member(0);
@@ -1093,6 +1112,53 @@ public final class Float16MatrixMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 1;
 		if (vals.length/componentCount != storage.size()) {
@@ -1121,6 +1187,119 @@ public final class Float16MatrixMember
 	}
 
 	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  (float) vals[i + 0] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		Float16Member value = G.HLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		byte[] values = new byte[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = (byte) value.v();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		short[] values = new short[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = (short) value.v();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		int[] values = new int[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = (int) value.v();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		long[] values = new long[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = (long) value.v();
+		}
+		return values;
+	}
+
+	@Override
 	public float[] getAsFloatArray() {
 		if (storage.size() > (Integer.MAX_VALUE / 1))
 			throw new IllegalArgumentException(
@@ -1130,6 +1309,48 @@ public final class Float16MatrixMember
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
 			values[i] = value.v();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		double[] values = new double[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		BigInteger[] values = new BigInteger[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = BigDecimal.valueOf(value.v()).toBigInteger();
+		}
+		return values;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float16Member value = G.HLF.construct();
+		BigDecimal[] values = new BigDecimal[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = BigDecimal.valueOf(value.v());
 		}
 		return values;
 	}
