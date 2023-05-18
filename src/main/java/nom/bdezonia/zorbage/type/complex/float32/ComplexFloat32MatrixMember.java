@@ -61,7 +61,28 @@ public final class ComplexFloat32MatrixMember
 		Settable<ComplexFloat32MatrixMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<ComplexFloat32Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
@@ -1160,6 +1181,66 @@ public final class ComplexFloat32MatrixMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
@@ -1190,6 +1271,126 @@ public final class ComplexFloat32MatrixMember
 	}
 
 	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 2;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		ComplexFloat32Member value = G.CFLT.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		byte[] values = new byte[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		short[] values = new short[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		int[] values = new int[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		long[] values = new long[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
+		}
+		return values;
+	}
+
+	@Override
 	public float[] getAsFloatArray() {
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
@@ -1200,6 +1401,51 @@ public final class ComplexFloat32MatrixMember
 			storage.get(i, value);
 			values[k++] = value.r();
 			values[k++] = value.i();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		double[] values = new double[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+		}
+		return values;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 2))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		ComplexFloat32Member value = G.CFLT.construct();
+		BigDecimal[] values = new BigDecimal[2 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
 		}
 		return values;
 	}
