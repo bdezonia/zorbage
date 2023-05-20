@@ -30,7 +30,18 @@
  */
 package nom.bdezonia.zorbage.type.geom.polygonalchain;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromBytes;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromDoubles;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromFloats;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
+import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NaN;
@@ -54,7 +65,15 @@ public class PolygonalChainAlgebra
 		Infinite<PolygonalChainMember>,
 		NegInfinite<PolygonalChainMember>,
 		NaN<PolygonalChainMember>,
-		Tolerance<Float, PolygonalChainMember>
+		Tolerance<Float, PolygonalChainMember>,
+		ConstructibleFromBytes<PolygonalChainMember>,
+		ConstructibleFromShorts<PolygonalChainMember>,
+		ConstructibleFromInts<PolygonalChainMember>,
+		ConstructibleFromLongs<PolygonalChainMember>,
+		ConstructibleFromFloats<PolygonalChainMember>,
+		ConstructibleFromDoubles<PolygonalChainMember>,
+		ConstructibleFromBigIntegers<PolygonalChainMember>,
+		ConstructibleFromBigDecimals<PolygonalChainMember>
 {
 	private static final float ZERO_TOL = 0.00000001f;
 	
@@ -79,6 +98,62 @@ public class PolygonalChainAlgebra
 			UnsupportedOperationException(
 				"Ability to construct polygonal chains from a String is not implemented yet."
 			);
+	}
+	
+	@Override
+	public PolygonalChainMember construct(byte... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromBytes(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(short... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromShorts(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(int... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromInts(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(long... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromLongs(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(float... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromFloats(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(double... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromDoubles(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(BigInteger... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromBigIntegers(vals);
+		return v;
+	}
+	
+	@Override
+	public PolygonalChainMember construct(BigDecimal... vals) {
+		PolygonalChainMember v = construct();
+		v.setFromBigDecimals(vals);
+		return v;
 	}
 
 	private final Function2<Boolean, PolygonalChainMember, PolygonalChainMember> EQ =

@@ -30,15 +30,37 @@
  */
 package nom.bdezonia.zorbage.type.geom.polygonalchain;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.NumberMember;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBytes;
+import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
+import nom.bdezonia.zorbage.algebra.SetFromDoubles;
 import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
+import nom.bdezonia.zorbage.algebra.SetFromInts;
+import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromShorts;
+import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -52,8 +74,28 @@ public class PolygonalChainMember
 		ByteCoder, Settable<PolygonalChainMember>, Gettable<PolygonalChainMember>,
 		Allocatable<PolygonalChainMember>, Duplicatable<PolygonalChainMember>,
 		NumberMember<PolygonalChainMember>,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromLongs,
 		SetFromFloats,
-		GetAsFloatArray
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact
 {
 	float boundsValid;
 	float minx, miny, minz, maxx, maxy, maxz;
@@ -510,6 +552,97 @@ public class PolygonalChainMember
 	}
 
 	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		byte[] vals = new byte[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = (byte) x[i];
+			vals[idx + 1] = (byte) y[i];
+			vals[idx + 2] = (byte) z[i];
+		}
+
+		return vals;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		short[] vals = new short[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = (short) x[i];
+			vals[idx + 1] = (short) y[i];
+			vals[idx + 2] = (short) z[i];
+		}
+
+		return vals;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		int[] vals = new int[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = (int) x[i];
+			vals[idx + 1] = (int) y[i];
+			vals[idx + 2] = (int) z[i];
+		}
+
+		return vals;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		long[] vals = new long[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = (long) x[i];
+			vals[idx + 1] = (long) y[i];
+			vals[idx + 2] = (long) z[i];
+		}
+
+		return vals;
+	}
+
+	@Override
 	public float[] getAsFloatArray() {
 		
 		int numPoints = x.length;
@@ -526,6 +659,174 @@ public class PolygonalChainMember
 		}
 
 		return vals;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		double[] vals = new double[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = x[i];
+			vals[idx + 1] = y[i];
+			vals[idx + 2] = z[i];
+		}
+
+		return vals;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		BigInteger[] vals = new BigInteger[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = BigDecimal.valueOf(x[i]).toBigInteger();
+			vals[idx + 1] = BigDecimal.valueOf(y[i]).toBigInteger();
+			vals[idx + 2] = BigDecimal.valueOf(z[i]).toBigInteger();
+		}
+
+		return vals;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		
+		int numPoints = x.length;
+		
+		int numFloats = 3 * numPoints;
+		
+		BigDecimal[] vals = new BigDecimal[numFloats];
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			vals[idx + 0] = BigDecimal.valueOf(x[i]);
+			vals[idx + 1] = BigDecimal.valueOf(y[i]);
+			vals[idx + 2] = BigDecimal.valueOf(z[i]);
+		}
+
+		return vals;
+	}
+
+	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = vals[idx + 0];
+			y[i] = vals[idx + 1];
+			z[i] = vals[idx + 2];
+		}
+		
+		boundsValid = 0;
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = vals[idx + 0];
+			y[i] = vals[idx + 1];
+			z[i] = vals[idx + 2];
+		}
+		
+		boundsValid = 0;
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = vals[idx + 0];
+			y[i] = vals[idx + 1];
+			z[i] = vals[idx + 2];
+		}
+		
+		boundsValid = 0;
+	}
+
+	@Override
+	public void setFromLongs(long... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = vals[idx + 0];
+			y[i] = vals[idx + 1];
+			z[i] = vals[idx + 2];
+		}
+		
+		boundsValid = 0;
 	}
 
 	@Override
@@ -547,6 +848,78 @@ public class PolygonalChainMember
 			x[i] = vals[idx + 0];
 			y[i] = vals[idx + 1];
 			z[i] = vals[idx + 2];
+		}
+		
+		boundsValid = 0;
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = (float) vals[idx + 0];
+			y[i] = (float) vals[idx + 1];
+			z[i] = (float) vals[idx + 2];
+		}
+		
+		boundsValid = 0;
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = vals[idx + 0].floatValue();
+			y[i] = vals[idx + 1].floatValue();
+			z[i] = vals[idx + 2].floatValue();
+		}
+		
+		boundsValid = 0;
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+
+		if (vals.length % 3 != 0)
+			throw new IllegalArgumentException("Tracts require 3 floats per point");
+		
+		int numPoints = vals.length / 3;
+		
+		if (x.length != numPoints) {
+			x = new float[numPoints];
+			y = new float[numPoints];
+			z = new float[numPoints];
+		}
+		
+		int idx = 0;
+		for (int i = 0; i < numPoints; i++, idx += 3) {
+			x[i] = vals[idx + 0].floatValue();
+			y[i] = vals[idx + 1].floatValue();
+			z[i] = vals[idx + 2].floatValue();
 		}
 		
 		boundsValid = 0;
