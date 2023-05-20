@@ -818,16 +818,16 @@ public final class QuaternionFloat16Member
 		if (component < 2) {
 			// 0 <= component <= 1
 			if (component == 0)
-				return BigDecimal.valueOf(r()).toBigInteger();
+				return BigInteger.valueOf((long) r());
 			else // component == 1
-				return BigDecimal.valueOf(i()).toBigInteger();
+				return BigInteger.valueOf((long) i());
 		}
 		else {
 			// 2 <= component <= 3
 			if (component == 2)
-				return BigDecimal.valueOf(j()).toBigInteger();
+				return BigInteger.valueOf((long) j());
 			else // component == 3
-				return BigDecimal.valueOf(k()).toBigInteger();
+				return BigInteger.valueOf((long) k());
 		}
 	}
 
@@ -1083,16 +1083,16 @@ public final class QuaternionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return BigDecimal.valueOf(r()).toBigInteger();
+					return BigInteger.valueOf((long) r());
 				else // component == 1
-					return BigDecimal.valueOf(i()).toBigInteger();
+					return BigInteger.valueOf((long) i());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return BigDecimal.valueOf(j()).toBigInteger();
+					return BigInteger.valueOf((long) j());
 				else // component == 3
-					return BigDecimal.valueOf(k()).toBigInteger();
+					return BigInteger.valueOf((long) k());
 			}
 		}
 	}
@@ -1302,7 +1302,7 @@ public final class QuaternionFloat16Member
 
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
-		return new BigInteger[] { BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger(), BigDecimal.valueOf(j()).toBigInteger(), BigDecimal.valueOf(k()).toBigInteger() };
+		return new BigInteger[] { BigInteger.valueOf((long) r()), BigInteger.valueOf((long) i()), BigInteger.valueOf((long) j()), BigInteger.valueOf((long) k()) };
 	}
 
 	@Override

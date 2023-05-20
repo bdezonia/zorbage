@@ -1339,29 +1339,29 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
-					return BigDecimal.valueOf(tmp.r()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.r());
 				else
-					return BigDecimal.valueOf(tmp.i()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.i());
 			}
 			else { // component >= 2
 				if (component == 2)
-					return BigDecimal.valueOf(tmp.j()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.j());
 				else
-					return BigDecimal.valueOf(tmp.k()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.k());
 			}
 		}
 		else { // component == 4 or 5 or 6 or 7
 			if (component < 6) {
 				if (component == 4)
-					return BigDecimal.valueOf(tmp.l()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.l());
 				else
-					return BigDecimal.valueOf(tmp.i0()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.i0());
 			}
 			else { // component == 6 or 7
 				if (component == 6)
-					return BigDecimal.valueOf(tmp.j0()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.j0());
 				else
-					return BigDecimal.valueOf(tmp.k0()).toBigInteger();
+					return BigInteger.valueOf((long) tmp.k0());
 			}
 		}
 	}
@@ -1648,29 +1648,29 @@ public final class OctonionFloat16CartesianTensorProductMember
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return BigDecimal.valueOf(tmp.r()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.r());
 					else
-						return BigDecimal.valueOf(tmp.i()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.i());
 				}
 				else { // component >= 2
 					if (component == 2)
-						return BigDecimal.valueOf(tmp.j()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.j());
 					else
-						return BigDecimal.valueOf(tmp.k()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.k());
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7
 				if (component < 6) {
 					if (component == 4)
-						return BigDecimal.valueOf(tmp.l()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.l());
 					else
-						return BigDecimal.valueOf(tmp.i0()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.i0());
 				}
 				else { // component == 6 or 7
 					if (component == 6)
-						return BigDecimal.valueOf(tmp.j0()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.j0());
 					else
-						return BigDecimal.valueOf(tmp.k0()).toBigInteger();
+						return BigInteger.valueOf((long) tmp.k0());
 				}
 			}
 		}
@@ -2071,14 +2071,14 @@ public final class OctonionFloat16CartesianTensorProductMember
 		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.j()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.k()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.l()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i0()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.j0()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.k0()).toBigInteger();
+			values[k++] = BigInteger.valueOf((long) value.r());
+			values[k++] = BigInteger.valueOf((long) value.i());
+			values[k++] = BigInteger.valueOf((long) value.j());
+			values[k++] = BigInteger.valueOf((long) value.k());
+			values[k++] = BigInteger.valueOf((long) value.l());
+			values[k++] = BigInteger.valueOf((long) value.i0());
+			values[k++] = BigInteger.valueOf((long) value.j0());
+			values[k++] = BigInteger.valueOf((long) value.k0());
 		}
 		return values;
 	}

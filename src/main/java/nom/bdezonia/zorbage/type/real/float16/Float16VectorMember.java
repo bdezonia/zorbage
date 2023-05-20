@@ -676,7 +676,7 @@ public final class Float16VectorMember
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
 			getV(index.get(0), tmp);
-			return BigDecimal.valueOf(tmp.v()).toBigInteger();
+			return BigInteger.valueOf((long) tmp.v());
 		}
 		return BigInteger.ZERO;
 	}
@@ -900,7 +900,7 @@ public final class Float16VectorMember
 		else {
 			Float16Member tmp = tmpFloat.get();
 			getV(index.get(0), tmp);
-			return BigDecimal.valueOf(tmp.v()).toBigInteger();
+			return BigInteger.valueOf((long) tmp.v());
 		}
 	}
 
@@ -1184,7 +1184,7 @@ public final class Float16VectorMember
 		BigInteger[] values = new BigInteger[1 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[i] = BigDecimal.valueOf(value.v()).toBigInteger();
+			values[i] = BigInteger.valueOf((long) value.v());
 		}
 		return values;
 	}

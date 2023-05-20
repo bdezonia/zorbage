@@ -496,7 +496,7 @@ public final class Float16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(v()).toBigInteger();
+		if (component == 0) return BigInteger.valueOf((long) v());
 		return BigInteger.ZERO;
 	}
 
@@ -659,7 +659,7 @@ public final class Float16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			return BigDecimal.valueOf(v()).toBigInteger();
+			return BigInteger.valueOf((long) v());
 		}
 	}
 
@@ -800,7 +800,7 @@ public final class Float16Member
 
 	@Override
 	public BigInteger getAsBigInteger() {
-		return BigDecimal.valueOf(v()).toBigInteger();
+		return BigInteger.valueOf((long) v());
 	}
 
 	@Override

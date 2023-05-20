@@ -770,7 +770,7 @@ public final class Float16MatrixMember
 		if (component == 0) {
 			Float16Member tmp = tmpFloat.get();
 			getV(index.get(1), index.get(0), tmp);
-			return BigDecimal.valueOf(tmp.v()).toBigInteger();
+			return BigInteger.valueOf((long) tmp.v());
 		}
 		return BigInteger.ZERO;
 	}
@@ -1036,7 +1036,7 @@ public final class Float16MatrixMember
 		else {
 			Float16Member tmp = tmpFloat.get();
 			getV(index.get(1), index.get(0), tmp);
-			return BigDecimal.valueOf(tmp.v()).toBigInteger();
+			return BigInteger.valueOf((long) tmp.v());
 		}
 	}
 
@@ -1336,7 +1336,7 @@ public final class Float16MatrixMember
 		BigInteger[] values = new BigInteger[1 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[i] = BigDecimal.valueOf(value.v()).toBigInteger();
+			values[i] = BigInteger.valueOf((long) value.v());
 		}
 		return values;
 	}

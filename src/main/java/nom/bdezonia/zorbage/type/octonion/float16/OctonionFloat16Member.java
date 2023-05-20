@@ -1261,32 +1261,32 @@ public final class OctonionFloat16Member
 			if (component < 2) {
 				// 0 <= component <= 1
 				if (component == 0)
-					return BigDecimal.valueOf(r()).toBigInteger();
+					return BigInteger.valueOf((long) r());
 				else // component == 1
-					return BigDecimal.valueOf(i()).toBigInteger();
+					return BigInteger.valueOf((long) i());
 			}
 			else {
 				// 2 <= component <= 3
 				if (component == 2)
-					return BigDecimal.valueOf(j()).toBigInteger();
+					return BigInteger.valueOf((long) j());
 				else // component == 3
-					return BigDecimal.valueOf(k()).toBigInteger();
+					return BigInteger.valueOf((long) k());
 			}
 		} else {
 			// component >= 4
 			if (component < 6) {
 				// 4 <= component <= 5
 				if (component == 4)
-					return BigDecimal.valueOf(l()).toBigInteger();
+					return BigInteger.valueOf((long) l());
 				else // component == 5
-					return BigDecimal.valueOf(i0()).toBigInteger();
+					return BigInteger.valueOf((long) i0());
 			}
 			else {
 				// 6 <= component <= 7
 				if (component == 6)
-					return BigDecimal.valueOf(j0()).toBigInteger();
+					return BigInteger.valueOf((long) j0());
 				else // component == 7
-					return BigDecimal.valueOf(k0()).toBigInteger();
+					return BigInteger.valueOf((long) k0());
 			}
 		}
 	}
@@ -1670,32 +1670,32 @@ public final class OctonionFloat16Member
 				if (component < 2) {
 					// 0 <= component <= 1
 					if (component == 0)
-						return BigDecimal.valueOf(r()).toBigInteger();
+						return BigInteger.valueOf((long) r());
 					else // component == 1
-						return BigDecimal.valueOf(i()).toBigInteger();
+						return BigInteger.valueOf((long) i());
 				}
 				else {
 					// 2 <= component <= 3
 					if (component == 2)
-						return BigDecimal.valueOf(j()).toBigInteger();
+						return BigInteger.valueOf((long) j());
 					else // component == 3
-						return BigDecimal.valueOf(k()).toBigInteger();
+						return BigInteger.valueOf((long) k());
 				}
 			} else {
 				// component >= 4
 				if (component < 6) {
 					// 4 <= component <= 5
 					if (component == 4)
-						return BigDecimal.valueOf(l()).toBigInteger();
+						return BigInteger.valueOf((long) l());
 					else // component == 5
-						return BigDecimal.valueOf(i0()).toBigInteger();
+						return BigInteger.valueOf((long) i0());
 				}
 				else {
 					// 6 <= component <= 7
 					if (component == 6)
-						return BigDecimal.valueOf(j0()).toBigInteger();
+						return BigInteger.valueOf((long) j0());
 					else // component == 7
-						return BigDecimal.valueOf(k0()).toBigInteger();
+						return BigInteger.valueOf((long) k0());
 				}
 			}
 		}
@@ -2024,7 +2024,7 @@ public final class OctonionFloat16Member
 
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
-		return new BigInteger[] {BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger(), BigDecimal.valueOf(j()).toBigInteger(), BigDecimal.valueOf(k()).toBigInteger(), BigDecimal.valueOf(l()).toBigInteger(), BigDecimal.valueOf(i0()).toBigInteger(), BigDecimal.valueOf(j0()).toBigInteger(), BigDecimal.valueOf(k0()).toBigInteger()};
+		return new BigInteger[] {BigInteger.valueOf((long) r()), BigInteger.valueOf((long) i()), BigInteger.valueOf((long) j()), BigInteger.valueOf((long) k()), BigInteger.valueOf((long) l()), BigInteger.valueOf((long) i0()), BigInteger.valueOf((long) j0()), BigInteger.valueOf((long) k0())};
 	}
 
 	@Override

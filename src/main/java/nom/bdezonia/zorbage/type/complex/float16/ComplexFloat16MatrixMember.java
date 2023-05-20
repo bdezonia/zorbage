@@ -831,8 +831,8 @@ public final class ComplexFloat16MatrixMember
 		if (component > 1) return BigInteger.ZERO;
 		ComplexFloat16Member tmp = tmpComp.get();
 		getV(index.get(1), index.get(0), tmp);
-		if (component == 0) return BigDecimal.valueOf(tmp.r()).toBigInteger();
-		return BigDecimal.valueOf(tmp.i()).toBigInteger();
+		if (component == 0) return BigInteger.valueOf((long) tmp.r());
+		return BigInteger.valueOf((long) tmp.i());
 	}
 
 	@Override
@@ -1101,8 +1101,8 @@ public final class ComplexFloat16MatrixMember
 		else {
 			ComplexFloat16Member tmp = tmpComp.get();
 			getV(index.get(1), index.get(0), tmp);
-			if (component == 0) return BigDecimal.valueOf(tmp.r()).toBigInteger();
-			return BigDecimal.valueOf(tmp.i()).toBigInteger();
+			if (component == 0) return BigInteger.valueOf((long) tmp.r());
+			return BigInteger.valueOf((long) tmp.i());
 		}
 	}
 
@@ -1417,8 +1417,8 @@ public final class ComplexFloat16MatrixMember
 		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[k++] = BigInteger.valueOf((long) value.r());
+			values[k++] = BigInteger.valueOf((long) value.i());
 		}
 		return values;
 	}

@@ -553,8 +553,8 @@ public final class ComplexFloat16Member
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
-		if (component == 1) return BigDecimal.valueOf(i()).toBigInteger();
+		if (component == 0) return BigInteger.valueOf((long) r());
+		if (component == 1) return BigInteger.valueOf((long) i());
 		return BigInteger.ZERO;
 	}
 
@@ -724,8 +724,8 @@ public final class ComplexFloat16Member
 			return BigInteger.ZERO;
 		}
 		else {
-			if (component == 0) return BigDecimal.valueOf(r()).toBigInteger();
-			else return BigDecimal.valueOf(i()).toBigInteger();
+			if (component == 0) return BigInteger.valueOf((long) r());
+			else return BigInteger.valueOf((long) i());
 		}
 	}
 
@@ -872,7 +872,7 @@ public final class ComplexFloat16Member
 
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
-		return new BigInteger[] {BigDecimal.valueOf(r()).toBigInteger(), BigDecimal.valueOf(i()).toBigInteger()};
+		return new BigInteger[] {BigInteger.valueOf((long) r()), BigInteger.valueOf((long) i())};
 	}
 
 	@Override

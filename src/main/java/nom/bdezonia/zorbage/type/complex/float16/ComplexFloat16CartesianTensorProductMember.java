@@ -780,9 +780,9 @@ public final class ComplexFloat16CartesianTensorProductMember
 		ComplexFloat16Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return BigDecimal.valueOf(tmp.r()).toBigInteger();
+			return BigInteger.valueOf((long) tmp.r());
 		else if (component == 1)
-			return BigDecimal.valueOf(tmp.i()).toBigInteger();
+			return BigInteger.valueOf((long) tmp.i());
 		return BigInteger.ZERO;
 	}
 
@@ -899,9 +899,9 @@ public final class ComplexFloat16CartesianTensorProductMember
 			ComplexFloat16Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return BigDecimal.valueOf(tmp.r()).toBigInteger();
+				return BigInteger.valueOf((long) tmp.r());
 			else
-				return BigDecimal.valueOf(tmp.i()).toBigInteger();
+				return BigInteger.valueOf((long) tmp.i());
 		}
 	}
 
@@ -1192,8 +1192,8 @@ public final class ComplexFloat16CartesianTensorProductMember
 		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[k++] = BigInteger.valueOf((long) value.r());
+			values[k++] = BigInteger.valueOf((long) value.i());
 		}
 		return values;
 	}
