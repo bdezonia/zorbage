@@ -40,10 +40,27 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBytes;
+import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
+import nom.bdezonia.zorbage.algebra.SetFromDoubles;
 import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromInts;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -77,7 +94,26 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		Settable<QuaternionFloat16CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat16Member>,
-		SetFromFloats, SetFromLongs, GetAsFloatArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromInts,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromDoubles,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsFloatArrayExact,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member();
@@ -1181,6 +1217,62 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
@@ -1215,6 +1307,140 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 
 	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			value.setJ(  (float) vals[i + 2] );
+			value.setK(  (float) vals[i + 3] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 4;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		QuaternionFloat16Member value = G.QHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		byte[] values = new byte[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
+			values[k++] = (byte) value.j();
+			values[k++] = (byte) value.k();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		short[] values = new short[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
+			values[k++] = (short) value.j();
+			values[k++] = (short) value.k();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		int[] values = new int[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
+			values[k++] = (int) value.j();
+			values[k++] = (int) value.k();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		long[] values = new long[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
+			values[k++] = (long) value.j();
+			values[k++] = (long) value.k();
+		}
+		return values;
+	}
+
+	@Override
 	public float[] getAsFloatArray() {
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
@@ -1227,6 +1453,57 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			values[k++] = value.i();
 			values[k++] = value.j();
 			values[k++] = value.k();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		double[] values = new double[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		BigInteger[] values = new BigInteger[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k()).toBigInteger();
+		}
+		return values;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 4))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		QuaternionFloat16Member value = G.QHLF.construct();
+		BigDecimal[] values = new BigDecimal[4 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
+			values[k++] = BigDecimal.valueOf(value.j());
+			values[k++] = BigDecimal.valueOf(value.k());
 		}
 		return values;
 	}

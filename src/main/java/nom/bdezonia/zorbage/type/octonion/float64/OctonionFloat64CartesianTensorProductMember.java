@@ -40,10 +40,30 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
 import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBytes;
+import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
+import nom.bdezonia.zorbage.algebra.SetFromDoublesExact;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
+import nom.bdezonia.zorbage.algebra.SetFromInts;
+import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromShorts;
+import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -77,7 +97,29 @@ public final class OctonionFloat64CartesianTensorProductMember
 		Settable<OctonionFloat64CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<OctonionFloat64Member>,
-		SetFromDoubles, SetFromLongs, GetAsDoubleArray,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
+		GetAsBigIntegerArray,
+		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
@@ -1713,7 +1755,116 @@ public final class OctonionFloat64CartesianTensorProductMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
@@ -1755,6 +1906,163 @@ public final class OctonionFloat64CartesianTensorProductMember
 	}
 
 	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].doubleValue() );
+			value.setI(  vals[i + 1].doubleValue() );
+			value.setJ(  vals[i + 2].doubleValue() );
+			value.setK(  vals[i + 3].doubleValue() );
+			value.setL(  vals[i + 4].doubleValue() );
+			value.setI0( vals[i + 5].doubleValue() );
+			value.setJ0( vals[i + 6].doubleValue() );
+			value.setK0( vals[i + 7].doubleValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat64Member value = G.ODBL.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].doubleValue() );
+			value.setI(  vals[i + 1].doubleValue() );
+			value.setJ(  vals[i + 2].doubleValue() );
+			value.setK(  vals[i + 3].doubleValue() );
+			value.setL(  vals[i + 4].doubleValue() );
+			value.setI0( vals[i + 5].doubleValue() );
+			value.setJ0( vals[i + 6].doubleValue() );
+			value.setK0( vals[i + 7].doubleValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		byte[] values = new byte[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
+			values[k++] = (byte) value.j();
+			values[k++] = (byte) value.k();
+			values[k++] = (byte) value.l();
+			values[k++] = (byte) value.i0();
+			values[k++] = (byte) value.j0();
+			values[k++] = (byte) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		short[] values = new short[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
+			values[k++] = (short) value.j();
+			values[k++] = (short) value.k();
+			values[k++] = (short) value.l();
+			values[k++] = (short) value.i0();
+			values[k++] = (short) value.j0();
+			values[k++] = (short) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		int[] values = new int[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
+			values[k++] = (int) value.j();
+			values[k++] = (int) value.k();
+			values[k++] = (int) value.l();
+			values[k++] = (int) value.i0();
+			values[k++] = (int) value.j0();
+			values[k++] = (int) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		long[] values = new long[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
+			values[k++] = (long) value.j();
+			values[k++] = (long) value.k();
+			values[k++] = (long) value.l();
+			values[k++] = (long) value.i0();
+			values[k++] = (long) value.j0();
+			values[k++] = (long) value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		float[] values = new float[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = (float) value.r();
+			values[k++] = (float) value.i();
+			values[k++] = (float) value.j();
+			values[k++] = (float) value.k();
+			values[k++] = (float) value.l();
+			values[k++] = (float) value.i0();
+			values[k++] = (float) value.j0();
+			values[k++] = (float) value.k0();
+		}
+		return values;
+	}
+
+	@Override
 	public double[] getAsDoubleArray() {
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
@@ -1771,6 +2079,48 @@ public final class OctonionFloat64CartesianTensorProductMember
 			values[k++] = value.i0();
 			values[k++] = value.j0();
 			values[k++] = value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.l()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i0()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j0()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k0()).toBigInteger();
+		}
+		return values;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat64Member value = G.ODBL.construct();
+		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
+			values[k++] = BigDecimal.valueOf(value.j());
+			values[k++] = BigDecimal.valueOf(value.k());
+			values[k++] = BigDecimal.valueOf(value.l());
+			values[k++] = BigDecimal.valueOf(value.i0());
+			values[k++] = BigDecimal.valueOf(value.j0());
+			values[k++] = BigDecimal.valueOf(value.k0());
 		}
 		return values;
 	}

@@ -41,11 +41,28 @@ import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
+import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
+import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
+import nom.bdezonia.zorbage.algebra.GetAsByteArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsIntArray;
+import nom.bdezonia.zorbage.algebra.GetAsLongArray;
+import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBytes;
+import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
+import nom.bdezonia.zorbage.algebra.SetFromDoublesExact;
+import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
+import nom.bdezonia.zorbage.algebra.SetFromInts;
+import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromShorts;
+import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -79,8 +96,28 @@ public final class Float128CartesianTensorProductMember
 		Settable<Float128CartesianTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float128Member>,
-		SetFromBigDecimals, SetFromBigIntegers, SetFromDoubles, SetFromLongs,
+		SetFromBytes,
+		SetFromBytesExact,
+		SetFromShorts,
+		SetFromShortsExact,
+		SetFromInts,
+		SetFromIntsExact,
+		SetFromLongs,
+		SetFromFloats,
+		SetFromFloatsExact,
+		SetFromDoubles,
+		SetFromDoublesExact,
+		SetFromBigIntegers,
+		SetFromBigDecimals,
+		GetAsByteArray,
+		GetAsShortArray,
+		GetAsIntArray,
+		GetAsLongArray,
+		GetAsFloatArray,
+		GetAsDoubleArray,
+		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
+		GetAsBigDecimalArrayExact,
 		ThreadAccess
 {
 	private static final Float128Member ZERO = new Float128Member();
@@ -832,14 +869,87 @@ public final class Float128CartesianTensorProductMember
 	}
 
 	@Override
+	public void setFromBytesExact(byte... vals) {
+		setFromBytes(vals);
+	}
+	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBytes(byte... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromShorts(short... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromInts(int... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
 	public void setFromLongs(long... vals) {
 		if (vals.length != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		Float128Member value = new Float128Member();
+		Float128Member tmp = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
-			value.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, value);
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
+		}
+	}
+
+	@Override
+	public void setFromFloats(float... vals) {
+		if (vals.length != storage.size()) {
+			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		}
+		Float128Member tmp = new Float128Member();
+		for (int i = 0; i < vals.length; i++) {
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
 		}
 	}
 
@@ -848,10 +958,10 @@ public final class Float128CartesianTensorProductMember
 		if (vals.length != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		Float128Member value = new Float128Member();
+		Float128Member tmp = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
-			value.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, value);
+			tmp.setV(BigDecimal.valueOf(vals[i]));
+			storage.set(i, tmp);
 		}
 	}
 
@@ -860,10 +970,10 @@ public final class Float128CartesianTensorProductMember
 		if (vals.length != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		Float128Member value = new Float128Member();
+		Float128Member tmp = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
-			value.setV(new BigDecimal(vals[i]));
-			storage.set(i, value);
+			tmp.setV(new BigDecimal(vals[i]));
+			storage.set(i, tmp);
 		}
 	}
 
@@ -872,11 +982,114 @@ public final class Float128CartesianTensorProductMember
 		if (vals.length != storage.size()) {
 			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
 		}
-		Float128Member value = new Float128Member();
+		Float128Member tmp = new Float128Member();
 		for (int i = 0; i < vals.length; i++) {
-			value.setV(vals[i]);
-			storage.set(i, value);
+			tmp.setV(vals[i]);
+			storage.set(i, tmp);
 		}
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArrayExact() {
+		return getAsBigDecimalArray();
+	}
+	
+	@Override
+	public byte[] getAsByteArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		byte[] values = new byte[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().byteValue();
+		}
+		return values;
+	}
+
+	@Override
+	public short[] getAsShortArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		short[] values = new short[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().shortValue();
+		}
+		return values;
+	}
+
+	@Override
+	public int[] getAsIntArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		int[] values = new int[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().intValue();
+		}
+		return values;
+	}
+
+	@Override
+	public long[] getAsLongArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		long[] values = new long[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().longValue();
+		}
+		return values;
+	}
+
+	@Override
+	public float[] getAsFloatArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		float[] values = new float[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().floatValue();
+		}
+		return values;
+	}
+
+	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		double[] values = new double[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().doubleValue();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 1))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		Float128Member value = G.QUAD.construct();
+		BigInteger[] values = new BigInteger[1 * (int) storage.size()];
+		for (int i = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[i] = value.v().toBigInteger();
+		}
+		return values;
 	}
 
 	@Override
