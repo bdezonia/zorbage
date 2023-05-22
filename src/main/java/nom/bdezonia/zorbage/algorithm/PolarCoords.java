@@ -84,8 +84,8 @@ public class PolarCoords {
 	}
 
 	/**
-	 * Calculate the phase of a complex number given the real and imag
-	 * components as the inputs.
+	 * Calculate the phase of a complex number given the real and imag components as the inputs.
+	 * Phase is always returned from within the half open range (-pi, pi].
 	 * 
 	 * @param <T>
 	 * @param <U>
@@ -108,66 +108,62 @@ public class PolarCoords {
 		
 		U pi = realAlg.construct();
 		
-		U arctan = realAlg.construct();
-		
-		if (xSignum > 0) {
+		U one = realAlg.construct();
 
+		U two = realAlg.construct();
+
+		if (xSignum == 0 && ySignum == 0) {
+			
+			realAlg.nan().call(phase);
+		}
+		else if (xSignum == 0) {  // and ySignum does not
+
+			realAlg.PI().call(pi);
+
+			realAlg.unity().call(one);
+				
+			realAlg.add().call(one, one, two);
+					
+			realAlg.divide().call(pi, two, quotient);
+					
+			if (ySignum > 0) {
+
+				realAlg.assign().call(quotient, phase);
+			}
+			else {
+
+				realAlg.negate().call(quotient, phase);
+			}
+		}
+		else if (ySignum == 0) {  // and xSignum does not
+				
+			if (xSignum < 0) {
+					
+				realAlg.PI().call(phase);
+			}
+			else {
+
+				realAlg.zero().call(phase);
+			}
+		}
+		else {
+			
 			realAlg.divide().call(imag, real, quotient);
 			
 			realAlg.atan().call(quotient, phase);
-		}
-		else if (xSignum < 0) {
 			
-			realAlg.PI().call(pi);
+			if (xSignum < 0) {
 
-			if (ySignum >= 0) {
-				
-				realAlg.divide().call(imag, real, quotient);
-				
-				realAlg.atan().call(quotient, arctan);
-				
-				realAlg.add().call(quotient,  pi,  phase);
-			}
-			else {  // ySignum < 0
-				
-				realAlg.divide().call(imag, real, quotient);
-				
-				realAlg.atan().call(quotient, arctan);
-				
-				realAlg.subtract().call(quotient,  pi,  phase);
-			}
-		}
-		else { // xSignum == 0
-			
-			if (ySignum > 0) {
-			
-				U one = realAlg.construct();
+				realAlg.PI().call(pi);
 
-				U two = realAlg.construct();
-				
-				realAlg.unity().call(one);
-				
-				realAlg.add().call(one, one, two);
-				
-				realAlg.divide().call(pi, two, phase);
-			}
-			else if (ySignum < 0) {
-				
-				U one = realAlg.construct();
+				if (ySignum < 0) {
 
-				U two = realAlg.construct();
-				
-				realAlg.unity().call(one);
-				
-				realAlg.add().call(one, one, two);
-				
-				realAlg.divide().call(pi, two, quotient);
-				
-				realAlg.negate().call(quotient, phase);
-			}
-			else { // ySignum == 0
-				
-				realAlg.nan().call(phase);
+					realAlg.subtract().call(phase, pi, phase);
+				}
+				else {
+
+					realAlg.add().call(phase, pi, phase);
+				}
 			}
 		}
 	}
