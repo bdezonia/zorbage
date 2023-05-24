@@ -47,7 +47,7 @@ public class TestPolarCoords {
 	@Test
 	public void test() {
 
-		double TOL = 0.01;
+		double TOL = 0.000000000000001;
 		
 		Float64Member real = G.DBL.construct();
 		
