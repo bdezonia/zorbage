@@ -155,6 +155,7 @@ public class ComplexFloat64Algebra
 	{
 		@Override
 		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+			
 			// for safety must use tmps
 			double max = Math.max( Math.max(Math.abs(a.r()), Math.abs(a.i())) , Math.max(Math.abs(b.r()), Math.abs(b.i())) );
 			if (max == 0) {

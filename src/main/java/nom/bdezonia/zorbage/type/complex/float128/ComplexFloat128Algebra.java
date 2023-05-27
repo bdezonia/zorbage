@@ -177,8 +177,8 @@ public class ComplexFloat128Algebra
 			G.QUAD.multiply().call(a.i(), b.i(), tmp2);
 			G.QUAD.subtract().call(tmp1, tmp2, r);
 			
-			G.QUAD.multiply().call(a.i(), b.r(), tmp1);
-			G.QUAD.multiply().call(a.r(), b.i(), tmp2);
+			G.QUAD.multiply().call(a.r(), b.i(), tmp1);
+			G.QUAD.multiply().call(a.i(), b.r(), tmp2);
 			G.QUAD.add().call(tmp1, tmp2, i);
 			
 			c.setR( r );

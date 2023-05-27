@@ -143,7 +143,7 @@ public class ComplexHighPrecisionAlgebra
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
 			// for safety must use tmps
 			BigDecimal r = a.r().multiply(b.r()).subtract(a.i().multiply(b.i()));
-			BigDecimal i = a.i().multiply(b.r()).subtract(a.r().multiply(b.i()));
+			BigDecimal i = a.i().multiply(b.r()).add(a.r().multiply(b.i()));
 			c.setR( r );
 			c.setI( i );
 		}
