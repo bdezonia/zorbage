@@ -47,7 +47,7 @@ public class SwapQuadrants {
 	
 
 	/**
-	 * Swaps quadrants of a 2d even sized data source. This is an in place operation.
+	 * Swaps quadrants of a 2d data source. This is an in place operation.
 	 * The lower left and upper right quadrants are exchanged. So are the upper left
 	 * and lower right. This operation can be useful for dealing with 2d FFT data.
 	 * 
@@ -81,8 +81,8 @@ public class SwapQuadrants {
 		for (long y = 0; y < yQuadSize; y++) {
 			for (long x = 0; x < xQuadSize; x++) {
 				vw.get(x, y, tmp1);
-				vw.get(x+xQuadSize+middleFixX, y+yQuadSize+middleFixY, tmp2);
-				vw.set(x+xQuadSize+middleFixX, y+yQuadSize+middleFixY, tmp1);
+				vw.get(x+(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp2);
+				vw.set(x+(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp1);
 				vw.set(x, y, tmp2);
 			}
 		}
@@ -90,13 +90,12 @@ public class SwapQuadrants {
 		// swap ur and ll
 
 		for (long y = 0; y < yQuadSize; y++) {
-			for (long x = xQuadSize+middleFixX; x < vw.d0(); x++) {
+			for (long x = (xQuadSize+middleFixX); x < vw.d0(); x++) {
 				vw.get(x, y, tmp1);
-				vw.get(x-xQuadSize-middleFixX, y+yQuadSize+middleFixY, tmp2);
-				vw.set(x-xQuadSize-middleFixX, y+yQuadSize+middleFixY, tmp1);
+				vw.get(x-(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp2);
+				vw.set(x-(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp1);
 				vw.set(x, y, tmp2);
 			}
 		}
 	}
-	
 }
