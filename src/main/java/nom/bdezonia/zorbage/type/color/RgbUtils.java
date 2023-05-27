@@ -175,4 +175,35 @@ public class RgbUtils {
 	public static int argb(int a, int r, int g, int b) {
 		return a_enc(a) | r_enc(r) | g_enc(g) | b_enc(b);
 	}
+	
+	/**
+	 * 
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return
+	 */
+	public static double intensity(int r, int g, int b) {
+		
+		// from a wikipedia article on GrayScale
+		
+		return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+	}
+	
+	/**
+	 * 
+	 * @param a
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @return
+	 */
+	public static double intensity(int a, int r, int g, int b) {
+		
+		double intensity = intensity(r, g, b);
+		
+		intensity *= (a / 255.0);  // scale intensity by the alpha value
+		
+		return intensity;
+	}
 }
