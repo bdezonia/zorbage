@@ -186,8 +186,9 @@ public class RgbUtils {
 	public static double intensity(int r, int g, int b) {
 		
 		// from a wikipedia article on GrayScale
+		// modified to avoid roundoff errors
 		
-		return (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
+		return (0.21261875 * r) + (0.715175 * g) + (0.07220625 * b);
 	}
 	
 	/**
