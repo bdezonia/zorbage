@@ -188,7 +188,7 @@ public class RgbUtils {
 		// from a wikipedia article on GrayScale
 		// modified to avoid roundoff errors
 		
-		return (0.21261875 * r) + (0.715175 * g) + (0.07220625 * b);
+		return (0.21261875 * r) + (0.71517500 * g) + (0.07220625 * b);
 	}
 	
 	/**
