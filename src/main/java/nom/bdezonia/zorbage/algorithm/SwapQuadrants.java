@@ -98,4 +98,13 @@ public class SwapQuadrants {
 			}
 		}
 	}
+	
+	/*
+	// a special version for FFT files that have extra row and col in freq space
+	
+	public static <T extends Algebra<T,U>, U>
+		void fftShift(T alg, DimensionedDataSource<U> data)
+	{
+	}
+	*/
 }
