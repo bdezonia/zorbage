@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.GetComplex;
@@ -67,7 +68,8 @@ public class ComplexCorrelation {
 					RA extends Algebra<RA,R> & Ordered<R> & Unity<R> &
 								NaN<R> & Addition<R> & Multiplication<R> &
 								Invertible<R> & Trigonometric<R> & Roots<R> &
-								RealConstants<R> & InverseTrigonometric<R>,
+								RealConstants<R> & InverseTrigonometric<R> &
+								AbsoluteValue<R,R>,
 					R>
 	
 		void compute(RA realAlg, C aV, C bV, R result)
