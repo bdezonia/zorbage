@@ -72,19 +72,31 @@ public class InvFFT {
 	 * @param b Destination list of complex data
 	 */
 	public static
-		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
+	
+		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> &
+						Conjugate<C>,
+						
 			C extends SetR<R> & SetI<R>,
-			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
-				Multiplication<R> & Addition<R> & Invertible<R>,
+			
+			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
+				Unity<R> & Multiplication<R> & Addition<R> & Invertible<R>,
+				
 			R>
-	void compute(CA complexAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
+	
+	void compute(CA complexAlg,
+					RA realAlg,
+					IndexedDataSource<C> a,
+					IndexedDataSource<C> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
+
 		if (aSize != FFT.enclosingPowerOf2(aSize))
 			throw new IllegalArgumentException("input size is not a power of 2");
+		
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
+		
 		C one_over_n = complexAlg.construct((BigDecimal.ONE.divide(BigDecimal.valueOf(aSize), new MathContext(100))).toString());
 		nom.bdezonia.zorbage.algorithm.Conjugate.compute(complexAlg, a, b);
 		FFT.compute(complexAlg, realAlg, b, b);

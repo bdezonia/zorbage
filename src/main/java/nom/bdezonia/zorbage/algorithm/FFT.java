@@ -67,17 +67,26 @@ public class FFT {
 	 * @param a Source list of complex data
 	 * @param b Destination list of complex data
 	 */
-	public static <CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
-						C extends SetR<R> & SetI<R>,
-						RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
-							Multiplication<R> & Addition<R> & Invertible<R> & Unity<R>,
-						R>
+	public static
+	
+		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C>,
+		
+			C extends SetR<R> & SetI<R>,
+			
+			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
+							Multiplication<R> & Addition<R> & Invertible<R> &
+							Unity<R>,
+							
+			R>
+	
 		void compute(CA complexAlg, RA realAlg, IndexedDataSource<C> a, IndexedDataSource<C> b)
 	{
 		long aSize = a.size();
 		long bSize = b.size();
+
 		if (aSize != FFT.enclosingPowerOf2(aSize))
 			throw new IllegalArgumentException("input size is not a power of 2");
+		
 		if (aSize != bSize)
 			throw new IllegalArgumentException("output size does not match input size");
 		
@@ -156,13 +165,19 @@ public class FFT {
 	 * @return
 	 */
 	public static long enclosingPowerOf2(long num) {
+		
 		if (num <= 0)
 			throw new IllegalArgumentException("num too small");
+		
 		long max = 1;
+		
 		for (int i = 0; i < 63; i++) {
+		
 			if (num <= max) return max;
+			
 			max <<= 1;
 		}
+		
 		throw new IllegalArgumentException("number passed ("+num+") does not have an enclosing power of two that fits into a positive long");
 	}
 }
