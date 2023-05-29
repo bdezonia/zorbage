@@ -65,57 +65,69 @@ public class InvFFT2D {
 	 * @param <C>
 	 * @param <RA>
 	 * @param <R>
-	 * @param cmplxAlg
+	 * @param complexAlg
 	 * @param realAlg
-	 * @param cmplxData
-	 * @param axis0
-	 * @param axis1
-	 * @param otherPositions
+	 * @param inputPlane
 	 * @return
 	 */
 	public static
+	
 		<CA extends Algebra<CA,C> & Addition<C> & Multiplication<C> & Conjugate<C>,
-			C extends SetR<R> & SetI<R> & Allocatable<C>,
-			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> & Unity<R> &
-						Multiplication<R> & Addition<R> & Invertible<R>,
+	
+			C extends  Allocatable<C> & SetR<R> & SetI<R>,
+			
+			RA extends Algebra<RA,R> & Trigonometric<R> & RealConstants<R> &
+						Unity<R> & Multiplication<R> & Addition<R> &
+						Invertible<R>,
+			
 			R>
-	DimensionedDataSource<C> compute(CA complexAlg, RA realAlg, DimensionedDataSource<C> complexData)
+	
+		DimensionedDataSource<C>
+	
+			compute(CA complexAlg,
+					RA realAlg,
+					DimensionedDataSource<C> inputPlane)
 	{
-		if (complexData.numDimensions() != 2)
+		if (inputPlane.numDimensions() != 2)
 			throw new IllegalArgumentException("InvFFT2D input should be a single 2-d plane of complex values");
 		
 		C complexValue = complexAlg.construct();
 		
 		// calc some important variables
 		
-		long cols = complexData.dimension(0);
+		long cols = inputPlane.dimension(0);
 		
-		long rows = complexData.dimension(1);
+		long rows = inputPlane.dimension(1);
 		
 		long sz = FFT.enclosingPowerOf2(Math.max(rows, cols));
+		
+		long[] squareDims = new long[] {sz,sz};
 
 		// create power of two square planes for calculations
 		
-		DimensionedDataSource<C> inputPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
+		DimensionedDataSource<C> complexData =
+				DimensionedStorage.allocate(complexValue, squareDims);
 
-		DimensionedDataSource<C> tmpPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
+		DimensionedDataSource<C> tmpPlane =
+				DimensionedStorage.allocate(complexValue, squareDims);
 
-		DimensionedDataSource<C> outputPlane = DimensionedStorage.allocate(complexValue, new long[] {sz,sz});
+		DimensionedDataSource<C> outputPlane =
+				DimensionedStorage.allocate(complexValue, squareDims);
 
 		// Copy the rectangular input image into the square plane defined for it.
-		// The other (padded) values are zero.
+		// The values outside the rectangular region will be zero (padding).
 		
-		TwoDView<C> complexVw1 = new TwoDView<>(complexData);
+		TwoDView<C> readView = new TwoDView<>(inputPlane);
 		
-		TwoDView<C> complexVw2 = new TwoDView<>(inputPlane);
+		TwoDView<C> writeView = new TwoDView<>(complexData);
 		
 		for (long y = 0; y < rows; y++) {
 
 			for (long x = 0; x < cols; x++) {
 			
-				complexVw1.get(x, y, complexValue);
+				readView.get(x, y, complexValue);
 				
-				complexVw2.set(x, y, complexValue);
+				writeView.set(x, y, complexValue);
 			}
 		}
 		
@@ -125,7 +137,7 @@ public class InvFFT2D {
 			
 			// setup the input col to do InvFFT on
 			
-			IndexedDataSource<C> inCol = new SequencedDataSource<>(inputPlane.rawData(), c, sz, sz);
+			IndexedDataSource<C> inCol = new SequencedDataSource<>(complexData.rawData(), c, sz, sz);
 			
 			// setup the tmp col to place InvFFT results in
 
