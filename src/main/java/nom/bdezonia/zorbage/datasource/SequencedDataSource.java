@@ -38,7 +38,9 @@ import nom.bdezonia.zorbage.algebra.StorageConstruction;
  *
  */
 public class SequencedDataSource<U>
+
 	implements IndexedDataSource<U>
+
 {
 	private final IndexedDataSource<U> data;
 	private final long start;
@@ -52,60 +54,84 @@ public class SequencedDataSource<U>
 	 * @param stride
 	 * @param count
 	 */
-	public SequencedDataSource(IndexedDataSource<U> data,long start, long stride, long count) {
+	public SequencedDataSource(IndexedDataSource<U> data, long start, long stride, long count) {
+
 		this.data = data;
 		this.start = start;
 		this.stride = stride;
 		this.count = count;
-		if (count < 0)
-			throw new IllegalArgumentException("count must be >= 1");
-		if (start < 0 || start >= data.size())
+		
+		if (!(count >= 0)) {
+		
+			throw new IllegalArgumentException("count must be >= 0");
+		}
+		
+		if (start < 0 || start >= data.size()) {
+		
 			throw new IllegalArgumentException("start is outside the bounds of the dataset");
-		if (stride == 0)
-			throw new IllegalArgumentException("stride must be nonzero");
+		}
+		
 		if (stride > 0) {
-			if ((start + stride*(count-1)) >= data.size())
+
+			if ((start + stride*(count-1)) >= data.size()) {
+				
 				throw new IllegalArgumentException("the specified sequence reaches beyond the end of the dataset");
+			}
+		}
+		else if (stride < 0){
+			
+			if ((start + stride*(count-1)) < 0) {
+				
+				throw new IllegalArgumentException("the specified sequence reaches beyond the beginning of the dataset");
+			}
 		}
 		else {
-			// stride < 0
-			if ((start + stride*(count-1)) < 0)
-				throw new IllegalArgumentException("the specified sequence reaches beyond the beginning of the dataset");
+			
+			throw new IllegalArgumentException("stride must be nonzero");
 		}
 	}
 	
 	@Override
 	public SequencedDataSource<U> duplicate() {
+
 		// shallow copy
+		
 		return new SequencedDataSource<>(data, start, stride, count);
 	}
 
 	@Override
 	public void set(long index, U value) {
+		
 		if (index < 0 || index >= count)
 			throw new IllegalArgumentException("index out of bounds");
+		
 		data.set(start + stride*index, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
+		
 		if (index < 0 || index >= count)
 			throw new IllegalArgumentException("index out of bounds");
+		
 		data.get(start + stride*index, value);
 	}
 
 	@Override
 	public long size() {
+		
 		return count;
 	}
 
 	@Override
 	public StorageConstruction storageType() {
+		
 		return data.storageType();
 	}
 
 	@Override
 	public boolean accessWithOneThread() {
+		
 		return data.accessWithOneThread();
 	}
 }
