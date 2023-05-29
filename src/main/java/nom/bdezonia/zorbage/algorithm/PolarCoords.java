@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.AbsoluteValue;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.InverseTrigonometric;
@@ -57,60 +58,86 @@ public class PolarCoords {
 	 * Calculate the magnitude of a complex number given the real and imag
 	 * components as the inputs.
 	 * 
-	 * @param <T>
-	 * @param <U>
+	 * @param <RA>
+	 * @param <R>
 	 * @param realAlg
 	 * @param real
 	 * @param imag
 	 * @param magnitude
 	 */
-	public static <T extends Algebra<T,U> & Addition<U> & Multiplication<U> & Roots<U>, U>
-		void magnitude(T realAlg, U real, U imag, U magnitude)
+	public static
+	
+		<RA extends Algebra<RA,R> & Addition<R> & Multiplication<R> &
+					Roots<R> & Ordered<R> & AbsoluteValue<R,R> &
+					Invertible<R>,
+			R>
+	
+		void magnitude(RA realAlg, R real, R imag, R magnitude)
 	{
-		U sum = realAlg.construct();
+		R max = realAlg.construct();
 
-		U r2 = realAlg.construct();
-		U i2 = realAlg.construct();
+		R r2 = realAlg.construct();
 		
-		// TODO: this is the super naive algo. look at the L2 Norm code
-		// for a better approach to take in the future.
+		R i2 = realAlg.construct();
 		
-		realAlg.multiply().call(real, real, r2);
-		realAlg.multiply().call(imag, imag, i2);
+		R sum = realAlg.construct();
+		
+		realAlg.max().call(real, imag, max);
+		
+		if (realAlg.isZero().call(max)) {
+		
+			realAlg.zero().call(max);
+			return;
+		}
+		
+		realAlg.abs().call(max, max);
 
+		realAlg.divide().call(real, max, r2);
+		
+		realAlg.divide().call(imag, max, i2);
+		
+		realAlg.multiply().call(r2, r2, r2);
+		
+		realAlg.multiply().call(i2, i2, i2);
+		
 		realAlg.add().call(r2, i2, sum);
 		
-		realAlg.sqrt().call(sum, magnitude);
+		realAlg.sqrt().call(sum, sum);
+		
+		realAlg.multiply().call(sum, max, magnitude);
 	}
 
 	/**
 	 * Calculate the phase of a complex number given the real and imag components as the inputs.
 	 * Phase is always returned from within the half open range (-pi, pi].
 	 * 
-	 * @param <T>
-	 * @param <U>
+	 * @param <RA>
+	 * @param <R>
 	 * @param realAlg
 	 * @param real
 	 * @param imag
 	 * @param phase
 	 */
-	public static <T extends Algebra<T,U> & Invertible<U> & NaN<U> &
-						InverseTrigonometric<U> & RealConstants<U> &
-						Ordered<U> & Addition<U> & Unity<U>,
-					U>
-		void phase(T realAlg, U real, U imag, U phase)
+	public static
+	
+		<RA extends Algebra<RA,R> & Invertible<R> & NaN<R> &
+						InverseTrigonometric<R> & RealConstants<R> &
+						Ordered<R> & Addition<R> & Unity<R>,
+			R>
+	
+		void phase(RA realAlg, R real, R imag, R phase)
 	{
 		int xSignum = realAlg.signum().call(real);
 
 		int ySignum = realAlg.signum().call(imag);
 
-		U quotient = realAlg.construct();
+		R quotient = realAlg.construct();
 		
-		U pi = realAlg.construct();
+		R pi = realAlg.construct();
 		
-		U one = realAlg.construct();
+		R one = realAlg.construct();
 
-		U two = realAlg.construct();
+		R two = realAlg.construct();
 
 		if (xSignum == 0 && ySignum == 0) {
 			
@@ -172,15 +199,21 @@ public class PolarCoords {
 	 * Calculate the real coordinate value of a complex number
 	 * given the magnitude and phase components.
 	 * 
+	 * @param <RA>
+	 * @param <R>
 	 * @param realAlg
 	 * @param magnitude
 	 * @param phase
 	 * @param real
 	 */
-	public static <T extends Algebra<T,U> & Trigonometric<U> & Multiplication<U>, U>
-		void real(T realAlg, U magnitude, U phase, U real)
+	public static
+	
+		<RA extends Algebra<RA,R> & Trigonometric<R> & Multiplication<R>,
+			R>
+	
+		void real(RA realAlg, R magnitude, R phase, R real)
 	{
-		U cosPhase = realAlg.construct();
+		R cosPhase = realAlg.construct();
 		
 		realAlg.cos().call(phase, cosPhase);
 		
@@ -191,17 +224,21 @@ public class PolarCoords {
 	 * Calculate the imaginary coordinate value of a complex number
 	 * given the magnitude and phase components.
 	 * 
+	 * @param <RA>
+	 * @param <R>
 	 * @param realAlg
 	 * @param magnitude
 	 * @param phase
 	 * @param imag
 	 */
-	public static <T extends Algebra<T,U> &
-			Trigonometric<U> & Multiplication<U>,
-			U>
-		void imaginary(T realAlg, U magnitude, U phase, U imag)
+	public static
+		
+		<RA extends Algebra<RA,R> & Trigonometric<R> & Multiplication<R>,
+			R>
+	
+		void imaginary(RA realAlg, R magnitude, R phase, R imag)
 	{
-		U sinPhase = realAlg.construct();
+		R sinPhase = realAlg.construct();
 
 		realAlg.sin().call(phase, sinPhase);
 		
