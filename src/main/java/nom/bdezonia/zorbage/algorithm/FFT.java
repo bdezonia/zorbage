@@ -95,34 +95,27 @@ public class FFT {
 
 		Copy.compute(complexAlg, a, b);
 		
-		// bit reversal permutation
-		int bits = 0;
-		long sz = aSize;
-		while (sz > 0) {
-			bits++;
-			sz /= 2;
-		}
-		int shift = 64 - bits + 1;
-		//int shift = 1 + Long.numberOfLeadingZeros(aSize);
-		System.out.println("shift = "+shift);
-		for (long k = 0; k < aSize; k++) {
-			long r = Long.reverse(k) >>> shift;
-			/*
-			long j = 0;
-			long m = k;
-			long t = 64 - Long.numberOfLeadingZeros(aSize);
-			for (long q = 0; q < t; q++) {
-				long s = m / 2;
-				// b_sub_q = m - 2*s
-				j = 2*j + (m - 2*s);
-				m = s;
+		/*  Something that made more sense to Barry but turns out is equivalent to simpler way below.
+		 
+			int bits = 0;
+			long sz = aSize;
+			while (sz > 0) {
+				bits++;
+				sz /= 2;
 			}
-			*/
-			if (r > k) {
-				b.get(r, tmp1);
+			int shift = 64 - bits + 1;
+		*/
+		
+		// bit reversal permutation
+		
+		int shift = 1 + Long.numberOfLeadingZeros(aSize);
+		for (long k = 0; k < aSize; k++) {
+			long j = Long.reverse(k) >>> shift;
+			if (j > k) {
+				b.get(j, tmp1);
 				b.get(k, tmp2);
 				b.set(k, tmp1);
-				b.set(r, tmp2);
+				b.set(j, tmp2);
 			}
 		}
 
