@@ -154,18 +154,33 @@ public class ComplexFloat64Algebra
 			new Procedure3<ComplexFloat64Member, ComplexFloat64Member, ComplexFloat64Member>()
 	{
 		@Override
-		public void call(ComplexFloat64Member a, ComplexFloat64Member b, ComplexFloat64Member c) {
+		public void call(ComplexFloat64Member aV, ComplexFloat64Member bV, ComplexFloat64Member cV) {
+
+			/* MathWorld describes a way that only uses 3 multiplies
+			
+			double a = aV.r();
+			double b = aV.i();
+			double c = bV.r();
+			double d = bV.i();
+			double ac = a * c;
+			double bd = b * d;
+			
+			cV.setR(ac - bd);
+			
+			cV.setI((a + b) * (c + d) - ac - bd);
+
+			*/
 			
 			// for safety must use tmps
-			double max = Math.max( Math.max(Math.abs(a.r()), Math.abs(a.i())) , Math.max(Math.abs(b.r()), Math.abs(b.i())) );
+			double max = Math.max( Math.max(Math.abs(aV.r()), Math.abs(aV.i())) , Math.max(Math.abs(bV.r()), Math.abs(bV.i())) );
 			if (max == 0) {
 				zero().call(c);
 			}
 			else {
-				double ar = a.r() / max;
-				double ai = a.i() / max;
-				double br = b.r() / max;
-				double bi = b.i() / max;
+				double ar = aV.r() / max;
+				double ai = aV.i() / max;
+				double br = bV.r() / max;
+				double bi = bV.i() / max;
 				double r = (ar*br) - (ai*bi);
 				double i = (ai*br) + (ar*bi);
 				c.setR( r * max * max );
