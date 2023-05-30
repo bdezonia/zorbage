@@ -174,7 +174,7 @@ public class ComplexFloat64Algebra
 			// for safety must use tmps
 			double max = Math.max( Math.max(Math.abs(aV.r()), Math.abs(aV.i())) , Math.max(Math.abs(bV.r()), Math.abs(bV.i())) );
 			if (max == 0) {
-				zero().call(c);
+				zero().call(cV);
 			}
 			else {
 				double ar = aV.r() / max;
@@ -183,8 +183,8 @@ public class ComplexFloat64Algebra
 				double bi = bV.i() / max;
 				double r = (ar*br) - (ai*bi);
 				double i = (ai*br) + (ar*bi);
-				c.setR( r * max * max );
-				c.setI( i * max * max );
+				cV.setR( r * max * max );
+				cV.setI( i * max * max );
 			}
 		}
 	};
