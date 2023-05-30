@@ -164,7 +164,7 @@ public class FFT2D {
 			
 			FFT.compute(complexAlg, realAlg, tmpRow, outRow);
 		}
-		
+
 		return outputPlane;
 	}
 }
