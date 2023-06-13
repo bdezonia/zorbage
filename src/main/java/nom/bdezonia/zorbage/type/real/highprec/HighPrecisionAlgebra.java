@@ -583,8 +583,8 @@ public class HighPrecisionAlgebra
 		@Override
 		public void call(RationalMember a, HighPrecisionMember b, HighPrecisionMember c) {
 			BigDecimal tmp = b.v();
-			tmp = tmp.multiply(new BigDecimal(a.n()));
-			tmp = tmp.divide(new BigDecimal(a.d()),CONTEXT);
+			tmp = tmp.multiply(new BigDecimal(a.n()), CONTEXT);
+			tmp = tmp.divide(new BigDecimal(a.d()), CONTEXT);
 			c.setV(tmp);
 		}
 	};
@@ -601,7 +601,7 @@ public class HighPrecisionAlgebra
 		public void call(Double a, HighPrecisionMember b, HighPrecisionMember c) {
 			BigDecimal d = BigDecimal.valueOf(a);
 			BigDecimal tmp = b.v();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, CONTEXT);
 			c.setV(tmp);
 		}
 	};
@@ -822,7 +822,7 @@ public class HighPrecisionAlgebra
 			if (a.v().signum() == 0)
 				b.setV(BigDecimal.ONE);
 			else
-				b.setV(BigDecimalMath.sinh(a.v(), CONTEXT).divide(a.v(), HighPrecisionAlgebra.getContext()));
+				b.setV(BigDecimalMath.sinh(a.v(), CONTEXT).divide(a.v(), CONTEXT));
 		}
 	};
 
@@ -839,8 +839,8 @@ public class HighPrecisionAlgebra
 			if (a.v().signum() == 0)
 				b.setV(BigDecimal.ONE);
 			else {
-				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT));
-				b.setV(BigDecimalMath.sinh(term, CONTEXT).divide(term, HighPrecisionAlgebra.getContext()));
+				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT), CONTEXT);
+				b.setV(BigDecimalMath.sinh(term, CONTEXT).divide(term, CONTEXT));
 			}
 		}
 	};
@@ -858,7 +858,7 @@ public class HighPrecisionAlgebra
 			if (a.v().signum() == 0)
 				b.setV(BigDecimal.ONE);
 			else
-				b.setV(BigDecimalMath.sin(a.v(), CONTEXT).divide(a.v(), HighPrecisionAlgebra.getContext()));
+				b.setV(BigDecimalMath.sin(a.v(), CONTEXT).divide(a.v(), CONTEXT));
 		}
 	};
 
@@ -875,8 +875,8 @@ public class HighPrecisionAlgebra
 			if (a.v().signum() == 0)
 				b.setV(BigDecimal.ONE);
 			else {
-				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT));
-				b.setV(BigDecimalMath.sin(term, CONTEXT).divide(term, HighPrecisionAlgebra.getContext()));
+				BigDecimal term = a.v().multiply(BigDecimalMath.e(CONTEXT), CONTEXT);
+				b.setV(BigDecimalMath.sin(term, CONTEXT).divide(term, CONTEXT));
 			}
 		}
 	};
@@ -933,7 +933,7 @@ public class HighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, HighPrecisionMember b, HighPrecisionMember c) {
-			c.setV(a.v().multiply(b.v()));
+			c.setV(a.v().multiply(b.v(), CONTEXT));
 		}
 	};
 

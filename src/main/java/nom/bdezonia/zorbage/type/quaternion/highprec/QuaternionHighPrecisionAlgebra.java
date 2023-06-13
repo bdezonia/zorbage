@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.quaternion.highprec;
 import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
@@ -104,6 +105,8 @@ public class QuaternionHighPrecisionAlgebra
 	private static final QuaternionHighPrecisionMember J = new QuaternionHighPrecisionMember(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE,BigDecimal.ZERO);
 	private static final QuaternionHighPrecisionMember K = new QuaternionHighPrecisionMember(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ONE);
 	
+	private MathContext context = HighPrecisionAlgebra.getContext();
+	
 	@Override
 	public String typeDescription() {
 		return "Arbitrary precicion quaternion number";
@@ -146,22 +149,22 @@ public class QuaternionHighPrecisionAlgebra
 		@Override
 		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b, QuaternionHighPrecisionMember c) {
 			// for safety must use tmps
-			BigDecimal r = a.r().multiply(b.r());
-			r = r.subtract(a.i().multiply(b.i()));
-			r = r.subtract(a.j().multiply(b.j()));
-			r = r.subtract(a.k().multiply(b.k()));
-			BigDecimal i = a.r().multiply(b.i());
-			i = i.add(a.i().multiply(b.r()));
-			i = i.add(a.j().multiply(b.k()));
-			i = i.subtract(a.k().multiply(b.j()));
-			BigDecimal j = a.r().multiply(b.j());
-			j = j.subtract(a.i().multiply(b.k()));
-			j = j.add(a.j().multiply(b.r()));
-			j = j.add(a.k().multiply(b.i()));
-			BigDecimal k = a.r().multiply(b.k());
-			k = k.add(a.i().multiply(b.j()));
-			k = k.subtract(a.j().multiply(b.i()));
-			k = k.add(a.k().multiply(b.r()));
+			BigDecimal r = a.r().multiply(b.r(), context);
+			r = r.subtract(a.i().multiply(b.i(), context));
+			r = r.subtract(a.j().multiply(b.j(), context));
+			r = r.subtract(a.k().multiply(b.k(), context));
+			BigDecimal i = a.r().multiply(b.i(), context);
+			i = i.add(a.i().multiply(b.r(), context));
+			i = i.add(a.j().multiply(b.k(), context));
+			i = i.subtract(a.k().multiply(b.j(), context));
+			BigDecimal j = a.r().multiply(b.j(), context);
+			j = j.subtract(a.i().multiply(b.k(), context));
+			j = j.add(a.j().multiply(b.r(), context));
+			j = j.add(a.k().multiply(b.i(), context));
+			BigDecimal k = a.r().multiply(b.k(), context);
+			k = k.add(a.i().multiply(b.j(), context));
+			k = k.subtract(a.j().multiply(b.i(), context));
+			k = k.add(a.k().multiply(b.r(), context));
 			c.setR( r );
 			c.setI( i );
 			c.setJ( j );
@@ -301,7 +304,7 @@ public class QuaternionHighPrecisionAlgebra
 			QuaternionHighPrecisionMember scale = new QuaternionHighPrecisionMember();
 			HighPrecisionMember nval = new HighPrecisionMember();
 			norm().call(a, nval);
-			scale.setR( BigDecimal.ONE.divide((nval.v().multiply(nval.v())), HighPrecisionAlgebra.getContext()) );
+			scale.setR( BigDecimal.ONE.divide((nval.v().multiply(nval.v(), context)), context) );
 			conjugate().call(a, conjA);
 			multiply().call(scale, conjA, b);
 		}
@@ -350,11 +353,11 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(QuaternionHighPrecisionMember a, HighPrecisionMember b) {
-			BigDecimal sum = a.r().multiply(a.r());
-			sum = sum.add(a.i().multiply(a.i()));
-			sum = sum.add(a.j().multiply(a.j()));
-			sum = sum.add(a.k().multiply(a.k()));
-			b.setV( BigDecimalMath.sqrt(sum, HighPrecisionAlgebra.getContext()) );
+			BigDecimal sum = a.r().multiply(a.r(), context);
+			sum = sum.add(a.i().multiply(a.i(), context));
+			sum = sum.add(a.j().multiply(a.j(), context));
+			sum = sum.add(a.k().multiply(a.k(), context));
+			b.setV( BigDecimalMath.sqrt(sum, context) );
 		}
 	};
 	
@@ -489,16 +492,16 @@ public class QuaternionHighPrecisionAlgebra
 			HighPrecisionMember z = new HighPrecisionMember();
 			HighPrecisionMember z2 = new HighPrecisionMember();
 			QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
-			BigDecimal u = BigDecimalMath.exp(a.r(), HighPrecisionAlgebra.getContext());
+			BigDecimal u = BigDecimalMath.exp(a.r(), context);
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.HP.sinc().call(z, z2);
 			BigDecimal w = z2.v();
-			BigDecimal t = u.multiply(w);
-			b.setR( u.multiply(BigDecimalMath.cos(z.v(), HighPrecisionAlgebra.getContext())) );
-			b.setI( t.multiply(a.i()) );
-			b.setJ( t.multiply(a.j()) );
-			b.setK( t.multiply(a.k()) );
+			BigDecimal t = u.multiply(w, context);
+			b.setR( u.multiply(BigDecimalMath.cos(z.v(), context)) );
+			b.setI( t.multiply(a.i(), context) );
+			b.setJ( t.multiply(a.j(), context) );
+			b.setK( t.multiply(a.k(), context) );
 		}
 	};
 	
@@ -518,15 +521,15 @@ public class QuaternionHighPrecisionAlgebra
 			HighPrecisionMember v2 = new HighPrecisionMember();
 			HighPrecisionMember v3 = new HighPrecisionMember();
 			norm().call(a, norm);
-			HighPrecisionMember multiplier = new HighPrecisionMember(a.r().divide(norm.v(), HighPrecisionAlgebra.getContext()));
-			v1.setV( a.i().multiply(multiplier.v()) );
-			v2.setV( a.j().multiply(multiplier.v()) );
-			v3.setV( a.k().multiply(multiplier.v()) );
+			HighPrecisionMember multiplier = new HighPrecisionMember(a.r().divide(norm.v(), context));
+			v1.setV( a.i().multiply(multiplier.v(), context) );
+			v2.setV( a.j().multiply(multiplier.v(), context) );
+			v3.setV( a.k().multiply(multiplier.v(), context) );
 			G.HP.acos().call(multiplier, term);
-			b.setR(BigDecimalMath.log(norm.v(), HighPrecisionAlgebra.getContext()));
-			b.setI( v1.v().multiply(term.v()) );
-			b.setJ( v2.v().multiply(term.v()) );
-			b.setK( v3.v().multiply(term.v()) );
+			b.setR(BigDecimalMath.log(norm.v(), context));
+			b.setI( v1.v().multiply(term.v(), context) );
+			b.setJ( v2.v().multiply(term.v(), context) );
+			b.setK( v3.v().multiply(term.v(), context) );
 		}
 	};
 	
@@ -670,15 +673,15 @@ public class QuaternionHighPrecisionAlgebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.HP.sinch().call(z, z2);
-			BigDecimal cos = BigDecimalMath.cos(a.r(), HighPrecisionAlgebra.getContext());
-			BigDecimal sin = BigDecimalMath.sin(a.r(), HighPrecisionAlgebra.getContext());
+			BigDecimal cos = BigDecimalMath.cos(a.r(), context);
+			BigDecimal sin = BigDecimalMath.sin(a.r(), context);
 			BigDecimal sinhc_pi = z2.v();
-			BigDecimal cosh = BigDecimalMath.cosh(z.v(), HighPrecisionAlgebra.getContext());
-			BigDecimal ws = cos.multiply(sinhc_pi);
-			b.setR( sin.multiply(cosh) );
-			b.setI( ws.multiply(a.i()) );
-			b.setJ( ws.multiply(a.j()) );
-			b.setK( ws.multiply(a.k()) );
+			BigDecimal cosh = BigDecimalMath.cosh(z.v(), context);
+			BigDecimal ws = cos.multiply(sinhc_pi, context);
+			b.setR( sin.multiply(cosh, context) );
+			b.setI( ws.multiply(a.i(), context) );
+			b.setJ( ws.multiply(a.j(), context) );
+			b.setK( ws.multiply(a.k(), context) );
 		}
 	};
 	
@@ -698,15 +701,15 @@ public class QuaternionHighPrecisionAlgebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.HP.sinch().call(z, z2);
-			BigDecimal cos = BigDecimalMath.cos(a.r(), HighPrecisionAlgebra.getContext());
-			BigDecimal sin = BigDecimalMath.sin(a.r(), HighPrecisionAlgebra.getContext());
+			BigDecimal cos = BigDecimalMath.cos(a.r(), context);
+			BigDecimal sin = BigDecimalMath.sin(a.r(), context);
 			BigDecimal sinhc_pi = z2.v();
-			BigDecimal cosh = BigDecimalMath.cosh(z.v(), HighPrecisionAlgebra.getContext());
-			BigDecimal wc = sin.negate().multiply(sinhc_pi);
-			b.setR( cos.multiply(cosh) );
-			b.setI( wc.multiply(a.i()) );
-			b.setJ( wc.multiply(a.j()) );
-			b.setK( wc.multiply(a.k()) );
+			BigDecimal cosh = BigDecimalMath.cosh(z.v(), context);
+			BigDecimal wc = sin.negate().multiply(sinhc_pi, context);
+			b.setR( cos.multiply(cosh, context) );
+			b.setI( wc.multiply(a.i(), context) );
+			b.setJ( wc.multiply(a.j(), context) );
+			b.setK( wc.multiply(a.k(), context) );
 		}
 	};
 	
@@ -726,20 +729,20 @@ public class QuaternionHighPrecisionAlgebra
 			unreal().call(a, tmp);
 			norm().call(tmp, z);
 			G.HP.sinch().call(z, z2);
-			BigDecimal cos = BigDecimalMath.cos(a.r(), HighPrecisionAlgebra.getContext());
-			BigDecimal sin = BigDecimalMath.sin(a.r(), HighPrecisionAlgebra.getContext());
+			BigDecimal cos = BigDecimalMath.cos(a.r(), context);
+			BigDecimal sin = BigDecimalMath.sin(a.r(), context);
 			BigDecimal sinhc_pi = z2.v();
-			BigDecimal cosh = BigDecimalMath.cosh(z.v(), HighPrecisionAlgebra.getContext());
-			BigDecimal ws = cos.multiply(sinhc_pi);
-			BigDecimal wc = sin.negate().multiply(sinhc_pi);
-			s.setR( sin.multiply(cosh) );
-			s.setI( ws.multiply(a.i()) );
-			s.setJ( ws.multiply(a.j()) );
-			s.setK( ws.multiply(a.k()) );
-			c.setR( cos.multiply(cosh) );
-			c.setI( wc.multiply(a.i()) );
-			c.setJ( wc.multiply(a.j()) );
-			c.setK( wc.multiply(a.k()) );
+			BigDecimal cosh = BigDecimalMath.cosh(z.v(), context);
+			BigDecimal ws = cos.multiply(sinhc_pi, context);
+			BigDecimal wc = sin.negate().multiply(sinhc_pi, context);
+			s.setR( sin.multiply(cosh, context) );
+			s.setI( ws.multiply(a.i(), context) );
+			s.setJ( ws.multiply(a.j(), context) );
+			s.setK( ws.multiply(a.k(), context) );
+			c.setR( cos.multiply(cosh, context) );
+			c.setI( wc.multiply(a.i(), context) );
+			c.setJ( wc.multiply(a.j(), context) );
+			c.setK( wc.multiply(a.k(), context) );
 		}
 	};
 	
@@ -845,7 +848,7 @@ public class QuaternionHighPrecisionAlgebra
 		@Override
 		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
 			QuaternionHighPrecisionMember ONE_HALF = G.QHP.construct();
-			ONE_HALF.setR(BigDecimal.ONE.divide(TWO.r(), HighPrecisionAlgebra.getContext()));
+			ONE_HALF.setR(BigDecimal.ONE.divide(TWO.r(), context));
 			pow().call(a, ONE_HALF, b);
 		}
 	};
@@ -861,7 +864,7 @@ public class QuaternionHighPrecisionAlgebra
 		@Override
 		public void call(QuaternionHighPrecisionMember a, QuaternionHighPrecisionMember b) {
 			QuaternionHighPrecisionMember ONE_THIRD = G.QHP.construct();
-			ONE_THIRD.setR(BigDecimal.ONE.divide(THREE.r(), HighPrecisionAlgebra.getContext()));
+			ONE_THIRD.setR(BigDecimal.ONE.divide(THREE.r(), context));
 			pow().call(a, ONE_THIRD, b);
 		}
 	};
@@ -897,13 +900,13 @@ public class QuaternionHighPrecisionAlgebra
 		@Override
 		public void call(HighPrecisionMember a, QuaternionHighPrecisionMember b, QuaternionHighPrecisionMember c) {
 			BigDecimal tmp;
-			tmp = a.v().multiply(b.r());
+			tmp = a.v().multiply(b.r(), context);
 			c.setR(tmp);
-			tmp = a.v().multiply(b.i());
+			tmp = a.v().multiply(b.i(), context);
 			c.setI(tmp);
-			tmp = a.v().multiply(b.j());
+			tmp = a.v().multiply(b.j(), context);
 			c.setJ(tmp);
-			tmp = a.v().multiply(b.k());
+			tmp = a.v().multiply(b.k(), context);
 			c.setK(tmp);
 		}
 	};
@@ -922,20 +925,20 @@ public class QuaternionHighPrecisionAlgebra
 			BigDecimal d = new BigDecimal(a.d());
 			BigDecimal tmp;
 			tmp = b.r();
-			tmp = tmp.multiply(n);
-			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			tmp = tmp.multiply(n, context);
+			tmp = tmp.divide(d, context);
 			c.setR(tmp);
 			tmp = b.i();
-			tmp = tmp.multiply(n);
-			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			tmp = tmp.multiply(n, context);
+			tmp = tmp.divide(d, context);
 			c.setI(tmp);
 			tmp = b.j();
-			tmp = tmp.multiply(n);
-			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			tmp = tmp.multiply(n, context);
+			tmp = tmp.divide(d, context);
 			c.setJ(tmp);
 			tmp = b.k();
-			tmp = tmp.multiply(n);
-			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			tmp = tmp.multiply(n, context);
+			tmp = tmp.divide(d, context);
 			c.setK(tmp);
 		}
 	};
@@ -953,16 +956,16 @@ public class QuaternionHighPrecisionAlgebra
 			BigDecimal d = BigDecimal.valueOf(a);
 			BigDecimal tmp;
 			tmp = b.r();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, context);
 			c.setR(tmp);
 			tmp = b.i();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, context);
 			c.setI(tmp);
 			tmp = b.j();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, context);
 			c.setJ(tmp);
 			tmp = b.k();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, context);
 			c.setK(tmp);
 		}
 	};
@@ -977,10 +980,10 @@ public class QuaternionHighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, QuaternionHighPrecisionMember b, QuaternionHighPrecisionMember c) {
-			c.setR(a.v().multiply(b.r()));
-			c.setI(a.v().multiply(b.i()));
-			c.setJ(a.v().multiply(b.j()));
-			c.setK(a.v().multiply(b.k()));
+			c.setR(a.v().multiply(b.r(), context));
+			c.setI(a.v().multiply(b.i(), context));
+			c.setJ(a.v().multiply(b.j(), context));
+			c.setK(a.v().multiply(b.k(), context));
 		}
 	};
 

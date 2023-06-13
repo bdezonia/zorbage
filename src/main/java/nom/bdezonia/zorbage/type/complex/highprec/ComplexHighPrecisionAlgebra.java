@@ -43,6 +43,7 @@ package nom.bdezonia.zorbage.type.complex.highprec;
 import java.lang.Integer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
@@ -114,6 +115,8 @@ public class ComplexHighPrecisionAlgebra
 	private static final ComplexHighPrecisionMember TWO_I = new ComplexHighPrecisionMember(BigDecimal.ZERO,BigDecimal.valueOf(2));
 	private static final ComplexHighPrecisionMember MINUS_I = new ComplexHighPrecisionMember(BigDecimal.ZERO,BigDecimal.valueOf(-1));
 
+	private static MathContext context = HighPrecisionAlgebra.getContext();
+	
 	@Override
 	public String typeDescription() {
 		return "Arbitrary precision complex number";
@@ -142,8 +145,8 @@ public class ComplexHighPrecisionAlgebra
 		@Override
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
 			// for safety must use tmps
-			BigDecimal r = a.r().multiply(b.r()).subtract(a.i().multiply(b.i()));
-			BigDecimal i = a.i().multiply(b.r()).add(a.r().multiply(b.i()));
+			BigDecimal r = a.r().multiply(b.r(),context).subtract(a.i().multiply(b.i(),context));
+			BigDecimal i = a.i().multiply(b.r(),context).add(a.r().multiply(b.i(),context));
 			c.setR( r );
 			c.setI( i );
 		}
@@ -163,10 +166,10 @@ public class ComplexHighPrecisionAlgebra
 				throw new IllegalArgumentException("0^0 is not a number");
 			}
 			BigDecimal r = getModulus(a);
-			BigDecimal rToTheN = BigDecimalMath.pow(r, power, HighPrecisionAlgebra.getContext());
-			BigDecimal nTheta = BigDecimal.valueOf(power).multiply(getArgument(a));
-			b.setR( rToTheN.multiply(BigDecimalMath.cos(nTheta, HighPrecisionAlgebra.getContext())) );
-			b.setI( rToTheN.multiply(BigDecimalMath.sin(nTheta, HighPrecisionAlgebra.getContext())) );
+			BigDecimal rToTheN = BigDecimalMath.pow(r, power, context);
+			BigDecimal nTheta = BigDecimal.valueOf(power).multiply(getArgument(a), context);
+			b.setR( rToTheN.multiply(BigDecimalMath.cos(nTheta, context), context) );
+			b.setI( rToTheN.multiply(BigDecimalMath.sin(nTheta, context), context) );
 		}
 	};
 
@@ -311,10 +314,10 @@ public class ComplexHighPrecisionAlgebra
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
 			// for safety must use tmps
 			BigDecimal mod2 = getModulus2(b);
-			BigDecimal r = a.r().multiply(b.r()).add(a.i().multiply(b.i()));
-			BigDecimal i = a.i().multiply(b.r()).subtract(a.r().multiply(b.i()));
-			r = r.divide(mod2, HighPrecisionAlgebra.getContext());
-			i = i.divide(mod2, HighPrecisionAlgebra.getContext());
+			BigDecimal r = a.r().multiply(b.r(),context).add(a.i().multiply(b.i(),context));
+			BigDecimal i = a.i().multiply(b.r(),context).subtract(a.r().multiply(b.i(),context));
+			r = r.divide(mod2, context);
+			i = i.divide(mod2, context);
 			c.setR( r );
 			c.setI( i );
 		}
@@ -447,7 +450,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember root = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember sum = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember logSum = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 			
 			multiply().call(I, a, ia);
@@ -475,7 +478,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember root = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember sum = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember logSum = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 
 			multiply().call(a, a, aSquared);
@@ -502,7 +505,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember diff = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember quotient = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember log = new ComplexHighPrecisionMember();
-			BigDecimal minus_one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(-2), HighPrecisionAlgebra.getContext());
+			BigDecimal minus_one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(-2), context);
 			ComplexHighPrecisionMember MINUS_I_OVER_TWO = new ComplexHighPrecisionMember(BigDecimal.ZERO, minus_one_half);
 			
 			multiply().call(I, a, ia);
@@ -563,7 +566,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember diff = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember quotient = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember log = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2),context);
 			ComplexHighPrecisionMember I_OVER_TWO = new ComplexHighPrecisionMember(BigDecimal.ZERO, one_half);
 
 			multiply().call(I, a, ia);
@@ -589,7 +592,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember miniSum = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember root = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember sum = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2),context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 
 			multiply().call(a, a, aSquared);
@@ -614,7 +617,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember miniSum = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember root = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember sum = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2),context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 
 			multiply().call(a, a, aSquared);
@@ -639,7 +642,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember diff = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember quotient = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember log = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2),context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 
 			add().call(ONE, a, sum);
@@ -698,7 +701,7 @@ public class ComplexHighPrecisionAlgebra
 			ComplexHighPrecisionMember diff = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember quotient = new ComplexHighPrecisionMember();
 			ComplexHighPrecisionMember log = new ComplexHighPrecisionMember();
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2),context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 
 			add().call(a, ONE, sum);
@@ -1014,9 +1017,9 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
-			BigDecimal constant = BigDecimalMath.exp(a.r(), HighPrecisionAlgebra.getContext());
-			b.setR( constant.multiply(BigDecimalMath.cos(a.i(), HighPrecisionAlgebra.getContext())) );
-			b.setI( constant.multiply(BigDecimalMath.sin(a.i(), HighPrecisionAlgebra.getContext())) );
+			BigDecimal constant = BigDecimalMath.exp(a.r(), context);
+			b.setR( constant.multiply(BigDecimalMath.cos(a.i(), context), context) );
+			b.setI( constant.multiply(BigDecimalMath.sin(a.i(), context), context) );
 		}
 	};
 	
@@ -1049,7 +1052,7 @@ public class ComplexHighPrecisionAlgebra
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
 			BigDecimal modulus = getModulus(a);
 			BigDecimal argument = getArgument(a);
-			b.setR( BigDecimalMath.log(modulus, HighPrecisionAlgebra.getContext()) );
+			b.setR( BigDecimalMath.log(modulus, context) );
 			b.setI( getPrincipalArgument(argument) );
 		}
 	};
@@ -1060,11 +1063,11 @@ public class ComplexHighPrecisionAlgebra
 	}
 	
 	private BigDecimal getModulus2(ComplexHighPrecisionMember a) {
-		return a.r().multiply(a.r()).add(a.i().multiply(a.i()));
+		return a.r().multiply(a.r(),context).add(a.i().multiply(a.i(),context));
 	}
 
 	private BigDecimal getModulus(ComplexHighPrecisionMember a) {
-		return BigDecimalMath.sqrt(getModulus2(a), HighPrecisionAlgebra.getContext());
+		return BigDecimalMath.sqrt(getModulus2(a), context);
 	}
 
 	private BigDecimal getArgument(ComplexHighPrecisionMember a) {
@@ -1077,9 +1080,9 @@ public class ComplexHighPrecisionAlgebra
 		BigDecimal theta;
 		if (x.equals(BigDecimal.ZERO)) {
 			if (y.compareTo(BigDecimal.ZERO) > 0)
-				theta = pi.v().divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+				theta = pi.v().divide(BigDecimal.valueOf(2), context);
 			else if (y.compareTo(BigDecimal.ZERO) < 0)
-				theta = minus_pi.v().divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+				theta = minus_pi.v().divide(BigDecimal.valueOf(2), context);
 			else // y == 0 : theta indeterminate
 				throw new IllegalArgumentException("HighPrec can't use NaN value");
 		}
@@ -1090,7 +1093,7 @@ public class ComplexHighPrecisionAlgebra
 				theta = pi.v();
 		}
 		else // x && y both != 0
-			theta = BigDecimalMath.atan2(y,x,HighPrecisionAlgebra.getContext());
+			theta = BigDecimalMath.atan2(y,x, context);
 		
 		return theta;
 	}
@@ -1132,7 +1135,7 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
-			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), HighPrecisionAlgebra.getContext());
+			BigDecimal one_half = BigDecimal.ONE.divide(BigDecimal.valueOf(2), context);
 			ComplexHighPrecisionMember ONE_HALF = new ComplexHighPrecisionMember(one_half, BigDecimal.ZERO);
 			pow().call(a, ONE_HALF, b);
 		}
@@ -1150,7 +1153,7 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
-			BigDecimal one_third = BigDecimal.ONE.divide(BigDecimal.valueOf(3), HighPrecisionAlgebra.getContext());
+			BigDecimal one_third = BigDecimal.ONE.divide(BigDecimal.valueOf(3), context);
 			ComplexHighPrecisionMember ONE_THIRD = new ComplexHighPrecisionMember(one_third, BigDecimal.ZERO);
 			pow().call(a, ONE_THIRD, b);
 		}
@@ -1289,9 +1292,9 @@ public class ComplexHighPrecisionAlgebra
 		@Override
 		public void call(HighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
 			BigDecimal tmp;
-			tmp = a.v().multiply(b.r());
+			tmp = a.v().multiply(b.r(),context);
 			c.setR(tmp);
-			tmp = a.v().multiply(b.i());
+			tmp = a.v().multiply(b.i(),context);
 			c.setI(tmp);
 		}
 	};
@@ -1310,12 +1313,12 @@ public class ComplexHighPrecisionAlgebra
 			BigDecimal d = new BigDecimal(a.d());
 			BigDecimal tmp;
 			tmp = b.r();
-			tmp = tmp.multiply(n);
-			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			tmp = tmp.multiply(n, context);
+			tmp = tmp.divide(d, context);
 			c.setR(tmp);
 			tmp = b.i();
-			tmp = tmp.multiply(n);
-			tmp = tmp.divide(d, HighPrecisionAlgebra.getContext());
+			tmp = tmp.multiply(n, context);
+			tmp = tmp.divide(d, context);
 			c.setI(tmp);
 		}
 	};
@@ -1333,10 +1336,10 @@ public class ComplexHighPrecisionAlgebra
 			BigDecimal d = BigDecimal.valueOf(a);
 			BigDecimal tmp;
 			tmp = b.r();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, context);
 			c.setR(tmp);
 			tmp = b.i();
-			tmp = tmp.multiply(d);
+			tmp = tmp.multiply(d, context);
 			c.setI(tmp);
 		}
 	};
@@ -1351,8 +1354,8 @@ public class ComplexHighPrecisionAlgebra
 	{
 		@Override
 		public void call(HighPrecisionMember a, ComplexHighPrecisionMember b, ComplexHighPrecisionMember c) {
-			c.setR(a.v().multiply(b.r()));
-			c.setI(a.v().multiply(b.i()));
+			c.setR(a.v().multiply(b.r(),context));
+			c.setI(a.v().multiply(b.i(),context));
 		}
 	};
 
