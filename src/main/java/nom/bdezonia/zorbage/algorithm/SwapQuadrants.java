@@ -46,6 +46,10 @@ public class SwapQuadrants {
 	private SwapQuadrants() { }
 	
 
+	// TODO: make this more like Matlab's fftshift(). That routine can handle
+	//   odd sized images and shifts a little unevenly. Read more about it,
+	//   fix this code, and maybe even rename it to FFTShift.
+	
 	/**
 	 * Swaps quadrants of a 2d data source. This is an in place operation.
 	 * The lower left and upper right quadrants are exchanged. So are the upper left
@@ -60,6 +64,9 @@ public class SwapQuadrants {
 		if (data.numDimensions() != 2)
 			throw new IllegalArgumentException("Swap quadrant algorithm only works with 2D data.");
 		
+		if (data.dimension(0) % 2 != 0 || data.dimension(1) % 2 != 0)
+			throw new IllegalArgumentException("Swap quadrant algorithm only works with images of even sized X and Y dimensions");
+		
 		U tmp1 = alg.construct();
 
 		U tmp2 = alg.construct();
@@ -70,19 +77,13 @@ public class SwapQuadrants {
 
 		long yQuadSize = vw.d1() / 2;
 
-		// for each dimension, if it is odd sized, we need to skip the middlemost set of pixels
-		
-		long middleFixX = vw.d0() % 2;
-		
-		long middleFixY = vw.d1() % 2;
-		
 		// swap ul and lr
 		
 		for (long y = 0; y < yQuadSize; y++) {
 			for (long x = 0; x < xQuadSize; x++) {
 				vw.get(x, y, tmp1);
-				vw.get(x+(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp2);
-				vw.set(x+(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp1);
+				vw.get(x+xQuadSize, y+yQuadSize, tmp2);
+				vw.set(x+xQuadSize, y+yQuadSize, tmp1);
 				vw.set(x, y, tmp2);
 			}
 		}
@@ -90,21 +91,12 @@ public class SwapQuadrants {
 		// swap ur and ll
 
 		for (long y = 0; y < yQuadSize; y++) {
-			for (long x = (xQuadSize+middleFixX); x < vw.d0(); x++) {
+			for (long x = xQuadSize; x < vw.d0(); x++) {
 				vw.get(x, y, tmp1);
-				vw.get(x-(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp2);
-				vw.set(x-(xQuadSize+middleFixX), y+(yQuadSize+middleFixY), tmp1);
+				vw.get(x-xQuadSize, y+yQuadSize, tmp2);
+				vw.set(x-xQuadSize, y+yQuadSize, tmp1);
 				vw.set(x, y, tmp2);
 			}
 		}
 	}
-	
-	/*
-	// a special version for FFT files that have extra row and col in freq space
-	
-	public static <T extends Algebra<T,U>, U>
-		void fftShift(T alg, DimensionedDataSource<U> data)
-	{
-	}
-	*/
 }
