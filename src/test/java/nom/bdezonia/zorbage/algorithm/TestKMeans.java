@@ -68,7 +68,7 @@ public class TestKMeans {
 			algebra.random().call(point);
 		}
 		
-		KMeans.compute(algebra, numClusters, points, clusterIndices);
+		KMeans.compute(numClusters, points, clusterIndices);
 		
 		assertTrue(true);
 	}

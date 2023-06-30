@@ -141,7 +141,7 @@ class MiscAlgorithms {
 		}
 		
 		// cluster the data into groups of points that are "close" together
-		KMeans.compute(G.POINT, numClusters, points, clusterIndices);
+		KMeans.compute(numClusters, points, clusterIndices);
 	}
 	
 	// make a ramped set of data values

@@ -35,10 +35,10 @@ import java.util.List;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.geom.point.Point;
-import nom.bdezonia.zorbage.type.geom.point.PointAlgebra;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.function.Function2;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class KMeans {
 	// do not instantiate
 	
 	private KMeans() { }
-	
+
 	/**
 	 * KMeans.compute()
 	 * Usage: Pass in a list of points (all of the same dimension greater than 0) that span any region.
@@ -59,13 +59,15 @@ public class KMeans {
 	 *        Pass in the number of clusters you want to divide the point set into.
 	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
 	 *        list.
-	 * @param algebra The PointAlgebra to be used to manipulate Points.
 	 * @param numClusters The number of clusters to divide the list of Points into.
 	 * @param points The list of Points to analyze.
 	 * @param clusterIndices The list tracking which Point is in which cluster.
 	 */
 	public static
-		void compute(PointAlgebra algebra, int numClusters, IndexedDataSource<Point> points, IndexedDataSource<SignedInt32Member> clusterIndices)
+		void compute(int numClusters,
+						Function2<Double,Point,Point> distFunc,
+						IndexedDataSource<Point> points,
+						IndexedDataSource<SignedInt32Member> clusterIndices)
 	{
 		if (numClusters < 1)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");
@@ -81,16 +83,24 @@ public class KMeans {
 		
 		int MAX_ITERS = 1000;
 		
-		Point point = algebra.construct();
+		Point point = G.POINT.construct();
 		SignedInt32Member clusterNum = G.INT32.construct();
 		double scale;
-		Float64Member dist = G.DBL.construct();
-		Float64Member minDist = G.DBL.construct();
+		double dist = 0;
+		double minDist = 0;
 		
 		// assign initial clusters arbitrarily
+		int clusterNo = 0;
+		int clusterSize = 0;
+		long cutoff = clusterIndicesSize / numClusters;
 		for (long i = 0; i < clusterIndicesSize; i++) {
-			clusterNum.setV((int)(i % numClusters));
+			clusterNum.setV(clusterNo);
 			clusterIndices.set(i, clusterNum);
+			clusterSize++;
+			if (clusterSize >= cutoff) {
+				clusterSize = 0;
+				clusterNo++;
+			}
 		}
 		
 		// set the dimensionality of the set of points
@@ -107,20 +117,20 @@ public class KMeans {
 			
 			// calc centroids of clusters
 			for (int i = 0; i < numClusters; i++) {
-				algebra.zero().call(centers.get(i));
+				G.POINT.zero().call(centers.get(i));
 			}
 			for (long i = 0; i < pointsSize; i++) {
 				points.get(i, point);
 				clusterIndices.get(i, clusterNum);
 				Point ctrSum = centers.get(clusterNum.v());
-				algebra.add().call(ctrSum, point, ctrSum);
+				G.POINT.add().call(ctrSum, point, ctrSum);
 				counts.set(clusterNum.v(), (counts.get(clusterNum.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
 				Point ctrSum = centers.get(i);
 				long count = counts.get(i);
 				scale = 1.0 / count;
-				algebra.scale().call(scale, ctrSum, ctrSum);
+				G.POINT.scale().call(scale, ctrSum, ctrSum);
 			}
 			
 			// for each point
@@ -130,14 +140,14 @@ public class KMeans {
 			for (long i = 0; i < pointsSize; i++) {
 				points.get(i,  point);
 				Point clusterCtr = centers.get(0);
-				PointDistance.compute(point, clusterCtr, minDist);
+				minDist = distFunc.call(point, clusterCtr);
 				int minCluster = 0;
 				//   find closest cluster
 				for (int j = 1; j < numClusters; j++) {
 					Point ctr = centers.get(j);
-					PointDistance.compute(point, ctr, dist);
-					if (G.DBL.isLess().call(dist,minDist)) {
-						G.DBL.assign().call(dist, minDist);
+					dist = distFunc.call(point, ctr);
+					if (dist < minDist) {
+						minDist = dist;
 						minCluster = j;
 					}
 				}
@@ -154,5 +164,28 @@ public class KMeans {
 		}
 		
 		System.out.println("Did not converge after "+MAX_ITERS+" iterations. Best approximation returned.");
+	}
+
+	public static
+		void compute(int numClusters,
+						IndexedDataSource<Point> points,
+						IndexedDataSource<SignedInt32Member> clusterIndices)
+	{
+		Function2<Double,Point,Point> defaultDistFunc =
+				
+			new Function2<Double,Point,Point>()
+		
+		{
+			private Float64Member dist = G.DBL.construct();
+			
+			public Double call(Point a, Point b) {
+			
+				PointDistance.compute(a, b, dist);
+				
+				return dist.v();
+			}
+		};
+		
+		compute(numClusters, defaultDistFunc, points, clusterIndices);
 	}
 }
