@@ -69,8 +69,8 @@ public class KMeans {
 						IndexedDataSource<Point> points,
 						IndexedDataSource<SignedInt32Member> clusterIndices)
 	{
-		if (numClusters < 1)
-			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 1.");
+		if (numClusters < 2)
+			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 2.");
 		
 		long pointsSize = points.size();
 		long clusterIndicesSize = clusterIndices.size();
@@ -89,17 +89,26 @@ public class KMeans {
 		double dist = 0;
 		double minDist = 0;
 		
-		// assign initial clusters arbitrarily
-		int clusterNo = 0;
-		int clusterSize = 0;
-		long cutoff = clusterIndicesSize / numClusters;
+		// assign initial clusters arbitrarily but somewhat closely in space
+		
+		int cNum = 0;
+		
+		int cSize = 0;
+
+		long cutoff;
+		
+		if (clusterIndicesSize % numClusters == 0)
+			cutoff = clusterIndicesSize / numClusters;
+		else
+			cutoff = clusterIndicesSize / (numClusters-1);
+		
 		for (long i = 0; i < clusterIndicesSize; i++) {
-			clusterNum.setV(clusterNo);
+			clusterNum.setV(cNum);
 			clusterIndices.set(i, clusterNum);
-			clusterSize++;
-			if (clusterSize >= cutoff) {
-				clusterSize = 0;
-				clusterNo++;
+			cSize++;
+			if (cSize >= cutoff) {
+				cSize = 0;
+				cNum++;
 			}
 		}
 		
