@@ -60,6 +60,8 @@ public class KMeans {
 	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
 	 *        list.
 	 * @param numClusters The number of clusters to divide the list of Points into.
+	 * @param distFunc The function used to measure how "close" points are in an n-d space. This can
+	 *        be a Euclidean distance function or some other distance function in a user defined space.
 	 * @param points The list of Points to analyze.
 	 * @param clusterIndices The list tracking which Point is in which cluster.
 	 */
@@ -175,6 +177,14 @@ public class KMeans {
 		System.out.println("Did not converge after "+MAX_ITERS+" iterations. Best approximation returned.");
 	}
 
+	/**
+	 * The default KMeans algorithm. It dispatches to the more general KMeans method but it passes it a
+	 * Euclidean distance function. This method is desgined for use with geometric Point data.
+	 *  
+	 * @param numClusters The number of clusters to divide the list of Points into.
+	 * @param points The list of Points to analyze.
+	 * @param clusterIndices The list tracking which Point is in which cluster.
+	 */
 	public static
 		void compute(int numClusters,
 						IndexedDataSource<Point> points,
