@@ -58,6 +58,8 @@ public class KMeans {
 	 *        Pass in a list of ints that will track which points go with which clusters.
 	 *        The two lists must be of the same length.
 	 *        Pass in the number of clusters you want to divide the point set into.
+	 *        Pass in a custom distance function for measuring how "close" points are to each other.
+	 *        This allows the user to make the algorithm work in a measurement space of their choice.
 	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
 	 *        list.
 	 * @param numClusters The number of clusters to divide the list of Points into.
@@ -193,8 +195,17 @@ public class KMeans {
 	}
 
 	/**
-	 * The default KMeans algorithm. It dispatches to the more general KMeans method but it passes it a
-	 * Euclidean distance function. This method is designed for use with geometric Point data.
+	 * KMeans.compute()
+	 * Usage: Pass in a list of points (all of the same dimension greater than 0) that span any region.
+	 *        Pass in a list of ints that will track which points go with which clusters.
+	 *        The two lists must be of the same length.
+	 *        Pass in the number of clusters you want to divide the point set into.
+	 *        Run the algorithm. The points are assigned cluster numbers in the clusterNumbers
+	 *        list.
+	 *        
+	 * This is the default KMeans algorithm. It dispatches to the more general KMeans method but
+	 * it passes it a Euclidean distance function. This method is designed for use with geometric
+	 * Point data.
 	 *  
 	 * @param numClusters The number of clusters to divide the list of Points into.
 	 * @param points The list of Points to analyze.
