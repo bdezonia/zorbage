@@ -74,10 +74,13 @@ public class KMeans {
 						IndexedDataSource<Point> points,
 						IndexedDataSource<SignedInt32Member> clusterIndices)
 	{
+		final int MAX_ITERS = 1000;
+		
 		if (numClusters < 2)
 			throw new IllegalArgumentException("kmeans: illegal number of clusters. must be >= 2.");
 		
 		long pointsSize = points.size();
+
 		long clusterIndicesSize = clusterIndices.size();
 
 		if (pointsSize != clusterIndicesSize)
@@ -85,14 +88,6 @@ public class KMeans {
 
 		if (pointsSize < numClusters)
 			throw new IllegalArgumentException("number of points given must be >= to the number of clusters");
-		
-		int MAX_ITERS = 1000;
-		
-		Point point = G.POINT.construct();
-		SignedInt32Member clusterNum = G.INT32.construct();
-		double scale;
-		double dist = 0;
-		double minDist = 0;
 		
 		/*
 		
@@ -125,19 +120,29 @@ public class KMeans {
 		
 		ThreadLocalRandom rng = ThreadLocalRandom.current();
 		
+		SignedInt32Member clusterNum = G.INT32.construct();
+		
 		for (long i = 0; i < numClusters; i++) {
+		
 			int rval = rng.nextInt(0, numClusters);
+			
 			clusterNum.setV(rval);
+			
 			clusterIndices.set(i, clusterNum);
 		}
 
-		// set the dimensionality of the set of points
-		points.get(0, point);
+		Point point = G.POINT.construct();
+		
+		points.get(0, point);  // set the dimensionality of the set of points
 		
 		List<Point> centers = new ArrayList<Point>();
+		
 		List<Long> counts = new ArrayList<Long>();
+		
 		for (int i = 0; i < numClusters; i++) {
+		
 			centers.add(new Point(point.numDimensions()));
+			
 			counts.add(0L);
 		}
 
@@ -145,19 +150,29 @@ public class KMeans {
 			
 			// calc centroids of clusters
 			for (int i = 0; i < numClusters; i++) {
+			
 				G.POINT.zero().call(centers.get(i));
 			}
 			for (long i = 0; i < pointsSize; i++) {
+				
 				points.get(i, point);
+			
 				clusterIndices.get(i, clusterNum);
+				
 				Point ctrSum = centers.get(clusterNum.v());
+				
 				G.POINT.add().call(ctrSum, point, ctrSum);
+				
 				counts.set(clusterNum.v(), (counts.get(clusterNum.v()))+1);
 			}
 			for (int i = 0; i < numClusters; i++) {
+				
 				Point ctrSum = centers.get(i);
+				
 				long count = counts.get(i);
-				scale = 1.0 / count;
+				
+				double scale = 1.0 / count;
+				
 				G.POINT.scale().call(scale, ctrSum, ctrSum);
 			}
 			
@@ -166,23 +181,38 @@ public class KMeans {
 			boolean converged = true;
 			
 			for (long i = 0; i < pointsSize; i++) {
+				
 				points.get(i,  point);
-				Point clusterCtr = centers.get(0);
-				minDist = distFunc.call(point, clusterCtr);
+				
+				Point firstCtr = centers.get(0);
+				
+				double minDist = distFunc.call(point, firstCtr);
+				
 				int minCluster = 0;
+				
 				//   find closest cluster
 				for (int j = 1; j < numClusters; j++) {
-					Point ctr = centers.get(j);
-					dist = distFunc.call(point, ctr);
+				
+					Point oneCtr = centers.get(j);
+				
+					double dist = distFunc.call(point, oneCtr);
+					
 					if (dist < minDist) {
+					
 						minDist = dist;
+						
 						minCluster = j;
 					}
 				}
+
 				clusterIndices.get(i, clusterNum);
-				if (minCluster != clusterNum.v()) {
+				
+				if (clusterNum.v() != minCluster) {
+					
 					converged = false;
+				
 					clusterNum.setV(minCluster);
+					
 					clusterIndices.set(i, clusterNum);
 				}
 			}
