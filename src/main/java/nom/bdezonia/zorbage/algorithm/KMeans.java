@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.geom.point.Point;
@@ -91,6 +92,8 @@ public class KMeans {
 		double dist = 0;
 		double minDist = 0;
 		
+		/*
+		
 		// assign initial clusters arbitrarily but somewhat closely in space
 		
 		int cNum = 0;
@@ -114,6 +117,18 @@ public class KMeans {
 			}
 		}
 		
+		*/
+		
+		// assign initial cluster memberships arbitrarily
+		
+		ThreadLocalRandom rng = ThreadLocalRandom.current();
+		
+		for (long i = 0; i < numClusters; i++) {
+			int rval = rng.nextInt(0, numClusters);
+			clusterNum.setV(rval);
+			clusterIndices.set(i, clusterNum);
+		}
+
 		// set the dimensionality of the set of points
 		points.get(0, point);
 		
@@ -179,7 +194,7 @@ public class KMeans {
 
 	/**
 	 * The default KMeans algorithm. It dispatches to the more general KMeans method but it passes it a
-	 * Euclidean distance function. This method is desgined for use with geometric Point data.
+	 * Euclidean distance function. This method is designed for use with geometric Point data.
 	 *  
 	 * @param numClusters The number of clusters to divide the list of Points into.
 	 * @param points The list of Points to analyze.
