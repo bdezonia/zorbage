@@ -84,4 +84,58 @@ public class TestSamplingCartesianIntegerGrid {
 		tmp.set(1, 3);
 		assertFalse(sampling.contains(tmp));
 	}
+
+	@Test
+	public void test2() {
+		
+		IntegerIndex p1 = new IntegerIndex(2);
+		
+		IntegerIndex p2 = new IntegerIndex(2);
+		
+		p1.set(0, -1);
+		
+		p1.set(1, -2);
+		
+		p2.set(0, 1);
+		
+		p2.set(1, 2);
+		
+		SamplingCartesianIntegerGrid sampling =
+				new SamplingCartesianIntegerGrid(p1,p2);
+		IntegerIndex tmp = new IntegerIndex(sampling.numDimensions());
+		SamplingIterator<IntegerIndex> iter = sampling.iterator();
+		assertTrue(iter.hasNext());
+		int x = -1;
+		int y = -2;
+		int count = 0;
+		while (iter.hasNext()) {
+			iter.next(tmp);
+			assertEquals(x, tmp.get(0));
+			assertEquals(y, tmp.get(1));
+			assertTrue(sampling.contains(tmp));
+			x += 1;
+			if (x > 1) {
+				x = -1;
+				y += 1;
+			}
+			count++;
+		}
+		assertEquals(15, count);
+		
+		tmp.set(0, -2);
+		tmp.set(1, -2);
+		assertFalse(sampling.contains(tmp));
+		
+		tmp.set(0, 2);
+		tmp.set(1, -2);
+		assertFalse(sampling.contains(tmp));
+		
+		tmp.set(0, -1);
+		tmp.set(1, -3);
+		assertFalse(sampling.contains(tmp));
+		
+		tmp.set(0, -1);
+		tmp.set(1, 3);
+		assertFalse(sampling.contains(tmp));
+	}
 }

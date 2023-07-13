@@ -30,6 +30,9 @@
  */
 package nom.bdezonia.zorbage.sampling;
 
+import nom.bdezonia.zorbage.algebra.Dimensioned;
+import nom.bdezonia.zorbage.misc.DataSourceUtils;
+
 /**
  * 
  * {@link SamplingCartesianIntegerGrid } is an n-dimensional {@link Sampling} that spans a user
@@ -40,52 +43,102 @@ package nom.bdezonia.zorbage.sampling;
  */
 public class SamplingCartesianIntegerGrid implements Sampling<IntegerIndex> {
 
-	private final int numD;
-	private final IntegerIndex minPt;
-	private final IntegerIndex maxPt;
+	private int numD;
+	private IntegerIndex minPt;
+	private IntegerIndex maxPt;
 	
 	public SamplingCartesianIntegerGrid(long[] point1, long[] point2) {
-		if (point1.length != point2.length)
-			throw new IllegalArgumentException("mismatched dimensions of input points");
-		numD = point1.length;
-		minPt = new IntegerIndex(numD);
-		maxPt = new IntegerIndex(numD);
-		for (int i = 0; i < numD; i++) {
-			minPt.set(i, Math.min(point1[i], point2[i]));
-			maxPt.set(i, Math.max(point1[i], point2[i]));
-		}
+		
+		init(point1, point2);
 	}
 
 	public SamplingCartesianIntegerGrid(IntegerIndex point1, IntegerIndex point2) {
-		if (point1.numDimensions() != point2.numDimensions())
-			throw new IllegalArgumentException("mismatched dimensions of input points");
-		numD = point1.numDimensions();
-		minPt = point1.allocate();
-		maxPt = point1.allocate();
-		for (int i = 0; i < numD; i++) {
-			minPt.set(i, Math.min(point1.get(i), point2.get(i)));
-			maxPt.set(i, Math.max(point1.get(i), point2.get(i)));
+
+		long[] p1 = new long[point1.numDimensions()];
+		
+		long[] p2 = new long[point2.numDimensions()];
+		
+		for (int i = 0; i < p1.length; i++) {
+			
+			p1[i] = point1.get(i);
 		}
+		
+		for (int i = 0; i < p2.length; i++) {
+			
+			p2[i] = point2.get(i);
+		}
+		
+		init(p1, p2);
 	}
 
+	public SamplingCartesianIntegerGrid(long[] dims) {
+
+		long[] point1 = new long[dims.length];
+		
+		long[] point2 = new long[dims.length];
+		
+		for (int i = 0; i < dims.length; i++) {
+		
+			point2[i] = dims[i] - 1;
+		}
+		
+		init(point1, point2);
+	}
+	
+	public SamplingCartesianIntegerGrid(Dimensioned dataSource) {
+		
+		this(DataSourceUtils.dimensions(dataSource));
+	}
+
+	public SamplingCartesianIntegerGrid(IntegerIndex dims) {
+		
+		this((Dimensioned) dims);
+	}
+
+	private void init(long[] point1, long[] point2) {
+
+		if (point1.length != point2.length)
+			throw new IllegalArgumentException("mismatched dimensions of input points");
+		
+		numD = point1.length;
+		
+		minPt = new IntegerIndex(numD);
+		
+		maxPt = new IntegerIndex(numD);
+		
+		for (int i = 0; i < numD; i++) {
+		
+			minPt.set(i, Math.min(point1[i], point2[i]));
+			
+			maxPt.set(i, Math.max(point1[i], point2[i]));
+		}
+	}
+	
 	@Override
 	public int numDimensions() {
+		
 		return numD;
 	}
 	
 	@Override
 	public boolean contains(IntegerIndex samplePoint) {
+		
 		if (samplePoint.numDimensions() != numD)
 			throw new IllegalArgumentException("contains() expects input point to have same dimension as sampling");
+		
 		for (int i = 0; i < numD; i++) {
+		
 			if (samplePoint.get(i) < minPt.get(i)) return false;
+			
 			if (samplePoint.get(i) > maxPt.get(i)) return false;
 		}
+		
 		return true;
 	}
 
 	@Override
 	public SamplingIterator<IntegerIndex> iterator() {
+		
 		return new Iterator();
 	}
 	
@@ -94,41 +147,58 @@ public class SamplingCartesianIntegerGrid implements Sampling<IntegerIndex> {
 		private IntegerIndex index;
 		
 		private Iterator() {
+
 			// Note: the last line in this method will fail if coord[0] == Long.MIN_VALUE
+			
 			if (minPt.get(0) == Long.MIN_VALUE)
 				throw new IllegalArgumentException("cannot handle min point at Long.MIN_VALUE");
+			
 			index = minPt.duplicate();
+			
 			reset();
 		}
 		
 		@Override
 		public void reset() {
+
 			for (int i = 1; i < index.numDimensions(); i++) {
+			
 				index.set(i, minPt.get(i));
 			}
+			
 			index.set(0, minPt.get(0) - 1);
 		}
 		
 		@Override
 		public boolean hasNext() {
+			
 			return !index.equals(maxPt);
 		}
 
 		@Override
 		public void next(IntegerIndex value) {
+			
 			if (value.numDimensions() != numD)
 				throw new IllegalArgumentException("mismatched dimensions of output point");
+			
 			for (int i = 0; i < numD; i++) {
+			
 				if (index.get(i) < maxPt.get(i)) {
+				
 					index.set(i, index.get(i) + 1);
+					
 					for (int j = 0; j < numD; j++) {
 						value.set(j, index.get(j));
 					}
+					
 					return;
 				}
-				else
+				else {
+					
 					index.set(i, minPt.get(i));
+				}
 			}
+
 			throw new IllegalArgumentException("next() called on sampling that does not hasNext()");
 		}
 		
