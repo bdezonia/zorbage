@@ -72,7 +72,7 @@ public class ConstantPaddedDimensionedDataSource<T extends Algebra<T,U>, U>
 		}
 		else {
 			
-			referenceData.get(index, value);
+			referenceData.set(index, value);
 		}
 	}
 
