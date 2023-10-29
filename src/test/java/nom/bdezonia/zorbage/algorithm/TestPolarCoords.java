@@ -259,7 +259,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (7.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(5.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// midpoint
 		
@@ -268,7 +268,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (5.0 / 4) * Math.PI, -phase.v(), tol);
+		assertEquals(-(3.0 / 4) * Math.PI, phase.v(), tol);
 
 		// 8/12
 		
@@ -277,7 +277,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (8.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(4.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// 9/12
 		
@@ -286,7 +286,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (9.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(3.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// 10/12
 		
@@ -295,7 +295,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (10.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(2.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// midpoint
 		
@@ -304,7 +304,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (7.0 / 4) * Math.PI, -phase.v(), tol);
+		assertEquals(-(1.0 / 4) * Math.PI, phase.v(), tol);
 
 		// 11/12
 		
@@ -313,7 +313,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.FLT, r, i, phase);
 		
-		assertEquals(2*Math.PI - (11.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(1.0 / 6) * Math.PI, phase.v(), tol);
 	}
 
 	@Test
@@ -413,7 +413,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (7.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(5.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// midpoint
 		
@@ -422,7 +422,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (5.0 / 4) * Math.PI, -phase.v(), tol);
+		assertEquals(-(3.0 / 4) * Math.PI, phase.v(), tol);
 
 		// 8/12
 		
@@ -431,7 +431,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (8.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(4.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// 9/12
 		
@@ -440,7 +440,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (9.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(3.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// 10/12
 		
@@ -449,7 +449,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (10.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(2.0 / 6) * Math.PI, phase.v(), tol);
 		
 		// midpoint
 		
@@ -458,7 +458,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (7.0 / 4) * Math.PI, -phase.v(), tol);
+		assertEquals(-(1.0 / 4) * Math.PI, phase.v(), tol);
 
 		// 11/12
 		
@@ -467,7 +467,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.DBL, r, i, phase);
 		
-		assertEquals(2*Math.PI - (11.0 / 6) * Math.PI, -phase.v(), tol);
+		assertEquals(-(1.0 / 6) * Math.PI, phase.v(), tol);
 	}
 
 	@Test
@@ -567,7 +567,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (7.0 / 6) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(5.0 / 6) * Math.PI, phase.v().doubleValue(), tol);
 		
 		// midpoint
 		
@@ -576,7 +576,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (5.0 / 4) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(3.0 / 4) * Math.PI, phase.v().doubleValue(), tol);
 
 		// 8/12
 		
@@ -585,7 +585,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (8.0 / 6) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(4.0 / 6) * Math.PI, phase.v().doubleValue(), tol);
 		
 		// 9/12
 		
@@ -594,7 +594,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (9.0 / 6) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(3.0 / 6) * Math.PI, phase.v().doubleValue(), tol);
 		
 		// 10/12
 		
@@ -603,7 +603,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (10.0 / 6) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(2.0 / 6) * Math.PI, phase.v().doubleValue(), tol);
 		
 		// midpoint
 		
@@ -612,7 +612,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (7.0 / 4) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(1.0 / 4) * Math.PI, phase.v().doubleValue(), tol);
 
 		// 11/12
 		
@@ -621,7 +621,7 @@ public class TestPolarCoords {
 
 		PolarCoords.phase(G.QUAD, r, i, phase);
 		
-		assertEquals(2*Math.PI - (11.0 / 6) * Math.PI, -phase.v().doubleValue(), tol);
+		assertEquals(-(1.0 / 6) * Math.PI, phase.v().doubleValue(), tol);
 	}
 
 }
