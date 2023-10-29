@@ -38,6 +38,7 @@ import org.junit.Test;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
+import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
@@ -160,6 +161,160 @@ public class TestPolarCoords {
 		imag.setV(-half);
 		PolarCoords.phase(G.DBL, real, imag, phase);
 		assertEquals(-1*Math.PI/6, phase.v(), TOL);
+	}
+
+	@Test
+	public void testHalfPhase() {
+
+		final double tol = 0.001;
+		
+		Float16Member r = G.HLF.construct();
+		Float16Member i = G.HLF.construct();
+		Float16Member phase = G.HLF.construct();
+		
+		// 0/12
+		
+		r.setV(1);
+		i.setV(0);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((0.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// 1/12
+		
+		r.setV((float) Math.sqrt(3)/2);
+		i.setV(0.5f);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((1.0/6) * Math.PI, phase.v(), tol);
+
+		// midpoint
+		
+		r.setV((float) Math.sqrt(2)/2);
+		i.setV((float) Math.sqrt(2)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((1.0 / 4) * Math.PI, phase.v(), tol);
+
+		// 2/12
+		
+		r.setV(0.5f);
+		i.setV((float) Math.sqrt(3)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((2.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// 3/12
+		
+		r.setV(0);
+		i.setV(1);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(Math.PI/2, phase.v(), tol);
+		
+		// 4/12
+		
+		r.setV(-0.5f);
+		i.setV((float) Math.sqrt(3)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((4.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// midpoint
+		
+		r.setV((float) -Math.sqrt(2)/2);
+		i.setV((float) Math.sqrt(2)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((3.0 / 4) * Math.PI, phase.v(), tol);
+
+		// 5/12
+		
+		r.setV((float) -Math.sqrt(3)/2);
+		i.setV(0.5f);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((5.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// 6/12
+		
+		r.setV(-1);
+		i.setV(0);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals((6.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// 7/12
+		
+		r.setV((float) -Math.sqrt(3)/2);
+		i.setV(-0.5f);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(5.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// midpoint
+		
+		r.setV((float) -Math.sqrt(2)/2);
+		i.setV((float) -Math.sqrt(2)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(3.0 / 4) * Math.PI, phase.v(), tol);
+
+		// 8/12
+		
+		r.setV(-0.5f);
+		i.setV((float) -Math.sqrt(3)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(4.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// 9/12
+		
+		r.setV(0);
+		i.setV(-1);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(3.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// 10/12
+		
+		r.setV(0.5f);
+		i.setV((float) -Math.sqrt(3)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(2.0 / 6) * Math.PI, phase.v(), tol);
+		
+		// midpoint
+		
+		r.setV((float) Math.sqrt(2)/2);
+		i.setV((float) -Math.sqrt(2)/2);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(1.0 / 4) * Math.PI, phase.v(), tol);
+
+		// 11/12
+		
+		r.setV((float) Math.sqrt(3)/2);
+		i.setV(-0.5f);
+
+		PolarCoords.phase(G.HLF, r, i, phase);
+		
+		assertEquals(-(1.0 / 6) * Math.PI, phase.v(), tol);
 	}
 
 	@Test
