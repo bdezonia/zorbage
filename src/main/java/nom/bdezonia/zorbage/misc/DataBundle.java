@@ -390,7 +390,7 @@ public class DataBundle {
 			argbs.add(ds);
 	}
 
-	public void mergeCieLab(DimensionedDataSource<CieXyzMember> ds) {
+	public void mergeCieXyz(DimensionedDataSource<CieXyzMember> ds) {
 		if (ds != null)
 			ciexyzs.add(ds);
 	}
