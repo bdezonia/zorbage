@@ -45,9 +45,9 @@ import nom.bdezonia.zorbage.type.universal.TensorStringRepresentation;
  * @author Barry DeZonia
  *
  */
-public class CieLabMember
-	implements DoubleCoder, Allocatable<CieLabMember>, Duplicatable<CieLabMember>,
-		Settable<CieLabMember>, Gettable<CieLabMember>, NumberMember<CieLabMember>,
+public class CieXyzMember
+	implements DoubleCoder, Allocatable<CieXyzMember>, Duplicatable<CieXyzMember>,
+		Settable<CieXyzMember>, Gettable<CieXyzMember>, NumberMember<CieXyzMember>,
 		SetFromBytes,
 		SetFromBytesExact,
 		SetFromShorts,
@@ -72,57 +72,57 @@ public class CieLabMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact
 {
-	private double l, a, b;
+	private double x, y, z;
 	
-	public CieLabMember() { }
+	public CieXyzMember() { }
 	
-	public CieLabMember(double... vals) {
+	public CieXyzMember(double... vals) {
 		setFromDoubles(vals);
 	}
 	
-	public CieLabMember(String str) {
+	public CieXyzMember(String str) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(str);
 		long valueCount = rep.firstVectorDimension();
 		BigList<OctonionRepresentation> values = rep.firstVectorValues();
-		double l = 0;
-		double a = 0;
-		double b = 0;
-		if (valueCount > 0) l = values.get(0).r().doubleValue();
-		if (valueCount > 1) a = values.get(1).r().doubleValue();
-		if (valueCount > 2) b = values.get(2).r().doubleValue();
-		setL(l);
-		setA(a);
-		setB(b);
+		double x = 0;
+		double y = 0;
+		double z = 0;
+		if (valueCount > 0) x = values.get(0).r().doubleValue();
+		if (valueCount > 1) y = values.get(1).r().doubleValue();
+		if (valueCount > 2) z = values.get(2).r().doubleValue();
+		setX(x);
+		setY(y);
+		setZ(z);
 	}
 
-	public void setL(double l) {
-		if (l < 0 || l > 100)
-			throw new IllegalArgumentException("CIELAB: cannot set L outside of 0-100 range");
-		this.l = l;
+	public void setX(double x) {
+		if (x < 0.0 || x > 1.0)
+			throw new IllegalArgumentException("x must be between 0 and 1");
+		this.x = x;
 	}
 	
-	public void setA(double a) {
-		if (!Double.isFinite(a))
-			throw new IllegalArgumentException("CIELAB: cannot set A outside finite range");
-		this.a = a;
+	public void setY(double y) {
+		if (y < 0.0 || y > 1.0)
+			throw new IllegalArgumentException("y must be between 0 and 1");
+		this.y = y;
 	}
 	
-	public void setB(double b) {
-		if (!Double.isFinite(b))
-			throw new IllegalArgumentException("CIELAB: cannot set B outside finite range");
-		this.b = b;
+	public void setZ(double z) {
+		if (z < 0.0 || z > 1.0)
+			throw new IllegalArgumentException("z must be between 0 and 1");
+		this.z = z;
 	}
 	
-	public double l() {
-		return l;
+	public double x() {
+		return x;
 	}
 	
-	public double a() {
-		return a;
+	public double y() {
+		return y;
 	}
 	
-	public double b() {
-		return b;
+	public double z() {
+		return z;
 	}
 
 	@Override
@@ -132,16 +132,16 @@ public class CieLabMember
 
 	@Override
 	public void fromDoubleArray(double[] arr, int index) {
-		l = arr[index];
-		a = arr[index+1];
-		b = arr[index+2];
+		x = arr[index];
+		y = arr[index+1];
+		z = arr[index+2];
 	}
 
 	@Override
 	public void toDoubleArray(double[] arr, int index) {
-		arr[index] = l;
-		arr[index+1] = a;
-		arr[index+2] = b;
+		arr[index] = x;
+		arr[index+1] = y;
+		arr[index+2] = z;
 	}
 
 	@Override
@@ -156,54 +156,54 @@ public class CieLabMember
 	}
 
 	@Override
-	public void getV(CieLabMember value) {
+	public void getV(CieXyzMember value) {
 		get(value);
 	}
 
 	@Override
-	public void setV(CieLabMember value) {
+	public void setV(CieXyzMember value) {
 		set(value);
 	}
 
 	@Override
-	public void get(CieLabMember other) {
-		other.l = l;
-		other.a = a;
-		other.b = b;
+	public void get(CieXyzMember other) {
+		other.x = x;
+		other.y = y;
+		other.z = z;
 	}
 
 	@Override
-	public void set(CieLabMember other) {
-		l = other.l;
-		a = other.a;
-		b = other.b;
+	public void set(CieXyzMember other) {
+		x = other.x;
+		y = other.y;
+		z = other.z;
 	}
 
 	@Override
-	public CieLabMember duplicate() {
-		CieLabMember val = allocate();
+	public CieXyzMember duplicate() {
+		CieXyzMember val = allocate();
 		get(val);
 		return val;
 	}
 
 	@Override
-	public CieLabMember allocate() {
-		return new CieLabMember();
+	public CieXyzMember allocate() {
+		return new CieXyzMember();
 	}
 
 	@Override
 	public int hashCode() {
 		int v = 1;
-		v = Hasher.PRIME * v + Hasher.hashCode(l);
-		v = Hasher.PRIME * v + Hasher.hashCode(a);
-		v = Hasher.PRIME * v + Hasher.hashCode(b);
+		v = Hasher.PRIME * v + Hasher.hashCode(x);
+		v = Hasher.PRIME * v + Hasher.hashCode(y);
+		v = Hasher.PRIME * v + Hasher.hashCode(z);
 		return v;
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof CieLabMember) {
-			return G.LAB.isEqual().call(this, (CieLabMember) o);
+		if (o instanceof CieXyzMember) {
+			return G.CIEXYZ.isEqual().call(this, (CieXyzMember) o);
 		}
 		return false;
 	}
@@ -212,15 +212,15 @@ public class CieLabMember
 	public void setFromDoubles(double... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0]);
-		setA(vals[1]);
-		setB(vals[2]);
+		setX(vals[0]);
+		setY(vals[1]);
+		setZ(vals[2]);
 	}
 
 	@Override
 	public double[] getAsDoubleArray() {
 
-		return new double[] { l(), a(), b() };
+		return new double[] { x(), y(), z() };
 	}
 
 	@Override
@@ -232,13 +232,13 @@ public class CieLabMember
 	@Override
 	public BigDecimal[] getAsBigDecimalArray() {
 		
-		return new BigDecimal[] { BigDecimal.valueOf(l()), BigDecimal.valueOf(a()), BigDecimal.valueOf(b()) };
+		return new BigDecimal[] { BigDecimal.valueOf(x()), BigDecimal.valueOf(y()), BigDecimal.valueOf(z()) };
 	}
 
 	@Override
 	public BigInteger[] getAsBigIntegerArray() {
 		
-		return new BigInteger[] { BigInteger.valueOf((long)l()), BigInteger.valueOf((long)a()), BigInteger.valueOf((long)b()) };
+		return new BigInteger[] { BigInteger.valueOf((long)x()), BigInteger.valueOf((long)y()), BigInteger.valueOf((long)z()) };
 	}
 
 	@Override
@@ -250,49 +250,49 @@ public class CieLabMember
 	@Override
 	public float[] getAsFloatArray() {
 		
-		return new float[] { (float) l(), (float) a(), (float) b() };
+		return new float[] { (float) x(), (float) y(), (float) z() };
 	}
 
 	@Override
 	public long[] getAsLongArray() {
 
-		return new long[] { (long) l(), (long) a(), (long) b() };
+		return new long[] { (long) x(), (long) y(), (long) z() };
 	}
 
 	@Override
 	public int[] getAsIntArray() {
 		
-		return new int[] { (int) l(), (int) a(), (int) b() };
+		return new int[] { (int) x(), (int) y(), (int) z() };
 	}
 
 	@Override
 	public short[] getAsShortArray() {
 		
-		return new short[] { (short) l(), (short) a(), (short) b() };
+		return new short[] { (short) x(), (short) y(), (short) z() };
 	}
 
 	@Override
 	public byte[] getAsByteArray() {
 		
-		return new byte[] { (byte) l(), (byte) a(), (byte) b() };
+		return new byte[] { (byte) x(), (byte) y(), (byte) z() };
 	}
 
 	@Override
 	public void setFromBigDecimals(BigDecimal... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0].doubleValue());
-		setA(vals[1].doubleValue());
-		setB(vals[2].doubleValue());
+		setX(vals[0].doubleValue());
+		setY(vals[1].doubleValue());
+		setZ(vals[2].doubleValue());
 	}
 
 	@Override
 	public void setFromBigIntegers(BigInteger... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0].doubleValue());
-		setA(vals[1].doubleValue());
-		setB(vals[2].doubleValue());
+		setX(vals[0].doubleValue());
+		setY(vals[1].doubleValue());
+		setZ(vals[2].doubleValue());
 	}
 
 	@Override
@@ -309,18 +309,18 @@ public class CieLabMember
 	public void setFromFloats(float... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0]);
-		setA(vals[1]);
-		setB(vals[2]);
+		setX(vals[0]);
+		setY(vals[1]);
+		setZ(vals[2]);
 	}
 
 	@Override
 	public void setFromLongs(long... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0]);
-		setA(vals[1]);
-		setB(vals[2]);
+		setX(vals[0]);
+		setY(vals[1]);
+		setZ(vals[2]);
 	}
 
 	@Override
@@ -332,9 +332,9 @@ public class CieLabMember
 	public void setFromInts(int... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0]);
-		setA(vals[1]);
-		setB(vals[2]);
+		setX(vals[0]);
+		setY(vals[1]);
+		setZ(vals[2]);
 	}
 
 	@Override
@@ -346,9 +346,9 @@ public class CieLabMember
 	public void setFromShorts(short... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0]);
-		setA(vals[1]);
-		setB(vals[2]);
+		setX(vals[0]);
+		setY(vals[1]);
+		setZ(vals[2]);
 	}
 
 	@Override
@@ -360,8 +360,8 @@ public class CieLabMember
 	public void setFromBytes(byte... vals) {
 		if (vals.length != 3)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
-		setL(vals[0]);
-		setA(vals[1]);
-		setB(vals[2]);
+		setX(vals[0]);
+		setY(vals[1]);
+		setZ(vals[2]);
 	}
 }

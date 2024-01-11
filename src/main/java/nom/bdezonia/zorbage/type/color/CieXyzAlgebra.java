@@ -54,182 +54,182 @@ import nom.bdezonia.zorbage.algebra.Random;
  * @author Barry DeZonia
  *
  */
-public class CieLabAlgebra
+public class CieXyzAlgebra
 	implements
-		Algebra<CieLabAlgebra, CieLabMember>,
-		Random<CieLabMember>,
-		ConstructibleFromBytes<CieLabMember>,
-		ConstructibleFromShorts<CieLabMember>,
-		ConstructibleFromInts<CieLabMember>,
-		ConstructibleFromLongs<CieLabMember>,
-		ConstructibleFromFloats<CieLabMember>,
-		ConstructibleFromDoubles<CieLabMember>,
-		ConstructibleFromBigIntegers<CieLabMember>,
-		ConstructibleFromBigDecimals<CieLabMember>
+		Algebra<CieXyzAlgebra, CieXyzMember>,
+		Random<CieXyzMember>,
+		ConstructibleFromBytes<CieXyzMember>,
+		ConstructibleFromShorts<CieXyzMember>,
+		ConstructibleFromInts<CieXyzMember>,
+		ConstructibleFromLongs<CieXyzMember>,
+		ConstructibleFromFloats<CieXyzMember>,
+		ConstructibleFromDoubles<CieXyzMember>,
+		ConstructibleFromBigIntegers<CieXyzMember>,
+		ConstructibleFromBigDecimals<CieXyzMember>
 {
 	@Override
 	public String typeDescription() {
 		return "192-bit CIE LAB color";
 	}
 	
-	public CieLabAlgebra() { }
+	public CieXyzAlgebra() { }
 	
 	@Override
-	public CieLabMember construct() {
-		return new CieLabMember();
+	public CieXyzMember construct() {
+		return new CieXyzMember();
 	}
 
 	@Override
-	public CieLabMember construct(CieLabMember other) {
+	public CieXyzMember construct(CieXyzMember other) {
 		return other.duplicate();
 	}
 
 	@Override
-	public CieLabMember construct(String str) {
-		return new CieLabMember(str);
+	public CieXyzMember construct(String str) {
+		return new CieXyzMember(str);
 	}
 
-	private final Function2<Boolean, CieLabMember, CieLabMember> EQ =
-			new Function2<Boolean, CieLabMember, CieLabMember>()
+	private final Function2<Boolean, CieXyzMember, CieXyzMember> EQ =
+			new Function2<Boolean, CieXyzMember, CieXyzMember>()
 	{
 		@Override
-		public Boolean call(CieLabMember a, CieLabMember b) {
-			return a.l() == b.l() && a.a() == b.a() && a.b() == b.b();
+		public Boolean call(CieXyzMember a, CieXyzMember b) {
+			return a.x() == b.x() && a.y() == b.y() && a.z() == b.z();
 		}
 	};
 
 	@Override
-	public Function2<Boolean, CieLabMember, CieLabMember> isEqual() {
+	public Function2<Boolean, CieXyzMember, CieXyzMember> isEqual() {
 		return EQ;
 	}
 
-	private final Function2<Boolean, CieLabMember, CieLabMember> NEQ =
-			new Function2<Boolean, CieLabMember, CieLabMember>()
+	private final Function2<Boolean, CieXyzMember, CieXyzMember> NEQ =
+			new Function2<Boolean, CieXyzMember, CieXyzMember>()
 	{
 		@Override
-		public Boolean call(CieLabMember a, CieLabMember b) {
+		public Boolean call(CieXyzMember a, CieXyzMember b) {
 			return !EQ.call(a, b);
 		}
 	};
 	
 	@Override
-	public Function2<Boolean, CieLabMember, CieLabMember> isNotEqual() {
+	public Function2<Boolean, CieXyzMember, CieXyzMember> isNotEqual() {
 		return NEQ;
 	}
 
-	private final Procedure2<CieLabMember, CieLabMember> AS =
-			new Procedure2<CieLabMember, CieLabMember>()
+	private final Procedure2<CieXyzMember, CieXyzMember> AS =
+			new Procedure2<CieXyzMember, CieXyzMember>()
 	{
 		@Override
-		public void call(CieLabMember a, CieLabMember b) {
+		public void call(CieXyzMember a, CieXyzMember b) {
 			b.set(a);
 		}
 	};
 
 	@Override
-	public Procedure2<CieLabMember, CieLabMember> assign() {
+	public Procedure2<CieXyzMember, CieXyzMember> assign() {
 		return AS;
 	}
 
-	private final Function1<Boolean, CieLabMember> ISZ =
-			new Function1<Boolean, CieLabMember>()
+	private final Function1<Boolean, CieXyzMember> ISZ =
+			new Function1<Boolean, CieXyzMember>()
 	{
 		@Override
-		public Boolean call(CieLabMember a) {
-			return a.l() == 0 && a.a() == 0 && a.b() == 0;
+		public Boolean call(CieXyzMember a) {
+			return a.x() == 0 && a.y() == 0 && a.z() == 0;
 		}
 	};
 
 	@Override
-	public Function1<Boolean, CieLabMember> isZero() {
+	public Function1<Boolean, CieXyzMember> isZero() {
 		return ISZ;
 	}
 
-	private final Procedure1<CieLabMember> RAND =
-			new Procedure1<CieLabMember>()
+	private final Procedure1<CieXyzMember> RAND =
+			new Procedure1<CieXyzMember>()
 	{
 		@Override
-		public void call(CieLabMember a) {
+		public void call(CieXyzMember a) {
 			ThreadLocalRandom rng = ThreadLocalRandom.current();
-			a.setL(rng.nextDouble());
-			a.setA(rng.nextDouble());
-			a.setB(rng.nextDouble());
+			a.setX(rng.nextDouble());
+			a.setY(rng.nextDouble());
+			a.setZ(rng.nextDouble());
 		}
 	};
 
 	@Override
-	public Procedure1<CieLabMember> random() {
+	public Procedure1<CieXyzMember> random() {
 		return RAND;
 	}
 
-	private final Procedure1<CieLabMember> ZERO =
-			new Procedure1<CieLabMember>()
+	private final Procedure1<CieXyzMember> ZERO =
+			new Procedure1<CieXyzMember>()
 	{
 		@Override
-		public void call(CieLabMember a) {
-			a.setL(0);
-			a.setA(0);
-			a.setB(0);
+		public void call(CieXyzMember a) {
+			a.setX(0);
+			a.setY(0);
+			a.setZ(0);
 		}
 	};
 
 	@Override
-	public Procedure1<CieLabMember> zero() {
+	public Procedure1<CieXyzMember> zero() {
 		return ZERO;
 	}
 
 	@Override
-	public CieLabMember construct(BigDecimal... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(BigDecimal... vals) {
+		CieXyzMember v = construct();
 		v.setFromBigDecimals(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(BigInteger... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(BigInteger... vals) {
+		CieXyzMember v = construct();
 		v.setFromBigIntegers(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(double... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(double... vals) {
+		CieXyzMember v = construct();
 		v.setFromDoubles(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(float... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(float... vals) {
+		CieXyzMember v = construct();
 		v.setFromFloats(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(long... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(long... vals) {
+		CieXyzMember v = construct();
 		v.setFromLongs(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(int... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(int... vals) {
+		CieXyzMember v = construct();
 		v.setFromInts(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(short... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(short... vals) {
+		CieXyzMember v = construct();
 		v.setFromShorts(vals);
 		return v;
 	}
 
 	@Override
-	public CieLabMember construct(byte... vals) {
-		CieLabMember v = construct();
+	public CieXyzMember construct(byte... vals) {
+		CieXyzMember v = construct();
 		v.setFromBytes(vals);
 		return v;
 	}

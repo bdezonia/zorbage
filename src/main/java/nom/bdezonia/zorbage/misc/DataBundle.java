@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.tuple.Tuple2;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.color.ArgbMember;
-import nom.bdezonia.zorbage.type.color.CieLabMember;
+import nom.bdezonia.zorbage.type.color.CieXyzMember;
 import nom.bdezonia.zorbage.type.color.RgbMember;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128MatrixMember;
@@ -186,7 +186,7 @@ public class DataBundle {
 	
 	// type.color
 	public List<DimensionedDataSource<ArgbMember>> argbs = new ArrayList<>();
-	public List<DimensionedDataSource<CieLabMember>> cielabs = new ArrayList<>();
+	public List<DimensionedDataSource<CieXyzMember>> ciexyzs = new ArrayList<>();
 	public List<DimensionedDataSource<RgbMember>> rgbs = new ArrayList<>();
 	
 	// type.complex.float128
@@ -390,9 +390,9 @@ public class DataBundle {
 			argbs.add(ds);
 	}
 
-	public void mergeCieLab(DimensionedDataSource<CieLabMember> ds) {
+	public void mergeCieLab(DimensionedDataSource<CieXyzMember> ds) {
 		if (ds != null)
-			cielabs.add(ds);
+			ciexyzs.add(ds);
 	}
 
 	public void mergeRgb(DimensionedDataSource<RgbMember> ds) {
@@ -1104,7 +1104,7 @@ public class DataBundle {
 		// type.color
 		
 		argbs.addAll(other.argbs);
-		cielabs.addAll(other.cielabs);
+		ciexyzs.addAll(other.ciexyzs);
 		rgbs.addAll(other.rgbs);
 		
 		// type.complex.float128
@@ -1341,9 +1341,9 @@ public class DataBundle {
 			fullList.add(tuple);
 		}
 		
-		for (DimensionedDataSource<?> ds : this.cielabs) {
+		for (DimensionedDataSource<?> ds : this.ciexyzs) {
 			Tuple2<T, DimensionedDataSource<U>> tuple =
-					new Tuple2<T, DimensionedDataSource<U>>((T)G.LAB, (DimensionedDataSource<U>)ds);
+					new Tuple2<T, DimensionedDataSource<U>>((T)G.CIEXYZ, (DimensionedDataSource<U>)ds);
 			fullList.add(tuple);
 		}
 		
