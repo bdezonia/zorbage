@@ -519,6 +519,7 @@ public class TestFixedStrings {
 		assertEquals("abc", b.v());
 	}
 	
+	@Test
 	public void test42() {
 		FixedStringMember a = new FixedStringMember(12);
 		FixedStringMember b = new FixedStringMember("12345678");
@@ -527,4 +528,23 @@ public class TestFixedStrings {
 		assertEquals("123456789012", a.v());
 	}
 
+	@Test
+	public void test43() {
+	
+		FixedStringMember a = new FixedStringMember(128);
+
+		String str = "UTM,1.000,1.000,256521.000,4112571.000,1.000000e+000,1.000000e+000,11,North,WGS-84,units=Meters "; 
+
+		a.setV(str);
+		
+		assertEquals(str, a.v());
+		
+		a.setV("4");
+
+		assertEquals("4", a.v());
+		
+		a.setV(str);
+		
+		assertEquals(str, a.v());
+	}
 }
