@@ -133,9 +133,9 @@ public class Extents {
 				
 				long val = point[i];
 				
-				if (val < min[i]) min[i] = val;
+				min[i] = val;
 
-				if (val > max[i]) max[i] = val;
+				max[i] = val;
 			}
 		}
 
@@ -192,9 +192,9 @@ public class Extents {
 				
 				long val = point.get(i);
 				
-				if (val < min.get(i)) min.set(i, val);
+				min.set(i, val);
 
-				if (val > max.get(i)) max.set(i, val);
+				max.set(i, val);
 			}
 		}
 
