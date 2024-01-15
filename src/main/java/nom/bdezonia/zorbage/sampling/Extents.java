@@ -65,16 +65,37 @@ public class Extents {
 		double[] point = new double[numD];
 		
 		SamplingIterator<double[]> iter = sampling.iterator();
-		
-		while (iter.hasNext()) {
-			
+
+		if (iter.hasNext()) {
+	
 			iter.next(point);
 			
 			for (int i = 0; i < numD; i++) {
 				
-				if (point[i] < min[i]) min[i] = point[i];
+				double val = point[i];
+				
+				min[i] = val;
 
-				if (point[i] > max[i]) max[i] = point[i];
+				max[i] = val;
+			}
+		}
+
+		while (iter.hasNext()) {
+			
+			iter.next(point);
+		
+			for (int i = 0; i < numD; i++) {
+
+				double val = point[i];
+				
+				if (val < min[i]) {
+					
+					min[i] = val;
+				}
+				else if (val > max[i]) {
+				
+					max[i] = val;
+				}
 			}
 		}
 		
@@ -104,15 +125,36 @@ public class Extents {
 		
 		SamplingIterator<long[]> iter = sampling.iterator();
 		
-		while (iter.hasNext()) {
+		if (iter.hasNext()) {
 			
 			iter.next(point);
 			
 			for (int i = 0; i < numD; i++) {
 				
-				if (point[i] < min[i]) min[i] = point[i];
+				long val = point[i];
+				
+				if (val < min[i]) min[i] = val;
 
-				if (point[i] > max[i]) max[i] = point[i];
+				if (val > max[i]) max[i] = val;
+			}
+		}
+
+		while (iter.hasNext()) {
+			
+			iter.next(point);
+		
+			for (int i = 0; i < numD; i++) {
+
+				long val = point[i];
+				
+				if (val < min[i]) {
+					
+					min[i] = val;
+				}
+				else if (val > max[i]) {
+				
+					max[i] = val;
+				}
 			}
 		}
 		
@@ -142,15 +184,36 @@ public class Extents {
 		
 		SamplingIterator<IntegerIndex> iter = sampling.iterator();
 		
-		while (iter.hasNext()) {
+		if (iter.hasNext()) {
 			
 			iter.next(point);
 			
 			for (int i = 0; i < numD; i++) {
 				
-				if (point.get(i) < min.get(i)) min.set(i, point.get(i));
+				long val = point.get(i);
+				
+				if (val < min.get(i)) min.set(i, val);
 
-				if (point.get(i) > max.get(i)) max.set(i, point.get(i));
+				if (val > max.get(i)) max.set(i, val);
+			}
+		}
+
+		while (iter.hasNext()) {
+			
+			iter.next(point);
+		
+			for (int i = 0; i < numD; i++) {
+
+				long val = point.get(i);
+				
+				if (val < min.get(i)) {
+					
+					min.set(i, val);
+				}
+				else if (val > max.get(i)) {
+					
+					max.set(i, val);
+				}
 			}
 		}
 		
