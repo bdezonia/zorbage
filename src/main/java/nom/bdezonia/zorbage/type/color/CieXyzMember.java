@@ -70,7 +70,8 @@ public class CieXyzMember
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<CieXyzAlgebra, CieXyzMember>
 {
 	private double x, y, z;
 	
@@ -363,5 +364,11 @@ public class CieXyzMember
 		setX(vals[0]);
 		setY(vals[1]);
 		setZ(vals[2]);
+	}
+	
+	@Override
+	public CieXyzAlgebra getAlgebra() {
+
+		return G.CIEXYZ;
 	}
 }

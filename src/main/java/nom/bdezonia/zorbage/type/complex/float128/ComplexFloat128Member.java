@@ -78,7 +78,8 @@ public final class ComplexFloat128Member
 		GetAsDoubleArray,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<ComplexFloat128Algebra, ComplexFloat128Member>
 {
 	private final Float128Member r, i;
 	
@@ -988,5 +989,11 @@ public final class ComplexFloat128Member
 	@Override
 	public byte[] getAsByteArray() {
 		return new byte[] {r().getAsByte(), i().getAsByte()};
+	}
+	
+	@Override
+	public ComplexFloat128Algebra getAlgebra() {
+
+		return G.CQUAD;
 	}
 }

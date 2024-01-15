@@ -71,7 +71,8 @@ public class RgbMember
 		GetAsBigIntegerArray,
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<RgbAlgebra, RgbMember>
 {
 	private byte r, g, b;
 	
@@ -362,5 +363,11 @@ public class RgbMember
 		setR(vals[0]);
 		setG(vals[1]);
 		setB(vals[2]);
+	}
+	
+	@Override
+	public RgbAlgebra getAlgebra() {
+
+		return G.RGB;
 	}
 }

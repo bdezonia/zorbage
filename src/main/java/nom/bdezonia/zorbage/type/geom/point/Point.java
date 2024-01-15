@@ -73,7 +73,8 @@ public class Point
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<PointAlgebra, Point>
 {
 	private double[] vector;
 	
@@ -485,5 +486,11 @@ public class Point
 	@Override
 	public Double componentMax() {
 		return Double.MAX_VALUE;
+	}
+	
+	@Override
+	public PointAlgebra getAlgebra() {
+
+		return G.POINT;
 	}
 }

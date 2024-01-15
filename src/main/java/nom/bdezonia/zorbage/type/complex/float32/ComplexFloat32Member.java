@@ -79,7 +79,8 @@ public final class ComplexFloat32Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<ComplexFloat32Algebra, ComplexFloat32Member>
 {
 	private float r, i;
 	
@@ -1006,5 +1007,11 @@ public final class ComplexFloat32Member
 			setI(0);
 		else
 			setI(vals[1]);
+	}
+	
+	@Override
+	public ComplexFloat32Algebra getAlgebra() {
+
+		return G.CFLT;
 	}
 }

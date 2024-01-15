@@ -80,7 +80,8 @@ public final class ComplexFloat64Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<ComplexFloat64Algebra, ComplexFloat64Member>
 {
 	private double r, i;
 	
@@ -1012,5 +1013,11 @@ public final class ComplexFloat64Member
 			setI(0);
 		else
 			setI(vals[1]);
+	}
+	
+	@Override
+	public ComplexFloat64Algebra getAlgebra() {
+
+		return G.CDBL;
 	}
 }

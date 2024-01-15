@@ -91,7 +91,8 @@ public final class UnsignedInt128Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt128Algebra, UnsignedInt128Member>
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO127 = TWO.pow(127);
@@ -957,5 +958,11 @@ public final class UnsignedInt128Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));
+	}
+	
+	@Override
+	public UnsignedInt128Algebra getAlgebra() {
+
+		return G.UINT128;
 	}
 }

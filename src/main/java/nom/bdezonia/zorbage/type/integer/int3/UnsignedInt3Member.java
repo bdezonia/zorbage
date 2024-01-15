@@ -100,7 +100,8 @@ public final class UnsignedInt3Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt3Algebra, UnsignedInt3Member>
 {
 	byte v;
 
@@ -1010,5 +1011,11 @@ public final class UnsignedInt3Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public UnsignedInt3Algebra getAlgebra() {
+
+		return G.UINT3;
 	}
 }

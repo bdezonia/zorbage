@@ -78,7 +78,8 @@ public final class ComplexFloat16Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<ComplexFloat16Algebra, ComplexFloat16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -997,5 +998,11 @@ public final class ComplexFloat16Member
 	@Override
 	public void setFromBytesExact(byte... vals) {
 		setFromBytes(vals);
+	}
+	
+	@Override
+	public ComplexFloat16Algebra getAlgebra() {
+
+		return G.CHLF;
 	}
 }

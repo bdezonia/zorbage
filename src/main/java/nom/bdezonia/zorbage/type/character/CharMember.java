@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.character;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsChar;
 import nom.bdezonia.zorbage.algebra.GetAsCharArray;
 import nom.bdezonia.zorbage.algebra.GetAsCharArrayExact;
@@ -63,7 +64,8 @@ public class CharMember
 		SetFromCharsExact, GetAsString, GetAsStringArray,
 		GetAsCharExact, GetAsCharArrayExact,
 		GetAsStringExact, GetAsStringArrayExact,
-		SetFromStrings
+		SetFromStrings,
+		GetAlgebra<CharAlgebra, CharMember>
 {
 	private char v;
 	
@@ -240,5 +242,11 @@ public class CharMember
 	@Override
 	public char getAsCharExact() {
 		return getAsChar();
+	}
+	
+	@Override
+	public CharAlgebra getAlgebra() {
+
+		return G.CHAR;
 	}
 }

@@ -100,7 +100,8 @@ public final class SignedInt3Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt3Algebra, SignedInt3Member>
 {
 	byte v;
 
@@ -1011,5 +1012,11 @@ public final class SignedInt3Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public SignedInt3Algebra getAlgebra() {
+
+		return G.INT3;
 	}
 }

@@ -82,7 +82,8 @@ public final class ComplexHighPrecisionMember
 		GetAsDoubleArray,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember>
 {
 	private BigDecimal r, i;
 	
@@ -1036,5 +1037,11 @@ public final class ComplexHighPrecisionMember
 			setI(BigDecimal.ZERO);
 		else
 			setI(BigDecimal.valueOf(vals[1]));
+	}
+	
+	@Override
+	public ComplexHighPrecisionAlgebra getAlgebra() {
+
+		return G.CHP;
 	}
 }

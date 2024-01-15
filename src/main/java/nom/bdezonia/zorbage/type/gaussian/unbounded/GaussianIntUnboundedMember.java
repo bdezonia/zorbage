@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
@@ -115,7 +116,8 @@ public class GaussianIntUnboundedMember
 		GetAsBigIntegerArray,
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>
 {
 	BigInteger r;
 	BigInteger i;
@@ -1048,5 +1050,11 @@ public class GaussianIntUnboundedMember
 			setI(BigInteger.valueOf(vals[1]));
 		else
 			setI(BigInteger.ZERO);
+	}
+	
+	@Override
+	public GaussianIntUnboundedAlgebra getAlgebra() {
+
+		return G.GAUSSU;
 	}
 }

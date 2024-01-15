@@ -99,7 +99,8 @@ public final class SignedInt15Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt15Algebra, SignedInt15Member>
 {
 	short v;
 
@@ -1210,5 +1211,11 @@ public final class SignedInt15Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public SignedInt15Algebra getAlgebra() {
+
+		return G.INT15;
 	}
 }

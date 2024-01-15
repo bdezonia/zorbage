@@ -70,7 +70,8 @@ public class ArgbMember
 		GetAsBigIntegerArray,
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<ArgbAlgebra, ArgbMember>
 {
 	private byte a, r, g, b;
 	
@@ -387,5 +388,11 @@ public class ArgbMember
 		setR(vals[1]);
 		setG(vals[2]);
 		setB(vals[3]);
+	}
+	
+	@Override
+	public ArgbAlgebra getAlgebra() {
+
+		return G.ARGB;
 	}
 }

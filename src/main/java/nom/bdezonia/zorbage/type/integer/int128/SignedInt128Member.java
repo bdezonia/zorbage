@@ -91,7 +91,8 @@ public final class SignedInt128Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt128Algebra, SignedInt128Member>
 {
 	static final BigInteger TWO = BigInteger.ONE.add(BigInteger.ONE);
 	static final BigInteger TWO63 = TWO.pow(63);
@@ -951,5 +952,11 @@ public final class SignedInt128Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));
+	}
+	
+	@Override
+	public SignedInt128Algebra getAlgebra() {
+
+		return G.INT128;
 	}
 }

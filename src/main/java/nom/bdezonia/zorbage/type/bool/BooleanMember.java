@@ -59,8 +59,9 @@ public final class BooleanMember
 		UniversalRepresentation, NumberMember<BooleanMember>,
 		PrimitiveConversion, SetFromBooleans, GetAsBoolean,
 		GetAsBooleanArray, NativeBooleanSupport, SetFromBooleansExact,
-		GetAsBooleanExact, GetAsBooleanArrayExact
-{	
+		GetAsBooleanExact, GetAsBooleanArrayExact,
+		GetAlgebra<BooleanAlgebra, BooleanMember>
+{
 	private static final String ZERO = "0";
 	private static final String ONE = "1";
 
@@ -775,5 +776,11 @@ public final class BooleanMember
 	@Override
 	public boolean getAsBooleanExact() {
 		return getAsBoolean();
+	}
+	
+	@Override
+	public BooleanAlgebra getAlgebra() {
+
+		return G.BOOL;
 	}
 }

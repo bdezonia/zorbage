@@ -99,7 +99,8 @@ public final class UnsignedInt14Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt14Algebra, UnsignedInt14Member>
 {
 	short v;
 
@@ -1189,5 +1190,11 @@ public final class UnsignedInt14Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public UnsignedInt14Algebra getAlgebra() {
+
+		return G.UINT14;
 	}
 }

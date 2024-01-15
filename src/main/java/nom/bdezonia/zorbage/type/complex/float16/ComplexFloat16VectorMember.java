@@ -81,7 +81,8 @@ public final class ComplexFloat16VectorMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<ComplexFloat16Vector, ComplexFloat16VectorMember>
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0); 
 
@@ -1289,5 +1290,11 @@ public final class ComplexFloat16VectorMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public ComplexFloat16Vector getAlgebra() {
+
+		return G.CHLF_VEC;
 	}
 }

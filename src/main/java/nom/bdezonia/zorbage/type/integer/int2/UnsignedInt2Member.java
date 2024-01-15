@@ -100,7 +100,8 @@ public final class UnsignedInt2Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt2Algebra, UnsignedInt2Member>
 {
 	byte v;
 
@@ -973,5 +974,11 @@ public final class UnsignedInt2Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public UnsignedInt2Algebra getAlgebra() {
+
+		return G.UINT2;
 	}
 }

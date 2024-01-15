@@ -83,7 +83,8 @@ public final class ComplexFloat32MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<ComplexFloat32Matrix, ComplexFloat32MatrixMember>
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member(0,0);
 	
@@ -1454,5 +1455,11 @@ public final class ComplexFloat32MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public ComplexFloat32Matrix getAlgebra() {
+
+		return G.CFLT_MAT;
 	}
 }

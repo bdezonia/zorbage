@@ -39,6 +39,8 @@ import nom.bdezonia.zorbage.algorithm.RModuleReshape;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Vector;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32VectorMember;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
 import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 import nom.bdezonia.zorbage.type.universal.PrimitiveRepresentation;
@@ -84,7 +86,8 @@ public final class ComplexFloat64VectorMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<ComplexFloat32Vector, ComplexFloat32VectorMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0); 
 
@@ -1307,5 +1310,11 @@ public final class ComplexFloat64VectorMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public ComplexFloat32Vector getAlgebra() {
+
+		return G.CFLT_VEC;
 	}
 }

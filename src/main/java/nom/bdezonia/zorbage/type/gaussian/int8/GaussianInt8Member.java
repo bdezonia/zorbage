@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
@@ -119,7 +120,8 @@ public class GaussianInt8Member
 		GetAsBigIntegerArray,
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<GaussianInt8Algebra, GaussianInt8Member>
 {
 	byte r;
 	byte i;
@@ -1062,5 +1064,11 @@ public class GaussianInt8Member
 			setI(vals[1]);
 		else
 			setI(0);
+	}
+	
+	@Override
+	public GaussianInt8Algebra getAlgebra() {
+
+		return G.GAUSS8;
 	}
 }

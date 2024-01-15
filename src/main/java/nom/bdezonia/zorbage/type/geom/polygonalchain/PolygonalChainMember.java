@@ -37,6 +37,7 @@ import java.util.List;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
@@ -95,7 +96,8 @@ public class PolygonalChainMember
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<PolygonalChainAlgebra, PolygonalChainMember>
 {
 	float boundsValid;
 	float minx, miny, minz, maxx, maxy, maxz;
@@ -1134,5 +1136,11 @@ public class PolygonalChainMember
 		}
 		
 		boundsValid = 1;
+	}
+	
+	@Override
+	public PolygonalChainAlgebra getAlgebra() {
+
+		return G.CHAIN;
 	}
 }

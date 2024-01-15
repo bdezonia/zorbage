@@ -81,7 +81,8 @@ public final class ComplexFloat16MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<ComplexFloat16Matrix, ComplexFloat16MatrixMember>
 {
 	private static final ComplexFloat16Member ZERO = new ComplexFloat16Member(0,0);
 	
@@ -1442,5 +1443,11 @@ public final class ComplexFloat16MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public ComplexFloat16Matrix getAlgebra() {
+
+		return G.CHLF_MAT;
 	}
 }

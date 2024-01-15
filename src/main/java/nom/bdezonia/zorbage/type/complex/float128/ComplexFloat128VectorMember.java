@@ -83,7 +83,8 @@ public final class ComplexFloat128VectorMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<ComplexFloat128Vector, ComplexFloat128VectorMember>
 {
 	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member(); 
 
@@ -1321,5 +1322,11 @@ public final class ComplexFloat128VectorMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public ComplexFloat128Vector getAlgebra() {
+
+		return G.CQUAD_VEC;
 	}
 }

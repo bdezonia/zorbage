@@ -98,7 +98,8 @@ public final class SignedInt16Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt16Algebra, SignedInt16Member>
 {
 	short v;
 	
@@ -960,5 +961,11 @@ public final class SignedInt16Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public SignedInt16Algebra getAlgebra() {
+
+		return G.INT16;
 	}
 }

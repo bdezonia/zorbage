@@ -84,7 +84,8 @@ public final class ComplexFloat64MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<ComplexFloat64Matrix, ComplexFloat64MatrixMember>
 {
 	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member(0,0);
 	
@@ -1463,5 +1464,11 @@ public final class ComplexFloat64MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public ComplexFloat64Matrix getAlgebra() {
+
+		return G.CDBL_MAT;
 	}
 }
