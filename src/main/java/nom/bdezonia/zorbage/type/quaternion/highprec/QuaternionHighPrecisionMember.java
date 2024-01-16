@@ -83,7 +83,8 @@ public final class QuaternionHighPrecisionMember
 		GetAsDoubleArray,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember>
 {
 	private BigDecimal r, i, j, k;
 	
@@ -1526,5 +1527,11 @@ public final class QuaternionHighPrecisionMember
 			setK(BigDecimal.ZERO);
 		else
 			setK(BigDecimal.valueOf(vals[3]));
+	}
+	
+	@Override
+	public QuaternionHighPrecisionAlgebra getAlgebra() {
+
+		return G.QHP;
 	}
 }

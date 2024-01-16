@@ -80,7 +80,8 @@ public final class OctonionFloat32Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<OctonionFloat32Algebra, OctonionFloat32Member>
 {
 	private float r, i, j, k, l, i0, j0, k0;
 	
@@ -2337,5 +2338,11 @@ public final class OctonionFloat32Member
 			setK0(0);
 		else
 			setK0(vals[7]);
+	}
+	
+	@Override
+	public OctonionFloat32Algebra getAlgebra() {
+
+		return G.OFLT;
 	}
 }

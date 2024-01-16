@@ -89,7 +89,8 @@ public class RationalMember
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimal,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<RationalAlgebra, RationalMember>
 {
 	// this is how many decimal places of accuracy the BigDecimal values will contain
 	private static final int PLACES = 24;
@@ -967,5 +968,11 @@ public class RationalMember
 	public BigInteger componentMax() {
 
 		return null; // bigintegers have no max
+	}
+	
+	@Override
+	public RationalAlgebra getAlgebra() {
+
+		return G.RAT;
 	}
 }

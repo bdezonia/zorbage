@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
@@ -124,7 +125,8 @@ public final class HighPrecisionCartesianTensorProductMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<HighPrecisionCartesianTensorProduct, HighPrecisionCartesianTensorProductMember>
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember();
 
@@ -1147,5 +1149,11 @@ public final class HighPrecisionCartesianTensorProductMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public HighPrecisionCartesianTensorProduct getAlgebra() {
+
+		return G.HP_TEN;
 	}
 }

@@ -91,7 +91,8 @@ public final class Float32Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<Float32Algebra, Float32Member>
 {
 	float v;
 	
@@ -920,5 +921,11 @@ public final class Float32Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public Float32Algebra getAlgebra() {
+
+		return G.FLT;
 	}
 }

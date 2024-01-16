@@ -91,7 +91,8 @@ public final class Float64Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<Float64Algebra, Float64Member>
 {
 	double v;
 	
@@ -919,5 +920,11 @@ public final class Float64Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public Float64Algebra getAlgebra() {
+
+		return G.DBL;
 	}
 }

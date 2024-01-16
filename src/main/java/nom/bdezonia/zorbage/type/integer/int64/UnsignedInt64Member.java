@@ -91,7 +91,8 @@ public final class UnsignedInt64Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt64Algebra, UnsignedInt64Member>
 {
 
 	private static final BigInteger UPPER = new BigInteger("8000000000000000",16);
@@ -932,5 +933,11 @@ public final class UnsignedInt64Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public UnsignedInt64Algebra getAlgebra() {
+
+		return G.UINT64;
 	}
 }

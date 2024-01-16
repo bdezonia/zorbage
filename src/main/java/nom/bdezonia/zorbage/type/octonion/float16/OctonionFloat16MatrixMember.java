@@ -81,7 +81,8 @@ public final class OctonionFloat16MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<OctonionFloat16Matrix, OctonionFloat16MatrixMember>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
 
@@ -2484,5 +2485,11 @@ public final class OctonionFloat16MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public OctonionFloat16Matrix getAlgebra() {
+
+		return G.OHLF_MAT;
 	}
 }

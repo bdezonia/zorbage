@@ -83,7 +83,8 @@ public final class QuaternionFloat128MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<QuaternionFloat128Matrix, QuaternionFloat128MatrixMember>
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member();
 
@@ -1859,5 +1860,11 @@ public final class QuaternionFloat128MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public QuaternionFloat128Matrix getAlgebra() {
+
+		return G.QQUAD_MAT;
 	}
 }

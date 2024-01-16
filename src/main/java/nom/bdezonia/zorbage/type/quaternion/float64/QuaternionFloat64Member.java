@@ -81,7 +81,8 @@ public final class QuaternionFloat64Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<QuaternionFloat64Algebra, QuaternionFloat64Member>
 {
 	private double r, i, j, k;
 	
@@ -1502,5 +1503,11 @@ public final class QuaternionFloat64Member
 			setK(0);
 		else
 			setK(vals[3]);
+	}
+	
+	@Override
+	public QuaternionFloat64Algebra getAlgebra() {
+
+		return G.QDBL;
 	}
 }

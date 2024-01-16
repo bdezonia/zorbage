@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
@@ -114,7 +115,8 @@ public final class OctonionFloat16CartesianTensorProductMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<OctonionFloat16CartesianTensorProduct, OctonionFloat16CartesianTensorProductMember>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
 
@@ -2108,5 +2110,11 @@ public final class OctonionFloat16CartesianTensorProductMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public OctonionFloat16CartesianTensorProduct getAlgebra() {
+
+		return G.OHLF_TEN;
 	}
 }

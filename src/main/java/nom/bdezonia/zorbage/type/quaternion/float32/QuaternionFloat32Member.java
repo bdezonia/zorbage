@@ -80,7 +80,8 @@ public final class QuaternionFloat32Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<QuaternionFloat32Algebra, QuaternionFloat32Member>
 {
 	private float r, i, j, k;
 	
@@ -1477,5 +1478,11 @@ public final class QuaternionFloat32Member
 			setK(0);
 		else
 			setK(vals[3]);
+	}
+	
+	@Override
+	public QuaternionFloat32Algebra getAlgebra() {
+
+		return G.QFLT;
 	}
 }

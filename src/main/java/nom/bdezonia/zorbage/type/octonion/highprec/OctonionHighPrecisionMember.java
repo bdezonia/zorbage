@@ -83,7 +83,8 @@ public final class OctonionHighPrecisionMember
 		GetAsDoubleArray,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember>
 {
 	private BigDecimal r, i, j, k, l, i0, j0, k0;
 	
@@ -2406,5 +2407,11 @@ public final class OctonionHighPrecisionMember
 			setK0(BigDecimal.ZERO);
 		else
 			setK0(BigDecimal.valueOf(vals[7]));
+	}
+	
+	@Override
+	public OctonionHighPrecisionAlgebra getAlgebra() {
+
+		return G.OHP;
 	}
 }

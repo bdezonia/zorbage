@@ -40,6 +40,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
@@ -114,7 +115,8 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<QuaternionFloat16CartesianTensorProduct, QuaternionFloat16CartesianTensorProductMember>
 {
 	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member();
 
@@ -1512,5 +1514,11 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public QuaternionFloat16CartesianTensorProduct getAlgebra() {
+
+		return G.QHLF_TEN;
 	}
 }

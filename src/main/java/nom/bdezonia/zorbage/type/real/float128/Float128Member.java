@@ -36,6 +36,7 @@ import java.math.BigInteger;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Duplicatable;
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algebra.GetAlgebra;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimal;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArray;
 import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
@@ -130,7 +131,8 @@ public final class Float128Member
 		GetAsBigIntegerArray,
 		GetAsBigDecimal,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<Float128Algebra, Float128Member>
 {
 	BigDecimal num;
 	byte classification;
@@ -1412,5 +1414,11 @@ public final class Float128Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigDecimal.valueOf(vals[0]));
+	}
+	
+	@Override
+	public Float128Algebra getAlgebra() {
+
+		return G.QUAD;
 	}
 }

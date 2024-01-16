@@ -86,7 +86,8 @@ public final class HighPrecisionMatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<HighPrecisionMatrix, HighPrecisionMatrixMember>
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember();
 
@@ -1404,5 +1405,11 @@ public final class HighPrecisionMatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public HighPrecisionMatrix getAlgebra() {
+
+		return G.HP_MAT;
 	}
 }

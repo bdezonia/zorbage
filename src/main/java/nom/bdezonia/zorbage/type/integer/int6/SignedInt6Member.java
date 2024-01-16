@@ -100,7 +100,8 @@ public final class SignedInt6Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt6Algebra, SignedInt6Member>
 {
 	byte v;
 
@@ -1063,5 +1064,11 @@ public final class SignedInt6Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public SignedInt6Algebra getAlgebra() {
+
+		return G.INT6;
 	}
 }

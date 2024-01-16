@@ -97,7 +97,8 @@ public final class UnsignedInt8Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt8Algebra, UnsignedInt8Member>
 {
 	byte v;
 	
@@ -957,5 +958,11 @@ public final class UnsignedInt8Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public UnsignedInt8Algebra getAlgebra() {
+
+		return G.UINT8;
 	}
 }

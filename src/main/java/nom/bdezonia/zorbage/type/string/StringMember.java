@@ -45,7 +45,8 @@ public final class StringMember
 		SetFromStrings, GetAsString, GetAsStringArray, NativeStringSupport,
 		SetFromStringsExact, SetFromChars, SetFromCharsExact,
 		GetAsCharArray, GetAsCharArrayExact,
-		GetAsStringExact, GetAsStringArrayExact
+		GetAsStringExact, GetAsStringArrayExact,
+		GetAlgebra<StringAlgebra, StringMember>
 {
 	private String v;
 	
@@ -194,5 +195,11 @@ public final class StringMember
 	@Override
 	public char[] getAsCharArrayExact() {
 		return getAsCharArray();
+	}
+	
+	@Override
+	public StringAlgebra getAlgebra() {
+
+		return G.STRING;
 	}
 }

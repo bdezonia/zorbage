@@ -81,7 +81,8 @@ public final class Float16MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<Float16Matrix, Float16MatrixMember>
 {
 	private static final Float16Member ZERO = new Float16Member(0);
 
@@ -1359,5 +1360,11 @@ public final class Float16MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public Float16Matrix getAlgebra() {
+
+		return G.HLF_MAT;
 	}
 }

@@ -92,7 +92,8 @@ public final class SignedInt64Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt64Algebra, SignedInt64Member>
 {
 
 	long v;
@@ -926,5 +927,11 @@ public final class SignedInt64Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public SignedInt64Algebra getAlgebra() {
+
+		return G.INT64;
 	}
 }

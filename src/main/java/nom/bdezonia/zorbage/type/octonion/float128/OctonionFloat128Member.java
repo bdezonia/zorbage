@@ -80,7 +80,8 @@ public final class OctonionFloat128Member
 		GetAsDoubleArray,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<OctonionFloat128Algebra, OctonionFloat128Member>
 {
 	private final Float128Member r, i, j, k, l, i0, j0, k0;
 	
@@ -2331,5 +2332,11 @@ public final class OctonionFloat128Member
 			setK0(BigDecimal.ZERO);
 		else
 			setK0(BigDecimal.valueOf(vals[7]));
+	}
+	
+	@Override
+	public OctonionFloat128Algebra getAlgebra() {
+
+		return G.OQUAD;
 	}
 }

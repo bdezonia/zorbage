@@ -83,7 +83,8 @@ public final class Float128VectorMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<Float128Vector, Float128VectorMember>
 {
 	private static final Float128Member ZERO = new Float128Member(); 
 
@@ -1237,5 +1238,11 @@ public final class Float128VectorMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public Float128Vector getAlgebra() {
+
+		return G.QUAD_VEC;
 	}
 }

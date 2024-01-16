@@ -99,7 +99,8 @@ public final class SignedInt8Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<SignedInt8Algebra, SignedInt8Member>
 {
 	byte v;
 	
@@ -966,5 +967,11 @@ public final class SignedInt8Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public SignedInt8Algebra getAlgebra() {
+
+		return G.INT8;
 	}
 }

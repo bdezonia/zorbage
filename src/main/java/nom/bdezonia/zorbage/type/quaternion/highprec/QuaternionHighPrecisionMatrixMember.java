@@ -86,7 +86,8 @@ public final class QuaternionHighPrecisionMatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<QuaternionHighPrecisionMatrix, QuaternionHighPrecisionMatrixMember>
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 
@@ -1877,5 +1878,11 @@ public final class QuaternionHighPrecisionMatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public QuaternionHighPrecisionMatrix getAlgebra() {
+
+		return G.QHP_MAT;
 	}
 }

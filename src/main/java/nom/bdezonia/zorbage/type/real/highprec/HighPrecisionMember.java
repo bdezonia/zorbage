@@ -91,7 +91,8 @@ public final class HighPrecisionMember
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<HighPrecisionAlgebra, HighPrecisionMember>
 {
 	private BigDecimal v;
 	
@@ -940,5 +941,11 @@ public final class HighPrecisionMember
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigDecimal.valueOf(vals[0]));
+	}
+	
+	@Override
+	public HighPrecisionAlgebra getAlgebra() {
+
+		return G.HP;
 	}
 }

@@ -84,7 +84,8 @@ public final class Float64VectorMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<Float64Vector, Float64VectorMember>
 {
 	private static final Float64Member ZERO = new Float64Member(0); 
 
@@ -1225,5 +1226,11 @@ public final class Float64VectorMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public Float64Vector getAlgebra() {
+
+		return G.DBL_VEC;
 	}
 }

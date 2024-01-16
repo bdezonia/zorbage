@@ -83,7 +83,8 @@ public final class Float32MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<Float32Matrix, Float32MatrixMember>
 {
 	private static final Float32Member ZERO = new Float32Member(0);
 
@@ -1371,5 +1372,11 @@ public final class Float32MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public Float32Matrix getAlgebra() {
+
+		return G.FLT_MAT;
 	}
 }

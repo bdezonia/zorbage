@@ -84,7 +84,8 @@ public final class QuaternionFloat64RModuleMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<QuaternionFloat64RModule, QuaternionFloat64RModuleMember>
 {
 	private static final QuaternionFloat64Member ZERO = new QuaternionFloat64Member(); 
 
@@ -1698,5 +1699,11 @@ public final class QuaternionFloat64RModuleMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public QuaternionFloat64RModule getAlgebra() {
+
+		return G.QDBL_RMOD;
 	}
 }

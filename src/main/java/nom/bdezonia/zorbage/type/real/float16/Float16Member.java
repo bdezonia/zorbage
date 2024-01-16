@@ -93,7 +93,8 @@ public final class Float16Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<Float16Algebra, Float16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -918,5 +919,11 @@ public final class Float16Member
 	@Override
 	public void setFromBytesExact(byte... vals) {
 		setFromBytes(vals);
+	}
+	
+	@Override
+	public Float16Algebra getAlgebra() {
+
+		return G.HLF;
 	}
 }

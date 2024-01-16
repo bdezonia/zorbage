@@ -46,7 +46,8 @@ public final class FixedStringMember
 		Settable<FixedStringMember>, Gettable<FixedStringMember>,
 		SetFromStrings, GetAsString, GetAsStringArray, SetFromChars,
 		GetAsStringExact, GetAsStringArrayExact,
-		GetAsCharArray, GetAsCharArrayExact
+		GetAsCharArray, GetAsCharArrayExact,
+		GetAlgebra<FixedStringAlgebra, FixedStringMember>
 {
 	private int[] codePoints;
 	
@@ -261,5 +262,11 @@ public final class FixedStringMember
 	@Override
 	public String getAsStringExact() {
 		return getAsString();
+	}
+	
+	@Override
+	public FixedStringAlgebra getAlgebra() {
+
+		return G.FSTRING;
 	}
 }

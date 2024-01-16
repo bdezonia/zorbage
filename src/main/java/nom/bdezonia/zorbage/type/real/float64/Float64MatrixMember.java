@@ -84,7 +84,8 @@ public final class Float64MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<Float64Matrix, Float64MatrixMember>
 {
 	private static final Float64Member ZERO = new Float64Member(0);
 
@@ -1377,5 +1378,11 @@ public final class Float64MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public Float64Matrix getAlgebra() {
+
+		return G.DBL_MAT;
 	}
 }

@@ -86,7 +86,8 @@ public final class HighPrecisionVectorMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<HighPrecisionVector, HighPrecisionVectorMember>
 {
 	private static final HighPrecisionMember ZERO = new HighPrecisionMember(); 
 
@@ -1255,5 +1256,11 @@ public final class HighPrecisionVectorMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public HighPrecisionVector getAlgebra() {
+
+		return G.HP_VEC;
 	}
 }

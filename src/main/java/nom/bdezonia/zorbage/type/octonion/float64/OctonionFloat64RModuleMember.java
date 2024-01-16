@@ -84,7 +84,8 @@ public final class OctonionFloat64RModuleMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<OctonionFloat64RModule, OctonionFloat64RModuleMember>
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member(); 
 
@@ -2350,5 +2351,11 @@ public final class OctonionFloat64RModuleMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public OctonionFloat64RModule getAlgebra() {
+
+		return G.ODBL_RMOD;
 	}
 }

@@ -79,7 +79,8 @@ public final class OctonionFloat16Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<OctonionFloat16Algebra, OctonionFloat16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -2329,5 +2330,11 @@ public final class OctonionFloat16Member
 	@Override
 	public void setFromBytesExact(byte... vals) {
 		setFromBytes(vals);
+	}
+	
+	@Override
+	public OctonionFloat16Algebra getAlgebra() {
+
+		return G.OHLF;
 	}
 }

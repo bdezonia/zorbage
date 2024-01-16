@@ -91,7 +91,8 @@ public final class UnboundedIntMember
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnboundedIntAlgebra, UnboundedIntMember>
 {
 	private BigInteger v;
 	
@@ -922,5 +923,11 @@ public final class UnboundedIntMember
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(BigInteger.valueOf(vals[0]));
+	}
+	
+	@Override
+	public UnboundedIntAlgebra getAlgebra() {
+
+		return G.UNBOUND;
 	}
 }

@@ -81,7 +81,8 @@ public final class OctonionFloat64Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<OctonionFloat64Algebra, OctonionFloat64Member>
 {
 	private double r, i, j, k, l, i0, j0, k0;
 	
@@ -2343,5 +2344,11 @@ public final class OctonionFloat64Member
 			setK0(0);
 		else
 			setK0(vals[7]);
+	}
+	
+	@Override
+	public OctonionFloat64Algebra getAlgebra() {
+
+		return G.ODBL;
 	}
 }

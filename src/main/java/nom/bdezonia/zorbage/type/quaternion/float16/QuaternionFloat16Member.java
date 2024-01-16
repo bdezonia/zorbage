@@ -79,7 +79,8 @@ public final class QuaternionFloat16Member
 		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<QuaternionFloat16Algebra, QuaternionFloat16Member>
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	
@@ -1487,5 +1488,11 @@ public final class QuaternionFloat16Member
 	@Override
 	public void setFromBytesExact(byte... vals) {
 		setFromBytes(vals);
+	}
+	
+	@Override
+	public QuaternionFloat16Algebra getAlgebra() {
+
+		return G.QHLF;
 	}
 }

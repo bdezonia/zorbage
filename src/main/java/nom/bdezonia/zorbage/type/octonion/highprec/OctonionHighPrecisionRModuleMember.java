@@ -86,7 +86,8 @@ public final class OctonionHighPrecisionRModuleMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<OctonionHighPrecisionRModule, OctonionHighPrecisionRModuleMember>
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember(); 
 
@@ -2384,5 +2385,11 @@ public final class OctonionHighPrecisionRModuleMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public OctonionHighPrecisionRModule getAlgebra() {
+
+		return G.OHP_RMOD;
 	}
 }

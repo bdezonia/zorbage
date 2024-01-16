@@ -80,7 +80,8 @@ public final class QuaternionFloat128Member
 		GetAsDoubleArray,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<QuaternionFloat128Algebra, QuaternionFloat128Member>
 {
 	private final Float128Member r, i, j, k;
 	
@@ -1490,5 +1491,11 @@ public final class QuaternionFloat128Member
 			setK(BigDecimal.ZERO);
 		else
 			setK(BigDecimal.valueOf(vals[3]));
+	}
+	
+	@Override
+	public QuaternionFloat128Algebra getAlgebra() {
+
+		return G.QQUAD;
 	}
 }

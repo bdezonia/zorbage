@@ -83,7 +83,8 @@ public final class OctonionFloat128MatrixMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		ThreadAccess
+		ThreadAccess,
+		GetAlgebra<OctonionFloat128Matrix, OctonionFloat128MatrixMember>
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 
@@ -2511,5 +2512,11 @@ public final class OctonionFloat128MatrixMember
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
+	}
+	
+	@Override
+	public OctonionFloat128Matrix getAlgebra() {
+
+		return G.OQUAD_MAT;
 	}
 }

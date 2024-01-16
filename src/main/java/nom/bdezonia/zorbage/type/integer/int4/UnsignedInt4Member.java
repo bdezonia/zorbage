@@ -100,7 +100,8 @@ public final class UnsignedInt4Member
 		GetAsBigDecimal,
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
-		GetAsBigDecimalArrayExact
+		GetAsBigDecimalArrayExact,
+		GetAlgebra<UnsignedInt4Algebra, UnsignedInt4Member>
 {
 	byte v;
 
@@ -973,5 +974,11 @@ public final class UnsignedInt4Member
 		if (vals.length != 1)
 			throw new IllegalArgumentException("mismatch between component count and input values count");
 		setV(vals[0]);
+	}
+	
+	@Override
+	public UnsignedInt4Algebra getAlgebra() {
+
+		return G.UINT4;
 	}
 }
