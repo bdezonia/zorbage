@@ -46,6 +46,15 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.Sinc;
@@ -106,7 +115,16 @@ public class ComplexFloat16Algebra
 		ConstructibleFromDoubles<ComplexFloat16Member>,
 		ConstructibleFromBigIntegers<ComplexFloat16Member>,
 		ConstructibleFromBigDecimals<ComplexFloat16Member>,
-		ExactlyConstructibleFromBytes<ComplexFloat16Member>
+		ExactlyConstructibleFromBytes<ComplexFloat16Member>,
+		ApproximateType,
+		CompoundType,
+		InfinityIncludedType,
+		NanIncludedType,
+		NumberType,
+		ComplexType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final ComplexFloat16Member ONE = new ComplexFloat16Member(1,0);
 	private static final ComplexFloat16Member TWO = new ComplexFloat16Member(2,0);

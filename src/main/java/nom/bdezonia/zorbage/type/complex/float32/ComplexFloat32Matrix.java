@@ -31,6 +31,14 @@
 package nom.bdezonia.zorbage.type.complex.float32;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -112,9 +120,16 @@ public class ComplexFloat32Matrix
 		ScaleByOneHalf<ComplexFloat32MatrixMember>,
 		ScaleByTwo<ComplexFloat32MatrixMember>,
 		Tolerance<Float32Member,ComplexFloat32MatrixMember>,
-		ArrayLikeMethods<ComplexFloat32MatrixMember,ComplexFloat32Member>
+		ArrayLikeMethods<ComplexFloat32MatrixMember,ComplexFloat32Member>,
+		ApproximateType,
+		CompositeType,
+		InfinityIncludedType,
+		MatrixType,
+		NanIncludedType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
-
 	@Override
 	public String typeDescription() {
 		return "32-bit based complex matrix";

@@ -35,6 +35,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.RationalType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -74,7 +81,14 @@ public class RationalAlgebra
 		ExactlyConstructibleFromShorts<RationalMember>,
 		ExactlyConstructibleFromInts<RationalMember>,
 		ExactlyConstructibleFromLongs<RationalMember>,
-		ExactlyConstructibleFromBigIntegers<RationalMember>
+		ExactlyConstructibleFromBigIntegers<RationalMember>,
+		CompoundType,
+		ExactType,
+		NumberType,
+		RationalType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

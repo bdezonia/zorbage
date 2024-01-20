@@ -37,6 +37,13 @@ import java.math.MathContext;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.QuaternionType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
@@ -95,7 +102,14 @@ public class QuaternionHighPrecisionAlgebra
 		ExactlyConstructibleFromFloats<QuaternionHighPrecisionMember>,
 		ExactlyConstructibleFromDoubles<QuaternionHighPrecisionMember>,
 		ExactlyConstructibleFromBigIntegers<QuaternionHighPrecisionMember>,
-		ExactlyConstructibleFromBigDecimals<QuaternionHighPrecisionMember>
+		ExactlyConstructibleFromBigDecimals<QuaternionHighPrecisionMember>,
+		CompoundType,
+		ExactType,
+		NumberType,
+		QuaternionType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 	private static final QuaternionHighPrecisionMember ONE = new QuaternionHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);

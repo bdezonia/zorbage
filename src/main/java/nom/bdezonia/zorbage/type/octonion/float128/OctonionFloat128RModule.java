@@ -35,6 +35,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.RModuleType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
@@ -105,7 +112,14 @@ public class OctonionFloat128RModule
 		ExactlyConstructibleFromShorts<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromInts<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromFloats<OctonionFloat128RModuleMember>,
-		ExactlyConstructibleFromDoubles<OctonionFloat128RModuleMember>
+		ExactlyConstructibleFromDoubles<OctonionFloat128RModuleMember>,
+		ApproximateType,
+		CompositeType,
+		InfinityIncludedType,
+		NanIncludedType,
+		RModuleType,
+		SignedType,
+		ZeroIncludedType
 {
 
 	@Override

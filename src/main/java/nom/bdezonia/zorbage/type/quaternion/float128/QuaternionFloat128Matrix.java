@@ -33,6 +33,14 @@ package nom.bdezonia.zorbage.type.quaternion.float128;
 import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -112,7 +120,15 @@ public class QuaternionFloat128Matrix
 		ScaleByOneHalf<QuaternionFloat128MatrixMember>,
 		ScaleByTwo<QuaternionFloat128MatrixMember>,
 		Tolerance<Float128Member,QuaternionFloat128MatrixMember>,
-		ArrayLikeMethods<QuaternionFloat128MatrixMember,QuaternionFloat128Member>
+		ArrayLikeMethods<QuaternionFloat128MatrixMember,QuaternionFloat128Member>,
+		ApproximateType,
+		CompositeType,
+		InfinityIncludedType,
+		MatrixType,
+		NanIncludedType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

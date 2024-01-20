@@ -34,6 +34,12 @@ import java.lang.Integer;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConjugate;
@@ -101,7 +107,13 @@ public class QuaternionHighPrecisionMatrix
 		ScaleByOneHalf<QuaternionHighPrecisionMatrixMember>,
 		ScaleByTwo<QuaternionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>,
-		ArrayLikeMethods<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMember>
+		ArrayLikeMethods<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMember>,
+		CompositeType,
+		ExactType,
+		MatrixType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

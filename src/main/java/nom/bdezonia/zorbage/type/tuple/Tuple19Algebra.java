@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple19;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 
 /**
  * 
@@ -61,7 +62,10 @@ public class Tuple19Algebra<AA extends Algebra<AA,A>, A,
 							QQ extends Algebra<QQ,Q>, Q,
 							RR extends Algebra<RR,R>, R,
 							SS extends Algebra<SS,S>, S>
-	implements Algebra<Tuple19Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M,NN,N,OO,O,PP,P,QQ,Q,RR,R,SS,S>, Tuple19<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S>>
+	implements
+	
+		Algebra<Tuple19Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M,NN,N,OO,O,PP,P,QQ,Q,RR,R,SS,S>, Tuple19<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S>>,
+		CompoundType
 {
 	private final AA algA;
 	private final BB algB;

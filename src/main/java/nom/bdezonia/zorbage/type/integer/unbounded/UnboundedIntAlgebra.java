@@ -64,6 +64,12 @@ import nom.bdezonia.zorbage.algebra.Integer;
 import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.IntegerType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
@@ -92,7 +98,13 @@ public class UnboundedIntAlgebra
 		ExactlyConstructibleFromShorts<UnboundedIntMember>,
 		ExactlyConstructibleFromInts<UnboundedIntMember>,
 		ExactlyConstructibleFromLongs<UnboundedIntMember>,
-		ExactlyConstructibleFromBigIntegers<UnboundedIntMember>
+		ExactlyConstructibleFromBigIntegers<UnboundedIntMember>,
+		ExactType,
+		IntegerType,
+		NumberType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final UnboundedIntMember ZERO = new UnboundedIntMember();
 	private static final UnboundedIntMember ONE = new UnboundedIntMember(BigInteger.ONE);

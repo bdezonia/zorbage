@@ -40,6 +40,11 @@ import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromChars;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.CharType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.procedure.Procedure1;
@@ -60,7 +65,12 @@ public class CharAlgebra
 		Bounded<CharMember>,
 		ConstructibleFromChars<CharMember>,
 		ConstructibleFromStrings<CharMember>,
-		ExactlyConstructibleFromChars<CharMember>
+		ExactlyConstructibleFromChars<CharMember>,
+		BoundedType,
+		CharType,
+		EnumerableType,
+		ExactType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

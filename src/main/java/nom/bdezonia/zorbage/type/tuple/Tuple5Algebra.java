@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple5;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 
 /**
  * 
@@ -47,7 +48,11 @@ public class Tuple5Algebra<AA extends Algebra<AA,A>, A,
 							CC extends Algebra<CC,C>, C,
 							DD extends Algebra<DD,D>, D,
 							EE extends Algebra<EE,E>, E>
-	implements Algebra<Tuple5Algebra<AA,A,BB,B,CC,C,DD,D,EE,E>, Tuple5<A,B,C,D,E>>
+	
+	implements
+	
+		Algebra<Tuple5Algebra<AA,A,BB,B,CC,C,DD,D,EE,E>, Tuple5<A,B,C,D,E>>,
+		CompoundType
 {
 	private final AA algA;
 	private final BB algB;

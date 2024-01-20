@@ -34,6 +34,12 @@ import java.lang.Integer;
 import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
@@ -80,9 +86,14 @@ public class ComplexHighPrecisionCartesianTensorProduct
 		ScaleByOneHalf<ComplexHighPrecisionCartesianTensorProductMember>,
 		ScaleByTwo<ComplexHighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, ComplexHighPrecisionCartesianTensorProductMember>,
-		ArrayLikeMethods<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionMember>
+		ArrayLikeMethods<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionMember>,
+		CompositeType,
+		ExactType,
+		OctonionType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
-
 	@Override
 	public String typeDescription() {
 		return "Arbitrary precision complex tensor";

@@ -35,6 +35,14 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.IntegerType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.DivMod;
 import nom.bdezonia.zorbage.algorithm.SteinGcd;
 import nom.bdezonia.zorbage.algorithm.SteinLcm;
@@ -90,7 +98,15 @@ public class SignedInt128Algebra
 		ExactlyConstructibleFromBytes<SignedInt128Member>,
 		ExactlyConstructibleFromShorts<SignedInt128Member>,
 		ExactlyConstructibleFromInts<SignedInt128Member>,
-		ExactlyConstructibleFromLongs<SignedInt128Member>
+		ExactlyConstructibleFromLongs<SignedInt128Member>,
+		BoundedType,
+		EnumerableType,
+		ExactType,
+		IntegerType,
+		NumberType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final SignedInt128Member ZERO = new SignedInt128Member();
 	private static final SignedInt128Member ONE = new SignedInt128Member(0,1);

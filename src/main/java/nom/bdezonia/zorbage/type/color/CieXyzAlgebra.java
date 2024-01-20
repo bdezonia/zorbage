@@ -48,6 +48,10 @@ import nom.bdezonia.zorbage.algebra.ConstructibleFromInts;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.Random;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.ColorType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 
 /**
  * 
@@ -65,7 +69,11 @@ public class CieXyzAlgebra
 		ConstructibleFromFloats<CieXyzMember>,
 		ConstructibleFromDoubles<CieXyzMember>,
 		ConstructibleFromBigIntegers<CieXyzMember>,
-		ConstructibleFromBigDecimals<CieXyzMember>
+		ConstructibleFromBigDecimals<CieXyzMember>,
+		ApproximateType,
+		ColorType,
+		CompoundType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

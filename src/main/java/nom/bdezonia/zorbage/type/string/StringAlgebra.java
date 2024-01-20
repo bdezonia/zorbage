@@ -41,6 +41,9 @@ import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromChars;
 import nom.bdezonia.zorbage.algebra.ExactlyConstructibleFromStrings;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Ordered;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.StringType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -66,7 +69,10 @@ public class StringAlgebra
 		ConstructibleFromChars<StringMember>,
 		ConstructibleFromStrings<StringMember>,
 		ExactlyConstructibleFromStrings<StringMember>,
-		ExactlyConstructibleFromChars<StringMember>
+		ExactlyConstructibleFromChars<StringMember>,
+		ExactType,
+		StringType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

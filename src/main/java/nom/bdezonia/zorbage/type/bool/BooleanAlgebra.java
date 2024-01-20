@@ -34,6 +34,13 @@ import java.lang.Integer;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.BooleanType;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnsignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.function.Function1;
@@ -58,7 +65,14 @@ public class BooleanAlgebra
 		PredSucc<BooleanMember>,
 		Random<BooleanMember>,
 		ConstructibleFromBooleans<BooleanMember>,
-		ExactlyConstructibleFromBooleans<BooleanMember>
+		ExactlyConstructibleFromBooleans<BooleanMember>,
+		BooleanType,
+		BoundedType,
+		EnumerableType,
+		ExactType,
+		UnityIncludedType,
+		UnsignedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

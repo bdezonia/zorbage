@@ -36,6 +36,7 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple8;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 
 /**
  * 
@@ -50,7 +51,11 @@ public class Tuple8Algebra<AA extends Algebra<AA,A>, A,
 							FF extends Algebra<FF,F>, F,
 							GG extends Algebra<GG,G>, G,
 							HH extends Algebra<HH,H>, H>
-	implements Algebra<Tuple8Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H>, Tuple8<A,B,C,D,E,F,G,H>>
+	
+	implements
+	
+		Algebra<Tuple8Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H>, Tuple8<A,B,C,D,E,F,G,H>>,
+		CompoundType
 {
 	private final AA algA;
 	private final BB algB;

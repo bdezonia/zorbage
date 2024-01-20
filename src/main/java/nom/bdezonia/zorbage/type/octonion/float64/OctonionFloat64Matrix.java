@@ -33,6 +33,14 @@ package nom.bdezonia.zorbage.type.octonion.float64;
 import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -112,7 +120,15 @@ public class OctonionFloat64Matrix
 		ScaleByOneHalf<OctonionFloat64MatrixMember>,
 		ScaleByTwo<OctonionFloat64MatrixMember>,
 		Tolerance<Float64Member,OctonionFloat64MatrixMember>,
-		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>
+		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>,
+		ApproximateType,
+		CompositeType,
+		InfinityIncludedType,
+		MatrixType,
+		NanIncludedType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

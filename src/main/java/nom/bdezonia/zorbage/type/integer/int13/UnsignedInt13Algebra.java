@@ -35,6 +35,14 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.IntegerType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnsignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.SteinGcd;
 import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -73,7 +81,15 @@ public class UnsignedInt13Algebra
 		ConstructibleFromDoubles<UnsignedInt13Member>,
 		ConstructibleFromBigIntegers<UnsignedInt13Member>,
 		ConstructibleFromBigDecimals<UnsignedInt13Member>,
-		Conjugate<UnsignedInt13Member>
+		Conjugate<UnsignedInt13Member>,
+		BoundedType,
+		EnumerableType,
+		ExactType,
+		IntegerType,
+		NumberType,
+		UnityIncludedType,
+		UnsignedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

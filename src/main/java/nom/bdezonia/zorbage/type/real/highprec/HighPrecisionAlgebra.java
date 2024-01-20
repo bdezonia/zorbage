@@ -38,6 +38,12 @@ import java.math.RoundingMode;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.RealType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -93,7 +99,13 @@ public class HighPrecisionAlgebra
 		ExactlyConstructibleFromLongs<HighPrecisionMember>,
 		ExactlyConstructibleFromInts<HighPrecisionMember>,
 		ExactlyConstructibleFromShorts<HighPrecisionMember>,
-		ExactlyConstructibleFromBytes<HighPrecisionMember>
+		ExactlyConstructibleFromBytes<HighPrecisionMember>,
+		ExactType,
+		NumberType,
+		RealType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static MathContext CONTEXT = new MathContext(24, RoundingMode.HALF_EVEN);
 	private static final BigDecimal THREE = BigDecimal.valueOf(3);

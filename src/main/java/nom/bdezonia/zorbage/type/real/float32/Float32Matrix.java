@@ -31,6 +31,14 @@
 package nom.bdezonia.zorbage.type.real.float32;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -109,7 +117,15 @@ public class Float32Matrix
 		ScaleByOneHalf<Float32MatrixMember>,
 		ScaleByTwo<Float32MatrixMember>,
 		Tolerance<Float32Member,Float32MatrixMember>,
-		ArrayLikeMethods<Float32MatrixMember,Float32Member>
+		ArrayLikeMethods<Float32MatrixMember,Float32Member>,
+		ApproximateType,
+		CompositeType,
+		InfinityIncludedType,
+		MatrixType,
+		NanIncludedType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

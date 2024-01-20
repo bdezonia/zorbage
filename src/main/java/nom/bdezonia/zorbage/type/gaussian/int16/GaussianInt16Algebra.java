@@ -60,6 +60,14 @@ import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
+import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.EuclideanGcd;
 import nom.bdezonia.zorbage.algorithm.EuclideanLcm;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -107,7 +115,15 @@ public class GaussianInt16Algebra
 		ConstructibleFromBigIntegers<GaussianInt16Member>,
 		ConstructibleFromBigDecimals<GaussianInt16Member>,
 		ExactlyConstructibleFromBytes<GaussianInt16Member>,
-		ExactlyConstructibleFromShorts<GaussianInt16Member>
+		ExactlyConstructibleFromShorts<GaussianInt16Member>,
+		ComplexType,
+		CompoundType,
+		EnumerableType,
+		ExactType,
+		NumberType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	@Override
 	public String typeDescription() {

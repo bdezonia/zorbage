@@ -46,6 +46,15 @@ import java.math.BigInteger;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -111,7 +120,16 @@ public class ComplexFloat128Algebra
 		ExactlyConstructibleFromShorts<ComplexFloat128Member>,
 		ExactlyConstructibleFromInts<ComplexFloat128Member>,
 		ExactlyConstructibleFromFloats<ComplexFloat128Member>,
-		ExactlyConstructibleFromDoubles<ComplexFloat128Member>
+		ExactlyConstructibleFromDoubles<ComplexFloat128Member>,
+		ApproximateType,
+		CompoundType,
+		InfinityIncludedType,
+		NanIncludedType,
+		NumberType,
+		ComplexType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final ComplexFloat128Member ONE = new ComplexFloat128Member(BigDecimal.valueOf(1),BigDecimal.ZERO);
 	private static final ComplexFloat128Member TWO = new ComplexFloat128Member(BigDecimal.valueOf(2),BigDecimal.ZERO);

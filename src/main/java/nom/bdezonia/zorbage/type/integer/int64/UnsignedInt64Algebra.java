@@ -35,6 +35,14 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.IntegerType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnsignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.DivMod;
 import nom.bdezonia.zorbage.algorithm.SteinGcd;
 import nom.bdezonia.zorbage.algorithm.SteinLcm;
@@ -76,7 +84,15 @@ public class UnsignedInt64Algebra
 		ConstructibleFromDoubles<UnsignedInt64Member>,
 		ConstructibleFromBigIntegers<UnsignedInt64Member>,
 		ConstructibleFromBigDecimals<UnsignedInt64Member>,
-		Conjugate<UnsignedInt64Member>
+		Conjugate<UnsignedInt64Member>,
+		BoundedType,
+		EnumerableType,
+		ExactType,
+		IntegerType,
+		NumberType,
+		UnityIncludedType,
+		UnsignedType,
+		ZeroIncludedType
 {
 	private static final UnsignedInt64Member ZERO = new UnsignedInt64Member();
 	private static final UnsignedInt64Member ONE = new UnsignedInt64Member(BigInteger.ONE);

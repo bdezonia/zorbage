@@ -35,6 +35,14 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.IntegerType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnsignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.SteinGcd;
 import nom.bdezonia.zorbage.algorithm.SteinLcm;
 import nom.bdezonia.zorbage.algorithm.Max;
@@ -75,7 +83,15 @@ public class UnsignedInt32Algebra
 		ConstructibleFromDoubles<UnsignedInt32Member>,
 		ConstructibleFromBigIntegers<UnsignedInt32Member>,
 		ConstructibleFromBigDecimals<UnsignedInt32Member>,
-		Conjugate<UnsignedInt32Member>
+		Conjugate<UnsignedInt32Member>,
+		BoundedType,
+		EnumerableType,
+		ExactType,
+		IntegerType,
+		NumberType,
+		UnityIncludedType,
+		UnsignedType,
+		ZeroIncludedType
 {
 	private static final UnsignedInt32Member ONE = new UnsignedInt32Member(1);
 	private static final UnsignedInt32Member ZERO = new UnsignedInt32Member();

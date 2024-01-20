@@ -36,6 +36,15 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.QuaternionType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -97,7 +106,16 @@ public class QuaternionFloat32Algebra
 		ConstructibleFromBigDecimals<QuaternionFloat32Member>,
 		ExactlyConstructibleFromBytes<QuaternionFloat32Member>,
 		ExactlyConstructibleFromShorts<QuaternionFloat32Member>,
-		ExactlyConstructibleFromFloats<QuaternionFloat32Member>
+		ExactlyConstructibleFromFloats<QuaternionFloat32Member>,
+		ApproximateType,
+		CompoundType,
+		InfinityIncludedType,
+		NanIncludedType,
+		NumberType,
+		QuaternionType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final QuaternionFloat32Member ZERO = new QuaternionFloat32Member(0,0,0,0);
 	private static final QuaternionFloat32Member ONE_THIRD = new QuaternionFloat32Member(1.0f/3,0,0,0);
