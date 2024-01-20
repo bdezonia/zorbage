@@ -164,6 +164,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVector;
 import nom.bdezonia.zorbage.type.string.FixedStringAlgebra;
 import nom.bdezonia.zorbage.type.string.StringAlgebra;
+import nom.bdezonia.zorbage.type.universal.AlgebraLibrary;
 
 /**
  * G is the container for the global set of defined Algebras.
@@ -340,4 +341,6 @@ public class G {
 	public static final GaussianInt32Algebra GAUSS32 = new GaussianInt32Algebra();
 	public static final GaussianInt64Algebra GAUSS64 = new GaussianInt64Algebra();
 	public static final GaussianIntUnboundedAlgebra GAUSSU = new GaussianIntUnboundedAlgebra();
+	
+	public static final AlgebraLibrary ALGEBRAS = new AlgebraLibrary();
 }
