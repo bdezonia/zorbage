@@ -50,4 +50,17 @@ public interface CompoundType {
 	//   (a CompoundType)
 	
 	// in other words a CompoundType is a U that has components
+	
+	// TODO: improve the type inference we support. Imagine we have
+	//   a vector of complex doubles. We should query the outer algebra
+	//   to see it is a composite type. And it is composed of the
+	//   CompoundType complex number. Use the outer algegra to somehow
+	//   get the inner algrebra of the compound type made of Float64s.
+	//   As it is defined now this is not really connected. Complex
+	//   numbers are not CompoundTypes of Float64s. We need more
+	//   expansive generics. Also note you could have a composite type
+	//   of a compound type and that compound type might have a 
+	//   composite type in it etc. This can get arbitrarily complex.
+	//   And a smart type inference engine could figure out the best
+	//   way to display such complex data.
 }
