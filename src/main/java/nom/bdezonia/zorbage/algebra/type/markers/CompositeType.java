@@ -39,9 +39,10 @@ public interface CompositeType {
 	//   various material or parts.
 	
 	// yes: a vector or matrix or tensor or String
-	//   see how their sizes vary
+	//   see how their sizes vary from allocation to allocation.
 	
 	// no: a quaternion, a complex number, an rgb color, etc
-	//   Those are CompoundTypes
+	//   Those are CompoundTypes. There sizes are fixed for
+	//   every allocation of the type.
 
 }

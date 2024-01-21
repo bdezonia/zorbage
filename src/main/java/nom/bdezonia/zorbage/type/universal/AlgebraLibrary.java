@@ -213,10 +213,10 @@ public class AlgebraLibrary {
 		
 		List<Algebra<?,?>> candidates = new LinkedList<>();
 		
-		boolean implementsAll = true;
-		
 		for (Algebra<?,?> alg : algebras) {
 
+			boolean implementsAll = true;
+			
 			for (Class<?> iface : interfaces) {
 				
 				if (!iface.isAssignableFrom(alg.getClass())) {
