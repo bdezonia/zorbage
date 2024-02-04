@@ -51,10 +51,16 @@ public class OneDSnapshot {
 	private OneDSnapshot() { }
 
 	/**
-	 * 
-	 * @param xDim
-	 * @param yDim
-	 * @param in
+	 * This algorithm will grab a subset of data of an input dataset
+	 *  and returns a one dimensional dataset using the `normal
+	 *  coordinate visit strategy. Out of bounds values are treated
+	 *  as zero.
+     *   
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param snapShotDims
+	 * @param ds
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
