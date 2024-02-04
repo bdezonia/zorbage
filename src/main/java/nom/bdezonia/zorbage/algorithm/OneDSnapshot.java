@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.data.DimensionedDataSource;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.misc.LongUtils;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.storage.Storage;
@@ -47,19 +48,19 @@ import nom.bdezonia.zorbage.storage.Storage;
 public class OneDSnapshot {
 
 	// do not instantiate
-	
+
 	private OneDSnapshot() { }
 
 	/**
 	 * This algorithm will grab a subset of data of an input dataset
-	 *  and returns a one dimensional dataset using the `normal
+	 *  and returns a one dimensional dataset using the normal
 	 *  coordinate visit strategy. Out of bounds values are treated
 	 *  as zero.
      *   
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param snapShotDims
+	 * @param snapshotDims
 	 * @param ds
 	 * @return
 	 */
@@ -67,9 +68,44 @@ public class OneDSnapshot {
 	
 		IndexedDataSource<U>
 			
-			snap(T alg, long[] snapShotDims, DimensionedDataSource<U> ds)
+			snap(T alg, long[] snapshotDims, DimensionedDataSource<U> ds)
 	{
-		if (snapShotDims.length != ds.numDimensions())
+		Procedure2<IntegerIndex, U> zeroFunc =
+
+			new Procedure2<IntegerIndex, U>()
+		{
+				
+			@Override
+			public void call(IntegerIndex idx, U outVal) {
+				
+				alg.zero().call(outVal);
+			}
+		};
+				
+		return snap(alg, snapshotDims, zeroFunc, ds);
+	}
+	
+	/**
+	 * This algorithm will grab a subset of data of an input dataset
+	 *  and returns a one dimensional dataset using the normal
+	 *  coordinate visit strategy. Out of bounds values are computed
+	 *  from an out of bounds function.
+     *   
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param snapshotDims
+	 * @param oobProc
+	 * @param ds
+	 * @return
+	 */
+	public static <T extends Algebra<T,U>, U extends Allocatable<U>>
+	
+		IndexedDataSource<U>
+			
+			snap(T alg, long[] snapshotDims, Procedure2<IntegerIndex,U> oobProc, DimensionedDataSource<U> ds)
+	{
+		if (snapshotDims.length != ds.numDimensions())
 			
 			throw new IllegalArgumentException("snapshot dims don't match dimensionality of input dataset");
 		
@@ -79,19 +115,19 @@ public class OneDSnapshot {
 	
 		IndexedDataSource<U> output =
 				
-				Storage.allocate(val, LongUtils.numElements(snapShotDims));
+				Storage.allocate(val, LongUtils.numElements(snapshotDims));
 	
 		long pos = 0;
 
-		SamplingIterator<IntegerIndex> iter = GridIterator.compute(snapShotDims);
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(snapshotDims);
 		
 		while (iter.hasNext()) {
 			
 			iter.next(idx);
 			
 			if (ds.oob(idx)) {
-				
-				alg.zero().call(val);
+
+				oobProc.call(idx, val);
 			}
 			else {
 
