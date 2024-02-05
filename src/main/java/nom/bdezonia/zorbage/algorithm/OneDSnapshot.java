@@ -68,7 +68,7 @@ public class OneDSnapshot {
 	
 		IndexedDataSource<U>
 			
-			snap(T alg, long[] snapshotDims, DimensionedDataSource<U> ds)
+			compute(T alg, long[] snapshotDims, DimensionedDataSource<U> ds)
 	{
 		Procedure2<IntegerIndex, U> zeroFunc =
 
