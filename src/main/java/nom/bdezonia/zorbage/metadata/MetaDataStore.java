@@ -32,13 +32,12 @@ package nom.bdezonia.zorbage.metadata;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import nom.bdezonia.zorbage.tuple.Tuple2;
 
 /**
  * 
@@ -47,789 +46,31 @@ import java.util.Set;
  */
 public class MetaDataStore {
 
-	private final Map<String, Object> blobs;
-	private final Map<String, Object[]> blobArrays;
-	private final Map<String, Object[][]> blobMatrices;
-	private final Map<String, Object[][][]> blobMatrix3ds;
-	private final Map<String, List<Object>> blobLists;
-	private final Map<String, Set<Object>> blobSets;
-	private final Map<String, Byte> bytes;
-	private final Map<String, byte[]> byteArrays;
-	private final Map<String, byte[][]> byteMatrices;
-	private final Map<String, byte[][][]> byteMatrix3ds;
-	private final Map<String, List<Byte>> byteLists;
-	private final Map<String, Set<Byte>> byteSets;
-	private final Map<String, Short> shorts;
-	private final Map<String, short[]> shortArrays;
-	private final Map<String, short[][]> shortMatrices;
-	private final Map<String, short[][][]> shortMatrix3ds;
-	private final Map<String, List<Short>> shortLists;
-	private final Map<String, Set<Short>> shortSets;
-	private final Map<String, Integer> ints;
-	private final Map<String, int[]> intArrays;
-	private final Map<String, int[][]> intMatrices;
-	private final Map<String, int[][][]> intMatrix3ds;
-	private final Map<String, List<Integer>> intLists;
-	private final Map<String, Set<Integer>> intSets;
-	private final Map<String, Long> longs;
-	private final Map<String, long[]> longArrays;
-	private final Map<String, long[][]> longMatrices;
-	private final Map<String, long[][][]> longMatrix3ds;
-	private final Map<String, List<Long>> longLists;
-	private final Map<String, Set<Long>> longSets;
-	private final Map<String, Float> floats;
-	private final Map<String, float[]> floatArrays;
-	private final Map<String, float[][]> floatMatrices;
-	private final Map<String, float[][][]> floatMatrix3ds;
-	private final Map<String, List<Float>> floatLists;
-	private final Map<String, Set<Float>> floatSets;
-	private final Map<String, Double> doubles;
-	private final Map<String, double[]> doubleArrays;
-	private final Map<String, double[][]> doubleMatrices;
-	private final Map<String, double[][][]> doubleMatrix3ds;
-	private final Map<String, List<Double>> doubleLists;
-	private final Map<String, Set<Double>> doubleSets;
-	private final Map<String, BigInteger> bigintegers;
-	private final Map<String, BigInteger[]> bigintegerArrays;
-	private final Map<String, BigInteger[][]> bigintegerMatrices;
-	private final Map<String, BigInteger[][][]> bigintegerMatrix3ds;
-	private final Map<String, List<BigInteger>> bigintegerLists;
-	private final Map<String, Set<BigInteger>> bigintegerSets;
-	private final Map<String, BigDecimal> bigdecimals;
-	private final Map<String, BigDecimal[]> bigdecimalArrays;
-	private final Map<String, BigDecimal[][]> bigdecimalMatrices;
-	private final Map<String, BigDecimal[][][]> bigdecimalMatrix3ds;
-	private final Map<String, List<BigDecimal>> bigdecimalLists;
-	private final Map<String, Set<BigDecimal>> bigdecimalSets;
-	private final Map<String, String> strings;
-	private final Map<String, String[]> stringArrays;
-	private final Map<String, String[][]> stringMatrices;
-	private final Map<String, String[][][]> stringMatrix3ds;
-	private final Map<String, List<String>> stringLists;
-	private final Map<String, Set<String>> stringSets;
-	private final Map<String, Character> chars;
-	private final Map<String, char[]> charArrays;
-	private final Map<String, char[][]> charMatrices;
-	private final Map<String, char[][][]> charMatrix3ds;
-	private final Map<String, List<Character>> charLists;
-	private final Map<String, Set<Character>> charSets;
-	private final Map<String, Boolean> booleans;
-	private final Map<String, boolean[]> booleanArrays;
-	private final Map<String, boolean[][]> booleanMatrices;
-	private final Map<String, boolean[][][]> booleanMatrix3ds;
-	private final Map<String, List<Boolean>> booleanLists;
-	private final Map<String, Set<Boolean>> booleanSets;
+	private final Map<Tuple2<String,String>, Object> data;
 	
 	/**
 	 * Construct an empty metadata structure
 	 */
 	public MetaDataStore() {
 		
-		blobs = new HashMap<>();
-		blobArrays = new HashMap<>();
-		blobMatrices = new HashMap<>();
-		blobMatrix3ds = new HashMap<>();
-		blobLists = new HashMap<>();
-		blobSets = new HashMap<>();
-		bytes = new HashMap<>();
-		byteArrays = new HashMap<>();
-		byteMatrices = new HashMap<>();
-		byteMatrix3ds = new HashMap<>();
-		byteLists = new HashMap<>();
-		byteSets = new HashMap<>();
-		shorts = new HashMap<>();
-		shortArrays = new HashMap<>();
-		shortMatrices = new HashMap<>();
-		shortMatrix3ds = new HashMap<>();
-		shortLists = new HashMap<>();
-		shortSets = new HashMap<>();
-		ints = new HashMap<>();
-		intArrays = new HashMap<>();
-		intMatrices = new HashMap<>();
-		intMatrix3ds = new HashMap<>();
-		intLists = new HashMap<>();
-		intSets = new HashMap<>();
-		longs = new HashMap<>();
-		longArrays = new HashMap<>();
-		longMatrices = new HashMap<>();
-		longMatrix3ds = new HashMap<>();
-		longLists = new HashMap<>();
-		longSets = new HashMap<>();
-		floats = new HashMap<>();
-		floatArrays = new HashMap<>();
-		floatMatrices = new HashMap<>();
-		floatMatrix3ds = new HashMap<>();
-		floatLists = new HashMap<>();
-		floatSets = new HashMap<>();
-		doubles = new HashMap<>();
-		doubleArrays = new HashMap<>();
-		doubleMatrices = new HashMap<>();
-		doubleMatrix3ds = new HashMap<>();
-		doubleLists = new HashMap<>();
-		doubleSets = new HashMap<>();
-		bigintegers = new HashMap<>();
-		bigintegerArrays = new HashMap<>();
-		bigintegerMatrices = new HashMap<>();
-		bigintegerMatrix3ds = new HashMap<>();
-		bigintegerLists = new HashMap<>();
-		bigintegerSets = new HashMap<>();
-		bigdecimals = new HashMap<>();
-		bigdecimalArrays = new HashMap<>();
-		bigdecimalMatrices = new HashMap<>();
-		bigdecimalMatrix3ds = new HashMap<>();
-		bigdecimalLists = new HashMap<>();
-		bigdecimalSets = new HashMap<>();
-		strings = new HashMap<>();
-		stringArrays = new HashMap<>();
-		stringMatrices = new HashMap<>();
-		stringMatrix3ds = new HashMap<>();
-		stringLists = new HashMap<>();
-		stringSets = new HashMap<>();
-		chars = new HashMap<>();
-		charArrays = new HashMap<>();
-		charMatrices = new HashMap<>();
-		charMatrix3ds = new HashMap<>();
-		charLists = new HashMap<>();
-		charSets = new HashMap<>();
-		booleans = new HashMap<>();
-		booleanArrays = new HashMap<>();
-		booleanMatrices = new HashMap<>();
-		booleanMatrix3ds = new HashMap<>();
-		booleanLists = new HashMap<>();
-		booleanSets = new HashMap<>();
+		data = new HashMap<>();
 	}
 	
 	/**
-	 * Get info about a value in the metadata store. Given the
-	 * nature of the store someone could use the same identifier
-	 * in different ways. The returned data types represent all
-	 * the data types associated with this one identifier.
-	 * 
-	 * @param identifier
-	 * @return
-	 */
-	public List<MetaDataType> keyTypes(String identifier) {
-
-		List<MetaDataType> entries = new LinkedList<>();
-		
-		if (blobs.containsKey(identifier))
-			entries.add(MetaDataType.BLOB);
-		
-		if (blobArrays.containsKey(identifier))
-			entries.add(MetaDataType.BLOB_ARRAY);
-		
-		if (blobMatrices.containsKey(identifier))
-			entries.add(MetaDataType.BLOB_MATRIX);
-		
-		if (blobMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.BLOB_MATRIX3D);
-		
-		if (blobLists.containsKey(identifier))
-			entries.add(MetaDataType.BLOB_LIST);
-		
-		if (blobSets.containsKey(identifier))
-			entries.add(MetaDataType.BLOB_SET);
-		
-		if (bytes.containsKey(identifier))
-			entries.add(MetaDataType.BYTE);
-		
-		if (byteArrays.containsKey(identifier))
-			entries.add(MetaDataType.BYTE_ARRAY);
-		
-		if (byteMatrices.containsKey(identifier))
-			entries.add(MetaDataType.BYTE_MATRIX);
-		
-		if (byteMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.BYTE_MATRIX3D);
-		
-		if (byteLists.containsKey(identifier))
-			entries.add(MetaDataType.BYTE_LIST);
-		
-		if (byteSets.containsKey(identifier))
-			entries.add(MetaDataType.BYTE_SET);
-		
-		if (shorts.containsKey(identifier))
-			entries.add(MetaDataType.SHORT);
-		
-		if (shortArrays.containsKey(identifier))
-			entries.add(MetaDataType.SHORT_ARRAY);
-		
-		if (shortMatrices.containsKey(identifier))
-			entries.add(MetaDataType.SHORT_MATRIX);
-		
-		if (shortMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.SHORT_MATRIX3D);
-		
-		if (shortLists.containsKey(identifier))
-			entries.add(MetaDataType.SHORT_LIST);
-		
-		if (shortSets.containsKey(identifier))
-			entries.add(MetaDataType.SHORT_SET);
-		
-		if (ints.containsKey(identifier))
-			entries.add(MetaDataType.INT);
-		
-		if (intArrays.containsKey(identifier))
-			entries.add(MetaDataType.INT_ARRAY);
-		
-		if (intMatrices.containsKey(identifier))
-			entries.add(MetaDataType.INT_MATRIX);
-		
-		if (intMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.INT_MATRIX3D);
-		
-		if (intLists.containsKey(identifier))
-			entries.add(MetaDataType.INT_LIST);
-		
-		if (intSets.containsKey(identifier))
-			entries.add(MetaDataType.INT_SET);
-		
-		if (longs.containsKey(identifier))
-			entries.add(MetaDataType.LONG);
-		
-		if (longArrays.containsKey(identifier))
-			entries.add(MetaDataType.LONG_ARRAY);
-		
-		if (longMatrices.containsKey(identifier))
-			entries.add(MetaDataType.LONG_MATRIX);
-		
-		if (longMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.LONG_MATRIX3D);
-		
-		if (longLists.containsKey(identifier))
-			entries.add(MetaDataType.LONG_LIST);
-		
-		if (longSets.containsKey(identifier))
-			entries.add(MetaDataType.LONG_SET);
-		
-		if (floats.containsKey(identifier))
-			entries.add(MetaDataType.FLOAT);
-		
-		if (floatArrays.containsKey(identifier))
-			entries.add(MetaDataType.FLOAT_ARRAY);
-		
-		if (floatMatrices.containsKey(identifier))
-			entries.add(MetaDataType.FLOAT_MATRIX);
-		
-		if (floatMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.FLOAT_MATRIX3D);
-		
-		if (floatLists.containsKey(identifier))
-			entries.add(MetaDataType.FLOAT_LIST);
-		
-		if (floatSets.containsKey(identifier))
-			entries.add(MetaDataType.FLOAT_SET);
-		
-		if (doubles.containsKey(identifier))
-			entries.add(MetaDataType.DOUBLE);
-		
-		if (doubleArrays.containsKey(identifier))
-			entries.add(MetaDataType.DOUBLE_ARRAY);
-		
-		if (doubleMatrices.containsKey(identifier))
-			entries.add(MetaDataType.DOUBLE_MATRIX);
-		
-		if (doubleMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.DOUBLE_MATRIX3D);
-		
-		if (doubleLists.containsKey(identifier))
-			entries.add(MetaDataType.DOUBLE_LIST);
-		
-		if (doubleSets.containsKey(identifier))
-			entries.add(MetaDataType.DOUBLE_SET);
-		
-		if (bigintegers.containsKey(identifier))
-			entries.add(MetaDataType.BIGINTEGER);
-		
-		if (bigintegerArrays.containsKey(identifier))
-			entries.add(MetaDataType.BIGINTEGER_ARRAY);
-		
-		if (bigintegerMatrices.containsKey(identifier))
-			entries.add(MetaDataType.BIGINTEGER_MATRIX);
-		
-		if (bigintegerMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.BIGINTEGER_MATRIX3D);
-		
-		if (bigintegerLists.containsKey(identifier))
-			entries.add(MetaDataType.BIGINTEGER_LIST);
-		
-		if (bigintegerSets.containsKey(identifier))
-			entries.add(MetaDataType.BIGINTEGER_SET);
-		
-		if (bigdecimals.containsKey(identifier))
-			entries.add(MetaDataType.BIGDECIMAL);
-		
-		if (bigdecimalArrays.containsKey(identifier))
-			entries.add(MetaDataType.BIGDECIMAL_ARRAY);
-		
-		if (bigdecimalMatrices.containsKey(identifier))
-			entries.add(MetaDataType.BIGDECIMAL_MATRIX);
-		
-		if (bigdecimalMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.BIGDECIMAL_MATRIX3D);
-		
-		if (bigdecimalLists.containsKey(identifier))
-			entries.add(MetaDataType.BIGDECIMAL_LIST);
-		
-		if (bigdecimalSets.containsKey(identifier))
-			entries.add(MetaDataType.BIGDECIMAL_SET);
-		
-		if (strings.containsKey(identifier))
-			entries.add(MetaDataType.STRING);
-		
-		if (stringArrays.containsKey(identifier))
-			entries.add(MetaDataType.STRING_ARRAY);
-		
-		if (stringMatrices.containsKey(identifier))
-			entries.add(MetaDataType.STRING_MATRIX);
-		
-		if (stringMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.STRING_MATRIX3D);
-		
-		if (stringLists.containsKey(identifier))
-			entries.add(MetaDataType.STRING_LIST);
-		
-		if (stringSets.containsKey(identifier))
-			entries.add(MetaDataType.STRING_SET);
-		
-		if (chars.containsKey(identifier))
-			entries.add(MetaDataType.CHAR);
-		
-		if (charArrays.containsKey(identifier))
-			entries.add(MetaDataType.CHAR_ARRAY);
-		
-		if (charMatrices.containsKey(identifier))
-			entries.add(MetaDataType.CHAR_MATRIX);
-		
-		if (charMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.CHAR_MATRIX3D);
-		
-		if (charLists.containsKey(identifier))
-			entries.add(MetaDataType.CHAR_LIST);
-		
-		if (charSets.containsKey(identifier))
-			entries.add(MetaDataType.CHAR_SET);
-		
-		if (booleans.containsKey(identifier))
-			entries.add(MetaDataType.BOOLEAN);
-		
-		if (booleanArrays.containsKey(identifier))
-			entries.add(MetaDataType.BOOLEAN_ARRAY);
-		
-		if (booleanMatrices.containsKey(identifier))
-			entries.add(MetaDataType.BOOLEAN_MATRIX);
-		
-		if (booleanMatrix3ds.containsKey(identifier))
-			entries.add(MetaDataType.BOOLEAN_MATRIX3D);
-		
-		if (booleanLists.containsKey(identifier))
-			entries.add(MetaDataType.BOOLEAN_LIST);
-		
-		if (booleanSets.containsKey(identifier))
-			entries.add(MetaDataType.BOOLEAN_SET);
-		
-		return entries;
-	}
-
-	/**
-	 * Add to self all the contents of another MetaDataStore.
+	 * Add all the contents of another MetaDataStore to self.
 	 * Existing values in self are overwritten if the two
-	 * store share a key with the same type. 
+	 * stores share a key with the same type. 
 	 */
 	public void merge(MetaDataStore other) {
 
-		for (String key : other.blobs.keySet()) {
-			blobs.put(key, other.blobs.get(key));
-		}
-		
-		for (String key : other.blobArrays.keySet()) {
-			blobArrays.put(key, other.blobArrays.get(key));
-		}
-		
-		for (String key : other.blobMatrices.keySet()) {
-			blobMatrices.put(key, other.blobMatrices.get(key));
-		}
-		
-		for (String key : other.blobMatrix3ds.keySet()) {
-			blobMatrix3ds.put(key, other.blobMatrix3ds.get(key));
-		}
-		
-		for (String key : other.blobLists.keySet()) {
-			blobLists.put(key, other.blobLists.get(key));
-		}
-		
-		for (String key : other.blobSets.keySet()) {
-			blobSets.put(key, other.blobSets.get(key));
-		}
-		
-		for (String key : other.bytes.keySet()) {
-			bytes.put(key, other.bytes.get(key));
-		}
-		
-		for (String key : other.byteArrays.keySet()) {
-			byteArrays.put(key, other.byteArrays.get(key));
-		}
-
-		for (String key : other.byteMatrices.keySet()) {
-			byteMatrices.put(key, other.byteMatrices.get(key));
-		}
-		
-		for (String key : other.byteMatrix3ds.keySet()) {
-			byteMatrix3ds.put(key, other.byteMatrix3ds.get(key));
-		}
-		
-		for (String key : other.byteLists.keySet()) {
-			byteLists.put(key, other.byteLists.get(key));
-		}
-		
-		for (String key : other.byteSets.keySet()) {
-			byteSets.put(key, other.byteSets.get(key));
-		}
-		
-		for (String key : other.shorts.keySet()) {
-			shorts.put(key, other.shorts.get(key));
-		}
-		
-		for (String key : other.shortArrays.keySet()) {
-			shortArrays.put(key, other.shortArrays.get(key));
-		}
-
-		for (String key : other.shortMatrices.keySet()) {
-			shortMatrices.put(key, other.shortMatrices.get(key));
-		}
-		
-		for (String key : other.shortMatrix3ds.keySet()) {
-			shortMatrix3ds.put(key, other.shortMatrix3ds.get(key));
-		}
-		
-		for (String key : other.shortLists.keySet()) {
-			shortLists.put(key, other.shortLists.get(key));
-		}
-		
-		for (String key : other.shortSets.keySet()) {
-			shortSets.put(key, other.shortSets.get(key));
-		}
-		
-		for (String key : other.ints.keySet()) {
-			ints.put(key, other.ints.get(key));
-		}
-		
-		for (String key : other.intArrays.keySet()) {
-			intArrays.put(key, other.intArrays.get(key));
-		}
-
-		for (String key : other.intMatrices.keySet()) {
-			intMatrices.put(key, other.intMatrices.get(key));
-		}
-		
-		for (String key : other.intMatrix3ds.keySet()) {
-			intMatrix3ds.put(key, other.intMatrix3ds.get(key));
-		}
-		
-		for (String key : other.intLists.keySet()) {
-			intLists.put(key, other.intLists.get(key));
-		}
-		
-		for (String key : other.intSets.keySet()) {
-			intSets.put(key, other.intSets.get(key));
-		}
-		
-		for (String key : other.longs.keySet()) {
-			longs.put(key, other.longs.get(key));
-		}
-		
-		for (String key : other.longArrays.keySet()) {
-			longArrays.put(key, other.longArrays.get(key));
-		}
-
-		for (String key : other.longMatrices.keySet()) {
-			longMatrices.put(key, other.longMatrices.get(key));
-		}
-		
-		for (String key : other.longMatrix3ds.keySet()) {
-			longMatrix3ds.put(key, other.longMatrix3ds.get(key));
-		}
-		
-		for (String key : other.longLists.keySet()) {
-			longLists.put(key, other.longLists.get(key));
-		}
-		
-		for (String key : other.longSets.keySet()) {
-			longSets.put(key, other.longSets.get(key));
-		}
-		
-		for (String key : other.floats.keySet()) {
-			floats.put(key, other.floats.get(key));
-		}
-		
-		for (String key : other.floatArrays.keySet()) {
-			floatArrays.put(key, other.floatArrays.get(key));
-		}
-
-		for (String key : other.floatMatrices.keySet()) {
-			floatMatrices.put(key, other.floatMatrices.get(key));
-		}
-		
-		for (String key : other.floatMatrix3ds.keySet()) {
-			floatMatrix3ds.put(key, other.floatMatrix3ds.get(key));
-		}
-		
-		for (String key : other.floatLists.keySet()) {
-			floatLists.put(key, other.floatLists.get(key));
-		}
-		
-		for (String key : other.floatSets.keySet()) {
-			floatSets.put(key, other.floatSets.get(key));
-		}
-		
-		for (String key : other.doubles.keySet()) {
-			doubles.put(key, other.doubles.get(key));
-		}
-		
-		for (String key : other.doubleArrays.keySet()) {
-			doubleArrays.put(key, other.doubleArrays.get(key));
-		}
-
-		for (String key : other.doubleMatrices.keySet()) {
-			doubleMatrices.put(key, other.doubleMatrices.get(key));
-		}
-		
-		for (String key : other.doubleMatrix3ds.keySet()) {
-			doubleMatrix3ds.put(key, other.doubleMatrix3ds.get(key));
-		}
-		
-		for (String key : other.doubleLists.keySet()) {
-			doubleLists.put(key, other.doubleLists.get(key));
-		}
-		
-		for (String key : other.doubleSets.keySet()) {
-			doubleSets.put(key, other.doubleSets.get(key));
-		}
-		
-		for (String key : other.bigintegers.keySet()) {
-			bigintegers.put(key, other.bigintegers.get(key));
-		}
-		
-		for (String key : other.bigintegerArrays.keySet()) {
-			bigintegerArrays.put(key, other.bigintegerArrays.get(key));
-		}
-
-		for (String key : other.bigintegerMatrices.keySet()) {
-			bigintegerMatrices.put(key, other.bigintegerMatrices.get(key));
-		}
-		
-		for (String key : other.bigintegerMatrix3ds.keySet()) {
-			bigintegerMatrix3ds.put(key, other.bigintegerMatrix3ds.get(key));
-		}
-		
-		for (String key : other.bigintegerLists.keySet()) {
-			bigintegerLists.put(key, other.bigintegerLists.get(key));
-		}
-		
-		for (String key : other.bigintegerSets.keySet()) {
-			bigintegerSets.put(key, other.bigintegerSets.get(key));
-		}
-		
-		for (String key : other.bigdecimals.keySet()) {
-			bigdecimals.put(key, other.bigdecimals.get(key));
-		}
-		
-		for (String key : other.bigdecimalArrays.keySet()) {
-			bigdecimalArrays.put(key, other.bigdecimalArrays.get(key));
-		}
-
-		for (String key : other.bigdecimalMatrices.keySet()) {
-			bigdecimalMatrices.put(key, other.bigdecimalMatrices.get(key));
-		}
-
-		for (String key : other.bigdecimalMatrix3ds.keySet()) {
-			bigdecimalMatrix3ds.put(key, other.bigdecimalMatrix3ds.get(key));
-		}
-		
-		for (String key : other.bigdecimalLists.keySet()) {
-			bigdecimalLists.put(key, other.bigdecimalLists.get(key));
-		}
-		
-		for (String key : other.bigdecimalSets.keySet()) {
-			bigdecimalSets.put(key, other.bigdecimalSets.get(key));
-		}
-		
-		for (String key : other.strings.keySet()) {
-			strings.put(key, other.strings.get(key));
-		}
-		
-		for (String key : other.stringArrays.keySet()) {
-			stringArrays.put(key, other.stringArrays.get(key));
-		}
-
-		for (String key : other.stringMatrices.keySet()) {
-			stringMatrices.put(key, other.stringMatrices.get(key));
-		}
-
-		for (String key : other.stringMatrix3ds.keySet()) {
-			stringMatrix3ds.put(key, other.stringMatrix3ds.get(key));
-		}
-		
-		for (String key : other.stringLists.keySet()) {
-			stringLists.put(key, other.stringLists.get(key));
-		}
-		
-		for (String key : other.stringSets.keySet()) {
-			stringSets.put(key, other.stringSets.get(key));
-		}
-		
-		for (String key : other.chars.keySet()) {
-			chars.put(key, other.chars.get(key));
-		}
-		
-		for (String key : other.charArrays.keySet()) {
-			charArrays.put(key, other.charArrays.get(key));
-		}
-
-		for (String key : other.charMatrices.keySet()) {
-			charMatrices.put(key, other.charMatrices.get(key));
-		}
-
-		for (String key : other.charMatrix3ds.keySet()) {
-			charMatrix3ds.put(key, other.charMatrix3ds.get(key));
-		}
-		
-		for (String key : other.charLists.keySet()) {
-			charLists.put(key, other.charLists.get(key));
-		}
-		
-		for (String key : other.charSets.keySet()) {
-			charSets.put(key, other.charSets.get(key));
-		}
-		
-		for (String key : other.booleans.keySet()) {
-			booleans.put(key, other.booleans.get(key));
-		}
-		
-		for (String key : other.booleanArrays.keySet()) {
-			booleanArrays.put(key, other.booleanArrays.get(key));
-		}
-
-		for (String key : other.booleanMatrices.keySet()) {
-			booleanMatrices.put(key, other.booleanMatrices.get(key));
-		}
-
-		for (String key : other.booleanMatrix3ds.keySet()) {
-			booleanMatrix3ds.put(key, other.booleanMatrix3ds.get(key));
-		}
-		
-		for (String key : other.booleanLists.keySet()) {
-			booleanLists.put(key, other.booleanLists.get(key));
-		}
-		
-		for (String key : other.booleanSets.keySet()) {
-			booleanSets.put(key, other.booleanSets.get(key));
+		for (Tuple2<String,String> key : other.data.keySet()) {
+			data.put(key, other.data.get(key));
 		}
 	}
 
-	/**
-	 * Get a summary of all stored fields and their various types. Or can
-	 * lookup a key and find all the types of data stored under that key.
-	 * One can then choose which type of data they want to retrieve using
-	 * the key.  
-	 */
-	public Map<String, List<MetaDataType>> keysPresent() {
+	public Set<Tuple2<String,String>> keys() {
 		
-		Map<String, List<MetaDataType>> keysPres =
-				new HashMap<String, List<MetaDataType>>();
-		
-		List<String> keys = keys();
-
-		for (String key : keys) {
-			keysPres.put(key, keyTypes(key));
-		}
-		
-		return keysPres;
-	}
-
-	/**
-	 * Return the list of all the keys in the MetaDataStore.
-	 */
-	public List<String> keys() {
-
-		List<String> keys = new ArrayList<>();
-		
-		keys.addAll(blobs.keySet());
-		keys.addAll(blobArrays.keySet());
-		keys.addAll(blobMatrices.keySet());
-		keys.addAll(blobMatrix3ds.keySet());
-		keys.addAll(blobLists.keySet());
-		keys.addAll(blobSets.keySet());
-		keys.addAll(bytes.keySet());
-		keys.addAll(byteArrays.keySet());
-		keys.addAll(byteMatrices.keySet());
-		keys.addAll(byteMatrix3ds.keySet());
-		keys.addAll(byteLists.keySet());
-		keys.addAll(byteSets.keySet());
-		keys.addAll(shorts.keySet());
-		keys.addAll(shortArrays.keySet());
-		keys.addAll(shortMatrices.keySet());
-		keys.addAll(shortMatrix3ds.keySet());
-		keys.addAll(shortLists.keySet());
-		keys.addAll(shortSets.keySet());
-		keys.addAll(ints.keySet());
-		keys.addAll(intArrays.keySet());
-		keys.addAll(intMatrices.keySet());
-		keys.addAll(intMatrix3ds.keySet());
-		keys.addAll(intLists.keySet());
-		keys.addAll(intSets.keySet());
-		keys.addAll(longs.keySet());
-		keys.addAll(longArrays.keySet());
-		keys.addAll(longMatrices.keySet());
-		keys.addAll(longMatrix3ds.keySet());
-		keys.addAll(longLists.keySet());
-		keys.addAll(longSets.keySet());
-		keys.addAll(floats.keySet());
-		keys.addAll(floatArrays.keySet());
-		keys.addAll(floatMatrices.keySet());
-		keys.addAll(floatMatrix3ds.keySet());
-		keys.addAll(floatLists.keySet());
-		keys.addAll(floatSets.keySet());
-		keys.addAll(doubles.keySet());
-		keys.addAll(doubleArrays.keySet());
-		keys.addAll(doubleMatrices.keySet());
-		keys.addAll(doubleMatrix3ds.keySet());
-		keys.addAll(doubleLists.keySet());
-		keys.addAll(doubleSets.keySet());
-		keys.addAll(bigintegers.keySet());
-		keys.addAll(bigintegerArrays.keySet());
-		keys.addAll(bigintegerMatrices.keySet());
-		keys.addAll(bigintegerMatrix3ds.keySet());
-		keys.addAll(bigintegerLists.keySet());
-		keys.addAll(bigintegerSets.keySet());
-		keys.addAll(bigdecimals.keySet());
-		keys.addAll(bigdecimalArrays.keySet());
-		keys.addAll(bigdecimalMatrices.keySet());
-		keys.addAll(bigdecimalMatrix3ds.keySet());
-		keys.addAll(bigdecimalLists.keySet());
-		keys.addAll(bigdecimalSets.keySet());
-		keys.addAll(strings.keySet());
-		keys.addAll(stringArrays.keySet());
-		keys.addAll(stringMatrices.keySet());
-		keys.addAll(stringMatrix3ds.keySet());
-		keys.addAll(stringLists.keySet());
-		keys.addAll(stringSets.keySet());
-		keys.addAll(chars.keySet());
-		keys.addAll(charArrays.keySet());
-		keys.addAll(charMatrices.keySet());
-		keys.addAll(charMatrix3ds.keySet());
-		keys.addAll(charLists.keySet());
-		keys.addAll(charSets.keySet());
-		keys.addAll(booleans.keySet());
-		keys.addAll(booleanArrays.keySet());
-		keys.addAll(booleanMatrices.keySet());
-		keys.addAll(booleanMatrix3ds.keySet());
-		keys.addAll(booleanLists.keySet());
-		keys.addAll(booleanSets.keySet());
-
-		// remove the duplicates and return result
-		
-		return new ArrayList<>(new HashSet<>(keys));
+		return data.keySet();
 	}
 
 	/**
@@ -840,7 +81,7 @@ public class MetaDataStore {
 	 */
 	public void putBlob(String identifier, Object value) {
 		
-		blobs.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Object"), value);
 	}
 
 	/**
@@ -850,7 +91,7 @@ public class MetaDataStore {
 	 */
 	public Object getBlob(String identifier) {
 		
-		return blobs.get(identifier);
+		return data.get(new Tuple2<>(identifier,"Object"));
 	}
 	
 	/**
@@ -861,7 +102,7 @@ public class MetaDataStore {
 	 */
 	public void putBlobArray(String identifier, Object[] value) {
 		
-		blobArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier, "Object[]"), value);
 	}
 
 	/**
@@ -871,7 +112,7 @@ public class MetaDataStore {
 	 */
 	public Object[] getBlobArray(String identifier) {
 		
-		return blobArrays.get(identifier);
+		return (Object[]) data.get(new Tuple2<>(identifier,"Object[]"));
 	}
 	
 	/**
@@ -882,7 +123,7 @@ public class MetaDataStore {
 	 */
 	public void putBlobMatrix(String identifier, Object[][] value) {
 		
-		blobMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Object[][]"), value);
 	}
 
 	/**
@@ -892,7 +133,7 @@ public class MetaDataStore {
 	 */
 	public Object[][] getBlobMatrix(String identifier) {
 		
-		return blobMatrices.get(identifier);
+		return (Object[][]) data.get(new Tuple2<>(identifier,"Object[][]"));
 	}
 	
 	/**
@@ -903,7 +144,7 @@ public class MetaDataStore {
 	 */
 	public void putBlobMatrix3d(String identifier, Object[][][] value) {
 		
-		blobMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Object[][][]"), value);
 	}
 
 	/**
@@ -913,7 +154,7 @@ public class MetaDataStore {
 	 */
 	public Object[][][] getBlobMatrix3d(String identifier) {
 		
-		return blobMatrix3ds.get(identifier);
+		return (Object[][][]) data.get(new Tuple2<>(identifier,"Object[][][]"));
 	}
 	
 	/**
@@ -924,7 +165,7 @@ public class MetaDataStore {
 	 */
 	public void putBlobList(String identifier, List<Object> value) {
 		
-		blobLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Object>"), value);
 	}
 
 	/**
@@ -932,9 +173,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Object> getBlobList(String identifier) {
 		
-		return blobLists.get(identifier);
+		return (List<Object>) data.get(new Tuple2<>(identifier,"List<Object>"));
 	}
 	
 	/**
@@ -945,7 +187,7 @@ public class MetaDataStore {
 	 */
 	public void putBlobSet(String identifier, Set<Object> value) {
 		
-		blobSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Object>"), value);
 	}
 
 	/**
@@ -953,9 +195,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Object> getBlobSet(String identifier) {
 		
-		return blobSets.get(identifier);
+		return (Set<Object>) data.get(new Tuple2<>(identifier,"Set<Object>"));
 	}
 	
 	/**
@@ -964,9 +207,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putByte(String identifier, byte value) {
+	public void putByte(String identifier, Byte value) {
 		
-		bytes.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Byte"), value);
 	}
 
 	/**
@@ -976,7 +219,7 @@ public class MetaDataStore {
 	 */
 	public Byte getByte(String identifier) {
 		
-		return bytes.get(identifier);
+		return (Byte) data.get(new Tuple2<>(identifier, "Byte"));
 	}
 	
 	/**
@@ -987,7 +230,7 @@ public class MetaDataStore {
 	 */
 	public void putByteArray(String identifier, byte[] value) {
 		
-		byteArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"byte[]"), value);
 	}
 	
 	/**
@@ -997,7 +240,7 @@ public class MetaDataStore {
 	 */
 	public byte[] getByteArray(String identifier) {
 		
-		return byteArrays.get(identifier);
+		return (byte[]) data.get(new Tuple2<>(identifier, "byte[]"));
 	}
 
 	/**
@@ -1008,7 +251,7 @@ public class MetaDataStore {
 	 */
 	public void putByteMatrix(String identifier, byte[][] value) {
 		
-		byteMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"byte[][]"), value);
 	}
 
 	/**
@@ -1018,7 +261,7 @@ public class MetaDataStore {
 	 */
 	public byte[][] getByteMatrix(String identifier) {
 		
-		return byteMatrices.get(identifier);
+		return (byte[][]) data.get(new Tuple2<>(identifier, "byte[][]"));
 	}
 
 	/**
@@ -1029,7 +272,7 @@ public class MetaDataStore {
 	 */
 	public void putByteMatrix3d(String identifier, byte[][][] value) {
 		
-		byteMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"byte[][][]"), value);
 	}
 
 	/**
@@ -1039,7 +282,7 @@ public class MetaDataStore {
 	 */
 	public byte[][][] getByteMatrix3d(String identifier) {
 		
-		return byteMatrix3ds.get(identifier);
+		return (byte[][][]) data.get(new Tuple2<>(identifier, "byte[][][]"));
 	}
 	
 	/**
@@ -1050,7 +293,7 @@ public class MetaDataStore {
 	 */
 	public void putByteList(String identifier, List<Byte> value) {
 		
-		byteLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Byte>"), value);
 	}
 
 	/**
@@ -1058,9 +301,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Byte> getByteList(String identifier) {
 		
-		return byteLists.get(identifier);
+		return (List<Byte>) data.get(new Tuple2<>(identifier, "List<Byte>"));
 	}
 	
 	/**
@@ -1071,7 +315,7 @@ public class MetaDataStore {
 	 */
 	public void putByteSet(String identifier, Set<Byte> value) {
 		
-		byteSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Byte>"), value);
 	}
 
 	/**
@@ -1079,9 +323,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Byte> getByteSet(String identifier) {
 		
-		return byteSets.get(identifier);
+		return (Set<Byte>) data.get(new Tuple2<>(identifier, "Set<Byte>"));
 	}
 	
 	/**
@@ -1090,9 +335,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putShort(String identifier, short value) {
+	public void putShort(String identifier, Short value) {
 		
-		shorts.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Short"), value);
 	}
 
 	/**
@@ -1102,7 +347,7 @@ public class MetaDataStore {
 	 */
 	public Short getShort(String identifier) {
 		
-		return shorts.get(identifier);
+		return (Short) data.get(new Tuple2<>(identifier, "Short"));
 	}
 	
 	/**
@@ -1113,7 +358,7 @@ public class MetaDataStore {
 	 */
 	public void putShortArray(String identifier, short[] value) {
 		
-		shortArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"short[]"), value);
 	}
 	
 	/**
@@ -1123,7 +368,7 @@ public class MetaDataStore {
 	 */
 	public short[] getShortArray(String identifier) {
 		
-		return shortArrays.get(identifier);
+		return (short[]) data.get(new Tuple2<>(identifier, "short[]"));
 	}
 
 	/**
@@ -1134,7 +379,7 @@ public class MetaDataStore {
 	 */
 	public void putShortMatrix(String identifier, short[][] value) {
 		
-		shortMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"short[][]"), value);
 	}
 
 	/**
@@ -1144,7 +389,7 @@ public class MetaDataStore {
 	 */
 	public short[][] getShortMatrix(String identifier) {
 		
-		return shortMatrices.get(identifier);
+		return (short[][]) data.get(new Tuple2<>(identifier, "short[][]"));
 	}
 
 	/**
@@ -1155,7 +400,7 @@ public class MetaDataStore {
 	 */
 	public void putShortMatrix3d(String identifier, short[][][] value) {
 		
-		shortMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"short[][][]"), value);
 	}
 
 	/**
@@ -1165,7 +410,7 @@ public class MetaDataStore {
 	 */
 	public short[][][] getShortMatrix3d(String identifier) {
 		
-		return shortMatrix3ds.get(identifier);
+		return (short[][][]) data.get(new Tuple2<>(identifier, "short[][][]"));
 	}
 	
 	/**
@@ -1176,7 +421,7 @@ public class MetaDataStore {
 	 */
 	public void putShortList(String identifier, List<Short> value) {
 		
-		shortLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Short>"), value);
 	}
 
 	/**
@@ -1184,9 +429,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Short> getShortList(String identifier) {
 		
-		return shortLists.get(identifier);
+		return (List<Short>) data.get(new Tuple2<>(identifier, "List<Short>"));
 	}
 	
 	/**
@@ -1197,7 +443,7 @@ public class MetaDataStore {
 	 */
 	public void putShortSet(String identifier, Set<Short> value) {
 		
-		shortSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Short>"), value);
 	}
 
 	/**
@@ -1205,9 +451,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Short> getShortSet(String identifier) {
 		
-		return shortSets.get(identifier);
+		return (Set<Short>) data.get(new Tuple2<>(identifier, "Set<Short>"));
 	}
 	
 	/**
@@ -1216,9 +463,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putInt(String identifier, int value) {
+	public void putInt(String identifier, Integer value) {
 		
-		ints.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Integer"), value);
 	}
 
 	/**
@@ -1228,7 +475,7 @@ public class MetaDataStore {
 	 */
 	public Integer getInt(String identifier) {
 		
-		return ints.get(identifier);
+		return (Integer) data.get(new Tuple2<>(identifier, "Integer"));
 	}
 	
 	/**
@@ -1239,7 +486,7 @@ public class MetaDataStore {
 	 */
 	public void putIntArray(String identifier, int[] value) {
 		
-		intArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"int[]"), value);
 	}
 
 	/**
@@ -1249,7 +496,7 @@ public class MetaDataStore {
 	 */
 	public int[] getIntArray(String identifier) {
 		
-		return intArrays.get(identifier);
+		return (int[]) data.get(new Tuple2<>(identifier, "int[]"));
 	}
 	
 	/**
@@ -1260,7 +507,7 @@ public class MetaDataStore {
 	 */
 	public void putIntMatrix(String identifier, int[][] value) {
 		
-		intMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"int[][]"), value);
 	}
 
 	/**
@@ -1270,7 +517,7 @@ public class MetaDataStore {
 	 */
 	public int[][] getIntMatrix(String identifier) {
 		
-		return intMatrices.get(identifier);
+		return (int[][]) data.get(new Tuple2<>(identifier, "int[][]"));
 	}
 	
 	/**
@@ -1281,7 +528,7 @@ public class MetaDataStore {
 	 */
 	public void putIntMatrix3d(String identifier, int[][][] value) {
 		
-		intMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"int[][][]"), value);
 	}
 
 	/**
@@ -1291,7 +538,7 @@ public class MetaDataStore {
 	 */
 	public int[][][] getIntMatrix3d(String identifier) {
 		
-		return intMatrix3ds.get(identifier);
+		return (int[][][]) data.get(new Tuple2<>(identifier, "int[][][]"));
 	}
 	
 	/**
@@ -1302,7 +549,7 @@ public class MetaDataStore {
 	 */
 	public void putIntList(String identifier, List<Integer> value) {
 		
-		intLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Integer>"), value);
 	}
 
 	/**
@@ -1310,9 +557,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Integer> getIntList(String identifier) {
 		
-		return intLists.get(identifier);
+		return (List<Integer>) data.get(new Tuple2<>(identifier, "List<Integer>"));
 	}
 	
 	/**
@@ -1323,7 +571,7 @@ public class MetaDataStore {
 	 */
 	public void putIntSet(String identifier, Set<Integer> value) {
 		
-		intSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Integer>"), value);
 	}
 
 	/**
@@ -1331,9 +579,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Integer> getIntSet(String identifier) {
 		
-		return intSets.get(identifier);
+		return (Set<Integer>) data.get(new Tuple2<>(identifier, "Set<Integer>"));
 	}
 	
 	/**
@@ -1342,9 +591,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putLong(String identifier, long value) {
+	public void putLong(String identifier, Long value) {
 		
-		longs.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Long"), value);
 	}
 
 	/**
@@ -1354,7 +603,7 @@ public class MetaDataStore {
 	 */
 	public Long getLong(String identifier) {
 		
-		return longs.get(identifier);
+		return (Long) data.get(new Tuple2<>(identifier, "Long"));
 	}
 	
 	/**
@@ -1365,7 +614,7 @@ public class MetaDataStore {
 	 */
 	public void putLongArray(String identifier, long[] value) {
 		
-		longArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"long[]"), value);
 	}
 
 	/**
@@ -1375,7 +624,7 @@ public class MetaDataStore {
 	 */
 	public long[] getLongArray(String identifier) {
 		
-		return longArrays.get(identifier);
+		return (long[]) data.get(new Tuple2<>(identifier, "long[]"));
 	}
 	
 	/**
@@ -1386,7 +635,7 @@ public class MetaDataStore {
 	 */
 	public void putLongMatrix(String identifier, long[][] value) {
 		
-		longMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"long[][]"), value);
 	}
 
 	/**
@@ -1396,7 +645,7 @@ public class MetaDataStore {
 	 */
 	public long[][] getLongMatrix(String identifier) {
 		
-		return longMatrices.get(identifier);
+		return (long[][]) data.get(new Tuple2<>(identifier, "long[][]"));
 	}
 	
 	/**
@@ -1407,7 +656,7 @@ public class MetaDataStore {
 	 */
 	public void putLongMatrix3d(String identifier, long[][][] value) {
 		
-		longMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"long[][][]"), value);
 	}
 
 	/**
@@ -1417,7 +666,7 @@ public class MetaDataStore {
 	 */
 	public long[][][] getLongMatrix3d(String identifier) {
 		
-		return longMatrix3ds.get(identifier);
+		return (long[][][]) data.get(new Tuple2<>(identifier, "long[][][]"));
 	}
 	
 	/**
@@ -1428,7 +677,7 @@ public class MetaDataStore {
 	 */
 	public void putLongList(String identifier, List<Long> value) {
 		
-		longLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Long>"), value);
 	}
 
 	/**
@@ -1436,9 +685,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Long> getLongList(String identifier) {
 		
-		return longLists.get(identifier);
+		return (List<Long>) data.get(new Tuple2<>(identifier, "List<Long>"));
 	}
 	
 	/**
@@ -1449,7 +699,7 @@ public class MetaDataStore {
 	 */
 	public void putLongSet(String identifier, Set<Long> value) {
 		
-		longSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Long>"), value);
 	}
 
 	/**
@@ -1457,9 +707,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Long> getLongSet(String identifier) {
 		
-		return longSets.get(identifier);
+		return (Set<Long>) data.get(new Tuple2<>(identifier, "Set<Long>"));
 	}
 	
 	/**
@@ -1468,9 +719,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putFloat(String identifier, float value) {
+	public void putFloat(String identifier, Float value) {
 		
-		floats.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Float"), value);
 	}
 
 	/**
@@ -1480,7 +731,7 @@ public class MetaDataStore {
 	 */
 	public Float getFloat(String identifier) {
 		
-		return floats.get(identifier);
+		return (Float) data.get(new Tuple2<>(identifier, "Float"));
 	}
 	
 	/**
@@ -1491,7 +742,7 @@ public class MetaDataStore {
 	 */
 	public void putFloatArray(String identifier, float[] value) {
 		
-		floatArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"float[]"), value);
 	}
 
 	/**
@@ -1501,7 +752,7 @@ public class MetaDataStore {
 	 */
 	public float[] getFloatArray(String identifier) {
 		
-		return floatArrays.get(identifier);
+		return (float[]) data.get(new Tuple2<>(identifier, "float[]"));
 	}
 	
 	/**
@@ -1512,7 +763,7 @@ public class MetaDataStore {
 	 */
 	public void putFloatMatrix(String identifier, float[][] value) {
 		
-		floatMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"float[][]"), value);
 	}
 
 	/**
@@ -1522,7 +773,7 @@ public class MetaDataStore {
 	 */
 	public float[][] getFloatMatrix(String identifier) {
 		
-		return floatMatrices.get(identifier);
+		return (float[][]) data.get(new Tuple2<>(identifier, "float[][]"));
 	}
 	
 	/**
@@ -1533,7 +784,7 @@ public class MetaDataStore {
 	 */
 	public void putFloatMatrix3d(String identifier, float[][][] value) {
 		
-		floatMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"float[][][]"), value);
 	}
 
 	/**
@@ -1543,7 +794,7 @@ public class MetaDataStore {
 	 */
 	public float[][][] getFloatMatrix3d(String identifier) {
 		
-		return floatMatrix3ds.get(identifier);
+		return (float[][][]) data.get(new Tuple2<>(identifier, "float[][][]"));
 	}
 	
 	/**
@@ -1554,7 +805,7 @@ public class MetaDataStore {
 	 */
 	public void putFloatList(String identifier, List<Float> value) {
 		
-		floatLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Float>"), value);
 	}
 
 	/**
@@ -1562,9 +813,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Float> getFloatList(String identifier) {
 		
-		return floatLists.get(identifier);
+		return (List<Float>) data.get(new Tuple2<>(identifier, "List<Float>"));
 	}
 	
 	/**
@@ -1575,7 +827,7 @@ public class MetaDataStore {
 	 */
 	public void putFloatSet(String identifier, Set<Float> value) {
 		
-		floatSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Float>"), value);
 	}
 
 	/**
@@ -1583,9 +835,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Float> getFloatSet(String identifier) {
 		
-		return floatSets.get(identifier);
+		return (Set<Float>) data.get(new Tuple2<>(identifier, "Set<Float>"));
 	}
 	
 	/**
@@ -1594,9 +847,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putDouble(String identifier, double value) {
+	public void putDouble(String identifier, Double value) {
 		
-		doubles.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Double"), value);
 	}
 
 	/**
@@ -1606,7 +859,7 @@ public class MetaDataStore {
 	 */
 	public Double getDouble(String identifier) {
 		
-		return doubles.get(identifier);
+		return (Double) data.get(new Tuple2<>(identifier, "Double"));
 	}
 	
 	/**
@@ -1617,7 +870,7 @@ public class MetaDataStore {
 	 */
 	public void putDoubleArray(String identifier, double[] value) {
 		
-		doubleArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"double[]"), value);
 	}
 
 	/**
@@ -1627,7 +880,7 @@ public class MetaDataStore {
 	 */
 	public double[] getDoubleArray(String identifier) {
 		
-		return doubleArrays.get(identifier);
+		return (double[]) data.get(new Tuple2<>(identifier, "double[]"));
 	}
 	
 	/**
@@ -1638,7 +891,7 @@ public class MetaDataStore {
 	 */
 	public void putDoubleMatrix(String identifier, double[][] value) {
 		
-		doubleMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"double[][]"), value);
 	}
 
 	/**
@@ -1648,7 +901,7 @@ public class MetaDataStore {
 	 */
 	public double[][] getDoubleMatrix(String identifier) {
 		
-		return doubleMatrices.get(identifier);
+		return (double[][]) data.get(new Tuple2<>(identifier, "double[][]"));
 	}
 	
 	/**
@@ -1659,7 +912,7 @@ public class MetaDataStore {
 	 */
 	public void putDoubleMatrix3d(String identifier, double[][][] value) {
 		
-		doubleMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"double[][][]"), value);
 	}
 
 	/**
@@ -1669,7 +922,7 @@ public class MetaDataStore {
 	 */
 	public double[][][] getDoubleMatrix3d(String identifier) {
 		
-		return doubleMatrix3ds.get(identifier);
+		return (double[][][]) data.get(new Tuple2<>(identifier, "double[][][]"));
 	}
 	
 	/**
@@ -1680,7 +933,7 @@ public class MetaDataStore {
 	 */
 	public void putDoubleList(String identifier, List<Double> value) {
 		
-		doubleLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Double>"), value);
 	}
 
 	/**
@@ -1688,9 +941,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Double> getDoubleList(String identifier) {
 		
-		return doubleLists.get(identifier);
+		return (List<Double>) data.get(new Tuple2<>(identifier, "List<Double>"));
 	}
 	
 	/**
@@ -1701,7 +955,7 @@ public class MetaDataStore {
 	 */
 	public void putDoubleSet(String identifier, Set<Double> value) {
 		
-		doubleSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Double>"), value);
 	}
 
 	/**
@@ -1709,9 +963,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Double> getDoubleSet(String identifier) {
 		
-		return doubleSets.get(identifier);
+		return (Set<Double>) data.get(new Tuple2<>(identifier, "Set<Double>"));
 	}
 	
 	/**
@@ -1722,7 +977,7 @@ public class MetaDataStore {
 	 */
 	public void putBigInteger(String identifier, BigInteger value) {
 		
-		bigintegers.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigInteger"), value);
 	}
 
 	/**
@@ -1732,7 +987,7 @@ public class MetaDataStore {
 	 */
 	public BigInteger getBigInteger(String identifier) {
 		
-		return bigintegers.get(identifier);
+		return (BigInteger) data.get(new Tuple2<>(identifier, "BigInteger"));
 	}
 	
 	/**
@@ -1743,7 +998,7 @@ public class MetaDataStore {
 	 */
 	public void putBigIntegerArray(String identifier, BigInteger[] value) {
 		
-		bigintegerArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigInteger[]"), value);
 	}
 
 	/**
@@ -1753,7 +1008,7 @@ public class MetaDataStore {
 	 */
 	public BigInteger[] getBigIntegerArray(String identifier) {
 		
-		return bigintegerArrays.get(identifier);
+		return (BigInteger[]) data.get(new Tuple2<>(identifier, "BigInteger[]"));
 	}
 
 	/**
@@ -1764,7 +1019,7 @@ public class MetaDataStore {
 	 */
 	public void putBigIntegerMatrix(String identifier, BigInteger[][] value) {
 		
-		bigintegerMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigInteger[][]"), value);
 	}
 
 	/**
@@ -1774,7 +1029,7 @@ public class MetaDataStore {
 	 */
 	public BigInteger[][] getBigIntegerMatrix(String identifier) {
 		
-		return bigintegerMatrices.get(identifier);
+		return (BigInteger[][]) data.get(new Tuple2<>(identifier, "BigInteger[][]"));
 	}
 
 	/**
@@ -1785,7 +1040,7 @@ public class MetaDataStore {
 	 */
 	public void putBigIntegerMatrix3d(String identifier, BigInteger[][][] value) {
 		
-		bigintegerMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigInteger[][][]"), value);
 	}
 
 	/**
@@ -1795,7 +1050,7 @@ public class MetaDataStore {
 	 */
 	public BigInteger[][][] getBigIntegerMatrix3d(String identifier) {
 		
-		return bigintegerMatrix3ds.get(identifier);
+		return (BigInteger[][][]) data.get(new Tuple2<>(identifier, "BigInteger[][][]"));
 	}
 	
 	/**
@@ -1806,7 +1061,7 @@ public class MetaDataStore {
 	 */
 	public void putBigIntegerList(String identifier, List<BigInteger> value) {
 		
-		bigintegerLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<BigInteger>"), value);
 	}
 
 	/**
@@ -1814,9 +1069,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<BigInteger> getBigIntegerList(String identifier) {
 		
-		return bigintegerLists.get(identifier);
+		return (List<BigInteger>) data.get(new Tuple2<>(identifier, "List<BigInteger>"));
 	}
 	
 	/**
@@ -1827,7 +1083,7 @@ public class MetaDataStore {
 	 */
 	public void putBigIntegerSet(String identifier, Set<BigInteger> value) {
 		
-		bigintegerSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<BigInteger>"), value);
 	}
 
 	/**
@@ -1835,9 +1091,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<BigInteger> getBigIntegerSet(String identifier) {
 		
-		return bigintegerSets.get(identifier);
+		return (Set<BigInteger>) data.get(new Tuple2<>(identifier, "Set<BigInteger>"));
 	}
 	
 	/**
@@ -1848,7 +1105,7 @@ public class MetaDataStore {
 	 */
 	public void putBigDecimal(String identifier, BigDecimal value) {
 		
-		bigdecimals.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigDecimal"), value);
 	}
 
 	/**
@@ -1858,7 +1115,7 @@ public class MetaDataStore {
 	 */
 	public BigDecimal getBigDecimal(String identifier) {
 		
-		return bigdecimals.get(identifier);
+		return (BigDecimal) data.get(new Tuple2<>(identifier, "BigDecimal"));
 	}
 	
 	/**
@@ -1869,7 +1126,7 @@ public class MetaDataStore {
 	 */
 	public void putBigDecimalArray(String identifier, BigDecimal[] value) {
 		
-		bigdecimalArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigDecimal[]"), value);
 	}
 
 	/**
@@ -1879,7 +1136,7 @@ public class MetaDataStore {
 	 */
 	public BigDecimal[] getBigDecimalArray(String identifier) {
 		
-		return bigdecimalArrays.get(identifier);
+		return (BigDecimal[]) data.get(new Tuple2<>(identifier, "BigDecimal[]"));
 	}
 	
 	/**
@@ -1890,7 +1147,7 @@ public class MetaDataStore {
 	 */
 	public void putBigDecimalMatrix(String identifier, BigDecimal[][] value) {
 		
-		bigdecimalMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigDecimal[][]"), value);
 	}
 	
 	/**
@@ -1900,7 +1157,7 @@ public class MetaDataStore {
 	 */
 	public BigDecimal[][] getBigDecimalMatrix(String identifier) {
 		
-		return bigdecimalMatrices.get(identifier);
+		return (BigDecimal[][]) data.get(new Tuple2<>(identifier, "BigDecimal[][]"));
 	}
 	
 	/**
@@ -1911,7 +1168,7 @@ public class MetaDataStore {
 	 */
 	public void putBigDecimalMatrix3d(String identifier, BigDecimal[][][] value) {
 		
-		bigdecimalMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"BigDecimal[][][]"), value);
 	}
 	
 	/**
@@ -1921,7 +1178,7 @@ public class MetaDataStore {
 	 */
 	public BigDecimal[][][] getBigDecimalMatrix3d(String identifier) {
 		
-		return bigdecimalMatrix3ds.get(identifier);
+		return (BigDecimal[][][]) data.get(new Tuple2<>(identifier, "BigDecimal[][][]"));
 	}
 	
 	/**
@@ -1932,7 +1189,7 @@ public class MetaDataStore {
 	 */
 	public void putBigDecimalList(String identifier, List<BigDecimal> value) {
 		
-		bigdecimalLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<BigDecimal>"), value);
 	}
 
 	/**
@@ -1940,9 +1197,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<BigDecimal> getBigDecimalList(String identifier) {
 		
-		return bigdecimalLists.get(identifier);
+		return (List<BigDecimal>) data.get(new Tuple2<>(identifier, "List<BigDecimal>"));
 	}
 	
 	/**
@@ -1953,7 +1211,7 @@ public class MetaDataStore {
 	 */
 	public void putBigDecimalSet(String identifier, Set<BigDecimal> value) {
 		
-		bigdecimalSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<BigDecimal>"), value);
 	}
 
 	/**
@@ -1961,9 +1219,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<BigDecimal> getBigDecimalSet(String identifier) {
 		
-		return bigdecimalSets.get(identifier);
+		return (Set<BigDecimal>) data.get(new Tuple2<>(identifier, "Set<BigDecimal>"));
 	}
 	
 	/**
@@ -1974,7 +1233,7 @@ public class MetaDataStore {
 	 */
 	public void putString(String identifier, String value) {
 		
-		strings.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"String"), value);
 	}
 
 	/**
@@ -1984,7 +1243,7 @@ public class MetaDataStore {
 	 */
 	public String getString(String identifier) {
 		
-		return strings.get(identifier);
+		return (String) data.get(new Tuple2<>(identifier, "String"));
 	}
 	
 	/**
@@ -1995,7 +1254,7 @@ public class MetaDataStore {
 	 */
 	public void putStringArray(String identifier, String[] value) {
 		
-		stringArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"String[]"), value);
 	}
 
 	/**
@@ -2005,7 +1264,7 @@ public class MetaDataStore {
 	 */
 	public String[] getStringArray(String identifier) {
 		
-		return stringArrays.get(identifier);
+		return (String[]) data.get(new Tuple2<>(identifier, "String[]"));
 	}
 	
 	/**
@@ -2016,7 +1275,7 @@ public class MetaDataStore {
 	 */
 	public void putStringMatrix(String identifier, String[][] value) {
 		
-		stringMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"String[][]"), value);
 	}
 
 	/**
@@ -2026,7 +1285,7 @@ public class MetaDataStore {
 	 */
 	public String[][] getStringMatrix(String identifier) {
 		
-		return stringMatrices.get(identifier);
+		return (String[][]) data.get(new Tuple2<>(identifier, "String[][]"));
 	}
 	
 	/**
@@ -2037,7 +1296,7 @@ public class MetaDataStore {
 	 */
 	public void putStringMatrix3d(String identifier, String[][][] value) {
 		
-		stringMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"String[][][]"), value);
 	}
 
 	/**
@@ -2047,7 +1306,7 @@ public class MetaDataStore {
 	 */
 	public String[][][] getStringMatrix3d(String identifier) {
 		
-		return stringMatrix3ds.get(identifier);
+		return (String[][][]) data.get(new Tuple2<>(identifier, "String[][][]"));
 	}
 	
 	/**
@@ -2058,7 +1317,7 @@ public class MetaDataStore {
 	 */
 	public void putStringList(String identifier, List<String> value) {
 		
-		stringLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<String>"), value);
 	}
 
 	/**
@@ -2066,9 +1325,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<String> getStringList(String identifier) {
 		
-		return stringLists.get(identifier);
+		return (List<String>) data.get(new Tuple2<>(identifier, "List<String>"));
 	}
 	
 	/**
@@ -2079,7 +1339,7 @@ public class MetaDataStore {
 	 */
 	public void putStringSet(String identifier, Set<String> value) {
 		
-		stringSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<String>"), value);
 	}
 
 	/**
@@ -2087,9 +1347,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<String> getStringSet(String identifier) {
 		
-		return stringSets.get(identifier);
+		return (Set<String>) data.get(new Tuple2<>(identifier, "Set<String>"));
 	}
 	
 	/**
@@ -2098,9 +1359,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putChar(String identifier, char value) {
+	public void putChar(String identifier, Character value) {
 		
-		chars.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Character"), value);
 	}
 	
 	/**
@@ -2110,7 +1371,7 @@ public class MetaDataStore {
 	 */
 	public Character getChar(String identifier) {
 		
-		return chars.get(identifier);
+		return (Character) data.get(new Tuple2<>(identifier, "Character"));
 	}
 	
 	/**
@@ -2121,7 +1382,7 @@ public class MetaDataStore {
 	 */
 	public void putCharArray(String identifier, char[] value) {
 		
-		charArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"char[]"), value);
 	}
 
 	/**
@@ -2131,7 +1392,7 @@ public class MetaDataStore {
 	 */
 	public char[] getCharArray(String identifier) {
 		
-		return charArrays.get(identifier);
+		return (char[]) data.get(new Tuple2<>(identifier, "char[]"));
 	}
 	
 	/**
@@ -2142,7 +1403,7 @@ public class MetaDataStore {
 	 */
 	public void putCharMatrix(String identifier, char[][] value) {
 		
-		charMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"char[][]"), value);
 	}
 
 	/**
@@ -2152,7 +1413,7 @@ public class MetaDataStore {
 	 */
 	public char[][] getCharMatrix(String identifier) {
 		
-		return charMatrices.get(identifier);
+		return (char[][]) data.get(new Tuple2<>(identifier, "char[][]"));
 	}
 	
 	/**
@@ -2163,7 +1424,7 @@ public class MetaDataStore {
 	 */
 	public void putCharMatrix3d(String identifier, char[][][] value) {
 		
-		charMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"char[][][]"), value);
 	}
 
 	/**
@@ -2173,7 +1434,7 @@ public class MetaDataStore {
 	 */
 	public char[][][] getCharMatrix3d(String identifier) {
 		
-		return charMatrix3ds.get(identifier);
+		return (char[][][]) data.get(new Tuple2<>(identifier, "char[][][]"));
 	}
 	
 	/**
@@ -2184,7 +1445,7 @@ public class MetaDataStore {
 	 */
 	public void putCharList(String identifier, List<Character> value) {
 		
-		charLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Character>"), value);
 	}
 
 	/**
@@ -2192,9 +1453,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Character> getCharList(String identifier) {
 		
-		return charLists.get(identifier);
+		return (List<Character>) data.get(new Tuple2<>(identifier, "List<Character>"));
 	}
 	
 	/**
@@ -2205,7 +1467,7 @@ public class MetaDataStore {
 	 */
 	public void putCharSet(String identifier, Set<Character> value) {
 		
-		charSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Character>"), value);
 	}
 
 	/**
@@ -2213,9 +1475,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Character> getCharSet(String identifier) {
 		
-		return charSets.get(identifier);
+		return (Set<Character>) data.get(new Tuple2<>(identifier, "Set<Character>"));
 	}
 	
 	/**
@@ -2224,9 +1487,9 @@ public class MetaDataStore {
 	 * @param identifier
 	 * @param value
 	 */
-	public void putBoolean(String identifier, boolean value) {
+	public void putBoolean(String identifier, Boolean value) {
 		
-		booleans.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Boolean"), value);
 	}
 	
 	/**
@@ -2236,7 +1499,7 @@ public class MetaDataStore {
 	 */
 	public Boolean getBoolean(String identifier) {
 		
-		return booleans.get(identifier);
+		return (Boolean) data.get(new Tuple2<>(identifier, "Boolean"));
 	}
 	
 	/**
@@ -2247,7 +1510,7 @@ public class MetaDataStore {
 	 */
 	public void putBooleanArray(String identifier, boolean[] value) {
 		
-		booleanArrays.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"boolean[]"), value);
 	}
 
 	/**
@@ -2257,7 +1520,7 @@ public class MetaDataStore {
 	 */
 	public boolean[] getBooleanArray(String identifier) {
 		
-		return booleanArrays.get(identifier);
+		return (boolean[]) data.get(new Tuple2<>(identifier, "boolean[]"));
 	}
 	
 	/**
@@ -2268,7 +1531,7 @@ public class MetaDataStore {
 	 */
 	public void putBooleanMatrix(String identifier, boolean[][] value) {
 		
-		booleanMatrices.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"boolean[][]"), value);
 	}
 
 	/**
@@ -2278,7 +1541,7 @@ public class MetaDataStore {
 	 */
 	public boolean[][] getBooleanMatrix(String identifier) {
 		
-		return booleanMatrices.get(identifier);
+		return (boolean[][]) data.get(new Tuple2<>(identifier, "boolean[][]"));
 	}
 	
 	/**
@@ -2289,7 +1552,7 @@ public class MetaDataStore {
 	 */
 	public void putBooleanMatrix3ds(String identifier, boolean[][][] value) {
 		
-		booleanMatrix3ds.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"boolean[][][]"), value);
 	}
 
 	/**
@@ -2299,7 +1562,7 @@ public class MetaDataStore {
 	 */
 	public boolean[][][] getBooleanMatrix3d(String identifier) {
 		
-		return booleanMatrix3ds.get(identifier);
+		return (boolean[][][]) data.get(new Tuple2<>(identifier, "boolean[][][]"));
 	}
 	
 	/**
@@ -2310,7 +1573,7 @@ public class MetaDataStore {
 	 */
 	public void putBooleanList(String identifier, List<Boolean> value) {
 		
-		booleanLists.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"List<Boolean>"), value);
 	}
 
 	/**
@@ -2318,9 +1581,10 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Boolean> getBooleanList(String identifier) {
 		
-		return booleanLists.get(identifier);
+		return (List<Boolean>) data.get(new Tuple2<>(identifier, "List<Boolean>"));
 	}
 	
 	/**
@@ -2331,7 +1595,7 @@ public class MetaDataStore {
 	 */
 	public void putBooleanSet(String identifier, Set<Boolean> value) {
 		
-		booleanSets.put(identifier, value);
+		data.put(new Tuple2<>(identifier,"Set<Boolean>"), value);
 	}
 
 	/**
@@ -2339,8 +1603,9 @@ public class MetaDataStore {
 	 * 
 	 * @param identifier
 	 */
+	@SuppressWarnings("unchecked")
 	public Set<Boolean> getBooleanSet(String identifier) {
-		
-		return booleanSets.get(identifier);
+
+		return (Set<Boolean>) data.get(new Tuple2<>(identifier, "Set<Boolean>"));
 	}
 }
