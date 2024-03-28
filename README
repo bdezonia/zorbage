@@ -241,6 +241,11 @@ Is there a way to get data into a Zorbage backed application?
     
     https://github.com/bdezonia/zorbage-ecat
 
+  Code has been written to load Java audio data using the zorbage
+    jaudio library into Zorbage structures. You can find it here:
+
+    https://github.com/bdezonia/zorbage-jaudio
+
   Code has been written to load raster GIS data using the GDAL library
     into Zorbage structures. You can find it here:
   
@@ -255,6 +260,11 @@ Is there a way to get data into a Zorbage backed application?
     nifti library into Zorbage structures. You can find it here:
     
     https://github.com/bdezonia/zorbage-nifti
+
+  Code has been written to load NMR data using the zorbage NMR
+    library into Zorbage structures. You can find it here:
+
+    https://github.com/bdezonia/zorbage-nmr
 
   Code has been written to load common raster data formats using
     the SCIFIO library into Zorbage structures. You can find it here:
