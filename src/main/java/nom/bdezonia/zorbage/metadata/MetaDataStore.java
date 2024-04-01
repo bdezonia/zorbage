@@ -68,7 +68,7 @@ public class MetaDataStore {
 		}
 	}
 
-	public Set<Tuple2<String,String>> keys() {
+	public Set<Tuple2<String,String>> keySet() {
 		
 		return data.keySet();
 	}
