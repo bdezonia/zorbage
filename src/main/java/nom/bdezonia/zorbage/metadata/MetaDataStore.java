@@ -68,6 +68,9 @@ public class MetaDataStore {
 		}
 	}
 
+	/**
+	 * Return the set of keys that are stored in this MetaDataStore.
+	 */
 	public Set<Tuple2<String,String>> keySet() {
 		
 		return data.keySet();
