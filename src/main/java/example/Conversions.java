@@ -164,7 +164,7 @@ class Conversions {
 		
 		IndexedDataSource<UnsignedInt1Member> uint1s = Storage.allocate(new UnsignedInt1Member(), bools.size());
 
-		// set the uint1's to the same values as the booelans
+		// set the uint1's to the same values as the booleans
 		
 		BoolToUInt1.compute(bools, uint1s);
 		
@@ -180,4 +180,3 @@ class Conversions {
 	}
 	
 }
-
