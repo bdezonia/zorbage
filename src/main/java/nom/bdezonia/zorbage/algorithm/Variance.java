@@ -61,30 +61,47 @@ public class Variance {
 								Multiplication<U> &
 								Unity<U>,
 					U extends SetFromLongs>
-		void compute(T alg, IndexedDataSource<U> source, U result)
+	
+		void compute(T alg, IndexedDataSource<U> source, U calcedVariance)
+		
+	{
+		compute(alg, source, alg.construct(), calcedVariance);
+	}
+
+	/**
+	 * Alternative algorithm that returns the mean and the variance.
+	 */
+	public static <T extends Algebra<T,U> &
+								Addition<U> &
+								Multiplication<U> &
+								Unity<U>,
+					U extends SetFromLongs>
+	
+		void compute(T alg, IndexedDataSource<U> source, U calcedMean, U calcedVariance)
+	
 	{
 		if (source.size() == 0)
 			throw new IllegalArgumentException("variance called on an empty list");
 
 		else if (source.size() == 1) {
-			alg.zero().call(result);
+			source.get(0, calcedMean);
+			alg.zero().call(calcedVariance);
 			return;
 		}
-		U mean = alg.construct();
 		U sum = alg.construct();
 		U tmp = alg.construct();
 		U n = alg.construct();
 		U one = alg.construct();
 		alg.unity().call(one);
-		Mean.compute(alg, source, mean);
+		Mean.compute(alg, source, calcedMean);
 		for (long i = 0; i < source.size(); i++) {
 			source.get(i, tmp);
-			alg.subtract().call(tmp, mean, tmp);
+			alg.subtract().call(tmp, calcedMean, tmp);
 			alg.multiply().call(tmp, tmp, tmp);
 			alg.add().call(sum, tmp, sum);
 			alg.add().call(n, one, n);
 		}
 		alg.subtract().call(n, one, n);
-		Divide.compute(alg, sum, n, result);
+		Divide.compute(alg, sum, n, calcedVariance);
 	}
 }
