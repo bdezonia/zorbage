@@ -61,7 +61,7 @@ public class EllipticIntegral {
 	 * @param tol The tolerance that defines when we'll accept the solution.
 	 * @param maxIters The max number of iterations to try before giving up.
 	 * @param result The value of the integral if a solution is found.
-	 * @return True if a solution was found in <= maxIters, else false.
+	 * @return True if a solution was found in less than or equal to maxIters, else false.
 	 */
 	public static <RA extends Algebra<RA,R> & Tolerance<R,R> & Unity<R> & Roots<R> &
 								Addition<R> & Multiplication<R> & RealConstants<R> &

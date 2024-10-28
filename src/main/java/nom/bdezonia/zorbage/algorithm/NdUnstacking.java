@@ -62,7 +62,7 @@ public class NdUnstacking {
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param dataSources
+	 * @param dataSource
 	 * @return
 	 */
 	public static <T extends Algebra<T,U>, U extends Allocatable<U>>

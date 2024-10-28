@@ -56,7 +56,7 @@ public class ApproxStdDev {
 	 * of a list of numbers. It is approximate in the sense that adjustments
 	 * are made to avoid overall data loss at the expense of absolute
 	 * accuracy. If you need absolute accuracy use the {@link StdDev}
-	 * algorithm using {@link HighPrecisionMember}s to contain the results. 
+	 * algorithm using {@link nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember}s to contain the results. 
 	 * 
 	 * @param storage
 	 * @param result

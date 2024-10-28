@@ -57,7 +57,7 @@ public class BinarySearch {
 	 * This algorithm does not care about duplicate values and will just
 	 * return the first hit it finds. If you need the leftmost or the
 	 * rightmost match use {@link BinarySearchLeft} or
-	 * {@link BinarySearchRightt}.
+	 * {@link BinarySearchRight}.
 	 * 
 	 * @param algebra
 	 * @param data

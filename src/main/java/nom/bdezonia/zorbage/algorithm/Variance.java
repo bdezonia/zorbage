@@ -52,7 +52,7 @@ public class Variance {
 	 * 
 	 * @param alg
 	 * @param source
-	 * @param result
+	 * @param calcedVariance
 	 * @param <T>
 	 * @param <U>
 	 */

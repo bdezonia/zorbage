@@ -56,8 +56,8 @@ public class ApproximateMinMaxElement {
 	 * your list to scan is big and absolute accuracy is not necessary.
 	 * 
 	 * @param alg The algebra that manipulates the types as stored in the list.
-	 * @param certainty A double > 0.0 and <= 1.0. Affects the thoroughness
-	 * of the performed search. 
+	 * @param certainty A double less than 0.0 and less than or equal to 1.0.
+	 * Affects the thoroughness of the performed search. 
 	 * @param storage The list of data to scan.
 	 * @param min The output storing the approximate min found. 
 	 * @param max The output storing the approximate max found.

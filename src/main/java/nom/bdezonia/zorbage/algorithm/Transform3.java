@@ -52,7 +52,7 @@ public class Transform3 {
 	 * Transform two lists into a third list using a function/procedure call at each point
 	 * in the two lists. Use a parallel algorithm for extra speed.
 	 * 
-	 * @param alg
+	 * @param algA
 	 * @param proc
 	 * @param a
 	 * @param b

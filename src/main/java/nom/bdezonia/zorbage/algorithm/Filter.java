@@ -49,7 +49,7 @@ public class Filter {
 
 	/**
 	 * 
-	 * @param <T>
+	 * @param <UA>
 	 * @param <U>
 	 * @param alg
 	 * @param predicate

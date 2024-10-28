@@ -47,8 +47,8 @@ public class TensorShape {
 	/**
 	 * Change the shape of an output tensor to match the shape of an input tensor
 	 * 
-	 * @param from
-	 * @param to
+	 * @param input
+	 * @param output
 	 */
 	public static
 		void compute(TensorMember<?> input, TensorMember<?> output)

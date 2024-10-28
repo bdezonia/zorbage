@@ -55,7 +55,7 @@ public class ApproxSumOfSquaredDeviationsWithCount {
 	/**
 	 * ApproxSumOfSquaredDeviationsWithCount gives an approximate estimate of
 	 * the sum of squared deviations around the mean for a list of numbers.
-	 * This algorithm is used by {@link ApproxStddev} and {@link ApproxVariance}.
+	 * This algorithm is used by {@link ApproxStdDev} and {@link ApproxVariance}.
 	 * The results are approximate in the sense that adjustments are made to avoid
 	 * overall data loss at the expense of absolute accuracy.
 	 * 

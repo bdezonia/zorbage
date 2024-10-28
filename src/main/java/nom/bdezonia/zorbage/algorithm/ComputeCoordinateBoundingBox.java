@@ -50,7 +50,7 @@ public class ComputeCoordinateBoundingBox {
 	private ComputeCoordinateBoundingBox() { }
 	
 	/**
-	 * Compute the bounding box of the coordinate space of a {@link DimensionsDataSource}.
+	 * Compute the bounding box of the coordinate space of a {@link DimensionedDataSource}.
 	 * The complete set of the data source's dimensions are transformed using its
 	 * {@link CoordinateSpace} and a bounding box in transformed coordinates is computed.
 	 * 

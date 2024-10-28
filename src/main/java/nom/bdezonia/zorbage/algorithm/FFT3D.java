@@ -67,7 +67,7 @@ public class FFT3D {
 	 * @param <R>
 	 * @param complexAlg
 	 * @param realAlg
-	 * @param inputBlock
+	 * @param inputData
 	 * @return
 	 */
 	public static
