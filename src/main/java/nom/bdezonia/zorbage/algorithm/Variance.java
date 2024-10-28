@@ -46,7 +46,7 @@ public class Variance {
 	 * Compute the variance of a list of values. This algorithm uses
 	 * a naive approach that is mathematically correct but can result
 	 * in precision issues for some data sets. This method is quite
-	 * excellent for use with {@link HighPrecisionMember} numbers.
+	 * excellent for use with {@link nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember} numbers.
 	 * They do not exhibit any rounding/precision loss and provide
 	 * the most accurate results.
 	 * 
