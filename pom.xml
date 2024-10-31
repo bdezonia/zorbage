@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.bdezonia</groupId>
   <artifactId>zorbage</artifactId>
-  <version>2.0.4.5</version>
+  <version>2.0.4.6</version>
   <packaging>jar</packaging>
   <name>Zorbage</name>
   <description>Algebraic data types and algorithms for use in numeric processing</description>
@@ -134,6 +134,9 @@
           </execution>
         </executions>
       </plugin>
+
+<!--
+
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -145,8 +148,22 @@
            <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
+
+-->
+
+      <plugin>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>0.6.0</version>
+          <extensions>true</extensions>
+          <configuration>
+            <publishingServerId>central</publishingServerId>
+          </configuration>
+        </plugin>
     </plugins>
   </build>
+
+<!--
 
   <distributionManagement>
     <snapshotRepository>
@@ -158,5 +175,7 @@
 	  <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
+
+-->
 
 </project>
