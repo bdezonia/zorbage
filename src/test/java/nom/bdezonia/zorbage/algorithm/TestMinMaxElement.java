@@ -32,8 +32,9 @@ package nom.bdezonia.zorbage.algorithm;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;

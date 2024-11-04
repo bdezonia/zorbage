@@ -34,6 +34,15 @@ import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.algebra.Algebra;
 
+// NOTE 11-3-24
+//
+// I had a fancy algorithm in here that optimized into the fewest comparisons
+// possible. But then I tested it against the most naive implementation possible 
+// and the naive code was consistently faster. I think this has to do with
+// pipelining, referential integrity, predictability, etc in automatic
+// optimizations. So I am now restoring to the original naive way.
+//
+
 /**
  * 
  * @author Barry DeZonia
@@ -57,43 +66,26 @@ public class MinMaxElement {
 		void compute(T alg, IndexedDataSource<U> storage, U min, U max)
 	{
 		long size = storage.size();
+		
 		if (size <= 0)
 			throw new IllegalArgumentException("minmax undefined for empty list");
-		U tmp1 = alg.construct();
-		U tmp2 = alg.construct();
+
+		U tmp = alg.construct();
+		
 		storage.get(0, min);
 		alg.assign().call(min, max);
-		long i = 1;
-		if ((size & 1) == 0) {
-			storage.get(1, tmp1);
-			if (alg.isGreater().call(tmp1, max)) {
-				alg.assign().call(tmp1, max);
-			}
-			if (alg.isLess().call(tmp1, min)) {
-				alg.assign().call(tmp1, min);
-			}
-			i++;
-		}
-		while (i < size) {
-			storage.get(i, tmp1);
-			storage.get(i+1, tmp2);
-			if (alg.isGreater().call(tmp1, tmp2)) {
-				if (alg.isGreater().call(tmp1, max)) {
-					alg.assign().call(tmp1, max);
-				}
-				if (alg.isLess().call(tmp2, min)) {
-					alg.assign().call(tmp2, min);
-				}
-			}
-			else { // tmp2 >= tmp1
-				if (alg.isGreater().call(tmp2, max)) {
-					alg.assign().call(tmp2, max);
-				}
-				if (alg.isLess().call(tmp1, min)) {
-					alg.assign().call(tmp1, min);
-				}
-			}
-			i += 2;
+		
+		for (long i = 1; i < size; i++) {
+			
+			storage.get(i, tmp);
+			
+			if (alg.isLess().call(tmp, min))
+				
+				alg.assign().call(tmp, min);
+
+			if (alg.isGreater().call(tmp, max))
+				
+				alg.assign().call(tmp, max);
 		}
 	}
 }
