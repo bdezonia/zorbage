@@ -67,4 +67,47 @@ public class Variance {
 	{
 		MeanAndVariance.compute(alg, source, alg.construct(), calcedVariance);
 	}
+
+	/**
+	 * Calculate variance of a list of values using a known mean to accelerate
+	 * the calculation.
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param source
+	 * @param knownMean
+	 * @param calcedVariance
+	 */
+	public static <T extends Algebra<T,U> &
+						Addition<U> &
+						Multiplication<U> &
+						Unity<U>,
+					U extends SetFromLongs>
+
+	void compute(T alg, IndexedDataSource<U> source, U knownMean, U calcedVariance)
+
+	{
+		if (source.size() == 0)
+			throw new IllegalArgumentException("variance called on an empty list");
+	
+		else if (source.size() == 1) {
+			alg.zero().call(calcedVariance);
+			return;
+		}
+		U sum = alg.construct();
+		U tmp = alg.construct();
+		U n = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
+		for (long i = 0; i < source.size(); i++) {
+			source.get(i, tmp);
+			alg.subtract().call(tmp, knownMean, tmp);
+			alg.multiply().call(tmp, tmp, tmp);
+			alg.add().call(sum, tmp, sum);
+			alg.add().call(n, one, n);
+		}
+		alg.subtract().call(n, one, n);
+		Divide.compute(alg, sum, n, calcedVariance);
+	}
 }
