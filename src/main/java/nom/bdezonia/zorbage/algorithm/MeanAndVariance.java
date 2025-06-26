@@ -32,9 +32,7 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.Invertible;
 import nom.bdezonia.zorbage.algebra.Multiplication;
-import nom.bdezonia.zorbage.algebra.Roots;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
@@ -44,37 +42,49 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
  * @author Barry DeZonia
  *
  */
-public class CoefficientOfVariation {
-
-	// do not instantiate
-	
-	private CoefficientOfVariation() { }
+public class MeanAndVariance {
 
 	/**
-	 * Calculate the coefficient of variation of a 1d source of data.
+	 * Calc the mean and variance of a list of elements
 	 * 
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param data
-	 * @param result
+	 * @param source
+	 * @param calcedMean
+	 * @param calcedVariance
 	 */
-	public static <T extends Algebra<T,U> & Invertible<U> & Roots<U> &
-						Unity<U> & Addition<U> & Multiplication<U>,
+	public static <T extends Algebra<T,U> &
+						Addition<U> &
+						Multiplication<U> &
+						Unity<U>,
 					U extends SetFromLongs>
 
-		void compute(T alg, IndexedDataSource<U> data, U result)
-	{
-		U mean = alg.construct();
-		
-		U variance = alg.construct();
-		
-		U stddev = alg.construct();
-		
-		MeanAndVariance.compute(alg, data, mean, variance);
+	void compute(T alg, IndexedDataSource<U> source, U calcedMean, U calcedVariance)
 
-		alg.sqrt().call(variance, stddev);
-		
-		alg.divide().call(stddev, mean, result);
+	{
+		if (source.size() == 0)
+			throw new IllegalArgumentException("variance called on an empty list");
+	
+		else if (source.size() == 1) {
+			source.get(0, calcedMean);
+			alg.zero().call(calcedVariance);
+			return;
+		}
+		U sum = alg.construct();
+		U tmp = alg.construct();
+		U n = alg.construct();
+		U one = alg.construct();
+		alg.unity().call(one);
+		Mean.compute(alg, source, calcedMean);
+		for (long i = 0; i < source.size(); i++) {
+			source.get(i, tmp);
+			alg.subtract().call(tmp, calcedMean, tmp);
+			alg.multiply().call(tmp, tmp, tmp);
+			alg.add().call(sum, tmp, sum);
+			alg.add().call(n, one, n);
+		}
+		alg.subtract().call(n, one, n);
+		Divide.compute(alg, sum, n, calcedVariance);
 	}
 }
