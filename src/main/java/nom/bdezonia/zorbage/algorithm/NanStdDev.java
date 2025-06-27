@@ -52,7 +52,7 @@ public class NanStdDev {
 	private NanStdDev() {}
 	
 	/**
-	 * Return the standard deviation of a list of numbers while gnoring NaNs.
+	 * Return the standard deviation of a list of numbers while ignoring NaNs.
 	 * 
 	 * @param storage
 	 * @param result
@@ -70,5 +70,21 @@ public class NanStdDev {
 		else {
 			StdDev.compute(alg, filteredValues, result);
 		}
+	}
+	
+	/**
+	 * Return the standard deviation from a known nan variance.
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param knownNanVariance
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Roots<U>,
+					U>
+		void compute(T alg, U knownNanVariance, U result)
+	{
+		alg.sqrt().call(knownNanVariance, result);
 	}
 }

@@ -52,7 +52,7 @@ public class Variance {
 	 * 
 	 * @param alg
 	 * @param source
-	 * @param calcedVariance
+	 * @param result
 	 * @param <T>
 	 * @param <U>
 	 */
@@ -62,10 +62,10 @@ public class Variance {
 								Unity<U>,
 					U extends SetFromLongs>
 	
-		void compute(T alg, IndexedDataSource<U> source, U calcedVariance)
+		void compute(T alg, IndexedDataSource<U> source, U result)
 		
 	{
-		MeanAndVariance.compute(alg, source, alg.construct(), calcedVariance);
+		MeanAndVariance.compute(alg, source, alg.construct(), result);
 	}
 
 	/**
@@ -85,14 +85,14 @@ public class Variance {
 						Unity<U>,
 					U extends SetFromLongs>
 
-	void compute(T alg, IndexedDataSource<U> source, U knownMean, U calcedVariance)
+	void compute(T alg, IndexedDataSource<U> source, U knownMean, U result)
 
 	{
 		if (source.size() == 0)
 			throw new IllegalArgumentException("variance called on an empty list");
 	
 		else if (source.size() == 1) {
-			alg.zero().call(calcedVariance);
+			alg.zero().call(result);
 			return;
 		}
 		U sum = alg.construct();
@@ -108,6 +108,6 @@ public class Variance {
 			alg.add().call(n, one, n);
 		}
 		alg.subtract().call(n, one, n);
-		Divide.compute(alg, sum, n, calcedVariance);
+		Divide.compute(alg, sum, n, result);
 	}
 }

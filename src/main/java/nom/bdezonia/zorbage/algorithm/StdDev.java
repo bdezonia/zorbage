@@ -65,6 +65,24 @@ public class StdDev {
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
 		Variance.compute(alg, storage, result);
-		alg.sqrt().call(result, result);
+
+		compute(alg, result, result);
 	}
+
+	/**
+	 * Compute the standard deviation from a known variance.
+	 *  
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param knownVariance
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Roots<U>,
+					U>
+		void compute(T alg, U knownVariance, U result)
+	{
+		alg.sqrt().call(knownVariance, result);
+	}
+
 }

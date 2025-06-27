@@ -74,4 +74,21 @@ public class ApproxStdDev {
 		ApproxVariance.compute(alg, storage, result);
 		alg.sqrt().call(result, result);
 	}
+	
+	/**
+	 * Calculate the approximate standard deviation from a known approximate variance.
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param knownApproxVariance
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Roots<U>,
+					U>
+		void compute(T alg, U knownApproxVariance, U result)
+	{
+		StdDev.compute(alg, knownApproxVariance, result);
+	}
+
 }
