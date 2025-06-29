@@ -110,4 +110,19 @@ public class Variance {
 		alg.subtract().call(n, one, n);
 		Divide.compute(alg, sum, n, result);
 	}
+	
+	/**
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param knownStdDev
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Multiplication<U>, U>
+	
+		void compute(T alg, U knownStdDev, U result)
+	{
+		alg.multiply().call(knownStdDev, knownStdDev, result);
+	}
 }

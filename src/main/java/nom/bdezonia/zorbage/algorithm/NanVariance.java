@@ -71,4 +71,19 @@ public class NanVariance {
 			Variance.compute(alg, filteredValues, result);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param alg
+	 * @param knownStdDev
+	 * @param result
+	 */
+	public static <T extends Algebra<T,U> & Multiplication<U>, U>
+	
+		void compute(T alg, U knownNanStdDev, U result)
+	{
+		alg.multiply().call(knownNanStdDev, knownNanStdDev, result);
+	}
 }
