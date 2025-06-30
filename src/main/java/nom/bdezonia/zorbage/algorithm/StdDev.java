@@ -64,9 +64,11 @@ public class StdDev {
 					U extends SetFromLongs>
 		void compute(T alg, IndexedDataSource<U> storage, U result)
 	{
-		Variance.compute(alg, storage, result);
+		U variance = alg.construct();
+		
+		Variance.compute(alg, storage, variance);
 
-		compute(alg, result, result);
+		compute(alg, variance, result);
 	}
 
 	/**

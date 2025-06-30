@@ -92,7 +92,7 @@ public class ApproxVariance {
 	
 		void compute(T alg, U knownApproxStdDev, U result)
 	{
-		alg.multiply().call(knownApproxStdDev, knownApproxStdDev, result);
+		Variance.compute(alg, knownApproxStdDev, result);
 	}
 	
 }

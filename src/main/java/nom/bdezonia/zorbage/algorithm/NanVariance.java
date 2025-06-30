@@ -84,6 +84,6 @@ public class NanVariance {
 	
 		void compute(T alg, U knownNanStdDev, U result)
 	{
-		alg.multiply().call(knownNanStdDev, knownNanStdDev, result);
+		Variance.compute(alg, knownNanStdDev, result);
 	}
 }

@@ -88,7 +88,7 @@ public class ApproxStdDev {
 					U>
 		void compute(T alg, U knownApproxVariance, U result)
 	{
-		alg.sqrt().call(knownApproxVariance, result);
+		StdDev.compute(alg, knownApproxVariance, result);
 	}
 
 }

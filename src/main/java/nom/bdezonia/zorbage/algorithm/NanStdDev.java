@@ -85,6 +85,6 @@ public class NanStdDev {
 					U>
 		void compute(T alg, U knownNanVariance, U result)
 	{
-		alg.sqrt().call(knownNanVariance, result);
+		StdDev.compute(alg, knownNanVariance, result);
 	}
 }
