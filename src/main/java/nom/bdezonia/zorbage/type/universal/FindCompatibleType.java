@@ -106,11 +106,11 @@ public class FindCompatibleType {
 		case BIGDECIMAL:
 			if (components == 1)
 				return (T) G.HP;
-			if (components <= 2)
+			if (components == 2)
 				return (T) G.CHP;
-			if (components <= 4)
+			if (components == 4)
 				return (T) G.QHP;
-			if (components <= 8)
+			if (components == 8)
 				return (T) G.OHP;
 			break;
 		case BIGINTEGER:
@@ -122,21 +122,23 @@ public class FindCompatibleType {
 		case DOUBLE:
 			if (components == 1)
 				return (T) G.DBL;
-			if (components <= 2)
+			if (components == 2)
 				return (T) G.CDBL;
-			if (components <= 4)
+			if (components == 3)
+				return (T) G.CIEXYZ;
+			if (components == 4)
 				return (T) G.QDBL;
-			if (components <= 8)
+			if (components == 8)
 				return (T) G.ODBL;
 			break;
 		case FLOAT:
 			if (components == 1)
 				return (T) G.FLT;
-			if (components <= 2)
+			if (components == 2)
 				return (T) G.CFLT;
-			if (components <= 4)
+			if (components == 4)
 				return (T) G.QFLT;
-			if (components <= 8)
+			if (components == 8)
 				return (T) G.OFLT;
 			break;
 		case LONG:
