@@ -30,12 +30,17 @@
  */
 package example;
 
+import java.util.List;
+
+import nom.bdezonia.zorbage.algebra.Addition;
+import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Multiplication;
+import nom.bdezonia.zorbage.algebra.NativeDoubleSupport;
+import nom.bdezonia.zorbage.algebra.type.markers.RealType;
 import nom.bdezonia.zorbage.type.integer.int11.UnsignedInt11Member;
 import nom.bdezonia.zorbage.type.integer.int4.SignedInt4Member;
-import nom.bdezonia.zorbage.type.real.float64.Float64Member;
-import nom.bdezonia.zorbage.type.universal.FindCompatibleType;
+import nom.bdezonia.zorbage.type.universal.PrimitiveConversion;
 
 /**
  * @author Barry DeZonia
@@ -172,25 +177,36 @@ class Algebras {
 	 * and more
 	 */
 
-	/* Zorbage also has a basic discovery mechanism for algebras. This is not something you'd usually
-	 * do but you can if you like. (You can find more enhanced examples of this in Zorbage's test code
-	 * for the FindCompatibleType class).
+	/* Zorbage also has a basic discovery mechanism for algebras. And
+	 * the type discovery mechanism can register new types at runtime.
+	 * So Zorbage is type extensible for 3rd party software devs. See
+	 * the AlgebraLibrary class for more information.
 	 */
 	
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
 		void test3()
 	{
-		Float64Member num = G.DBL.construct();
-		
-		T alg = FindCompatibleType.bestAlgebra(1, num.preferredRepresentation());
-		
-		U num1 = alg.construct("44.32");
-		U num2 = alg.construct();
-		
-		System.out.println(alg.isEqual().call(num1, num2)); // prints false
-		
-		alg.assign().call(num1, num2);
+		List<Algebra<T,U>> algs = G.ALGEBRAS.findCompatibleTypedAlgebras(new Class<?>[] {Addition.class}, new Class<?>[] {RealType.class, NativeDoubleSupport.class, PrimitiveConversion.class});
 
-		System.out.println(alg.isEqual().call(num1, num2)); // prints true
+		for (Algebra<T,U> alg : algs) {
+
+			U type = alg.construct();
+
+			PrimitiveConversion metadata =
+					
+				(PrimitiveConversion) type;
+
+			if (metadata.componentCount() == 1)
+			{
+				U num1 = alg.construct("44.32");
+				U num2 = alg.construct();
+				
+				System.out.println(alg.isEqual().call(num1, num2)); // prints false
+				
+				alg.assign().call(num1, num2);
+
+				System.out.println(alg.isEqual().call(num1, num2)); // prints true
+			}
+		}
 	}
 }

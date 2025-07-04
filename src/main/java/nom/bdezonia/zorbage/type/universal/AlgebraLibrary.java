@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.universal;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -236,4 +237,49 @@ public class AlgebraLibrary {
 		return candidates;
 	}
 
+	/**
+	 * 
+	 * @param <T>
+	 * @param <U>
+	 * @param algebraInterfaces
+	 * @param typeInterfaces
+	 * @return
+	 */
+	public <T extends Algebra<T,U>, U>
+	
+		List<Algebra<T,U>> findCompatibleTypedAlgebras(Class<?>[] algebraInterfaces, Class<?>[] typeInterfaces)
+	{
+		List<Algebra<?,?>> earlyCandidates = findCompatibleAlgebras(algebraInterfaces);
+		
+		List<Algebra<T,U>> lateCandidates = new LinkedList<>();
+
+		Iterator<Algebra<?,?>> iter = earlyCandidates.iterator();
+		
+		while (iter.hasNext()) {
+
+			@SuppressWarnings("unchecked")
+			Algebra<T,U> alg = (Algebra<T,U>) iter.next();
+			
+			U type = alg.construct();
+			
+			boolean implementsAll = true;
+
+			for (Class<?> iface : typeInterfaces) {
+				
+				if (!iface.isAssignableFrom(type.getClass())) {
+					
+					implementsAll = false;
+					
+					break;
+				}
+			}
+			
+			if (implementsAll) {
+				
+				lateCandidates.add(alg);
+			}
+		}
+		
+		return lateCandidates;
+	}
 }

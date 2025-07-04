@@ -30,8 +30,6 @@
  */
 package nom.bdezonia.zorbage.type.universal;
 
-import nom.bdezonia.zorbage.algebra.G;
-
 /**
  * 
  * @author Barry DeZonia
@@ -84,95 +82,5 @@ public class FindCompatibleType {
 			return PrimitiveRepresentation.BYTE;
 		
 		throw new IllegalArgumentException("unknown representations "+a.preferredRepresentation()+" "+b.preferredRepresentation());
-	}
-
-	/**
-	 * 
-	 * @param components
-	 * @param rep
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T>
-		T bestAlgebra(int components, PrimitiveRepresentation rep)
-	{
-		if (components <= 0)
-			throw new IllegalArgumentException("must specify 1 or more components");
-		
-		if (components > 8)
-			throw new IllegalArgumentException("must specify 8 or fewer components");
-		
-		switch (rep) {
-		case BIGDECIMAL:
-			if (components == 1)
-				return (T) G.HP;
-			if (components == 2)
-				return (T) G.CHP;
-			if (components == 4)
-				return (T) G.QHP;
-			if (components == 8)
-				return (T) G.OHP;
-			break;
-		case BIGINTEGER:
-			if (components == 1)
-				return (T) G.UNBOUND;
-			if (components == 2)
-				return (T) G.GAUSSU;
-			break;
-		case DOUBLE:
-			if (components == 1)
-				return (T) G.DBL;
-			if (components == 2)
-				return (T) G.CDBL;
-			if (components == 3)
-				return (T) G.CIEXYZ;
-			if (components == 4)
-				return (T) G.QDBL;
-			if (components == 8)
-				return (T) G.ODBL;
-			break;
-		case FLOAT:
-			if (components == 1)
-				return (T) G.FLT;
-			if (components == 2)
-				return (T) G.CFLT;
-			if (components == 4)
-				return (T) G.QFLT;
-			if (components == 8)
-				return (T) G.OFLT;
-			break;
-		case LONG:
-			if (components == 1)
-				return (T) G.INT64;
-			if (components == 2)
-				return (T) G.GAUSS64;
-			break;
-		case INT:
-			if (components == 1)
-				return (T) G.INT32;
-			if (components == 2)
-				return (T) G.GAUSS32;
-			break;
-		case SHORT:
-			if (components == 1)
-				return (T) G.INT16;
-			if (components == 2)
-				return (T) G.GAUSS16;
-			break;
-		case BYTE:
-			if (components == 1)
-				return (T) G.INT8;
-			if (components == 2)
-				return (T) G.GAUSS8;
-			if (components == 3)
-				return (T) G.RGB;
-			if (components == 4)
-				return (T) G.ARGB;
-			break;
-		default:
-			throw new IllegalArgumentException("unknown primitive rep "+rep);
-		}
-		
-		throw new IllegalArgumentException("can't find appropriate type");
 	}
 }

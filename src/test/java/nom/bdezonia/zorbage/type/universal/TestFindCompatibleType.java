@@ -31,10 +31,10 @@
 package nom.bdezonia.zorbage.type.universal;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import nom.bdezonia.zorbage.algebra.*;
-import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
+import org.junit.Test;
+
+import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.type.integer.int10.SignedInt10Member;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
 
@@ -44,7 +44,7 @@ import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
  *
  */
 public class TestFindCompatibleType {
-
+/*
 	// NOTE: This is the common denominator signature that these supported algebras in the
 	// FindCompatibleType share. One could write an algorithm that just used all the methods
 	// present in these interfaces and would be portable among the types. You would construct
@@ -56,8 +56,11 @@ public class TestFindCompatibleType {
 			U> 
 		void test1()
 	{
+		List<Algebra<?,?>> candidates;
 		T x;
 		U a;
+
+		candidates = G.ALGEBRAS.findCompatibleAlgebras(null);
 		
 		x = FindCompatibleType.bestAlgebra(1, PrimitiveRepresentation.DOUBLE);
 		assertTrue(x == G.DBL);
@@ -417,15 +420,12 @@ public class TestFindCompatibleType {
 		x.zero();
 	}
 	
-	// Note: a typical way to find a common type follows.
-	
+*/
 	@Test
 	public <T> void test2() {
 		SignedInt10Member a = G.INT10.construct();
 		QuaternionFloat16Member b = G.QHLF.construct();
-		PrimitiveRepresentation rep = FindCompatibleType.bestRep(a, b);
-		int componentCount = Math.max(a.componentCount(), b.componentCount());
-		T alg = FindCompatibleType.bestAlgebra(componentCount, rep);
-		assertEquals(G.QFLT, alg);
+		PrimitiveRepresentation bestRep = FindCompatibleType.bestRep(a, b);
+		assertEquals(bestRep, PrimitiveRepresentation.FLOAT);
 	}
 }
