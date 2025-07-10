@@ -374,7 +374,7 @@ public class PlaneView<U> implements Dimensioned {
 		if (origSpace instanceof LinearNdCoordinateSpace) {
 
 			LinearNdCoordinateSpace origLinSpace =
-					(LinearNdCoordinateSpace) data.getCoordinateSpace();
+					(LinearNdCoordinateSpace) origSpace;
 			
 			BigDecimal[] scales = new BigDecimal[2];
 
