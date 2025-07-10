@@ -257,7 +257,7 @@ public class NdData<U>
 	 */
 	@Override
 	public void setAxisUnit(int i, String unit) {
-		if (unit == null) unit = "unknown";
+		if (unit == null) unit = "unk";
 		this.axisUnits[i] = unit;
 	}
 
@@ -288,7 +288,7 @@ public class NdData<U>
 	 */
 	@Override
 	public void setValueUnit(String unit) {
-		if (unit == null) unit = "unknown";
+		if (unit == null) unit = "unk";
 		this.valueUnit = unit;
 	}
 	
@@ -345,7 +345,7 @@ public class NdData<U>
 	 */
 	@Override
 	public void setValueType(String type) {
-		if (type == null || type == "") type = "unknown";
+		if (type == null || type == "") type = "unk";
 		this.valueType = type;
 	}
 }
