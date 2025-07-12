@@ -121,4 +121,48 @@ public class LinearNdCoordinateSpace
 		
 		return new LinearNdCoordinateSpace(scales, offsets);
 	}
+
+	/**
+	 * Translate a linear nd space to another one whose origin
+	 * is in a different corner of the data.
+	 * 
+	 * @param dims
+	 * @param currOriginInfo
+	 * @param futureOriginInfo
+	 * @param origSpace
+	 * @return
+	 */
+	public static
+		
+		LinearNdCoordinateSpace
+		
+			translate(long[] dims, boolean[] currOriginInfo, boolean[] futureOriginInfo, LinearNdCoordinateSpace origSpace)
+	{
+		if (dims.length != currOriginInfo.length ||
+				dims.length != futureOriginInfo.length ||
+				dims.length != origSpace.numDimensions())
+			throw new IllegalArgumentException("shift() has arguments of mismatching dimensionality");
+		
+		BigDecimal[] newOrigin = new BigDecimal[dims.length];
+		BigDecimal[] newSpacings = new BigDecimal[dims.length];
+		
+		for (int d = 0; d < dims.length; d++) {
+		
+			if (currOriginInfo[d] == futureOriginInfo[d]) {
+				
+				newOrigin[d] = origSpace.getOffset(d);
+				newSpacings[d] = origSpace.getScale(d);
+			}
+			else {
+
+				long maxD = dims[d] - 1;				
+				newOrigin[d] = origSpace.getOffset(d).add(origSpace.getScale(d).multiply(BigDecimal.valueOf(maxD)));
+				newSpacings[d] = origSpace.getScale(d).negate();
+			}
+		}
+		
+		return new	
+
+			LinearNdCoordinateSpace(newSpacings, newOrigin);
+	}
 }
