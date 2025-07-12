@@ -126,11 +126,24 @@ public class LinearNdCoordinateSpace
 	 * Translate a linear nd space to another one whose origin
 	 * is in a different corner of the data.
 	 * 
-	 * @param dims
-	 * @param currOriginInfo
-	 * @param futureOriginInfo
-	 * @param origSpace
-	 * @return
+	 * @param dims The dimensions of the data set associated
+	 * with the original coord space.
+	 * @param currOriginInfo An array of booleans describing 
+	 * the orientation of the current linear coord space's
+	 * origin. A value of true for a dimension says my origin
+	 * component is at the max point away from an all zero
+	 * origin. A value of false says I am at the min point of
+	 * the d'th component of the all zero origin.
+	 * @param futureOriginInfo An array of booleans describing 
+	 * the orientation of the translated linear coord space's
+	 * origin. A value of true for a dimension says my origin
+	 * component is at the max point away from an all zero
+	 * origin. A value of false says I am at the min point of
+	 * the d'th component of the all zero origin.
+	 * @param origSpace The base space anchored at the
+	 * currOriginInfo that we will translate to the
+	 * the futureOriginInfo.
+	 * @return A correctly transformed linear coord space.
 	 */
 	public static
 		
@@ -141,7 +154,7 @@ public class LinearNdCoordinateSpace
 		if (dims.length != currOriginInfo.length ||
 				dims.length != futureOriginInfo.length ||
 				dims.length != origSpace.numDimensions())
-			throw new IllegalArgumentException("shift() has arguments of mismatching dimensionality");
+			throw new IllegalArgumentException("LinearNdCoordinateSpace::translate() has arguments of mismatching dimensionality");
 		
 		BigDecimal[] newOrigin = new BigDecimal[dims.length];
 		BigDecimal[] newSpacings = new BigDecimal[dims.length];
