@@ -77,7 +77,7 @@ public class NanVariance {
 	 * @param <T>
 	 * @param <U>
 	 * @param alg
-	 * @param knownStdDev
+	 * @param knownNanStdDev
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Multiplication<U>, U>

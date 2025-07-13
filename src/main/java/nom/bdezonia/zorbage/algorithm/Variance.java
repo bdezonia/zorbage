@@ -77,7 +77,7 @@ public class Variance {
 	 * @param alg
 	 * @param source
 	 * @param knownMean
-	 * @param calcedVariance
+	 * @param result
 	 */
 	public static <T extends Algebra<T,U> &
 						Addition<U> &
