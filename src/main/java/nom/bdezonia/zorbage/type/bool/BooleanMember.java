@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
@@ -60,7 +61,8 @@ public final class BooleanMember
 		PrimitiveConversion, SetFromBooleans, GetAsBoolean,
 		GetAsBooleanArray, NativeBooleanSupport, SetFromBooleansExact,
 		GetAsBooleanExact, GetAsBooleanArrayExact,
-		GetAlgebra<BooleanAlgebra, BooleanMember>
+		GetAlgebra<BooleanAlgebra, BooleanMember>,
+		FixedSize
 {
 	private static final String ZERO = "0";
 	private static final String ONE = "1";

@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -80,7 +81,8 @@ public final class ComplexFloat32Member
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<ComplexFloat32Algebra, ComplexFloat32Member>
+		GetAlgebra<ComplexFloat32Algebra, ComplexFloat32Member>,
+		FixedSize
 {
 	private float r, i;
 	

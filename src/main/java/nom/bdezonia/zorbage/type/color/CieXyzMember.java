@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
@@ -71,7 +72,8 @@ public class CieXyzMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<CieXyzAlgebra, CieXyzMember>
+		GetAlgebra<CieXyzAlgebra, CieXyzMember>,
+		FixedSize
 {
 	private double x, y, z;
 	

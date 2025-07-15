@@ -69,6 +69,7 @@ import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
@@ -119,7 +120,8 @@ public class GaussianInt32Member
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<GaussianInt32Algebra, GaussianInt32Member>
+		GetAlgebra<GaussianInt32Algebra, GaussianInt32Member>,
+		FixedSize
 {
 	int r;
 	int i;

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.string;
 
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
 
@@ -47,7 +48,8 @@ public final class FixedStringMember
 		SetFromStrings, GetAsString, GetAsStringArray, SetFromChars,
 		GetAsStringExact, GetAsStringArrayExact,
 		GetAsCharArray, GetAsCharArrayExact,
-		GetAlgebra<FixedStringAlgebra, FixedStringMember>
+		GetAlgebra<FixedStringAlgebra, FixedStringMember>,
+		FixedSize
 {
 	private int[] codePoints;
 	

@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
@@ -99,7 +100,8 @@ public final class SignedInt16Member
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<SignedInt16Algebra, SignedInt16Member>
+		GetAlgebra<SignedInt16Algebra, SignedInt16Member>,
+		FixedSize
 {
 	short v;
 	

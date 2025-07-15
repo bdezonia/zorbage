@@ -68,6 +68,7 @@ import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.algebra.type.markers.VaryingSize;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
@@ -117,7 +118,8 @@ public class GaussianIntUnboundedMember
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>
+		GetAlgebra<GaussianIntUnboundedAlgebra, GaussianIntUnboundedMember>,
+		VaryingSize
 {
 	BigInteger r;
 	BigInteger i;

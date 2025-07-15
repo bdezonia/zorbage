@@ -35,6 +35,7 @@ import java.math.BigInteger;
 import java.math.MathContext;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.VaryingSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
@@ -90,7 +91,8 @@ public class RationalMember
 		GetAsBigDecimal,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<RationalAlgebra, RationalMember>
+		GetAlgebra<RationalAlgebra, RationalMember>,
+		VaryingSize
 {
 	// this is how many decimal places of accuracy the BigDecimal values will contain
 	private static final int PLACES = 24;

@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -101,7 +102,8 @@ public final class UnsignedInt7Member
 		GetAsBigDecimalExact,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<UnsignedInt7Algebra, UnsignedInt7Member>
+		GetAlgebra<UnsignedInt7Algebra, UnsignedInt7Member>,
+		FixedSize
 {
 	byte v;
 

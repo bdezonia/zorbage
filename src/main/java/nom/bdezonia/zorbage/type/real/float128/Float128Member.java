@@ -75,6 +75,7 @@ import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.SetReal;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -132,7 +133,8 @@ public final class Float128Member
 		GetAsBigDecimal,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<Float128Algebra, Float128Member>
+		GetAlgebra<Float128Algebra, Float128Member>,
+		FixedSize
 {
 	BigDecimal num;
 	byte classification;

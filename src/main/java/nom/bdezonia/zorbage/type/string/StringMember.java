@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.string;
 
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.VaryingSize;
 
 /**
  * 
@@ -46,7 +47,8 @@ public final class StringMember
 		SetFromStringsExact, SetFromChars, SetFromCharsExact,
 		GetAsCharArray, GetAsCharArrayExact,
 		GetAsStringExact, GetAsStringArrayExact,
-		GetAlgebra<StringAlgebra, StringMember>
+		GetAlgebra<StringAlgebra, StringMember>,
+		VaryingSize
 {
 	private String v;
 	

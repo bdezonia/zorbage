@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -84,7 +85,8 @@ public final class QuaternionHighPrecisionMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember>
+		GetAlgebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember>,
+		FixedSize
 {
 	private BigDecimal r, i, j, k;
 	

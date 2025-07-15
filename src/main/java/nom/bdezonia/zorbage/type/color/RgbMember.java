@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -72,7 +73,8 @@ public class RgbMember
 		GetAsBigIntegerArrayExact,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<RgbAlgebra, RgbMember>
+		GetAlgebra<RgbAlgebra, RgbMember>,
+		FixedSize
 {
 	private byte r, g, b;
 	

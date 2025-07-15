@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.ShortCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -79,7 +80,8 @@ public final class ComplexFloat16Member
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<ComplexFloat16Algebra, ComplexFloat16Member>
+		GetAlgebra<ComplexFloat16Algebra, ComplexFloat16Member>,
+		FixedSize
 {
 	private static final short ZERO = Float16Util.convertFloatToHFloat(0);
 	

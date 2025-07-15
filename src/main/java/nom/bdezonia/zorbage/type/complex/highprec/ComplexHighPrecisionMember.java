@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.VaryingSize;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -83,7 +84,8 @@ public final class ComplexHighPrecisionMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember>
+		GetAlgebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember>,
+		VaryingSize
 {
 	private BigDecimal r, i;
 	
