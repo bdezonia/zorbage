@@ -54,8 +54,8 @@ public interface CompoundType {
 	// TODO: improve the type inference we support. Imagine we have
 	//   a vector of complex doubles. We should query the outer algebra
 	//   to see it is a composite type. And it is composed of the
-	//   CompoundType complex number. Use the outer algegra to somehow
-	//   get the inner algrebra of the compound type made of Float64s.
+	//   CompoundType complex number. Use the outer algebra to somehow
+	//   get the inner algebra of the compound type made of Float64s.
 	//   As it is defined now this is not really connected. Complex
 	//   numbers are not CompoundTypes of Float64s. We need more
 	//   expansive generics. Also note you could have a composite type
