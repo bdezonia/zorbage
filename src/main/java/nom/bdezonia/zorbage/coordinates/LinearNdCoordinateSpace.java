@@ -195,6 +195,6 @@ public class LinearNdCoordinateSpace
 	
 			translate(long[] dims, boolean[] currOriginInfo, LinearNdCoordinateSpace origSpace)
 	{
-		return translate(dims, currOriginInfo, new boolean[currOriginInfo.length], origSpace)
+		return translate(dims, currOriginInfo, new boolean[currOriginInfo.length], origSpace);
 	}
 }
