@@ -178,4 +178,23 @@ public class LinearNdCoordinateSpace
 
 			LinearNdCoordinateSpace(newSpacings, newOrigin);
 	}
+	
+	/**
+	 * Convert an arbitrary linear space to one with origins
+	 * at zero. This is the default convention of the zorbage
+	 * model space.
+	 * 
+	 * @param dims
+	 * @param currOriginInfo
+	 * @param origSpace
+	 * @return
+	 */
+	public static
+	
+		LinearNdCoordinateSpace
+	
+			translate(long[] dims, boolean[] currOriginInfo, LinearNdCoordinateSpace origSpace)
+	{
+		return translate(dims, currOriginInfo, new boolean[currOriginInfo.length], origSpace)
+	}
 }
