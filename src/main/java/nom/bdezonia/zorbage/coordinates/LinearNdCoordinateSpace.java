@@ -47,31 +47,48 @@ public class LinearNdCoordinateSpace
 	private final BigDecimal[] scales;
 	private final BigDecimal[] offsets;
 	private MathContext context;
-	
+
+	/**
+	 * Create a n-dimensional linear coord space.
+	 * @param scales Think of these as "cell spacings". There is one per dimension.
+	 * @param offsets Think of these as the origin of the coord space. There is one per dimension.
+	 */
 	public LinearNdCoordinateSpace(BigDecimal[] scales, BigDecimal[] offsets) {
+		
 		if (scales.length != offsets.length)
 			throw new IllegalArgumentException("inconsistent definition of a linear coord system");
+		
 		this.scales = new BigDecimal[scales.length];
+		
 		this.offsets = new BigDecimal[offsets.length];
+		
 		for (int i = 0; i < scales.length; i++) {
+		
 			this.scales[i] = BigDecimalUtils.value(scales[i]);
+			
 			this.offsets[i] = BigDecimalUtils.value(offsets[i]);
 		}
-		this.context = new MathContext(20);
+		
+		// this is pretty accurate: is it super slow for calculations? think of calcing coord readouts.
+		
+		this.context = new MathContext(20);  // more accurate than a double
 	}
 
 	@Override
 	public int numDimensions() {
+
 		return scales.length;
 	}
 
 	@Override
 	public BigDecimal project(long[] coord, int axis) {
+		
 		return BigDecimal.valueOf(coord[axis]).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
 	@Override
 	public BigDecimal project(IntegerIndex coord, int axis) {
+		
 		return BigDecimal.valueOf(coord.get(axis)).multiply(scales[axis], context).add(offsets[axis], context);
 	}
 
@@ -93,14 +110,17 @@ public class LinearNdCoordinateSpace
 
 	@Override
 	public void setPrecision(int precision) {
+		
 		this.context = new MathContext(precision);
 	}
 
 	public BigDecimal getScale(int axis) {
+		
 		return scales[axis];
 	}
 
 	public BigDecimal getOffset(int axis) {
+		
 		return offsets[axis];
 	}
 	
@@ -111,8 +131,10 @@ public class LinearNdCoordinateSpace
 		
 		BigDecimal[] scales = new BigDecimal[numDimensions()-1];
 		BigDecimal[] offsets = new BigDecimal[numDimensions()-1];
+		
 		int count = 0;
 		for (int i = 0; i < numDimensions(); i++) {
+		
 			if (i == coordToDrop) continue;
 			scales[count] = getScale(i);
 			offsets[count] = getOffset(i);
@@ -123,7 +145,7 @@ public class LinearNdCoordinateSpace
 	}
 
 	/**
-	 * Translate a linear nd space to another one whose origin
+	 * Translate a linear n-d space to another one whose origin
 	 * is in a different corner of the data.
 	 * 
 	 * @param dims The dimensions of the data set associated
@@ -180,13 +202,13 @@ public class LinearNdCoordinateSpace
 	}
 	
 	/**
-	 * Convert an arbitrary linear space to one with origins
-	 * at zero. This is the default convention of the zorbage
-	 * model space.
+	 * Convert a linear space with an arbitrary origin convention to one
+	 * with the coord space (not model space) at (0,0,...). This is the
+	 * default convention of the zorbage world.
 	 * 
-	 * @param dims
-	 * @param currOriginInfo
-	 * @param origSpace
+	 * @param dims The dimensions of the data that uses given coord space.
+	 * @param currOriginInfo A set of booleans where true implies that coord axis is not located at 0.
+	 * @param origSpace The given coord space with the arbitrary origin.
 	 * @return
 	 */
 	public static
