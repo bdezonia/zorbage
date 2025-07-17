@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.NativeDoubleSupport;
+import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
 import nom.bdezonia.zorbage.algebra.type.markers.RealType;
 import nom.bdezonia.zorbage.type.integer.int11.UnsignedInt11Member;
 import nom.bdezonia.zorbage.type.integer.int4.SignedInt4Member;
@@ -186,7 +187,7 @@ class Algebras {
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
 		void test3()
 	{
-		List<Algebra<T,U>> algs = G.ALGEBRAS.findCompatibleTypedAlgebras(new Class<?>[] {Addition.class}, new Class<?>[] {RealType.class, NativeDoubleSupport.class, PrimitiveConversion.class});
+		List<Algebra<T,U>> algs = G.ALGEBRAS.findCompatibleTypedAlgebras(new Class<?>[] {Addition.class, RealType.class, NativeDoubleSupport.class, PrimitiveConversion.class}, new Class<?>[] {FixedSize.class});
 
 		for (Algebra<T,U> alg : algs) {
 
