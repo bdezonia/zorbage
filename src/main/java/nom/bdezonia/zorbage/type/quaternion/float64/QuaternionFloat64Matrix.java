@@ -33,14 +33,6 @@ package nom.bdezonia.zorbage.type.quaternion.float64;
 import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
 import nom.bdezonia.zorbage.algorithm.FillNaN;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
@@ -120,15 +112,7 @@ public class QuaternionFloat64Matrix
 		ScaleByOneHalf<QuaternionFloat64MatrixMember>,
 		ScaleByTwo<QuaternionFloat64MatrixMember>,
 		Tolerance<Float64Member,QuaternionFloat64MatrixMember>,
-		ArrayLikeMethods<QuaternionFloat64MatrixMember,QuaternionFloat64Member>,
-		ApproximateType,
-		CompositeType,
-		InfinityIncludedType,
-		MatrixType,
-		NanIncludedType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ArrayLikeMethods<QuaternionFloat64MatrixMember,QuaternionFloat64Member>
 {
 	@Override
 	public String typeDescription() {

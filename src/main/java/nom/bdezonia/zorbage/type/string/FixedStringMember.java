@@ -32,7 +32,10 @@ package nom.bdezonia.zorbage.type.string;
 
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
 import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
+import nom.bdezonia.zorbage.algebra.type.markers.StringType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.storage.coder.IntCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
 
@@ -49,7 +52,10 @@ public final class FixedStringMember
 		GetAsStringExact, GetAsStringArrayExact,
 		GetAsCharArray, GetAsCharArrayExact,
 		GetAlgebra<FixedStringAlgebra, FixedStringMember>,
-		FixedSize
+		ExactType,
+		FixedSize,
+		StringType,
+		ZeroIncludedType
 {
 	private int[] codePoints;
 	

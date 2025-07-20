@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.tuple;
 
 import nom.bdezonia.zorbage.accessor.AccessorA;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -41,7 +42,7 @@ import nom.bdezonia.zorbage.misc.Hasher;
  */
 public class Tuple1<A>
 	implements
-		AccessorA<A>
+		AccessorA<A>, CompoundType
 {
 	
 	private A a;

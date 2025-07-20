@@ -34,7 +34,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ColorType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
 import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -73,7 +78,12 @@ public class ArgbMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		GetAlgebra<ArgbAlgebra, ArgbMember>,
-		FixedSize
+		ColorType,
+		CompoundType,
+		EnumerableType,
+		ExactType,
+		FixedSize,
+		ZeroIncludedType
 {
 	private byte a, r, g, b;
 	

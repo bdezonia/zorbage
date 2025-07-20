@@ -46,15 +46,6 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -117,16 +108,7 @@ public class ComplexFloat32Algebra
 		ConstructibleFromBigDecimals<ComplexFloat32Member>,
 		ExactlyConstructibleFromBytes<ComplexFloat32Member>,
 		ExactlyConstructibleFromShorts<ComplexFloat32Member>,
-		ExactlyConstructibleFromFloats<ComplexFloat32Member>,
-		ApproximateType,
-		CompoundType,
-		InfinityIncludedType,
-		NanIncludedType,
-		NumberType,
-		ComplexType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromFloats<ComplexFloat32Member>
 {
 	private static final ComplexFloat32Member ONE = new ComplexFloat32Member(1,0);
 	private static final ComplexFloat32Member TWO = new ComplexFloat32Member(2,0);

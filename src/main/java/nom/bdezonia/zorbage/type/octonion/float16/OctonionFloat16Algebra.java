@@ -35,15 +35,6 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.OctonionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -107,16 +98,7 @@ public class OctonionFloat16Algebra
 		ConstructibleFromDoubles<OctonionFloat16Member>,
 		ConstructibleFromBigIntegers<OctonionFloat16Member>,
 		ConstructibleFromBigDecimals<OctonionFloat16Member>,
-		ExactlyConstructibleFromBytes<OctonionFloat16Member>,
-		ApproximateType,
-		CompoundType,
-		InfinityIncludedType,
-		NanIncludedType,
-		NumberType,
-		OctonionType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromBytes<OctonionFloat16Member>
 {
 	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member(0, 0, 0, 0, 0, 0, 0, 0);
 	private static final OctonionFloat16Member ONE_THIRD = new OctonionFloat16Member((float)1.0/3, 0, 0, 0, 0, 0, 0, 0);

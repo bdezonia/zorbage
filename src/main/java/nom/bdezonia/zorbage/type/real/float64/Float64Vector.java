@@ -35,13 +35,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.RModuleType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
@@ -110,14 +103,7 @@ public class Float64Vector
 		ExactlyConstructibleFromShorts<Float64VectorMember>,
 		ExactlyConstructibleFromInts<Float64VectorMember>,
 		ExactlyConstructibleFromFloats<Float64VectorMember>,
-		ExactlyConstructibleFromDoubles<Float64VectorMember>,
-		ApproximateType,
-		CompositeType,
-		InfinityIncludedType,
-		NanIncludedType,
-		RModuleType,
-		SignedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromDoubles<Float64VectorMember>
 {
 	@Override
 	public String typeDescription() {

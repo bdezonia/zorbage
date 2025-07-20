@@ -81,15 +81,6 @@ import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
 import nom.bdezonia.zorbage.algebra.Trigonometric;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.RealType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -164,16 +155,7 @@ public class Float128Algebra
 		ExactlyConstructibleFromInts<Float128Member>,
 		ExactlyConstructibleFromLongs<Float128Member>,
 		ExactlyConstructibleFromFloats<Float128Member>,
-		ExactlyConstructibleFromDoubles<Float128Member>,
-		ApproximateType,
-		BoundedType,
-		InfinityIncludedType,
-		NanIncludedType,
-		NumberType,
-		RealType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromDoubles<Float128Member>
 {
 	public static final MathContext CONTEXT = new MathContext(38);
 

@@ -88,7 +88,7 @@ public class TestAlgebraLibrary {
 		
 		List<Algebra<?,?>> algs;
 		
-		algs = G.ALGEBRAS.findCompatibleAlgebras(ComplexType.class);
+		algs = G.ALGEBRAS.findAlgebras(ComplexType.class);
 		
 		assertEquals(10, algs.size());
 		
@@ -106,11 +106,14 @@ public class TestAlgebraLibrary {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void test2() {
 		
 		List<Algebra<?,?>> algs;
+
+		// TODO: why do I need this nasty cast?
 		
-		algs = G.ALGEBRAS.findCompatibleAlgebras(SignedType.class, IntegerType.class);
+		algs = (List<Algebra<?,?>>) (List<?>) G.ALGEBRAS.findAlgebras(new Class<?>[] {}, new Class<?>[] {SignedType.class, IntegerType.class});
 		
 		assertTrue(algs.size() == 20);
 		
@@ -141,7 +144,7 @@ public class TestAlgebraLibrary {
 		
 		List<Algebra<?,?>> algs;
 		
-		algs = G.ALGEBRAS.findCompatibleAlgebras(ColorType.class);
+		algs = G.ALGEBRAS.findAlgebras(ColorType.class);
 		
 		assertFalse(algs.contains(FRED));
 		
@@ -149,7 +152,7 @@ public class TestAlgebraLibrary {
 
 		G.ALGEBRAS.registerAlgebra(FRED);
 		
-		algs = G.ALGEBRAS.findCompatibleAlgebras(ColorType.class);
+		algs = G.ALGEBRAS.findAlgebras(ColorType.class);
 		
 		assertEquals(count+1, algs.size());
 

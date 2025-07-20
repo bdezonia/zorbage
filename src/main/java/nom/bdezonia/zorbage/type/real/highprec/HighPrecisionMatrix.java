@@ -31,12 +31,6 @@
 package nom.bdezonia.zorbage.type.real.highprec;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.MatrixAddition;
 import nom.bdezonia.zorbage.algorithm.MatrixAssign;
 import nom.bdezonia.zorbage.algorithm.MatrixConstantDiagonal;
@@ -104,13 +98,7 @@ public class HighPrecisionMatrix
 		ScaleByOneHalf<HighPrecisionMatrixMember>,
 		ScaleByTwo<HighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,HighPrecisionMatrixMember>,
-		ArrayLikeMethods<HighPrecisionMatrixMember,HighPrecisionMember>,
-		CompositeType,
-		ExactType,
-		MatrixType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ArrayLikeMethods<HighPrecisionMatrixMember,HighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {

@@ -35,15 +35,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.QuaternionType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.QuaternionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -109,16 +100,7 @@ public class QuaternionFloat128Algebra
 		ExactlyConstructibleFromInts<QuaternionFloat128Member>,
 		ExactlyConstructibleFromLongs<QuaternionFloat128Member>,
 		ExactlyConstructibleFromFloats<QuaternionFloat128Member>,
-		ExactlyConstructibleFromDoubles<QuaternionFloat128Member>,
-		ApproximateType,
-		CompoundType,
-		InfinityIncludedType,
-		NanIncludedType,
-		NumberType,
-		QuaternionType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromDoubles<QuaternionFloat128Member>
 {
 	private static final QuaternionFloat128Member ZERO = new QuaternionFloat128Member();
 	private static final QuaternionFloat128Member ONE_THIRD = new QuaternionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO);

@@ -35,6 +35,11 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.RModuleType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.RModuleReshape;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -87,7 +92,12 @@ public final class OctonionHighPrecisionRModuleMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<OctonionHighPrecisionRModule, OctonionHighPrecisionRModuleMember>
+		GetAlgebra<OctonionHighPrecisionRModule, OctonionHighPrecisionRModuleMember>,
+		CompositeType,
+		ExactType,
+		RModuleType,
+		SignedType,
+		ZeroIncludedType
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember(); 
 

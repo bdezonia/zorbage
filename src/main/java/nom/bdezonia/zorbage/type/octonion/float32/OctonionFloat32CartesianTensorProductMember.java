@@ -68,6 +68,14 @@ import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algebra.ThreadAccess;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.TensorType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.IndexUtils;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
@@ -120,7 +128,15 @@ public final class OctonionFloat32CartesianTensorProductMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<OctonionFloat32CartesianTensorProduct, OctonionFloat32CartesianTensorProductMember>
+		GetAlgebra<OctonionFloat32CartesianTensorProduct, OctonionFloat32CartesianTensorProductMember>,
+		ApproximateType,
+		CompositeType,
+		InfinityIncludedType,
+		NanIncludedType,
+		SignedType,
+		TensorType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member();
 

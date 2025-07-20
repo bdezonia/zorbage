@@ -34,7 +34,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.BooleanType;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
 import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnsignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
@@ -62,7 +69,14 @@ public final class BooleanMember
 		GetAsBooleanArray, NativeBooleanSupport, SetFromBooleansExact,
 		GetAsBooleanExact, GetAsBooleanArrayExact,
 		GetAlgebra<BooleanAlgebra, BooleanMember>,
-		FixedSize
+		BooleanType,
+		BoundedType,
+		EnumerableType,
+		ExactType,
+		FixedSize,
+		UnityIncludedType,
+		UnsignedType,
+		ZeroIncludedType
 {
 	private static final String ZERO = "0";
 	private static final String ONE = "1";

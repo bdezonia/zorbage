@@ -47,7 +47,6 @@ import nom.bdezonia.zorbage.algebra.Infinite;
 import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.NegInfinite;
 import nom.bdezonia.zorbage.algebra.Tolerance;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -74,8 +73,7 @@ public class PolygonalChainAlgebra
 		ConstructibleFromFloats<PolygonalChainMember>,
 		ConstructibleFromDoubles<PolygonalChainMember>,
 		ConstructibleFromBigIntegers<PolygonalChainMember>,
-		ConstructibleFromBigDecimals<PolygonalChainMember>,
-		CompositeType
+		ConstructibleFromBigDecimals<PolygonalChainMember>
 {
 	private static final float ZERO_TOL = 0.00000001f;
 	

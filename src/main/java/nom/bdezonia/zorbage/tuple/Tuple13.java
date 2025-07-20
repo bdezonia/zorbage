@@ -43,6 +43,7 @@ import nom.bdezonia.zorbage.accessor.AccessorJ;
 import nom.bdezonia.zorbage.accessor.AccessorK;
 import nom.bdezonia.zorbage.accessor.AccessorL;
 import nom.bdezonia.zorbage.accessor.AccessorM;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -66,7 +67,8 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class Tuple13<A,B,C,D,E,F,G,H,I,J,K,L,M>
 	implements
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
-		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>
+		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>,
+		CompoundType
 {
 	
 	private A a;

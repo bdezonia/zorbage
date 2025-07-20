@@ -36,6 +36,11 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.PointType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.storage.coder.DoubleCoder;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -74,7 +79,12 @@ public class Point
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<PointAlgebra, Point>
+		GetAlgebra<PointAlgebra, Point>,
+		ApproximateType,
+		BoundedType,
+		CompositeType,
+		PointType,
+		ZeroIncludedType
 {
 	private double[] vector;
 	

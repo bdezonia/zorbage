@@ -62,14 +62,6 @@ import nom.bdezonia.zorbage.algebra.ScaleByOneHalf;
 import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.Tolerance;
-import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.EuclideanGcd;
 import nom.bdezonia.zorbage.algorithm.EuclideanLcm;
 import nom.bdezonia.zorbage.algorithm.PowerNonNegative;
@@ -119,15 +111,7 @@ public class GaussianInt64Algebra
 		ExactlyConstructibleFromBytes<GaussianInt64Member>,
 		ExactlyConstructibleFromShorts<GaussianInt64Member>,
 		ExactlyConstructibleFromInts<GaussianInt64Member>,
-		ExactlyConstructibleFromLongs<GaussianInt64Member>,
-		ComplexType,
-		CompoundType,
-		EnumerableType,
-		ExactType,
-		NumberType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromLongs<GaussianInt64Member>
 {
 	@Override
 	public String typeDescription() {

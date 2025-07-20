@@ -34,15 +34,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.OctonionNumberWithin;
 import nom.bdezonia.zorbage.algorithm.Round;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
@@ -112,16 +103,7 @@ public class OctonionFloat128Algebra
 		ExactlyConstructibleFromInts<OctonionFloat128Member>,
 		ExactlyConstructibleFromLongs<OctonionFloat128Member>,
 		ExactlyConstructibleFromFloats<OctonionFloat128Member>,
-		ExactlyConstructibleFromDoubles<OctonionFloat128Member>,
-		ApproximateType,
-		CompoundType,
-		InfinityIncludedType,
-		NanIncludedType,
-		NumberType,
-		OctonionType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromDoubles<OctonionFloat128Member>
 {
 	private static final OctonionFloat128Member ZERO = new OctonionFloat128Member();
 	private static final OctonionFloat128Member ONE_THIRD = new OctonionFloat128Member(BigDecimal.ONE.divide(BigDecimal.valueOf(3), Float128Algebra.CONTEXT), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);

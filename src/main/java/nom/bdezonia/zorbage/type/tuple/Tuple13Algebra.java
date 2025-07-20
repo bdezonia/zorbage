@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple13;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 
 /**
  * 
@@ -58,8 +57,7 @@ public class Tuple13Algebra<AA extends Algebra<AA,A>, A,
 							MM extends Algebra<MM,M>, M>
 	implements
 	
-		Algebra<Tuple13Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M>, Tuple13<A,B,C,D,E,F,G,H,I,J,K,L,M>>,
-		CompoundType
+		Algebra<Tuple13Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M>, Tuple13<A,B,C,D,E,F,G,H,I,J,K,L,M>>
 {
 	private final AA algA;
 	private final BB algB;

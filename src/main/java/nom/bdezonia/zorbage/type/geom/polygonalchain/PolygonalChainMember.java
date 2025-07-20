@@ -63,6 +63,7 @@ import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
@@ -97,7 +98,8 @@ public class PolygonalChainMember
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
-		GetAlgebra<PolygonalChainAlgebra, PolygonalChainMember>
+		GetAlgebra<PolygonalChainAlgebra, PolygonalChainMember>,
+		CompositeType
 {
 	float boundsValid;
 	float minx, miny, minz, maxx, maxy, maxz;

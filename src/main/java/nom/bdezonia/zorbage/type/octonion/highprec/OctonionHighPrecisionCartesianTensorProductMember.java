@@ -71,6 +71,12 @@ import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algebra.ThreadAccess;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
 import nom.bdezonia.zorbage.data.IndexUtils;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
@@ -126,7 +132,13 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<OctonionHighPrecisionCartesianTensorProduct, OctonionHighPrecisionCartesianTensorProductMember>
+		GetAlgebra<OctonionHighPrecisionCartesianTensorProduct, OctonionHighPrecisionCartesianTensorProductMember>,
+		CompositeType,
+		ExactType,
+		OctonionType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
 

@@ -35,11 +35,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.RModuleType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.CrossProduct;
 import nom.bdezonia.zorbage.algorithm.DotProduct;
 import nom.bdezonia.zorbage.algorithm.PerpDotProduct;
@@ -102,12 +97,7 @@ public class HighPrecisionVector
 		ExactlyConstructibleFromLongs<HighPrecisionVectorMember>,
 		ExactlyConstructibleFromInts<HighPrecisionVectorMember>,
 		ExactlyConstructibleFromShorts<HighPrecisionVectorMember>,
-		ExactlyConstructibleFromBytes<HighPrecisionVectorMember>,
-		CompositeType,
-		ExactType,
-		RModuleType,
-		SignedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromBytes<HighPrecisionVectorMember>
 {
 	@Override
 	public String typeDescription() {

@@ -32,7 +32,10 @@ package nom.bdezonia.zorbage.type.string;
 
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.StringType;
 import nom.bdezonia.zorbage.algebra.type.markers.VaryingSize;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 
 /**
  * 
@@ -48,7 +51,10 @@ public final class StringMember
 		GetAsCharArray, GetAsCharArrayExact,
 		GetAsStringExact, GetAsStringArrayExact,
 		GetAlgebra<StringAlgebra, StringMember>,
-		VaryingSize
+		ExactType,
+		StringType,
+		VaryingSize,
+		ZeroIncludedType
 {
 	private String v;
 	

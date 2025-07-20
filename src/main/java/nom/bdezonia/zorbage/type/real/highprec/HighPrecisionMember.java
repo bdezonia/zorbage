@@ -34,7 +34,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.RealType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
 import nom.bdezonia.zorbage.algebra.type.markers.VaryingSize;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.type.universal.OctonionRepresentation;
@@ -94,7 +100,13 @@ public final class HighPrecisionMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		GetAlgebra<HighPrecisionAlgebra, HighPrecisionMember>,
-		VaryingSize
+		ExactType,
+		NumberType,
+		RealType,
+		SignedType,
+		UnityIncludedType,
+		VaryingSize,
+		ZeroIncludedType
 {
 	private BigDecimal v;
 	

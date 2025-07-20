@@ -34,7 +34,16 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
+import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.coder.FloatCoder;
 import nom.bdezonia.zorbage.misc.Hasher;
@@ -83,7 +92,16 @@ public final class OctonionFloat32Member
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		GetAlgebra<OctonionFloat32Algebra, OctonionFloat32Member>,
-		FixedSize
+		ApproximateType,
+		CompoundType,
+		FixedSize,
+		InfinityIncludedType,
+		NanIncludedType,
+		NumberType,
+		OctonionType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private float r, i, j, k, l, i0, j0, k0;
 	

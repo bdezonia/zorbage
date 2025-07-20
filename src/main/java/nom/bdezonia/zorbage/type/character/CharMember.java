@@ -48,7 +48,12 @@ import nom.bdezonia.zorbage.algebra.SetFromChars;
 import nom.bdezonia.zorbage.algebra.SetFromCharsExact;
 import nom.bdezonia.zorbage.algebra.SetFromStrings;
 import nom.bdezonia.zorbage.algebra.Settable;
+import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
+import nom.bdezonia.zorbage.algebra.type.markers.CharType;
+import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
 import nom.bdezonia.zorbage.algebra.type.markers.FixedSize;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.storage.coder.CharCoder;
 
@@ -67,7 +72,12 @@ public class CharMember
 		GetAsStringExact, GetAsStringArrayExact,
 		SetFromStrings,
 		GetAlgebra<CharAlgebra, CharMember>,
-		FixedSize
+		BoundedType,
+		CharType,
+		EnumerableType,
+		ExactType,
+		FixedSize,
+		ZeroIncludedType
 {
 	private char v;
 	

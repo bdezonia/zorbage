@@ -44,6 +44,7 @@ import nom.bdezonia.zorbage.accessor.AccessorK;
 import nom.bdezonia.zorbage.accessor.AccessorL;
 import nom.bdezonia.zorbage.accessor.AccessorM;
 import nom.bdezonia.zorbage.accessor.AccessorN;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -68,7 +69,8 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class Tuple14<A,B,C,D,E,F,G,H,I,J,K,L,M,N>
 	implements
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
-		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>, AccessorN<N>
+		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>, AccessorN<N>,
+		CompoundType
 {
 	
 	private A a;

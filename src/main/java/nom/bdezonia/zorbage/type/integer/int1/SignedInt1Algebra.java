@@ -35,13 +35,6 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
-import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.IntegerType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
@@ -80,14 +73,7 @@ public class SignedInt1Algebra
 		ConstructibleFromDoubles<SignedInt1Member>,
 		ConstructibleFromBigIntegers<SignedInt1Member>,
 		ConstructibleFromBigDecimals<SignedInt1Member>,
-		Conjugate<SignedInt1Member>,
-		BoundedType,
-		EnumerableType,
-		ExactType,
-		IntegerType,
-		NumberType,
-		SignedType,
-		ZeroIncludedType
+		Conjugate<SignedInt1Member>
 {
 	@Override
 	public String typeDescription() {

@@ -47,6 +47,7 @@ import nom.bdezonia.zorbage.accessor.AccessorN;
 import nom.bdezonia.zorbage.accessor.AccessorO;
 import nom.bdezonia.zorbage.accessor.AccessorP;
 import nom.bdezonia.zorbage.accessor.AccessorQ;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -75,7 +76,8 @@ public class Tuple17<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q>
 	implements
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
 		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>, AccessorN<N>,
-		AccessorO<O>, AccessorP<P>, AccessorQ<Q>
+		AccessorO<O>, AccessorP<P>, AccessorQ<Q>,
+		CompoundType
 {
 	
 	private A a;

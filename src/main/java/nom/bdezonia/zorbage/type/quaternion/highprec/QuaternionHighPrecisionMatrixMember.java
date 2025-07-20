@@ -35,6 +35,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import nom.bdezonia.zorbage.algebra.*;
+import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
+import nom.bdezonia.zorbage.algebra.type.markers.MatrixType;
+import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.MatrixReshape;
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
@@ -87,7 +93,13 @@ public final class QuaternionHighPrecisionMatrixMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<QuaternionHighPrecisionMatrix, QuaternionHighPrecisionMatrixMember>
+		GetAlgebra<QuaternionHighPrecisionMatrix, QuaternionHighPrecisionMatrixMember>,
+		CompositeType,
+		ExactType,
+		MatrixType,
+		SignedType,
+		UnityIncludedType,
+		ZeroIncludedType
 {
 	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 

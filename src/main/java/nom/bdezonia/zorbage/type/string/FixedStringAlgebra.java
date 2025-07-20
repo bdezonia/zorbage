@@ -39,9 +39,6 @@ import nom.bdezonia.zorbage.algebra.ConstructibleFromChars;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromStrings;
 import nom.bdezonia.zorbage.algebra.Norm;
 import nom.bdezonia.zorbage.algebra.Ordered;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.StringType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.function.Function2;
 import nom.bdezonia.zorbage.function.Function3;
@@ -65,10 +62,7 @@ public class FixedStringAlgebra
 		Norm<FixedStringMember, SignedInt32Member>,
 		Ordered<FixedStringMember>,
 		ConstructibleFromStrings<FixedStringMember>,
-		ConstructibleFromChars<FixedStringMember>,
-		ExactType,
-		StringType,
-		ZeroIncludedType
+		ConstructibleFromChars<FixedStringMember>
 {
 	@Override
 	public String typeDescription() {

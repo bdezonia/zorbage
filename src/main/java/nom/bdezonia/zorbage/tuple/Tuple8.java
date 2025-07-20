@@ -38,6 +38,7 @@ import nom.bdezonia.zorbage.accessor.AccessorE;
 import nom.bdezonia.zorbage.accessor.AccessorF;
 import nom.bdezonia.zorbage.accessor.AccessorG;
 import nom.bdezonia.zorbage.accessor.AccessorH;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -56,7 +57,8 @@ import nom.bdezonia.zorbage.misc.Hasher;
 public class Tuple8<A,B,C,D,E,F,G,H>
 	implements
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
-		AccessorH<H>
+		AccessorH<H>,
+		CompoundType
 {
 	
 	private A a;

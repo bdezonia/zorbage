@@ -210,7 +210,7 @@ public class AlgebraLibrary {
 	 * 
 	 * @return A List of Algebras that satisfy the user passed constraints.
 	 */
-	public List<Algebra<?,?>> findCompatibleAlgebras(Class<?> ... interfaces) {
+	public List<Algebra<?,?>> findAlgebras(Class<?> ... algebraInterfaces) {
 		
 		List<Algebra<?,?>> candidates = new LinkedList<>();
 		
@@ -218,7 +218,7 @@ public class AlgebraLibrary {
 
 			boolean implementsAll = true;
 			
-			for (Class<?> iface : interfaces) {
+			for (Class<?> iface : algebraInterfaces) {
 				
 				if (!iface.isAssignableFrom(alg.getClass())) {
 					
@@ -247,9 +247,9 @@ public class AlgebraLibrary {
 	 */
 	public <T extends Algebra<T,U>, U>
 	
-		List<Algebra<T,U>> findCompatibleTypedAlgebras(Class<?>[] algebraInterfaces, Class<?>[] typeInterfaces)
+		List<Algebra<T,U>> findAlgebras(Class<?>[] algebraInterfaces, Class<?>[] typeInterfaces)
 	{
-		List<Algebra<?,?>> earlyCandidates = findCompatibleAlgebras(algebraInterfaces);
+		List<Algebra<?,?>> earlyCandidates = findAlgebras(algebraInterfaces);
 		
 		List<Algebra<T,U>> lateCandidates = new LinkedList<>();
 

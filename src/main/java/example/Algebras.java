@@ -187,7 +187,7 @@ class Algebras {
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
 		void test3()
 	{
-		List<Algebra<T,U>> algs = G.ALGEBRAS.findCompatibleTypedAlgebras(new Class<?>[] {Addition.class, RealType.class, NativeDoubleSupport.class, PrimitiveConversion.class}, new Class<?>[] {FixedSize.class});
+		List<Algebra<T,U>> algs = G.ALGEBRAS.findAlgebras(new Class<?>[] {Addition.class}, new Class<?>[] {FixedSize.class, NativeDoubleSupport.class, PrimitiveConversion.class, RealType.class});
 
 		for (Algebra<T,U> alg : algs) {
 
@@ -197,8 +197,8 @@ class Algebras {
 					
 				(PrimitiveConversion) type;
 
-			if (metadata.componentCount() == 1)
-			{
+			if (metadata.componentCount() == 1) {
+				
 				U num1 = alg.construct("44.32");
 				U num2 = alg.construct();
 				

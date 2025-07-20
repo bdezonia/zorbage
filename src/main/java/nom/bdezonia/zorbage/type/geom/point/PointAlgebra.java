@@ -65,11 +65,6 @@ import nom.bdezonia.zorbage.algebra.ScaleByRational;
 import nom.bdezonia.zorbage.algebra.ScaleByTwo;
 import nom.bdezonia.zorbage.algebra.ScaleComponents;
 import nom.bdezonia.zorbage.algebra.Tolerance;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.PointType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
@@ -102,12 +97,7 @@ public class PointAlgebra
 		ConstructibleFromDoubles<Point>,
 		ConstructibleFromBigIntegers<Point>,
 		ConstructibleFromBigDecimals<Point>,
-		ExactlyConstructibleFromDoubles<Point>,
-		ApproximateType,
-		BoundedType,
-		CompositeType,
-		PointType,
-		ZeroIncludedType
+		ExactlyConstructibleFromDoubles<Point>
 {
 	private static final MathContext CONTEXT = new MathContext(18);
 	

@@ -33,14 +33,6 @@ package nom.bdezonia.zorbage.type.octonion.float128;
 import java.lang.Integer;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.TensorType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.algorithm.Copy;
 import nom.bdezonia.zorbage.algorithm.FillInfinite;
@@ -97,15 +89,7 @@ public class OctonionFloat128CartesianTensorProduct
 		ScaleByOneHalf<OctonionFloat128CartesianTensorProductMember>,
 		ScaleByTwo<OctonionFloat128CartesianTensorProductMember>,
 		Tolerance<Float128Member, OctonionFloat128CartesianTensorProductMember>,
-		ArrayLikeMethods<OctonionFloat128CartesianTensorProductMember, OctonionFloat128Member>,
-		ApproximateType,
-		CompositeType,
-		InfinityIncludedType,
-		NanIncludedType,
-		SignedType,
-		TensorType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ArrayLikeMethods<OctonionFloat128CartesianTensorProductMember, OctonionFloat128Member>
 {
 
 	@Override

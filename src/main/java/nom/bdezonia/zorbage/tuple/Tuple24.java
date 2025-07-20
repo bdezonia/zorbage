@@ -54,6 +54,7 @@ import nom.bdezonia.zorbage.accessor.AccessorU;
 import nom.bdezonia.zorbage.accessor.AccessorV;
 import nom.bdezonia.zorbage.accessor.AccessorW;
 import nom.bdezonia.zorbage.accessor.AccessorX;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -90,7 +91,8 @@ public class Tuple24<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X>
 		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>, AccessorF<F>, AccessorG<G>,
 		AccessorH<H>, AccessorI<I>, AccessorJ<J>, AccessorK<K>, AccessorL<L>, AccessorM<M>, AccessorN<N>,
 		AccessorO<O>, AccessorP<P>, AccessorQ<Q>, AccessorR<R>, AccessorS<S>, AccessorT<T>, AccessorU<U>,
-		AccessorV<V>, AccessorW<W>, AccessorX<X>
+		AccessorV<V>, AccessorW<W>, AccessorX<X>,
+		CompoundType
 {
 	
 	private A a;

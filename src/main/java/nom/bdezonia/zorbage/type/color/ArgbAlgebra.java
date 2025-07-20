@@ -52,11 +52,6 @@ import nom.bdezonia.zorbage.algebra.ConstructibleFromLongs;
 import nom.bdezonia.zorbage.algebra.ConstructibleFromShorts;
 import nom.bdezonia.zorbage.algebra.PredSucc;
 import nom.bdezonia.zorbage.algebra.Random;
-import nom.bdezonia.zorbage.algebra.type.markers.ColorType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.EnumerableType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 
 /**
  * 
@@ -74,12 +69,7 @@ public class ArgbAlgebra
 		ConstructibleFromFloats<ArgbMember>,
 		ConstructibleFromDoubles<ArgbMember>,
 		ConstructibleFromBigIntegers<ArgbMember>,
-		ConstructibleFromBigDecimals<ArgbMember>,
-		ColorType,
-		CompoundType,
-		EnumerableType,
-		ExactType,
-		ZeroIncludedType
+		ConstructibleFromBigDecimals<ArgbMember>
 {
 	@Override
 	public String typeDescription() {

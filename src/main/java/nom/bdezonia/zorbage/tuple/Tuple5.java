@@ -35,6 +35,7 @@ import nom.bdezonia.zorbage.accessor.AccessorB;
 import nom.bdezonia.zorbage.accessor.AccessorC;
 import nom.bdezonia.zorbage.accessor.AccessorD;
 import nom.bdezonia.zorbage.accessor.AccessorE;
+import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 import nom.bdezonia.zorbage.misc.Hasher;
 
 /**
@@ -49,7 +50,8 @@ import nom.bdezonia.zorbage.misc.Hasher;
  */
 public class Tuple5<A,B,C,D,E>
 	implements
-		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>
+		AccessorA<A>, AccessorB<B>, AccessorC<C>, AccessorD<D>, AccessorE<E>,
+		CompoundType
 {
 	
 	private A a;

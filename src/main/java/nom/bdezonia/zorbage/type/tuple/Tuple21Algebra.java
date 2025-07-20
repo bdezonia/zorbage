@@ -36,7 +36,6 @@ import nom.bdezonia.zorbage.procedure.Procedure1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.tuple.Tuple21;
 import nom.bdezonia.zorbage.algebra.Algebra;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
 
 /**
  * 
@@ -66,8 +65,7 @@ public class Tuple21Algebra<AA extends Algebra<AA,A>, A,
 							UU extends Algebra<UU,U>, U>
 	implements
 	
-		Algebra<Tuple21Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M,NN,N,OO,O,PP,P,QQ,Q,RR,R,SS,S,TT,T,UU,U>, Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U>>,
-		CompoundType
+		Algebra<Tuple21Algebra<AA,A,BB,B,CC,C,DD,D,EE,E,FF,F,GG,G,HH,H,II,I,JJ,J,KK,K,LL,L,MM,M,NN,N,OO,O,PP,P,QQ,Q,RR,R,SS,S,TT,T,UU,U>, Tuple21<A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U>>
 {
 	private final AA algA;
 	private final BB algB;

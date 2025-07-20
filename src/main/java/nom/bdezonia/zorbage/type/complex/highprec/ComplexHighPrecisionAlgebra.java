@@ -47,13 +47,6 @@ import java.math.MathContext;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
-import nom.bdezonia.zorbage.algebra.type.markers.CompoundType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.ComplexNumberWithin;
 import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.Sinc;
@@ -113,14 +106,7 @@ public class ComplexHighPrecisionAlgebra
 		ExactlyConstructibleFromFloats<ComplexHighPrecisionMember>,
 		ExactlyConstructibleFromDoubles<ComplexHighPrecisionMember>,
 		ExactlyConstructibleFromBigIntegers<ComplexHighPrecisionMember>,
-		ExactlyConstructibleFromBigDecimals<ComplexHighPrecisionMember>,
-		ComplexType,
-		CompoundType,
-		ExactType,
-		NumberType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromBigDecimals<ComplexHighPrecisionMember>
 {
 	private static final ComplexHighPrecisionMember ONE = new ComplexHighPrecisionMember(BigDecimal.ONE,BigDecimal.ZERO);
 	private static final ComplexHighPrecisionMember TWO = new ComplexHighPrecisionMember(BigDecimal.valueOf(2),BigDecimal.ZERO);

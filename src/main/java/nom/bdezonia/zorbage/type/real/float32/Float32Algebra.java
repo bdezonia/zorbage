@@ -36,15 +36,6 @@ import java.math.BigInteger;
 import java.util.concurrent.ThreadLocalRandom;
 
 import nom.bdezonia.zorbage.algebra.*;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
-import nom.bdezonia.zorbage.algebra.type.markers.BoundedType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NumberType;
-import nom.bdezonia.zorbage.algebra.type.markers.RealType;
-import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
-import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.Max;
 import nom.bdezonia.zorbage.algorithm.Min;
 import nom.bdezonia.zorbage.algorithm.NumberWithin;
@@ -113,16 +104,7 @@ public class Float32Algebra
 		ConstructibleFromBigDecimals<Float32Member>,
 		ExactlyConstructibleFromBytes<Float32Member>,
 		ExactlyConstructibleFromShorts<Float32Member>,
-		ExactlyConstructibleFromFloats<Float32Member>,
-		ApproximateType,
-		BoundedType,
-		InfinityIncludedType,
-		NanIncludedType,
-		NumberType,
-		RealType,
-		SignedType,
-		UnityIncludedType,
-		ZeroIncludedType
+		ExactlyConstructibleFromFloats<Float32Member>
 {
 	private static final Float32Member PI = new Float32Member((float)Math.PI);
 	private static final Float32Member E = new Float32Member((float)Math.E);
