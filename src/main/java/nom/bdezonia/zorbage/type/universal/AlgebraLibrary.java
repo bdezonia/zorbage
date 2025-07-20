@@ -206,86 +206,46 @@ public class AlgebraLibrary {
 	 * the multiple interfaces/classes passed as method parameters.
 	 * 
 	 * @param interfaces The collection of interfaces that we want
-	 *                   any found Algebra to implement.
+	 *                   any found Algebra or its type to implement.
 	 * 
 	 * @return A List of Algebras that satisfy the user passed constraints.
 	 */
-	
 	public <T extends Algebra<T,U>, U>
 	
-		List<Algebra<?,?>>
-	
-			findAlgebras(Class<?>[] algebraInterfaces)
+		List<Algebra<?,?>> findAlgebras(Class<?>... interfaces)
 	{
-		
 		List<Algebra<?,?>> candidates = new LinkedList<>();
-		
-		for (Algebra<?,?> alg : algebras) {
 
-			boolean implementsAll = true;
-			
-			for (Class<?> iface : algebraInterfaces) {
-				
-				if (!iface.isAssignableFrom(alg.getClass())) {
-					
-					implementsAll = false;
-					
-					break;
-				}
-			}
-			
-			if (implementsAll) {
-				
-				candidates.add(alg);
-			}
-		}
-		
-		return candidates;
-	}
-
-	/**
-	 * 
-	 * @param algebraInterfaces
-	 * @param typeInterfaces
-	 * @return
-	 */
-	public <T extends Algebra<T,U>, U>
-	
-		List<Algebra<?,?>> findAlgebras(Class<?>[] algebraInterfaces, Class<?>[] typeInterfaces)
-	{
-		List<Algebra<?,?>> earlyCandidates = findAlgebras(algebraInterfaces);
-		
-		List<Algebra<?,?>> lateCandidates = new LinkedList<>();
-
-		Iterator<Algebra<?,?>> iter = earlyCandidates.iterator();
+		Iterator<Algebra<?,?>> iter = algebras.iterator();
 		
 		while (iter.hasNext()) {
 
 			Algebra<?,?> theAlg = iter.next();
 			
+			boolean thisAlgIsLegit = true;
+			
 			@SuppressWarnings("unchecked")
 			T alg = (T) theAlg;
 			
 			U type = alg.construct();
-			
-			boolean implementsAll = true;
 
-			for (Class<?> iface : typeInterfaces) {
+			for (Class<?> iface : interfaces) {
 				
-				if (!iface.isAssignableFrom(type.getClass())) {
-					
-					implementsAll = false;
+				if (!iface.isAssignableFrom(alg.getClass()) &&
+					!iface.isAssignableFrom(type.getClass()))
+				{
+					thisAlgIsLegit = false;
 					
 					break;
 				}
 			}
 			
-			if (implementsAll) {
+			if (thisAlgIsLegit) {
 				
-				lateCandidates.add(alg);
+				candidates.add(theAlg);
 			}
 		}
 		
-		return lateCandidates;
+		return candidates;
 	}
 }

@@ -187,7 +187,7 @@ class Algebras {
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
 		void test3()
 	{
-		List<Algebra<?,?>> algs = G.ALGEBRAS.findAlgebras(new Class<?>[] {Addition.class}, new Class<?>[] {FixedSize.class, NativeDoubleSupport.class, PrimitiveConversion.class, RealType.class});
+		List<Algebra<?,?>> algs = G.ALGEBRAS.findAlgebras(Addition.class, RealType.class, FixedSize.class, NativeDoubleSupport.class, PrimitiveConversion.class);
 
 		for (Algebra<?,?> theAlg : algs) {
 

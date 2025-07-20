@@ -88,7 +88,7 @@ public class TestAlgebraLibrary {
 		
 		List<Algebra<?,?>> algs;
 		
-		algs = G.ALGEBRAS.findAlgebras(new Class<?>[0], new Class<?>[] {ComplexType.class});
+		algs = G.ALGEBRAS.findAlgebras(ComplexType.class);
 		
 		assertEquals(10, algs.size());
 		
@@ -110,7 +110,7 @@ public class TestAlgebraLibrary {
 		
 		List<Algebra<?,?>>algs;
 		
-		algs = G.ALGEBRAS.findAlgebras(new Class<?>[0], new Class<?>[] {SignedType.class, IntegerType.class});
+		algs = G.ALGEBRAS.findAlgebras(SignedType.class, IntegerType.class);
 		
 		assertTrue(algs.size() == 20);
 		
@@ -141,7 +141,7 @@ public class TestAlgebraLibrary {
 		
 		List<Algebra<?,?>> algs;
 		
-		algs = G.ALGEBRAS.findAlgebras(new Class<?>[0], new Class<?>[] {ColorType.class});
+		algs = G.ALGEBRAS.findAlgebras(ColorType.class);
 		
 		assertFalse(algs.contains(FRED));
 		
@@ -149,7 +149,7 @@ public class TestAlgebraLibrary {
 
 		G.ALGEBRAS.registerAlgebra(FRED);
 		
-		algs = G.ALGEBRAS.findAlgebras(new Class<?>[0], new Class<?>[] {ColorType.class});
+		algs = G.ALGEBRAS.findAlgebras(ColorType.class);
 		
 		assertEquals(count+1, algs.size());
 
