@@ -210,7 +210,13 @@ public class AlgebraLibrary {
 	 * 
 	 * @return A List of Algebras that satisfy the user passed constraints.
 	 */
-	public List<Algebra<?,?>> findAlgebras(Class<?> ... algebraInterfaces) {
+	
+	public <T extends Algebra<T,U>, U>
+	
+		List<Algebra<?,?>>
+	
+			findAlgebras(Class<?>[] algebraInterfaces)
+	{
 		
 		List<Algebra<?,?>> candidates = new LinkedList<>();
 		
@@ -239,26 +245,26 @@ public class AlgebraLibrary {
 
 	/**
 	 * 
-	 * @param <T>
-	 * @param <U>
 	 * @param algebraInterfaces
 	 * @param typeInterfaces
 	 * @return
 	 */
 	public <T extends Algebra<T,U>, U>
 	
-		List<Algebra<T,U>> findAlgebras(Class<?>[] algebraInterfaces, Class<?>[] typeInterfaces)
+		List<Algebra<?,?>> findAlgebras(Class<?>[] algebraInterfaces, Class<?>[] typeInterfaces)
 	{
 		List<Algebra<?,?>> earlyCandidates = findAlgebras(algebraInterfaces);
 		
-		List<Algebra<T,U>> lateCandidates = new LinkedList<>();
+		List<Algebra<?,?>> lateCandidates = new LinkedList<>();
 
 		Iterator<Algebra<?,?>> iter = earlyCandidates.iterator();
 		
 		while (iter.hasNext()) {
 
+			Algebra<?,?> theAlg = iter.next();
+			
 			@SuppressWarnings("unchecked")
-			Algebra<T,U> alg = (Algebra<T,U>) iter.next();
+			T alg = (T) theAlg;
 			
 			U type = alg.construct();
 			

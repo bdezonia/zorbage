@@ -187,10 +187,13 @@ class Algebras {
 	<T extends nom.bdezonia.zorbage.algebra.Algebra<T,U>, U>
 		void test3()
 	{
-		List<Algebra<T,U>> algs = G.ALGEBRAS.findAlgebras(new Class<?>[] {Addition.class}, new Class<?>[] {FixedSize.class, NativeDoubleSupport.class, PrimitiveConversion.class, RealType.class});
+		List<Algebra<?,?>> algs = G.ALGEBRAS.findAlgebras(new Class<?>[] {Addition.class}, new Class<?>[] {FixedSize.class, NativeDoubleSupport.class, PrimitiveConversion.class, RealType.class});
 
-		for (Algebra<T,U> alg : algs) {
+		for (Algebra<?,?> theAlg : algs) {
 
+			@SuppressWarnings("unchecked")
+			T alg = (T) theAlg;
+			
 			U type = alg.construct();
 
 			PrimitiveConversion metadata =
