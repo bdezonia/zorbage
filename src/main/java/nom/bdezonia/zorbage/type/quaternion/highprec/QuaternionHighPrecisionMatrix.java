@@ -101,7 +101,8 @@ public class QuaternionHighPrecisionMatrix
 		ScaleByOneHalf<QuaternionHighPrecisionMatrixMember>,
 		ScaleByTwo<QuaternionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,QuaternionHighPrecisionMatrixMember>,
-		ArrayLikeMethods<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMember>
+		ArrayLikeMethods<QuaternionHighPrecisionMatrixMember,QuaternionHighPrecisionMember>,
+		MadeOfElements<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -884,5 +885,10 @@ public class QuaternionHighPrecisionMatrix
 	@Override
 	public Function1<Boolean, QuaternionHighPrecisionMatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember> getElementAlgebra() {
+		return G.QHP;
 	}
 }

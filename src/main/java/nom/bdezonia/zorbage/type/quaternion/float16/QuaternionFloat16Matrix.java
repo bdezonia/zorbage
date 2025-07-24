@@ -112,7 +112,8 @@ public class QuaternionFloat16Matrix
 		ScaleByOneHalf<QuaternionFloat16MatrixMember>,
 		ScaleByTwo<QuaternionFloat16MatrixMember>,
 		Tolerance<Float16Member,QuaternionFloat16MatrixMember>,
-		ArrayLikeMethods<QuaternionFloat16MatrixMember,QuaternionFloat16Member>
+		ArrayLikeMethods<QuaternionFloat16MatrixMember,QuaternionFloat16Member>,
+		MadeOfElements<QuaternionFloat16Algebra,QuaternionFloat16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -967,5 +968,10 @@ public class QuaternionFloat16Matrix
 	@Override
 	public Function1<Boolean, QuaternionFloat16MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<QuaternionFloat16Algebra, QuaternionFloat16Member> getElementAlgebra() {
+		return G.QHLF;
 	}
 }

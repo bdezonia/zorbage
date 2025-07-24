@@ -101,7 +101,8 @@ public class QuaternionFloat16RModule
 		ConstructibleFromDoubles<QuaternionFloat16RModuleMember>,
 		ConstructibleFromBigIntegers<QuaternionFloat16RModuleMember>,
 		ConstructibleFromBigDecimals<QuaternionFloat16RModuleMember>,
-		ExactlyConstructibleFromBytes<QuaternionFloat16RModuleMember>
+		ExactlyConstructibleFromBytes<QuaternionFloat16RModuleMember>,
+		MadeOfElements<QuaternionFloat16Algebra,QuaternionFloat16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -710,5 +711,9 @@ public class QuaternionFloat16RModule
 	public Procedure3<Integer, QuaternionFloat16RModuleMember, QuaternionFloat16RModuleMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<QuaternionFloat16Algebra, QuaternionFloat16Member> getElementAlgebra() {
+		return G.QHLF;
+	}
 }

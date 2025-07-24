@@ -101,7 +101,8 @@ public class OctonionHighPrecisionMatrix
 		ScaleByOneHalf<OctonionHighPrecisionMatrixMember>,
 		ScaleByTwo<OctonionHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,OctonionHighPrecisionMatrixMember>,
-		ArrayLikeMethods<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMember>
+		ArrayLikeMethods<OctonionHighPrecisionMatrixMember,OctonionHighPrecisionMember>,
+		MadeOfElements<OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -872,5 +873,10 @@ public class OctonionHighPrecisionMatrix
 	@Override
 	public Function1<Boolean, OctonionHighPrecisionMatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember> getElementAlgebra() {
+		return G.OHP;
 	}
 }

@@ -80,7 +80,8 @@ public class ComplexHighPrecisionCartesianTensorProduct
 		ScaleByOneHalf<ComplexHighPrecisionCartesianTensorProductMember>,
 		ScaleByTwo<ComplexHighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, ComplexHighPrecisionCartesianTensorProductMember>,
-		ArrayLikeMethods<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionMember>
+		ArrayLikeMethods<ComplexHighPrecisionCartesianTensorProductMember, ComplexHighPrecisionMember>,
+		MadeOfElements<ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -628,5 +629,10 @@ public class ComplexHighPrecisionCartesianTensorProduct
 	@Override
 	public Function1<Boolean, ComplexHighPrecisionCartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember> getElementAlgebra() {
+		return G.CHP;
 	}
 }

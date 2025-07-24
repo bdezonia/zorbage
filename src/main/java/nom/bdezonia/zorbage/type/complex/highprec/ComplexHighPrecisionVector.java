@@ -100,7 +100,8 @@ public class ComplexHighPrecisionVector
 		ExactlyConstructibleFromFloats<ComplexHighPrecisionVectorMember>,
 		ExactlyConstructibleFromDoubles<ComplexHighPrecisionVectorMember>,
 		ExactlyConstructibleFromBigIntegers<ComplexHighPrecisionVectorMember>,
-		ExactlyConstructibleFromBigDecimals<ComplexHighPrecisionVectorMember>
+		ExactlyConstructibleFromBigDecimals<ComplexHighPrecisionVectorMember>,
+		MadeOfElements<ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -681,5 +682,9 @@ public class ComplexHighPrecisionVector
 	public Procedure3<Integer, ComplexHighPrecisionVectorMember, ComplexHighPrecisionVectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember> getElementAlgebra() {
+		return G.CHP;
+	}
 }

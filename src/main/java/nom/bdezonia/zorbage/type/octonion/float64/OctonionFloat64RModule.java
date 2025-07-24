@@ -105,7 +105,8 @@ public class OctonionFloat64RModule
 		ExactlyConstructibleFromShorts<OctonionFloat64RModuleMember>,
 		ExactlyConstructibleFromInts<OctonionFloat64RModuleMember>,
 		ExactlyConstructibleFromFloats<OctonionFloat64RModuleMember>,
-		ExactlyConstructibleFromDoubles<OctonionFloat64RModuleMember>
+		ExactlyConstructibleFromDoubles<OctonionFloat64RModuleMember>,
+		MadeOfElements<OctonionFloat64Algebra,OctonionFloat64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -731,5 +732,9 @@ public class OctonionFloat64RModule
 	public Procedure3<Integer, OctonionFloat64RModuleMember, OctonionFloat64RModuleMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<OctonionFloat64Algebra, OctonionFloat64Member> getElementAlgebra() {
+		return G.ODBL;
+	}
 }

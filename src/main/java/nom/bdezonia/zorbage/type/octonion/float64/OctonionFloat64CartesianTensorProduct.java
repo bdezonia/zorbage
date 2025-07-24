@@ -89,7 +89,8 @@ public class OctonionFloat64CartesianTensorProduct
 		ScaleByOneHalf<OctonionFloat64CartesianTensorProductMember>,
 		ScaleByTwo<OctonionFloat64CartesianTensorProductMember>,
 		Tolerance<Float64Member, OctonionFloat64CartesianTensorProductMember>,
-		ArrayLikeMethods<OctonionFloat64CartesianTensorProductMember, OctonionFloat64Member>
+		ArrayLikeMethods<OctonionFloat64CartesianTensorProductMember, OctonionFloat64Member>,
+		MadeOfElements<OctonionFloat64Algebra,OctonionFloat64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -707,5 +708,10 @@ public class OctonionFloat64CartesianTensorProduct
 	@Override
 	public Function1<Boolean, OctonionFloat64CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<OctonionFloat64Algebra, OctonionFloat64Member> getElementAlgebra() {
+		return G.ODBL;
 	}
 }

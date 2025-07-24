@@ -112,7 +112,8 @@ public class OctonionFloat64Matrix
 		ScaleByOneHalf<OctonionFloat64MatrixMember>,
 		ScaleByTwo<OctonionFloat64MatrixMember>,
 		Tolerance<Float64Member,OctonionFloat64MatrixMember>,
-		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>
+		ArrayLikeMethods<OctonionFloat64MatrixMember,OctonionFloat64Member>,
+		MadeOfElements<OctonionFloat64Algebra,OctonionFloat64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -953,5 +954,10 @@ public class OctonionFloat64Matrix
 	@Override
 	public Function1<Boolean, OctonionFloat64MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<OctonionFloat64Algebra, OctonionFloat64Member> getElementAlgebra() {
+		return G.ODBL;
 	}
 }

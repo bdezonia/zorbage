@@ -109,7 +109,8 @@ public class Float64Matrix
 		ScaleByOneHalf<Float64MatrixMember>,
 		ScaleByTwo<Float64MatrixMember>,
 		Tolerance<Float64Member,Float64MatrixMember>,
-		ArrayLikeMethods<Float64MatrixMember,Float64Member>
+		ArrayLikeMethods<Float64MatrixMember,Float64Member>,
+		MadeOfElements<Float64Algebra,Float64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -938,5 +939,10 @@ public class Float64Matrix
 	@Override
 	public Function1<Boolean, Float64MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<Float64Algebra, Float64Member> getElementAlgebra() {
+		return G.DBL;
 	}
 }

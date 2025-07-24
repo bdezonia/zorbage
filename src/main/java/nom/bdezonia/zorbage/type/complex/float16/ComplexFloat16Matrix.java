@@ -112,7 +112,8 @@ public class ComplexFloat16Matrix
 		ScaleByOneHalf<ComplexFloat16MatrixMember>,
 		ScaleByTwo<ComplexFloat16MatrixMember>,
 		Tolerance<Float16Member,ComplexFloat16MatrixMember>,
-		ArrayLikeMethods<ComplexFloat16MatrixMember, ComplexFloat16Member>
+		ArrayLikeMethods<ComplexFloat16MatrixMember, ComplexFloat16Member>,
+		MadeOfElements<ComplexFloat16Algebra,ComplexFloat16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -953,5 +954,10 @@ public class ComplexFloat16Matrix
 	@Override
 	public Function1<Boolean, ComplexFloat16MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat16Algebra, ComplexFloat16Member> getElementAlgebra() {
+		return G.CHLF;
 	}
 }

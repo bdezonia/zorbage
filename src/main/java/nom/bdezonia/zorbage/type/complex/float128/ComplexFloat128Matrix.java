@@ -113,7 +113,8 @@ public class ComplexFloat128Matrix
 		ScaleByOneHalf<ComplexFloat128MatrixMember>,
 		ScaleByTwo<ComplexFloat128MatrixMember>,
 		Tolerance<Float128Member,ComplexFloat128MatrixMember>,
-		ArrayLikeMethods<ComplexFloat128MatrixMember,ComplexFloat128Member>
+		ArrayLikeMethods<ComplexFloat128MatrixMember,ComplexFloat128Member>,
+		MadeOfElements<ComplexFloat128Algebra,ComplexFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -950,5 +951,10 @@ public class ComplexFloat128Matrix
 	@Override
 	public Function1<Boolean, ComplexFloat128MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat128Algebra, ComplexFloat128Member> getElementAlgebra() {
+		return G.CQUAD;
 	}
 }

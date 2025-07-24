@@ -103,7 +103,8 @@ public class Float128Vector
 		ExactlyConstructibleFromShorts<Float128VectorMember>,
 		ExactlyConstructibleFromInts<Float128VectorMember>,
 		ExactlyConstructibleFromFloats<Float128VectorMember>,
-		ExactlyConstructibleFromDoubles<Float128VectorMember>
+		ExactlyConstructibleFromDoubles<Float128VectorMember>,
+		MadeOfElements<Float128Algebra,Float128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -713,5 +714,10 @@ public class Float128Vector
 	@Override
 	public Procedure3<Integer, Float128VectorMember, Float128VectorMember> scaleByOneHalf() {
 		return SCBH;
+	}
+	
+	@Override
+	public Algebra<Float128Algebra, Float128Member> getElementAlgebra() {
+		return G.QUAD;
 	}
 }

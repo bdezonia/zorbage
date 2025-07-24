@@ -105,7 +105,8 @@ public class ComplexFloat64Vector
 		ExactlyConstructibleFromShorts<ComplexFloat64VectorMember>,
 		ExactlyConstructibleFromInts<ComplexFloat64VectorMember>,
 		ExactlyConstructibleFromFloats<ComplexFloat64VectorMember>,
-		ExactlyConstructibleFromDoubles<ComplexFloat64VectorMember>
+		ExactlyConstructibleFromDoubles<ComplexFloat64VectorMember>,
+		MadeOfElements<ComplexFloat64Algebra,ComplexFloat64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -731,5 +732,9 @@ public class ComplexFloat64Vector
 	public Procedure3<Integer, ComplexFloat64VectorMember, ComplexFloat64VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<ComplexFloat64Algebra, ComplexFloat64Member> getElementAlgebra() {
+		return G.CDBL;
+	}
 }

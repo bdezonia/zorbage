@@ -88,7 +88,8 @@ public class Float64CartesianTensorProduct
 		ScaleByOneHalf<Float64CartesianTensorProductMember>,
 		ScaleByTwo<Float64CartesianTensorProductMember>,
 		Tolerance<Float64Member, Float64CartesianTensorProductMember>,
-		ArrayLikeMethods<Float64CartesianTensorProductMember, Float64Member>
+		ArrayLikeMethods<Float64CartesianTensorProductMember, Float64Member>,
+		MadeOfElements<Float64Algebra,Float64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -696,5 +697,10 @@ public class Float64CartesianTensorProduct
 	@Override
 	public Function1<Boolean, Float64CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<Float64Algebra, Float64Member> getElementAlgebra() {
+		return G.DBL;
 	}
 }

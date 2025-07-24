@@ -97,7 +97,8 @@ public class HighPrecisionVector
 		ExactlyConstructibleFromLongs<HighPrecisionVectorMember>,
 		ExactlyConstructibleFromInts<HighPrecisionVectorMember>,
 		ExactlyConstructibleFromShorts<HighPrecisionVectorMember>,
-		ExactlyConstructibleFromBytes<HighPrecisionVectorMember>
+		ExactlyConstructibleFromBytes<HighPrecisionVectorMember>,
+		MadeOfElements<HighPrecisionAlgebra,HighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -668,5 +669,9 @@ public class HighPrecisionVector
 	public Procedure3<Integer, HighPrecisionVectorMember, HighPrecisionVectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<HighPrecisionAlgebra, HighPrecisionMember> getElementAlgebra() {
+		return G.HP;
+	}
 }

@@ -100,7 +100,8 @@ public class QuaternionHighPrecisionRModule
 		ExactlyConstructibleFromFloats<QuaternionHighPrecisionRModuleMember>,
 		ExactlyConstructibleFromDoubles<QuaternionHighPrecisionRModuleMember>,
 		ExactlyConstructibleFromBigIntegers<QuaternionHighPrecisionRModuleMember>,
-		ExactlyConstructibleFromBigDecimals<QuaternionHighPrecisionRModuleMember>
+		ExactlyConstructibleFromBigDecimals<QuaternionHighPrecisionRModuleMember>,
+		MadeOfElements<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -691,5 +692,9 @@ public class QuaternionHighPrecisionRModule
 	public Procedure3<Integer, QuaternionHighPrecisionRModuleMember, QuaternionHighPrecisionRModuleMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember> getElementAlgebra() {
+		return G.QHP;
+	}
 }

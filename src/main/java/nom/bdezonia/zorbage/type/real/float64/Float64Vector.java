@@ -103,7 +103,8 @@ public class Float64Vector
 		ExactlyConstructibleFromShorts<Float64VectorMember>,
 		ExactlyConstructibleFromInts<Float64VectorMember>,
 		ExactlyConstructibleFromFloats<Float64VectorMember>,
-		ExactlyConstructibleFromDoubles<Float64VectorMember>
+		ExactlyConstructibleFromDoubles<Float64VectorMember>,
+		MadeOfElements<Float64Algebra,Float64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -715,5 +716,9 @@ public class Float64Vector
 	public Procedure3<Integer, Float64VectorMember, Float64VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<Float64Algebra, Float64Member> getElementAlgebra() {
+		return G.DBL;
+	}
 }

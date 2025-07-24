@@ -101,7 +101,8 @@ public class Float32Vector
 		ConstructibleFromBigDecimals<Float32VectorMember>,
 		ExactlyConstructibleFromBytes<Float32VectorMember>,
 		ExactlyConstructibleFromShorts<Float32VectorMember>,
-		ExactlyConstructibleFromFloats<Float32VectorMember>
+		ExactlyConstructibleFromFloats<Float32VectorMember>,
+		MadeOfElements<Float32Algebra,Float32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -699,5 +700,9 @@ public class Float32Vector
 	public Procedure3<Integer, Float32VectorMember, Float32VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<Float32Algebra, Float32Member> getElementAlgebra() {
+		return G.FLT;
+	}
 }

@@ -112,7 +112,8 @@ public class ComplexFloat32Matrix
 		ScaleByOneHalf<ComplexFloat32MatrixMember>,
 		ScaleByTwo<ComplexFloat32MatrixMember>,
 		Tolerance<Float32Member,ComplexFloat32MatrixMember>,
-		ArrayLikeMethods<ComplexFloat32MatrixMember,ComplexFloat32Member>
+		ArrayLikeMethods<ComplexFloat32MatrixMember,ComplexFloat32Member>,
+		MadeOfElements<ComplexFloat32Algebra,ComplexFloat32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -953,5 +954,10 @@ public class ComplexFloat32Matrix
 	@Override
 	public Function1<Boolean, ComplexFloat32MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat32Algebra, ComplexFloat32Member> getElementAlgebra() {
+		return G.CFLT;
 	}
 }

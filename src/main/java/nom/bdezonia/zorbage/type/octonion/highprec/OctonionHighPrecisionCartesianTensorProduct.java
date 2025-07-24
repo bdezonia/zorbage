@@ -80,7 +80,8 @@ public class OctonionHighPrecisionCartesianTensorProduct
 		ScaleByOneHalf<OctonionHighPrecisionCartesianTensorProductMember>,
 		ScaleByTwo<OctonionHighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, OctonionHighPrecisionCartesianTensorProductMember>,
-		ArrayLikeMethods<OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionMember>
+		ArrayLikeMethods<OctonionHighPrecisionCartesianTensorProductMember, OctonionHighPrecisionMember>,
+		MadeOfElements<OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -628,5 +629,10 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	@Override
 	public Function1<Boolean, OctonionHighPrecisionCartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember> getElementAlgebra() {
+		return G.OHP;
 	}
 }

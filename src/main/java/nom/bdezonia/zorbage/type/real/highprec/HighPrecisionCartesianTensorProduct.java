@@ -94,7 +94,8 @@ public class HighPrecisionCartesianTensorProduct
 		ScaleByOneHalf<HighPrecisionCartesianTensorProductMember>,
 		ScaleByTwo<HighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, HighPrecisionCartesianTensorProductMember>,
-		ArrayLikeMethods<HighPrecisionCartesianTensorProductMember, HighPrecisionMember>
+		ArrayLikeMethods<HighPrecisionCartesianTensorProductMember, HighPrecisionMember>,
+		MadeOfElements<HighPrecisionAlgebra,HighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -632,5 +633,10 @@ public class HighPrecisionCartesianTensorProduct
 	@Override
 	public Function1<Boolean, HighPrecisionCartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<HighPrecisionAlgebra, HighPrecisionMember> getElementAlgebra() {
+		return G.HP;
 	}
 }

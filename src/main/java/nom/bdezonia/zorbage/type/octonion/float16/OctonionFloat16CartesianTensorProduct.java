@@ -89,7 +89,8 @@ public class OctonionFloat16CartesianTensorProduct
 		ScaleByOneHalf<OctonionFloat16CartesianTensorProductMember>,
 		ScaleByTwo<OctonionFloat16CartesianTensorProductMember>,
 		Tolerance<Float16Member, OctonionFloat16CartesianTensorProductMember>,
-		ArrayLikeMethods<OctonionFloat16CartesianTensorProductMember, OctonionFloat16Member>
+		ArrayLikeMethods<OctonionFloat16CartesianTensorProductMember, OctonionFloat16Member>,
+		MadeOfElements<OctonionFloat16Algebra,OctonionFloat16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -707,5 +708,10 @@ public class OctonionFloat16CartesianTensorProduct
 	@Override
 	public Function1<Boolean, OctonionFloat16CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<OctonionFloat16Algebra, OctonionFloat16Member> getElementAlgebra() {
+		return G.OHLF;
 	}
 }

@@ -110,7 +110,8 @@ public class Float128Matrix
 		ScaleByOneHalf<Float128MatrixMember>,
 		ScaleByTwo<Float128MatrixMember>,
 		Tolerance<Float128Member,Float128MatrixMember>,
-		ArrayLikeMethods<Float128MatrixMember,Float128Member>
+		ArrayLikeMethods<Float128MatrixMember,Float128Member>,
+		MadeOfElements<Float128Algebra,Float128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -939,5 +940,10 @@ public class Float128Matrix
 	@Override
 	public Function1<Boolean, Float128MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<Float128Algebra, Float128Member> getElementAlgebra() {
+		return G.QUAD;
 	}
 }

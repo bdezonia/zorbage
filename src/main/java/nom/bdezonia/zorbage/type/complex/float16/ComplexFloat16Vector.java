@@ -101,7 +101,8 @@ public class ComplexFloat16Vector
 		ConstructibleFromDoubles<ComplexFloat16VectorMember>,
 		ConstructibleFromBigIntegers<ComplexFloat16VectorMember>,
 		ConstructibleFromBigDecimals<ComplexFloat16VectorMember>,
-		ExactlyConstructibleFromBytes<ComplexFloat16VectorMember>
+		ExactlyConstructibleFromBytes<ComplexFloat16VectorMember>,
+		MadeOfElements<ComplexFloat16Algebra,ComplexFloat16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -699,5 +700,9 @@ public class ComplexFloat16Vector
 	public Procedure3<Integer, ComplexFloat16VectorMember, ComplexFloat16VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<ComplexFloat16Algebra, ComplexFloat16Member> getElementAlgebra() {
+		return G.CHLF;
+	}
 }

@@ -100,7 +100,8 @@ public class OctonionHighPrecisionRModule
 		ExactlyConstructibleFromFloats<OctonionHighPrecisionRModuleMember>,
 		ExactlyConstructibleFromDoubles<OctonionHighPrecisionRModuleMember>,
 		ExactlyConstructibleFromBigIntegers<OctonionHighPrecisionRModuleMember>,
-		ExactlyConstructibleFromBigDecimals<OctonionHighPrecisionRModuleMember>
+		ExactlyConstructibleFromBigDecimals<OctonionHighPrecisionRModuleMember>,
+		MadeOfElements<OctonionHighPrecisionAlgebra,OctonionHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -681,5 +682,9 @@ public class OctonionHighPrecisionRModule
 	public Procedure3<Integer, OctonionHighPrecisionRModuleMember, OctonionHighPrecisionRModuleMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember> getElementAlgebra() {
+		return G.OHP;
+	}
 }

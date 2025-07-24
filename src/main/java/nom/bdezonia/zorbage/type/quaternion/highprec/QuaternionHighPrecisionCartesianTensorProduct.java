@@ -80,7 +80,8 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 		ScaleByOneHalf<QuaternionHighPrecisionCartesianTensorProductMember>,
 		ScaleByTwo<QuaternionHighPrecisionCartesianTensorProductMember>,
 		Tolerance<HighPrecisionMember, QuaternionHighPrecisionCartesianTensorProductMember>,
-		ArrayLikeMethods<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionMember>
+		ArrayLikeMethods<QuaternionHighPrecisionCartesianTensorProductMember, QuaternionHighPrecisionMember>,
+		MadeOfElements<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -628,5 +629,10 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	@Override
 	public Function1<Boolean, QuaternionHighPrecisionCartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember> getElementAlgebra() {
+		return G.QHP;
 	}
 }

@@ -105,7 +105,8 @@ public class QuaternionFloat128RModule
 		ExactlyConstructibleFromShorts<QuaternionFloat128RModuleMember>,
 		ExactlyConstructibleFromInts<QuaternionFloat128RModuleMember>,
 		ExactlyConstructibleFromFloats<QuaternionFloat128RModuleMember>,
-		ExactlyConstructibleFromDoubles<QuaternionFloat128RModuleMember>
+		ExactlyConstructibleFromDoubles<QuaternionFloat128RModuleMember>,
+		MadeOfElements<QuaternionFloat128Algebra,QuaternionFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -742,5 +743,9 @@ public class QuaternionFloat128RModule
 	public Procedure3<Integer, QuaternionFloat128RModuleMember, QuaternionFloat128RModuleMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<QuaternionFloat128Algebra, QuaternionFloat128Member> getElementAlgebra() {
+		return G.QQUAD;
+	}
 }

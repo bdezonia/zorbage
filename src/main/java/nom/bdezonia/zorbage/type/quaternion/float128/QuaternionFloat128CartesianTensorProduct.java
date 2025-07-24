@@ -89,7 +89,8 @@ public class QuaternionFloat128CartesianTensorProduct
 		ScaleByOneHalf<QuaternionFloat128CartesianTensorProductMember>,
 		ScaleByTwo<QuaternionFloat128CartesianTensorProductMember>,
 		Tolerance<Float128Member, QuaternionFloat128CartesianTensorProductMember>,
-		ArrayLikeMethods<QuaternionFloat128CartesianTensorProductMember, QuaternionFloat128Member>
+		ArrayLikeMethods<QuaternionFloat128CartesianTensorProductMember, QuaternionFloat128Member>,
+		MadeOfElements<QuaternionFloat128Algebra,QuaternionFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -707,5 +708,10 @@ public class QuaternionFloat128CartesianTensorProduct
 	@Override
 	public Function1<Boolean, QuaternionFloat128CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<QuaternionFloat128Algebra, QuaternionFloat128Member> getElementAlgebra() {
+		return G.QQUAD;
 	}
 }

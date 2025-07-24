@@ -109,7 +109,8 @@ public class Float16Matrix
 		ScaleByOneHalf<Float16MatrixMember>,
 		ScaleByTwo<Float16MatrixMember>,
 		Tolerance<Float16Member,Float16MatrixMember>,
-		ArrayLikeMethods<Float16MatrixMember,Float16Member>
+		ArrayLikeMethods<Float16MatrixMember,Float16Member>,
+		MadeOfElements<Float16Algebra,Float16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -938,5 +939,10 @@ public class Float16Matrix
 	@Override
 	public Function1<Boolean, Float16MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<Float16Algebra, Float16Member> getElementAlgebra() {
+		return G.HLF;
 	}
 }

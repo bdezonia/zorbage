@@ -90,7 +90,8 @@ public class ComplexFloat128CartesianTensorProduct
 		ScaleByOneHalf<ComplexFloat128CartesianTensorProductMember>,
 		ScaleByTwo<ComplexFloat128CartesianTensorProductMember>,
 		Tolerance<Float128Member, ComplexFloat128CartesianTensorProductMember>,
-		ArrayLikeMethods<ComplexFloat128CartesianTensorProductMember, ComplexFloat128Member>
+		ArrayLikeMethods<ComplexFloat128CartesianTensorProductMember, ComplexFloat128Member>,
+		MadeOfElements<ComplexFloat128Algebra,ComplexFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -708,5 +709,10 @@ public class ComplexFloat128CartesianTensorProduct
 	@Override
 	public Function1<Boolean, ComplexFloat128CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat128Algebra, ComplexFloat128Member> getElementAlgebra() {
+		return G.CQUAD;
 	}
 }

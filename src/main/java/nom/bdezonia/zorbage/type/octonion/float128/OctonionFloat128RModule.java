@@ -105,7 +105,8 @@ public class OctonionFloat128RModule
 		ExactlyConstructibleFromShorts<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromInts<OctonionFloat128RModuleMember>,
 		ExactlyConstructibleFromFloats<OctonionFloat128RModuleMember>,
-		ExactlyConstructibleFromDoubles<OctonionFloat128RModuleMember>
+		ExactlyConstructibleFromDoubles<OctonionFloat128RModuleMember>,
+		MadeOfElements<OctonionFloat128Algebra,OctonionFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -729,5 +730,10 @@ public class OctonionFloat128RModule
 	@Override
 	public Procedure3<Integer, OctonionFloat128RModuleMember, OctonionFloat128RModuleMember> scaleByOneHalf() {
 		return SCBH;
+	}
+	
+	@Override
+	public Algebra<OctonionFloat128Algebra, OctonionFloat128Member> getElementAlgebra() {
+		return G.OQUAD;
 	}
 }

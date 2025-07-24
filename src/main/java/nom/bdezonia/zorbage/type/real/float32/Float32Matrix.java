@@ -109,7 +109,8 @@ public class Float32Matrix
 		ScaleByOneHalf<Float32MatrixMember>,
 		ScaleByTwo<Float32MatrixMember>,
 		Tolerance<Float32Member,Float32MatrixMember>,
-		ArrayLikeMethods<Float32MatrixMember,Float32Member>
+		ArrayLikeMethods<Float32MatrixMember,Float32Member>,
+		MadeOfElements<Float32Algebra,Float32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -938,5 +939,10 @@ public class Float32Matrix
 	@Override
 	public Function1<Boolean, Float32MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<Float32Algebra, Float32Member> getElementAlgebra() {
+		return G.FLT;
 	}
 }

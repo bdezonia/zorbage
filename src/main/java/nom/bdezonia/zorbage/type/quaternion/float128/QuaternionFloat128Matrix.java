@@ -112,7 +112,8 @@ public class QuaternionFloat128Matrix
 		ScaleByOneHalf<QuaternionFloat128MatrixMember>,
 		ScaleByTwo<QuaternionFloat128MatrixMember>,
 		Tolerance<Float128Member,QuaternionFloat128MatrixMember>,
-		ArrayLikeMethods<QuaternionFloat128MatrixMember,QuaternionFloat128Member>
+		ArrayLikeMethods<QuaternionFloat128MatrixMember,QuaternionFloat128Member>,
+		MadeOfElements<QuaternionFloat128Algebra,QuaternionFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -967,5 +968,10 @@ public class QuaternionFloat128Matrix
 	@Override
 	public Function1<Boolean, QuaternionFloat128MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<QuaternionFloat128Algebra, QuaternionFloat128Member> getElementAlgebra() {
+		return G.QQUAD;
 	}
 }

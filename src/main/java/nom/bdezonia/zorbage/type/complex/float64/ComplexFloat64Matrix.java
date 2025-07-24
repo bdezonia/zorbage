@@ -112,7 +112,8 @@ public class ComplexFloat64Matrix
 		ScaleByOneHalf<ComplexFloat64MatrixMember>,
 		ScaleByTwo<ComplexFloat64MatrixMember>,
 		Tolerance<Float64Member,ComplexFloat64MatrixMember>,
-		ArrayLikeMethods<ComplexFloat64MatrixMember,ComplexFloat64Member>
+		ArrayLikeMethods<ComplexFloat64MatrixMember,ComplexFloat64Member>,
+		MadeOfElements<ComplexFloat64Algebra,ComplexFloat64Member>
 {
 	@Override
 	public String typeDescription() {
@@ -955,5 +956,10 @@ public class ComplexFloat64Matrix
 	@Override
 	public Function1<Boolean, ComplexFloat64MatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat64Algebra, ComplexFloat64Member> getElementAlgebra() {
+		return G.CDBL;
 	}
 }

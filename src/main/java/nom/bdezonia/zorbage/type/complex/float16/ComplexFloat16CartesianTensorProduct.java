@@ -89,7 +89,8 @@ public class ComplexFloat16CartesianTensorProduct
 		ScaleByOneHalf<ComplexFloat16CartesianTensorProductMember>,
 		ScaleByTwo<ComplexFloat16CartesianTensorProductMember>,
 		Tolerance<Float16Member, ComplexFloat16CartesianTensorProductMember>,
-		ArrayLikeMethods<ComplexFloat16CartesianTensorProductMember, ComplexFloat16Member>
+		ArrayLikeMethods<ComplexFloat16CartesianTensorProductMember, ComplexFloat16Member>,
+		MadeOfElements<ComplexFloat16Algebra,ComplexFloat16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -707,5 +708,10 @@ public class ComplexFloat16CartesianTensorProduct
 	@Override
 	public Function1<Boolean, ComplexFloat16CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat16Algebra, ComplexFloat16Member> getElementAlgebra() {
+		return G.CHLF;
 	}
 }

@@ -103,7 +103,8 @@ public class ComplexFloat32Vector
 		ConstructibleFromBigDecimals<ComplexFloat32VectorMember>,
 		ExactlyConstructibleFromBytes<ComplexFloat32VectorMember>,
 		ExactlyConstructibleFromShorts<ComplexFloat32VectorMember>,
-		ExactlyConstructibleFromFloats<ComplexFloat32VectorMember>
+		ExactlyConstructibleFromFloats<ComplexFloat32VectorMember>,
+		MadeOfElements<ComplexFloat32Algebra,ComplexFloat32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -715,5 +716,9 @@ public class ComplexFloat32Vector
 	public Procedure3<Integer, ComplexFloat32VectorMember, ComplexFloat32VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<ComplexFloat32Algebra, ComplexFloat32Member> getElementAlgebra() {
+		return G.CFLT;
+	}
 }

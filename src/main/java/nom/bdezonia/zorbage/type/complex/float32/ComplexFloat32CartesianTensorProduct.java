@@ -89,7 +89,8 @@ public class ComplexFloat32CartesianTensorProduct
 		ScaleByOneHalf<ComplexFloat32CartesianTensorProductMember>,
 		ScaleByTwo<ComplexFloat32CartesianTensorProductMember>,
 		Tolerance<Float32Member, ComplexFloat32CartesianTensorProductMember>,
-		ArrayLikeMethods<ComplexFloat32CartesianTensorProductMember, ComplexFloat32Member>
+		ArrayLikeMethods<ComplexFloat32CartesianTensorProductMember, ComplexFloat32Member>,
+		MadeOfElements<ComplexFloat32Algebra,ComplexFloat32Member>
 {
 
 	@Override
@@ -708,5 +709,10 @@ public class ComplexFloat32CartesianTensorProduct
 	@Override
 	public Function1<Boolean, ComplexFloat32CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat32Algebra, ComplexFloat32Member> getElementAlgebra() {
+		return G.CFLT;
 	}
 }

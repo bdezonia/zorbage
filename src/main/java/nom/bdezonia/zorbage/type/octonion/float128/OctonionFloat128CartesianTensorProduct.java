@@ -89,7 +89,8 @@ public class OctonionFloat128CartesianTensorProduct
 		ScaleByOneHalf<OctonionFloat128CartesianTensorProductMember>,
 		ScaleByTwo<OctonionFloat128CartesianTensorProductMember>,
 		Tolerance<Float128Member, OctonionFloat128CartesianTensorProductMember>,
-		ArrayLikeMethods<OctonionFloat128CartesianTensorProductMember, OctonionFloat128Member>
+		ArrayLikeMethods<OctonionFloat128CartesianTensorProductMember, OctonionFloat128Member>,
+		MadeOfElements<OctonionFloat128Algebra,OctonionFloat128Member>
 {
 
 	@Override
@@ -708,5 +709,10 @@ public class OctonionFloat128CartesianTensorProduct
 	@Override
 	public Function1<Boolean, OctonionFloat128CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<OctonionFloat128Algebra, OctonionFloat128Member> getElementAlgebra() {
+		return G.OQUAD;
 	}
 }

@@ -105,7 +105,8 @@ public class ComplexFloat128Vector
 		ExactlyConstructibleFromShorts<ComplexFloat128VectorMember>,
 		ExactlyConstructibleFromInts<ComplexFloat128VectorMember>,
 		ExactlyConstructibleFromFloats<ComplexFloat128VectorMember>,
-		ExactlyConstructibleFromDoubles<ComplexFloat128VectorMember>
+		ExactlyConstructibleFromDoubles<ComplexFloat128VectorMember>,
+		MadeOfElements<ComplexFloat128Algebra,ComplexFloat128Member>
 {
 	@Override
 	public String typeDescription() {
@@ -730,5 +731,10 @@ public class ComplexFloat128Vector
 		ComplexFloat128VectorMember v = construct();
 		v.setFromBigDecimals(vals);
 		return v;
+	}
+	
+	@Override
+	public Algebra<ComplexFloat128Algebra, ComplexFloat128Member> getElementAlgebra() {
+		return G.CQUAD;
 	}
 }

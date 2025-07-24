@@ -88,7 +88,8 @@ public class Float32CartesianTensorProduct
 		ScaleByOneHalf<Float32CartesianTensorProductMember>,
 		ScaleByTwo<Float32CartesianTensorProductMember>,
 		Tolerance<Float32Member, Float32CartesianTensorProductMember>,
-		ArrayLikeMethods<Float32CartesianTensorProductMember, Float32Member>
+		ArrayLikeMethods<Float32CartesianTensorProductMember, Float32Member>,
+		MadeOfElements<Float32Algebra,Float32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -696,5 +697,10 @@ public class Float32CartesianTensorProduct
 	@Override
 	public Function1<Boolean, Float32CartesianTensorProductMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<Float32Algebra, Float32Member> getElementAlgebra() {
+		return G.FLT;
 	}
 }

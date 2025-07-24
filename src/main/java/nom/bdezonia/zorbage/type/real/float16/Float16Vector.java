@@ -99,7 +99,8 @@ public class Float16Vector
 		ScaleByOneHalf<Float16VectorMember>,
 		ScaleByTwo<Float16VectorMember>,
 		Tolerance<Float16Member,Float16VectorMember>,
-		ArrayLikeMethods<Float16VectorMember,Float16Member>
+		ArrayLikeMethods<Float16VectorMember,Float16Member>,
+		MadeOfElements<Float16Algebra,Float16Member>
 {
 	@Override
 	public String typeDescription() {
@@ -683,5 +684,9 @@ public class Float16Vector
 	public Procedure3<Integer, Float16VectorMember, Float16VectorMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<Float16Algebra, Float16Member> getElementAlgebra() {
+		return G.HLF;
+	}
 }

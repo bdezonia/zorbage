@@ -103,7 +103,8 @@ public class QuaternionFloat32RModule
 		ConstructibleFromBigDecimals<QuaternionFloat32RModuleMember>,
 		ExactlyConstructibleFromBytes<QuaternionFloat32RModuleMember>,
 		ExactlyConstructibleFromShorts<QuaternionFloat32RModuleMember>,
-		ExactlyConstructibleFromFloats<QuaternionFloat32RModuleMember>
+		ExactlyConstructibleFromFloats<QuaternionFloat32RModuleMember>,
+		MadeOfElements<QuaternionFloat32Algebra,QuaternionFloat32Member>
 {
 	@Override
 	public String typeDescription() {
@@ -726,5 +727,9 @@ public class QuaternionFloat32RModule
 	public Procedure3<Integer, QuaternionFloat32RModuleMember, QuaternionFloat32RModuleMember> scaleByOneHalf() {
 		return SCBH;
 	}
-
+	
+	@Override
+	public Algebra<QuaternionFloat32Algebra, QuaternionFloat32Member> getElementAlgebra() {
+		return G.QFLT;
+	}
 }

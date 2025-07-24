@@ -101,7 +101,8 @@ public class ComplexHighPrecisionMatrix
 		ScaleByOneHalf<ComplexHighPrecisionMatrixMember>,
 		ScaleByTwo<ComplexHighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,ComplexHighPrecisionMatrixMember>,
-		ArrayLikeMethods<ComplexHighPrecisionMatrixMember,ComplexHighPrecisionMember>
+		ArrayLikeMethods<ComplexHighPrecisionMatrixMember,ComplexHighPrecisionMember>,
+		MadeOfElements<ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -872,5 +873,10 @@ public class ComplexHighPrecisionMatrix
 	@Override
 	public Function1<Boolean, ComplexHighPrecisionMatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember> getElementAlgebra() {
+		return G.CHP;
 	}
 }

@@ -98,7 +98,8 @@ public class HighPrecisionMatrix
 		ScaleByOneHalf<HighPrecisionMatrixMember>,
 		ScaleByTwo<HighPrecisionMatrixMember>,
 		Tolerance<HighPrecisionMember,HighPrecisionMatrixMember>,
-		ArrayLikeMethods<HighPrecisionMatrixMember,HighPrecisionMember>
+		ArrayLikeMethods<HighPrecisionMatrixMember,HighPrecisionMember>,
+		MadeOfElements<HighPrecisionAlgebra,HighPrecisionMember>
 {
 	@Override
 	public String typeDescription() {
@@ -857,5 +858,10 @@ public class HighPrecisionMatrix
 	@Override
 	public Function1<Boolean, HighPrecisionMatrixMember> isUnity() {
 		return ISUNITY;
+	}
+	
+	@Override
+	public Algebra<HighPrecisionAlgebra, HighPrecisionMember> getElementAlgebra() {
+		return G.HP;
 	}
 }
