@@ -876,7 +876,7 @@ public class ComplexHighPrecisionMatrix
 	}
 	
 	@Override
-	public Algebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember> getElementAlgebra() {
+	public ComplexHighPrecisionAlgebra getElementAlgebra() {
 		return G.CHP;
 	}
 }

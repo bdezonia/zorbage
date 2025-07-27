@@ -861,7 +861,7 @@ public class HighPrecisionMatrix
 	}
 	
 	@Override
-	public Algebra<HighPrecisionAlgebra, HighPrecisionMember> getElementAlgebra() {
+	public HighPrecisionAlgebra getElementAlgebra() {
 		return G.HP;
 	}
 }

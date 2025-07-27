@@ -694,7 +694,7 @@ public class QuaternionHighPrecisionRModule
 	}
 	
 	@Override
-	public Algebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember> getElementAlgebra() {
+	public QuaternionHighPrecisionAlgebra getElementAlgebra() {
 		return G.QHP;
 	}
 }

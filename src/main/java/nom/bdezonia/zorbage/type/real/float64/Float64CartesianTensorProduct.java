@@ -700,7 +700,7 @@ public class Float64CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<Float64Algebra, Float64Member> getElementAlgebra() {
+	public Float64Algebra getElementAlgebra() {
 		return G.DBL;
 	}
 }

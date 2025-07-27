@@ -957,7 +957,7 @@ public class OctonionFloat16Matrix
 	}
 	
 	@Override
-	public Algebra<OctonionFloat16Algebra, OctonionFloat16Member> getElementAlgebra() {
+	public OctonionFloat16Algebra getElementAlgebra() {
 		return G.OHLF;
 	}
 }

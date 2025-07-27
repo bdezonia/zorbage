@@ -632,7 +632,7 @@ public class OctonionHighPrecisionCartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember> getElementAlgebra() {
+	public OctonionHighPrecisionAlgebra getElementAlgebra() {
 		return G.OHP;
 	}
 }

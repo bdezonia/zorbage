@@ -30,6 +30,11 @@
  */
 package example;
 
+import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.GetR;
+import nom.bdezonia.zorbage.algebra.MadeOfElements;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+
 /**
  * @author Barry DeZonia
  */
@@ -53,5 +58,39 @@ class Generics {
 	 * Java's code generator can define optimal code for manipulating U objects
 	 * as inline stack constructed data structures.
 	 */
+	
+	// illustrative example
+	
+	<T extends Algebra<T,U> & MadeOfElements<V,W>,
+		U extends GetR<W>,
+		V extends Algebra<V,W>,
+		W>
+	
+		W realValue(T blobAlg, IndexedDataSource<U> data, long idx)
+	{
+		// make a value to hold the blob of data from the list
+		
+		U blob = blobAlg.construct();
+
+		// figure out the algebra for the subelements of the blob
+		
+		V elemAlg = blobAlg.getElementAlgebra();
+
+		// get first element in list onto the blob
+		
+		data.get(idx, blob);
+		
+		// create a variable to hold the return value
+		
+		W value = elemAlg.construct();
+		
+		// get the real value of that element
+		
+		blob.getR(value);
+		
+		// and return it
+		
+		return value;
+	}
 	
 }

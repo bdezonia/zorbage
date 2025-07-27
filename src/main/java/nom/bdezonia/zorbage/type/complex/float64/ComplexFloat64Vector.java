@@ -734,7 +734,7 @@ public class ComplexFloat64Vector
 	}
 	
 	@Override
-	public Algebra<ComplexFloat64Algebra, ComplexFloat64Member> getElementAlgebra() {
+	public ComplexFloat64Algebra getElementAlgebra() {
 		return G.CDBL;
 	}
 }

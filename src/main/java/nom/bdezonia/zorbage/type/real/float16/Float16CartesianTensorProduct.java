@@ -701,7 +701,7 @@ public class Float16CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<Float16Algebra, Float16Member> getElementAlgebra() {
+	public Float16Algebra getElementAlgebra() {
 		return G.HLF;
 	}
 }

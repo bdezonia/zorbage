@@ -718,7 +718,7 @@ public class ComplexFloat32Vector
 	}
 	
 	@Override
-	public Algebra<ComplexFloat32Algebra, ComplexFloat32Member> getElementAlgebra() {
+	public ComplexFloat32Algebra getElementAlgebra() {
 		return G.CFLT;
 	}
 }

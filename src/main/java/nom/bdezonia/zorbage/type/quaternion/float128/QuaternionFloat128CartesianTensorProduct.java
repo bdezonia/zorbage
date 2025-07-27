@@ -711,7 +711,7 @@ public class QuaternionFloat128CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<QuaternionFloat128Algebra, QuaternionFloat128Member> getElementAlgebra() {
+	public QuaternionFloat128Algebra getElementAlgebra() {
 		return G.QQUAD;
 	}
 }

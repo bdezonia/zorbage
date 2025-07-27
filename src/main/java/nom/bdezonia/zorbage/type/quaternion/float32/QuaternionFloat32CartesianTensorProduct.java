@@ -711,7 +711,7 @@ public class QuaternionFloat32CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<QuaternionFloat32Algebra, QuaternionFloat32Member> getElementAlgebra() {
+	public QuaternionFloat32Algebra getElementAlgebra() {
 		return G.QFLT;
 	}
 }

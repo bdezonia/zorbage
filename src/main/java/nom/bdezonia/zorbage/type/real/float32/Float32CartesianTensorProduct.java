@@ -700,7 +700,7 @@ public class Float32CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<Float32Algebra, Float32Member> getElementAlgebra() {
+	public Float32Algebra getElementAlgebra() {
 		return G.FLT;
 	}
 }

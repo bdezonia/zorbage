@@ -711,7 +711,7 @@ public class OctonionFloat16CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<OctonionFloat16Algebra, OctonionFloat16Member> getElementAlgebra() {
+	public OctonionFloat16Algebra getElementAlgebra() {
 		return G.OHLF;
 	}
 }

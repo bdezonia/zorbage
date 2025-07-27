@@ -686,7 +686,7 @@ public class Float16Vector
 	}
 	
 	@Override
-	public Algebra<Float16Algebra, Float16Member> getElementAlgebra() {
+	public Float16Algebra getElementAlgebra() {
 		return G.HLF;
 	}
 }

@@ -971,7 +971,7 @@ public class QuaternionFloat16Matrix
 	}
 	
 	@Override
-	public Algebra<QuaternionFloat16Algebra, QuaternionFloat16Member> getElementAlgebra() {
+	public QuaternionFloat16Algebra getElementAlgebra() {
 		return G.QHLF;
 	}
 }

@@ -717,7 +717,7 @@ public class Float128Vector
 	}
 	
 	@Override
-	public Algebra<Float128Algebra, Float128Member> getElementAlgebra() {
+	public Float128Algebra getElementAlgebra() {
 		return G.QUAD;
 	}
 }

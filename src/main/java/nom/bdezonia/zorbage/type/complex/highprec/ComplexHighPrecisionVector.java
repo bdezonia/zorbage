@@ -684,7 +684,7 @@ public class ComplexHighPrecisionVector
 	}
 	
 	@Override
-	public Algebra<ComplexHighPrecisionAlgebra, ComplexHighPrecisionMember> getElementAlgebra() {
+	public ComplexHighPrecisionAlgebra getElementAlgebra() {
 		return G.CHP;
 	}
 }

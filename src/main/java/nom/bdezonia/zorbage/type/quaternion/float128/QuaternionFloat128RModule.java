@@ -745,7 +745,7 @@ public class QuaternionFloat128RModule
 	}
 	
 	@Override
-	public Algebra<QuaternionFloat128Algebra, QuaternionFloat128Member> getElementAlgebra() {
+	public QuaternionFloat128Algebra getElementAlgebra() {
 		return G.QQUAD;
 	}
 }

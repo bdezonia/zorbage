@@ -971,7 +971,7 @@ public class QuaternionFloat64Matrix
 	}
 	
 	@Override
-	public Algebra<QuaternionFloat64Algebra, QuaternionFloat64Member> getElementAlgebra() {
+	public QuaternionFloat64Algebra getElementAlgebra() {
 		return G.QDBL;
 	}
 }

@@ -632,7 +632,7 @@ public class QuaternionHighPrecisionCartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<QuaternionHighPrecisionAlgebra, QuaternionHighPrecisionMember> getElementAlgebra() {
+	public QuaternionHighPrecisionAlgebra getElementAlgebra() {
 		return G.QHP;
 	}
 }

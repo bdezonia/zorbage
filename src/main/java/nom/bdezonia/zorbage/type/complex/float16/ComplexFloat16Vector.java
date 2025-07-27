@@ -702,7 +702,7 @@ public class ComplexFloat16Vector
 	}
 	
 	@Override
-	public Algebra<ComplexFloat16Algebra, ComplexFloat16Member> getElementAlgebra() {
+	public ComplexFloat16Algebra getElementAlgebra() {
 		return G.CHLF;
 	}
 }

@@ -37,5 +37,5 @@ package nom.bdezonia.zorbage.algebra;
  */
 public interface MadeOfElements<T extends Algebra<T,U>, U> {
 
-	Algebra<T,U> getElementAlgebra();
+	T getElementAlgebra();
 }

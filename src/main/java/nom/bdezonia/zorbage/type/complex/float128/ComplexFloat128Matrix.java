@@ -954,7 +954,7 @@ public class ComplexFloat128Matrix
 	}
 	
 	@Override
-	public Algebra<ComplexFloat128Algebra, ComplexFloat128Member> getElementAlgebra() {
+	public ComplexFloat128Algebra getElementAlgebra() {
 		return G.CQUAD;
 	}
 }

@@ -711,7 +711,7 @@ public class OctonionFloat32CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<OctonionFloat32Algebra, OctonionFloat32Member> getElementAlgebra() {
+	public OctonionFloat32Algebra getElementAlgebra() {
 		return G.OFLT;
 	}
 }

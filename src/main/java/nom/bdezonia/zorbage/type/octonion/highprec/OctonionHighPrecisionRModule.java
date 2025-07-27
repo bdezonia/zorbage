@@ -684,7 +684,7 @@ public class OctonionHighPrecisionRModule
 	}
 	
 	@Override
-	public Algebra<OctonionHighPrecisionAlgebra, OctonionHighPrecisionMember> getElementAlgebra() {
+	public OctonionHighPrecisionAlgebra getElementAlgebra() {
 		return G.OHP;
 	}
 }

@@ -729,7 +729,7 @@ public class QuaternionFloat32RModule
 	}
 	
 	@Override
-	public Algebra<QuaternionFloat32Algebra, QuaternionFloat32Member> getElementAlgebra() {
+	public QuaternionFloat32Algebra getElementAlgebra() {
 		return G.QFLT;
 	}
 }

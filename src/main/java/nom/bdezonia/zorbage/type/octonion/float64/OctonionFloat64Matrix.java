@@ -957,7 +957,7 @@ public class OctonionFloat64Matrix
 	}
 	
 	@Override
-	public Algebra<OctonionFloat64Algebra, OctonionFloat64Member> getElementAlgebra() {
+	public OctonionFloat64Algebra getElementAlgebra() {
 		return G.ODBL;
 	}
 }

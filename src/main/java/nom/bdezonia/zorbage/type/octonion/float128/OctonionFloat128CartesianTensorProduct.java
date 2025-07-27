@@ -712,7 +712,7 @@ public class OctonionFloat128CartesianTensorProduct
 	}
 	
 	@Override
-	public Algebra<OctonionFloat128Algebra, OctonionFloat128Member> getElementAlgebra() {
+	public OctonionFloat128Algebra getElementAlgebra() {
 		return G.OQUAD;
 	}
 }

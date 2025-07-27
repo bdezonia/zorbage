@@ -671,7 +671,7 @@ public class HighPrecisionVector
 	}
 	
 	@Override
-	public Algebra<HighPrecisionAlgebra, HighPrecisionMember> getElementAlgebra() {
+	public HighPrecisionAlgebra getElementAlgebra() {
 		return G.HP;
 	}
 }
