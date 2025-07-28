@@ -68,20 +68,22 @@ public class ConcatenatedDataSource<U>
 	public void set(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		if (index < first.size())
+		long sz = first.size();
+		if (index < sz)
 			first.set(index, value);
 		else
-			second.set(index-first.size(), value);
+			second.set(index-sz, value);
 	}
 
 	@Override
 	public void get(long index, U value) {
 		if (index < 0)
 			throw new IllegalArgumentException("negative index exception");
-		if (index < first.size())
+		long sz = first.size();
+		if (index < sz)
 			first.get(index, value);
 		else
-			second.get(index-first.size(), value);
+			second.get(index-sz, value);
 	}
 
 	@Override
@@ -91,17 +93,29 @@ public class ConcatenatedDataSource<U>
 
 	@Override
 	public StorageConstruction storageType() {
-		// TODO - Maybe the order of these if statements should change. Or maybe more testing of the size()'s
-		//   should factor in.
-		if ((first.storageType() == StorageConstruction.MEM_SPARSE) &&
-				(second.storageType() == StorageConstruction.MEM_SPARSE))
+		
+		// TODO - Maybe the order of these if statements should change.
+		//   Or maybe more testing of the size()'s should factor in.
+		
+		StorageConstruction firstType = first.storageType();
+		
+		StorageConstruction secondType = first.storageType();
+		
+		// if both are sparse then so is the resulting list's
+		
+		if ((firstType == StorageConstruction.MEM_SPARSE) &&
+				(secondType == StorageConstruction.MEM_SPARSE))
 			return StorageConstruction.MEM_SPARSE;
-		if ((first.storageType() == StorageConstruction.MEM_VIRTUAL) ||
-				(second.storageType() == StorageConstruction.MEM_VIRTUAL))
+		
+		// if one is virtual then so is the resulting list's
+		
+		if ((firstType == StorageConstruction.MEM_VIRTUAL) ||
+				(secondType == StorageConstruction.MEM_VIRTUAL))
 			return StorageConstruction.MEM_VIRTUAL;
-		if (size() <= Integer.MAX_VALUE)
-			return StorageConstruction.MEM_ARRAY;
-		return StorageConstruction.MEM_VIRTUAL;
+		
+		// default otherwise to trying RAM
+		
+		return StorageConstruction.MEM_ARRAY;
 	}
 
 	@Override
@@ -139,9 +153,6 @@ public class ConcatenatedDataSource<U>
 		if (left >= rightPlusOne)
 			throw new IllegalArgumentException("concat has error condition 3");
 	
-		if (rightPlusOne - left <= 0)
-			throw new IllegalArgumentException("concat has error condition 4");
-		
 		if (rightPlusOne - left == 1) {
 			return sources.get(left);
 		}
