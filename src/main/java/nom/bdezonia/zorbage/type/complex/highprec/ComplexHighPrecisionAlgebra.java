@@ -163,7 +163,8 @@ public class ComplexHighPrecisionAlgebra
 		@Override
 		public void call(Integer power, ComplexHighPrecisionMember a, ComplexHighPrecisionMember b) {
 			if (power == 0 && isZero().call(a)) {
-				throw new IllegalArgumentException("0^0 is not a number");
+				unity().call(b);
+				return;
 			}
 			BigDecimal r = getModulus(a);
 			BigDecimal rToTheN = BigDecimalMath.pow(r, power, context);

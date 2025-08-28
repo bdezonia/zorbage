@@ -397,7 +397,7 @@ public class HighPrecisionAlgebra
 		@Override
 		public void call(Integer power, HighPrecisionMember a, HighPrecisionMember b) {
 			if (power == 0 && a.v().equals(BigDecimal.ZERO)) {
-				throw new IllegalArgumentException("0^0 is not a number");
+				unity().call(b);
 			}
 			else
 				b.setV( a.v().pow(power) );

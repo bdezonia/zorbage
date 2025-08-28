@@ -198,7 +198,7 @@ public class ComplexFloat128Algebra
 		public void call(Integer power, ComplexFloat128Member a, ComplexFloat128Member b) {
 			
 			if (power == 0 && isZero().call(a)) {
-				nan().call(b);
+				unity().call(b);
 				return;
 			}
 			Float128Member norm = new Float128Member();

@@ -668,8 +668,10 @@ public class UnsignedInt64Algebra
 	{
 		@Override
 		public void call(UnsignedInt64Member a, UnsignedInt64Member b, UnsignedInt64Member c) {
-			if (signum().call(a) == 0 && signum().call(b) == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
+			if (signum().call(a) == 0 && signum().call(b) == 0) {
+				unity().call(c);
+				return;
+			}
 			UnsignedInt64Member tmp = new UnsignedInt64Member(ONE);
 			UnsignedInt64Member pow = new UnsignedInt64Member(b);
 			while (!isEqual().call(pow, ZERO)) {

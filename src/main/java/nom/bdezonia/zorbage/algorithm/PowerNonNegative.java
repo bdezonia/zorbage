@@ -59,8 +59,10 @@ public class PowerNonNegative {
 		if (power < 0)
 			throw new IllegalArgumentException("Cannot get negative powers from integers");
 		if (power == 0) {
-			if (algebra.isZero().call(in))
-				throw new IllegalArgumentException("0^0 is not a number");
+			if (algebra.isZero().call(in)) {
+				algebra.unity().call(out);
+				return;
+			}
 		}
 		pow(algebra, power, in, out);
 	}

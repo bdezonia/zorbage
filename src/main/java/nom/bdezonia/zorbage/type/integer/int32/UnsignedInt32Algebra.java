@@ -653,8 +653,11 @@ public class UnsignedInt32Algebra
 	{
 		@Override
 		public void call(UnsignedInt32Member a, UnsignedInt32Member b, UnsignedInt32Member c) {
-			if (signum().call(a) == 0 && signum().call(b) == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
+
+			if (signum().call(a) == 0 && signum().call(b) == 0) {
+				unity().call(c);
+				return;
+			}
 			UnsignedInt32Member tmp = new UnsignedInt32Member(ONE);
 			UnsignedInt32Member pow = new UnsignedInt32Member(b);
 			while (!isEqual().call(pow, ZERO)) {

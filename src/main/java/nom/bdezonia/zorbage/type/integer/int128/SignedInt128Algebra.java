@@ -606,8 +606,11 @@ public class SignedInt128Algebra
 	{
 		@Override
 		public void call(SignedInt128Member a, SignedInt128Member b, SignedInt128Member c) {
-			if (signum().call(a) == 0 && signum().call(b) == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
+
+			if (signum().call(a) == 0 && signum().call(b) == 0) {
+				unity().call(c);
+				return;
+			}
 			SignedInt128Member tmp = new SignedInt128Member(ONE);
 			SignedInt128Member pow = new SignedInt128Member(b);
 			while (!isEqual().call(pow, ZERO)) {

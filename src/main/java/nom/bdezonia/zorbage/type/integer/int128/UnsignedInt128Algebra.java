@@ -572,8 +572,11 @@ public class UnsignedInt128Algebra
 	{
 		@Override
 		public void call(UnsignedInt128Member a, UnsignedInt128Member b, UnsignedInt128Member c) {
-			if (signum().call(a) == 0 && signum().call(b) == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
+
+			if (signum().call(a) == 0 && signum().call(b) == 0) {
+				unity().call(c);
+				return;
+			}
 			UnsignedInt128Member tmp = new UnsignedInt128Member(ONE);
 			UnsignedInt128Member pow = new UnsignedInt128Member(b);
 			while (!isEqual().call(pow, ZERO)) {

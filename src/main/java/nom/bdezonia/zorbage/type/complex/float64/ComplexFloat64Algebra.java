@@ -200,7 +200,7 @@ public class ComplexFloat64Algebra
 		@Override
 		public void call(Integer power, ComplexFloat64Member a, ComplexFloat64Member b) {
 			if (power == 0 && isZero().call(a)) {
-				assign().call(NaN_, b);
+				unity().call(b);
 				return;
 			}
 			double rToTheN = Math.pow(Math.hypot(a.r(), a.i()), power);

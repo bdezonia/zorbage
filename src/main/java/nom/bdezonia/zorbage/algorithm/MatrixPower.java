@@ -78,12 +78,7 @@ public class MatrixPower {
 		}
 		else if (power == 0) {
 			b.alloc(a.rows(), a.cols());
-			if (matAlgebra.isZero().call(a)) {
-				throw new IllegalArgumentException("0^0 is not a number");
-			}
-			else {
-				MatrixUnity.compute(numAlgebra, b);
-			}
+			MatrixUnity.compute(numAlgebra, b);
 		}
 		else if (power == 1)
 			MatrixAssign.compute(numAlgebra, a, b);

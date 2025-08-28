@@ -691,8 +691,10 @@ public class SignedInt64Algebra
 		public void call(SignedInt64Member a, SignedInt64Member b, SignedInt64Member c) {
 			if (b.v() < 0)
 				throw new IllegalArgumentException("Cannot get negative powers from int64s");
-			if (signum().call(a) == 0 && signum().call(b) == 0)
-				throw new IllegalArgumentException("0^0 is not a number");
+			if (signum().call(a) == 0 && signum().call(b) == 0) {
+				unity().call(c);
+				return;
+			}
 			SignedInt64Member tmp = new SignedInt64Member(ONE);
 			SignedInt64Member pow = new SignedInt64Member(b);
 			while (!isEqual().call(pow, ZERO)) {

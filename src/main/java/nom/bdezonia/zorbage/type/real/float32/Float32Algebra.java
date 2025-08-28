@@ -409,7 +409,7 @@ public class Float32Algebra
 		@Override
 		public void call(Integer power, Float32Member a, Float32Member b) {
 			if (power == 0 && a.v() == 0) {
-				b.setV(Float.NaN);
+				unity().call(b);
 			}
 			else
 				b.setV( (float) Math.pow(a.v(), power) );

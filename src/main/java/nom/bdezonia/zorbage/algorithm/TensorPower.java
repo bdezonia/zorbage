@@ -66,9 +66,6 @@ public class TensorPower {
 			throw new IllegalArgumentException("negative powers not supported");
 		}
 		else if (power == 0) {
-			if (tensAlg.isZero().call(a)) {
-				throw new IllegalArgumentException("0^0 is not a number");
-			}
 			TensorShape.compute(a, b); // set the shape of result
 			tensAlg.unity().call(b); // and make it have value 1
 		}
