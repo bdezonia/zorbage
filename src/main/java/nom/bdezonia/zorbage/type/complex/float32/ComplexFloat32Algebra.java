@@ -124,7 +124,6 @@ public class ComplexFloat32Algebra
 	private static final ComplexFloat32Member TWO_I = new ComplexFloat32Member(0,2);
 	private static final ComplexFloat32Member MINUS_I = new ComplexFloat32Member(0,-1);
 	private static final ComplexFloat32Member MINUS_I_OVER_TWO = new ComplexFloat32Member(0,-0.5f);
-	private static final ComplexFloat32Member NaN_ = new ComplexFloat32Member(Float.NaN,Float.NaN);
 
 	@Override
 	public String typeDescription() {

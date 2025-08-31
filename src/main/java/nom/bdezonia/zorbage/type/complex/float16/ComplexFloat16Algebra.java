@@ -122,7 +122,6 @@ public class ComplexFloat16Algebra
 	private static final ComplexFloat16Member TWO_I = new ComplexFloat16Member(0,2);
 	private static final ComplexFloat16Member MINUS_I = new ComplexFloat16Member(0,-1);
 	private static final ComplexFloat16Member MINUS_I_OVER_TWO = new ComplexFloat16Member(0,(float)-0.5);
-	private static final ComplexFloat16Member NaN_ = new ComplexFloat16Member(Float.NaN,Float.NaN);
 
 	@Override
 	public String typeDescription() {
