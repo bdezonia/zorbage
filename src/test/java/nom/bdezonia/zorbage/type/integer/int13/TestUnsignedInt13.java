@@ -255,12 +255,8 @@ public class TestUnsignedInt13 {
 					c.set(a);
 					G.UINT13.pred().call(c, c);
 					G.UINT13.pred().call(c, c);
-					try {
-						G.UINT13.pow().call(a, b, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.UINT13.pow().call(a, b, c);
+					assertEquals(1, c.v());
 				}
 				else {
 					c.set(a);
@@ -276,12 +272,8 @@ public class TestUnsignedInt13 {
 					c.set(a);
 					G.UINT13.pred().call(c, c);
 					G.UINT13.pred().call(c, c);
-					try {
-						G.UINT13.power().call(j, a, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.UINT13.power().call(j, a, c);
+					assertEquals(1, c.v());
 				}
 				else {
 					c.set(a);

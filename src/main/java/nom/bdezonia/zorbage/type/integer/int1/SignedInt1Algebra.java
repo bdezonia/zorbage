@@ -217,8 +217,7 @@ public class SignedInt1Algebra
 			if (power < 0)
 				throw new IllegalArgumentException("negative power of an integral type is impossible");
 			else if (power == 0) {
-				if (a.v == 0)
-					throw new IllegalArgumentException("1 bit signed int does not have the concept of 1");
+				throw new IllegalArgumentException("1 bit signed int does not have the concept of 1");
 			}
 			else if (power == 1) {
 				b.v = a.v;

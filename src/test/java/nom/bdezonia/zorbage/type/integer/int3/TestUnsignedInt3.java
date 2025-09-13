@@ -249,12 +249,8 @@ public class TestUnsignedInt3 {
 					c.set(a);
 					G.UINT3.pred().call(c, c);
 					G.UINT3.pred().call(c, c);
-					try {
-						G.UINT3.pow().call(a, b, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.UINT3.pow().call(a, b, c);
+					assertEquals(1, c.v());
 				}
 				else {
 					c.set(a);
@@ -270,12 +266,8 @@ public class TestUnsignedInt3 {
 					c.set(a);
 					G.UINT3.pred().call(c, c);
 					G.UINT3.pred().call(c, c);
-					try {
-						G.UINT3.power().call(j, a, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.UINT3.power().call(j, a, c);
+					assertEquals(1, c.v());
 				}
 				else {
 					c.set(a);

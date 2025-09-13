@@ -275,12 +275,8 @@ public class TestSignedInt5 {
 					c.set(a);
 					G.INT5.pred().call(c, c);
 					G.INT5.pred().call(c, c);
-					try {
-						G.INT5.pow().call(a, b, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.INT5.pow().call(a, b, c);
+					assertEquals(1, c.v());
 				}
 				else if (j >= 0) {
 					c.set(a);
@@ -296,12 +292,8 @@ public class TestSignedInt5 {
 					c.set(a);
 					G.INT5.pred().call(c, c);
 					G.INT5.pred().call(c, c);
-					try {
-						G.INT5.power().call(j, a, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.INT5.power().call(j, a, c);
+					assertEquals(1, c.v());
 				}
 				else if (j > 0) {
 					c.set(a);

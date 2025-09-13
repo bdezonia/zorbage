@@ -272,12 +272,8 @@ public class TestSignedInt10 {
 					c.set(a);
 					G.INT10.pred().call(c, c);
 					G.INT10.pred().call(c, c);
-					try {
-						G.INT10.pow().call(a, b, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.INT10.pow().call(a, b, c);
+					assertEquals(1, c.v());
 				}
 				else if (j >= 0) {
 					c.set(a);
@@ -293,12 +289,8 @@ public class TestSignedInt10 {
 					c.set(a);
 					G.INT10.pred().call(c, c);
 					G.INT10.pred().call(c, c);
-					try {
-						G.INT10.power().call(j, a, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.INT10.power().call(j, a, c);
+					assertEquals(1, c.v());
 				}
 				else if (j > 0) {
 					c.set(a);

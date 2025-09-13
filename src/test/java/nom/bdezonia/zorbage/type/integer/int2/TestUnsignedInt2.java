@@ -249,12 +249,8 @@ public class TestUnsignedInt2 {
 					c.set(a);
 					G.UINT2.pred().call(c, c);
 					G.UINT2.pred().call(c, c);
-					try {
-						G.UINT2.pow().call(a, b, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.UINT2.pow().call(a, b, c);
+					assertEquals(1, c.v());
 				}
 				else {
 					c.set(a);
@@ -270,12 +266,8 @@ public class TestUnsignedInt2 {
 					c.set(a);
 					G.UINT2.pred().call(c, c);
 					G.UINT2.pred().call(c, c);
-					try {
-						G.UINT2.power().call(j, a, c);
-						fail();
-					} catch (IllegalArgumentException e) {
-						assertTrue(true);
-					}
+					G.UINT2.power().call(j, a, c);
+					assertEquals(1, c.v());
 				}
 				else {
 					c.set(a);
