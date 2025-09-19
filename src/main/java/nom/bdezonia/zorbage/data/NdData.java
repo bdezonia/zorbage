@@ -267,7 +267,7 @@ public class NdData<U>
 	 */
 	@Override
 	public void setAxisType(int i, String type) {
-		if (type == null || type == "") type = "d" + i;
+		if (type == null || type.equals("")) type = "d" + i;
 		this.axisTypes[i] = type;
 	}
 
@@ -345,7 +345,7 @@ public class NdData<U>
 	 */
 	@Override
 	public void setValueType(String type) {
-		if (type == null || type == "") type = "unk";
+		if (type == null || type.equals("")) type = "unk";
 		this.valueType = type;
 	}
 }
