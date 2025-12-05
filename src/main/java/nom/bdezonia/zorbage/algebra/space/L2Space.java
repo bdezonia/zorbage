@@ -30,12 +30,9 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-// triangle inequality exists
-// complete
-
 /**
  * @author Barry DeZonia
  */
-public interface LNSpace extends BanachSpace {
+public interface L2Space extends HilbertSpace, LpSpace {
 
 }

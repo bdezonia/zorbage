@@ -35,6 +35,6 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface EuclideanSpace extends HilbertSpace {
+public interface EuclideanSpace extends L2Space, Manifold {
 
 }

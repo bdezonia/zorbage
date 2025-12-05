@@ -33,6 +33,6 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface HilbertSpace extends BanachSpace, InnerProductSpace {
+public interface LocallyConvexSpace extends TopologicalSpace, VectorSpace {
 
 }
