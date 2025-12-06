@@ -35,4 +35,5 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface L2Space extends HilbertSpace, LpSpace {
 
+	// I think it has the L2 norm
 }

@@ -35,4 +35,5 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface HilbertSpace extends BanachSpace, InnerProductSpace {
 
+	// Dot Product and Completeness
 }

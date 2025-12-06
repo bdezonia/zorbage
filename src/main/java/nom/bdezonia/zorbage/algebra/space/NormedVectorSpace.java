@@ -30,14 +30,13 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-// maybe also known as a Vector Space????
-//   if so then why do we have two classes?
-//   this came from a facebook diagram that may not have
-//   been accurate.
-
 /**
  * @author Barry DeZonia
  */
-public interface NormedLinearSpace extends MetricSpace, LocallyConvexSpace {
+public interface NormedVectorSpace extends MetricSpace, LocallyConvexSpace {
 
+	// Norm
+	
+	// At one time I called this NormedLinearSpace and I'm
+	// not sure if LinearSpace or VectorSpace is better.
 }

@@ -35,4 +35,5 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface MetricSpace extends TopologicalSpace {
 
+	// Distance
 }

@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface InnerProductSpace extends NormedLinearSpace, LocallyConvexSpace {
+public interface InnerProductSpace extends NormedVectorSpace, LocallyConvexSpace {
 
+	// Dot Product
 }

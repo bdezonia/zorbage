@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface BanachSpace extends NormedLinearSpace {
+public interface BanachSpace extends NormedVectorSpace {
 
+	// Norm and Completeness
 }

@@ -35,4 +35,5 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface LocallyConvexSpace extends TopologicalSpace, VectorSpace {
 
+	// Semi-Norm
 }

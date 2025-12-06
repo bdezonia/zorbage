@@ -35,4 +35,15 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface Manifold extends TopologicalSpace {
 
+	/* In topology, a manifold is a space that looks like
+	 * familiar Euclidean space (like a flat plane or 3D space)
+	 * when you zoom in on any single point, even if its global
+	 * structure is curved or complex, such as a sphere or a
+	 * donut (torus). Formally, it's a topological space where
+	 * every point has a neighborhood that's topologically
+	 * equivalent (homeomorphic) to an open ball in R^n,
+	 * allowing for local coordinates, but the overall shape
+	 * can be globally different, making them fundamental for
+	 * modeling physics and geometry.
+ 	 */
 }

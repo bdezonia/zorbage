@@ -30,12 +30,12 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-// triangle inequality exists
-// complete
-
 /**
  * @author Barry DeZonia
  */
 public interface LpSpace extends BanachSpace {
 
+	// I think it has the Lp norm: 1 <= p <= infinity
+	// triangle inequality exists
+	// complete
 }

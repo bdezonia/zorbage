@@ -30,11 +30,10 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-// R^n vector space
-
 /**
  * @author Barry DeZonia
  */
 public interface EuclideanSpace extends L2Space, Manifold {
 
+	// R^n vector space (or linear space)
 }
