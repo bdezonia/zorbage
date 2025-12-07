@@ -30,12 +30,21 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface LpSpace extends BanachSpace {
+public interface LpSpace<T extends Field<T,U>, U>
 
+	extends BanachSpace<T,U>, Completeness
+{
+
+	// isComplete() returns true
+	
 	// I think it has the Lp norm: 1 <= p <= infinity
 	// triangle inequality exists
 	// complete
+	
+	long p();  // < 0 == infinity, otherwise 1 to LONG_MAX
 }

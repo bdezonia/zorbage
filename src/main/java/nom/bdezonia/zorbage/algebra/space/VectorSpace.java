@@ -30,10 +30,24 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface VectorSpace {
+public interface VectorSpace<T extends Field<T,U>,U>
 
+	extends AffineSpace<T,U>
+{
 	// Linear Combination
+	
+	// isCompact() returns true;
+
+	// is also a topological space if based on reals/complexes/field values
+
+	U[] origin();
+
+	// "an affine space is a vector space that's forgotten its
+	//  origin". In particular, every linear space is also an
+	//  affine space."
 }

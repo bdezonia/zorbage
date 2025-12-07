@@ -30,13 +30,18 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface NormedVectorSpace extends MetricSpace, LocallyConvexSpace {
+public interface NormedVectorSpace<T extends Field<T,U>, U>
 
+	extends MetricSpace, LocallyConvexSpace<T,U>
+{
 	// Norm
 	
 	// At one time I called this NormedLinearSpace and I'm
 	// not sure if LinearSpace or VectorSpace is better.
+	// LATER: it seems they are interchangeable terms.
 }

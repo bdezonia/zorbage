@@ -30,10 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface LocallyConvexSpace extends TopologicalSpace, VectorSpace {
+public interface LocallyConvexSpace<T extends Field<T,U>,U>
 
+	extends TopologicalSpace, VectorSpace<T,U>
+{
 	// Semi-Norm
 }

@@ -35,9 +35,15 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface HilbertSpace<T extends Field<T,U>,U>
+public interface AffineSpace<T extends Field<T,U>, U>
 
-	extends BanachSpace<T,U>, InnerProductSpace<T,U>
+    extends Compactness, Manifold
 {
-	// Dot Product and Completeness
+	// isCompact() returns false;
+	
+	// a topological space if based on reals/complexes/field values
+
+	// "an affine space is a vector space that's forgotten its
+	//  origin". In particular, every linear space is also an
+	//  affine space."
 }

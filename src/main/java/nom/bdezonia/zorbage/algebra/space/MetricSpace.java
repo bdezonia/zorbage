@@ -33,7 +33,9 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface MetricSpace extends TopologicalSpace {
+public interface MetricSpace
 
+	extends TopologicalSpace
+{
 	// Distance
 }

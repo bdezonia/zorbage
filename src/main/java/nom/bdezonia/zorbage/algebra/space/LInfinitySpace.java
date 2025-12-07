@@ -35,9 +35,9 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface HilbertSpace<T extends Field<T,U>,U>
+public interface LInfinitySpace<T extends Field<T,U>, U>
 
-	extends BanachSpace<T,U>, InnerProductSpace<T,U>
+	extends LpSpace<T,U>
 {
-	// Dot Product and Completeness
+	// long p() is < 0 which we use to symbolize Infinity
 }

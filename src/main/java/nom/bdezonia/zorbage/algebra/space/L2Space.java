@@ -30,10 +30,16 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface L2Space extends HilbertSpace, LpSpace {
+public interface L2Space<T extends Field<T,U>, U>
 
+	extends HilbertSpace<T,U>, LpSpace<T,U>
+{
 	// I think it has the L2 norm
+	
+	// also long p() == 2
 }

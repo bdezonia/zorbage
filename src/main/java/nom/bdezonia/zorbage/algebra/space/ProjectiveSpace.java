@@ -35,9 +35,11 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface HilbertSpace<T extends Field<T,U>,U>
+public interface ProjectiveSpace<T extends Field<T,U>, U>
 
-	extends BanachSpace<T,U>, InnerProductSpace<T,U>
+    extends Manifold, Compactness
 {
-	// Dot Product and Completeness
+	// isCompact() returns true;
+
+	// a topological space if based on reals/complexes/field values
 }

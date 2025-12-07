@@ -30,10 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface InnerProductSpace extends NormedVectorSpace, LocallyConvexSpace {
+public interface InnerProductSpace<T extends Field<T,U>,U>
 
+	extends NormedVectorSpace<T,U>, LocallyConvexSpace<T,U>
+{
 	// Dot Product
 }

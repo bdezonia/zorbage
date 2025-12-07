@@ -30,10 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface EuclideanSpace extends L2Space, Manifold {
+public interface EuclideanSpace<T extends Field<T,U>, U>
 
+	extends L2Space<T,U>, Manifold
+{
 	// R^n vector space (or linear space)
 }

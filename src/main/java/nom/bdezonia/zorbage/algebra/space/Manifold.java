@@ -33,8 +33,10 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface Manifold extends TopologicalSpace {
+public interface Manifold
 
+	extends TopologicalSpace
+{
 	/* In topology, a manifold is a space that looks like
 	 * familiar Euclidean space (like a flat plane or 3D space)
 	 * when you zoom in on any single point, even if its global

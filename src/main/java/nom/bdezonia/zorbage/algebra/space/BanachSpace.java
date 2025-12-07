@@ -30,10 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import nom.bdezonia.zorbage.algebra.Field;
+
 /**
  * @author Barry DeZonia
  */
-public interface BanachSpace extends NormedVectorSpace {
+public interface BanachSpace<T extends Field<T,U>, U>
 
+	extends NormedVectorSpace<T,U>
+{
 	// Norm and Completeness
 }
