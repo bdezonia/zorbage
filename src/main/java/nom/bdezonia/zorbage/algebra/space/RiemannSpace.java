@@ -30,16 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-import nom.bdezonia.zorbage.algebra.Field;
-
 /**
  * @author Barry DeZonia
  */
-public interface ProjectiveSpace<T extends Field<T,U>, U>
+public interface RiemannSpace
 
-    extends Homogeneity, Manifold 
+	extends Manifold
 {
-	// isCompact() returns true
-
-	// a topological space if based on reals/complexes/field values
+	// isSmooth() returns true
+	
+	// has a lot of other properties
 }

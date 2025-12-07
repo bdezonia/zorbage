@@ -31,15 +31,14 @@
 package nom.bdezonia.zorbage.algebra.space;
 
 import nom.bdezonia.zorbage.algebra.Field;
+import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
 
 /**
  * @author Barry DeZonia
  */
-public interface ProjectiveSpace<T extends Field<T,U>, U>
-
-    extends Homogeneity, Manifold 
+public interface ComplexSpace<T extends Field<T,U>, U extends ComplexType>
 {
-	// isCompact() returns true
-
-	// a topological space if based on reals/complexes/field values
+	// what is the API?
+	
+	// sesquilinear form
 }

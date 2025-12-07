@@ -31,15 +31,14 @@
 package nom.bdezonia.zorbage.algebra.space;
 
 import nom.bdezonia.zorbage.algebra.Field;
+import nom.bdezonia.zorbage.algebra.type.markers.RealType;
 
 /**
  * @author Barry DeZonia
  */
-public interface ProjectiveSpace<T extends Field<T,U>, U>
-
-    extends Homogeneity, Manifold 
+public interface RealSpace<T extends Field<T,U>, U extends RealType>
 {
-	// isCompact() returns true
+	// what is the API?
 
-	// a topological space if based on reals/complexes/field values
+	// bilinear form
 }

@@ -30,6 +30,9 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import java.util.List;
+
+import nom.bdezonia.zorbage.algebra.Dimensioned;
 import nom.bdezonia.zorbage.algebra.Field;
 
 /**
@@ -37,15 +40,25 @@ import nom.bdezonia.zorbage.algebra.Field;
  */
 public interface VectorSpace<T extends Field<T,U>,U>
 
-	extends AffineSpace<T,U>
+	extends AffineSpace<T,U>, Dimensioned
 {
 	// Linear Combination
 	
-	// isCompact() returns true;
+	// isLinear() returns true
+	
+	// isCompact() returns true
+
+	// isHomogeneous() returns false
+	
+	// inductiveDimension() == numDimensions()
+
+	// lebesgueCoveringDimension() == numDimensions()
+	
+	// does haussdorffDimension() == numDimensions() as well?
 
 	// is also a topological space if based on reals/complexes/field values
 
-	U[] origin();
+	List<U> origin();  // this presence causes inhomogeneity of the space
 
 	// "an affine space is a vector space that's forgotten its
 	//  origin". In particular, every linear space is also an

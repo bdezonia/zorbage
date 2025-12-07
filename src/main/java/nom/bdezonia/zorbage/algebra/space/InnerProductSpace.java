@@ -40,4 +40,12 @@ public interface InnerProductSpace<T extends Field<T,U>,U>
 	extends NormedVectorSpace<T,U>, LocallyConvexSpace<T,U>
 {
 	// Dot Product
+	
+	// Angles between vectors are defined in inner product
+	// spaces. Probably through the application of the
+	// dot product.
+	
+	// warning: A normed space underlies an inner product
+	// space if and only if it satisfies the parallelogram
+	// law, or equivalently, if its unit ball is an ellipsoid. 
 }

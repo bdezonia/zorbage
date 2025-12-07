@@ -30,16 +30,20 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-import nom.bdezonia.zorbage.algebra.Field;
+import nom.bdezonia.zorbage.algebra.Norm;
 
 /**
  * @author Barry DeZonia
  */
-public interface ProjectiveSpace<T extends Field<T,U>, U>
+public interface NormedSpace<T,U>
 
-    extends Homogeneity, Manifold 
+	extends Norm<T,U>, LinearTopologicalSpace, MetricSpace
 {
-	// isCompact() returns true
-
-	// a topological space if based on reals/complexes/field values
+	// A real or complex linear space endowed with a norm is
+	// a normed space. Every normed space is both a linear
+	// topological space and a metric space.
+	
+	// Care must be taken because if T,U is a field and not
+	// real or complex then maybe it is not a normed space.
+	// I need to investigate this further.
 }

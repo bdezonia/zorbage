@@ -37,7 +37,9 @@ import nom.bdezonia.zorbage.algebra.Field;
  */
 public interface EuclideanSpace<T extends Field<T,U>, U>
 
-	extends L2Space<T,U>, Manifold
+	extends L2Space<T,U>, RiemannSpace
 {
 	// R^n vector space (or linear space)
+	
+	// isComplete() returns true
 }

@@ -40,4 +40,6 @@ public interface HilbertSpace<T extends Field<T,U>,U>
 	extends BanachSpace<T,U>, InnerProductSpace<T,U>
 {
 	// Dot Product and Completeness
+	
+	// isComplete() returns true
 }

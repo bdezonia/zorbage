@@ -37,9 +37,8 @@ import nom.bdezonia.zorbage.algebra.Field;
  */
 public interface LpSpace<T extends Field<T,U>, U>
 
-	extends BanachSpace<T,U>, Completeness
+	extends BanachSpace<T,U>
 {
-
 	// isComplete() returns true
 	
 	// I think it has the Lp norm: 1 <= p <= infinity

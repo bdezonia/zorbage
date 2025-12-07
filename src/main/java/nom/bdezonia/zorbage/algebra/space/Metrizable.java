@@ -30,16 +30,9 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-import nom.bdezonia.zorbage.algebra.Field;
-
 /**
  * @author Barry DeZonia
  */
-public interface ProjectiveSpace<T extends Field<T,U>, U>
+public interface Metrizable {
 
-    extends Homogeneity, Manifold 
-{
-	// isCompact() returns true
-
-	// a topological space if based on reals/complexes/field values
 }

@@ -33,7 +33,15 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface TopologicalSpace {
+public interface TopologicalSpace
 
+	extends Compactness, LinearStatus
+{
 	// Open Space
+	
+	// for a Euclidean space (R^n) these next two concepts == n
+	
+	int inductiveDimension();
+	
+	int lebesgueCoveringDimension();
 }

@@ -37,9 +37,14 @@ import nom.bdezonia.zorbage.algebra.Field;
  */
 public interface NormedVectorSpace<T extends Field<T,U>, U>
 
-	extends MetricSpace, LocallyConvexSpace<T,U>
+	// Barry added VectorSpace<T,U> because that is logical.
+	// He might be wrong.
+
+	extends MetricSpace, NormedSpace<T,U>, VectorSpace<T,U>, LocallyConvexSpace<T,U>
 {
-	// Norm
+	// has norm()
+	
+	// isLinear() returns true
 	
 	// At one time I called this NormedLinearSpace and I'm
 	// not sure if LinearSpace or VectorSpace is better.

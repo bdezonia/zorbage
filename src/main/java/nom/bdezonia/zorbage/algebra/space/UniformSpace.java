@@ -30,16 +30,13 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-import nom.bdezonia.zorbage.algebra.Field;
-
 /**
  * @author Barry DeZonia
  */
-public interface ProjectiveSpace<T extends Field<T,U>, U>
+public interface UniformSpace
 
-    extends Homogeneity, Manifold 
+	extends TopologicalSpace, Compactness, Completeness
 {
-	// isCompact() returns true
-
-	// a topological space if based on reals/complexes/field values
+	// complete and copact might need to be defined
+	// elsewhere is the space class hierarchy
 }

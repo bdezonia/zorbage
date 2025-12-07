@@ -37,9 +37,11 @@ import nom.bdezonia.zorbage.algebra.Field;
  */
 public interface AffineSpace<T extends Field<T,U>, U>
 
-    extends Compactness, Manifold
+    extends Homogeneity, Manifold
 {
-	// isCompact() returns false;
+	// isCompact() returns false
+	
+	// isHomogeneous() returns true
 	
 	// a topological space if based on reals/complexes/field values
 
