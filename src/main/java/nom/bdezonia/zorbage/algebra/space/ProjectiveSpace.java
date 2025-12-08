@@ -37,9 +37,11 @@ import nom.bdezonia.zorbage.algebra.Field;
  */
 public interface ProjectiveSpace<T extends Field<T,U>, U>
 
-    extends Homogeneity, Manifold 
+    extends Homogeneity, Manifold, Smoothness
 {
 	// isCompact() returns true
+	
+	// isSmooth() returns true
 
 	// a topological space if based on reals/complexes/field values
 }

@@ -30,14 +30,10 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-import nom.bdezonia.zorbage.algebra.Field;
-
 /**
  * @author Barry DeZonia
  */
-public interface LInfinitySpace<T extends Field<T,U>, U>
+public interface PseudoRiemannSpace {
 
-	extends LpSpace<T,U>
-{
-	// p() is -1 which we use to symbolize Infinity
+	// what are the properties?
 }

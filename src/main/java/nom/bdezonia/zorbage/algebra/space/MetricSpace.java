@@ -39,5 +39,5 @@ public interface MetricSpace
 {
 	// Distance
 	
-	double hausdorfDimension();
+	double hausdorffDimension();
 }

@@ -41,5 +41,5 @@ public interface L2Space<T extends Field<T,U>, U>
 {
 	// I think it has the L2 norm
 	
-	// also long p() == 2
+	// also p() == 2
 }

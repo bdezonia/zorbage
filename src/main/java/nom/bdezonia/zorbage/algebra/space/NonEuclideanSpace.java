@@ -35,9 +35,9 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface LInfinitySpace<T extends Field<T,U>, U>
+public interface NonEuclideanSpace<T extends Field<T,U>, U>
 
-	extends LpSpace<T,U>
+	extends RiemannSpace
 {
-	// p() is -1 which we use to symbolize Infinity
+	// what are the properties?
 }

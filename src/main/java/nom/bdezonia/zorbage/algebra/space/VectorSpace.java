@@ -44,6 +44,8 @@ public interface VectorSpace<T extends Field<T,U>,U>
 {
 	// Linear Combination
 	
+	// isSmooth() is true if finite dimensional
+	
 	// isLinear() returns true
 	
 	// isCompact() returns true

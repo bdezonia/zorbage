@@ -35,4 +35,7 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface Metrizable {
 
+	// TODO: I am not using this. I made RiemannSpace a
+	// MetricSpace instead of making it Metrizable. Is
+	// that correct?
 }
