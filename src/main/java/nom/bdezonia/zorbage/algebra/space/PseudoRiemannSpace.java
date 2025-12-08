@@ -36,4 +36,6 @@ package nom.bdezonia.zorbage.algebra.space;
 public interface PseudoRiemannSpace {
 
 	// what are the properties?
+	
+	// is it smooth? a manifold? what else?
 }

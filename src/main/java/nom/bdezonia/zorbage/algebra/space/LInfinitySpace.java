@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface LInfinitySpace<T extends Field<T,U>, U>
+public interface LInfinitySpace<T extends Field<T,U>,
+									U>
 
 	extends LpSpace<T,U>
 {

@@ -36,7 +36,8 @@ import nom.bdezonia.zorbage.algebra.type.markers.RealType;
 /**
  * @author Barry DeZonia
  */
-public interface RealSpace<T extends Field<T,U>, U extends RealType>
+public interface RealSpace<T extends Field<T,U>,
+							U extends RealType>
 {
 	// what is the API?
 

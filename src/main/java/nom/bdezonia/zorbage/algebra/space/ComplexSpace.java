@@ -36,7 +36,8 @@ import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
 /**
  * @author Barry DeZonia
  */
-public interface ComplexSpace<T extends Field<T,U>, U extends ComplexType>
+public interface ComplexSpace<T extends Field<T,U>,
+								U extends ComplexType>
 {
 	// what is the API?
 	

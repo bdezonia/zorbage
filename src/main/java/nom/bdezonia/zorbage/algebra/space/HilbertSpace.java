@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface HilbertSpace<T extends Field<T,U>,U>
+public interface HilbertSpace<T extends Field<T,U>,
+								U>
 
 	extends BanachSpace<T,U>, InnerProductSpace<T,U>
 {

@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface RiemannSpace
 
-	extends Manifold, MetricSpace, PseudoRiemannSpace, Smoothness
+	extends Manifold, PseudoRiemannSpace
 {
 	// isSmooth() returns true
 	

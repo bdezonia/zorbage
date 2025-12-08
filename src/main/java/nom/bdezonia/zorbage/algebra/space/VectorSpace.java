@@ -38,7 +38,8 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface VectorSpace<T extends Field<T,U>,U>
+public interface VectorSpace<T extends Field<T,U>,
+								U>
 
 	extends AffineSpace<T,U>, Dimensioned
 {

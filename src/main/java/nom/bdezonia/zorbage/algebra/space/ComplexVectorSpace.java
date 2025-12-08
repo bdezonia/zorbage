@@ -31,16 +31,15 @@
 package nom.bdezonia.zorbage.algebra.space;
 
 import nom.bdezonia.zorbage.algebra.Field;
+import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
 
 /**
  * @author Barry DeZonia
  */
-public interface L2Space<T extends Field<T,U>,
-							U>
+public interface ComplexVectorSpace<T extends Field<T,U>,
+										U extends ComplexType>
 
-	extends HilbertSpace<T,U>, LpSpace<T,U>
+	extends ComplexSpace<T,U>, VectorSpace<T,U>, Manifold
 {
-	// I think it has the L2 norm
-	
-	// also p() == 2
+	// if finite dimensional then it is a smooth manifold
 }

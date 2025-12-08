@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface LocallyConvexSpace<T extends Field<T,U>,U>
+public interface LocallyConvexSpace<T extends Field<T,U>,
+										U>
 
 	extends TopologicalSpace, VectorSpace<T,U>
 {

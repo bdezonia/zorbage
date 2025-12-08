@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface EuclideanSpace<T extends Field<T,U>, U>
+public interface EuclideanSpace<T extends Field<T,U>,
+									U>
 
 	extends L2Space<T,U>, RiemannSpace
 {

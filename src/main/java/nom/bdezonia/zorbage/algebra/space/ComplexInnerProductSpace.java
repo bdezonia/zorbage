@@ -36,7 +36,8 @@ import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
 /**
  * @author Barry DeZonia
  */
-public interface ComplexInnerProductSpace<T extends Field<T,U>,U extends ComplexType>
+public interface ComplexInnerProductSpace<T extends Field<T,U>,
+											U extends ComplexType>
 
 	extends ComplexSpace<T,U>, InnerProductSpace<T,U>
 {

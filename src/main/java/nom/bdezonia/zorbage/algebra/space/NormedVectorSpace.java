@@ -35,7 +35,8 @@ import nom.bdezonia.zorbage.algebra.Field;
 /**
  * @author Barry DeZonia
  */
-public interface NormedVectorSpace<T extends Field<T,U>, U>
+public interface NormedVectorSpace<T extends Field<T,U>,
+									U>
 
 	// Barry added VectorSpace<T,U> because that is logical.
 	// He might be wrong.
