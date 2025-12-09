@@ -41,6 +41,9 @@ public interface MetricSpace<U,V>
 
 	extends TopologicalSpace, Completeness
 {
+	// is the use of Lists here correct? And should V
+	// actually also just be a U?
+	
 	Procedure3<List<U>, List<U>, V> distance();
 	
 	double hausdorffDimension();

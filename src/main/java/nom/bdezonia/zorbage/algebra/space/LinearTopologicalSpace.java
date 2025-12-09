@@ -38,4 +38,8 @@ public interface LinearTopologicalSpace
 	extends TopologicalSpace, Lineararity
 {
 	// isLinear() returns true
+	
+	// this is disconnected from VectorSpace. Are they
+	// the same thing? Derived from different diagrams
+	// on a wikipedia page.
 }
