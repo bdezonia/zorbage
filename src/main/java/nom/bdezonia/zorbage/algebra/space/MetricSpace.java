@@ -32,6 +32,8 @@ package nom.bdezonia.zorbage.algebra.space;
 
 import java.util.List;
 
+import nom.bdezonia.zorbage.procedure.Procedure3;
+
 /**
  * @author Barry DeZonia
  */
@@ -39,7 +41,7 @@ public interface MetricSpace<U>
 
 	extends TopologicalSpace, Completeness
 {
-	double distance(List<U> pt1, List<U> pt2);
+	Procedure3<List<U>, List<U>, U> distance();
 	
 	double hausdorffDimension();
 }
