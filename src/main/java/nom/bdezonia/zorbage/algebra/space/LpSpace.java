@@ -46,5 +46,5 @@ public interface LpSpace<T extends Field<T,U>,
 	// triangle inequality exists
 	// complete
 	
-	long p();  // -1 == infinity, otherwise 1 to LONG_MAX
+	long p();  // -2 == infinity, otherwise 1 to LONG_MAX
 }

@@ -40,5 +40,5 @@ public interface LInfinitySpace<T extends Field<T,U>,
 
 	extends LpSpace<T,U>
 {
-	// p() is -1 which we use to symbolize Infinity
+	// p() is -2 which we use to symbolize Infinity
 }

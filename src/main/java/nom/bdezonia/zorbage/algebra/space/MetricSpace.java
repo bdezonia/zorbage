@@ -39,8 +39,6 @@ public interface MetricSpace<U>
 
 	extends TopologicalSpace, Completeness
 {
-	// Distance
-	
 	double distance(List<U> pt1, List<U> pt2);
 	
 	double hausdorffDimension();
