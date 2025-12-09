@@ -37,9 +37,10 @@ import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
  * @author Barry DeZonia
  */
 public interface ComplexVectorSpace<T extends Field<T,U>,
-										U extends ComplexType>
+										U extends ComplexType,
+										V>
 
-	extends ComplexSpace<T,U>, VectorSpace<T,U>
+	extends ComplexSpace<T,U>, VectorSpace<T,U,V>
 {
 	// if finite dimensional then it is a smooth manifold
 }

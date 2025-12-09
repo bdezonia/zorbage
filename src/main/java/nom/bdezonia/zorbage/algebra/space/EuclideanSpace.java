@@ -36,9 +36,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface EuclideanSpace<T extends Field<T,U>,
-									U>
+									U,
+									V>
 
-	extends L2Space<T,U>, RiemannSpace<U>
+	extends L2Space<T,U,V>, RiemannSpace<U,V>
 {
 	// R^n vector space (or linear space)
 	

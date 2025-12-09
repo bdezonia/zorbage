@@ -37,9 +37,10 @@ import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
  * @author Barry DeZonia
  */
 public interface ComplexProjectiveSpace<T extends Field<T,U>,
-											U extends ComplexType>
+											U extends ComplexType,
+											V>
 
-	extends ComplexSpace<T,U>, ProjectiveSpace<T,U>
+	extends ComplexSpace<T,U>, ProjectiveSpace<T,U,V>
 {
 	// if finite dimensional then it is a smooth manifold
 }

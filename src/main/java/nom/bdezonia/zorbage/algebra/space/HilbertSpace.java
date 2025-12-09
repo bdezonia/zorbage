@@ -36,9 +36,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface HilbertSpace<T extends Field<T,U>,
-								U>
+								U,
+								V>
 
-	extends BanachSpace<T,U>, InnerProductSpace<T,U>
+	extends BanachSpace<T,U,V>, InnerProductSpace<T,U,V>
 {
 	// Dot Product and Completeness
 	

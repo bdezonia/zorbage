@@ -30,14 +30,14 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
-import nom.bdezonia.zorbage.algebra.Norm;
+import nom.bdezonia.zorbage.procedure.Procedure2;
 
 /**
  * @author Barry DeZonia
  */
-public interface NormedSpace<T,U>
+public interface NormedSpace<U,V>
 
-	extends Norm<T,U>, LinearTopologicalSpace, MetricSpace<U>
+	extends LinearTopologicalSpace, MetricSpace<U,V>
 {
 	// A real or complex linear space endowed with a norm is
 	// a normed space. Every normed space is both a linear
@@ -46,4 +46,18 @@ public interface NormedSpace<T,U>
 	// Care must be taken because if T,U is a field and not
 	// real or complex then maybe it is not a normed space.
 	// I need to investigate this further.
+	
+	Procedure2<U, V> norm();
+
+/* from my aborted NormedVectorSpace class
+
+	// has norm()
+	
+	// isLinear() returns true
+	
+	// At one time I called this NormedLinearSpace and I'm
+	// not sure if LinearSpace or VectorSpace is better.
+	// LATER: it seems they are interchangeable terms.
+
+*/
 }

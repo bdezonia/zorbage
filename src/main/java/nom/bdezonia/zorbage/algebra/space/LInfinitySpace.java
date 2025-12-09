@@ -36,9 +36,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface LInfinitySpace<T extends Field<T,U>,
-									U>
+									U,
+									V>
 
-	extends LpSpace<T,U>
+	extends LpSpace<T,U,V>
 {
 	// p() is -2 which we use to symbolize Infinity
 }

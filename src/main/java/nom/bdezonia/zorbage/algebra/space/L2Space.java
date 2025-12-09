@@ -36,9 +36,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface L2Space<T extends Field<T,U>,
-							U>
+							U,
+							V>
 
-	extends HilbertSpace<T,U>, LpSpace<T,U>
+	extends HilbertSpace<T,U,V>, LpSpace<T,U,V>
 {
 	// I think it has the L2 norm
 	

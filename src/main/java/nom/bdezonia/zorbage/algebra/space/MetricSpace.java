@@ -37,11 +37,11 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 /**
  * @author Barry DeZonia
  */
-public interface MetricSpace<U>
+public interface MetricSpace<U,V>
 
 	extends TopologicalSpace, Completeness
 {
-	Procedure3<List<U>, List<U>, U> distance();
+	Procedure3<List<U>, List<U>, V> distance();
 	
 	double hausdorffDimension();
 }

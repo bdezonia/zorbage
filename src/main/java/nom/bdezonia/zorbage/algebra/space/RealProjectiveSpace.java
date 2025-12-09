@@ -37,9 +37,10 @@ import nom.bdezonia.zorbage.algebra.type.markers.RealType;
  * @author Barry DeZonia
  */
 public interface RealProjectiveSpace<T extends Field<T,U>,
-										U extends RealType>
+										U extends RealType,
+										V>
 
-	extends RealSpace<T,U>, ProjectiveSpace<T,U>
+	extends RealSpace<T,U>, ProjectiveSpace<T,U,V>
 {
 	// if finite dimensional then it is a smooth manifold
 }

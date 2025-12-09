@@ -33,9 +33,9 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface Manifold<U>
+public interface Manifold<U,V>
 
-	extends TopologicalSpace, MetricSpace<U>, Smoothness
+	extends TopologicalSpace, MetricSpace<U,V>, Smoothness
 {
 	/* In topology, a manifold is a space that looks like
 	 * familiar Euclidean space (like a flat plane or 3D space)

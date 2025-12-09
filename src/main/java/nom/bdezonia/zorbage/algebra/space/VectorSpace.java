@@ -39,9 +39,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface VectorSpace<T extends Field<T,U>,
-								U>
+								U,
+								V>
 
-	extends AffineSpace<T,U>, Dimensioned
+	extends AffineSpace<T,U,V>, Dimensioned
 {
 	// Linear Combination
 	

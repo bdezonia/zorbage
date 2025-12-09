@@ -37,8 +37,9 @@ import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
  * @author Barry DeZonia
  */
 public interface ComplexHilbertSpace<T extends Field<T,U>,
-										U extends ComplexType>
+										U extends ComplexType,
+										V>
 
-	extends ComplexSpace<T,U>, HilbertSpace<T,U>
+	extends ComplexSpace<T,U>, HilbertSpace<T,U,V>
 {
 }

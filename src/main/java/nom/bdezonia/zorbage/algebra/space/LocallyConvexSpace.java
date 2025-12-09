@@ -36,9 +36,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface LocallyConvexSpace<T extends Field<T,U>,
-										U>
+										U,
+										V>
 
-	extends TopologicalSpace, VectorSpace<T,U>
+	extends TopologicalSpace, VectorSpace<T,U,V>
 {
 	// Semi-Norm
 }

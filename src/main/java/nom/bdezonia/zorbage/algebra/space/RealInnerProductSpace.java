@@ -37,9 +37,10 @@ import nom.bdezonia.zorbage.algebra.type.markers.RealType;
  * @author Barry DeZonia
  */
 public interface RealInnerProductSpace<T extends Field<T,U>,
-										U extends RealType>
+										U extends RealType,
+										V>
 
-	extends RealSpace<T,U>, InnerProductSpace<T,U>
+	extends RealSpace<T,U>, InnerProductSpace<T,U,V>
 {
 
 }

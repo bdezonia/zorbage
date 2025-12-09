@@ -36,9 +36,10 @@ import nom.bdezonia.zorbage.algebra.Field;
  * @author Barry DeZonia
  */
 public interface ProjectiveSpace<T extends Field<T,U>,
-									U>
+									U,
+									V>
 
-    extends Homogeneity, Manifold<U>
+    extends Homogeneity, Manifold<U,V>
 {
 	// isCompact() returns true
 	

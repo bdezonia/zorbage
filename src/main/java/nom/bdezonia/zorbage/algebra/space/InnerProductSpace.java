@@ -30,17 +30,23 @@
  */
 package nom.bdezonia.zorbage.algebra.space;
 
+import java.util.List;
+
 import nom.bdezonia.zorbage.algebra.Field;
+import nom.bdezonia.zorbage.procedure.Procedure3;
 
 /**
  * @author Barry DeZonia
  */
 public interface InnerProductSpace<T extends Field<T,U>,
-									U>
+									U,
+									V>
 
-	extends NormedVectorSpace<T,U>, LocallyConvexSpace<T,U>
+	extends LocallyConvexSpace<T,U,V>, NormedSpace<U,V>
 {
 	// Dot Product
+	
+	Procedure3<List<U>,List<U>,V> dot();
 	
 	// Angles between vectors are defined in inner product
 	// spaces. Probably through the application of the
