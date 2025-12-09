@@ -51,7 +51,8 @@ public interface VectorSpace<T extends Field<T,U>,
 	
 	// isCompact() returns true
 
-	// isHomogeneous() returns false
+	// isHomogeneous() returns false. is this a troublesome detail?
+	//   AffineSpace is, EuclidSpace is, but VectorSpace isn't?
 	
 	// inductiveDimension() == numDimensions()
 
