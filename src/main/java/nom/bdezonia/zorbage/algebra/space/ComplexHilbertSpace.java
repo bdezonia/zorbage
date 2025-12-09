@@ -39,6 +39,6 @@ import nom.bdezonia.zorbage.algebra.type.markers.ComplexType;
 public interface ComplexHilbertSpace<T extends Field<T,U>,
 										U extends ComplexType>
 
-	extends HilbertSpace<T,U>
+	extends ComplexSpace<T,U>, HilbertSpace<T,U>
 {
 }

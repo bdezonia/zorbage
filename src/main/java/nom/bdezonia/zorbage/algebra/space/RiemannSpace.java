@@ -33,9 +33,9 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface RiemannSpace
+public interface RiemannSpace<U>
 
-	extends Manifold, PseudoRiemannSpace
+	extends PseudoRiemannSpace, Manifold<U>
 {
 	// isSmooth() returns true
 	

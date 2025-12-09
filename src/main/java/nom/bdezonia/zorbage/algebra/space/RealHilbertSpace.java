@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.algebra.type.markers.RealType;
 public interface RealHilbertSpace<T extends Field<T,U>,
 									U extends RealType>
 
-	extends HilbertSpace<T,U>
+	extends RealSpace<T,U>, HilbertSpace<T,U>
 {
 	// some authors deny that real-based hilbert spaces exist
 }

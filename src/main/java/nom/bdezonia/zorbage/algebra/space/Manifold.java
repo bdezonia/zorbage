@@ -33,9 +33,9 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface Manifold
+public interface Manifold<U>
 
-	extends TopologicalSpace, MetricSpace, Smoothness
+	extends TopologicalSpace, MetricSpace<U>, Smoothness
 {
 	/* In topology, a manifold is a space that looks like
 	 * familiar Euclidean space (like a flat plane or 3D space)
@@ -48,4 +48,13 @@ public interface Manifold
 	 * can be globally different, making them fundamental for
 	 * modeling physics and geometry.
  	 */
+	
+	// NOTE: it seems that there are Manifolds and Topological
+	// Manifolds. Topo ones aren't smooth. Mandifolds are. At
+	// least I think that is true though I don't know if that
+	// is the correct discriminator. Right now we are treating
+	// both kinds of manifolds as one kind with an isSmooth()
+	// routine. Maybe that is all I need. I don't think all
+	// the work I had done on manifolds from before had an
+	// inkling that there were two types.
 }

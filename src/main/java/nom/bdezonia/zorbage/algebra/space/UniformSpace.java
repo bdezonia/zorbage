@@ -37,6 +37,6 @@ public interface UniformSpace
 
 	extends TopologicalSpace, Compactness, Completeness
 {
-	// complete and copact might need to be defined
-	// elsewhere is the space class hierarchy
+	// complete and compact might need to be defined
+	// elsewhere in the space class hierarchy
 }

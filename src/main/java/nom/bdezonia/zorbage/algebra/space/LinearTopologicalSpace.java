@@ -35,7 +35,7 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface LinearTopologicalSpace
 
-	extends TopologicalSpace, LinearStatus
+	extends TopologicalSpace, Lineararity
 {
 	// isLinear() returns true
 }

@@ -33,7 +33,7 @@ package nom.bdezonia.zorbage.algebra.space;
 /**
  * @author Barry DeZonia
  */
-public interface LinearStatus {
+public interface Lineararity {
 
 	boolean isLinear();
 }

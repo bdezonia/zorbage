@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.algebra.Field;
 public interface AffineSpace<T extends Field<T,U>,
 								U>
 
-    extends Homogeneity, Manifold
+    extends Homogeneity, Manifold<U>
 {
 	// isSmooth() is true if finite dimensional
 	

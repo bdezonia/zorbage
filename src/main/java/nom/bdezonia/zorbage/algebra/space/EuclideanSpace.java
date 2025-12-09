@@ -38,9 +38,11 @@ import nom.bdezonia.zorbage.algebra.Field;
 public interface EuclideanSpace<T extends Field<T,U>,
 									U>
 
-	extends L2Space<T,U>, RiemannSpace
+	extends L2Space<T,U>, RiemannSpace<U>
 {
 	// R^n vector space (or linear space)
 	
 	// isComplete() returns true
+	
+	// isHomogeneous returns true
 }

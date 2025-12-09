@@ -41,7 +41,7 @@ public interface NormedVectorSpace<T extends Field<T,U>,
 	// Barry added VectorSpace<T,U> because that is logical.
 	// He might be wrong.
 
-	extends MetricSpace, NormedSpace<T,U>, VectorSpace<T,U>, LocallyConvexSpace<T,U>
+	extends MetricSpace<U>, NormedSpace<T,U>, VectorSpace<T,U>, LocallyConvexSpace<T,U>
 {
 	// has norm()
 	

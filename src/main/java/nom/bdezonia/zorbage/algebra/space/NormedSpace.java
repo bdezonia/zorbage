@@ -37,7 +37,7 @@ import nom.bdezonia.zorbage.algebra.Norm;
  */
 public interface NormedSpace<T,U>
 
-	extends Norm<T,U>, LinearTopologicalSpace, MetricSpace
+	extends Norm<T,U>, LinearTopologicalSpace, MetricSpace<U>
 {
 	// A real or complex linear space endowed with a norm is
 	// a normed space. Every normed space is both a linear

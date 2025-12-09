@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.algebra.type.markers.RealType;
 public interface RealAffineSpace<T extends Field<T,U>,
 										U extends RealType>
 
-	extends RealSpace<T,U>, AffineSpace<T,U>, Manifold
+	extends RealSpace<T,U>, AffineSpace<T,U>
 {
 	// if finite dimensional then it is a smooth manifold
 }

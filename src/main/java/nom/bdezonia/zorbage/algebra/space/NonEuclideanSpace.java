@@ -38,7 +38,7 @@ import nom.bdezonia.zorbage.algebra.Field;
 public interface NonEuclideanSpace<T extends Field<T,U>,
 									U>
 
-	extends RiemannSpace
+	extends RiemannSpace<U>
 {
 	// what are the properties?
 }

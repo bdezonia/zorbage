@@ -35,13 +35,16 @@ package nom.bdezonia.zorbage.algebra.space;
  */
 public interface TopologicalSpace
 
-	extends Compactness, LinearStatus
+	extends Compactness, Lineararity
 {
 	// Open Space
 	
 	// for a Euclidean space (R^n) these next two concepts == n
 	
-	int inductiveDimension();
+	// -1 is valid here for the empty set so Infinity should
+	// start at -2
+	long inductiveDimension();
 	
-	int lebesgueCoveringDimension();
+	// treat infinity as -2
+	long lebesgueCoveringDimension();  // 0 to infinity
 }
