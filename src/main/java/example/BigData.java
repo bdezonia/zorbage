@@ -87,7 +87,7 @@ class BigData {
 		Fill.compute(G.INT16, G.INT16.random(), data);
 
 		// Now count the number of fours we found.
-		//   Notice the list is indexed by a 64-bit integer. Lists can contain up to 2^63 elements.
+		//   Notice the list is indexed by a 64-bit integer. Lists can contain up to 2^63-1 elements.
 
 		long numFours = 0;
 		for (long i = 0; i < data.size(); i++) {
@@ -143,7 +143,7 @@ class BigData {
 		Fill.compute(G.INT16, G.INT16.random(), data);
 
 		// Now count the number of fours we found.
-		//   Notice the list is indexed by a 64-bit integer. Lists can contain up to 2^63 elements.
+		//   Notice the list is indexed by a 64-bit integer. Lists can contain up to 2^63-1 elements.
 
 		long numFours = 0;
 		for (long i = 0; i < data.size(); i++) {

@@ -60,7 +60,7 @@ class BreakingLimits {
 	/*
 	 * Array/List lengths
 	 *   Java imposes a 2^31 limit on list lengths. Arrays are indexed by 32-bit ints.
-	 *   Zorbage allows a 2^63 limit on list lengths. Zorbage arrays are indexed by 64-bit ints.
+	 *   Zorbage allows a 2^63-1 limit on list lengths. Zorbage arrays are indexed by 64-bit ints.
 	 *     In memory arrays can be glued together if needed to make huge in memory data structures.
 	 *     Other list abstractions exist to provide ways of making huge lists of data.
 	 */

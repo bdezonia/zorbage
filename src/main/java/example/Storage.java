@@ -78,7 +78,7 @@ class Storage {
 	 *  to be able to allocate a single big chunk. ExtMemStorage can work around this.
 	 *  
 	 *  File storage is another type supported by Zorbage. Using file storage Zorbage can
-	 *  allocate lists containing up to 2^63 elements. File storage uses a small amount of
+	 *  allocate lists containing up to 2^63-1 elements. File storage uses a small amount of
 	 *  buffer memory to allow pages of elements on disk to be pulled into RAM when they are
 	 *  need. Accessing file storage is slower than accessing array storage but sometimes it
 	 *  is the only way to do a large computation. Given the limitations of file based storage
@@ -94,7 +94,7 @@ class Storage {
 	 *  
 	 *  Another RAM based storage type supported by Zorbage is sparse storage. This type of
 	 *  storage is used to store big lists, vectors, matrices, and tensors completely in RAM.
-	 *  Only nonzero values are stored. The number of total elements can reach 2^63 and
+	 *  Only nonzero values are stored. The number of total elements can reach 2^63-1 and
 	 *  performance is proportional to the number of nonzero elements 
 	 *  
 	 *  Finally there is RaggedStorage. It allows one to store objects of varying size in
