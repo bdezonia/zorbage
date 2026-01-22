@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.storage.extmem;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.ObjectHolder;
 import nom.bdezonia.zorbage.storage.coder.*;
 
 /**
@@ -91,8 +92,11 @@ public class ExtMemStorage {
 		//
 		// if (type instanceof BitCoder) {
 		// }
+		if (type instanceof ObjectHolder) {
+			return (IndexedDataSource<U>) (new ExtMemStorageObject(numElements));
+		}
 
-		throw new IllegalArgumentException("Unsupported type in HyperBoxStorage");
+		throw new IllegalArgumentException("Unsupported type in ExtMemStorage");
 	}
 
 	// do not instantiate

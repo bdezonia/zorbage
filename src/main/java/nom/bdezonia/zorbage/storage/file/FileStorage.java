@@ -30,7 +30,6 @@
  */
 package nom.bdezonia.zorbage.storage.file;
 
-import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
 import nom.bdezonia.zorbage.storage.coder.ByteCoder;
@@ -75,7 +74,7 @@ public class FileStorage {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>> IndexedDataSource<U> allocate(U type, long numElements) {
+	public static <U> IndexedDataSource<U> allocate(U type, long numElements) {
 		
 		if (type instanceof DoubleCoder) {
 			return new FileStorageFloat64((DoubleCoder)type, numElements);

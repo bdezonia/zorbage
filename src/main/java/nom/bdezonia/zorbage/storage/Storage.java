@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorageObject;
 import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BooleanCoder;
@@ -68,7 +69,7 @@ public class Storage {
 	 * @param <U>
 	 * @return
 	 */
-	public static <U extends Allocatable<U>> IndexedDataSource<U>
+	public static <U> IndexedDataSource<U>
 		allocate(U type, long numElements)
 	{
 		// catch the most basic error. this simplifies the logic below.
@@ -415,6 +416,25 @@ public class Storage {
 		U tmp = type.allocate();
 		for (int i = 0, offset = 0; i < list.size(); i++, offset += type.booleanCount()) {
 			tmp.fromBooleanArray(array, offset);
+			list.set(i, tmp);
+		}
+		return list;
+	}
+	/**
+	 * Allocate a list of Object elements and initialize their values
+	 * from a passed in Object array of data.
+	 * 
+	 * @param type
+	 * @param array
+	 * @return
+	 */
+	public static
+		IndexedDataSource<ObjectHolder> allocate(Object[] array)
+	{
+		ObjectHolder tmp = new ObjectHolder();
+		IndexedDataSource<ObjectHolder> list = new ArrayStorageObject(array.length);
+		for (int i = 0; i < list.size(); i++) {
+			tmp.set( array[i] );
 			list.set(i, tmp);
 		}
 		return list;

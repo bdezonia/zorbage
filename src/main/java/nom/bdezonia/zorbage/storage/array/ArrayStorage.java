@@ -30,8 +30,8 @@
  */
 package nom.bdezonia.zorbage.storage.array;
 
-import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.ObjectHolder;
 import nom.bdezonia.zorbage.storage.coder.BigDecimalCoder;
 import nom.bdezonia.zorbage.storage.coder.BigIntegerCoder;
 import nom.bdezonia.zorbage.storage.coder.BitCoder;
@@ -66,7 +66,7 @@ public class ArrayStorage {
 	 * @return
 	 */
 	@SuppressWarnings({"unchecked","rawtypes"})
-	public static <U extends Allocatable<U>>
+	public static <U>
 		IndexedDataSource<U> allocate(U type, long numElements)
 	{
 		if (type instanceof DoubleCoder) {
@@ -105,9 +105,13 @@ public class ArrayStorage {
 			return new ArrayStorageSignedInt8((ByteCoder)type, numElements);
 		}
 		
-		// Best if last: since bit types are slow
+		// Best if almost last: since bit types are slow
 		if (type instanceof BitCoder) {
 			return new ArrayStorageBit((BitCoder)type, numElements);
+		}
+
+		if (type instanceof ObjectHolder) {
+			return (IndexedDataSource<U>) (new ArrayStorageObject(numElements));
 		}
 
 		throw new IllegalArgumentException("Unsupported type in ArrayStorage");
