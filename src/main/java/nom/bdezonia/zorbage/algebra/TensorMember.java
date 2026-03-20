@@ -39,18 +39,39 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @param <A>
  */
 public interface TensorMember<A>
-	extends Dimensioned, StorageType, ThreadAccess
+	extends StorageType, ThreadAccess
 {
-	// n dims
-	long dimension();
 	int rank();
 	int upperRank();
 	int lowerRank();
+
 	boolean indexIsUpper(int index);
 	boolean indexIsLower(int index);
+	
+	IndexType indexType(int index);
+	void indexTypes(IndexType[] types);
+	
+	long axisSize(int axisNum);
+
+	void shape(long[] sizes);
+	
+	// these two return true if a memory allocation
+	//   was done during a resize.
+	//   otherwise returns false. if memory is
+	//   allocated it is set to zero.
+	
 	boolean alloc(long[] dims);
+	boolean alloc(long[] dims, IndexType[] indexTypes);
+
+	// these two set all allocated data to zero. can
+	//   reshape the tensor in the process if specified
+	//   by the user.
+	
 	void init(long[] dims);
-	void reshape(long[] dims);
+	void init(long[] dims, IndexType[] indexTypes);
+	
+	long numElements();
+	
 	void getV(IntegerIndex index, A value);
 	void setV(IntegerIndex index, A value);
 }

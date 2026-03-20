@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
+import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algebra.Unity;
@@ -63,15 +64,40 @@ public class TensorUnity {
 					NUMBER>
 		void compute(S tensAlg, M numberAlg, TENSOR result)
 	{
+		NUMBER zero = numberAlg.construct();
 		NUMBER one = numberAlg.construct();
 		numberAlg.unity().call(one);
-		tensAlg.zero().call(result);
+		if (result.rank() == 0) {
+			result.setV(new IntegerIndex(0), one);
+			return;
+		}
 		IntegerIndex index = new IntegerIndex(result.rank());
-		for (long d = 0; d < result.dimension(0); d++) {
-			for (int r = 0; r < result.rank(); r++) {
-				index.set(r, d);
+		
+		// TODO: this code does a lot more work than it needs to
+		
+		long[] axisSizes = new long[index.numDimensions()];
+		result.shape(axisSizes);
+		SamplingIterator<IntegerIndex> iter =
+				GridIterator.compute(axisSizes);
+		while (iter.hasNext()) {
+			iter.next(index);
+			
+			long first = index.get(0);
+			boolean allSame = true;
+			for (int d = 1; d < index.numDimensions(); d++) {
+				
+				if (index.get(d) != first) {
+					
+					allSame = false;
+					break;
+				}
 			}
-			result.setV(index, one);
+			if (allSame) {
+				result.setV(index, one);
+			}
+			else {
+				result.setV(index, zero);
+			}
 		}
 	}
 }

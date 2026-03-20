@@ -155,7 +155,7 @@ import nom.bdezonia.zorbage.type.real.float32.Float32CartesianTensorProduct;
 import nom.bdezonia.zorbage.type.real.float32.Float32Matrix;
 import nom.bdezonia.zorbage.type.real.float32.Float32Vector;
 import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
-import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.real.float64.Float64Matrix;
 import nom.bdezonia.zorbage.type.real.float64.Float64Vector;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
@@ -239,7 +239,7 @@ public class G {
 	public static final Float64Algebra DBL = new Float64Algebra();
 	public static final Float64Vector DBL_VEC = new Float64Vector();
 	public static final Float64Matrix DBL_MAT = new Float64Matrix();
-	public static final Float64CartesianTensorProduct DBL_TEN = new Float64CartesianTensorProduct();
+	public static final Float64GeneralTensorProduct DBL_TEN = new Float64GeneralTensorProduct();
 
 	public static final ComplexFloat64Algebra CDBL = new ComplexFloat64Algebra();
 	public static final ComplexFloat64Vector CDBL_VEC = new ComplexFloat64Vector();

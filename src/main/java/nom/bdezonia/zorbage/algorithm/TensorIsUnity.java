@@ -57,36 +57,25 @@ public class TensorIsUnity {
 	public static <T extends Algebra<T,U> & Unity<U>, U>
 		boolean compute(T alg, TensorMember<U> a)
 	{
-		int numD = a.numDimensions();
-		IntegerIndex idx = new IntegerIndex(numD);
+		int rank = a.rank();
+		IntegerIndex idx = new IntegerIndex(rank);
 		U value = alg.construct();
-		if (numD == 0) {
+		if (rank == 0) {
 			// a number
 			a.getV(idx, value);
 			return alg.isUnity().call(value);
-		}
-		if (numD == 1) {
-			// a vector
-			if (a.dimension(0) != 1)
-				return false;
-			// a number
-			a.getV(idx, value);
-			return alg.isUnity().call(value);
-		}
-		// if here than numD is 2 or more
-		for (int i = 0; i < numD; i++) {
-			if (a.dimension(i) < 1)
-				return false;
 		}
 		// note that we do not require perfectly shaped tensors. many things can be unity-like.
-		SamplingIterator<IntegerIndex> iter = GridIterator.compute(a);
+		long[] shape = new long[a.rank()];
+		a.shape(shape);
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(shape);
 		while (iter.hasNext()) {
 			iter.next(idx);
 			a.getV(idx, value);
 			boolean onDiag = true;
-			long tmp = idx.get(0);
+			long first = idx.get(0);
 			for (int i = 1; i < idx.numDimensions(); i++) {
-				if (idx.get(i) != tmp)
+				if (idx.get(i) != first)
 					onDiag = false;
 			}
 			if (onDiag) {

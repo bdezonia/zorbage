@@ -470,7 +470,7 @@ public class TestTensors {
 		// this exceptions out which also seems nonintuitive
 		for (int i = 1; i < 10; i++) {
 			try {
-				bridge.dimension(1);
+				bridge.dimension(i);
 				fail();
 			} catch (IllegalArgumentException e) {
 				assertTrue(true);

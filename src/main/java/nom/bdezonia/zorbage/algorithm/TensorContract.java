@@ -34,6 +34,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Addition;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 
 // https://en.wikipedia.org/wiki/Tensor_contraction
@@ -66,67 +67,98 @@ public class TensorContract {
 	 * @param b
 	 */
 	public static <M extends Algebra<M,NUMBER> & Addition<NUMBER>, NUMBER>
-		void compute(M numberAlg, Integer aRank, Integer i, Integer j, TensorMember<NUMBER> a, TensorMember<NUMBER> b)
+		void compute(M numberAlg, int i, int j, TensorMember<NUMBER> a, TensorMember<NUMBER> b)
 	{
-		if ((int)i == (int)j)
+		final int rank = a.rank();
+
+		if (i == j)
 			throw new IllegalArgumentException("cannot contract along a single axis");
 		if (i < 0 || j < 0)
 			throw new IllegalArgumentException("negative contraction indices given");
-		if (i >= aRank || j >= aRank)
-			throw new IllegalArgumentException("contraction indices cannot be out of bounds of input tensor's rank");
+		if (i >= rank || j >= rank)
+			throw new IllegalArgumentException("contraction indices cannot be out of bounds");
 		if (a == b)
 			throw new IllegalArgumentException("src cannot equal dest: contraction is not an in place operation");
-		int newRank = aRank - 2;
+
+		if (a.indexType(i) == a.indexType(j))
+			throw new IllegalArgumentException("contraction requires one upper and one lower index");
+			
+		final long sizeI = a.axisSize(i);
+		final long sizeJ = a.axisSize(j);
+
+		if (sizeI != sizeJ)
+			throw new IllegalArgumentException("contracted axes must have equal sizes");
+
+		final int newRank = rank - 2;
+
 		long[] newDims = new long[newRank];
-		for (int k = 0; k < newDims.length; k++) {
-			newDims[k] = a.dimension(0);
-		}
-		b.alloc(newDims);
-		if (newRank == 0) {
-			NUMBER sum = numberAlg.construct();
-			NUMBER tmp = numberAlg.construct();
-			IntegerIndex pos = new IntegerIndex(2);
-			for (int idx = 0; idx < a.dimension(0); idx++) {
-				pos.set(i, idx);
-				pos.set(j, idx);
-				a.getV(pos, tmp);
-				numberAlg.add().call(sum, tmp, sum);
+		IndexType[] newTypes = new IndexType[newRank];
+
+		int p = 0;
+		for (int r = 0; r < rank; r++) {
+			if (r != i && r != j) {
+				newDims[p] = a.axisSize(r);
+				newTypes[p] = a.indexType(r);
+				p++;
 			}
-			IntegerIndex origin = new IntegerIndex(0);
-			// TODO: this assignment won't work cuz lower level code does not allow zero dim index.
-			// Maybe I fix that in the TensorMember classes. Or I expose setV(0, sum). Investigate.
-			b.setV(origin, sum);
-			return;
 		}
-		IntegerIndex point1 = new IntegerIndex(newRank);
-		IntegerIndex point2 = new IntegerIndex(newRank);
-		for (int k = 0; k < newDims.length; k++) {
-			point2.set(k, newDims[k] - 1);
-		}
-		SamplingIterator<IntegerIndex> iter = GridIterator.compute(point1, point2);
-		IntegerIndex contractedPos = new IntegerIndex(newRank);
-		IntegerIndex origPos = new IntegerIndex(aRank);
+
+		b.alloc(newDims, newTypes);
+
 		NUMBER sum = numberAlg.construct();
 		NUMBER tmp = numberAlg.construct();
-		while (iter.hasNext()) {
-			iter.next(contractedPos);
-			int p = 0;
-			for (int r = 0; r < aRank; r++) {
-				if (r == i)
-					origPos.set(i, 0);
-				else if (r == j)
-					origPos.set(j, 0);
-				else
-					origPos.set(r, contractedPos.get(p++));
-			}
+
+		// Scalar result
+		if (newRank == 0) {
+			IntegerIndex srcIndex = new IntegerIndex(rank);
+			IntegerIndex dstIndex = new IntegerIndex(0);
+
 			numberAlg.zero().call(sum);
-			for (int idx = 0; idx < a.dimension(0); idx++) {
-				origPos.set(i, idx);
-				origPos.set(j, idx);
-				a.getV(origPos, tmp);
+			for (long k = 0; k < sizeI; k++) {
+				srcIndex.set(i, k);
+				srcIndex.set(j, k);
+				a.getV(srcIndex, tmp);
 				numberAlg.add().call(sum, tmp, sum);
 			}
-			b.setV(contractedPos, sum);
+			b.setV(dstIndex, sum);
+			return;
+		}
+
+		IntegerIndex min = new IntegerIndex(newRank);
+		IntegerIndex max = new IntegerIndex(newRank);
+		for (int r = 0; r < newRank; r++) {
+			max.set(r, newDims[r] - 1);
+		}
+
+		SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
+
+		IntegerIndex dstIndex = new IntegerIndex(newRank);
+		IntegerIndex srcIndex = new IntegerIndex(rank);
+
+		while (iter.hasNext()) {
+			iter.next(dstIndex);
+
+			// Map output coordinates into source coordinates,
+			// leaving the contracted axes to be filled by k.
+			p = 0;
+			for (int r = 0; r < rank; r++) {
+				if (r == i || r == j) {
+					srcIndex.set(r, 0);
+				}
+				else {
+					srcIndex.set(r, dstIndex.get(p++));
+				}
+			}
+
+			numberAlg.zero().call(sum);
+			for (long k = 0; k < sizeI; k++) {
+				srcIndex.set(i, k);
+				srcIndex.set(j, k);
+				a.getV(srcIndex, tmp);
+				numberAlg.add().call(sum, tmp, sum);
+			}
+
+			b.setV(dstIndex, sum);
 		}
 	}
 }

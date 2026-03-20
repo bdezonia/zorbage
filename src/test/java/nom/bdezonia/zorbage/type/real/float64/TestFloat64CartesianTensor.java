@@ -57,7 +57,7 @@ public class TestFloat64CartesianTensor {
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
-		Float64CartesianTensorProductMember a =
+		Float64GeneralTensorProductMember a =
 				G.DBL_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
 		assertEquals(3, a.rank());
 		assertEquals(3, a.dimension(0));
@@ -96,12 +96,12 @@ public class TestFloat64CartesianTensor {
 				assertEquals(0, value.v(), 0);
 		}
 
-		Float64CartesianTensorProductMember x =
-				new Float64CartesianTensorProductMember(2, 2, 1,2,3,4);
-		Float64CartesianTensorProductMember y =
-				new Float64CartesianTensorProductMember(2, 2, 5,6,7,8);
-		Float64CartesianTensorProductMember z =
-				new Float64CartesianTensorProductMember();
+		Float64GeneralTensorProductMember x =
+				new Float64GeneralTensorProductMember(2, 2, 1,2,3,4);
+		Float64GeneralTensorProductMember y =
+				new Float64GeneralTensorProductMember(2, 2, 5,6,7,8);
+		Float64GeneralTensorProductMember z =
+				new Float64GeneralTensorProductMember();
 
 		G.DBL_TEN.multiply().call(x, y, z);
 		
@@ -122,18 +122,18 @@ public class TestFloat64CartesianTensor {
 		Float64Member tmp1 = G.DBL.construct();
 		Float64Member tmp2 = G.DBL.construct();
 		
-		Float64CartesianTensorProductMember value1 =
-				new Float64CartesianTensorProductMember(rank, dimension);
-		Float64CartesianTensorProductMember value2 =
-				new Float64CartesianTensorProductMember(rank, dimension);
+		Float64GeneralTensorProductMember value1 =
+				new Float64GeneralTensorProductMember(rank, dimension);
+		Float64GeneralTensorProductMember value2 =
+				new Float64GeneralTensorProductMember(rank, dimension);
 
 		assertNotNull(G.DBL_TEN.construct());
-		Float64CartesianTensorProductMember junk1 = G.DBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
+		Float64GeneralTensorProductMember junk1 = G.DBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
 		assertEquals(2, junk1.rank());
 		assertEquals(3, junk1.dimension());
 		junk1.v(1, tmp1);
 		assertEquals(2, tmp1.v(), 0);
-		Float64CartesianTensorProductMember junk2 = G.DBL_TEN.construct(junk1);
+		Float64GeneralTensorProductMember junk2 = G.DBL_TEN.construct(junk1);
 		assertTrue(G.DBL_TEN.isEqual().call(junk1, junk2));
 		assertFalse(G.DBL_TEN.isNotEqual().call(junk1, junk2));
 		
@@ -199,7 +199,7 @@ public class TestFloat64CartesianTensor {
 		G.DBL_TEN.subtract().call(value1, value1, value2);
 		assertTrue(G.DBL_TEN.isZero().call(value2));
 		
-		value1 = new Float64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
 		assertEquals(2, value1.dimension());
 		G.DBL_TEN.multiply().call(value1, value1, value2);
@@ -221,7 +221,7 @@ public class TestFloat64CartesianTensor {
 		G.DBL_TEN.infinite().call(value1);
 		assertTrue(G.DBL_TEN.isInfinite().call(value1));
 
-		value1 = new Float64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		G.DBL_TEN.negate().call(value1, value2);
 		assertFalse(G.DBL_TEN.isEqual().call(value1, value2));
 		value2.v(2, tmp2);
@@ -267,11 +267,11 @@ public class TestFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(4, tmp2.v(), 0);
 		
-		value1 = new Float64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		G.DBL_TEN.norm().call(value1, tmp1);
 		assertEquals(Math.sqrt(30), tmp1.v(), 0);
 		
-		value1 = new Float64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
 		assertEquals(2, value1.dimension());
 		G.DBL_TEN.outerProduct().call(value1, value1, value2);
@@ -296,7 +296,7 @@ public class TestFloat64CartesianTensor {
 			assertTrue(true);
 		}
 
-		value1 = new Float64CartesianTensorProductMember(3,2);
+		value1 = new Float64GeneralTensorProductMember(3,2);
 		assertEquals(3, value1.rank());
 		assertEquals(2, value1.dimension());
 		assertEquals(8, value1.numElems());
@@ -327,7 +327,7 @@ public class TestFloat64CartesianTensor {
 		// tested in test1() above
 		//G.DBL_TEN.power();
 		
-		value1 = new Float64CartesianTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember(2,2);
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -349,7 +349,7 @@ public class TestFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64CartesianTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember(2,2);
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -370,7 +370,7 @@ public class TestFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64CartesianTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember(2,2);
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -391,7 +391,7 @@ public class TestFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64CartesianTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember(2,2);
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -412,8 +412,8 @@ public class TestFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64CartesianTensorProductMember("[1.25,2][3,4]");
-		value2 = new Float64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float64GeneralTensorProductMember("[1.25,2][3,4]");
+		value2 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		tmp1.setV(0.24);
 		assertFalse(G.DBL_TEN.within().call(tmp1, value1, value2));
 		tmp1.setV(0.26);
@@ -502,7 +502,7 @@ public class TestFloat64CartesianTensor {
 		
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
-		value1 = new Float64CartesianTensorProductMember(0,3);
+		value1 = new Float64GeneralTensorProductMember(0,3);
 		tmp1.setV(53.9);
 		value1.setV(idx, tmp1);
 		tmp2.setV(-99999);

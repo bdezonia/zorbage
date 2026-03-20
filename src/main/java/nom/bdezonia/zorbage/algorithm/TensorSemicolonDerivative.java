@@ -51,7 +51,7 @@ public class TensorSemicolonDerivative {
 	// https://en.wikipedia.org/wiki/Christoffel_symbols
 		
 	/**
-	 * Calculate the semicolon derivative of a tensor and place results in an output tensor.
+	 * Calculate the semicolon derivative of tensor a and place results in an output tensor b.
 	 * 
 	 * @param <S>
 	 * @param <TENSOR>
@@ -68,7 +68,7 @@ public class TensorSemicolonDerivative {
 					M extends Algebra<M,NUMBER>, NUMBER>
 		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
 	{
-		
+		/*
 		TensorCommaDerivative.compute(tensAlg, numAlg, index, a, b);
 		
 		TENSOR sum = tensAlg.construct();
@@ -77,12 +77,6 @@ public class TensorSemicolonDerivative {
 		TensorShape.compute(a, tmp);
 		tensAlg.commaDerivative().call(index, a, sum);
 		for (int i = 0; i < a.rank(); i++) {
-			/*
-			
-			// TODO: since all my tensor impls are cartesian ones in euclidean space right now I think that the
-			// semicolon derivative degenerates into the comma derivative because the christoffel symbols are
-			// all zero. This might be wrong so should revisit.
-			 
 			if (a.indexIsUpper(i)) {
 				// this position is an upper index
 				christoffel(i, d, index, a, tmp);
@@ -93,18 +87,16 @@ public class TensorSemicolonDerivative {
 				christoffel(d, i, index, a, tmp);
 				tensAlg.subtract().call(sum, tmp, sum);
 			}
-			 */
 		}
 		tensAlg.assign().call(sum, b);
+	*/
 	}
 	
-	/* future code
 	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER>,
 						TENSOR extends TensorMember<NUMBER>,
 						M extends Algebra<M,NUMBER>, NUMBER>
 		void christoffel(int k, int i, int j, TENSOR a, TENSOR out)
 	{
-		
+		throw new IllegalArgumentException("must implement me!");
 	}
-	*/
 }

@@ -41,7 +41,7 @@ import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
@@ -55,9 +55,9 @@ class TensorAlgorithms {
 	
 	void example1() {
 		
-		Float64CartesianTensorProductMember a = new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a = new Float64GeneralTensorProductMember(3, 4);
 		
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 		
 		TensorCommaDerivative.compute(G.DBL_TEN, G.DBL, 1, a, b);
 		
@@ -93,10 +93,10 @@ class TensorAlgorithms {
 
 	void example4() {
 		
-		Float64CartesianTensorProductMember a =
-				new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a =
+				new Float64GeneralTensorProductMember(3, 4);
 
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
 		TensorPower.compute(G.DBL_TEN, 4, a, b);
 		
@@ -105,10 +105,10 @@ class TensorAlgorithms {
 
 	void example5() {
 		
-		Float64CartesianTensorProductMember a =
-				new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a =
+				new Float64GeneralTensorProductMember(3, 4);
 
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
 		Float64Member delta = new Float64Member(1);
 		
@@ -119,10 +119,10 @@ class TensorAlgorithms {
 
 	void example6() {
 		
-		Float64CartesianTensorProductMember a =
-				new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a =
+				new Float64GeneralTensorProductMember(3, 4);
 
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
 		TensorSemicolonDerivative.compute(G.DBL_TEN, G.DBL, 2, a, b);
 		

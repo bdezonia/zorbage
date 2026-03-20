@@ -30,6 +30,7 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.misc.DataSourceUtils;
 
@@ -54,8 +55,11 @@ public class TensorShape {
 		void compute(TensorMember<?> input, TensorMember<?> output)
 	{
 		if (input == output) return;
-		long[] dims = DataSourceUtils.dimensions(input);
-		output.alloc(dims);
+		long[] dims = new long[input.rank()];
+		IndexType[] indexTypes = new IndexType[input.rank()];
+		input.shape(dims);
+		input.indexTypes(indexTypes);
+		output.alloc(dims, indexTypes);
 	}
 
 }

@@ -72,6 +72,7 @@ public class TensorCommaDerivative {
 					NUMBER>
 		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
 	{
+		/*
 		if (a.rank() == 0) {
 			tensAlg.assign().call(a, b);
 			return;
@@ -94,5 +95,6 @@ public class TensorCommaDerivative {
 			tmp.setV(tmpIdx, value);
 		}
 		tensAlg.assign().call(tmp, b);
+		*/
 	}
 }

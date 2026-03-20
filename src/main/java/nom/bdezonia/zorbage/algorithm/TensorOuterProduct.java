@@ -33,22 +33,21 @@ package nom.bdezonia.zorbage.algorithm;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
 
-import java.util.Arrays;
-
 /**
- * 
+ *
  * @author Barry DeZonia
  *
  */
 public class TensorOuterProduct {
 
-	// do not instantiate
+	// do noy instantiate
 	
 	private TensorOuterProduct() { }
-	
+
 	/**
 	 * Calculate the outer product of two tensors and place result in an output tensor
 	 * 
@@ -68,39 +67,63 @@ public class TensorOuterProduct {
 					NUMBER>
 		void compute(S tensAlg, M numberAlg, TENSOR a, TENSOR b, TENSOR c)
 	{
-		// how an outer product is calculated:
-		//   https://www.math3ma.com/blog/the-tensor-product-demystified
-		
 		if (c == a || c == b)
 			throw new IllegalArgumentException("destination tensor cannot be one of the inputs");
-		long dimA = a.dimension(0);
-		long dimB = b.dimension(0);
-		if (dimA != dimB)
-			throw new IllegalArgumentException("dimension of tensors must match");
-		int rankA = a.numDimensions();
-		int rankB = b.numDimensions();
-		int rankC = rankA + rankB;
-		long[] cDims = new long[rankC];
-		Arrays.fill(cDims, dimA);
-		c.alloc(cDims);
+
+		final int rankA = a.rank();
+		final int rankB = b.rank();
+		final int rankC = rankA + rankB;
+
+		// Build output shape = shape(a) followed by shape(b)
+
+		long[] aShape = new long[rankA];
+		long[] bShape = new long[rankB];
+		a.shape(aShape);
+		b.shape(bShape);
+
+		long[] cShape = new long[rankC];
+		for (int i = 0; i < rankA; i++) {
+			cShape[i] = aShape[i];
+		}
+		for (int i = 0; i < rankB; i++) {
+			cShape[rankA + i] = bShape[i];
+		}
+
+		// Build output variance = index types of a followed by index types of b
+
+		IndexType[] cTypes = new IndexType[rankC];
+		for (int i = 0; i < rankA; i++) {
+			cTypes[i] = a.indexType(i);
+		}
+		for (int i = 0; i < rankB; i++) {
+			cTypes[rankA + i] = b.indexType(i);
+		}
+
+		c.alloc(cShape, cTypes);
+
 		NUMBER aTmp = numberAlg.construct();
 		NUMBER bTmp = numberAlg.construct();
 		NUMBER cTmp = numberAlg.construct();
+
 		IndexedDataSource<NUMBER> aList = a.rawData();
 		IndexedDataSource<NUMBER> bList = b.rawData();
 		IndexedDataSource<NUMBER> cList = c.rawData();
+
 		long k = 0;
 		long numElemsA = aList.size();
 		long numElemsB = bList.size();
+
+		// TODO: am I storing oututs in the right order.
+		//   I think I am but remember the universal
+		//   representation might have different ideas.
+
 		for (long i = 0; i < numElemsA; i++) {
 			aList.get(i, aTmp);
 			for (long j = 0; j < numElemsB; j++) {
 				bList.get(j, bTmp);
 				numberAlg.multiply().call(aTmp, bTmp, cTmp);
-				cList.set(k, cTmp);
-				k++;
+				cList.set(k++, cTmp);
 			}
 		}
 	}
-
 }

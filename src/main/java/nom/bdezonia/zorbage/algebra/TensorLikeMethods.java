@@ -43,8 +43,9 @@ import nom.bdezonia.zorbage.procedure.Procedure5;
  */
 public interface TensorLikeMethods<U,W>
 {
-	Procedure3<Integer,U,U> semicolonDerivative();
-	Procedure3<Integer,U,U> commaDerivative();
+	// I think these belong in a tensor field enhancedalgebra
+	//Procedure3<Integer,U,U> semicolonDerivative();
+	//Procedure3<Integer,U,U> commaDerivative();
 	Procedure4<Integer,Integer,U,U> contract();
 	Procedure5<Integer,Integer,U,U,U> innerProduct();
 	Procedure3<U,U,U> outerProduct();
