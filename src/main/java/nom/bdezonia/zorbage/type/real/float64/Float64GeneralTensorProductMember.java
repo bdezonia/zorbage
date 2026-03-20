@@ -345,6 +345,7 @@ public final class Float64GeneralTensorProductMember
 	public boolean alloc(long[] newDims, IndexType[] indexTypes) {
 		if (newDims.length != indexTypes.length)
 			throw new IllegalArgumentException("trying to allocate a "+newDims.length+" rank tensor with "+indexTypes.length+"co/contra/variant designators");
+		this.indexTypes = indexTypes.clone();
 		boolean theSame = true;
 		if (newDims.length != axisLengths.length)
 			theSame = false;
@@ -355,9 +356,6 @@ public final class Float64GeneralTensorProductMember
 					break;
 				}
 			}
-		}
-		if (this.indexTypes != indexTypes) {
-			this.indexTypes = indexTypes.clone();
 		}
 		if (theSame)
 			return false;
