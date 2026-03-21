@@ -91,7 +91,8 @@ public class Float128GeneralTensorProduct
 		ScaleByTwo<Float128GeneralTensorProductMember>,
 		Tolerance<Float128Member, Float128GeneralTensorProductMember>,
 		ArrayLikeMethods<Float128GeneralTensorProductMember, Float128Member>,
-		MadeOfElements<Float128Algebra,Float128Member>
+		MadeOfElements<Float128Algebra,Float128Member>,
+		ConstructibleTensor<Float128GeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
@@ -695,5 +696,11 @@ public class Float128GeneralTensorProduct
 	@Override
 	public Float128Algebra getElementAlgebra() {
 		return G.QUAD;
+	}
+
+	@Override
+	public Float128GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new Float128GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }

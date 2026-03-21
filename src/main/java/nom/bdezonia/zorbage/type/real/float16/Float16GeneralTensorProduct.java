@@ -90,7 +90,8 @@ public class Float16GeneralTensorProduct
 		ScaleByTwo<Float16GeneralTensorProductMember>,
 		Tolerance<Float16Member, Float16GeneralTensorProductMember>,
 		ArrayLikeMethods<Float16GeneralTensorProductMember, Float16Member>,
-		MadeOfElements<Float16Algebra,Float16Member>
+		MadeOfElements<Float16Algebra,Float16Member>,
+		ConstructibleTensor<Float16GeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
@@ -697,5 +698,11 @@ public class Float16GeneralTensorProduct
 	@Override
 	public Float16Algebra getElementAlgebra() {
 		return G.HLF;
+	}
+
+	@Override
+	public Float16GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new Float16GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }

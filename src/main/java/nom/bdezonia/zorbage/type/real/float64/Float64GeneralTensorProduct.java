@@ -88,7 +88,8 @@ public class Float64GeneralTensorProduct
 		ScaleByTwo<Float64GeneralTensorProductMember>,
 		Tolerance<Float64Member, Float64GeneralTensorProductMember>,
 		ArrayLikeMethods<Float64GeneralTensorProductMember, Float64Member>,
-		MadeOfElements<Float64Algebra,Float64Member>
+		MadeOfElements<Float64Algebra,Float64Member>,
+		ConstructibleTensor<Float64GeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
@@ -693,5 +694,11 @@ public class Float64GeneralTensorProduct
 	@Override
 	public Float64Algebra getElementAlgebra() {
 		return G.DBL;
+	}
+
+	@Override
+	public Float64GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new Float64GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }
