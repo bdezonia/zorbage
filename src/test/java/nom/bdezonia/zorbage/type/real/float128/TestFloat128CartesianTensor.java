@@ -64,7 +64,7 @@ public class TestFloat128CartesianTensor {
 	@Test
 	public void test1() {
 		Float128Member value = G.QUAD.construct();
-		Float128CartesianTensorProductMember a = G.QUAD_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
+		Float128GeneralTensorProductMember a = G.QUAD_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
 		assertEquals(3, a.rank());
 		assertEquals(3, a.dimension(0));
 		assertEquals(3, a.dimension(1));
@@ -102,9 +102,9 @@ public class TestFloat128CartesianTensor {
 				assertTrue(BigDecimalUtils.isNear(0, value.v(), TOL));
 		}
 
-		Float128CartesianTensorProductMember x = new Float128CartesianTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(1),BigDecimal.valueOf(2),BigDecimal.valueOf(3),BigDecimal.valueOf(4)});
-		Float128CartesianTensorProductMember y = new Float128CartesianTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(5),BigDecimal.valueOf(6),BigDecimal.valueOf(7),BigDecimal.valueOf(8)});
-		Float128CartesianTensorProductMember z = new Float128CartesianTensorProductMember();
+		Float128GeneralTensorProductMember x = new Float128GeneralTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(1),BigDecimal.valueOf(2),BigDecimal.valueOf(3),BigDecimal.valueOf(4)});
+		Float128GeneralTensorProductMember y = new Float128GeneralTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(5),BigDecimal.valueOf(6),BigDecimal.valueOf(7),BigDecimal.valueOf(8)});
+		Float128GeneralTensorProductMember z = new Float128GeneralTensorProductMember();
 
 		G.QUAD_TEN.multiply().call(x, y, z);
 		
@@ -125,16 +125,16 @@ public class TestFloat128CartesianTensor {
 		Float128Member tmp1 = G.QUAD.construct();
 		Float128Member tmp2 = G.QUAD.construct();
 		
-		Float128CartesianTensorProductMember value1 = new Float128CartesianTensorProductMember(rank, dimension);
-		Float128CartesianTensorProductMember value2 = new Float128CartesianTensorProductMember(rank, dimension);
+		Float128GeneralTensorProductMember value1 = new Float128GeneralTensorProductMember(rank, dimension);
+		Float128GeneralTensorProductMember value2 = new Float128GeneralTensorProductMember(rank, dimension);
 
 		assertNotNull(G.QUAD_TEN.construct());
-		Float128CartesianTensorProductMember junk1 = G.QUAD_TEN.construct("[1,2,3][4,5,6][7,8,9]");
+		Float128GeneralTensorProductMember junk1 = G.QUAD_TEN.construct("[1,2,3][4,5,6][7,8,9]");
 		assertEquals(2, junk1.rank());
 		assertEquals(3, junk1.dimension());
 		junk1.v(1, tmp1);
 		assertTrue(BigDecimalUtils.isNear(2, tmp1.v(), TOL));
-		Float128CartesianTensorProductMember junk2 = G.QUAD_TEN.construct(junk1);
+		Float128GeneralTensorProductMember junk2 = G.QUAD_TEN.construct(junk1);
 		assertTrue(G.QUAD_TEN.isEqual().call(junk1, junk2));
 		assertFalse(G.QUAD_TEN.isNotEqual().call(junk1, junk2));
 		
@@ -200,7 +200,7 @@ public class TestFloat128CartesianTensor {
 		G.QUAD_TEN.subtract().call(value1, value1, value2);
 		assertTrue(G.QUAD_TEN.isZero().call(value2));
 		
-		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
 		assertEquals(2, value1.dimension());
 		G.QUAD_TEN.multiply().call(value1, value1, value2);
@@ -222,7 +222,7 @@ public class TestFloat128CartesianTensor {
 		G.QUAD_TEN.infinite().call(value1);
 		assertTrue(G.QUAD_TEN.isInfinite().call(value1));
 
-		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		G.QUAD_TEN.negate().call(value1, value2);
 		assertFalse(G.QUAD_TEN.isEqual().call(value1, value2));
 		value2.v(2, tmp2);
@@ -268,11 +268,11 @@ public class TestFloat128CartesianTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(4, tmp2.v(), BigDecimal.ZERO));
 		
-		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		G.QUAD_TEN.norm().call(value1, tmp1);
 		assertTrue(BigDecimalUtils.isNear(Math.sqrt(30), tmp1.v(), TOL));
 		
-		value1 = new Float128CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
 		assertEquals(2, value1.dimension());
 		G.QUAD_TEN.outerProduct().call(value1, value1, value2);
@@ -297,7 +297,7 @@ public class TestFloat128CartesianTensor {
 			assertTrue(true);
 		}
 
-		value1 = new Float128CartesianTensorProductMember(3,2);
+		value1 = new Float128GeneralTensorProductMember(3,2);
 		assertEquals(3, value1.rank());
 		assertEquals(2, value1.dimension());
 		assertEquals(8, value1.numElems());
@@ -326,7 +326,7 @@ public class TestFloat128CartesianTensor {
 		// tested in test1() above
 		//G.QUAD_TEN.power();
 		
-		value1 = new Float128CartesianTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -348,7 +348,7 @@ public class TestFloat128CartesianTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128CartesianTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -369,7 +369,7 @@ public class TestFloat128CartesianTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128CartesianTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -390,7 +390,7 @@ public class TestFloat128CartesianTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128CartesianTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember(2,2);
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -411,8 +411,8 @@ public class TestFloat128CartesianTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128CartesianTensorProductMember("[1.25,2][3,4]");
-		value2 = new Float128CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new Float128GeneralTensorProductMember("[1.25,2][3,4]");
+		value2 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		tmp1.setV(BigDecimal.valueOf(0.24));
 		assertFalse(G.QUAD_TEN.within().call(tmp1, value1, value2));
 		tmp1.setV(BigDecimal.valueOf(0.26));
@@ -500,7 +500,7 @@ public class TestFloat128CartesianTensor {
 
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
-		value1 = new Float128CartesianTensorProductMember(0,3);
+		value1 = new Float128GeneralTensorProductMember(0,3);
 		value1.getV(idx, tmp1);
 	}
 

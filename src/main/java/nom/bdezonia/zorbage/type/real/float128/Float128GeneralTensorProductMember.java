@@ -32,7 +32,6 @@ package nom.bdezonia.zorbage.type.real.float128;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
@@ -51,6 +50,7 @@ import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
@@ -88,21 +88,16 @@ import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
 
-
-// TODO:
-//   rank 0 tensor getting and setting 1 value instead of 0
-//   upper and lower indices: only if not CartesianTensors
-
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public final class Float128CartesianTensorProductMember
+public final class Float128GeneralTensorProductMember
 	implements
 		TensorMember<Float128Member>,
-		Gettable<Float128CartesianTensorProductMember>,
-		Settable<Float128CartesianTensorProductMember>,
+		Gettable<Float128GeneralTensorProductMember>,
+		Settable<Float128GeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<Float128Member>,
 		SetFromBytes,
@@ -128,7 +123,7 @@ public final class Float128CartesianTensorProductMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<Float128CartesianTensorProduct, Float128CartesianTensorProductMember>,
+		GetAlgebra<Float128GeneralTensorProduct, Float128GeneralTensorProductMember>,
 		ApproximateType,
 		CompositeType,
 		InfinityIncludedType,
@@ -140,133 +135,179 @@ public final class Float128CartesianTensorProductMember
 {
 	private static final Float128Member ZERO = new Float128Member();
 
-	private int rank;
-	private long dimCount;
+	private IndexType[] indexTypes;
+	private long[] axisLengths;
+	private long[] strides;
 	private IndexedDataSource<Float128Member> storage;
-	private long[] dims;
-	private long[] multipliers;
 	private StorageConstruction s;
 
-	// rank() is also numDimensions(). Confusing. TODO - fix
+	// TODO: I hate this but can't figure out the coding I
+	//   need to do to get rid of it.
 	
 	@Override
-	public int rank() { return lowerRank() + upperRank(); }
+	public int numDimensions() {
+
+		return rank();
+	}
+
+	// TODO: I hate this but can't figure out the coding I
+	//   need to do to get rid of it.
 	
 	@Override
-	public int lowerRank() { return rank; }
+	public long dimension(int d) {
+
+		return axisSize(d);
+	}
+
+	public long axisSize(int index) {
+		
+		return axisLengths[index];
+	}
+	
+	public void shape(long[] sizes) {
+
+		if (sizes.length != this.axisLengths.length)
+			throw new IllegalArgumentException("axis count mismatch in axisLengths() method");
+		
+		for (int i = 0; i < sizes.length; i++) {
+			sizes[i] = this.axisLengths[i];
+		}
+	}
 	
 	@Override
-	public int upperRank() { return 0; }
+	public int rank() { return indexTypes.length; }
+	
+	@Override
+	public int lowerRank() {
+		
+		int rank = 0;
+		
+		for (int i = 0; i < rank(); i++)  {
+		
+			if (indexIsLower(i)) rank++;
+		}
+		
+		return rank;
+	}
+	
+	@Override
+	public int upperRank() {
+		
+		int rank = 0;
+		
+		for (int i = 0; i < rank(); i++)  {
+		
+			if (indexIsUpper(i)) rank++;
+		}
+		
+		return rank;
+	}
 	
 	@Override
 	public boolean indexIsLower(int index) {
+		
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		
+		return indexTypes[index] == IndexType.COVARIANT;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
+
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		
+		return indexTypes[index] == IndexType.CONTRAVARIANT;
 	}
 
 	@Override
-	public long dimension() { return dimCount; }
+	public IndexType indexType(int index) {
 
-	public Float128CartesianTensorProductMember() {
-		rank = 0;
-		dimCount = 0;
-		dims = new long[0];
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new Float128Member(), 1);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		return indexTypes[index];
 	}
 
-	public Float128CartesianTensorProductMember(int rank, long dimCount) {
-		if (rank < 0)
-			throw new IllegalArgumentException("bad rank in tensor constructor");
-		if (dimCount < 0)
-			throw new IllegalArgumentException("bad dimensionality in tensor constructor");
-		this.rank = rank;
-		this.dimCount = dimCount;
-		dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
+	@Override
+	public void indexTypes(IndexType[] types) {
+
+		if (types.length != rank())
+			throw new IllegalArgumentException();
+		for (int i = 0; i < types.length; i++)
+			types[i] = indexTypes[i];
+	}
+	
+	public long numElements() {
+	
+		return storage.size();
+	}
+	
+	public Float128GeneralTensorProductMember() {
+
+		indexTypes = new IndexType[0];
+		axisLengths = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new Float128Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		storage = Storage.allocate(s, new Float128Member(), 1); // one scalar
+		strides = IndexUtils.calcMultipliers(axisLengths);
+	}
+
+	public Float128GeneralTensorProductMember(IndexType[] indices, long[] sizes) {
+		
+		if (indices.length != sizes.length)
+			throw new IllegalArgumentException("bad input to tensor constructor");
+		indexTypes = indices.clone();
+		axisLengths = sizes.clone();
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new Float128Member(), storageElems);
+		strides = IndexUtils.calcMultipliers(axisLengths);
 	}
 	
-	public Float128CartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
-		this(rank, dimCount);
-		setFromBigDecimals(vals);
-	}
-	
-	public Float128CartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
-		this(rank, dimCount);
-		setFromBigIntegers(vals);
-	}
-	
-	public Float128CartesianTensorProductMember(int rank, long dimCount, double... vals) {
-		this(rank, dimCount);
+	public Float128GeneralTensorProductMember(IndexType[] indices, long[] sizes, double... vals) {
+		this(indices, sizes);
 		setFromDoubles(vals);
 	}
-	
-	public Float128CartesianTensorProductMember(int rank, long dimCount, long... vals) {
-		this(rank, dimCount);
-		setFromLongs(vals);
-	}
 
-	public Float128CartesianTensorProductMember(Float128CartesianTensorProductMember other) {
+	public Float128GeneralTensorProductMember(Float128GeneralTensorProductMember other) {
 		set(other);
 	}
-	
-	public Float128CartesianTensorProductMember(String s) {
+
+	public Float128GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
-		this.rank = tmpDims.length;
-		if (tmpDims.length == 0) {
-			this.dimCount = 1;
-		}
-		else {
-			long d0 = tmpDims[0];
-			for (int i = 1; i < tmpDims.length; i++) {
-				if (tmpDims[i] != d0)
-					throw new IllegalArgumentException("tensors must be the same in all dimensions");
-			}
-			this.dimCount = d0;
-		}
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
+		this.axisLengths = tmpDims;
+		this.indexTypes = indices(tmpDims.length, IndexType.CONTRAVARIANT);
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new Float128Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		this.storage = Storage.allocate(this.s, new Float128Member(), storageElems);
+		this.strides = IndexUtils.calcMultipliers(axisLengths);
 		Float128Member value = new Float128Member();
-		if (numElems == 1) {
-			// TODO: does a rank 0 tensor have any values from a parsing?
-			OctonionRepresentation val = data.get(0);
+		if (rank() == 0) {
+			OctonionRepresentation val;
+			if (data.size() == 0)
+				val = new OctonionRepresentation();
+			else
+				val = data.get(0);
 			value.setV(val.r());
 			storage.set(0, value);
 		}
 		else {
 			long i = 0;
 			SamplingIterator<IntegerIndex> iter = GridIterator.compute(tmpDims);
-			IntegerIndex index = new IntegerIndex(dims.length);
+			IntegerIndex index = new IntegerIndex(axisLengths.length);
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
 				value.setV(val.r());
-				long idx = IndexUtils.indexToLong(dims, index);
+				long idx = IndexUtils.indexToLong(axisLengths, index);
 				storage.set(idx, value);
 				i++;
 			}
@@ -279,35 +320,36 @@ public final class Float128CartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(Float128CartesianTensorProductMember other) {
+	public void set(Float128GeneralTensorProductMember other) {
 		if (this == other) return;
-		rank = other.rank;
-		dimCount = other.dimCount;
-		dims = other.dims.clone();
-		multipliers = other.multipliers.clone();
+		indexTypes = other.indexTypes.clone();
+		axisLengths = other.axisLengths.clone();
+		strides = other.strides.clone();
 		storage = other.storage.duplicate();
 		s = other.s;
 	}
 	
 	@Override
-	public void get(Float128CartesianTensorProductMember other) {
+	public void get(Float128GeneralTensorProductMember other) {
 		if (this == other) return;
-		other.rank = rank;
-		other.dimCount = dimCount;
-		other.dims = dims.clone();
-		other.multipliers = multipliers.clone();
+		other.indexTypes = indexTypes.clone();
+		other.axisLengths = axisLengths.clone();
+		other.strides = strides.clone();
 		other.storage = storage.duplicate();
 		other.s = s;
 	}
 
 	@Override
-	public boolean alloc(long[] newDims) {
+	public boolean alloc(long[] newDims, IndexType[] indexTypes) {
+		if (newDims.length != indexTypes.length)
+			throw new IllegalArgumentException("trying to allocate a "+newDims.length+" rank tensor with "+indexTypes.length+"co/contra/variant designators");
+		this.indexTypes = indexTypes.clone();
 		boolean theSame = true;
-		if (newDims.length != dims.length)
+		if (newDims.length != axisLengths.length)
 			theSame = false;
 		else {
 			for (int i = 0; i < newDims.length; i++) {
-				if (newDims[i] != dims[i]) {
+				if (newDims[i] != axisLengths[i]) {
 					theSame = false;
 					break;
 				}
@@ -315,53 +357,47 @@ public final class Float128CartesianTensorProductMember
 		}
 		if (theSame)
 			return false;
-		this.rank = newDims.length;
-		if (rank == 0) {
-			this.dimCount = 1;
-		}
-		else {
-			long d0 = newDims[0];
-			for (int i = 1; i < newDims.length; i++) {
-				if (newDims[i] != d0)
-					throw new IllegalArgumentException("tensors must be the same in all dimensions");
-			}
-			this.dimCount = d0;
-		}
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		this.multipliers = IndexUtils.calcMultipliers(dims);
-		long newCount = LongUtils.numElements(this.dims);
-		if (newCount == 0) newCount = 1;
-		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new Float128Member(), newCount);
+		this.axisLengths = newDims.clone();
+		this.strides = IndexUtils.calcMultipliers(axisLengths);
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
+		if (storage == null || storageElems != storage.size()) {
+			storage = Storage.allocate(s, new Float128Member(), storageElems);
 			return true;
 		}
 		return false;
 	}
+
+	@Override
+	public boolean alloc(long[] newDims) {
+		return alloc(newDims, indexTypes);
+	}
 	
 	@Override
-	public void init(long[] newDims) {
-		if (!alloc(newDims)) {
+	public void init(long[] newDims, IndexType[] indexTypes) {
+		if (!alloc(newDims, indexTypes)) {
 			long storageSize = storage.size();
 			for (long i = 0; i < storageSize; i++) {
 				storage.set(i, ZERO);
 			}
 		}
 	}
-	
-	public long numElems() {
-		return storage.size();
+
+	@Override
+	public void init(long[] newDims) {
+		init(newDims, indexTypes);
 	}
-	
+
 	void v(long index, Float128Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
 	public void getV(IntegerIndex index, Float128Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index);
+		long idx = IndexUtils.safeIndexToLong(axisLengths, index);
 		storage.get(idx, value);
 	}
 	
@@ -371,7 +407,7 @@ public final class Float128CartesianTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, Float128Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index);
+		long idx = IndexUtils.safeIndexToLong(axisLengths, index);
 		storage.set(idx, value);
 	}
 	
@@ -393,7 +429,7 @@ public final class Float128CartesianTensorProductMember
 			o.setJ0(BigDecimal.ZERO);
 			o.setK0(BigDecimal.ZERO);
 		}
-		rep.setTensor(dims, values);
+		rep.setTensor(axisLengths, values);
 	}
 
 	@Override
@@ -409,63 +445,52 @@ public final class Float128CartesianTensorProductMember
 		}
 	}
 
-	// TODO: finish me
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		// iterate values/indices and write numbers, brackets, and commas in correct order
-		// something recursive?
-		Float128Member tmp = new Float128Member();
-		IntegerIndex index = new IntegerIndex(this.dims.length);
-		// [2,2,2] dims
-		// [0,0,0]  [[[num
-		// [1,0,0]  [[[num,num
-		// [0,1,0]  [[[num,num][num
-		// [1,1,0]  [[[num,num][num,num
-		// [0,0,1]  [[[num,num][num,num]][[num
-		// [1,0,1]  [[[num,num][num,num]][[num,num
-		// [0,1,1]  [[[num,num][num,num]][[num,num][num
-		// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
-		long storageSize = storage.size();
-		for (long i = 0; i < storageSize; i++) {
-			storage.get(i, tmp);
-			IndexUtils.longToIntegerIndex(multipliers, dims.length, storageSize, i, index);
-			int j = 0;
-			while (j < index.numDimensions() && index.get(j++) == 0)
-				builder.append('[');
-			if (index.get(0) != 0)
-				builder.append(',');
-			builder.append(tmp.v());
-			j = 0;
-			while (j < index.numDimensions() && index.get(j) == (dims[j++]-1))
-				builder.append(']');
-		}
-		return builder.toString();
-	}
+	private void appendTensor(StringBuilder sb, Float128Member tmp, IntegerIndex index, int axis) {
 
-	@Override
-	public int numDimensions() {
-		return dims.length;
-	}
+		if (axis == rank()) {
+	        getV(index, tmp);
+	        sb.append(tmp.v());
+	        return;
+	    }
 
-	@Override
-	public void reshape(long[] dims) {
-		// the idea here is to change dims and preserve values that
-		// overlap old dims / new dims.
-		if (Arrays.equals(this.dims, dims)) return;
-		// the previous line makes sure that tensor add(a,a,a) will work
-		// TODO
-		throw new IllegalArgumentException("to implement");
-	}
-
-	@Override
-	public long dimension(int d) {
-		if (d < 0)
-			throw new IllegalArgumentException("can't query negative dimension");
-		if (d >= dims.length) return 1;
-		return dims[d];
+	    sb.append('[');
+	    long n = axisSize(axis);
+	    for (long i = 0; i < n; i++) {
+	        if (i > 0) sb.append(',');
+	        index.set(axis, i);
+	        appendTensor(sb, tmp, index, axis + 1);
+	    }
+	    sb.append(']');
 	}
 	
+	// iterate values/indices and write numbers, brackets, and commas in correct order
+	// [2,2,2] dims
+	// [0,0,0]  [[[num
+	// [1,0,0]  [[[num,num
+	// [0,1,0]  [[[num,num][num
+	// [1,1,0]  [[[num,num][num,num
+	// [0,0,1]  [[[num,num][num,num]][[num
+	// [1,0,1]  [[[num,num][num,num]][[num,num
+	// [0,1,1]  [[[num,num][num,num]][[num,num][num
+	// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
+
+	@Override
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+	    Float128Member tmp = new Float128Member();
+
+	    if (rank() == 0) {
+	    	storage.get(0, tmp);
+	        sb.append(tmp.v());
+	        return sb.toString();
+	    }
+
+	    IntegerIndex idx = new IntegerIndex(rank());
+	    appendTensor(sb, tmp, idx, 0);
+	    return sb.toString();
+	}
+
 	private static final ThreadLocal<Float128Member> tmpFloat =
 			new ThreadLocal<Float128Member>()
 	{
@@ -543,7 +568,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -557,7 +582,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -571,7 +596,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -585,7 +610,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -599,7 +624,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -613,7 +638,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -627,7 +652,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -641,7 +666,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -759,7 +784,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
@@ -771,7 +796,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
@@ -783,7 +808,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
@@ -795,7 +820,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
@@ -807,7 +832,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
@@ -819,7 +844,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
@@ -831,7 +856,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return BigInteger.ZERO;
 		}
 		else {
@@ -843,7 +868,7 @@ public final class Float128CartesianTensorProductMember
 
 	@Override
 	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 1)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return BigDecimal.ZERO;
 		}
 		else {
@@ -868,7 +893,11 @@ public final class Float128CartesianTensorProductMember
 	@Override
 	public int hashCode() {
 		Float128Member tmp = G.QUAD.construct();
-		long len = dimension(0);
+		long len;
+		if (rank() == 0)
+			len = 1;
+		else
+			len = axisSize(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
 		if (len > 0) {
@@ -880,8 +909,8 @@ public final class Float128CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Float128CartesianTensorProductMember) {
-			return G.QUAD_TEN.isEqual().call(this, (Float128CartesianTensorProductMember) o);
+		if (o instanceof Float128GeneralTensorProductMember) {
+			return G.QUAD_TEN.isEqual().call(this, (Float128GeneralTensorProductMember) o);
 		}
 		return false;
 	}
@@ -913,97 +942,113 @@ public final class Float128CartesianTensorProductMember
 	
 	@Override
 	public void setFromBytes(byte... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf( vals[i + 0] ) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromShorts(short... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf( vals[i + 0] ) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromInts(int... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf( vals[i + 0] ) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromLongs(long... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf( vals[i + 0] ));
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromFloats(float... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf( vals[i + 0] ) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromDoubles(double... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(BigDecimal.valueOf(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  BigDecimal.valueOf( vals[i + 0] ) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigIntegers(BigInteger... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(new BigDecimal(vals[i]));
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  new BigDecimal( vals[i + 0] ) );
+			storage.set(i/componentCount, value);
 		}
 	}
 
 	@Override
 	public void setFromBigDecimals(BigDecimal... vals) {
-		if (vals.length != storage.size()) {
-			throw new IllegalArgumentException("number of elements passed in do not fit allocated storage");
+		int componentCount = 1;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
 		}
-		Float128Member tmp = new Float128Member();
-		for (int i = 0; i < vals.length; i++) {
-			tmp.setV(vals[i]);
-			storage.set(i, tmp);
+		Float128Member value = G.QUAD.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setV(  vals[i + 0] );
+			storage.set(i/componentCount, value);
 		}
 	}
 
@@ -1131,8 +1176,17 @@ public final class Float128CartesianTensorProductMember
 	}
 	
 	@Override
-	public Float128CartesianTensorProduct getAlgebra() {
+	public Float128GeneralTensorProduct getAlgebra() {
 
 		return G.QUAD_TEN;
+	}
+	
+	private static IndexType[] indices(int size, IndexType value) {
+		
+		IndexType[] values = new IndexType[size];
+		for (int i = 0; i < size; i++) {
+			values[i] = value;
+		}
+		return values;
 	}
 }
