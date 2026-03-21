@@ -64,6 +64,9 @@ public class TensorFlipIndex {
 					T extends TensorMember<NUMBER> & RawData<NUMBER> & Settable<T>>
 		void compute(NN numberAlg, T metric, int axis, IndexType targetType, T a, T b)
 	{
+		if (a == b)
+			throw new IllegalArgumentException("source and destination must be different tensors");
+
 		if (metric.rank() != 2)
 			throw new IllegalArgumentException("metric must be rank 2");
 
