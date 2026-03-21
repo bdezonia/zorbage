@@ -45,6 +45,7 @@ import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
 import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
@@ -89,6 +90,14 @@ public class Float64GeneralTensorProduct
 		ArrayLikeMethods<Float64GeneralTensorProductMember, Float64Member>,
 		MadeOfElements<Float64Algebra,Float64Member>
 {
+	// TODO rank 2 helper
+	
+	private static Float64GeneralTensorProductMember metricRaise = null;
+	
+	// TODO rank 2 helper
+	
+	private static Float64GeneralTensorProductMember metricLower = null;
+	
 	@Override
 	public String typeDescription() {
 		return "64-bit based real tensor";
@@ -584,11 +593,10 @@ public class Float64GeneralTensorProduct
 		@Override
 		public void call(Integer idx, Float64GeneralTensorProductMember a, Float64GeneralTensorProductMember b) {
 			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
-
+			TensorFlipIndex.compute(G.DBL, metricRaise, idx, IndexType.CONTRAVARIANT, a, b);
 		}
 	};
-	
+
 	@Override
 	public Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
@@ -600,12 +608,7 @@ public class Float64GeneralTensorProduct
 		@Override
 		public void call(Integer idx, Float64GeneralTensorProductMember a, Float64GeneralTensorProductMember b) {
 			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+			TensorFlipIndex.compute(G.DBL, metricLower, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
