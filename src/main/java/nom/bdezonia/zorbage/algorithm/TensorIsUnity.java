@@ -66,7 +66,7 @@ public class TensorIsUnity {
 			return alg.isUnity().call(value);
 		}
 		// note that we do not require perfectly shaped tensors. many things can be unity-like.
-		long[] shape = new long[a.rank()];
+		long[] shape = new long[rank];
 		a.shape(shape);
 		SamplingIterator<IntegerIndex> iter = GridIterator.compute(shape);
 		while (iter.hasNext()) {
@@ -75,8 +75,10 @@ public class TensorIsUnity {
 			boolean onDiag = true;
 			long first = idx.get(0);
 			for (int i = 1; i < idx.numDimensions(); i++) {
-				if (idx.get(i) != first)
+				if (idx.get(i) != first) {
 					onDiag = false;
+					break;
+				}
 			}
 			if (onDiag) {
 				if (!alg.isUnity().call(value))

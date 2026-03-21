@@ -64,39 +64,37 @@ public class TensorUnity {
 					NUMBER>
 		void compute(S tensAlg, M numberAlg, TENSOR result)
 	{
-		NUMBER zero = numberAlg.construct();
 		NUMBER one = numberAlg.construct();
 		numberAlg.unity().call(one);
-		if (result.rank() == 0) {
-			result.setV(new IntegerIndex(0), one);
+		
+		int rank = result.rank();
+
+		IntegerIndex index = new IntegerIndex(rank);
+
+		if (rank == 0) {
+			result.setV(index, one);
 			return;
 		}
-		IntegerIndex index = new IntegerIndex(result.rank());
 		
-		// TODO: this code does a lot more work than it needs to
-		
-		long[] axisSizes = new long[index.numDimensions()];
+		long[] axisSizes = new long[rank];
 		result.shape(axisSizes);
-		SamplingIterator<IntegerIndex> iter =
-				GridIterator.compute(axisSizes);
-		while (iter.hasNext()) {
-			iter.next(index);
+
+		long minSize = axisSizes[0];
+		for (int i = 1; i < rank; i++) {
 			
-			long first = index.get(0);
-			boolean allSame = true;
-			for (int d = 1; d < index.numDimensions(); d++) {
+			if (axisSizes[i] < minSize)
+				minSize = axisSizes[i];
+		}
+
+		tensAlg.zero().call(result);
+		
+		for (int i = 0; i < minSize; i++) {
+			
+			for (int k = 0; i < rank; k++) {
 				
-				if (index.get(d) != first) {
-					
-					allSame = false;
-					break;
-				}
-			}
-			if (allSame) {
+				index.set(k, minSize);
+				
 				result.setV(index, one);
-			}
-			else {
-				result.setV(index, zero);
 			}
 		}
 	}
