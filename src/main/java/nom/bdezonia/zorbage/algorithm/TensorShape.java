@@ -55,11 +55,12 @@ public class TensorShape {
 		void compute(TensorMember<?> input, TensorMember<?> output)
 	{
 		if (input == output) return;
-		long[] dims = new long[input.rank()];
-		IndexType[] indexTypes = new IndexType[input.rank()];
-		input.shape(dims);
+		int rank = input.rank();
+		long[] axisSizes = new long[rank];
+		IndexType[] indexTypes = new IndexType[rank];
+		input.shape(axisSizes);
 		input.indexTypes(indexTypes);
-		output.alloc(dims, indexTypes);
+		output.alloc(axisSizes, indexTypes);
 	}
 
 }
