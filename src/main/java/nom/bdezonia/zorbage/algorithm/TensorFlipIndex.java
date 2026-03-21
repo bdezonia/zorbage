@@ -35,9 +35,9 @@ import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.Multiplication;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.TensorMember;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.RawData;
 import nom.bdezonia.zorbage.algebra.IndexType;
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.sampling.SamplingIterator;
 
 /**
  * @author Barry DeZonia
@@ -52,6 +52,7 @@ public class TensorFlipIndex {
 	 * 
 	 * @param <NN>
 	 * @param <NUMBER>
+	 * @param <T>
 	 * @param numberAlg
 	 * @param metric
 	 * @param axis
@@ -59,18 +60,21 @@ public class TensorFlipIndex {
 	 * @param b
 	 * @param targetType
 	 */
-	public static <NN extends Algebra<NN,NUMBER> & Addition<NUMBER> & Multiplication<NUMBER>, NUMBER, TENSOR extends TensorMember<NUMBER> & Settable<TENSOR>>
-		void compute(NN numberAlg, TENSOR metric, Integer axis, IndexType targetType, TENSOR a, TENSOR b)
+	public static <NN extends Algebra<NN,NUMBER> & Addition<NUMBER> & Multiplication<NUMBER>, NUMBER,
+					T extends TensorMember<NUMBER> & RawData<NUMBER> & Settable<T>>
+		void compute(NN numberAlg, T metric, int axis, T a, T b, IndexType targetType)
 	{
 		if (metric.rank() != 2)
 			throw new IllegalArgumentException("metric must be rank 2");
 
-		if (axis < 0 || axis >= a.rank())
+		final int rank = a.rank();
+
+		if (axis < 0 || axis >= rank)
 			throw new IllegalArgumentException("axis out of bounds");
 
-		long n0 = metric.axisSize(0);
-		long n1 = metric.axisSize(1);
-		long na = a.axisSize(axis);
+		final long n0 = metric.axisSize(0);
+		final long n1 = metric.axisSize(1);
+		final long na = a.axisSize(axis);
 
 		if (n0 != n1)
 			throw new IllegalArgumentException("metric must be square");
@@ -78,71 +82,84 @@ public class TensorFlipIndex {
 		if (n0 != na)
 			throw new IllegalArgumentException("metric size must match selected tensor axis");
 
-		if (a.indexType(axis) == targetType) {
-
-			// already correctly aligned
-			
+		// strict check on raising or lowering when already done
+		
+		if (targetType == a.indexType(axis)) {
+		
 			b.set(a);
 			return;
 		}
+		
+		// Optional strict checks:
+		// if (targetType == IndexType.LOWER && a.indexType(axis) != IndexType.UPPER)
+		//     throw new IllegalArgumentException("can only lower an upper index");
+		// if (targetType == IndexType.UPPER && a.indexType(axis) != IndexType.LOWER)
+		//     throw new IllegalArgumentException("can only raise a lower index");
 
-		int rank = a.rank();
+		long[] axisSizes = new long[rank];
+		a.shape(axisSizes);
 
-		long[] dims = new long[rank];
-		a.shape(dims);
+		IndexType[] outTypes = new IndexType[rank];
+		a.indexTypes(outTypes);
+		outTypes[axis] = targetType;
 
-		IndexType[] types = new IndexType[rank];
-		a.indexTypes(types);
+		b.alloc(axisSizes, outTypes);
 
-		types[axis] = targetType;
+		final long[] aStrides = rowMajorStrides(axisSizes);
 
-		b.alloc(dims, types);
+		long[] metricDims = new long[2];
+		metric.shape(metricDims);
+		final long[] metricStrides = rowMajorStrides(metricDims);
+
+		final IndexedDataSource<NUMBER> aData = a.rawData();
+		final IndexedDataSource<NUMBER> bData = b.rawData();
+		final IndexedDataSource<NUMBER> gData = metric.rawData();
+
+		final long total = aData.size();
+		final long axisLen = axisSizes[axis];
+		final long axisStride = aStrides[axis];
 
 		NUMBER sum = numberAlg.construct();
-		NUMBER mVal = numberAlg.construct();
+		NUMBER gVal = numberAlg.construct();
 		NUMBER aVal = numberAlg.construct();
 		NUMBER term = numberAlg.construct();
 
-		// rank-0 tensor cannot have an axis to raise/lower, so no special scalar case needed
+		for (long outFlat = 0; outFlat < total; outFlat++) {
 
-		IntegerIndex min = new IntegerIndex(rank);
-		IntegerIndex max = new IntegerIndex(rank);
-		for (int i = 0; i < rank; i++) {
-			max.set(i, dims[i] - 1);
-		}
+			// coordinate i at the chosen axis in the output index
+			final long iCoord = (outFlat / axisStride) % axisLen;
 
-		SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
-
-		IntegerIndex outIdx = new IntegerIndex(rank);
-		IntegerIndex aIdx = new IntegerIndex(rank);
-		IntegerIndex gIdx = new IntegerIndex(2);
-
-		while (iter.hasNext()) {
-			iter.next(outIdx);
-
-			// start with aIdx = outIdx
-			for (int i = 0; i < rank; i++) {
-				aIdx.set(i, outIdx.get(i));
-			}
-
-			long outCoord = outIdx.get(axis);
+			// flat position with the chosen axis removed from contribution
+			final long base = outFlat - iCoord * axisStride;
 
 			numberAlg.zero().call(sum);
 
-			for (long k = 0; k < na; k++) {
-				gIdx.set(0, outCoord);
-				gIdx.set(1, k);
+			for (long k = 0; k < axisLen; k++) {
 
-				aIdx.set(axis, k);
+				// metric[iCoord, k]
+				final long gFlat = iCoord * metricStrides[0] + k * metricStrides[1];
 
-				metric.getV(gIdx, mVal);
-				a.getV(aIdx, aVal);
+				// a[..., k, ...]
+				final long aFlat = base + k * axisStride;
 
-				numberAlg.multiply().call(mVal, aVal, term);
+				gData.get(gFlat, gVal);
+				aData.get(aFlat, aVal);
+
+				numberAlg.multiply().call(gVal, aVal, term);
 				numberAlg.add().call(sum, term, sum);
 			}
 
-			b.setV(outIdx, sum);
+			bData.set(outFlat, sum);
 		}
+	}
+
+	private static long[] rowMajorStrides(long[] dims) {
+		long[] strides = new long[dims.length];
+		long stride = 1;
+		for (int i = dims.length - 1; i >= 0; i--) {
+			strides[i] = stride;
+			stride *= dims[i];
+		}
+		return strides;
 	}
 }
