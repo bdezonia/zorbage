@@ -152,7 +152,7 @@ import nom.bdezonia.zorbage.type.real.float128.Float128CartesianTensorProductMem
 import nom.bdezonia.zorbage.type.real.float128.Float128MatrixMember;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float128.Float128VectorMember;
-import nom.bdezonia.zorbage.type.real.float16.Float16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float16.Float16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16MatrixMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16VectorMember;
@@ -343,7 +343,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<Float16Member>> hlfs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16VectorMember>> hlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16MatrixMember>> hlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<Float16CartesianTensorProductMember>> hlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float16GeneralTensorProductMember>> hlf_tens = new ArrayList<>();
 	
 	// type.real.float32
 	public List<DimensionedDataSource<Float32Member>> flts = new ArrayList<>();
@@ -1007,7 +1007,7 @@ public class DataBundle {
 			hlf_mats.add(ds);
 	}
 	
-	public void mergeFlt16Tens(DimensionedDataSource<Float16CartesianTensorProductMember> ds) {
+	public void mergeFlt16Tens(DimensionedDataSource<Float16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			hlf_tens.add(ds);
 	}
