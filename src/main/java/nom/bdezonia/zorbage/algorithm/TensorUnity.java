@@ -80,7 +80,6 @@ public class TensorUnity {
 
 		long minSize = axisSizes[0];
 		for (int i = 1; i < rank; i++) {
-			
 			if (axisSizes[i] < minSize)
 				minSize = axisSizes[i];
 		}
@@ -89,12 +88,12 @@ public class TensorUnity {
 		
 		for (int i = 0; i < minSize; i++) {
 			
-			for (int k = 0; i < rank; k++) {
+			for (int k = 0; k < rank; k++) {
 				
 				index.set(k, minSize);
-				
-				result.setV(index, one);
 			}
+			
+			result.setV(index, one);
 		}
 	}
 }
