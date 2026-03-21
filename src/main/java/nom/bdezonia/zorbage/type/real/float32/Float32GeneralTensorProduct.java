@@ -68,8 +68,6 @@ import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
-// Note that for now the implementation is only for Cartesian tensors
-
 /**
  * 
  * @author Barry DeZonia
@@ -92,14 +90,6 @@ public class Float32GeneralTensorProduct
 		ArrayLikeMethods<Float32GeneralTensorProductMember, Float32Member>,
 		MadeOfElements<Float32Algebra,Float32Member>
 {
-	// TODO rank 2 helper
-	
-	private static Float32GeneralTensorProductMember metricRaise = null;
-	
-	// TODO rank 2 helper
-	
-	private static Float32GeneralTensorProductMember metricLower = null;
-	
 	@Override
 	public String typeDescription() {
 		return "32-bit based real tensor";
@@ -589,33 +579,33 @@ public class Float32GeneralTensorProduct
 		return DIVBYSCALAR;
 	}
 	
-	private final Procedure3<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember>()
+	private final Procedure4<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> RAISE =
+		new Procedure4<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b) {
+		public void call(Integer idx, Float32GeneralTensorProductMember inverseMetric, Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b) {
 			
-			TensorFlipIndex.compute(G.FLT, metricRaise, idx, IndexType.CONTRAVARIANT, a, b);
+			TensorFlipIndex.compute(G.FLT, inverseMetric, idx, IndexType.CONTRAVARIANT, a, b);
 		}
 	};
 
 	@Override
-	public Procedure3<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
 
-	private final Procedure3<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember>()
+	private final Procedure4<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b) {
+		public void call(Integer idx, Float32GeneralTensorProductMember metric, Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b) {
 			
-			TensorFlipIndex.compute(G.FLT, metricLower, idx, IndexType.COVARIANT, a, b);
+			TensorFlipIndex.compute(G.FLT, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember, Float32GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 

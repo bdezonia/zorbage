@@ -90,14 +90,6 @@ public class Float64GeneralTensorProduct
 		ArrayLikeMethods<Float64GeneralTensorProductMember, Float64Member>,
 		MadeOfElements<Float64Algebra,Float64Member>
 {
-	// TODO rank 2 helper
-	
-	private static Float64GeneralTensorProductMember metricRaise = null;
-	
-	// TODO rank 2 helper
-	
-	private static Float64GeneralTensorProductMember metricLower = null;
-	
 	@Override
 	public String typeDescription() {
 		return "64-bit based real tensor";
@@ -587,33 +579,33 @@ public class Float64GeneralTensorProduct
 		return DIVBYSCALAR;
 	}
 	
-	private final Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember>()
+	private final Procedure4<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> RAISE =
+		new Procedure4<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, Float64GeneralTensorProductMember a, Float64GeneralTensorProductMember b) {
+		public void call(Integer idx, Float64GeneralTensorProductMember inverseMetric, Float64GeneralTensorProductMember a, Float64GeneralTensorProductMember b) {
 			
-			TensorFlipIndex.compute(G.DBL, metricRaise, idx, IndexType.CONTRAVARIANT, a, b);
+			TensorFlipIndex.compute(G.DBL, inverseMetric, idx, IndexType.CONTRAVARIANT, a, b);
 		}
 	};
 
 	@Override
-	public Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
 
-	private final Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember>()
+	private final Procedure4<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, Float64GeneralTensorProductMember a, Float64GeneralTensorProductMember b) {
+		public void call(Integer idx, Float64GeneralTensorProductMember metric, Float64GeneralTensorProductMember a, Float64GeneralTensorProductMember b) {
 			
-			TensorFlipIndex.compute(G.DBL, metricLower, idx, IndexType.COVARIANT, a, b);
+			TensorFlipIndex.compute(G.DBL, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember, Float64GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
