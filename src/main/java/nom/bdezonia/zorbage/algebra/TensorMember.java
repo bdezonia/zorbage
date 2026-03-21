@@ -39,7 +39,7 @@ import nom.bdezonia.zorbage.sampling.IntegerIndex;
  * @param <A>
  */
 public interface TensorMember<A>
-	extends StorageType, ThreadAccess
+	extends Dimensioned, StorageType, ThreadAccess
 {
 	int rank();
 	int upperRank();

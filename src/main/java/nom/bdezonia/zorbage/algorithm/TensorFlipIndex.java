@@ -62,7 +62,7 @@ public class TensorFlipIndex {
 	 */
 	public static <NN extends Algebra<NN,NUMBER> & Addition<NUMBER> & Multiplication<NUMBER>, NUMBER,
 					T extends TensorMember<NUMBER> & RawData<NUMBER> & Settable<T>>
-		void compute(NN numberAlg, T metric, int axis, T a, T b, IndexType targetType)
+		void compute(NN numberAlg, T metric, int axis, IndexType targetType, T a, T b)
 	{
 		if (metric.rank() != 2)
 			throw new IllegalArgumentException("metric must be rank 2");

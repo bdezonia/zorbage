@@ -32,7 +32,6 @@ package nom.bdezonia.zorbage.algorithm;
 
 import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.TensorMember;
-import nom.bdezonia.zorbage.misc.DataSourceUtils;
 
 /**
  * 
