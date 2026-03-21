@@ -60,9 +60,9 @@ public class TensorFlipIndex {
 	 * @param b
 	 * @param targetType
 	 */
-	public static <NN extends Algebra<NN,NUMBER> & Addition<NUMBER> & Multiplication<NUMBER>, NUMBER,
+	public static <NA extends Algebra<NA,NUMBER> & Addition<NUMBER> & Multiplication<NUMBER>, NUMBER,
 					T extends TensorMember<NUMBER> & RawData<NUMBER> & Settable<T>>
-		void compute(NN numberAlg, T metric, int axis, IndexType targetType, T a, T b)
+		void compute(NA numberAlg, T metric, int axis, IndexType targetType, T a, T b)
 	{
 		if (a == b)
 			throw new IllegalArgumentException("source and destination must be different tensors");
