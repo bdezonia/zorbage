@@ -44,7 +44,6 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
@@ -52,7 +51,6 @@ import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -352,32 +350,6 @@ public class Float128GeneralTensorProduct
 	@Override
 	public Procedure4<Integer,Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, Float128GeneralTensorProductMember a, Float128GeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.QUAD_TEN, G.QUAD, index, a, b);
-		}
-	};
-	
-	public Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, Float128GeneralTensorProductMember a, Float128GeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.QUAD_TEN, G.QUAD, index, a, b);
-		}
-	};
-	
-	public Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,Float128GeneralTensorProductMember,Float128GeneralTensorProductMember> POWER =

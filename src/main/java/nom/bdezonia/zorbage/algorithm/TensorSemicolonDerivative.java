@@ -50,24 +50,13 @@ public class TensorSemicolonDerivative {
 	// https://en.wikipedia.org/wiki/Covariant_derivative
 	// https://en.wikipedia.org/wiki/Christoffel_symbols
 		
-	/**
-	 * Calculate the semicolon derivative of tensor a and place results in an output tensor b.
-	 * 
-	 * @param <S>
-	 * @param <TENSOR>
-	 * @param <M>
-	 * @param <NUMBER>
-	 * @param tensAlg
-	 * @param numAlg
-	 * @param index
-	 * @param a
-	 * @param b
-	 */
-	public static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
+	public static <TA extends Algebra<TA,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
 					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M,NUMBER>, NUMBER>
-		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
+					NA extends Algebra<NA,NUMBER>, NUMBER>
+		void compute(TA tensAlg, NA numAlg, Integer index, TENSOR a, TENSOR b)
 	{
+		// No idea if this code is right in any way
+		
 		/*
 		TensorCommaDerivative.compute(tensAlg, numAlg, index, a, b);
 		
@@ -90,13 +79,5 @@ public class TensorSemicolonDerivative {
 		}
 		tensAlg.assign().call(sum, b);
 	*/
-	}
-	
-	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER>,
-						TENSOR extends TensorMember<NUMBER>,
-						M extends Algebra<M,NUMBER>, NUMBER>
-		void christoffel(int k, int i, int j, TENSOR a, TENSOR out)
-	{
-		throw new IllegalArgumentException("must implement me!");
 	}
 }

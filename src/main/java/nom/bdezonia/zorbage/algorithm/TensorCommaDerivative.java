@@ -48,53 +48,11 @@ public class TensorCommaDerivative {
 	
 	// https://mathworld.wolfram.com/CommaDerivative.html
 	
-	// My current understanding is this populates a tensor zero everywhere except where an input tensor
-	// is sliced by the index value (0 .. dimension-1) in the outermost dimension. This may be incorrect
-	// but that is what seems most logical when I look at the math definition above.
-	
-	/**
-	 * Calculate the tensor comma derivative at a point of an input tensor
-	 * and store in an output tensor.
-	 * 
-	 * @param <S>
-	 * @param <TENSOR>
-	 * @param <M>
-	 * @param <NUMBER>
-	 * @param tensAlg
-	 * @param numAlg
-	 * @param index
-	 * @param a
-	 * @param b
-	 */
-	public static <S extends Algebra<S,TENSOR>,
+	public static <TA extends Algebra<TA,TENSOR>,
 					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M, NUMBER>,
+					NA extends Algebra<NA, NUMBER>,
 					NUMBER>
-		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
+		void compute(TA tensAlg, NA numAlg, Integer index, TENSOR a, TENSOR b)
 	{
-		/*
-		if (a.rank() == 0) {
-			tensAlg.assign().call(a, b);
-			return;
-		}
-		TENSOR tmp = tensAlg.construct();
-		TensorShape.compute(a, tmp);
-		NUMBER value = numAlg.construct();
-		IntegerIndex min = new IntegerIndex(a.rank());
-		IntegerIndex max = new IntegerIndex(a.rank());
-		IntegerIndex tmpIdx = new IntegerIndex(a.rank());
-		min.set(a.rank()-1, index);
-		max.set(a.rank()-1, index);
-		for (int i = 0; i < a.rank()-1; i++) {
-			max.set(i, a.dimension()-1);
-		}
-		SamplingIterator<IntegerIndex> iter = GridIterator.compute(min, max);
-		while (iter.hasNext()) {
-			iter.next(tmpIdx);
-			a.getV(tmpIdx, value);
-			tmp.setV(tmpIdx, value);
-		}
-		tensAlg.assign().call(tmp, b);
-		*/
 	}
 }

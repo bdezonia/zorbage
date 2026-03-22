@@ -39,14 +39,12 @@ import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
 import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -342,32 +340,6 @@ public class HighPrecisionGeneralTensorProduct
 	@Override
 	public Procedure4<Integer,Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.HP_TEN, G.HP, index, a, b);
-		}
-	};
-	
-	public Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.HP_TEN, G.HP, index, a, b);
-		}
-	};
-	
-	public Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,HighPrecisionGeneralTensorProductMember,HighPrecisionGeneralTensorProductMember> POWER =
