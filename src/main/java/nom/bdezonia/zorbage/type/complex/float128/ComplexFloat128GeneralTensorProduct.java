@@ -69,8 +69,6 @@ import nom.bdezonia.zorbage.type.real.float128.Float128Algebra;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
-// Note that for now the implementation is only for Cartesian tensors
-
 /**
  * 
  * @author Barry DeZonia
