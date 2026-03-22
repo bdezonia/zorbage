@@ -36,23 +36,23 @@ import nom.bdezonia.zorbage.type.color.ArgbAlgebra;
 import nom.bdezonia.zorbage.type.color.CieXyzAlgebra;
 import nom.bdezonia.zorbage.type.color.RgbAlgebra;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Algebra;
-import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Matrix;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Vector;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Algebra;
-import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Matrix;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Vector;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Algebra;
-import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Matrix;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Vector;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Algebra;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Matrix;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Vector;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionCartesianTensorProduct;
+import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionGeberalTensorProduct;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionVector;
 import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Algebra;
@@ -204,7 +204,7 @@ public class G {
 	public static final ComplexFloat16Algebra CHLF = new ComplexFloat16Algebra();
 	public static final ComplexFloat16Vector CHLF_VEC = new ComplexFloat16Vector();
 	public static final ComplexFloat16Matrix CHLF_MAT = new ComplexFloat16Matrix();
-	public static final ComplexFloat16CartesianTensorProduct CHLF_TEN = new ComplexFloat16CartesianTensorProduct();
+	public static final ComplexFloat16GeneralTensorProduct CHLF_TEN = new ComplexFloat16GeneralTensorProduct();
 
 	public static final QuaternionFloat16Algebra QHLF = new QuaternionFloat16Algebra();
 	public static final QuaternionFloat16RModule QHLF_RMOD = new QuaternionFloat16RModule();
@@ -224,7 +224,7 @@ public class G {
 	public static final ComplexFloat32Algebra CFLT = new ComplexFloat32Algebra();
 	public static final ComplexFloat32Vector CFLT_VEC = new ComplexFloat32Vector();
 	public static final ComplexFloat32Matrix CFLT_MAT = new ComplexFloat32Matrix();
-	public static final ComplexFloat32CartesianTensorProduct CFLT_TEN = new ComplexFloat32CartesianTensorProduct();
+	public static final ComplexFloat32GeneralTensorProduct CFLT_TEN = new ComplexFloat32GeneralTensorProduct();
 
 	public static final QuaternionFloat32Algebra QFLT = new QuaternionFloat32Algebra();
 	public static final QuaternionFloat32RModule QFLT_RMOD = new QuaternionFloat32RModule();
@@ -244,7 +244,7 @@ public class G {
 	public static final ComplexFloat64Algebra CDBL = new ComplexFloat64Algebra();
 	public static final ComplexFloat64Vector CDBL_VEC = new ComplexFloat64Vector();
 	public static final ComplexFloat64Matrix CDBL_MAT = new ComplexFloat64Matrix();
-	public static final ComplexFloat64CartesianTensorProduct CDBL_TEN = new ComplexFloat64CartesianTensorProduct();
+	public static final ComplexFloat64GeneralTensorProduct CDBL_TEN = new ComplexFloat64GeneralTensorProduct();
 
 	public static final QuaternionFloat64Algebra QDBL = new QuaternionFloat64Algebra();
 	public static final QuaternionFloat64RModule QDBL_RMOD = new QuaternionFloat64RModule();
@@ -264,7 +264,7 @@ public class G {
 	public static final ComplexFloat128Algebra CQUAD = new ComplexFloat128Algebra();
 	public static final ComplexFloat128Vector CQUAD_VEC = new ComplexFloat128Vector();
 	public static final ComplexFloat128Matrix CQUAD_MAT = new ComplexFloat128Matrix();
-	public static final ComplexFloat128CartesianTensorProduct CQUAD_TEN = new ComplexFloat128CartesianTensorProduct();
+	public static final ComplexFloat128GeneralTensorProduct CQUAD_TEN = new ComplexFloat128GeneralTensorProduct();
 
 	public static final QuaternionFloat128Algebra QQUAD = new QuaternionFloat128Algebra();
 	public static final QuaternionFloat128RModule QQUAD_RMOD = new QuaternionFloat128RModule();
@@ -284,7 +284,7 @@ public class G {
 	public static final ComplexHighPrecisionAlgebra CHP = new ComplexHighPrecisionAlgebra();
 	public static final ComplexHighPrecisionVector CHP_VEC = new ComplexHighPrecisionVector();
 	public static final ComplexHighPrecisionMatrix CHP_MAT = new ComplexHighPrecisionMatrix();
-	public static final ComplexHighPrecisionCartesianTensorProduct CHP_TEN = new ComplexHighPrecisionCartesianTensorProduct();
+	public static final ComplexHighPrecisionGeberalTensorProduct CHP_TEN = new ComplexHighPrecisionGeberalTensorProduct();
 
 	public static final QuaternionHighPrecisionAlgebra QHP = new QuaternionHighPrecisionAlgebra();
 	public static final QuaternionHighPrecisionRModule QHP_RMOD = new QuaternionHighPrecisionRModule();

@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.complex.float128;
+package nom.bdezonia.zorbage.type.complex.float32;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -46,7 +46,9 @@ import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
 import nom.bdezonia.zorbage.algebra.GetAsByteArray;
 import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
@@ -56,11 +58,9 @@ import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
 import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
-import nom.bdezonia.zorbage.algebra.SetFromDoublesExact;
 import nom.bdezonia.zorbage.algebra.SetFromFloats;
 import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
 import nom.bdezonia.zorbage.algebra.SetFromInts;
-import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
@@ -98,24 +98,22 @@ import nom.bdezonia.zorbage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public final class ComplexFloat128CartesianTensorProductMember
+public final class ComplexFloat32GeneralTensorProductMember
 	implements
-		TensorMember<ComplexFloat128Member>,
-		Gettable<ComplexFloat128CartesianTensorProductMember>,
-		Settable<ComplexFloat128CartesianTensorProductMember>,
+		TensorMember<ComplexFloat32Member>,
+		Gettable<ComplexFloat32GeneralTensorProductMember>,
+		Settable<ComplexFloat32GeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexFloat128Member>,
+		RawData<ComplexFloat32Member>,
 		SetFromBytes,
 		SetFromBytesExact,
 		SetFromShorts,
 		SetFromShortsExact,
 		SetFromInts,
-		SetFromIntsExact,
 		SetFromLongs,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
-		SetFromDoublesExact,
 		SetFromBigIntegers,
 		SetFromBigDecimals,
 		GetAsByteArray,
@@ -123,12 +121,14 @@ public final class ComplexFloat128CartesianTensorProductMember
 		GetAsIntArray,
 		GetAsLongArray,
 		GetAsFloatArray,
+		GetAsFloatArrayExact,
 		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<ComplexFloat128CartesianTensorProduct, ComplexFloat128CartesianTensorProductMember>,
+		GetAlgebra<ComplexFloat32GeneralTensorProduct, ComplexFloat32GeneralTensorProductMember>,
 		ApproximateType,
 		CompositeType,
 		InfinityIncludedType,
@@ -138,11 +138,11 @@ public final class ComplexFloat128CartesianTensorProductMember
 		UnityIncludedType,
 		ZeroIncludedType
 {
-	private static final ComplexFloat128Member ZERO = new ComplexFloat128Member();
+	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member();
 
 	private int rank;
 	private long dimCount;
-	private IndexedDataSource<ComplexFloat128Member> storage;
+	private IndexedDataSource<ComplexFloat32Member> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private StorageConstruction s;
@@ -175,16 +175,16 @@ public final class ComplexFloat128CartesianTensorProductMember
 	@Override
 	public long dimension() { return dimCount; }
 
-	public ComplexFloat128CartesianTensorProductMember() {
+	public ComplexFloat32GeneralTensorProductMember() {
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new ComplexFloat128Member(), 1);
+		storage = Storage.allocate(s, new ComplexFloat32Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
-	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount) {
+	public ComplexFloat32GeneralTensorProductMember(int rank, long dimCount) {
 		if (rank < 0)
 			throw new IllegalArgumentException("bad rank in tensor constructor");
 		if (dimCount < 0)
@@ -198,35 +198,20 @@ public final class ComplexFloat128CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new ComplexFloat128Member(), numElems);
+		storage = Storage.allocate(s, new ComplexFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
+	public ComplexFloat32GeneralTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		setFromBigDecimals(vals);
-	}
-	
-	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
-		this(rank, dimCount);
-		setFromBigIntegers(vals);
-	}
-	
-	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, double... vals) {
-		this(rank, dimCount);
-		setFromDoubles(vals);
-	}
-	
-	public ComplexFloat128CartesianTensorProductMember(int rank, long dimCount, long... vals) {
-		this(rank, dimCount);
-		setFromLongs(vals);
+		setFromFloats(vals);
 	}
 
-	public ComplexFloat128CartesianTensorProductMember(ComplexFloat128CartesianTensorProductMember other) {
+	public ComplexFloat32GeneralTensorProductMember(ComplexFloat32GeneralTensorProductMember other) {
 		set(other);
 	}
 	
-	public ComplexFloat128CartesianTensorProductMember(String s) {
+	public ComplexFloat32GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
@@ -249,14 +234,14 @@ public final class ComplexFloat128CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new ComplexFloat128Member(), numElems);
+		this.storage = Storage.allocate(this.s, new ComplexFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
-			value.setR(val.r());
-			value.setI(val.i());
+			value.setR(val.r().floatValue());
+			value.setI(val.i().floatValue());
 			storage.set(0, value);
 		}
 		else {
@@ -266,8 +251,8 @@ public final class ComplexFloat128CartesianTensorProductMember
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
-				value.setR(val.r());
-				value.setI(val.i());
+				value.setR(val.r().floatValue());
+				value.setI(val.i().floatValue());
 				long idx = IndexUtils.indexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
@@ -281,7 +266,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(ComplexFloat128CartesianTensorProductMember other) {
+	public void set(ComplexFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
 		rank = other.rank;
 		dimCount = other.dimCount;
@@ -292,7 +277,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 	}
 	
 	@Override
-	public void get(ComplexFloat128CartesianTensorProductMember other) {
+	public void get(ComplexFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
 		other.rank = rank;
 		other.dimCount = dimCount;
@@ -337,7 +322,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new ComplexFloat128Member(), newCount);
+			storage = Storage.allocate(s, new ComplexFloat32Member(), newCount);
 			return true;
 		}
 		return false;
@@ -357,22 +342,22 @@ public final class ComplexFloat128CartesianTensorProductMember
 		return storage.size();
 	}
 	
-	void v(long index, ComplexFloat128Member value) {
+	void v(long index, ComplexFloat32Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
-	public void getV(IntegerIndex index, ComplexFloat128Member value) {
+	public void getV(IntegerIndex index, ComplexFloat32Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
-	void setV(long index, ComplexFloat128Member value) {
+	void setV(long index, ComplexFloat32Member value) {
 		storage.set(index, value);
 	}
 	
 	@Override
-	public void setV(IntegerIndex index, ComplexFloat128Member value) {
+	public void setV(IntegerIndex index, ComplexFloat32Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
@@ -380,12 +365,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
-			BigDecimal re = value.r().v();
-			BigDecimal im = value.i().v();
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
 			OctonionRepresentation o = values.get(i);
 			o.setR(re);
 			o.setI(im);
@@ -401,14 +386,14 @@ public final class ComplexFloat128CartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
-			value.setR(o.r());
-			value.setI(o.i());
+			value.setR(o.r().floatValue());
+			value.setI(o.i().floatValue());
 			storage.set(i, value);
 		}
 	}
@@ -419,7 +404,7 @@ public final class ComplexFloat128CartesianTensorProductMember
 		StringBuilder builder = new StringBuilder();
 		// iterate values/indices and write numbers, brackets, and commas in correct order
 		// something recursive?
-		ComplexFloat128Member tmp = new ComplexFloat128Member();
+		ComplexFloat32Member tmp = new ComplexFloat32Member();
 		IntegerIndex index = new IntegerIndex(this.dims.length);
 		// [2,2,2] dims
 		// [0,0,0]  [[[num
@@ -474,18 +459,18 @@ public final class ComplexFloat128CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static final ThreadLocal<ComplexFloat128Member> tmpComp =
-			new ThreadLocal<ComplexFloat128Member>()
+	private static final ThreadLocal<ComplexFloat32Member> tmpComp =
+			new ThreadLocal<ComplexFloat32Member>()
 	{
-		protected ComplexFloat128Member initialValue() {
-			return new ComplexFloat128Member();
+		protected ComplexFloat32Member initialValue() {
+			return new ComplexFloat32Member();
 		};
 		
 	};
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.BIGDECIMAL;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -495,89 +480,89 @@ public final class ComplexFloat128CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		ComplexFloat128Member tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(new BigDecimal(v));
-		else if (component == 1)
-			tmp.setI(new BigDecimal(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else if (component == 1)
 			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR((float) v);
+		else if (component == 1)
+			tmp.setI((float) v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v.floatValue());
+		else if (component == 1)
+			tmp.setI(v.floatValue());
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		ComplexFloat32Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v.floatValue());
+		else if (component == 1)
+			tmp.setI(v.floatValue());
 		setV(index, tmp);
 	}
 
@@ -589,12 +574,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -607,12 +592,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -625,12 +610,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -643,12 +628,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -661,12 +646,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -679,12 +664,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR((float) v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI((float) v);
 			setV(index, tmp);
 		}
 	}
@@ -697,12 +682,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(new BigDecimal(v));
+				tmp.setR(v.floatValue());
 			else if (component == 1)
-				tmp.setI(new BigDecimal(v));
+				tmp.setI(v.floatValue());
 			setV(index, tmp);
 		}
 	}
@@ -715,12 +700,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR(v.floatValue());
 			else if (component == 1)
-				tmp.setI(v);
+				tmp.setI(v.floatValue());
 			setV(index, tmp);
 		}
 	}
@@ -730,12 +715,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().byteValue();
+			return (byte) tmp.r();
 		else if (component == 1)
-			return tmp.i().v().byteValue();
+			return (byte) tmp.i();
 		return 0;
 	}
 
@@ -744,12 +729,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().shortValue();
+			return (short) tmp.r();
 		else if (component == 1)
-			return tmp.i().v().shortValue();
+			return (short) tmp.i();
 		return 0;
 	}
 
@@ -758,12 +743,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().intValue();
+			return (int) tmp.r();
 		else if (component == 1)
-			return tmp.i().v().intValue();
+			return (int) tmp.i();
 		return 0;
 	}
 
@@ -772,12 +757,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().longValue();
+			return (long) tmp.r();
 		else if (component == 1)
-			return tmp.i().v().longValue();
+			return (long) tmp.i();
 		return 0;
 	}
 
@@ -786,12 +771,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().floatValue();
+			return tmp.r();
 		else if (component == 1)
-			return tmp.i().v().floatValue();
+			return tmp.i();
 		return 0;
 	}
 
@@ -800,12 +785,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().doubleValue();
+			return tmp.r();
 		else if (component == 1)
-			return tmp.i().v().doubleValue();
+			return tmp.i();
 		return 0;
 	}
 
@@ -814,12 +799,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v().toBigInteger();
+			return BigDecimal.valueOf(tmp.r()).toBigInteger();
 		else if (component == 1)
-			return tmp.i().v().toBigInteger();
+			return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -828,12 +813,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexFloat128Member tmp = tmpComp.get();
+		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().v();
+			return BigDecimal.valueOf(tmp.r());
 		else if (component == 1)
-			return tmp.i().v();
+			return BigDecimal.valueOf(tmp.i());
 		return BigDecimal.ZERO;
 	}
 
@@ -843,12 +828,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().byteValue();
+				return (byte) tmp.r();
 			else
-				return tmp.i().v().byteValue();
+				return (byte) tmp.i();
 		}
 	}
 
@@ -858,12 +843,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().shortValue();
+				return (short) tmp.r();
 			else
-				return tmp.i().v().shortValue();
+				return (short) tmp.i();
 		}
 	}
 
@@ -873,12 +858,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().intValue();
+				return (int) tmp.r();
 			else
-				return tmp.i().v().intValue();
+				return (int) tmp.i();
 		}
 	}
 
@@ -888,12 +873,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().longValue();
+				return (long) tmp.r();
 			else
-				return tmp.i().v().longValue();
+				return (long) tmp.i();
 		}
 	}
 
@@ -903,12 +888,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().floatValue();
+				return tmp.r();
 			else
-				return tmp.i().v().floatValue();
+				return tmp.i();
 		}
 	}
 
@@ -918,12 +903,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().doubleValue();
+				return tmp.r();
 			else
-				return tmp.i().v().doubleValue();
+				return tmp.i();
 		}
 	}
 
@@ -933,12 +918,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return BigInteger.ZERO;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v().toBigInteger();
+				return BigDecimal.valueOf(tmp.r()).toBigInteger();
 			else
-				return tmp.i().v().toBigInteger();
+				return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		}
 	}
 
@@ -948,12 +933,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			ComplexFloat128Member tmp = tmpComp.get();
+			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().v();
+				return BigDecimal.valueOf(tmp.r());
 			else
-				return tmp.i().v();
+				return BigDecimal.valueOf(tmp.i());
 		}
 	}
 
@@ -965,13 +950,13 @@ public final class ComplexFloat128CartesianTensorProductMember
 	}
 
 	@Override
-	public IndexedDataSource<ComplexFloat128Member> rawData() {
+	public IndexedDataSource<ComplexFloat32Member> rawData() {
 		return storage;
 	}
 
 	@Override
 	public int hashCode() {
-		ComplexFloat128Member tmp = G.CQUAD.construct();
+		ComplexFloat32Member tmp = G.CFLT.construct();
 		long len = dimension(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
@@ -984,8 +969,8 @@ public final class ComplexFloat128CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof ComplexFloat128CartesianTensorProductMember) {
-			return G.CQUAD_TEN.isEqual().call(this, (ComplexFloat128CartesianTensorProductMember) o);
+		if (o instanceof ComplexFloat32GeneralTensorProductMember) {
+			return G.CFLT_TEN.isEqual().call(this, (ComplexFloat32GeneralTensorProductMember) o);
 		}
 		return false;
 	}
@@ -1001,18 +986,8 @@ public final class ComplexFloat128CartesianTensorProductMember
 	}
 	
 	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
-	}
-	
-	@Override
 	public void setFromFloatsExact(float... vals) {
 		setFromFloats(vals);
-	}
-	
-	@Override
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
 	}
 	
 	@Override
@@ -1022,10 +997,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1037,10 +1012,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1052,10 +1027,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1067,10 +1042,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1082,10 +1057,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1097,10 +1072,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1112,10 +1087,10 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  new BigDecimal(vals[i + 0]) );
-			value.setI(  new BigDecimal(vals[i + 1]) );
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1127,14 +1102,24 @@ public final class ComplexFloat128CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
 			storage.set(i/componentCount, value);
 		}
 	}
 
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
 	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
@@ -1145,12 +1130,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		byte[] values = new byte[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().byteValue();
-			values[k++] = value.i().v().byteValue();
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
 		}
 		return values;
 	}
@@ -1160,12 +1145,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		short[] values = new short[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().shortValue();
-			values[k++] = value.i().v().shortValue();
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
 		}
 		return values;
 	}
@@ -1175,12 +1160,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		int[] values = new int[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().intValue();
-			values[k++] = value.i().v().intValue();
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
 		}
 		return values;
 	}
@@ -1190,12 +1175,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		long[] values = new long[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().longValue();
-			values[k++] = value.i().v().longValue();
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
 		}
 		return values;
 	}
@@ -1205,12 +1190,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		float[] values = new float[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().floatValue();
-			values[k++] = value.i().v().floatValue();
+			values[k++] = value.r();
+			values[k++] = value.i();
 		}
 		return values;
 	}
@@ -1220,12 +1205,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		double[] values = new double[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().doubleValue();
-			values[k++] = value.i().v().doubleValue();
+			values[k++] = value.r();
+			values[k++] = value.i();
 		}
 		return values;
 	}
@@ -1235,12 +1220,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v().toBigInteger();
-			values[k++] = value.i().v().toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
 		}
 		return values;
 	}
@@ -1250,12 +1235,12 @@ public final class ComplexFloat128CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexFloat128Member value = G.CQUAD.construct();
+		ComplexFloat32Member value = G.CFLT.construct();
 		BigDecimal[] values = new BigDecimal[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().v();
-			values[k++] = value.i().v();
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
 		}
 		return values;
 	}
@@ -1267,8 +1252,8 @@ public final class ComplexFloat128CartesianTensorProductMember
 	}
 	
 	@Override
-	public ComplexFloat128CartesianTensorProduct getAlgebra() {
+	public ComplexFloat32GeneralTensorProduct getAlgebra() {
 
-		return G.CQUAD_TEN;
+		return G.CFLT_TEN;
 	}
 }

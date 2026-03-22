@@ -40,7 +40,7 @@ import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
@@ -66,8 +66,8 @@ class TensorAlgorithms {
 
 	void example2() {
 		
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember(3, 4);
 		
 		Float64Member b = G.DBL.construct();
 		
@@ -78,13 +78,13 @@ class TensorAlgorithms {
 
 	void example3() {
 
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember(3, 4);
 		
-		ComplexFloat64CartesianTensorProductMember b =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember b =
+				new ComplexFloat64GeneralTensorProductMember(3, 4);
 		
-		ComplexFloat64CartesianTensorProductMember c = G.CDBL_TEN.construct();
+		ComplexFloat64GeneralTensorProductMember c = G.CDBL_TEN.construct();
 		
 		TensorOuterProduct.compute(G.CDBL_TEN, G.CDBL, a, b, c);
 		
@@ -131,10 +131,10 @@ class TensorAlgorithms {
 
 	void example7() {
 		
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember(3, 4);
 		
-		ComplexFloat64CartesianTensorProductMember b = G.CDBL_TEN.construct();
+		ComplexFloat64GeneralTensorProductMember b = G.CDBL_TEN.construct();
 
 		TensorShape.compute(a, b);
 		
@@ -143,8 +143,8 @@ class TensorAlgorithms {
 
 	void example8() {
 
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember(3, 4);
 		
 		TensorUnity.compute(G.CDBL_TEN, G.CDBL, a);
 		

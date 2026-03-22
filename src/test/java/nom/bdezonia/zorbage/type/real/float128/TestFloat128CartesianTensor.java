@@ -47,7 +47,7 @@ import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.misc.BigDecimalUtils;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.storage.Storage;
-import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
@@ -426,7 +426,7 @@ public class TestFloat128CartesianTensor {
 		IntegerIndex index = new IntegerIndex(2);
 		ComplexFloat128Member ctmp1 = G.CQUAD.construct();
 		ComplexFloat128Member ctmp2 = G.CQUAD.construct();
-		ComplexFloat128CartesianTensorProductMember cvalue1 = new ComplexFloat128CartesianTensorProductMember(2,2);
+		ComplexFloat128GeneralTensorProductMember cvalue1 = new ComplexFloat128GeneralTensorProductMember(2,2);
 		index.set(0, 0);
 		index.set(1, 0);
 		ctmp1.setR(BigDecimal.valueOf(1));
@@ -447,8 +447,8 @@ public class TestFloat128CartesianTensor {
 		ctmp1.setR(BigDecimal.valueOf(7));
 		ctmp1.setI(BigDecimal.valueOf(8));
 		cvalue1.setV(index, ctmp1);
-		ComplexFloat128CartesianTensorProductMember cvalue2 =
-				new ComplexFloat128CartesianTensorProductMember();
+		ComplexFloat128GeneralTensorProductMember cvalue2 =
+				new ComplexFloat128GeneralTensorProductMember();
 		
 		G.CQUAD_TEN.conjugate().call(cvalue1, cvalue2);
 		assertEquals(cvalue1.rank(), cvalue2.rank());

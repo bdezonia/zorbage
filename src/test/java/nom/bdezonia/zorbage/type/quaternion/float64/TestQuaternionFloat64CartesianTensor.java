@@ -42,7 +42,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -432,8 +432,8 @@ public class TestQuaternionFloat64CartesianTensor {
 		IntegerIndex index = new IntegerIndex(2);
 		ComplexFloat64Member ctmp1 = G.CDBL.construct();
 		ComplexFloat64Member ctmp2 = G.CDBL.construct();
-		ComplexFloat64CartesianTensorProductMember cvalue1 =
-				new ComplexFloat64CartesianTensorProductMember(2,2);
+		ComplexFloat64GeneralTensorProductMember cvalue1 =
+				new ComplexFloat64GeneralTensorProductMember(2,2);
 		index.set(0, 0);
 		index.set(1, 0);
 		ctmp1.setR(1);
@@ -454,8 +454,8 @@ public class TestQuaternionFloat64CartesianTensor {
 		ctmp1.setR(7);
 		ctmp1.setI(8);
 		cvalue1.setV(index, ctmp1);
-		ComplexFloat64CartesianTensorProductMember cvalue2 =
-				new ComplexFloat64CartesianTensorProductMember();
+		ComplexFloat64GeneralTensorProductMember cvalue2 =
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		G.CDBL_TEN.conjugate().call(cvalue1, cvalue2);
 		assertEquals(cvalue1.rank(), cvalue2.rank());

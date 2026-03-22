@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.complex.highprec;
+package nom.bdezonia.zorbage.type.complex.float64;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -46,15 +46,14 @@ import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
 import nom.bdezonia.zorbage.algebra.GetAsByteArray;
 import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
 import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
-import nom.bdezonia.zorbage.algebra.SetFromBigDecimalsExact;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
-import nom.bdezonia.zorbage.algebra.SetFromBigIntegersExact;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
 import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
@@ -64,17 +63,18 @@ import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
 import nom.bdezonia.zorbage.algebra.SetFromInts;
 import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
-import nom.bdezonia.zorbage.algebra.SetFromLongsExact;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algebra.ThreadAccess;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
 import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
 import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.TensorType;
 import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
 import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
@@ -99,13 +99,13 @@ import nom.bdezonia.zorbage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public final class ComplexHighPrecisionCartesianTensorProductMember
+public final class ComplexFloat64GeneralTensorProductMember
 	implements
-		TensorMember<ComplexHighPrecisionMember>,
-		Gettable<ComplexHighPrecisionCartesianTensorProductMember>,
-		Settable<ComplexHighPrecisionCartesianTensorProductMember>,
+		TensorMember<ComplexFloat64Member>,
+		Gettable<ComplexFloat64GeneralTensorProductMember>,
+		Settable<ComplexFloat64GeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<ComplexHighPrecisionMember>,
+		RawData<ComplexFloat64Member>,
 		SetFromBytes,
 		SetFromBytesExact,
 		SetFromShorts,
@@ -113,38 +113,38 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
-		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
 		SetFromDoublesExact,
 		SetFromBigIntegers,
-		SetFromBigIntegersExact,
 		SetFromBigDecimals,
-		SetFromBigDecimalsExact,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
 		GetAsLongArray,
 		GetAsFloatArray,
 		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<ComplexHighPrecisionCartesianTensorProduct, ComplexHighPrecisionCartesianTensorProductMember>,
+		GetAlgebra<ComplexFloat64GeneralTensorProduct, ComplexFloat64GeneralTensorProductMember>,
+		ApproximateType,
 		CompositeType,
-		ExactType,
-		OctonionType,
+		InfinityIncludedType,
+		NanIncludedType,
 		SignedType,
+		TensorType,
 		UnityIncludedType,
 		ZeroIncludedType
 {
-	private static final ComplexHighPrecisionMember ZERO = new ComplexHighPrecisionMember();
+	private static final ComplexFloat64Member ZERO = new ComplexFloat64Member();
 
 	private int rank;
 	private long dimCount;
-	private IndexedDataSource<ComplexHighPrecisionMember> storage;
+	private IndexedDataSource<ComplexFloat64Member> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private StorageConstruction s;
@@ -177,16 +177,16 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	@Override
 	public long dimension() { return dimCount; }
 
-	public ComplexHighPrecisionCartesianTensorProductMember() {
+	public ComplexFloat64GeneralTensorProductMember() {
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), 1);
+		storage = Storage.allocate(s, new ComplexFloat64Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
-	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount) {
+	public ComplexFloat64GeneralTensorProductMember(int rank, long dimCount) {
 		if (rank < 0)
 			throw new IllegalArgumentException("bad rank in tensor constructor");
 		if (dimCount < 0)
@@ -200,35 +200,20 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new ComplexHighPrecisionMember(), numElems);
+		storage = Storage.allocate(s, new ComplexFloat64Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
-		this(rank, dimCount);
-		setFromBigDecimals(vals);
-	}
-
-	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
-		this(rank, dimCount);
-		setFromBigIntegers(vals);
-	}
-
-	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, double... vals) {
+	public ComplexFloat64GeneralTensorProductMember(int rank, long dimCount, double... vals) {
 		this(rank, dimCount);
 		setFromDoubles(vals);
 	}
 
-	public ComplexHighPrecisionCartesianTensorProductMember(int rank, long dimCount, long... vals) {
-		this(rank, dimCount);
-		setFromLongs(vals);
-	}
-
-	public ComplexHighPrecisionCartesianTensorProductMember(ComplexHighPrecisionCartesianTensorProductMember other) {
+	public ComplexFloat64GeneralTensorProductMember(ComplexFloat64GeneralTensorProductMember other) {
 		set(other);
 	}
 	
-	public ComplexHighPrecisionCartesianTensorProductMember(String s) {
+	public ComplexFloat64GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
@@ -251,14 +236,14 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new ComplexHighPrecisionMember(), numElems);
+		this.storage = Storage.allocate(this.s, new ComplexFloat64Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
-			value.setR(val.r());
-			value.setI(val.i());
+			value.setR(val.r().doubleValue());
+			value.setI(val.i().doubleValue());
 			storage.set(0, value);
 		}
 		else {
@@ -268,8 +253,8 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
-				value.setR(val.r());
-				value.setI(val.i());
+				value.setR(val.r().doubleValue());
+				value.setI(val.i().doubleValue());
 				long idx = IndexUtils.indexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
@@ -283,7 +268,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(ComplexHighPrecisionCartesianTensorProductMember other) {
+	public void set(ComplexFloat64GeneralTensorProductMember other) {
 		if (this == other) return;
 		rank = other.rank;
 		dimCount = other.dimCount;
@@ -294,7 +279,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void get(ComplexHighPrecisionCartesianTensorProductMember other) {
+	public void get(ComplexFloat64GeneralTensorProductMember other) {
 		if (this == other) return;
 		other.rank = rank;
 		other.dimCount = dimCount;
@@ -339,7 +324,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new ComplexHighPrecisionMember(), newCount);
+			storage = Storage.allocate(s, new ComplexFloat64Member(), newCount);
 			return true;
 		}
 		return false;
@@ -359,22 +344,22 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		return storage.size();
 	}
 	
-	void v(long index, ComplexHighPrecisionMember value) {
+	void v(long index, ComplexFloat64Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
-	public void getV(IntegerIndex index, ComplexHighPrecisionMember value) {
+	public void getV(IntegerIndex index, ComplexFloat64Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
-	void setV(long index, ComplexHighPrecisionMember value) {
+	void setV(long index, ComplexFloat64Member value) {
 		storage.set(index, value);
 	}
 	
 	@Override
-	public void setV(IntegerIndex index, ComplexHighPrecisionMember value) {
+	public void setV(IntegerIndex index, ComplexFloat64Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
@@ -382,12 +367,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
-			BigDecimal re = value.r();
-			BigDecimal im = value.i();
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
 			OctonionRepresentation o = values.get(i);
 			o.setR(re);
 			o.setI(im);
@@ -403,14 +388,14 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
-			value.setR(o.r());
-			value.setI(o.i());
+			value.setR(o.r().doubleValue());
+			value.setI(o.i().doubleValue());
 			storage.set(i, value);
 		}
 	}
@@ -421,7 +406,7 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		StringBuilder builder = new StringBuilder();
 		// iterate values/indices and write numbers, brackets, and commas in correct order
 		// something recursive?
-		ComplexHighPrecisionMember tmp = new ComplexHighPrecisionMember();
+		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		IntegerIndex index = new IntegerIndex(this.dims.length);
 		// [2,2,2] dims
 		// [0,0,0]  [[[num
@@ -476,18 +461,18 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static final ThreadLocal<ComplexHighPrecisionMember> tmpComp =
-			new ThreadLocal<ComplexHighPrecisionMember>()
+	private static final ThreadLocal<ComplexFloat64Member> tmpComp =
+			new ThreadLocal<ComplexFloat64Member>()
 	{
-		protected ComplexHighPrecisionMember initialValue() {
-			return new ComplexHighPrecisionMember();
+		protected ComplexFloat64Member initialValue() {
+			return new ComplexFloat64Member();
 		};
 		
 	};
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.BIGDECIMAL;
+		return PrimitiveRepresentation.DOUBLE;
 	}
 
 	@Override
@@ -497,89 +482,89 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(BigDecimal.valueOf(v));
-		else if (component == 1)
-			tmp.setI(BigDecimal.valueOf(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
-		getV(index, tmp);
-		if (component == 0)
-			tmp.setR(new BigDecimal(v));
-		else if (component == 1)
-			tmp.setI(new BigDecimal(v));
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(v);
 		else if (component == 1)
 			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v.doubleValue());
+		else if (component == 1)
+			tmp.setI(v.doubleValue());
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		ComplexFloat64Member tmp = tmpComp.get();
+		getV(index, tmp);
+		if (component == 0)
+			tmp.setR(v.doubleValue());
+		else if (component == 1)
+			tmp.setI(v.doubleValue());
 		setV(index, tmp);
 	}
 
@@ -591,12 +576,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -609,12 +594,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -627,12 +612,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -645,12 +630,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -663,12 +648,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -681,12 +666,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(BigDecimal.valueOf(v));
+				tmp.setR(v);
 			else if (component == 1)
-				tmp.setI(BigDecimal.valueOf(v));
+				tmp.setI(v);
 			setV(index, tmp);
 		}
 	}
@@ -699,12 +684,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(new BigDecimal(v));
+				tmp.setR(v.doubleValue());
 			else if (component == 1)
-				tmp.setI(new BigDecimal(v));
+				tmp.setI(v.doubleValue());
 			setV(index, tmp);
 		}
 	}
@@ -717,12 +702,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR(v.doubleValue());
 			else if (component == 1)
-				tmp.setI(v);
+				tmp.setI(v.doubleValue());
 			setV(index, tmp);
 		}
 	}
@@ -732,12 +717,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().byteValue();
+			return (byte) tmp.r();
 		else if (component == 1)
-			return tmp.i().byteValue();
+			return (byte) tmp.i();
 		return 0;
 	}
 
@@ -746,12 +731,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().shortValue();
+			return (short) tmp.r();
 		else if (component == 1)
-			return tmp.i().shortValue();
+			return (short) tmp.i();
 		return 0;
 	}
 
@@ -760,12 +745,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().intValue();
+			return (int) tmp.r();
 		else if (component == 1)
-			return tmp.i().intValue();
+			return (int) tmp.i();
 		return 0;
 	}
 
@@ -774,12 +759,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().longValue();
+			return (long) tmp.r();
 		else if (component == 1)
-			return tmp.i().longValue();
+			return (long) tmp.i();
 		return 0;
 	}
 
@@ -788,12 +773,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().floatValue();
+			return (float) tmp.r();
 		else if (component == 1)
-			return tmp.i().floatValue();
+			return (float) tmp.i();
 		return 0;
 	}
 
@@ -802,12 +787,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().doubleValue();
+			return tmp.r();
 		else if (component == 1)
-			return tmp.i().doubleValue();
+			return tmp.i();
 		return 0;
 	}
 
@@ -816,12 +801,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r().toBigInteger();
+			return BigDecimal.valueOf(tmp.r()).toBigInteger();
 		else if (component == 1)
-			return tmp.i().toBigInteger();
+			return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		return BigInteger.ZERO;
 	}
 
@@ -830,12 +815,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		ComplexHighPrecisionMember tmp = tmpComp.get();
+		ComplexFloat64Member tmp = tmpComp.get();
 		getV(index, tmp);
 		if (component == 0)
-			return tmp.r();
+			return BigDecimal.valueOf(tmp.r());
 		else if (component == 1)
-			return tmp.i();
+			return BigDecimal.valueOf(tmp.i());
 		return BigDecimal.ZERO;
 	}
 
@@ -845,12 +830,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().byteValue();
+				return (byte) tmp.r();
 			else
-				return tmp.i().byteValue();
+				return (byte) tmp.i();
 		}
 	}
 
@@ -860,12 +845,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().shortValue();
+				return (short) tmp.r();
 			else
-				return tmp.i().shortValue();
+				return (short) tmp.i();
 		}
 	}
 
@@ -875,12 +860,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().intValue();
+				return (int) tmp.r();
 			else
-				return tmp.i().intValue();
+				return (int) tmp.i();
 		}
 	}
 
@@ -890,12 +875,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().longValue();
+				return (long) tmp.r();
 			else
-				return tmp.i().longValue();
+				return (long) tmp.i();
 		}
 	}
 
@@ -905,12 +890,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().floatValue();
+				return (float) tmp.r();
 			else
-				return tmp.i().floatValue();
+				return (float) tmp.i();
 		}
 	}
 
@@ -920,12 +905,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().doubleValue();
+				return tmp.r();
 			else
-				return tmp.i().doubleValue();
+				return tmp.i();
 		}
 	}
 
@@ -935,12 +920,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return BigInteger.ZERO;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r().toBigInteger();
+				return BigDecimal.valueOf(tmp.r()).toBigInteger();
 			else
-				return tmp.i().toBigInteger();
+				return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		}
 	}
 
@@ -950,12 +935,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			ComplexHighPrecisionMember tmp = tmpComp.get();
+			ComplexFloat64Member tmp = tmpComp.get();
 			getV(index, tmp);
 			if (component == 0)
-				return tmp.r();
+				return BigDecimal.valueOf(tmp.r());
 			else
-				return tmp.i();
+				return BigDecimal.valueOf(tmp.i());
 		}
 	}
 
@@ -967,13 +952,13 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
-	public IndexedDataSource<ComplexHighPrecisionMember> rawData() {
+	public IndexedDataSource<ComplexFloat64Member> rawData() {
 		return storage;
 	}
 
 	@Override
 	public int hashCode() {
-		ComplexHighPrecisionMember tmp = G.CHP.construct();
+		ComplexFloat64Member tmp = G.CDBL.construct();
 		long len = dimension(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
@@ -986,8 +971,8 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof ComplexHighPrecisionCartesianTensorProductMember) {
-			return G.CHP_TEN.isEqual().call(this, (ComplexHighPrecisionCartesianTensorProductMember) o);
+		if (o instanceof ComplexFloat64GeneralTensorProductMember) {
+			return G.CDBL_TEN.isEqual().call(this, (ComplexFloat64GeneralTensorProductMember) o);
 		}
 		return false;
 	}
@@ -1008,11 +993,6 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void setFromLongsExact(long... vals) {
-		setFromLongs(vals);
-	}
-	
-	@Override
 	public void setFromFloatsExact(float... vals) {
 		setFromFloats(vals);
 	}
@@ -1023,26 +1003,16 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void setFromBigIntegersExact(BigInteger... vals) {
-		setFromBigIntegers(vals);
-	}
-	
-	@Override
-	public void setFromBigDecimalsExact(BigDecimal... vals) {
-		setFromBigDecimals(vals);
-	}
-	
-	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 2;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1054,10 +1024,10 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1069,10 +1039,10 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1084,10 +1054,10 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1099,13 +1069,14 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
+
 
 	@Override
 	public void setFromDoubles(double... vals) {
@@ -1114,13 +1085,14 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
 			storage.set(i/componentCount, value);
 		}
 	}
+
 
 	@Override
 	public void setFromBigIntegers(BigInteger... vals) {
@@ -1129,13 +1101,14 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  new BigDecimal(vals[i + 0]) );
-			value.setI(  new BigDecimal(vals[i + 1]) );
+			value.setR(  vals[i + 0].doubleValue() );
+			value.setI(  vals[i + 1].doubleValue() );
 			storage.set(i/componentCount, value);
 		}
 	}
+
 
 	@Override
 	public void setFromBigDecimals(BigDecimal... vals) {
@@ -1144,14 +1117,19 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
+			value.setR(  vals[i + 0].doubleValue() );
+			value.setI(  vals[i + 1].doubleValue() );
 			storage.set(i/componentCount, value);
 		}
 	}
 
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
 	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
@@ -1162,12 +1140,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		byte[] values = new byte[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().byteValue();
-			values[k++] = value.i().byteValue();
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
 		}
 		return values;
 	}
@@ -1177,12 +1155,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		short[] values = new short[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().shortValue();
-			values[k++] = value.i().shortValue();
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
 		}
 		return values;
 	}
@@ -1192,12 +1170,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		int[] values = new int[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().intValue();
-			values[k++] = value.i().intValue();
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
 		}
 		return values;
 	}
@@ -1207,12 +1185,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		long[] values = new long[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().longValue();
-			values[k++] = value.i().longValue();
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
 		}
 		return values;
 	}
@@ -1222,12 +1200,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		float[] values = new float[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().floatValue();
-			values[k++] = value.i().floatValue();
+			values[k++] = (float) value.r();
+			values[k++] = (float) value.i();
 		}
 		return values;
 	}
@@ -1237,12 +1215,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		double[] values = new double[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().doubleValue();
-			values[k++] = value.i().doubleValue();
+			values[k++] = value.r();
+			values[k++] = value.i();
 		}
 		return values;
 	}
@@ -1252,12 +1230,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().toBigInteger();
-			values[k++] = value.i().toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
 		}
 		return values;
 	}
@@ -1267,12 +1245,12 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 2))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		ComplexHighPrecisionMember value = G.CHP.construct();
+		ComplexFloat64Member value = G.CDBL.construct();
 		BigDecimal[] values = new BigDecimal[2 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r();
-			values[k++] = value.i();
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
 		}
 		return values;
 	}
@@ -1284,8 +1262,8 @@ public final class ComplexHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public ComplexHighPrecisionCartesianTensorProduct getAlgebra() {
+	public ComplexFloat64GeneralTensorProduct getAlgebra() {
 
-		return G.CHP_TEN;
+		return G.CDBL_TEN;
 	}
 }
