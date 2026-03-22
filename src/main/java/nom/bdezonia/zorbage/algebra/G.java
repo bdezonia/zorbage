@@ -159,7 +159,7 @@ import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.real.float64.Float64Matrix;
 import nom.bdezonia.zorbage.type.real.float64.Float64Vector;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionCartesianTensorProduct;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionGeneralTensorProduct;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVector;
 import nom.bdezonia.zorbage.type.string.FixedStringAlgebra;
@@ -279,7 +279,7 @@ public class G {
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
 	public static final HighPrecisionMatrix HP_MAT = new HighPrecisionMatrix();
-	public static final HighPrecisionCartesianTensorProduct HP_TEN = new HighPrecisionCartesianTensorProduct();
+	public static final HighPrecisionGeneralTensorProduct HP_TEN = new HighPrecisionGeneralTensorProduct();
 
 	public static final ComplexHighPrecisionAlgebra CHP = new ComplexHighPrecisionAlgebra();
 	public static final ComplexHighPrecisionVector CHP_VEC = new ComplexHighPrecisionVector();

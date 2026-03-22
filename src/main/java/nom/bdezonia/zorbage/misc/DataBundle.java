@@ -164,7 +164,7 @@ import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVectorMember;
@@ -361,7 +361,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<HighPrecisionMember>> hps = new ArrayList<>();
 	public List<DimensionedDataSource<HighPrecisionVectorMember>> hp_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<HighPrecisionMatrixMember>> hp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<HighPrecisionCartesianTensorProductMember>> hp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<HighPrecisionGeneralTensorProductMember>> hp_tens = new ArrayList<>();
 	
 	// type.string
 	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
@@ -1073,7 +1073,7 @@ public class DataBundle {
 			hp_mats.add(ds);
 	}
 	
-	public void mergeHPTens(DimensionedDataSource<HighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeHPTens(DimensionedDataSource<HighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			hp_tens.add(ds);
 	}

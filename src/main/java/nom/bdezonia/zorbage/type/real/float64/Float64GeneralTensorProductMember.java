@@ -438,7 +438,20 @@ public final class Float64GeneralTensorProductMember
 	public void fromRep(TensorOctonionRepresentation rep) {
 		Float64Member value = new Float64Member();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
-		init(rep.getTensorDims());
+		long[] dims = rep.getTensorDims();
+		// NOTE: there is a hole in our tensor rep. It does not
+		//   store variation indices. We will treat all passed
+		//   tensors as things like positions. not quantities.
+		//   So contravariant indices. Note that with this
+		//   convention you can lose data. Take a mixed index
+		//   tensor. Then tensor.toRep(rep) followed by
+		//   tensor.fromRep(rep). Al the mixed indices are now
+		//   contravariant.
+		IndexType[] indices = new IndexType[dims.length];
+		for (int i = 0; i < dims.length; i++) {
+			indices[i] = IndexType.CONTRAVARIANT;
+		}
+		init(dims, indices);
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
