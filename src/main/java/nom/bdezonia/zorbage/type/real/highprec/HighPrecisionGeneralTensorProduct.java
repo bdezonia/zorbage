@@ -502,6 +502,7 @@ public class HighPrecisionGeneralTensorProduct
 	public Procedure3<HighPrecisionMember, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
+	
 	private final Procedure4<Integer, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember> RAISE =
 			new Procedure4<Integer, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember>()
 		{

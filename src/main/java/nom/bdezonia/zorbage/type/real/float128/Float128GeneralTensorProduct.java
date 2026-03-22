@@ -582,6 +582,7 @@ public class Float128GeneralTensorProduct
 	public Procedure3<Float128Member, Float128GeneralTensorProductMember, Float128GeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
+
 	private final Procedure4<Integer, Float128GeneralTensorProductMember, Float128GeneralTensorProductMember, Float128GeneralTensorProductMember> RAISE =
 			new Procedure4<Integer, Float128GeneralTensorProductMember, Float128GeneralTensorProductMember, Float128GeneralTensorProductMember>()
 		{
