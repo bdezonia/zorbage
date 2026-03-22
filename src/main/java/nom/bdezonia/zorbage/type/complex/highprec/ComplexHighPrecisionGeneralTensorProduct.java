@@ -39,13 +39,13 @@ import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
+import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -60,18 +60,17 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
  * @author Barry DeZonia
  *
  */
-public class ComplexHighPrecisionGeberalTensorProduct
+public class ComplexHighPrecisionGeneralTensorProduct
 	implements
-		TensorProduct<ComplexHighPrecisionGeberalTensorProduct,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>,
+		TensorProduct<ComplexHighPrecisionGeneralTensorProduct,ComplexHighPrecisionGeneralTensorProductMember,HighPrecisionAlgebra,HighPrecisionMember>,
 		Norm<ComplexHighPrecisionGeneralTensorProductMember,HighPrecisionMember>,
 		Scale<ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionMember>,
 		ScaleByHighPrec<ComplexHighPrecisionGeneralTensorProductMember>,
@@ -81,11 +80,12 @@ public class ComplexHighPrecisionGeberalTensorProduct
 		ScaleByTwo<ComplexHighPrecisionGeneralTensorProductMember>,
 		Tolerance<HighPrecisionMember, ComplexHighPrecisionGeneralTensorProductMember>,
 		ArrayLikeMethods<ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionMember>,
-		MadeOfElements<ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>
+		MadeOfElements<ComplexHighPrecisionAlgebra,ComplexHighPrecisionMember>,
+		ConstructibleTensor<ComplexHighPrecisionGeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
-		return "Arbitrary precision complex tensor";
+		return "Arbitrary precision based complex tensor";
 	}
 
 	@Override
@@ -226,19 +226,9 @@ public class ComplexHighPrecisionGeberalTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> CONJ =
-			new Procedure2<ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.CHP, G.CHP.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<ComplexHighPrecisionMember,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> SCALE =
@@ -312,7 +302,7 @@ public class ComplexHighPrecisionGeberalTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.CHP, G.CHP.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.CHP, G.CHP.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -344,41 +334,13 @@ public class ComplexHighPrecisionGeberalTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
-			TensorContract.compute(G.CHP, a.rank(), i, j, a, b);
+			TensorContract.compute(G.CHP, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.CHP_TEN, G.CHP, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.CHP_TEN, G.CHP, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,ComplexHighPrecisionGeneralTensorProductMember,ComplexHighPrecisionGeneralTensorProductMember> POWER =
@@ -513,40 +475,34 @@ public class ComplexHighPrecisionGeberalTensorProduct
 	public Procedure3<ComplexHighPrecisionMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, ComplexHighPrecisionGeneralTensorProductMember metricInverse, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.CHP, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, ComplexHighPrecisionGeneralTensorProductMember metric, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.CHP, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember, ComplexHighPrecisionGeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -593,7 +549,7 @@ public class ComplexHighPrecisionGeberalTensorProduct
 		@Override
 		public void call(Integer numTimes, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO), numTimes, a, b);
+			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(2,0), numTimes, a, b);
 		}
 	};
 
@@ -608,7 +564,7 @@ public class ComplexHighPrecisionGeberalTensorProduct
 		@Override
 		public void call(Integer numTimes, ComplexHighPrecisionGeneralTensorProductMember a, ComplexHighPrecisionGeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO), numTimes, a, b);
+			ScaleHelper.compute(G.CHP_TEN, G.CHP, new ComplexHighPrecisionMember(0.5,0), numTimes, a, b);
 		}
 	};
 
@@ -635,4 +591,11 @@ public class ComplexHighPrecisionGeberalTensorProduct
 	public ComplexHighPrecisionAlgebra getElementAlgebra() {
 		return G.CHP;
 	}
+
+	@Override
+	public ComplexHighPrecisionGeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new ComplexHighPrecisionGeneralTensorProductMember(indexTypes, axisSizes);
+	}
+
 }

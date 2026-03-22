@@ -52,7 +52,7 @@ import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProd
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Matrix;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Vector;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionGeberalTensorProduct;
+import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionGeneralTensorProduct;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionVector;
 import nom.bdezonia.zorbage.type.gaussian.int16.GaussianInt16Algebra;
@@ -284,7 +284,7 @@ public class G {
 	public static final ComplexHighPrecisionAlgebra CHP = new ComplexHighPrecisionAlgebra();
 	public static final ComplexHighPrecisionVector CHP_VEC = new ComplexHighPrecisionVector();
 	public static final ComplexHighPrecisionMatrix CHP_MAT = new ComplexHighPrecisionMatrix();
-	public static final ComplexHighPrecisionGeberalTensorProduct CHP_TEN = new ComplexHighPrecisionGeberalTensorProduct();
+	public static final ComplexHighPrecisionGeneralTensorProduct CHP_TEN = new ComplexHighPrecisionGeneralTensorProduct();
 
 	public static final QuaternionHighPrecisionAlgebra QHP = new QuaternionHighPrecisionAlgebra();
 	public static final QuaternionHighPrecisionRModule QHP_RMOD = new QuaternionHighPrecisionRModule();
