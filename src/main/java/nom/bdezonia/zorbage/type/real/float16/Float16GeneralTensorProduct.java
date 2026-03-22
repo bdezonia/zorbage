@@ -560,9 +560,9 @@ public class Float16GeneralTensorProduct
 		new Procedure4<Integer, Float16GeneralTensorProductMember, Float16GeneralTensorProductMember, Float16GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, Float16GeneralTensorProductMember metric, Float16GeneralTensorProductMember a, Float16GeneralTensorProductMember b) {
+		public void call(Integer idx, Float16GeneralTensorProductMember metricInverse, Float16GeneralTensorProductMember a, Float16GeneralTensorProductMember b) {
 
-			TensorFlipIndex.compute(G.HLF, metric, idx, IndexType.CONTRAVARIANT, a, b);
+			TensorFlipIndex.compute(G.HLF, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
 		}
 	};
 	

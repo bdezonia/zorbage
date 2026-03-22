@@ -479,9 +479,9 @@ public class HighPrecisionGeneralTensorProduct
 			new Procedure4<Integer, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember, HighPrecisionGeneralTensorProductMember>()
 		{
 			@Override
-			public void call(Integer idx, HighPrecisionGeneralTensorProductMember metric, HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b) {
+			public void call(Integer idx, HighPrecisionGeneralTensorProductMember metricInverse, HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b) {
 
-				TensorFlipIndex.compute(G.HP, metric, idx, IndexType.CONTRAVARIANT, a, b);
+				TensorFlipIndex.compute(G.HP, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
 			}
 		};
 		
