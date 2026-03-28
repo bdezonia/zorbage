@@ -1201,12 +1201,12 @@ public final class ComplexFloat16GeneralTensorProductMember
 	public float[] getAsFloatArrayExact() {
 		return getAsFloatArray();
 	}
-
+	
 	@Override
 	public double[] getAsDoubleArrayExact() {
 		return getAsDoubleArray();
 	}
-
+	
 	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
@@ -1311,8 +1311,8 @@ public final class ComplexFloat16GeneralTensorProductMember
 		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = BigDecimal.valueOf( value.r() ).toBigInteger();
-			values[2*i + 1] = BigDecimal.valueOf( value.i() ).toBigInteger();
+			values[2*i + 0] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[2*i + 1] = BigDecimal.valueOf(value.i()).toBigInteger();
 		}
 		return values;
 	}
@@ -1326,8 +1326,8 @@ public final class ComplexFloat16GeneralTensorProductMember
 		BigDecimal[] values = new BigDecimal[2 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = BigDecimal.valueOf( value.r() );
-			values[2*i + 1] = BigDecimal.valueOf( value.i() );
+			values[2*i + 0] = BigDecimal.valueOf(value.r());
+			values[2*i + 1] = BigDecimal.valueOf(value.i());
 		}
 		return values;
 	}

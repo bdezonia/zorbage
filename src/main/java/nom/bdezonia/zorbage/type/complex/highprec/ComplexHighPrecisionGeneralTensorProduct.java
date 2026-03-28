@@ -31,7 +31,6 @@
 package nom.bdezonia.zorbage.type.complex.highprec;
 
 import java.lang.Integer;
-import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;

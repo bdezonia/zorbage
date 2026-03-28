@@ -31,7 +31,6 @@
 package nom.bdezonia.zorbage.type.complex.float16;
 
 import java.lang.Integer;
-import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
@@ -64,7 +63,6 @@ import nom.bdezonia.zorbage.procedure.Procedure2;
 import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
-import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Member;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16Algebra;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
@@ -629,7 +627,7 @@ public class ComplexFloat16GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, ComplexFloat16GeneralTensorProductMember a, ComplexFloat16GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.CHLF_TEN, G.CHLF, new ComplexFloat16Member(2, 0), numTimes, a, b);
+			ScaleHelper.compute(G.CHLF_TEN, G.CHLF, new ComplexFloat16Member(2,0), numTimes, a, b);
 		}
 	};
 
