@@ -32,7 +32,6 @@ package nom.bdezonia.zorbage.type.complex.float32;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
@@ -53,6 +52,7 @@ import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
@@ -87,11 +87,6 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
-
-
-// TODO:
-//   rank 0 tensor getting and setting 1 value instead of 0
-//   upper and lower indices: only if not CartesianTensors
 
 /**
  * 
@@ -140,106 +135,167 @@ public final class ComplexFloat32GeneralTensorProductMember
 {
 	private static final ComplexFloat32Member ZERO = new ComplexFloat32Member();
 
-	private int rank;
-	private long dimCount;
+	private IndexType[] indexTypes;
+	private long[] axisLengths;
+	private long[] strides;
 	private IndexedDataSource<ComplexFloat32Member> storage;
-	private long[] dims;
-	private long[] multipliers;
 	private StorageConstruction s;
 
-	// rank() is also numDimensions(). Confusing. TODO - fix
+	// TODO: I hate this but can't figure out the coding I
+	//   need to do to get rid of it.
 	
 	@Override
-	public int rank() { return lowerRank() + upperRank(); }
+	public int numDimensions() {
+
+		return rank();
+	}
+
+	// TODO: I hate this but can't figure out the coding I
+	//   need to do to get rid of it.
 	
 	@Override
-	public int lowerRank() { return rank; }
+	public long dimension(int d) {
+
+		return axisSize(d);
+	}
+
+	public long axisSize(int index) {
+		
+		return axisLengths[index];
+	}
+	
+	public void shape(long[] sizes) {
+
+		if (sizes.length != this.axisLengths.length)
+			throw new IllegalArgumentException("axis count mismatch in axisLengths() method");
+		
+		for (int i = 0; i < sizes.length; i++) {
+			sizes[i] = this.axisLengths[i];
+		}
+	}
 	
 	@Override
-	public int upperRank() { return 0; }
+	public int rank() { return indexTypes.length; }
+	
+	@Override
+	public int lowerRank() {
+		
+		int rank = 0;
+		
+		for (int i = 0; i < rank(); i++)  {
+		
+			if (indexIsLower(i)) rank++;
+		}
+		
+		return rank;
+	}
+	
+	@Override
+	public int upperRank() {
+		
+		int rank = 0;
+		
+		for (int i = 0; i < rank(); i++)  {
+		
+			if (indexIsUpper(i)) rank++;
+		}
+		
+		return rank;
+	}
 	
 	@Override
 	public boolean indexIsLower(int index) {
+		
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		
+		return indexTypes[index] == IndexType.COVARIANT;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
+
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		
+		return indexTypes[index] == IndexType.CONTRAVARIANT;
 	}
 
 	@Override
-	public long dimension() { return dimCount; }
+	public IndexType indexType(int index) {
 
-	public ComplexFloat32GeneralTensorProductMember() {
-		rank = 0;
-		dimCount = 0;
-		dims = new long[0];
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new ComplexFloat32Member(), 1);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		return indexTypes[index];
 	}
 
-	public ComplexFloat32GeneralTensorProductMember(int rank, long dimCount) {
-		if (rank < 0)
-			throw new IllegalArgumentException("bad rank in tensor constructor");
-		if (dimCount < 0)
-			throw new IllegalArgumentException("bad dimensionality in tensor constructor");
-		this.rank = rank;
-		this.dimCount = dimCount;
-		dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new ComplexFloat32Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+	@Override
+	public void indexTypes(IndexType[] types) {
+
+		if (types.length != rank())
+			throw new IllegalArgumentException();
+		for (int i = 0; i < types.length; i++)
+			types[i] = indexTypes[i];
 	}
 	
-	public ComplexFloat32GeneralTensorProductMember(int rank, long dimCount, float... vals) {
-		this(rank, dimCount);
-		setFromFloats(vals);
+	public long numElements() {
+	
+		return storage.size();
+	}
+	
+	public ComplexFloat32GeneralTensorProductMember() {
+
+		indexTypes = new IndexType[0];
+		axisLengths = new long[0];
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new ComplexFloat32Member(), 1); // one scalar
+		strides = IndexUtils.calcMultipliers(axisLengths);
+	}
+
+	public ComplexFloat32GeneralTensorProductMember(IndexType[] indices, long[] sizes) {
+		
+		if (indices.length != sizes.length)
+			throw new IllegalArgumentException("bad input to tensor constructor");
+		indexTypes = indices.clone();
+		axisLengths = sizes.clone();
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new ComplexFloat32Member(), storageElems);
+		strides = IndexUtils.calcMultipliers(axisLengths);
+	}
+	
+	public ComplexFloat32GeneralTensorProductMember(IndexType[] indices, long[] sizes, double... vals) {
+		this(indices, sizes);
+		setFromDoubles(vals);
 	}
 
 	public ComplexFloat32GeneralTensorProductMember(ComplexFloat32GeneralTensorProductMember other) {
 		set(other);
 	}
-	
+
 	public ComplexFloat32GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
-		this.rank = tmpDims.length;
-		if (tmpDims.length == 0) {
-			this.dimCount = 1;
-		}
-		else {
-			long d0 = tmpDims[0];
-			for (int i = 1; i < tmpDims.length; i++) {
-				if (tmpDims[i] != d0)
-					throw new IllegalArgumentException("tensors must be the same in all dimensions");
-			}
-			this.dimCount = d0;
-		}
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
+		this.axisLengths = tmpDims;
+		this.indexTypes = indices(tmpDims.length, IndexType.CONTRAVARIANT);
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new ComplexFloat32Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
-		ComplexFloat32Member value = G.CFLT.construct();
-		if (numElems == 1) {
-			// TODO: does a rank 0 tensor have any values from a parsing?
-			OctonionRepresentation val = data.get(0);
+		this.storage = Storage.allocate(this.s, new ComplexFloat32Member(), storageElems);
+		this.strides = IndexUtils.calcMultipliers(axisLengths);
+		ComplexFloat32Member value = new ComplexFloat32Member();
+		if (rank() == 0) {
+			OctonionRepresentation val;
+			if (data.size() == 0)
+				val = new OctonionRepresentation();
+			else
+				val = data.get(0);
 			value.setR(val.r().floatValue());
 			value.setI(val.i().floatValue());
 			storage.set(0, value);
@@ -247,13 +303,13 @@ public final class ComplexFloat32GeneralTensorProductMember
 		else {
 			long i = 0;
 			SamplingIterator<IntegerIndex> iter = GridIterator.compute(tmpDims);
-			IntegerIndex index = new IntegerIndex(dims.length);
+			IntegerIndex index = new IntegerIndex(axisLengths.length);
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
 				value.setR(val.r().floatValue());
 				value.setI(val.i().floatValue());
-				long idx = IndexUtils.indexToLong(dims, index);
+				long idx = IndexUtils.indexToLong(axisLengths, index);
 				storage.set(idx, value);
 				i++;
 			}
@@ -268,10 +324,9 @@ public final class ComplexFloat32GeneralTensorProductMember
 	@Override
 	public void set(ComplexFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
-		rank = other.rank;
-		dimCount = other.dimCount;
-		dims = other.dims.clone();
-		multipliers = other.multipliers.clone();
+		indexTypes = other.indexTypes.clone();
+		axisLengths = other.axisLengths.clone();
+		strides = other.strides.clone();
 		storage = other.storage.duplicate();
 		s = other.s;
 	}
@@ -279,22 +334,24 @@ public final class ComplexFloat32GeneralTensorProductMember
 	@Override
 	public void get(ComplexFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
-		other.rank = rank;
-		other.dimCount = dimCount;
-		other.dims = dims.clone();
-		other.multipliers = multipliers.clone();
+		other.indexTypes = indexTypes.clone();
+		other.axisLengths = axisLengths.clone();
+		other.strides = strides.clone();
 		other.storage = storage.duplicate();
 		other.s = s;
 	}
 
 	@Override
-	public boolean alloc(long[] newDims) {
+	public boolean alloc(long[] newDims, IndexType[] indexTypes) {
+		if (newDims.length != indexTypes.length)
+			throw new IllegalArgumentException("trying to allocate a "+newDims.length+" rank tensor with "+indexTypes.length+"co/contra/variant designators");
+		this.indexTypes = indexTypes.clone();
 		boolean theSame = true;
-		if (newDims.length != dims.length)
+		if (newDims.length != axisLengths.length)
 			theSame = false;
 		else {
 			for (int i = 0; i < newDims.length; i++) {
-				if (newDims[i] != dims[i]) {
+				if (newDims[i] != axisLengths[i]) {
 					theSame = false;
 					break;
 				}
@@ -302,53 +359,47 @@ public final class ComplexFloat32GeneralTensorProductMember
 		}
 		if (theSame)
 			return false;
-		this.rank = newDims.length;
-		if (rank == 0) {
-			this.dimCount = 1;
-		}
-		else {
-			long d0 = newDims[0];
-			for (int i = 1; i < newDims.length; i++) {
-				if (newDims[i] != d0)
-					throw new IllegalArgumentException("tensors must be the same in all dimensions");
-			}
-			this.dimCount = d0;
-		}
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		this.multipliers = IndexUtils.calcMultipliers(dims);
-		long newCount = LongUtils.numElements(this.dims);
-		if (newCount == 0) newCount = 1;
-		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new ComplexFloat32Member(), newCount);
+		this.axisLengths = newDims.clone();
+		this.strides = IndexUtils.calcMultipliers(axisLengths);
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
+		if (storage == null || storageElems != storage.size()) {
+			storage = Storage.allocate(s, new ComplexFloat32Member(), storageElems);
 			return true;
 		}
 		return false;
 	}
+
+	@Override
+	public boolean alloc(long[] newDims) {
+		return alloc(newDims, indexTypes);
+	}
 	
 	@Override
-	public void init(long[] newDims) {
-		if (!alloc(newDims)) {
+	public void init(long[] newDims, IndexType[] indexTypes) {
+		if (!alloc(newDims, indexTypes)) {
 			long storageSize = storage.size();
 			for (long i = 0; i < storageSize; i++) {
 				storage.set(i, ZERO);
 			}
 		}
 	}
-	
-	public long numElems() {
-		return storage.size();
+
+	@Override
+	public void init(long[] newDims) {
+		init(newDims, indexTypes);
 	}
-	
+
 	void v(long index, ComplexFloat32Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
 	public void getV(IntegerIndex index, ComplexFloat32Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index);
+		long idx = IndexUtils.safeIndexToLong(axisLengths, index);
 		storage.get(idx, value);
 	}
 	
@@ -358,14 +409,14 @@ public final class ComplexFloat32GeneralTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, ComplexFloat32Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index);
+		long idx = IndexUtils.safeIndexToLong(axisLengths, index);
 		storage.set(idx, value);
 	}
 	
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		ComplexFloat32Member value = G.CFLT.construct();
+		ComplexFloat32Member value = new ComplexFloat32Member();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -381,14 +432,27 @@ public final class ComplexFloat32GeneralTensorProductMember
 			o.setJ0(BigDecimal.ZERO);
 			o.setK0(BigDecimal.ZERO);
 		}
-		rep.setTensor(dims, values);
+		rep.setTensor(axisLengths, values);
 	}
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		ComplexFloat32Member value = G.CFLT.construct();
+		ComplexFloat32Member value = new ComplexFloat32Member();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
-		init(rep.getTensorDims());
+		long[] dims = rep.getTensorDims();
+		// NOTE: there is a hole in our tensor rep. It does not
+		//   store variation indices. We will treat all passed
+		//   tensors as things like positions. not quantities.
+		//   So contravariant indices. Note that with this
+		//   convention you can lose data. Take a mixed index
+		//   tensor. Then tensor.toRep(rep) followed by
+		//   tensor.fromRep(rep). Al the mixed indices are now
+		//   contravariant.
+		IndexType[] indices = new IndexType[dims.length];
+		for (int i = 0; i < dims.length; i++) {
+			indices[i] = IndexType.CONTRAVARIANT;
+		}
+		init(dims, indices);
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
@@ -398,67 +462,60 @@ public final class ComplexFloat32GeneralTensorProductMember
 		}
 	}
 
-	// TODO: finish me
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		// iterate values/indices and write numbers, brackets, and commas in correct order
-		// something recursive?
-		ComplexFloat32Member tmp = new ComplexFloat32Member();
-		IntegerIndex index = new IntegerIndex(this.dims.length);
-		// [2,2,2] dims
-		// [0,0,0]  [[[num
-		// [1,0,0]  [[[num,num
-		// [0,1,0]  [[[num,num][num
-		// [1,1,0]  [[[num,num][num,num
-		// [0,0,1]  [[[num,num][num,num]][[num
-		// [1,0,1]  [[[num,num][num,num]][[num,num
-		// [0,1,1]  [[[num,num][num,num]][[num,num][num
-		// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
-		long storageSize = storage.size();
-		for (long i = 0; i < storageSize; i++) {
-			storage.get(i, tmp);
-			IndexUtils.longToIntegerIndex(multipliers, dims.length, storageSize, i, index);
-			int j = 0;
-			while (j < index.numDimensions() && index.get(j++) == 0)
-				builder.append('[');
-			if (index.get(0) != 0)
-				builder.append(',');
-			builder.append('{');
-			builder.append(tmp.r());
-			builder.append(',');
-			builder.append(tmp.i());
-			builder.append('}');
-			j = 0;
-			while (j < index.numDimensions() && index.get(j) == (dims[j++]-1))
-				builder.append(']');
-		}
-		return builder.toString();
-	}
+	private void appendTensor(StringBuilder sb, ComplexFloat32Member tmp, IntegerIndex index, int axis) {
 
-	@Override
-	public int numDimensions() {
-		return dims.length;
-	}
+		if (axis == rank()) {
+	        getV(index, tmp);
+	        sb.append("{");
+	        sb.append(tmp.r());
+	        sb.append(",");
+	        sb.append(tmp.i());
+	        sb.append("}");
+	        return;
+	    }
 
-	@Override
-	public void reshape(long[] dims) {
-		// the idea here is to change dims and preserve values that
-		// overlap old dims / new dims.
-		if (Arrays.equals(this.dims, dims)) return;
-		// the previous line makes sure that tensor add(a,a,a) will work
-		// TODO
-		throw new IllegalArgumentException("to implement");
-	}
-
-	@Override
-	public long dimension(int d) {
-		if (d < 0)
-			throw new IllegalArgumentException("can't query negative dimension");
-		if (d >= dims.length) return 1;
-		return dims[d];
+	    sb.append('[');
+	    long n = axisSize(axis);
+	    for (long i = 0; i < n; i++) {
+	        if (i > 0) sb.append(',');
+	        index.set(axis, i);
+	        appendTensor(sb, tmp, index, axis + 1);
+	    }
+	    sb.append(']');
 	}
 	
+	// iterate values/indices and write numbers, brackets, and commas in correct order
+	// [2,2,2] dims
+	// [0,0,0]  [[[num
+	// [1,0,0]  [[[num,num
+	// [0,1,0]  [[[num,num][num
+	// [1,1,0]  [[[num,num][num,num
+	// [0,0,1]  [[[num,num][num,num]][[num
+	// [1,0,1]  [[[num,num][num,num]][[num,num
+	// [0,1,1]  [[[num,num][num,num]][[num,num][num
+	// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
+
+	@Override
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+	    ComplexFloat32Member tmp = new ComplexFloat32Member();
+
+	    if (rank() == 0) {
+	    	storage.get(0, tmp);
+	        sb.append("{");
+	        sb.append(tmp.r());
+	        sb.append(",");
+	        sb.append(tmp.i());
+	        sb.append("}");
+	        return sb.toString();
+	    }
+
+	    IntegerIndex idx = new IntegerIndex(rank());
+	    appendTensor(sb, tmp, idx, 0);
+	    return sb.toString();
+	}
+
 	private static final ThreadLocal<ComplexFloat32Member> tmpComp =
 			new ThreadLocal<ComplexFloat32Member>()
 	{
@@ -568,7 +625,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -586,7 +643,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -604,7 +661,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -622,7 +679,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -640,7 +697,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -658,7 +715,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -676,7 +733,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -694,7 +751,7 @@ public final class ComplexFloat32GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -717,10 +774,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return (byte) tmp.r();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return (byte) tmp.i();
+		}
 		return 0;
 	}
 
@@ -731,10 +790,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return (short) tmp.r();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return (short) tmp.i();
+		}
 		return 0;
 	}
 
@@ -745,10 +806,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return (int) tmp.r();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return (int) tmp.i();
+		}
 		return 0;
 	}
 
@@ -759,10 +822,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return (long) tmp.r();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return (long) tmp.i();
+		}
 		return 0;
 	}
 
@@ -773,10 +838,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return tmp.r();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return tmp.i();
+		}
 		return 0;
 	}
 
@@ -787,10 +854,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return tmp.r();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return tmp.i();
+		}
 		return 0;
 	}
 
@@ -801,10 +870,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return BigDecimal.valueOf(tmp.r()).toBigInteger();
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return BigDecimal.valueOf(tmp.i()).toBigInteger();
+		}
 		return BigInteger.ZERO;
 	}
 
@@ -815,130 +886,156 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"negative component index error");
 		ComplexFloat32Member tmp = tmpComp.get();
 		getV(index, tmp);
-		if (component == 0)
+		if (component == 0) {
 			return BigDecimal.valueOf(tmp.r());
-		else if (component == 1)
+		}
+		else if (component == 1) {
 			return BigDecimal.valueOf(tmp.i());
+		}
 		return BigDecimal.ZERO;
 	}
 
 	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return (byte) tmp.r();
-			else
+			}
+			else if (component == 1) {
 				return (byte) tmp.i();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return (short) tmp.r();
-			else
+			}
+			else if (component == 1) {
 				return (short) tmp.i();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return (int) tmp.r();
-			else
+			}
+			else if (component == 1) {
 				return (int) tmp.i();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return (long) tmp.r();
-			else
+			}
+			else if (component == 1) {
 				return (long) tmp.i();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return tmp.r();
-			else
+			}
+			else if (component == 1) {
 				return tmp.i();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return tmp.r();
-			else
+			}
+			else if (component == 1) {
 				return tmp.i();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return BigInteger.ZERO;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return BigDecimal.valueOf(tmp.r()).toBigInteger();
-			else
+			}
+			else if (component == 1) {
 				return BigDecimal.valueOf(tmp.i()).toBigInteger();
+			}
+			return BigInteger.ZERO;
 		}
 	}
 
 	@Override
 	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 2)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return BigDecimal.ZERO;
 		}
 		else {
 			ComplexFloat32Member tmp = tmpComp.get();
 			getV(index, tmp);
-			if (component == 0)
+			if (component == 0) {
 				return BigDecimal.valueOf(tmp.r());
-			else
+			}
+			else if (component == 1) {
 				return BigDecimal.valueOf(tmp.i());
+			}
+			return BigDecimal.ZERO;
 		}
 	}
 
@@ -957,7 +1054,11 @@ public final class ComplexFloat32GeneralTensorProductMember
 	@Override
 	public int hashCode() {
 		ComplexFloat32Member tmp = G.CFLT.construct();
-		long len = dimension(0);
+		long len;
+		if (rank() == 0)
+			len = 1;
+		else
+			len = axisSize(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
 		if (len > 0) {
@@ -1114,12 +1215,12 @@ public final class ComplexFloat32GeneralTensorProductMember
 	public float[] getAsFloatArrayExact() {
 		return getAsFloatArray();
 	}
-	
+
 	@Override
 	public double[] getAsDoubleArrayExact() {
 		return getAsDoubleArray();
 	}
-	
+
 	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
@@ -1132,10 +1233,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		byte[] values = new byte[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (byte) value.r();
-			values[k++] = (byte) value.i();
+			values[2*i + 0] = (byte) value.r();
+			values[2*i + 1] = (byte) value.i();
 		}
 		return values;
 	}
@@ -1147,10 +1248,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		short[] values = new short[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (short) value.r();
-			values[k++] = (short) value.i();
+			values[2*i + 0] = (short) value.r();
+			values[2*i + 1] = (short) value.i();
 		}
 		return values;
 	}
@@ -1162,10 +1263,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		int[] values = new int[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (int) value.r();
-			values[k++] = (int) value.i();
+			values[2*i + 0] = (int) value.r();
+			values[2*i + 1] = (int) value.i();
 		}
 		return values;
 	}
@@ -1177,10 +1278,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		long[] values = new long[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (long) value.r();
-			values[k++] = (long) value.i();
+			values[2*i + 0] = (long) value.r();
+			values[2*i + 1] = (long) value.i();
 		}
 		return values;
 	}
@@ -1192,10 +1293,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		float[] values = new float[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r();
-			values[k++] = value.i();
+			values[2*i + 0] = value.r();
+			values[2*i + 1] = value.i();
 		}
 		return values;
 	}
@@ -1207,10 +1308,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		double[] values = new double[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r();
-			values[k++] = value.i();
+			values[2*i + 0] = value.r();
+			values[2*i + 1] = value.i();
 		}
 		return values;
 	}
@@ -1222,10 +1323,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		BigInteger[] values = new BigInteger[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[2*i + 0] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[2*i + 1] = BigDecimal.valueOf(value.i()).toBigInteger();
 		}
 		return values;
 	}
@@ -1237,10 +1338,10 @@ public final class ComplexFloat32GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		ComplexFloat32Member value = G.CFLT.construct();
 		BigDecimal[] values = new BigDecimal[2 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r());
-			values[k++] = BigDecimal.valueOf(value.i());
+			values[2*i + 0] = BigDecimal.valueOf(value.r());
+			values[2*i + 1] = BigDecimal.valueOf(value.i());
 		}
 		return values;
 	}
@@ -1255,5 +1356,14 @@ public final class ComplexFloat32GeneralTensorProductMember
 	public ComplexFloat32GeneralTensorProduct getAlgebra() {
 
 		return G.CFLT_TEN;
+	}
+	
+	private static IndexType[] indices(int size, IndexType value) {
+		
+		IndexType[] values = new IndexType[size];
+		for (int i = 0; i < size; i++) {
+			values[i] = value;
+		}
+		return values;
 	}
 }

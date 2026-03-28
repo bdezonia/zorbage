@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.type.complex.float32;
 
 import java.lang.Integer;
+import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
@@ -43,14 +44,13 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -65,10 +65,9 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -77,7 +76,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class ComplexFloat32GeneralTensorProduct
 	implements
-		TensorProduct<ComplexFloat32GeneralTensorProduct,ComplexFloat32GeneralTensorProductMember,ComplexFloat32Algebra,ComplexFloat32Member>,
+		TensorProduct<ComplexFloat32GeneralTensorProduct,ComplexFloat32GeneralTensorProductMember,Float32Algebra,Float32Member>,
 		Norm<ComplexFloat32GeneralTensorProductMember,Float32Member>,
 		Scale<ComplexFloat32GeneralTensorProductMember,ComplexFloat32Member>,
 		Rounding<Float32Member,ComplexFloat32GeneralTensorProductMember>,
@@ -90,9 +89,9 @@ public class ComplexFloat32GeneralTensorProduct
 		ScaleByTwo<ComplexFloat32GeneralTensorProductMember>,
 		Tolerance<Float32Member, ComplexFloat32GeneralTensorProductMember>,
 		ArrayLikeMethods<ComplexFloat32GeneralTensorProductMember, ComplexFloat32Member>,
-		MadeOfElements<ComplexFloat32Algebra,ComplexFloat32Member>
+		MadeOfElements<ComplexFloat32Algebra,ComplexFloat32Member>,
+		ConstructibleTensor<ComplexFloat32GeneralTensorProductMember>
 {
-
 	@Override
 	public String typeDescription() {
 		return "32-bit based complex tensor";
@@ -236,19 +235,9 @@ public class ComplexFloat32GeneralTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> CONJ =
-			new Procedure2<ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.CFLT, G.CFLT.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<ComplexFloat32Member,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> SCALE =
@@ -322,7 +311,7 @@ public class ComplexFloat32GeneralTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.CFLT, G.CFLT.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.CFLT, G.CFLT.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -354,41 +343,13 @@ public class ComplexFloat32GeneralTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
-			TensorContract.compute(G.CFLT, a.rank(), i, j, a, b);
+			TensorContract.compute(G.CFLT, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-
-	private final Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.CFLT_TEN, G.CFLT, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.CFLT_TEN, G.CFLT, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,ComplexFloat32GeneralTensorProductMember,ComplexFloat32GeneralTensorProductMember> POWER =
@@ -593,40 +554,34 @@ public class ComplexFloat32GeneralTensorProduct
 	public Procedure3<ComplexFloat32Member, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, ComplexFloat32GeneralTensorProductMember metricInverse, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.CFLT, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, ComplexFloat32GeneralTensorProductMember metric, ComplexFloat32GeneralTensorProductMember a, ComplexFloat32GeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.CFLT, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember, ComplexFloat32GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -714,5 +669,11 @@ public class ComplexFloat32GeneralTensorProduct
 	@Override
 	public ComplexFloat32Algebra getElementAlgebra() {
 		return G.CFLT;
+	}
+
+	@Override
+	public ComplexFloat32GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new ComplexFloat32GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }
