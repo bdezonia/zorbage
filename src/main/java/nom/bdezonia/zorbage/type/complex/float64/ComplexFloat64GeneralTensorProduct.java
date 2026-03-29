@@ -43,14 +43,13 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -65,10 +64,9 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64Algebra;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -77,7 +75,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class ComplexFloat64GeneralTensorProduct
 	implements
-		TensorProduct<ComplexFloat64GeneralTensorProduct,ComplexFloat64GeneralTensorProductMember,ComplexFloat64Algebra,ComplexFloat64Member>,
+		TensorProduct<ComplexFloat64GeneralTensorProduct,ComplexFloat64GeneralTensorProductMember,Float64Algebra,Float64Member>,
 		Norm<ComplexFloat64GeneralTensorProductMember,Float64Member>,
 		Scale<ComplexFloat64GeneralTensorProductMember,ComplexFloat64Member>,
 		Rounding<Float64Member,ComplexFloat64GeneralTensorProductMember>,
@@ -90,9 +88,9 @@ public class ComplexFloat64GeneralTensorProduct
 		ScaleByTwo<ComplexFloat64GeneralTensorProductMember>,
 		Tolerance<Float64Member, ComplexFloat64GeneralTensorProductMember>,
 		ArrayLikeMethods<ComplexFloat64GeneralTensorProductMember, ComplexFloat64Member>,
-		MadeOfElements<ComplexFloat64Algebra,ComplexFloat64Member>
+		MadeOfElements<ComplexFloat64Algebra,ComplexFloat64Member>,
+		ConstructibleTensor<ComplexFloat64GeneralTensorProductMember>
 {
-
 	@Override
 	public String typeDescription() {
 		return "64-bit based complex tensor";
@@ -236,19 +234,9 @@ public class ComplexFloat64GeneralTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> CONJ =
-			new Procedure2<ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.CDBL, G.CDBL.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<ComplexFloat64Member,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> SCALE =
@@ -322,7 +310,7 @@ public class ComplexFloat64GeneralTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.CDBL, G.CDBL.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.CDBL, G.CDBL.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -354,41 +342,13 @@ public class ComplexFloat64GeneralTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
-			TensorContract.compute(G.CDBL, a.rank(), i, j, a, b);
+			TensorContract.compute(G.CDBL, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.CDBL_TEN, G.CDBL, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.CDBL_TEN, G.CDBL, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,ComplexFloat64GeneralTensorProductMember,ComplexFloat64GeneralTensorProductMember> POWER =
@@ -593,40 +553,34 @@ public class ComplexFloat64GeneralTensorProduct
 	public Procedure3<ComplexFloat64Member, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, ComplexFloat64GeneralTensorProductMember metricInverse, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.CDBL, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, ComplexFloat64GeneralTensorProductMember metric, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.CDBL, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember, ComplexFloat64GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -688,7 +642,7 @@ public class ComplexFloat64GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, ComplexFloat64GeneralTensorProductMember a, ComplexFloat64GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.CDBL_TEN, G.CDBL, new ComplexFloat64Member(0.5, 0), numTimes, a, b);
+			ScaleHelper.compute(G.CDBL_TEN, G.CDBL, new ComplexFloat64Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 
@@ -714,5 +668,11 @@ public class ComplexFloat64GeneralTensorProduct
 	@Override
 	public ComplexFloat64Algebra getElementAlgebra() {
 		return G.CDBL;
+	}
+
+	@Override
+	public ComplexFloat64GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new ComplexFloat64GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }
