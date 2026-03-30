@@ -74,6 +74,7 @@ public final class ComplexFloat128Member
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
+		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -846,6 +847,11 @@ public final class ComplexFloat128Member
 	@Override
 	public void setFromIntsExact(int... vals) {
 		setFromInts(vals);
+	}
+
+	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
 	}
 
 	@Override

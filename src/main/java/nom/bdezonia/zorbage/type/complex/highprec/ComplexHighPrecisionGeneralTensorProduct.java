@@ -84,7 +84,7 @@ public class ComplexHighPrecisionGeneralTensorProduct
 {
 	@Override
 	public String typeDescription() {
-		return "Arbitrary precision based complex tensor";
+		return "Arbitrary precision complex tensor";
 	}
 
 	@Override

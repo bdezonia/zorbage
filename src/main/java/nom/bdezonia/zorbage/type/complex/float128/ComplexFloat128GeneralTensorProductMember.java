@@ -62,6 +62,7 @@ import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
 import nom.bdezonia.zorbage.algebra.SetFromInts;
 import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromLongsExact;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
 import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
@@ -107,6 +108,7 @@ public final class ComplexFloat128GeneralTensorProductMember
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
+		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -1089,6 +1091,11 @@ public final class ComplexFloat128GeneralTensorProductMember
 	@Override
 	public void setFromIntsExact(int... vals) {
 		setFromInts(vals);
+	}
+
+	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
 	}
 	
 	@Override

@@ -75,6 +75,7 @@ public final class ComplexFloat128VectorMember
 		SetFromInts,
 		SetFromIntsExact,
 		SetFromLongs,
+		SetFromLongsExact,
 		SetFromFloats,
 		SetFromFloatsExact,
 		SetFromDoubles,
@@ -1084,6 +1085,11 @@ public final class ComplexFloat128VectorMember
 	@Override
 	public void setFromIntsExact(int... vals) {
 		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
 	}
 	
 	@Override

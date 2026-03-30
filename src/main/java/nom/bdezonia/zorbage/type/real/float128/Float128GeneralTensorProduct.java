@@ -67,8 +67,6 @@ import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 
-// Note that for now the implementation is only for Cartesian tensors
-
 /**
  * 
  * @author Barry DeZonia

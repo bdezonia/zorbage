@@ -60,8 +60,6 @@ import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
 
-// Note that for now the implementation is only for Cartesian tensors
-
 /**
  * 
  * @author Barry DeZonia
@@ -84,7 +82,7 @@ public class HighPrecisionGeneralTensorProduct
 {
 	@Override
 	public String typeDescription() {
-		return "128-bit based real tensor";
+		return "Arbitrary precision real tensor";
 	}
 
 	@Override
