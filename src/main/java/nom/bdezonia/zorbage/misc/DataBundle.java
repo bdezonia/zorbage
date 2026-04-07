@@ -127,7 +127,7 @@ import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesia
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Member;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128RModuleMember;
@@ -304,7 +304,7 @@ public class DataBundle {
 	public List<DimensionedDataSource<QuaternionFloat128Member>> qquads = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat128RModuleMember>> qquad_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat128MatrixMember>> qquad_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat128CartesianTensorProductMember>> qquad_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat128GeneralTensorProductMember>> qquad_tens = new ArrayList<>();
 	
 	// type.quaternion.float16
 	public List<DimensionedDataSource<QuaternionFloat16Member>> qhlfs = new ArrayList<>();
@@ -868,7 +868,7 @@ public class DataBundle {
 			qquad_mats.add(ds);
 	}
 	
-	public void mergeQuatFlt128Tens(DimensionedDataSource<QuaternionFloat128CartesianTensorProductMember> ds) {
+	public void mergeQuatFlt128Tens(DimensionedDataSource<QuaternionFloat128GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qquad_tens.add(ds);
 	}

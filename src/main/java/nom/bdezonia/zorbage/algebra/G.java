@@ -122,7 +122,7 @@ import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesia
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModule;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Algebra;
-import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Matrix;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128RModule;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Algebra;
@@ -269,7 +269,7 @@ public class G {
 	public static final QuaternionFloat128Algebra QQUAD = new QuaternionFloat128Algebra();
 	public static final QuaternionFloat128RModule QQUAD_RMOD = new QuaternionFloat128RModule();
 	public static final QuaternionFloat128Matrix QQUAD_MAT = new QuaternionFloat128Matrix();
-	public static final QuaternionFloat128CartesianTensorProduct QQUAD_TEN = new QuaternionFloat128CartesianTensorProduct();
+	public static final QuaternionFloat128GeneralTensorProduct QQUAD_TEN = new QuaternionFloat128GeneralTensorProduct();
 	
 	public static final OctonionFloat128Algebra OQUAD = new OctonionFloat128Algebra();
 	public static final OctonionFloat128RModule OQUAD_RMOD = new OctonionFloat128RModule();
