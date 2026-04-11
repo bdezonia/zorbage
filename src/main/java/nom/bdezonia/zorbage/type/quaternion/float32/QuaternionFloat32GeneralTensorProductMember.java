@@ -98,11 +98,11 @@ import nom.bdezonia.zorbage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat32CartesianTensorProductMember
+public final class QuaternionFloat32GeneralTensorProductMember
 	implements
 		TensorMember<QuaternionFloat32Member>,
-		Gettable<QuaternionFloat32CartesianTensorProductMember>,
-		Settable<QuaternionFloat32CartesianTensorProductMember>,
+		Gettable<QuaternionFloat32GeneralTensorProductMember>,
+		Settable<QuaternionFloat32GeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
 		RawData<QuaternionFloat32Member>,
 		SetFromBytes,
@@ -128,7 +128,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<QuaternionFloat32CartesianTensorProduct, QuaternionFloat32CartesianTensorProductMember>,
+		GetAlgebra<QuaternionFloat32GeneralTensorProduct, QuaternionFloat32GeneralTensorProductMember>,
 		ApproximateType,
 		CompositeType,
 		InfinityIncludedType,
@@ -179,7 +179,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 	@Override
 	public long dimension() { return dimCount; }
 
-	public QuaternionFloat32CartesianTensorProductMember() {
+	public QuaternionFloat32GeneralTensorProductMember() {
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
@@ -188,7 +188,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
-	public QuaternionFloat32CartesianTensorProductMember(int rank, long dimCount) {
+	public QuaternionFloat32GeneralTensorProductMember(int rank, long dimCount) {
 		if (rank < 0)
 			throw new IllegalArgumentException("bad rank in tensor constructor");
 		if (dimCount < 0)
@@ -206,16 +206,16 @@ public final class QuaternionFloat32CartesianTensorProductMember
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public QuaternionFloat32CartesianTensorProductMember(int rank, long dimCount, float... vals) {
+	public QuaternionFloat32GeneralTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
 		setFromFloats(vals);
 	}
 
-	public QuaternionFloat32CartesianTensorProductMember(QuaternionFloat32CartesianTensorProductMember other) {
+	public QuaternionFloat32GeneralTensorProductMember(QuaternionFloat32GeneralTensorProductMember other) {
 		set(other);
 	}
 	
-	public QuaternionFloat32CartesianTensorProductMember(String s) {
+	public QuaternionFloat32GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
@@ -274,7 +274,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(QuaternionFloat32CartesianTensorProductMember other) {
+	public void set(QuaternionFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
 		rank = other.rank;
 		dimCount = other.dimCount;
@@ -285,7 +285,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 	}
 	
 	@Override
-	public void get(QuaternionFloat32CartesianTensorProductMember other) {
+	public void get(QuaternionFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
 		other.rank = rank;
 		other.dimCount = dimCount;
@@ -1232,8 +1232,8 @@ public final class QuaternionFloat32CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof QuaternionFloat32CartesianTensorProductMember) {
-			return G.QFLT_TEN.isEqual().call(this, (QuaternionFloat32CartesianTensorProductMember) o);
+		if (o instanceof QuaternionFloat32GeneralTensorProductMember) {
+			return G.QFLT_TEN.isEqual().call(this, (QuaternionFloat32GeneralTensorProductMember) o);
 		}
 		return false;
 	}
@@ -1547,7 +1547,7 @@ public final class QuaternionFloat32CartesianTensorProductMember
 	}
 	
 	@Override
-	public QuaternionFloat32CartesianTensorProduct getAlgebra() {
+	public QuaternionFloat32GeneralTensorProduct getAlgebra() {
 
 		return G.QFLT_TEN;
 	}

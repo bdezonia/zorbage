@@ -131,19 +131,19 @@ import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128GeneralTe
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Member;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Member;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionRModuleMember;
@@ -310,25 +310,25 @@ public class DataBundle {
 	public List<DimensionedDataSource<QuaternionFloat16Member>> qhlfs = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat16RModuleMember>> qhlf_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat16MatrixMember>> qhlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat16CartesianTensorProductMember>> qhlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat16GeneralTensorProductMember>> qhlf_tens = new ArrayList<>();
 	
 	// type.quaternion.float32
 	public List<DimensionedDataSource<QuaternionFloat32Member>> qflts = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat32RModuleMember>> qflt_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat32MatrixMember>> qflt_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat32CartesianTensorProductMember>> qflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat32GeneralTensorProductMember>> qflt_tens = new ArrayList<>();
 	
 	// type.quaternion.float64
 	public List<DimensionedDataSource<QuaternionFloat64Member>> qdbls = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat64RModuleMember>> qdbl_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat64MatrixMember>> qdbl_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat64CartesianTensorProductMember>> qdbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat64GeneralTensorProductMember>> qdbl_tens = new ArrayList<>();
 	
 	// type.quaternion.highprec
 	public List<DimensionedDataSource<QuaternionHighPrecisionMember>> qhps = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionHighPrecisionRModuleMember>> qhp_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionHighPrecisionMatrixMember>> qhp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember>> qhp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionHighPrecisionGeneralTensorProductMember>> qhp_tens = new ArrayList<>();
 	
 	// type.rational
 	public List<DimensionedDataSource<RationalMember>> rationals = new ArrayList<>();
@@ -890,7 +890,7 @@ public class DataBundle {
 			qhlf_mats.add(ds);
 	}
 	
-	public void mergeQuat16Tens(DimensionedDataSource<QuaternionFloat16CartesianTensorProductMember> ds) {
+	public void mergeQuat16Tens(DimensionedDataSource<QuaternionFloat16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qhlf_tens.add(ds);
 	}
@@ -912,7 +912,7 @@ public class DataBundle {
 			qflt_mats.add(ds);
 	}
 	
-	public void mergeQuat32Tens(DimensionedDataSource<QuaternionFloat32CartesianTensorProductMember> ds) {
+	public void mergeQuat32Tens(DimensionedDataSource<QuaternionFloat32GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qflt_tens.add(ds);
 	}
@@ -934,7 +934,7 @@ public class DataBundle {
 			qdbl_mats.add(ds);
 	}
 	
-	public void mergeQuat64Tens(DimensionedDataSource<QuaternionFloat64CartesianTensorProductMember> ds) {
+	public void mergeQuat64Tens(DimensionedDataSource<QuaternionFloat64GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qdbl_tens.add(ds);
 	}
@@ -956,7 +956,7 @@ public class DataBundle {
 			qhp_mats.add(ds);
 	}
 	
-	public void mergeQuatHPTens(DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeQuatHPTens(DimensionedDataSource<QuaternionHighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			qhp_tens.add(ds);
 	}

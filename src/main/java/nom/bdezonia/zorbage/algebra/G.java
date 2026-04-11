@@ -126,19 +126,19 @@ import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128GeneralTe
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Matrix;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128RModule;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Algebra;
-import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Matrix;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16RModule;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Algebra;
-import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Matrix;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32RModule;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Algebra;
-import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Matrix;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64RModule;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionCartesianTensorProduct;
+import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionGeneralTensorProduct;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionRModule;
 import nom.bdezonia.zorbage.type.rational.RationalAlgebra;
@@ -209,7 +209,7 @@ public class G {
 	public static final QuaternionFloat16Algebra QHLF = new QuaternionFloat16Algebra();
 	public static final QuaternionFloat16RModule QHLF_RMOD = new QuaternionFloat16RModule();
 	public static final QuaternionFloat16Matrix QHLF_MAT = new QuaternionFloat16Matrix();
-	public static final QuaternionFloat16CartesianTensorProduct QHLF_TEN = new QuaternionFloat16CartesianTensorProduct();
+	public static final QuaternionFloat16GeneralTensorProduct QHLF_TEN = new QuaternionFloat16GeneralTensorProduct();
 
 	public static final OctonionFloat16Algebra OHLF = new OctonionFloat16Algebra();
 	public static final OctonionFloat16RModule OHLF_RMOD = new OctonionFloat16RModule();
@@ -229,7 +229,7 @@ public class G {
 	public static final QuaternionFloat32Algebra QFLT = new QuaternionFloat32Algebra();
 	public static final QuaternionFloat32RModule QFLT_RMOD = new QuaternionFloat32RModule();
 	public static final QuaternionFloat32Matrix QFLT_MAT = new QuaternionFloat32Matrix();
-	public static final QuaternionFloat32CartesianTensorProduct QFLT_TEN = new QuaternionFloat32CartesianTensorProduct();
+	public static final QuaternionFloat32GeneralTensorProduct QFLT_TEN = new QuaternionFloat32GeneralTensorProduct();
 
 	public static final OctonionFloat32Algebra OFLT = new OctonionFloat32Algebra();
 	public static final OctonionFloat32RModule OFLT_RMOD = new OctonionFloat32RModule();
@@ -249,7 +249,7 @@ public class G {
 	public static final QuaternionFloat64Algebra QDBL = new QuaternionFloat64Algebra();
 	public static final QuaternionFloat64RModule QDBL_RMOD = new QuaternionFloat64RModule();
 	public static final QuaternionFloat64Matrix QDBL_MAT = new QuaternionFloat64Matrix();
-	public static final QuaternionFloat64CartesianTensorProduct QDBL_TEN = new QuaternionFloat64CartesianTensorProduct();
+	public static final QuaternionFloat64GeneralTensorProduct QDBL_TEN = new QuaternionFloat64GeneralTensorProduct();
 
 	public static final OctonionFloat64Algebra ODBL = new OctonionFloat64Algebra();
 	public static final OctonionFloat64RModule ODBL_RMOD = new OctonionFloat64RModule();
@@ -289,7 +289,7 @@ public class G {
 	public static final QuaternionHighPrecisionAlgebra QHP = new QuaternionHighPrecisionAlgebra();
 	public static final QuaternionHighPrecisionRModule QHP_RMOD = new QuaternionHighPrecisionRModule();
 	public static final QuaternionHighPrecisionMatrix QHP_MAT = new QuaternionHighPrecisionMatrix();
-	public static final QuaternionHighPrecisionCartesianTensorProduct QHP_TEN = new QuaternionHighPrecisionCartesianTensorProduct();
+	public static final QuaternionHighPrecisionGeneralTensorProduct QHP_TEN = new QuaternionHighPrecisionGeneralTensorProduct();
 
 	public static final OctonionHighPrecisionAlgebra OHP = new OctonionHighPrecisionAlgebra();
 	public static final OctonionHighPrecisionRModule OHP_RMOD = new OctonionHighPrecisionRModule();

@@ -58,7 +58,7 @@ public class TestQuaternionFloat64CartesianTensor {
 	@Test
 	public void test1() {
 		QuaternionFloat64Member value = G.QDBL.construct();
-		QuaternionFloat64CartesianTensorProductMember a =
+		QuaternionFloat64GeneralTensorProductMember a =
 				G.QDBL_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
 		assertEquals(3, a.rank());
 		assertEquals(3, a.dimension(0));
@@ -99,12 +99,12 @@ public class TestQuaternionFloat64CartesianTensor {
 				assertEquals(0, value.r(), 0);
 		}
 
-		QuaternionFloat64CartesianTensorProductMember x =
-				new QuaternionFloat64CartesianTensorProductMember(2, 2, 1,2,3,4, 0,0,0,0, 0,0,0,0, 0,0,0,0);
-		QuaternionFloat64CartesianTensorProductMember y =
-				new QuaternionFloat64CartesianTensorProductMember(2, 2, 5,6,7,8, 0,0,0,0, 0,0,0,0, 0,0,0,0);
-		QuaternionFloat64CartesianTensorProductMember z =
-				new QuaternionFloat64CartesianTensorProductMember();
+		QuaternionFloat64GeneralTensorProductMember x =
+				new QuaternionFloat64GeneralTensorProductMember(2, 2, 1,2,3,4, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+		QuaternionFloat64GeneralTensorProductMember y =
+				new QuaternionFloat64GeneralTensorProductMember(2, 2, 5,6,7,8, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+		QuaternionFloat64GeneralTensorProductMember z =
+				new QuaternionFloat64GeneralTensorProductMember();
 
 		G.QDBL_TEN.multiply().call(x, y, z);
 		
@@ -127,18 +127,18 @@ public class TestQuaternionFloat64CartesianTensor {
 		Float64Member tmp1v = G.DBL.construct();
 		Float64Member tmp2v = G.DBL.construct();
 		
-		QuaternionFloat64CartesianTensorProductMember value1 =
-				new QuaternionFloat64CartesianTensorProductMember(rank, dimension);
-		QuaternionFloat64CartesianTensorProductMember value2 =
-				new QuaternionFloat64CartesianTensorProductMember(rank, dimension);
+		QuaternionFloat64GeneralTensorProductMember value1 =
+				new QuaternionFloat64GeneralTensorProductMember(rank, dimension);
+		QuaternionFloat64GeneralTensorProductMember value2 =
+				new QuaternionFloat64GeneralTensorProductMember(rank, dimension);
 
 		assertNotNull(G.QDBL_TEN.construct());
-		QuaternionFloat64CartesianTensorProductMember junk1 = G.QDBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
+		QuaternionFloat64GeneralTensorProductMember junk1 = G.QDBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
 		assertEquals(2, junk1.rank());
 		assertEquals(3, junk1.dimension());
 		junk1.v(1, tmp1);
 		assertEquals(2, tmp1.r(), 0);
-		QuaternionFloat64CartesianTensorProductMember junk2 = G.QDBL_TEN.construct(junk1);
+		QuaternionFloat64GeneralTensorProductMember junk2 = G.QDBL_TEN.construct(junk1);
 		assertTrue(G.QDBL_TEN.isEqual().call(junk1, junk2));
 		assertFalse(G.QDBL_TEN.isNotEqual().call(junk1, junk2));
 		
@@ -204,7 +204,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		G.QDBL_TEN.subtract().call(value1, value1, value2);
 		assertTrue(G.QDBL_TEN.isZero().call(value2));
 		
-		value1 = new QuaternionFloat64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
 		assertEquals(2, value1.dimension());
 		G.QDBL_TEN.multiply().call(value1, value1, value2);
@@ -226,7 +226,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		G.QDBL_TEN.infinite().call(value1);
 		assertTrue(G.QDBL_TEN.isInfinite().call(value1));
 
-		value1 = new QuaternionFloat64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		G.QDBL_TEN.negate().call(value1, value2);
 		assertFalse(G.QDBL_TEN.isEqual().call(value1, value2));
 		value2.v(2, tmp2);
@@ -272,11 +272,11 @@ public class TestQuaternionFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(4, tmp2.r(), 0);
 		
-		value1 = new QuaternionFloat64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		G.QDBL_TEN.norm().call(value1, tmp1v);
 		assertEquals(Math.sqrt(30), tmp1v.v(), 0);
 		
-		value1 = new QuaternionFloat64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
 		assertEquals(2, value1.dimension());
 		G.QDBL_TEN.outerProduct().call(value1, value1, value2);
@@ -301,7 +301,7 @@ public class TestQuaternionFloat64CartesianTensor {
 			assertTrue(true);
 		}
 
-		value1 = new QuaternionFloat64CartesianTensorProductMember(3,2);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(3,2);
 		assertEquals(3, value1.rank());
 		assertEquals(2, value1.dimension());
 		assertEquals(8, value1.numElems());
@@ -332,7 +332,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		// tested in test1() above
 		//G.QDBL_TEN.power();
 		
-		value1 = new QuaternionFloat64CartesianTensorProductMember(2,2);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(2,2);
 		tmp1.setR(3);
 		value1.setV(0, tmp1);
 		tmp1.setR(6);
@@ -354,7 +354,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.r(), 0);
 
-		value1 = new QuaternionFloat64CartesianTensorProductMember(2,2);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(2,2);
 		tmp1.setR(3);
 		value1.setV(0, tmp1);
 		tmp1.setR(6);
@@ -375,7 +375,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.r(), 0);
 
-		value1 = new QuaternionFloat64CartesianTensorProductMember(2,2);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(2,2);
 		tmp1.setR(3);
 		value1.setV(0, tmp1);
 		tmp1.setR(6);
@@ -396,7 +396,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.r(), 0);
 
-		value1 = new QuaternionFloat64CartesianTensorProductMember(2,2);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(2,2);
 		tmp1.setR(3);
 		value1.setV(0, tmp1);
 		tmp1.setR(6);
@@ -417,8 +417,8 @@ public class TestQuaternionFloat64CartesianTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.r(), 0);
 
-		value1 = new QuaternionFloat64CartesianTensorProductMember("[1.25,2][3,4]");
-		value2 = new QuaternionFloat64CartesianTensorProductMember("[1,2][3,4]");
+		value1 = new QuaternionFloat64GeneralTensorProductMember("[1.25,2][3,4]");
+		value2 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		tmp1v.setV(0.24);
 		assertFalse(G.QDBL_TEN.within().call(tmp1v, value1, value2));
 		tmp1v.setV(0.26);
@@ -507,7 +507,7 @@ public class TestQuaternionFloat64CartesianTensor {
 		
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
-		value1 = new QuaternionFloat64CartesianTensorProductMember(0,3);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(0,3);
 		tmp1.setR(53.9);
 		value1.setV(idx, tmp1);
 		tmp2.setR(-99999);

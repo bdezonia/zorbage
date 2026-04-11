@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.quaternion.float16;
+package nom.bdezonia.zorbage.type.quaternion.highprec;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -46,30 +46,33 @@ import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
 import nom.bdezonia.zorbage.algebra.GetAsByteArray;
 import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
-import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
-import nom.bdezonia.zorbage.algebra.GetAsFloatArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
+import nom.bdezonia.zorbage.algebra.SetFromBigDecimalsExact;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
+import nom.bdezonia.zorbage.algebra.SetFromBigIntegersExact;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
 import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
+import nom.bdezonia.zorbage.algebra.SetFromDoublesExact;
 import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
 import nom.bdezonia.zorbage.algebra.SetFromInts;
+import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
+import nom.bdezonia.zorbage.algebra.SetFromLongsExact;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
+import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algebra.ThreadAccess;
-import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
 import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
-import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
 import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
 import nom.bdezonia.zorbage.algebra.type.markers.TensorType;
 import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
@@ -96,49 +99,52 @@ import nom.bdezonia.zorbage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public final class QuaternionFloat16CartesianTensorProductMember
+public final class QuaternionHighPrecisionGeneralTensorProductMember
 	implements
-		TensorMember<QuaternionFloat16Member>,
-		Gettable<QuaternionFloat16CartesianTensorProductMember>,
-		Settable<QuaternionFloat16CartesianTensorProductMember>,
+		TensorMember<QuaternionHighPrecisionMember>,
+		Gettable<QuaternionHighPrecisionGeneralTensorProductMember>,
+		Settable<QuaternionHighPrecisionGeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<QuaternionFloat16Member>,
+		RawData<QuaternionHighPrecisionMember>,
 		SetFromBytes,
 		SetFromBytesExact,
 		SetFromShorts,
+		SetFromShortsExact,
 		SetFromInts,
+		SetFromIntsExact,
 		SetFromLongs,
+		SetFromLongsExact,
 		SetFromFloats,
+		SetFromFloatsExact,
 		SetFromDoubles,
+		SetFromDoublesExact,
 		SetFromBigIntegers,
+		SetFromBigIntegersExact,
 		SetFromBigDecimals,
+		SetFromBigDecimalsExact,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
 		GetAsLongArray,
 		GetAsFloatArray,
-		GetAsFloatArrayExact,
 		GetAsDoubleArray,
-		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<QuaternionFloat16CartesianTensorProduct, QuaternionFloat16CartesianTensorProductMember>,
-		ApproximateType,
+		GetAlgebra<QuaternionHighPrecisionGeneralTensorProduct, QuaternionHighPrecisionGeneralTensorProductMember>,
 		CompositeType,
-		InfinityIncludedType,
-		NanIncludedType,
+		ExactType,
 		SignedType,
 		TensorType,
 		UnityIncludedType,
 		ZeroIncludedType
 {
-	private static final QuaternionFloat16Member ZERO = new QuaternionFloat16Member();
+	private static final QuaternionHighPrecisionMember ZERO = new QuaternionHighPrecisionMember();
 
 	private int rank;
 	private long dimCount;
-	private IndexedDataSource<QuaternionFloat16Member> storage;
+	private IndexedDataSource<QuaternionHighPrecisionMember> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private StorageConstruction s;
@@ -171,20 +177,20 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return false;
 	}
-
+	
 	@Override
 	public long dimension() { return dimCount; }
 
-	public QuaternionFloat16CartesianTensorProductMember() {
+	public QuaternionHighPrecisionGeneralTensorProductMember() {
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new QuaternionFloat16Member(), 1);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), 1);
+		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
-	public QuaternionFloat16CartesianTensorProductMember(int rank, long dimCount) {
+	public QuaternionHighPrecisionGeneralTensorProductMember(int rank, long dimCount) {
 		if (rank < 0)
 			throw new IllegalArgumentException("bad rank in tensor constructor");
 		if (dimCount < 0)
@@ -198,20 +204,35 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new QuaternionFloat16Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), numElems);
+		multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public QuaternionFloat16CartesianTensorProductMember(int rank, long dimCount, float... vals) {
+	public QuaternionHighPrecisionGeneralTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
 		this(rank, dimCount);
-		setFromFloats(vals);
+		setFromBigDecimals(vals);
+	}
+	
+	public QuaternionHighPrecisionGeneralTensorProductMember(int rank, long dimCount, BigInteger... vals) {
+		this(rank, dimCount);
+		setFromBigIntegers(vals);
+	}
+	
+	public QuaternionHighPrecisionGeneralTensorProductMember(int rank, long dimCount, double... vals) {
+		this(rank, dimCount);
+		setFromDoubles(vals);
+	}
+	
+	public QuaternionHighPrecisionGeneralTensorProductMember(int rank, long dimCount, long... vals) {
+		this(rank, dimCount);
+		setFromLongs(vals);
 	}
 
-	public QuaternionFloat16CartesianTensorProductMember(QuaternionFloat16CartesianTensorProductMember other) {
+	public QuaternionHighPrecisionGeneralTensorProductMember(QuaternionHighPrecisionGeneralTensorProductMember other) {
 		set(other);
 	}
 	
-	public QuaternionFloat16CartesianTensorProductMember(String s) {
+	public QuaternionHighPrecisionGeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
@@ -234,16 +255,16 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new QuaternionFloat16Member(), numElems);
+		this.storage = Storage.allocate(this.s, new QuaternionHighPrecisionMember(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		QuaternionFloat16Member value = new QuaternionFloat16Member();
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
-			value.setR(val.r().floatValue());
-			value.setI(val.i().floatValue());
-			value.setJ(val.j().floatValue());
-			value.setK(val.k().floatValue());
+			value.setR(val.r());
+			value.setI(val.i());
+			value.setJ(val.j());
+			value.setK(val.k());
 			storage.set(0, value);
 		}
 		else {
@@ -253,10 +274,10 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
-				value.setR(val.r().floatValue());
-				value.setI(val.i().floatValue());
-				value.setJ(val.j().floatValue());
-				value.setK(val.k().floatValue());
+				value.setR(val.r());
+				value.setI(val.i());
+				value.setJ(val.j());
+				value.setK(val.k());
 				long idx = IndexUtils.indexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
@@ -270,7 +291,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(QuaternionFloat16CartesianTensorProductMember other) {
+	public void set(QuaternionHighPrecisionGeneralTensorProductMember other) {
 		if (this == other) return;
 		rank = other.rank;
 		dimCount = other.dimCount;
@@ -281,7 +302,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
-	public void get(QuaternionFloat16CartesianTensorProductMember other) {
+	public void get(QuaternionHighPrecisionGeneralTensorProductMember other) {
 		if (this == other) return;
 		other.rank = rank;
 		other.dimCount = dimCount;
@@ -326,7 +347,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new QuaternionFloat16Member(), newCount);
+			storage = Storage.allocate(s, new QuaternionHighPrecisionMember(), newCount);
 			return true;
 		}
 		return false;
@@ -346,22 +367,22 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		return storage.size();
 	}
 	
-	void v(long index, QuaternionFloat16Member value) {
+	void v(long index, QuaternionHighPrecisionMember value) {
 		storage.get(index, value);
 	}
 	
 	@Override
-	public void getV(IntegerIndex index, QuaternionFloat16Member value) {
+	public void getV(IntegerIndex index, QuaternionHighPrecisionMember value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
-	void setV(long index, QuaternionFloat16Member value) {
+	void setV(long index, QuaternionHighPrecisionMember value) {
 		storage.set(index, value);
 	}
 	
 	@Override
-	public void setV(IntegerIndex index, QuaternionFloat16Member value) {
+	public void setV(IntegerIndex index, QuaternionHighPrecisionMember value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
@@ -369,14 +390,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		QuaternionFloat16Member value = new QuaternionFloat16Member();
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
-			BigDecimal re = BigDecimal.valueOf(value.r());
-			BigDecimal im = BigDecimal.valueOf(value.i());
-			BigDecimal j = BigDecimal.valueOf(value.j());
-			BigDecimal k = BigDecimal.valueOf(value.k());
+			BigDecimal re = value.r();
+			BigDecimal im = value.i();
+			BigDecimal j = value.j();
+			BigDecimal k = value.k();
 			OctonionRepresentation o = values.get(i);
 			o.setR(re);
 			o.setI(im);
@@ -392,16 +413,16 @@ public final class QuaternionFloat16CartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		QuaternionFloat16Member value = new QuaternionFloat16Member();
+		QuaternionHighPrecisionMember value = new QuaternionHighPrecisionMember();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
-			value.setR(o.r().floatValue());
-			value.setI(o.i().floatValue());
-			value.setJ(o.j().floatValue());
-			value.setK(o.k().floatValue());
+			value.setR(o.r());
+			value.setI(o.i());
+			value.setJ(o.j());
+			value.setK(o.k());
 			storage.set(i, value);
 		}
 	}
@@ -412,7 +433,7 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		StringBuilder builder = new StringBuilder();
 		// iterate values/indices and write numbers, brackets, and commas in correct order
 		// something recursive?
-		QuaternionFloat16Member tmp = new QuaternionFloat16Member();
+		QuaternionHighPrecisionMember tmp = new QuaternionHighPrecisionMember();
 		IntegerIndex index = new IntegerIndex(this.dims.length);
 		// [2,2,2] dims
 		// [0,0,0]  [[[num
@@ -471,18 +492,18 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static final ThreadLocal<QuaternionFloat16Member> tmpQuat =
-			new ThreadLocal<QuaternionFloat16Member>()
+	private static final ThreadLocal<QuaternionHighPrecisionMember> tmpQuat =
+			new ThreadLocal<QuaternionHighPrecisionMember>()
 	{
-		protected QuaternionFloat16Member initialValue() {
-			return new QuaternionFloat16Member();
+		protected QuaternionHighPrecisionMember initialValue() {
+			return new QuaternionHighPrecisionMember();
 		};
 		
 	};
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.FLOAT;
+		return PrimitiveRepresentation.BIGDECIMAL;
 	}
 
 	@Override
@@ -492,83 +513,140 @@ public final class QuaternionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR(BigDecimal.valueOf(v));
 			else
-				tmp.setI(v);
+				tmp.setI(BigDecimal.valueOf(v));
 		}
 		else { // component >= 2
 			if (component == 2)
-				tmp.setJ(v);
+				tmp.setJ(BigDecimal.valueOf(v));
 			else
-				tmp.setK(v);
+				tmp.setK(BigDecimal.valueOf(v));
 		}
 		setV(index, tmp);
 	}
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR(BigDecimal.valueOf(v));
 			else
-				tmp.setI(v);
+				tmp.setI(BigDecimal.valueOf(v));
 		}
 		else { // component >= 2
 			if (component == 2)
-				tmp.setJ(v);
+				tmp.setJ(BigDecimal.valueOf(v));
 			else
-				tmp.setK(v);
+				tmp.setK(BigDecimal.valueOf(v));
 		}
 		setV(index, tmp);
 	}
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR(BigDecimal.valueOf(v));
 			else
-				tmp.setI(v);
+				tmp.setI(BigDecimal.valueOf(v));
 		}
 		else { // component >= 2
 			if (component == 2)
-				tmp.setJ(v);
+				tmp.setJ(BigDecimal.valueOf(v));
 			else
-				tmp.setK(v);
+				tmp.setK(BigDecimal.valueOf(v));
 		}
 		setV(index, tmp);
 	}
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				tmp.setR(v);
+				tmp.setR(BigDecimal.valueOf(v));
 			else
-				tmp.setI(v);
+				tmp.setI(BigDecimal.valueOf(v));
 		}
 		else { // component >= 2
 			if (component == 2)
-				tmp.setJ(v);
+				tmp.setJ(BigDecimal.valueOf(v));
 			else
-				tmp.setK(v);
+				tmp.setK(BigDecimal.valueOf(v));
 		}
 		setV(index, tmp);
 	}
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
+		getV(index, tmp);
+		if (component < 2) {
+			if (component == 0)
+				tmp.setR(BigDecimal.valueOf(v));
+			else
+				tmp.setI(BigDecimal.valueOf(v));
+		}
+		else { // component >= 2
+			if (component == 2)
+				tmp.setJ(BigDecimal.valueOf(v));
+			else
+				tmp.setK(BigDecimal.valueOf(v));
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
+		getV(index, tmp);
+		if (component < 2) {
+			if (component == 0)
+				tmp.setR(BigDecimal.valueOf(v));
+			else
+				tmp.setI(BigDecimal.valueOf(v));
+		}
+		else { // component >= 2
+			if (component == 2)
+				tmp.setJ(BigDecimal.valueOf(v));
+			else
+				tmp.setK(BigDecimal.valueOf(v));
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
+		getV(index, tmp);
+		if (component < 2) {
+			if (component == 0)
+				tmp.setR(new BigDecimal(v));
+			else
+				tmp.setI(new BigDecimal(v));
+		}
+		else { // component >= 2
+			if (component == 2)
+				tmp.setJ(new BigDecimal(v));
+			else
+				tmp.setK(new BigDecimal(v));
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
@@ -581,63 +659,6 @@ public final class QuaternionFloat16CartesianTensorProductMember
 				tmp.setJ(v);
 			else
 				tmp.setK(v);
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
-		getV(index, tmp);
-		if (component < 2) {
-			if (component == 0)
-				tmp.setR((float) v);
-			else
-				tmp.setI((float) v);
-		}
-		else { // component >= 2
-			if (component == 2)
-				tmp.setJ((float) v);
-			else
-				tmp.setK((float) v);
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
-		getV(index, tmp);
-		if (component < 2) {
-			if (component == 0)
-				tmp.setR(v.floatValue());
-			else
-				tmp.setI(v.floatValue());
-		}
-		else { // component >= 2
-			if (component == 2)
-				tmp.setJ(v.floatValue());
-			else
-				tmp.setK(v.floatValue());
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		QuaternionFloat16Member tmp = tmpQuat.get();
-		getV(index, tmp);
-		if (component < 2) {
-			if (component == 0)
-				tmp.setR(v.floatValue());
-			else
-				tmp.setI(v.floatValue());
-		}
-		else { // component >= 2
-			if (component == 2)
-				tmp.setJ(v.floatValue());
-			else
-				tmp.setK(v.floatValue());
 		}
 		setV(index, tmp);
 	}
@@ -650,19 +671,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					tmp.setR(v);
+					tmp.setR(BigDecimal.valueOf(v));
 				else
-					tmp.setI(v);
+					tmp.setI(BigDecimal.valueOf(v));
 			}
 			else { // component >= 2
 				if (component == 2)
-					tmp.setJ(v);
+					tmp.setJ(BigDecimal.valueOf(v));
 				else
-					tmp.setK(v);
+					tmp.setK(BigDecimal.valueOf(v));
 			}
 			setV(index, tmp);
 		}
@@ -676,19 +697,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					tmp.setR(v);
+					tmp.setR(BigDecimal.valueOf(v));
 				else
-					tmp.setI(v);
+					tmp.setI(BigDecimal.valueOf(v));
 			}
 			else { // component >= 2
 				if (component == 2)
-					tmp.setJ(v);
+					tmp.setJ(BigDecimal.valueOf(v));
 				else
-					tmp.setK(v);
+					tmp.setK(BigDecimal.valueOf(v));
 			}
 			setV(index, tmp);
 		}
@@ -702,19 +723,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					tmp.setR(v);
+					tmp.setR(BigDecimal.valueOf(v));
 				else
-					tmp.setI(v);
+					tmp.setI(BigDecimal.valueOf(v));
 			}
 			else { // component >= 2
 				if (component == 2)
-					tmp.setJ(v);
+					tmp.setJ(BigDecimal.valueOf(v));
 				else
-					tmp.setK(v);
+					tmp.setK(BigDecimal.valueOf(v));
 			}
 			setV(index, tmp);
 		}
@@ -728,19 +749,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					tmp.setR(v);
+					tmp.setR(BigDecimal.valueOf(v));
 				else
-					tmp.setI(v);
+					tmp.setI(BigDecimal.valueOf(v));
 			}
 			else { // component >= 2
 				if (component == 2)
-					tmp.setJ(v);
+					tmp.setJ(BigDecimal.valueOf(v));
 				else
-					tmp.setK(v);
+					tmp.setK(BigDecimal.valueOf(v));
 			}
 			setV(index, tmp);
 		}
@@ -754,7 +775,84 @@ public final class QuaternionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
+			getV(index, tmp);
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(BigDecimal.valueOf(v));
+				else
+					tmp.setI(BigDecimal.valueOf(v));
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(BigDecimal.valueOf(v));
+				else
+					tmp.setK(BigDecimal.valueOf(v));
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
+		if (IndexUtils.componentOob(dims, index, component, 4)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
+			getV(index, tmp);
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(BigDecimal.valueOf(v));
+				else
+					tmp.setI(BigDecimal.valueOf(v));
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(BigDecimal.valueOf(v));
+				else
+					tmp.setK(BigDecimal.valueOf(v));
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
+		if (IndexUtils.componentOob(dims, index, component, 4)) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
+			getV(index, tmp);
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(new BigDecimal(v));
+				else
+					tmp.setI(new BigDecimal(v));
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(new BigDecimal(v));
+				else
+					tmp.setK(new BigDecimal(v));
+			}
+		}
+	}
+
+	@Override
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
+		if (IndexUtils.componentOob(dims, index, component, 4)) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
@@ -773,100 +871,23 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 
 	@Override
-	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.componentOob(dims, index, component, 4)) {
-			if (v != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
-			getV(index, tmp);
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR((float) v);
-				else
-					tmp.setI((float) v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ((float) v);
-				else
-					tmp.setK((float) v);
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.componentOob(dims, index, component, 4)) {
-			if (v.signum() != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
-			getV(index, tmp);
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v.floatValue());
-				else
-					tmp.setI(v.floatValue());
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v.floatValue());
-				else
-					tmp.setK(v.floatValue());
-			}
-		}
-	}
-
-	@Override
-	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.componentOob(dims, index, component, 4)) {
-			if (v.signum() != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
-			getV(index, tmp);
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v.floatValue());
-				else
-					tmp.setI(v.floatValue());
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v.floatValue());
-				else
-					tmp.setK(v.floatValue());
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
 	public byte primComponentGetAsByte(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				return (byte) tmp.r();
+				return tmp.r().byteValue();
 			else
-				return (byte) tmp.i();
+				return tmp.i().byteValue();
 		}
 		else { // component >= 2
 			if (component == 2)
-				return (byte) tmp.j();
+				return tmp.j().byteValue();
 			else
-				return (byte) tmp.k();
+				return tmp.k().byteValue();
 		}
 	}
 
@@ -875,19 +896,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				return (short) tmp.r();
+				return tmp.r().shortValue();
 			else
-				return (short) tmp.i();
+				return tmp.i().shortValue();
 		}
 		else { // component >= 2
 			if (component == 2)
-				return (short) tmp.j();
+				return tmp.j().shortValue();
 			else
-				return (short) tmp.k();
+				return tmp.k().shortValue();
 		}
 	}
 
@@ -896,19 +917,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				return (int) tmp.r();
+				return tmp.r().intValue();
 			else
-				return (int) tmp.i();
+				return tmp.i().intValue();
 		}
 		else { // component >= 2
 			if (component == 2)
-				return (int) tmp.j();
+				return tmp.j().intValue();
 			else
-				return (int) tmp.k();
+				return tmp.k().intValue();
 		}
 	}
 
@@ -917,19 +938,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				return (long) tmp.r();
+				return tmp.r().longValue();
 			else
-				return (long) tmp.i();
+				return tmp.i().longValue();
 		}
 		else { // component >= 2
 			if (component == 2)
-				return (long) tmp.j();
+				return tmp.j().longValue();
 			else
-				return (long) tmp.k();
+				return tmp.k().longValue();
 		}
 	}
 
@@ -938,19 +959,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
-				return tmp.r();
+				return tmp.r().floatValue();
 			else
-				return tmp.i();
+				return tmp.i().floatValue();
 		}
 		else { // component >= 2
 			if (component == 2)
-				return tmp.j();
+				return tmp.j().floatValue();
 			else
-				return tmp.k();
+				return tmp.k().floatValue();
 		}
 	}
 
@@ -959,7 +980,49 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
+		getV(index, tmp);
+		if (component < 2) {
+			if (component == 0)
+				return tmp.r().doubleValue();
+			else
+				return tmp.i().doubleValue();
+		}
+		else { // component >= 2
+			if (component == 2)
+				return tmp.j().doubleValue();
+			else
+				return tmp.k().doubleValue();
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
+		getV(index, tmp);
+		if (component < 2) {
+			if (component == 0)
+				return tmp.r().toBigInteger();
+			else
+				return tmp.i().toBigInteger();
+		}
+		else { // component >= 2
+			if (component == 2)
+				return tmp.j().toBigInteger();
+			else
+				return tmp.k().toBigInteger();
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		QuaternionHighPrecisionMember tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component < 2) {
 			if (component == 0)
@@ -972,48 +1035,6 @@ public final class QuaternionFloat16CartesianTensorProductMember
 				return tmp.j();
 			else
 				return tmp.k();
-		}
-	}
-
-	@Override
-	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
-		if (component < 0)
-			throw new IllegalArgumentException(
-					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
-		getV(index, tmp);
-		if (component < 2) {
-			if (component == 0)
-				return BigInteger.valueOf((long) tmp.r());
-			else
-				return BigInteger.valueOf((long) tmp.i());
-		}
-		else { // component >= 2
-			if (component == 2)
-				return BigInteger.valueOf((long) tmp.j());
-			else
-				return BigInteger.valueOf((long) tmp.k());
-		}
-	}
-
-	@Override
-	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
-		if (component < 0)
-			throw new IllegalArgumentException(
-					"negative component index error");
-		QuaternionFloat16Member tmp = tmpQuat.get();
-		getV(index, tmp);
-		if (component < 2) {
-			if (component == 0)
-				return BigDecimal.valueOf(tmp.r());
-			else
-				return BigDecimal.valueOf(tmp.i());
-		}
-		else { // component >= 2
-			if (component == 2)
-				return BigDecimal.valueOf(tmp.j());
-			else
-				return BigDecimal.valueOf(tmp.k());
 		}
 	}
 
@@ -1023,19 +1044,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					return (byte) tmp.r();
+					return tmp.r().byteValue();
 				else
-					return (byte) tmp.i();
+					return tmp.i().byteValue();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return (byte) tmp.j();
+					return tmp.j().byteValue();
 				else
-					return (byte) tmp.k();
+					return tmp.k().byteValue();
 			}
 		}
 	}
@@ -1046,19 +1067,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					return (short) tmp.r();
+					return tmp.r().shortValue();
 				else
-					return (short) tmp.i();
+					return tmp.i().shortValue();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return (short) tmp.j();
+					return tmp.j().shortValue();
 				else
-					return (short) tmp.k();
+					return tmp.k().shortValue();
 			}
 		}
 	}
@@ -1069,19 +1090,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					return (int) tmp.r();
+					return tmp.r().intValue();
 				else
-					return (int) tmp.i();
+					return tmp.i().intValue();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return (int) tmp.j();
+					return tmp.j().intValue();
 				else
-					return (int) tmp.k();
+					return tmp.k().intValue();
 			}
 		}
 	}
@@ -1092,19 +1113,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					return (long) tmp.r();
+					return tmp.r().longValue();
 				else
-					return (long) tmp.i();
+					return tmp.i().longValue();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return (long) tmp.j();
+					return tmp.j().longValue();
 				else
-					return (long) tmp.k();
+					return tmp.k().longValue();
 			}
 		}
 	}
@@ -1115,19 +1136,19 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
-					return tmp.r();
+					return tmp.r().floatValue();
 				else
-					return tmp.i();
+					return tmp.i().floatValue();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return tmp.j();
+					return tmp.j().floatValue();
 				else
-					return tmp.k();
+					return tmp.k().floatValue();
 			}
 		}
 	}
@@ -1138,7 +1159,53 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
+			getV(index, tmp);
+			if (component < 2) {
+				if (component == 0)
+					return tmp.r().doubleValue();
+				else
+					return tmp.i().doubleValue();
+			}
+			else { // component >= 2
+				if (component == 2)
+					return tmp.j().doubleValue();
+				else
+					return tmp.k().doubleValue();
+			}
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
+		if (IndexUtils.componentOob(dims, index, component, 4)) {
+			return BigInteger.ZERO;
+		}
+		else {
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
+			getV(index, tmp);
+			if (component < 2) {
+				if (component == 0)
+					return tmp.r().toBigInteger();
+				else
+					return tmp.i().toBigInteger();
+			}
+			else { // component >= 2
+				if (component == 2)
+					return tmp.j().toBigInteger();
+				else
+					return tmp.k().toBigInteger();
+			}
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
+		if (IndexUtils.componentOob(dims, index, component, 4)) {
+			return BigDecimal.ZERO;
+		}
+		else {
+			QuaternionHighPrecisionMember tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component < 2) {
 				if (component == 0)
@@ -1151,52 +1218,6 @@ public final class QuaternionFloat16CartesianTensorProductMember
 					return tmp.j();
 				else
 					return tmp.k();
-			}
-		}
-	}
-
-	@Override
-	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 4)) {
-			return BigInteger.ZERO;
-		}
-		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
-			getV(index, tmp);
-			if (component < 2) {
-				if (component == 0)
-					return BigInteger.valueOf((long) tmp.r());
-				else
-					return BigInteger.valueOf((long) tmp.i());
-			}
-			else { // component >= 2
-				if (component == 2)
-					return BigInteger.valueOf((long) tmp.j());
-				else
-					return BigInteger.valueOf((long) tmp.k());
-			}
-		}
-	}
-
-	@Override
-	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 4)) {
-			return BigDecimal.ZERO;
-		}
-		else {
-			QuaternionFloat16Member tmp = tmpQuat.get();
-			getV(index, tmp);
-			if (component < 2) {
-				if (component == 0)
-					return BigDecimal.valueOf(tmp.r());
-				else
-					return BigDecimal.valueOf(tmp.i());
-			}
-			else { // component >= 2
-				if (component == 2)
-					return BigDecimal.valueOf(tmp.j());
-				else
-					return BigDecimal.valueOf(tmp.k());
 			}
 		}
 	}
@@ -1209,13 +1230,13 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 
 	@Override
-	public IndexedDataSource<QuaternionFloat16Member> rawData() {
+	public IndexedDataSource<QuaternionHighPrecisionMember> rawData() {
 		return storage;
 	}
 
 	@Override
 	public int hashCode() {
-		QuaternionFloat16Member tmp = G.QHLF.construct();
+		QuaternionHighPrecisionMember tmp = G.QHP.construct();
 		long len = dimension(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
@@ -1228,17 +1249,52 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof QuaternionFloat16CartesianTensorProductMember) {
-			return G.QHLF_TEN.isEqual().call(this, (QuaternionFloat16CartesianTensorProductMember) o);
+		if (o instanceof QuaternionHighPrecisionGeneralTensorProductMember) {
+			return G.QHP_TEN.isEqual().call(this, (QuaternionHighPrecisionGeneralTensorProductMember) o);
 		}
 		return false;
 	}
-
+	
 	@Override
 	public void setFromBytesExact(byte... vals) {
 		setFromBytes(vals);
 	}
 	
+	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromIntsExact(int... vals) {
+		setFromInts(vals);
+	}
+	
+	@Override
+	public void setFromLongsExact(long... vals) {
+		setFromLongs(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
+	public void setFromDoublesExact(double... vals) {
+		setFromDoubles(vals);
+	}
+	
+	@Override
+	public void setFromBigIntegersExact(BigInteger... vals) {
+		setFromBigIntegers(vals);
+	}
+	
+	@Override
+	public void setFromBigDecimalsExact(BigDecimal... vals) {
+		setFromBigDecimals(vals);
+	}
+
 	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 4;
@@ -1246,12 +1302,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
-			value.setJ(  vals[i + 2] );
-			value.setK(  vals[i + 3] );
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1263,12 +1319,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
-			value.setJ(  vals[i + 2] );
-			value.setK(  vals[i + 3] );
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1280,12 +1336,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
-			value.setJ(  vals[i + 2] );
-			value.setK(  vals[i + 3] );
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1297,12 +1353,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
-			value.setJ(  vals[i + 2] );
-			value.setK(  vals[i + 3] );
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1314,12 +1370,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0] );
-			value.setI(  vals[i + 1] );
-			value.setJ(  vals[i + 2] );
-			value.setK(  vals[i + 3] );
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1331,12 +1387,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  (float) vals[i + 0] );
-			value.setI(  (float) vals[i + 1] );
-			value.setJ(  (float) vals[i + 2] );
-			value.setK(  (float) vals[i + 3] );
+			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
+			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
+			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
+			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1348,12 +1404,12 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0].floatValue() );
-			value.setI(  vals[i + 1].floatValue() );
-			value.setJ(  vals[i + 2].floatValue() );
-			value.setK(  vals[i + 3].floatValue() );
+			value.setR(  new BigDecimal(vals[i + 0]) );
+			value.setI(  new BigDecimal(vals[i + 1]) );
+			value.setJ(  new BigDecimal(vals[i + 2]) );
+			value.setK(  new BigDecimal(vals[i + 3]) );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1365,26 +1421,16 @@ public final class QuaternionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  vals[i + 0].floatValue() );
-			value.setI(  vals[i + 1].floatValue() );
-			value.setJ(  vals[i + 2].floatValue() );
-			value.setK(  vals[i + 3].floatValue() );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
 			storage.set(i/componentCount, value);
 		}
 	}
 
-	@Override
-	public float[] getAsFloatArrayExact() {
-		return getAsFloatArray();
-	}
-	
-	@Override
-	public double[] getAsDoubleArrayExact() {
-		return getAsDoubleArray();
-	}
-	
 	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
@@ -1395,14 +1441,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		byte[] values = new byte[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (byte) value.r();
-			values[k++] = (byte) value.i();
-			values[k++] = (byte) value.j();
-			values[k++] = (byte) value.k();
+			values[k++] = value.r().byteValue();
+			values[k++] = value.i().byteValue();
+			values[k++] = value.j().byteValue();
+			values[k++] = value.k().byteValue();
 		}
 		return values;
 	}
@@ -1412,14 +1458,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		short[] values = new short[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (short) value.r();
-			values[k++] = (short) value.i();
-			values[k++] = (short) value.j();
-			values[k++] = (short) value.k();
+			values[k++] = value.r().shortValue();
+			values[k++] = value.i().shortValue();
+			values[k++] = value.j().shortValue();
+			values[k++] = value.k().shortValue();
 		}
 		return values;
 	}
@@ -1429,14 +1475,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		int[] values = new int[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (int) value.r();
-			values[k++] = (int) value.i();
-			values[k++] = (int) value.j();
-			values[k++] = (int) value.k();
+			values[k++] = value.r().intValue();
+			values[k++] = value.i().intValue();
+			values[k++] = value.j().intValue();
+			values[k++] = value.k().intValue();
 		}
 		return values;
 	}
@@ -1446,14 +1492,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		long[] values = new long[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (long) value.r();
-			values[k++] = (long) value.i();
-			values[k++] = (long) value.j();
-			values[k++] = (long) value.k();
+			values[k++] = value.r().longValue();
+			values[k++] = value.i().longValue();
+			values[k++] = value.j().longValue();
+			values[k++] = value.k().longValue();
 		}
 		return values;
 	}
@@ -1463,14 +1509,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		float[] values = new float[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r();
-			values[k++] = value.i();
-			values[k++] = value.j();
-			values[k++] = value.k();
+			values[k++] = value.r().floatValue();
+			values[k++] = value.i().floatValue();
+			values[k++] = value.j().floatValue();
+			values[k++] = value.k().floatValue();
 		}
 		return values;
 	}
@@ -1480,14 +1526,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		double[] values = new double[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r();
-			values[k++] = value.i();
-			values[k++] = value.j();
-			values[k++] = value.k();
+			values[k++] = value.r().doubleValue();
+			values[k++] = value.i().doubleValue();
+			values[k++] = value.j().doubleValue();
+			values[k++] = value.k().doubleValue();
 		}
 		return values;
 	}
@@ -1497,14 +1543,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		BigInteger[] values = new BigInteger[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigInteger.valueOf((long) value.r());
-			values[k++] = BigInteger.valueOf((long) value.i());
-			values[k++] = BigInteger.valueOf((long) value.j());
-			values[k++] = BigInteger.valueOf((long) value.k());
+			values[k++] = value.r().toBigInteger();
+			values[k++] = value.i().toBigInteger();
+			values[k++] = value.j().toBigInteger();
+			values[k++] = value.k().toBigInteger();
 		}
 		return values;
 	}
@@ -1514,14 +1560,14 @@ public final class QuaternionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		QuaternionFloat16Member value = G.QHLF.construct();
+		QuaternionHighPrecisionMember value = G.QHP.construct();
 		BigDecimal[] values = new BigDecimal[4 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r());
-			values[k++] = BigDecimal.valueOf(value.i());
-			values[k++] = BigDecimal.valueOf(value.j());
-			values[k++] = BigDecimal.valueOf(value.k());
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
 		}
 		return values;
 	}
@@ -1533,8 +1579,8 @@ public final class QuaternionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
-	public QuaternionFloat16CartesianTensorProduct getAlgebra() {
+	public QuaternionHighPrecisionGeneralTensorProduct getAlgebra() {
 
-		return G.QHLF_TEN;
+		return G.QHP_TEN;
 	}
 }
