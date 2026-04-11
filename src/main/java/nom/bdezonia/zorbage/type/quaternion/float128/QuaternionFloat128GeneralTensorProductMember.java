@@ -534,7 +534,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 	    return sb.toString();
 	}
 
-	private static final ThreadLocal<QuaternionFloat128Member> tmpComp =
+	private static final ThreadLocal<QuaternionFloat128Member> tmpQuat =
 			new ThreadLocal<QuaternionFloat128Member>()
 	{
 		protected QuaternionFloat128Member initialValue() {
@@ -555,7 +555,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
@@ -570,7 +570,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
@@ -585,7 +585,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
@@ -600,7 +600,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
@@ -615,7 +615,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
@@ -630,7 +630,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(BigDecimal.valueOf(v));
@@ -645,7 +645,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(new BigDecimal(v));
@@ -660,7 +660,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0)
 			tmp.setR(v);
@@ -681,7 +681,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
@@ -703,7 +703,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
@@ -725,7 +725,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
@@ -747,7 +747,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
@@ -769,7 +769,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
@@ -791,7 +791,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(BigDecimal.valueOf(v));
@@ -813,7 +813,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(new BigDecimal(v));
@@ -835,7 +835,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0)
 				tmp.setR(v);
@@ -854,7 +854,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().byteValue();
@@ -876,7 +876,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().shortValue();
@@ -898,7 +898,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().intValue();
@@ -920,7 +920,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().longValue();
@@ -942,7 +942,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().floatValue();
@@ -964,7 +964,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().doubleValue();
@@ -986,7 +986,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v().toBigInteger();
@@ -1008,7 +1008,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		QuaternionFloat128Member tmp = tmpComp.get();
+		QuaternionFloat128Member tmp = tmpQuat.get();
 		getV(index, tmp);
 		if (component == 0) {
 			return tmp.r().v();
@@ -1031,7 +1031,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().byteValue();
@@ -1055,7 +1055,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().shortValue();
@@ -1079,7 +1079,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().intValue();
@@ -1103,7 +1103,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().longValue();
@@ -1127,7 +1127,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().floatValue();
@@ -1151,7 +1151,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return 0;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().doubleValue();
@@ -1175,7 +1175,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return BigInteger.ZERO;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v().toBigInteger();
@@ -1199,7 +1199,7 @@ public final class QuaternionFloat128GeneralTensorProductMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			QuaternionFloat128Member tmp = tmpComp.get();
+			QuaternionFloat128Member tmp = tmpQuat.get();
 			getV(index, tmp);
 			if (component == 0) {
 				return tmp.r().v();

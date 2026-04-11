@@ -43,14 +43,13 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -65,10 +64,9 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float16.Float16Algebra;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -77,7 +75,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class QuaternionFloat16GeneralTensorProduct
 	implements
-		TensorLikeProduct<QuaternionFloat16GeneralTensorProduct,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16Algebra,QuaternionFloat16Member>,
+		TensorProduct<QuaternionFloat16GeneralTensorProduct,QuaternionFloat16GeneralTensorProductMember,Float16Algebra,Float16Member>,
 		Norm<QuaternionFloat16GeneralTensorProductMember,Float16Member>,
 		Scale<QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16Member>,
 		Rounding<Float16Member,QuaternionFloat16GeneralTensorProductMember>,
@@ -90,7 +88,8 @@ public class QuaternionFloat16GeneralTensorProduct
 		ScaleByTwo<QuaternionFloat16GeneralTensorProductMember>,
 		Tolerance<Float16Member, QuaternionFloat16GeneralTensorProductMember>,
 		ArrayLikeMethods<QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16Member>,
-		MadeOfElements<QuaternionFloat16Algebra,QuaternionFloat16Member>
+		MadeOfElements<QuaternionFloat16Algebra,QuaternionFloat16Member>,
+		ConstructibleTensor<QuaternionFloat16GeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
@@ -235,19 +234,9 @@ public class QuaternionFloat16GeneralTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> CONJ =
-			new Procedure2<QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.QHLF, G.QHLF.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<QuaternionFloat16Member,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> SCALE =
@@ -321,7 +310,7 @@ public class QuaternionFloat16GeneralTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.QHLF, G.QHLF.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.QHLF, G.QHLF.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -353,41 +342,13 @@ public class QuaternionFloat16GeneralTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
-			TensorContract.compute(G.QHLF, a.rank(), i, j, a, b);
+			TensorContract.compute(G.QHLF, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.QHLF_TEN, G.QHLF, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.QHLF_TEN, G.QHLF, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,QuaternionFloat16GeneralTensorProductMember,QuaternionFloat16GeneralTensorProductMember> POWER =
@@ -592,40 +553,34 @@ public class QuaternionFloat16GeneralTensorProduct
 	public Procedure3<QuaternionFloat16Member, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, QuaternionFloat16GeneralTensorProductMember metricInverse, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.QHLF, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, QuaternionFloat16GeneralTensorProductMember metric, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.QHLF, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember, QuaternionFloat16GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -672,7 +627,7 @@ public class QuaternionFloat16GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.QHLF_TEN, G.QHLF, new QuaternionFloat16Member(2, 0, 0, 0), numTimes, a, b);
+			ScaleHelper.compute(G.QHLF_TEN, G.QHLF, new QuaternionFloat16Member(2,0), numTimes, a, b);
 		}
 	};
 
@@ -687,7 +642,7 @@ public class QuaternionFloat16GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, QuaternionFloat16GeneralTensorProductMember a, QuaternionFloat16GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.QHLF_TEN, G.QHLF, new QuaternionFloat16Member(0.5f, 0, 0, 0), numTimes, a, b);
+			ScaleHelper.compute(G.QHLF_TEN, G.QHLF, new QuaternionFloat16Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 
@@ -713,5 +668,11 @@ public class QuaternionFloat16GeneralTensorProduct
 	@Override
 	public QuaternionFloat16Algebra getElementAlgebra() {
 		return G.QHLF;
+	}
+
+	@Override
+	public QuaternionFloat16GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new QuaternionFloat16GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }
