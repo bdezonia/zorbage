@@ -31,7 +31,6 @@
 package nom.bdezonia.zorbage.type.quaternion.highprec;
 
 import java.lang.Integer;
-import java.math.BigDecimal;
 
 import nom.bdezonia.zorbage.algebra.*;
 import nom.bdezonia.zorbage.algorithm.Copy;
@@ -39,13 +38,12 @@ import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -60,9 +58,8 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionAlgebra;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -71,7 +68,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class QuaternionHighPrecisionGeneralTensorProduct
 	implements
-		TensorLikeProduct<QuaternionHighPrecisionGeneralTensorProduct,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>,
+		TensorProduct<QuaternionHighPrecisionGeneralTensorProduct,QuaternionHighPrecisionGeneralTensorProductMember,HighPrecisionAlgebra,HighPrecisionMember>,
 		Norm<QuaternionHighPrecisionGeneralTensorProductMember,HighPrecisionMember>,
 		Scale<QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionMember>,
 		ScaleByHighPrec<QuaternionHighPrecisionGeneralTensorProductMember>,
@@ -81,11 +78,12 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 		ScaleByTwo<QuaternionHighPrecisionGeneralTensorProductMember>,
 		Tolerance<HighPrecisionMember, QuaternionHighPrecisionGeneralTensorProductMember>,
 		ArrayLikeMethods<QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionMember>,
-		MadeOfElements<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>
+		MadeOfElements<QuaternionHighPrecisionAlgebra,QuaternionHighPrecisionMember>,
+		ConstructibleTensor<QuaternionHighPrecisionGeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
-		return "Arbitrary precicion quaternion tensor";
+		return "Arbitrary precision complex tensor";
 	}
 
 	@Override
@@ -226,19 +224,9 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> CONJ =
-			new Procedure2<QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.QHP, G.QHP.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<QuaternionHighPrecisionMember,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> SCALE =
@@ -312,7 +300,7 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.QHP, G.QHP.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.QHP, G.QHP.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -344,41 +332,13 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
-			TensorContract.compute(G.QHP, a.rank(), i, j, a, b);
+			TensorContract.compute(G.QHP, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.QHP_TEN, G.QHP, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.QHP_TEN, G.QHP, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,QuaternionHighPrecisionGeneralTensorProductMember,QuaternionHighPrecisionGeneralTensorProductMember> POWER =
@@ -513,40 +473,34 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 	public Procedure3<QuaternionHighPrecisionMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, QuaternionHighPrecisionGeneralTensorProductMember metricInverse, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.QHP, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, QuaternionHighPrecisionGeneralTensorProductMember metric, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.QHP, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember, QuaternionHighPrecisionGeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -593,7 +547,7 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.QHP_TEN, G.QHP, new QuaternionHighPrecisionMember(BigDecimal.valueOf(2), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
+			ScaleHelper.compute(G.QHP_TEN, G.QHP, new QuaternionHighPrecisionMember(2,0), numTimes, a, b);
 		}
 	};
 
@@ -608,7 +562,7 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, QuaternionHighPrecisionGeneralTensorProductMember a, QuaternionHighPrecisionGeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.QHP_TEN, G.QHP, new QuaternionHighPrecisionMember(BigDecimal.valueOf(0.5), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO), numTimes, a, b);
+			ScaleHelper.compute(G.QHP_TEN, G.QHP, new QuaternionHighPrecisionMember(0.5,0), numTimes, a, b);
 		}
 	};
 
@@ -635,4 +589,11 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 	public QuaternionHighPrecisionAlgebra getElementAlgebra() {
 		return G.QHP;
 	}
+
+	@Override
+	public QuaternionHighPrecisionGeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new QuaternionHighPrecisionGeneralTensorProductMember(indexTypes, axisSizes);
+	}
+
 }
