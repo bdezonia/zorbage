@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.octonion.highprec;
+package nom.bdezonia.zorbage.type.octonion.float16;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -46,35 +46,32 @@ import nom.bdezonia.zorbage.algebra.GetAsBigDecimalArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsBigIntegerArray;
 import nom.bdezonia.zorbage.algebra.GetAsByteArray;
 import nom.bdezonia.zorbage.algebra.GetAsDoubleArray;
+import nom.bdezonia.zorbage.algebra.GetAsDoubleArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsFloatArray;
+import nom.bdezonia.zorbage.algebra.GetAsFloatArrayExact;
 import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
-import nom.bdezonia.zorbage.algebra.SetFromBigDecimalsExact;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
-import nom.bdezonia.zorbage.algebra.SetFromBigIntegersExact;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
 import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
-import nom.bdezonia.zorbage.algebra.SetFromDoublesExact;
 import nom.bdezonia.zorbage.algebra.SetFromFloats;
-import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
 import nom.bdezonia.zorbage.algebra.SetFromInts;
-import nom.bdezonia.zorbage.algebra.SetFromIntsExact;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
-import nom.bdezonia.zorbage.algebra.SetFromLongsExact;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
-import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algebra.ThreadAccess;
+import nom.bdezonia.zorbage.algebra.type.markers.ApproximateType;
 import nom.bdezonia.zorbage.algebra.type.markers.CompositeType;
-import nom.bdezonia.zorbage.algebra.type.markers.ExactType;
-import nom.bdezonia.zorbage.algebra.type.markers.OctonionType;
+import nom.bdezonia.zorbage.algebra.type.markers.InfinityIncludedType;
+import nom.bdezonia.zorbage.algebra.type.markers.NanIncludedType;
 import nom.bdezonia.zorbage.algebra.type.markers.SignedType;
+import nom.bdezonia.zorbage.algebra.type.markers.TensorType;
 import nom.bdezonia.zorbage.algebra.type.markers.UnityIncludedType;
 import nom.bdezonia.zorbage.algebra.type.markers.ZeroIncludedType;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
@@ -99,52 +96,49 @@ import nom.bdezonia.zorbage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public final class OctonionHighPrecisionCartesianTensorProductMember
+public final class OctonionFloat16GeneralTensorProductMember
 	implements
-		TensorMember<OctonionHighPrecisionMember>,
-		Gettable<OctonionHighPrecisionCartesianTensorProductMember>,
-		Settable<OctonionHighPrecisionCartesianTensorProductMember>,
+		TensorMember<OctonionFloat16Member>,
+		Gettable<OctonionFloat16GeneralTensorProductMember>,
+		Settable<OctonionFloat16GeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionHighPrecisionMember>,
+		RawData<OctonionFloat16Member>,
 		SetFromBytes,
 		SetFromBytesExact,
 		SetFromShorts,
-		SetFromShortsExact,
 		SetFromInts,
-		SetFromIntsExact,
 		SetFromLongs,
-		SetFromLongsExact,
 		SetFromFloats,
-		SetFromFloatsExact,
 		SetFromDoubles,
-		SetFromDoublesExact,
 		SetFromBigIntegers,
-		SetFromBigIntegersExact,
 		SetFromBigDecimals,
-		SetFromBigDecimalsExact,
 		GetAsByteArray,
 		GetAsShortArray,
 		GetAsIntArray,
 		GetAsLongArray,
 		GetAsFloatArray,
+		GetAsFloatArrayExact,
 		GetAsDoubleArray,
+		GetAsDoubleArrayExact,
 		GetAsBigIntegerArray,
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<OctonionHighPrecisionCartesianTensorProduct, OctonionHighPrecisionCartesianTensorProductMember>,
+		GetAlgebra<OctonionFloat16GeneralTensorProduct, OctonionFloat16GeneralTensorProductMember>,
+		ApproximateType,
 		CompositeType,
-		ExactType,
-		OctonionType,
+		InfinityIncludedType,
+		NanIncludedType,
 		SignedType,
+		TensorType,
 		UnityIncludedType,
 		ZeroIncludedType
 {
-	private static final OctonionHighPrecisionMember ZERO = new OctonionHighPrecisionMember();
+	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
 
 	private int rank;
 	private long dimCount;
-	private IndexedDataSource<OctonionHighPrecisionMember> storage;
+	private IndexedDataSource<OctonionFloat16Member> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private StorageConstruction s;
@@ -155,14 +149,10 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	public int rank() { return lowerRank() + upperRank(); }
 	
 	@Override
-	public int lowerRank() {
-		return rank;
-	}
+	public int lowerRank() { return rank; }
 	
 	@Override
-	public int upperRank() {
-		return 0;
-	}
+	public int upperRank() { return 0; }
 	
 	@Override
 	public boolean indexIsLower(int index) {
@@ -181,16 +171,16 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public long dimension() { return dimCount; }
 
-	public OctonionHighPrecisionCartesianTensorProductMember() {
+	public OctonionFloat16GeneralTensorProductMember() {
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), 1);
+		storage = Storage.allocate(s, new OctonionFloat16Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
-	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount) {
+	public OctonionFloat16GeneralTensorProductMember(int rank, long dimCount) {
 		if (rank < 0)
 			throw new IllegalArgumentException("bad rank in tensor constructor");
 		if (dimCount < 0)
@@ -204,35 +194,20 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionHighPrecisionMember(), numElems);
+		storage = Storage.allocate(s, new OctonionFloat16Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigDecimal... vals) {
+	public OctonionFloat16GeneralTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
-		setFromBigDecimals(vals);
-	}
-	
-	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, BigInteger... vals) {
-		this(rank, dimCount);
-		setFromBigIntegers(vals);
-	}
-	
-	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, double... vals) {
-		this(rank, dimCount);
-		setFromDoubles(vals);
-	}
-	
-	public OctonionHighPrecisionCartesianTensorProductMember(int rank, long dimCount, long... vals) {
-		this(rank, dimCount);
-		setFromLongs(vals);
+		setFromFloats(vals);
 	}
 
-	public OctonionHighPrecisionCartesianTensorProductMember(OctonionHighPrecisionCartesianTensorProductMember other) {
+	public OctonionFloat16GeneralTensorProductMember(OctonionFloat16GeneralTensorProductMember other) {
 		set(other);
 	}
 	
-	public OctonionHighPrecisionCartesianTensorProductMember(String s) {
+	public OctonionFloat16GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
@@ -255,20 +230,20 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new OctonionHighPrecisionMember(), numElems);
+		this.storage = Storage.allocate(this.s, new OctonionFloat16Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		OctonionFloat16Member value = new OctonionFloat16Member();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
-			value.setR(val.r());
-			value.setI(val.i());
-			value.setJ(val.j());
-			value.setK(val.k());
-			value.setL(val.l());
-			value.setI0(val.i0());
-			value.setJ0(val.j0());
-			value.setK0(val.k0());
+			value.setR(val.r().floatValue());
+			value.setI(val.i().floatValue());
+			value.setJ(val.j().floatValue());
+			value.setK(val.k().floatValue());
+			value.setL(val.l().floatValue());
+			value.setI0(val.i0().floatValue());
+			value.setJ0(val.j0().floatValue());
+			value.setK0(val.k0().floatValue());
 			storage.set(0, value);
 		}
 		else {
@@ -278,14 +253,14 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
-				value.setR(val.r());
-				value.setI(val.i());
-				value.setJ(val.j());
-				value.setK(val.k());
-				value.setL(val.l());
-				value.setI0(val.i0());
-				value.setJ0(val.j0());
-				value.setK0(val.k0());
+				value.setR(val.r().floatValue());
+				value.setI(val.i().floatValue());
+				value.setJ(val.j().floatValue());
+				value.setK(val.k().floatValue());
+				value.setL(val.l().floatValue());
+				value.setI0(val.i0().floatValue());
+				value.setJ0(val.j0().floatValue());
+				value.setK0(val.k0().floatValue());
 				long idx = IndexUtils.indexToLong(dims, index);
 				storage.set(idx, value);
 				i++;
@@ -299,7 +274,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(OctonionHighPrecisionCartesianTensorProductMember other) {
+	public void set(OctonionFloat16GeneralTensorProductMember other) {
 		if (this == other) return;
 		rank = other.rank;
 		dimCount = other.dimCount;
@@ -310,7 +285,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void get(OctonionHighPrecisionCartesianTensorProductMember other) {
+	public void get(OctonionFloat16GeneralTensorProductMember other) {
 		if (this == other) return;
 		other.rank = rank;
 		other.dimCount = dimCount;
@@ -355,7 +330,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new OctonionHighPrecisionMember(), newCount);
+			storage = Storage.allocate(s, new OctonionFloat16Member(), newCount);
 			return true;
 		}
 		return false;
@@ -375,22 +350,22 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		return storage.size();
 	}
 	
-	void v(long index, OctonionHighPrecisionMember value) {
+	void v(long index, OctonionFloat16Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
-	public void getV(IntegerIndex index, OctonionHighPrecisionMember value) {
+	public void getV(IntegerIndex index, OctonionFloat16Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
-	void setV(long index, OctonionHighPrecisionMember value) {
+	void setV(long index, OctonionFloat16Member value) {
 		storage.set(index, value);
 	}
 	
 	@Override
-	public void setV(IntegerIndex index, OctonionHighPrecisionMember value) {
+	public void setV(IntegerIndex index, OctonionFloat16Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
@@ -398,18 +373,18 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		OctonionFloat16Member value = new OctonionFloat16Member();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
-			BigDecimal re = value.r();
-			BigDecimal im = value.i();
-			BigDecimal j = value.j();
-			BigDecimal k = value.k();
-			BigDecimal l = value.l();
-			BigDecimal i0 = value.i0();
-			BigDecimal j0 = value.j0();
-			BigDecimal k0 = value.k0();
+			BigDecimal re = BigDecimal.valueOf(value.r());
+			BigDecimal im = BigDecimal.valueOf(value.i());
+			BigDecimal j = BigDecimal.valueOf(value.j());
+			BigDecimal k = BigDecimal.valueOf(value.k());
+			BigDecimal l = BigDecimal.valueOf(value.l());
+			BigDecimal i0 = BigDecimal.valueOf(value.i0());
+			BigDecimal j0 = BigDecimal.valueOf(value.j0());
+			BigDecimal k0 = BigDecimal.valueOf(value.k0());
 			OctonionRepresentation o = values.get(i);
 			o.setR(re);
 			o.setI(im);
@@ -425,20 +400,20 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		OctonionHighPrecisionMember value = new OctonionHighPrecisionMember();
+		OctonionFloat16Member value = new OctonionFloat16Member();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
-			value.setR(o.r());
-			value.setI(o.i());
-			value.setJ(o.j());
-			value.setK(o.k());
-			value.setL(o.l());
-			value.setI0(o.i0());
-			value.setJ0(o.j0());
-			value.setK0(o.k0());
+			value.setR(o.r().floatValue());
+			value.setI(o.i().floatValue());
+			value.setJ(o.j().floatValue());
+			value.setK(o.k().floatValue());
+			value.setL(o.l().floatValue());
+			value.setI0(o.i0().floatValue());
+			value.setJ0(o.j0().floatValue());
+			value.setK0(o.k0().floatValue());
 			storage.set(i, value);
 		}
 	}
@@ -449,7 +424,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		StringBuilder builder = new StringBuilder();
 		// iterate values/indices and write numbers, brackets, and commas in correct order
 		// something recursive?
-		OctonionHighPrecisionMember tmp = new OctonionHighPrecisionMember();
+		OctonionFloat16Member tmp = new OctonionFloat16Member();
 		IntegerIndex index = new IntegerIndex(this.dims.length);
 		// [2,2,2] dims
 		// [0,0,0]  [[[num
@@ -516,18 +491,18 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static final ThreadLocal<OctonionHighPrecisionMember> tmpOct =
-			new ThreadLocal<OctonionHighPrecisionMember>()
+	private static final ThreadLocal<OctonionFloat16Member> tmpOct =
+			new ThreadLocal<OctonionFloat16Member>()
 	{
-		protected OctonionHighPrecisionMember initialValue() {
-			return new OctonionHighPrecisionMember();
+		protected OctonionFloat16Member initialValue() {
+			return new OctonionFloat16Member();
 		};
 		
 	};
 	
 	@Override
 	public PrimitiveRepresentation preferredRepresentation() {
-		return PrimitiveRepresentation.BIGDECIMAL;
+		return PrimitiveRepresentation.FLOAT;
 	}
 
 	@Override
@@ -537,252 +512,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(BigDecimal.valueOf(v));
-				else
-					tmp.setI(BigDecimal.valueOf(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(BigDecimal.valueOf(v));
-				else
-					tmp.setK(BigDecimal.valueOf(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(BigDecimal.valueOf(v));
-				else
-					tmp.setI0(BigDecimal.valueOf(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(BigDecimal.valueOf(v));
-				else
-					tmp.setK0(BigDecimal.valueOf(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(BigDecimal.valueOf(v));
-				else
-					tmp.setI(BigDecimal.valueOf(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(BigDecimal.valueOf(v));
-				else
-					tmp.setK(BigDecimal.valueOf(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(BigDecimal.valueOf(v));
-				else
-					tmp.setI0(BigDecimal.valueOf(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(BigDecimal.valueOf(v));
-				else
-					tmp.setK0(BigDecimal.valueOf(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(BigDecimal.valueOf(v));
-				else
-					tmp.setI(BigDecimal.valueOf(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(BigDecimal.valueOf(v));
-				else
-					tmp.setK(BigDecimal.valueOf(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(BigDecimal.valueOf(v));
-				else
-					tmp.setI0(BigDecimal.valueOf(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(BigDecimal.valueOf(v));
-				else
-					tmp.setK0(BigDecimal.valueOf(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(BigDecimal.valueOf(v));
-				else
-					tmp.setI(BigDecimal.valueOf(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(BigDecimal.valueOf(v));
-				else
-					tmp.setK(BigDecimal.valueOf(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(BigDecimal.valueOf(v));
-				else
-					tmp.setI0(BigDecimal.valueOf(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(BigDecimal.valueOf(v));
-				else
-					tmp.setK0(BigDecimal.valueOf(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(BigDecimal.valueOf(v));
-				else
-					tmp.setI(BigDecimal.valueOf(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(BigDecimal.valueOf(v));
-				else
-					tmp.setK(BigDecimal.valueOf(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(BigDecimal.valueOf(v));
-				else
-					tmp.setI0(BigDecimal.valueOf(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(BigDecimal.valueOf(v));
-				else
-					tmp.setK0(BigDecimal.valueOf(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(BigDecimal.valueOf(v));
-				else
-					tmp.setI(BigDecimal.valueOf(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(BigDecimal.valueOf(v));
-				else
-					tmp.setK(BigDecimal.valueOf(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(BigDecimal.valueOf(v));
-				else
-					tmp.setI0(BigDecimal.valueOf(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(BigDecimal.valueOf(v));
-				else
-					tmp.setK0(BigDecimal.valueOf(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(new BigDecimal(v));
-				else
-					tmp.setI(new BigDecimal(v));
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(new BigDecimal(v));
-				else
-					tmp.setK(new BigDecimal(v));
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(new BigDecimal(v));
-				else
-					tmp.setI0(new BigDecimal(v));
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(new BigDecimal(v));
-				else
-					tmp.setK0(new BigDecimal(v));
-			}
-		}
-		setV(index, tmp);
-	}
-
-	@Override
-	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		OctonionHighPrecisionMember tmp = tmpOct.get();
+		OctonionFloat16Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -816,6 +546,251 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
+	public void primComponentSetShort(IntegerIndex index, int component, short v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(v);
+				else
+					tmp.setI(v);
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(v);
+				else
+					tmp.setK(v);
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL(v);
+				else
+					tmp.setI0(v);
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0(v);
+				else
+					tmp.setK0(v);
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetInt(IntegerIndex index, int component, int v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(v);
+				else
+					tmp.setI(v);
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(v);
+				else
+					tmp.setK(v);
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL(v);
+				else
+					tmp.setI0(v);
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0(v);
+				else
+					tmp.setK0(v);
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetLong(IntegerIndex index, int component, long v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(v);
+				else
+					tmp.setI(v);
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(v);
+				else
+					tmp.setK(v);
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL(v);
+				else
+					tmp.setI0(v);
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0(v);
+				else
+					tmp.setK0(v);
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(v);
+				else
+					tmp.setI(v);
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(v);
+				else
+					tmp.setK(v);
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL(v);
+				else
+					tmp.setI0(v);
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0(v);
+				else
+					tmp.setK0(v);
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR((float) v);
+				else
+					tmp.setI((float) v);
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ((float) v);
+				else
+					tmp.setK((float) v);
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL((float) v);
+				else
+					tmp.setI0((float) v);
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0((float) v);
+				else
+					tmp.setK0((float) v);
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(v.floatValue());
+				else
+					tmp.setI(v.floatValue());
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(v.floatValue());
+				else
+					tmp.setK(v.floatValue());
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL(v.floatValue());
+				else
+					tmp.setI0(v.floatValue());
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0(v.floatValue());
+				else
+					tmp.setK0(v.floatValue());
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
+	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					tmp.setR(v.floatValue());
+				else
+					tmp.setI(v.floatValue());
+			}
+			else { // component >= 2
+				if (component == 2)
+					tmp.setJ(v.floatValue());
+				else
+					tmp.setK(v.floatValue());
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					tmp.setL(v.floatValue());
+				else
+					tmp.setI0(v.floatValue());
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					tmp.setJ0(v.floatValue());
+				else
+					tmp.setK0(v.floatValue());
+			}
+		}
+		setV(index, tmp);
+	}
+
+	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
 		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			if (v != 0)
@@ -823,300 +798,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(BigDecimal.valueOf(v));
-					else
-						tmp.setI(BigDecimal.valueOf(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(BigDecimal.valueOf(v));
-					else
-						tmp.setK(BigDecimal.valueOf(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(BigDecimal.valueOf(v));
-					else
-						tmp.setI0(BigDecimal.valueOf(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(BigDecimal.valueOf(v));
-					else
-						tmp.setK0(BigDecimal.valueOf(v));
-				}
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(BigDecimal.valueOf(v));
-					else
-						tmp.setI(BigDecimal.valueOf(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(BigDecimal.valueOf(v));
-					else
-						tmp.setK(BigDecimal.valueOf(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(BigDecimal.valueOf(v));
-					else
-						tmp.setI0(BigDecimal.valueOf(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(BigDecimal.valueOf(v));
-					else
-						tmp.setK0(BigDecimal.valueOf(v));
-				}
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(BigDecimal.valueOf(v));
-					else
-						tmp.setI(BigDecimal.valueOf(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(BigDecimal.valueOf(v));
-					else
-						tmp.setK(BigDecimal.valueOf(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(BigDecimal.valueOf(v));
-					else
-						tmp.setI0(BigDecimal.valueOf(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(BigDecimal.valueOf(v));
-					else
-						tmp.setK0(BigDecimal.valueOf(v));
-				}
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(BigDecimal.valueOf(v));
-					else
-						tmp.setI(BigDecimal.valueOf(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(BigDecimal.valueOf(v));
-					else
-						tmp.setK(BigDecimal.valueOf(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(BigDecimal.valueOf(v));
-					else
-						tmp.setI0(BigDecimal.valueOf(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(BigDecimal.valueOf(v));
-					else
-						tmp.setK0(BigDecimal.valueOf(v));
-				}
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(BigDecimal.valueOf(v));
-					else
-						tmp.setI(BigDecimal.valueOf(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(BigDecimal.valueOf(v));
-					else
-						tmp.setK(BigDecimal.valueOf(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(BigDecimal.valueOf(v));
-					else
-						tmp.setI0(BigDecimal.valueOf(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(BigDecimal.valueOf(v));
-					else
-						tmp.setK0(BigDecimal.valueOf(v));
-				}
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(BigDecimal.valueOf(v));
-					else
-						tmp.setI(BigDecimal.valueOf(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(BigDecimal.valueOf(v));
-					else
-						tmp.setK(BigDecimal.valueOf(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(BigDecimal.valueOf(v));
-					else
-						tmp.setI0(BigDecimal.valueOf(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(BigDecimal.valueOf(v));
-					else
-						tmp.setK0(BigDecimal.valueOf(v));
-				}
-			}
-			setV(index, tmp);
-		}
-	}
-
-	@Override
-	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v.signum() != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(new BigDecimal(v));
-					else
-						tmp.setI(new BigDecimal(v));
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(new BigDecimal(v));
-					else
-						tmp.setK(new BigDecimal(v));
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(new BigDecimal(v));
-					else
-						tmp.setI0(new BigDecimal(v));
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(new BigDecimal(v));
-					else
-						tmp.setK0(new BigDecimal(v));
-				}
-			}
-		}
-	}
-
-	@Override
-	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			if (v.signum() != 0)
-				throw new IllegalArgumentException(
-						"cannot set nonzero value outside extents");
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
+			OctonionFloat16Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1151,38 +833,331 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
+	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR(v);
+					else
+						tmp.setI(v);
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ(v);
+					else
+						tmp.setK(v);
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL(v);
+					else
+						tmp.setI0(v);
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0(v);
+					else
+						tmp.setK0(v);
+				}
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR(v);
+					else
+						tmp.setI(v);
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ(v);
+					else
+						tmp.setK(v);
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL(v);
+					else
+						tmp.setI0(v);
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0(v);
+					else
+						tmp.setK0(v);
+				}
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR(v);
+					else
+						tmp.setI(v);
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ(v);
+					else
+						tmp.setK(v);
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL(v);
+					else
+						tmp.setI0(v);
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0(v);
+					else
+						tmp.setK0(v);
+				}
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR(v);
+					else
+						tmp.setI(v);
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ(v);
+					else
+						tmp.setK(v);
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL(v);
+					else
+						tmp.setI0(v);
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0(v);
+					else
+						tmp.setK0(v);
+				}
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR((float) v);
+					else
+						tmp.setI((float) v);
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ((float) v);
+					else
+						tmp.setK((float) v);
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL((float) v);
+					else
+						tmp.setI0((float) v);
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0((float) v);
+					else
+						tmp.setK0((float) v);
+				}
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
+	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR(v.floatValue());
+					else
+						tmp.setI(v.floatValue());
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ(v.floatValue());
+					else
+						tmp.setK(v.floatValue());
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL(v.floatValue());
+					else
+						tmp.setI0(v.floatValue());
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0(v.floatValue());
+					else
+						tmp.setK0(v.floatValue());
+				}
+			}
+		}
+	}
+
+	@Override
+	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			if (v.signum() != 0)
+				throw new IllegalArgumentException(
+						"cannot set nonzero value outside extents");
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						tmp.setR(v.floatValue());
+					else
+						tmp.setI(v.floatValue());
+				}
+				else { // component >= 2
+					if (component == 2)
+						tmp.setJ(v.floatValue());
+					else
+						tmp.setK(v.floatValue());
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						tmp.setL(v.floatValue());
+					else
+						tmp.setI0(v.floatValue());
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						tmp.setJ0(v.floatValue());
+					else
+						tmp.setK0(v.floatValue());
+				}
+			}
+			setV(index, tmp);
+		}
+	}
+
+	@Override
 	public byte primComponentGetAsByte(IntegerIndex index, int component) {
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
+		OctonionFloat16Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
-					return tmp.r().byteValue();
+					return (byte) tmp.r();
 				else
-					return tmp.i().byteValue();
+					return (byte) tmp.i();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return tmp.j().byteValue();
+					return (byte) tmp.j();
 				else
-					return tmp.k().byteValue();
+					return (byte) tmp.k();
 			}
 		}
 		else { // component == 4 or 5 or 6 or 7
 			if (component < 6) {
 				if (component == 4)
-					return tmp.l().byteValue();
+					return (byte) tmp.l();
 				else
-					return tmp.i0().byteValue();
+					return (byte) tmp.i0();
 			}
 			else { // component == 6 or 7
 				if (component == 6)
-					return tmp.j0().byteValue();
+					return (byte) tmp.j0();
 				else
-					return tmp.k0().byteValue();
+					return (byte) tmp.k0();
 			}
 		}
 	}
@@ -1192,34 +1167,34 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
+		OctonionFloat16Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
-					return tmp.r().shortValue();
+					return (short) tmp.r();
 				else
-					return tmp.i().shortValue();
+					return (short) tmp.i();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return tmp.j().shortValue();
+					return (short) tmp.j();
 				else
-					return tmp.k().shortValue();
+					return (short) tmp.k();
 			}
 		}
 		else { // component == 4 or 5 or 6 or 7
 			if (component < 6) {
 				if (component == 4)
-					return tmp.l().shortValue();
+					return (short) tmp.l();
 				else
-					return tmp.i0().shortValue();
+					return (short) tmp.i0();
 			}
 			else { // component == 6 or 7
 				if (component == 6)
-					return tmp.j0().shortValue();
+					return (short) tmp.j0();
 				else
-					return tmp.k0().shortValue();
+					return (short) tmp.k0();
 			}
 		}
 	}
@@ -1229,34 +1204,34 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
+		OctonionFloat16Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
-					return tmp.r().intValue();
+					return (int) tmp.r();
 				else
-					return tmp.i().intValue();
+					return (int) tmp.i();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return tmp.j().intValue();
+					return (int) tmp.j();
 				else
-					return tmp.k().intValue();
+					return (int) tmp.k();
 			}
 		}
 		else { // component == 4 or 5 or 6 or 7
 			if (component < 6) {
 				if (component == 4)
-					return tmp.l().intValue();
+					return (int) tmp.l();
 				else
-					return tmp.i0().intValue();
+					return (int) tmp.i0();
 			}
 			else { // component == 6 or 7
 				if (component == 6)
-					return tmp.j0().intValue();
+					return (int) tmp.j0();
 				else
-					return tmp.k0().intValue();
+					return (int) tmp.k0();
 			}
 		}
 	}
@@ -1266,34 +1241,34 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
+		OctonionFloat16Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
-					return tmp.r().longValue();
+					return (long) tmp.r();
 				else
-					return tmp.i().longValue();
+					return (long) tmp.i();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return tmp.j().longValue();
+					return (long) tmp.j();
 				else
-					return tmp.k().longValue();
+					return (long) tmp.k();
 			}
 		}
 		else { // component == 4 or 5 or 6 or 7
 			if (component < 6) {
 				if (component == 4)
-					return tmp.l().longValue();
+					return (long) tmp.l();
 				else
-					return tmp.i0().longValue();
+					return (long) tmp.i0();
 			}
 			else { // component == 6 or 7
 				if (component == 6)
-					return tmp.j0().longValue();
+					return (long) tmp.j0();
 				else
-					return tmp.k0().longValue();
+					return (long) tmp.k0();
 			}
 		}
 	}
@@ -1303,118 +1278,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return tmp.r().floatValue();
-				else
-					return tmp.i().floatValue();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return tmp.j().floatValue();
-				else
-					return tmp.k().floatValue();
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return tmp.l().floatValue();
-				else
-					return tmp.i0().floatValue();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return tmp.j0().floatValue();
-				else
-					return tmp.k0().floatValue();
-			}
-		}
-	}
-
-	@Override
-	public double primComponentGetAsDouble(IntegerIndex index, int component) {
-		if (component < 0)
-			throw new IllegalArgumentException(
-					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return tmp.r().doubleValue();
-				else
-					return tmp.i().doubleValue();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return tmp.j().doubleValue();
-				else
-					return tmp.k().doubleValue();
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return tmp.l().doubleValue();
-				else
-					return tmp.i0().doubleValue();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return tmp.j0().doubleValue();
-				else
-					return tmp.k0().doubleValue();
-			}
-		}
-	}
-
-	@Override
-	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
-		if (component < 0)
-			throw new IllegalArgumentException(
-					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
-		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return tmp.r().toBigInteger();
-				else
-					return tmp.i().toBigInteger();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return tmp.j().toBigInteger();
-				else
-					return tmp.k().toBigInteger();
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return tmp.l().toBigInteger();
-				else
-					return tmp.i0().toBigInteger();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return tmp.j0().toBigInteger();
-				else
-					return tmp.k0().toBigInteger();
-			}
-		}
-	}
-
-	@Override
-	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
-		if (component < 0)
-			throw new IllegalArgumentException(
-					"negative component index error");
-		OctonionHighPrecisionMember tmp = tmpOct.get();
+		OctonionFloat16Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1447,39 +1311,150 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
+	public double primComponentGetAsDouble(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					return tmp.r();
+				else
+					return tmp.i();
+			}
+			else { // component >= 2
+				if (component == 2)
+					return tmp.j();
+				else
+					return tmp.k();
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					return tmp.l();
+				else
+					return tmp.i0();
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					return tmp.j0();
+				else
+					return tmp.k0();
+			}
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigInteger(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					return BigInteger.valueOf((long) tmp.r());
+				else
+					return BigInteger.valueOf((long) tmp.i());
+			}
+			else { // component >= 2
+				if (component == 2)
+					return BigInteger.valueOf((long) tmp.j());
+				else
+					return BigInteger.valueOf((long) tmp.k());
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					return BigInteger.valueOf((long) tmp.l());
+				else
+					return BigInteger.valueOf((long) tmp.i0());
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					return BigInteger.valueOf((long) tmp.j0());
+				else
+					return BigInteger.valueOf((long) tmp.k0());
+			}
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimal(IntegerIndex index, int component) {
+		if (component < 0)
+			throw new IllegalArgumentException(
+					"negative component index error");
+		OctonionFloat16Member tmp = tmpOct.get();
+		getV(index, tmp);
+		if (component < 4) {
+			if (component < 2) {
+				if (component == 0)
+					return BigDecimal.valueOf(tmp.r());
+				else
+					return BigDecimal.valueOf(tmp.i());
+			}
+			else { // component >= 2
+				if (component == 2)
+					return BigDecimal.valueOf(tmp.j());
+				else
+					return BigDecimal.valueOf(tmp.k());
+			}
+		}
+		else { // component == 4 or 5 or 6 or 7
+			if (component < 6) {
+				if (component == 4)
+					return BigDecimal.valueOf(tmp.l());
+				else
+					return BigDecimal.valueOf(tmp.i0());
+			}
+			else { // component == 6 or 7
+				if (component == 6)
+					return BigDecimal.valueOf(tmp.j0());
+				else
+					return BigDecimal.valueOf(tmp.k0());
+			}
+		}
+	}
+
+	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
 		if (IndexUtils.componentOob(dims, index, component, 8)) {
 			return 0;
 		}
 		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
+			OctonionFloat16Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return tmp.r().byteValue();
+						return (byte) tmp.r();
 					else
-						return tmp.i().byteValue();
+						return (byte) tmp.i();
 				}
 				else { // component >= 2
 					if (component == 2)
-						return tmp.j().byteValue();
+						return (byte) tmp.j();
 					else
-						return tmp.k().byteValue();
+						return (byte) tmp.k();
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7
 				if (component < 6) {
 					if (component == 4)
-						return tmp.l().byteValue();
+						return (byte) tmp.l();
 					else
-						return tmp.i0().byteValue();
+						return (byte) tmp.i0();
 				}
 				else { // component == 6 or 7
 					if (component == 6)
-						return tmp.j0().byteValue();
+						return (byte) tmp.j0();
 					else
-						return tmp.k0().byteValue();
+						return (byte) tmp.k0();
 				}
 			}
 		}
@@ -1491,34 +1466,34 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
+			OctonionFloat16Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return tmp.r().shortValue();
+						return (short) tmp.r();
 					else
-						return tmp.i().shortValue();
+						return (short) tmp.i();
 				}
 				else { // component >= 2
 					if (component == 2)
-						return tmp.j().shortValue();
+						return (short) tmp.j();
 					else
-						return tmp.k().shortValue();
+						return (short) tmp.k();
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7
 				if (component < 6) {
 					if (component == 4)
-						return tmp.l().shortValue();
+						return (short) tmp.l();
 					else
-						return tmp.i0().shortValue();
+						return (short) tmp.i0();
 				}
 				else { // component == 6 or 7
 					if (component == 6)
-						return tmp.j0().shortValue();
+						return (short) tmp.j0();
 					else
-						return tmp.k0().shortValue();
+						return (short) tmp.k0();
 				}
 			}
 		}
@@ -1530,34 +1505,34 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
+			OctonionFloat16Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return tmp.r().intValue();
+						return (int) tmp.r();
 					else
-						return tmp.i().intValue();
+						return (int) tmp.i();
 				}
 				else { // component >= 2
 					if (component == 2)
-						return tmp.j().intValue();
+						return (int) tmp.j();
 					else
-						return tmp.k().intValue();
+						return (int) tmp.k();
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7
 				if (component < 6) {
 					if (component == 4)
-						return tmp.l().intValue();
+						return (int) tmp.l();
 					else
-						return tmp.i0().intValue();
+						return (int) tmp.i0();
 				}
 				else { // component == 6 or 7
 					if (component == 6)
-						return tmp.j0().intValue();
+						return (int) tmp.j0();
 					else
-						return tmp.k0().intValue();
+						return (int) tmp.k0();
 				}
 			}
 		}
@@ -1569,34 +1544,34 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
+			OctonionFloat16Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return tmp.r().longValue();
+						return (long) tmp.r();
 					else
-						return tmp.i().longValue();
+						return (long) tmp.i();
 				}
 				else { // component >= 2
 					if (component == 2)
-						return tmp.j().longValue();
+						return (long) tmp.j();
 					else
-						return tmp.k().longValue();
+						return (long) tmp.k();
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7
 				if (component < 6) {
 					if (component == 4)
-						return tmp.l().longValue();
+						return (long) tmp.l();
 					else
-						return tmp.i0().longValue();
+						return (long) tmp.i0();
 				}
 				else { // component == 6 or 7
 					if (component == 6)
-						return tmp.j0().longValue();
+						return (long) tmp.j0();
 					else
-						return tmp.k0().longValue();
+						return (long) tmp.k0();
 				}
 			}
 		}
@@ -1608,124 +1583,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return tmp.r().floatValue();
-					else
-						return tmp.i().floatValue();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return tmp.j().floatValue();
-					else
-						return tmp.k().floatValue();
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return tmp.l().floatValue();
-					else
-						return tmp.i0().floatValue();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return tmp.j0().floatValue();
-					else
-						return tmp.k0().floatValue();
-				}
-			}
-		}
-	}
-
-	@Override
-	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			return 0;
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return tmp.r().doubleValue();
-					else
-						return tmp.i().doubleValue();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return tmp.j().doubleValue();
-					else
-						return tmp.k().doubleValue();
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return tmp.l().doubleValue();
-					else
-						return tmp.i0().doubleValue();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return tmp.j0().doubleValue();
-					else
-						return tmp.k0().doubleValue();
-				}
-			}
-		}
-	}
-
-	@Override
-	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			return BigInteger.ZERO;
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
-			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return tmp.r().toBigInteger();
-					else
-						return tmp.i().toBigInteger();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return tmp.j().toBigInteger();
-					else
-						return tmp.k().toBigInteger();
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return tmp.l().toBigInteger();
-					else
-						return tmp.i0().toBigInteger();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return tmp.j0().toBigInteger();
-					else
-						return tmp.k0().toBigInteger();
-				}
-			}
-		}
-	}
-
-	@Override
-	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
-			return BigDecimal.ZERO;
-		}
-		else {
-			OctonionHighPrecisionMember tmp = tmpOct.get();
+			OctonionFloat16Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1759,6 +1617,123 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
+	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			return 0;
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						return tmp.r();
+					else
+						return tmp.i();
+				}
+				else { // component >= 2
+					if (component == 2)
+						return tmp.j();
+					else
+						return tmp.k();
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						return tmp.l();
+					else
+						return tmp.i0();
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						return tmp.j0();
+					else
+						return tmp.k0();
+				}
+			}
+		}
+	}
+
+	@Override
+	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			return BigInteger.ZERO;
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						return BigInteger.valueOf((long) tmp.r());
+					else
+						return BigInteger.valueOf((long) tmp.i());
+				}
+				else { // component >= 2
+					if (component == 2)
+						return BigInteger.valueOf((long) tmp.j());
+					else
+						return BigInteger.valueOf((long) tmp.k());
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						return BigInteger.valueOf((long) tmp.l());
+					else
+						return BigInteger.valueOf((long) tmp.i0());
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						return BigInteger.valueOf((long) tmp.j0());
+					else
+						return BigInteger.valueOf((long) tmp.k0());
+				}
+			}
+		}
+	}
+
+	@Override
+	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
+		if (IndexUtils.componentOob(dims, index, component, 8)) {
+			return BigDecimal.ZERO;
+		}
+		else {
+			OctonionFloat16Member tmp = tmpOct.get();
+			getV(index, tmp);
+			if (component < 4) {
+				if (component < 2) {
+					if (component == 0)
+						return BigDecimal.valueOf(tmp.r());
+					else
+						return BigDecimal.valueOf(tmp.i());
+				}
+				else { // component >= 2
+					if (component == 2)
+						return BigDecimal.valueOf(tmp.j());
+					else
+						return BigDecimal.valueOf(tmp.k());
+				}
+			}
+			else { // component == 4 or 5 or 6 or 7
+				if (component < 6) {
+					if (component == 4)
+						return BigDecimal.valueOf(tmp.l());
+					else
+						return BigDecimal.valueOf(tmp.i0());
+				}
+				else { // component == 6 or 7
+					if (component == 6)
+						return BigDecimal.valueOf(tmp.j0());
+					else
+						return BigDecimal.valueOf(tmp.k0());
+				}
+			}
+		}
+	}
+
+	@Override
 	public void primitiveInit() {
 		long storageSize = storage.size();
 		for (long i = 0; i < storageSize; i++)
@@ -1766,13 +1741,13 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
-	public IndexedDataSource<OctonionHighPrecisionMember> rawData() {
+	public IndexedDataSource<OctonionFloat16Member> rawData() {
 		return storage;
 	}
 
 	@Override
 	public int hashCode() {
-		OctonionHighPrecisionMember tmp = G.OHP.construct();
+		OctonionFloat16Member tmp = G.OHLF.construct();
 		long len = dimension(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
@@ -1785,8 +1760,8 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof OctonionHighPrecisionCartesianTensorProductMember) {
-			return G.OHP_TEN.isEqual().call(this, (OctonionHighPrecisionCartesianTensorProductMember) o);
+		if (o instanceof OctonionFloat16GeneralTensorProductMember) {
+			return G.OHLF_TEN.isEqual().call(this, (OctonionFloat16GeneralTensorProductMember) o);
 		}
 		return false;
 	}
@@ -1797,61 +1772,26 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 	
 	@Override
-	public void setFromShortsExact(short... vals) {
-		setFromShorts(vals);
-	}
-	
-	@Override
-	public void setFromIntsExact(int... vals) {
-		setFromInts(vals);
-	}
-	
-	@Override
-	public void setFromLongsExact(long... vals) {
-		setFromLongs(vals);
-	}
-	
-	@Override
-	public void setFromFloatsExact(float... vals) {
-		setFromFloats(vals);
-	}
-	
-	@Override
-	public void setFromDoublesExact(double... vals) {
-		setFromDoubles(vals);
-	}
-	
-	@Override
-	public void setFromBigIntegersExact(BigInteger... vals) {
-		setFromBigIntegers(vals);
-	}
-	
-	@Override
-	public void setFromBigDecimalsExact(BigDecimal... vals) {
-		setFromBigDecimals(vals);
-	}
-	
-	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
-			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
-			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
-			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
-			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
-			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
-			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
-
+	
 	@Override
 	public void setFromShorts(short... vals) {
 		int componentCount = 8;
@@ -1859,20 +1799,20 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
-			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
-			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
-			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
-			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
-			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
-			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
-
+	
 	@Override
 	public void setFromInts(int... vals) {
 		int componentCount = 8;
@@ -1880,20 +1820,20 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
-			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
-			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
-			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
-			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
-			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
-			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
-
+	
 	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 8;
@@ -1901,91 +1841,7 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
-			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
-			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
-			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
-			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
-			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
-			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
-			storage.set(i/componentCount, value);
-		}
-	}
-
-	@Override
-	public void setFromFloats(float... vals) {
-		int componentCount = 8;
-		if (vals.length/componentCount != storage.size()) {
-			throw new IllegalArgumentException(
-					"number of elements passed in do not fit allocated storage");
-		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
-			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
-			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
-			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
-			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
-			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
-			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
-			storage.set(i/componentCount, value);
-		}
-	}
-
-	@Override
-	public void setFromDoubles(double... vals) {
-		int componentCount = 8;
-		if (vals.length/componentCount != storage.size()) {
-			throw new IllegalArgumentException(
-					"number of elements passed in do not fit allocated storage");
-		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  BigDecimal.valueOf(vals[i + 0]) );
-			value.setI(  BigDecimal.valueOf(vals[i + 1]) );
-			value.setJ(  BigDecimal.valueOf(vals[i + 2]) );
-			value.setK(  BigDecimal.valueOf(vals[i + 3]) );
-			value.setL(  BigDecimal.valueOf(vals[i + 4]) );
-			value.setI0( BigDecimal.valueOf(vals[i + 5]) );
-			value.setJ0( BigDecimal.valueOf(vals[i + 6]) );
-			value.setK0( BigDecimal.valueOf(vals[i + 7]) );
-			storage.set(i/componentCount, value);
-		}
-	}
-
-	@Override
-	public void setFromBigIntegers(BigInteger... vals) {
-		int componentCount = 8;
-		if (vals.length/componentCount != storage.size()) {
-			throw new IllegalArgumentException(
-					"number of elements passed in do not fit allocated storage");
-		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		for (int i = 0; i < vals.length; i += componentCount) {
-			value.setR(  new BigDecimal(vals[i + 0]) );
-			value.setI(  new BigDecimal(vals[i + 1]) );
-			value.setJ(  new BigDecimal(vals[i + 2]) );
-			value.setK(  new BigDecimal(vals[i + 3]) );
-			value.setL(  new BigDecimal(vals[i + 4]) );
-			value.setI0( new BigDecimal(vals[i + 5]) );
-			value.setJ0( new BigDecimal(vals[i + 6]) );
-			value.setK0( new BigDecimal(vals[i + 7]) );
-			storage.set(i/componentCount, value);
-		}
-	}
-
-	@Override
-	public void setFromBigDecimals(BigDecimal... vals) {
-		int componentCount = 8;
-		if (vals.length/componentCount != storage.size()) {
-			throw new IllegalArgumentException(
-					"number of elements passed in do not fit allocated storage");
-		}
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
@@ -2000,6 +1856,100 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
+	public void setFromFloats(float... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0] );
+			value.setI(  vals[i + 1] );
+			value.setJ(  vals[i + 2] );
+			value.setK(  vals[i + 3] );
+			value.setL(  vals[i + 4] );
+			value.setI0( vals[i + 5] );
+			value.setJ0( vals[i + 6] );
+			value.setK0( vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromDoubles(double... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  (float) vals[i + 0] );
+			value.setI(  (float) vals[i + 1] );
+			value.setJ(  (float) vals[i + 2] );
+			value.setK(  (float) vals[i + 3] );
+			value.setL(  (float) vals[i + 4] );
+			value.setI0( (float) vals[i + 5] );
+			value.setJ0( (float) vals[i + 6] );
+			value.setK0( (float) vals[i + 7] );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigIntegers(BigInteger... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			value.setL(  vals[i + 4].floatValue() );
+			value.setI0( vals[i + 5].floatValue() );
+			value.setJ0( vals[i + 6].floatValue() );
+			value.setK0( vals[i + 7].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public void setFromBigDecimals(BigDecimal... vals) {
+		int componentCount = 8;
+		if (vals.length/componentCount != storage.size()) {
+			throw new IllegalArgumentException(
+					"number of elements passed in do not fit allocated storage");
+		}
+		OctonionFloat16Member value = G.OHLF.construct();
+		for (int i = 0; i < vals.length; i += componentCount) {
+			value.setR(  vals[i + 0].floatValue() );
+			value.setI(  vals[i + 1].floatValue() );
+			value.setJ(  vals[i + 2].floatValue() );
+			value.setK(  vals[i + 3].floatValue() );
+			value.setL(  vals[i + 4].floatValue() );
+			value.setI0( vals[i + 5].floatValue() );
+			value.setJ0( vals[i + 6].floatValue() );
+			value.setK0( vals[i + 7].floatValue() );
+			storage.set(i/componentCount, value);
+		}
+	}
+
+	@Override
+	public float[] getAsFloatArrayExact() {
+		return getAsFloatArray();
+	}
+	
+	@Override
+	public double[] getAsDoubleArrayExact() {
+		return getAsDoubleArray();
+	}
+	
+	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
 	}
@@ -2009,18 +1959,18 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		byte[] values = new byte[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().byteValue();
-			values[k++] = value.i().byteValue();
-			values[k++] = value.j().byteValue();
-			values[k++] = value.k().byteValue();
-			values[k++] = value.l().byteValue();
-			values[k++] = value.i0().byteValue();
-			values[k++] = value.j0().byteValue();
-			values[k++] = value.k0().byteValue();
+			values[k++] = (byte) value.r();
+			values[k++] = (byte) value.i();
+			values[k++] = (byte) value.j();
+			values[k++] = (byte) value.k();
+			values[k++] = (byte) value.l();
+			values[k++] = (byte) value.i0();
+			values[k++] = (byte) value.j0();
+			values[k++] = (byte) value.k0();
 		}
 		return values;
 	}
@@ -2030,18 +1980,18 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		short[] values = new short[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().shortValue();
-			values[k++] = value.i().shortValue();
-			values[k++] = value.j().shortValue();
-			values[k++] = value.k().shortValue();
-			values[k++] = value.l().shortValue();
-			values[k++] = value.i0().shortValue();
-			values[k++] = value.j0().shortValue();
-			values[k++] = value.k0().shortValue();
+			values[k++] = (short) value.r();
+			values[k++] = (short) value.i();
+			values[k++] = (short) value.j();
+			values[k++] = (short) value.k();
+			values[k++] = (short) value.l();
+			values[k++] = (short) value.i0();
+			values[k++] = (short) value.j0();
+			values[k++] = (short) value.k0();
 		}
 		return values;
 	}
@@ -2051,18 +2001,18 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		int[] values = new int[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().intValue();
-			values[k++] = value.i().intValue();
-			values[k++] = value.j().intValue();
-			values[k++] = value.k().intValue();
-			values[k++] = value.l().intValue();
-			values[k++] = value.i0().intValue();
-			values[k++] = value.j0().intValue();
-			values[k++] = value.k0().intValue();
+			values[k++] = (int) value.r();
+			values[k++] = (int) value.i();
+			values[k++] = (int) value.j();
+			values[k++] = (int) value.k();
+			values[k++] = (int) value.l();
+			values[k++] = (int) value.i0();
+			values[k++] = (int) value.j0();
+			values[k++] = (int) value.k0();
 		}
 		return values;
 	}
@@ -2072,18 +2022,18 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		long[] values = new long[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r().longValue();
-			values[k++] = value.i().longValue();
-			values[k++] = value.j().longValue();
-			values[k++] = value.k().longValue();
-			values[k++] = value.l().longValue();
-			values[k++] = value.i0().longValue();
-			values[k++] = value.j0().longValue();
-			values[k++] = value.k0().longValue();
+			values[k++] = (long) value.r();
+			values[k++] = (long) value.i();
+			values[k++] = (long) value.j();
+			values[k++] = (long) value.k();
+			values[k++] = (long) value.l();
+			values[k++] = (long) value.i0();
+			values[k++] = (long) value.j0();
+			values[k++] = (long) value.k0();
 		}
 		return values;
 	}
@@ -2093,71 +2043,8 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
+		OctonionFloat16Member value = G.OHLF.construct();
 		float[] values = new float[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			values[k++] = value.r().floatValue();
-			values[k++] = value.i().floatValue();
-			values[k++] = value.j().floatValue();
-			values[k++] = value.k().floatValue();
-			values[k++] = value.l().floatValue();
-			values[k++] = value.i0().floatValue();
-			values[k++] = value.j0().floatValue();
-			values[k++] = value.k0().floatValue();
-		}
-		return values;
-	}
-
-	@Override
-	public double[] getAsDoubleArray() {
-		if (storage.size() > (Integer.MAX_VALUE / 8))
-			throw new IllegalArgumentException(
-					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		double[] values = new double[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			values[k++] = value.r().doubleValue();
-			values[k++] = value.i().doubleValue();
-			values[k++] = value.j().doubleValue();
-			values[k++] = value.k().doubleValue();
-			values[k++] = value.l().doubleValue();
-			values[k++] = value.i0().doubleValue();
-			values[k++] = value.j0().doubleValue();
-			values[k++] = value.k0().doubleValue();
-		}
-		return values;
-	}
-
-	@Override
-	public BigInteger[] getAsBigIntegerArray() {
-		if (storage.size() > (Integer.MAX_VALUE / 8))
-			throw new IllegalArgumentException(
-					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
-			storage.get(i, value);
-			values[k++] = value.r().toBigInteger();
-			values[k++] = value.i().toBigInteger();
-			values[k++] = value.j().toBigInteger();
-			values[k++] = value.k().toBigInteger();
-			values[k++] = value.l().toBigInteger();
-			values[k++] = value.i0().toBigInteger();
-			values[k++] = value.j0().toBigInteger();
-			values[k++] = value.k0().toBigInteger();
-		}
-		return values;
-	}
-
-	@Override
-	public BigDecimal[] getAsBigDecimalArray() {
-		if (storage.size() > (Integer.MAX_VALUE / 8))
-			throw new IllegalArgumentException(
-					"internal data too large to be encoded in an array");
-		OctonionHighPrecisionMember value = G.OHP.construct();
-		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
 			values[k++] = value.r();
@@ -2173,14 +2060,77 @@ public final class OctonionHighPrecisionCartesianTensorProductMember
 	}
 
 	@Override
+	public double[] getAsDoubleArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat16Member value = G.OHLF.construct();
+		double[] values = new double[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = value.r();
+			values[k++] = value.i();
+			values[k++] = value.j();
+			values[k++] = value.k();
+			values[k++] = value.l();
+			values[k++] = value.i0();
+			values[k++] = value.j0();
+			values[k++] = value.k0();
+		}
+		return values;
+	}
+
+	@Override
+	public BigInteger[] getAsBigIntegerArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat16Member value = G.OHLF.construct();
+		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigInteger.valueOf((long) value.r());
+			values[k++] = BigInteger.valueOf((long) value.i());
+			values[k++] = BigInteger.valueOf((long) value.j());
+			values[k++] = BigInteger.valueOf((long) value.k());
+			values[k++] = BigInteger.valueOf((long) value.l());
+			values[k++] = BigInteger.valueOf((long) value.i0());
+			values[k++] = BigInteger.valueOf((long) value.j0());
+			values[k++] = BigInteger.valueOf((long) value.k0());
+		}
+		return values;
+	}
+
+	@Override
+	public BigDecimal[] getAsBigDecimalArray() {
+		if (storage.size() > (Integer.MAX_VALUE / 8))
+			throw new IllegalArgumentException(
+					"internal data too large to be encoded in an array");
+		OctonionFloat16Member value = G.OHLF.construct();
+		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
+		for (int i = 0, k = 0; i < storage.size(); i++) {
+			storage.get(i, value);
+			values[k++] = BigDecimal.valueOf(value.r());
+			values[k++] = BigDecimal.valueOf(value.i());
+			values[k++] = BigDecimal.valueOf(value.j());
+			values[k++] = BigDecimal.valueOf(value.k());
+			values[k++] = BigDecimal.valueOf(value.l());
+			values[k++] = BigDecimal.valueOf(value.i0());
+			values[k++] = BigDecimal.valueOf(value.j0());
+			values[k++] = BigDecimal.valueOf(value.k0());
+		}
+		return values;
+	}
+
+	@Override
 	public boolean accessWithOneThread() {
 
 		return storage.accessWithOneThread();
 	}
 	
 	@Override
-	public OctonionHighPrecisionCartesianTensorProduct getAlgebra() {
+	public OctonionFloat16GeneralTensorProduct getAlgebra() {
 
-		return G.OHP_TEN;
+		return G.OHLF_TEN;
 	}
 }

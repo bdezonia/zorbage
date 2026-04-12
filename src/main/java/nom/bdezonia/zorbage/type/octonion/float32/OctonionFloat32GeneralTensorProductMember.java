@@ -28,7 +28,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package nom.bdezonia.zorbage.type.octonion.float16;
+package nom.bdezonia.zorbage.type.octonion.float32;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -59,9 +59,11 @@ import nom.bdezonia.zorbage.algebra.SetFromBytes;
 import nom.bdezonia.zorbage.algebra.SetFromBytesExact;
 import nom.bdezonia.zorbage.algebra.SetFromDoubles;
 import nom.bdezonia.zorbage.algebra.SetFromFloats;
+import nom.bdezonia.zorbage.algebra.SetFromFloatsExact;
 import nom.bdezonia.zorbage.algebra.SetFromInts;
 import nom.bdezonia.zorbage.algebra.SetFromLongs;
 import nom.bdezonia.zorbage.algebra.SetFromShorts;
+import nom.bdezonia.zorbage.algebra.SetFromShortsExact;
 import nom.bdezonia.zorbage.algebra.Settable;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -96,19 +98,21 @@ import nom.bdezonia.zorbage.datasource.RawData;
  * @author Barry DeZonia
  *
  */
-public final class OctonionFloat16CartesianTensorProductMember
+public final class OctonionFloat32GeneralTensorProductMember
 	implements
-		TensorMember<OctonionFloat16Member>,
-		Gettable<OctonionFloat16CartesianTensorProductMember>,
-		Settable<OctonionFloat16CartesianTensorProductMember>,
+		TensorMember<OctonionFloat32Member>,
+		Gettable<OctonionFloat32GeneralTensorProductMember>,
+		Settable<OctonionFloat32GeneralTensorProductMember>,
 		PrimitiveConversion, UniversalRepresentation,
-		RawData<OctonionFloat16Member>,
+		RawData<OctonionFloat32Member>,
 		SetFromBytes,
 		SetFromBytesExact,
 		SetFromShorts,
+		SetFromShortsExact,
 		SetFromInts,
 		SetFromLongs,
 		SetFromFloats,
+		SetFromFloatsExact,
 		SetFromDoubles,
 		SetFromBigIntegers,
 		SetFromBigDecimals,
@@ -124,7 +128,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		GetAsBigDecimalArray,
 		GetAsBigDecimalArrayExact,
 		ThreadAccess,
-		GetAlgebra<OctonionFloat16CartesianTensorProduct, OctonionFloat16CartesianTensorProductMember>,
+		GetAlgebra<OctonionFloat32GeneralTensorProduct, OctonionFloat32GeneralTensorProductMember>,
 		ApproximateType,
 		CompositeType,
 		InfinityIncludedType,
@@ -134,11 +138,11 @@ public final class OctonionFloat16CartesianTensorProductMember
 		UnityIncludedType,
 		ZeroIncludedType
 {
-	private static final OctonionFloat16Member ZERO = new OctonionFloat16Member();
+	private static final OctonionFloat32Member ZERO = new OctonionFloat32Member();
 
 	private int rank;
 	private long dimCount;
-	private IndexedDataSource<OctonionFloat16Member> storage;
+	private IndexedDataSource<OctonionFloat32Member> storage;
 	private long[] dims;
 	private long[] multipliers;
 	private StorageConstruction s;
@@ -171,16 +175,16 @@ public final class OctonionFloat16CartesianTensorProductMember
 	@Override
 	public long dimension() { return dimCount; }
 
-	public OctonionFloat16CartesianTensorProductMember() {
+	public OctonionFloat32GeneralTensorProductMember() {
 		rank = 0;
 		dimCount = 0;
 		dims = new long[0];
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionFloat16Member(), 1);
+		storage = Storage.allocate(s, new OctonionFloat32Member(), 1);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 
-	public OctonionFloat16CartesianTensorProductMember(int rank, long dimCount) {
+	public OctonionFloat32GeneralTensorProductMember(int rank, long dimCount) {
 		if (rank < 0)
 			throw new IllegalArgumentException("bad rank in tensor constructor");
 		if (dimCount < 0)
@@ -194,20 +198,20 @@ public final class OctonionFloat16CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionFloat16Member(), numElems);
+		storage = Storage.allocate(s, new OctonionFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
 	}
 	
-	public OctonionFloat16CartesianTensorProductMember(int rank, long dimCount, float... vals) {
+	public OctonionFloat32GeneralTensorProductMember(int rank, long dimCount, float... vals) {
 		this(rank, dimCount);
 		setFromFloats(vals);
 	}
 
-	public OctonionFloat16CartesianTensorProductMember(OctonionFloat16CartesianTensorProductMember other) {
+	public OctonionFloat32GeneralTensorProductMember(OctonionFloat32GeneralTensorProductMember other) {
 		set(other);
 	}
 	
-	public OctonionFloat16CartesianTensorProductMember(String s) {
+	public OctonionFloat32GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
@@ -230,9 +234,9 @@ public final class OctonionFloat16CartesianTensorProductMember
 		long numElems = LongUtils.numElements(this.dims);
 		if (numElems == 0) numElems = 1;
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new OctonionFloat16Member(), numElems);
+		this.storage = Storage.allocate(this.s, new OctonionFloat32Member(), numElems);
 		this.multipliers = IndexUtils.calcMultipliers(dims);
-		OctonionFloat16Member value = new OctonionFloat16Member();
+		OctonionFloat32Member value = new OctonionFloat32Member();
 		if (numElems == 1) {
 			// TODO: does a rank 0 tensor have any values from a parsing?
 			OctonionRepresentation val = data.get(0);
@@ -274,7 +278,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
-	public void set(OctonionFloat16CartesianTensorProductMember other) {
+	public void set(OctonionFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
 		rank = other.rank;
 		dimCount = other.dimCount;
@@ -285,7 +289,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
-	public void get(OctonionFloat16CartesianTensorProductMember other) {
+	public void get(OctonionFloat32GeneralTensorProductMember other) {
 		if (this == other) return;
 		other.rank = rank;
 		other.dimCount = dimCount;
@@ -330,7 +334,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		long newCount = LongUtils.numElements(this.dims);
 		if (newCount == 0) newCount = 1;
 		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new OctonionFloat16Member(), newCount);
+			storage = Storage.allocate(s, new OctonionFloat32Member(), newCount);
 			return true;
 		}
 		return false;
@@ -350,22 +354,22 @@ public final class OctonionFloat16CartesianTensorProductMember
 		return storage.size();
 	}
 	
-	void v(long index, OctonionFloat16Member value) {
+	void v(long index, OctonionFloat32Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
-	public void getV(IntegerIndex index, OctonionFloat16Member value) {
+	public void getV(IntegerIndex index, OctonionFloat32Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.get(idx, value);
 	}
 	
-	void setV(long index, OctonionFloat16Member value) {
+	void setV(long index, OctonionFloat32Member value) {
 		storage.set(index, value);
 	}
 	
 	@Override
-	public void setV(IntegerIndex index, OctonionFloat16Member value) {
+	public void setV(IntegerIndex index, OctonionFloat32Member value) {
 		long idx = IndexUtils.safeIndexToLong(dims, index);
 		storage.set(idx, value);
 	}
@@ -373,7 +377,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 	@Override
 	public void toRep(TensorOctonionRepresentation rep) {
 		long storageSize = storage.size();
-		OctonionFloat16Member value = new OctonionFloat16Member();
+		OctonionFloat32Member value = new OctonionFloat32Member();
 		BigList<OctonionRepresentation> values = new BigList<OctonionRepresentation>(storageSize, new OctonionRepresentation());
 		for (long i = 0; i < storageSize; i++) {
 			storage.get(i, value);
@@ -400,7 +404,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
-		OctonionFloat16Member value = new OctonionFloat16Member();
+		OctonionFloat32Member value = new OctonionFloat32Member();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
 		init(rep.getTensorDims());
 		long tensorSize = tensor.size();
@@ -424,7 +428,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		StringBuilder builder = new StringBuilder();
 		// iterate values/indices and write numbers, brackets, and commas in correct order
 		// something recursive?
-		OctonionFloat16Member tmp = new OctonionFloat16Member();
+		OctonionFloat32Member tmp = new OctonionFloat32Member();
 		IntegerIndex index = new IntegerIndex(this.dims.length);
 		// [2,2,2] dims
 		// [0,0,0]  [[[num
@@ -491,11 +495,11 @@ public final class OctonionFloat16CartesianTensorProductMember
 		return dims[d];
 	}
 	
-	private static final ThreadLocal<OctonionFloat16Member> tmpOct =
-			new ThreadLocal<OctonionFloat16Member>()
+	private static final ThreadLocal<OctonionFloat32Member> tmpOct =
+			new ThreadLocal<OctonionFloat32Member>()
 	{
-		protected OctonionFloat16Member initialValue() {
-			return new OctonionFloat16Member();
+		protected OctonionFloat32Member initialValue() {
+			return new OctonionFloat32Member();
 		};
 		
 	};
@@ -512,7 +516,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -547,7 +551,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -582,7 +586,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -617,7 +621,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -652,7 +656,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -687,7 +691,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -722,7 +726,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -757,7 +761,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 
 	@Override
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -798,7 +802,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -840,7 +844,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -882,7 +886,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -924,7 +928,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -966,7 +970,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1008,7 +1012,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1050,7 +1054,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1091,7 +1095,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 						"cannot set nonzero value outside extents");
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1130,7 +1134,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1167,7 +1171,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1204,7 +1208,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1241,7 +1245,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1278,7 +1282,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1315,7 +1319,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1352,34 +1356,34 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
 				if (component == 0)
-					return BigInteger.valueOf((long) tmp.r());
+					return BigDecimal.valueOf(tmp.r()).toBigInteger();
 				else
-					return BigInteger.valueOf((long) tmp.i());
+					return BigDecimal.valueOf(tmp.i()).toBigInteger();
 			}
 			else { // component >= 2
 				if (component == 2)
-					return BigInteger.valueOf((long) tmp.j());
+					return BigDecimal.valueOf(tmp.j()).toBigInteger();
 				else
-					return BigInteger.valueOf((long) tmp.k());
+					return BigDecimal.valueOf(tmp.k()).toBigInteger();
 			}
 		}
 		else { // component == 4 or 5 or 6 or 7
 			if (component < 6) {
 				if (component == 4)
-					return BigInteger.valueOf((long) tmp.l());
+					return BigDecimal.valueOf(tmp.l()).toBigInteger();
 				else
-					return BigInteger.valueOf((long) tmp.i0());
+					return BigDecimal.valueOf(tmp.i0()).toBigInteger();
 			}
 			else { // component == 6 or 7
 				if (component == 6)
-					return BigInteger.valueOf((long) tmp.j0());
+					return BigDecimal.valueOf(tmp.j0()).toBigInteger();
 				else
-					return BigInteger.valueOf((long) tmp.k0());
+					return BigDecimal.valueOf(tmp.k0()).toBigInteger();
 			}
 		}
 	}
@@ -1389,7 +1393,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (component < 0)
 			throw new IllegalArgumentException(
 					"negative component index error");
-		OctonionFloat16Member tmp = tmpOct.get();
+		OctonionFloat32Member tmp = tmpOct.get();
 		getV(index, tmp);
 		if (component < 4) {
 			if (component < 2) {
@@ -1427,7 +1431,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1466,7 +1470,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1505,7 +1509,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1544,7 +1548,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1583,7 +1587,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1622,7 +1626,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return 0;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1661,34 +1665,34 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return BigInteger.ZERO;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
 					if (component == 0)
-						return BigInteger.valueOf((long) tmp.r());
+						return BigDecimal.valueOf(tmp.r()).toBigInteger();
 					else
-						return BigInteger.valueOf((long) tmp.i());
+						return BigDecimal.valueOf(tmp.i()).toBigInteger();
 				}
 				else { // component >= 2
 					if (component == 2)
-						return BigInteger.valueOf((long) tmp.j());
+						return BigDecimal.valueOf(tmp.j()).toBigInteger();
 					else
-						return BigInteger.valueOf((long) tmp.k());
+						return BigDecimal.valueOf(tmp.k()).toBigInteger();
 				}
 			}
 			else { // component == 4 or 5 or 6 or 7
 				if (component < 6) {
 					if (component == 4)
-						return BigInteger.valueOf((long) tmp.l());
+						return BigDecimal.valueOf(tmp.l()).toBigInteger();
 					else
-						return BigInteger.valueOf((long) tmp.i0());
+						return BigDecimal.valueOf(tmp.i0()).toBigInteger();
 				}
 				else { // component == 6 or 7
 					if (component == 6)
-						return BigInteger.valueOf((long) tmp.j0());
+						return BigDecimal.valueOf(tmp.j0()).toBigInteger();
 					else
-						return BigInteger.valueOf((long) tmp.k0());
+						return BigDecimal.valueOf(tmp.k0()).toBigInteger();
 				}
 			}
 		}
@@ -1700,7 +1704,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			return BigDecimal.ZERO;
 		}
 		else {
-			OctonionFloat16Member tmp = tmpOct.get();
+			OctonionFloat32Member tmp = tmpOct.get();
 			getV(index, tmp);
 			if (component < 4) {
 				if (component < 2) {
@@ -1741,13 +1745,13 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 
 	@Override
-	public IndexedDataSource<OctonionFloat16Member> rawData() {
+	public IndexedDataSource<OctonionFloat32Member> rawData() {
 		return storage;
 	}
 
 	@Override
 	public int hashCode() {
-		OctonionFloat16Member tmp = G.OHLF.construct();
+		OctonionFloat32Member tmp = G.OFLT.construct();
 		long len = dimension(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
@@ -1760,8 +1764,8 @@ public final class OctonionFloat16CartesianTensorProductMember
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof OctonionFloat16CartesianTensorProductMember) {
-			return G.OHLF_TEN.isEqual().call(this, (OctonionFloat16CartesianTensorProductMember) o);
+		if (o instanceof OctonionFloat32GeneralTensorProductMember) {
+			return G.OFLT_TEN.isEqual().call(this, (OctonionFloat32GeneralTensorProductMember) o);
 		}
 		return false;
 	}
@@ -1772,13 +1776,23 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
+	public void setFromShortsExact(short... vals) {
+		setFromShorts(vals);
+	}
+	
+	@Override
+	public void setFromFloatsExact(float... vals) {
+		setFromFloats(vals);
+	}
+	
+	@Override
 	public void setFromBytes(byte... vals) {
 		int componentCount = 8;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
@@ -1791,7 +1805,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			storage.set(i/componentCount, value);
 		}
 	}
-	
+
 	@Override
 	public void setFromShorts(short... vals) {
 		int componentCount = 8;
@@ -1799,7 +1813,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
@@ -1812,7 +1826,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			storage.set(i/componentCount, value);
 		}
 	}
-	
+
 	@Override
 	public void setFromInts(int... vals) {
 		int componentCount = 8;
@@ -1820,7 +1834,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
@@ -1833,7 +1847,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			storage.set(i/componentCount, value);
 		}
 	}
-	
+
 	@Override
 	public void setFromLongs(long... vals) {
 		int componentCount = 8;
@@ -1841,7 +1855,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
@@ -1862,7 +1876,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0] );
 			value.setI(  vals[i + 1] );
@@ -1883,7 +1897,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  (float) vals[i + 0] );
 			value.setI(  (float) vals[i + 1] );
@@ -1904,7 +1918,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0].floatValue() );
 			value.setI(  vals[i + 1].floatValue() );
@@ -1925,7 +1939,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
 		}
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		for (int i = 0; i < vals.length; i += componentCount) {
 			value.setR(  vals[i + 0].floatValue() );
 			value.setI(  vals[i + 1].floatValue() );
@@ -1959,7 +1973,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		byte[] values = new byte[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -1980,7 +1994,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		short[] values = new short[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -2001,7 +2015,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		int[] values = new int[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -2022,7 +2036,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		long[] values = new long[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -2043,7 +2057,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		float[] values = new float[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -2064,7 +2078,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		double[] values = new double[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -2085,18 +2099,18 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigInteger.valueOf((long) value.r());
-			values[k++] = BigInteger.valueOf((long) value.i());
-			values[k++] = BigInteger.valueOf((long) value.j());
-			values[k++] = BigInteger.valueOf((long) value.k());
-			values[k++] = BigInteger.valueOf((long) value.l());
-			values[k++] = BigInteger.valueOf((long) value.i0());
-			values[k++] = BigInteger.valueOf((long) value.j0());
-			values[k++] = BigInteger.valueOf((long) value.k0());
+			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.l()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.i0()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.j0()).toBigInteger();
+			values[k++] = BigDecimal.valueOf(value.k0()).toBigInteger();
 		}
 		return values;
 	}
@@ -2106,7 +2120,7 @@ public final class OctonionFloat16CartesianTensorProductMember
 		if (storage.size() > (Integer.MAX_VALUE / 8))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
-		OctonionFloat16Member value = G.OHLF.construct();
+		OctonionFloat32Member value = G.OFLT.construct();
 		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
 		for (int i = 0, k = 0; i < storage.size(); i++) {
 			storage.get(i, value);
@@ -2129,8 +2143,8 @@ public final class OctonionFloat16CartesianTensorProductMember
 	}
 	
 	@Override
-	public OctonionFloat16CartesianTensorProduct getAlgebra() {
+	public OctonionFloat32GeneralTensorProduct getAlgebra() {
 
-		return G.OHLF_TEN;
+		return G.OFLT_TEN;
 	}
 }

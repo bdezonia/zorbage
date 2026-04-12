@@ -107,23 +107,23 @@ import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.integer.int9.SignedInt9Member;
 import nom.bdezonia.zorbage.type.integer.int9.UnsignedInt9Member;
 import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
-import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Member;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Member;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Member;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModuleMember;
@@ -271,31 +271,31 @@ public class DataBundle {
 	public List<DimensionedDataSource<OctonionFloat128Member>> oquads = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat128RModuleMember>> oquad_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat128MatrixMember>> oquad_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat128CartesianTensorProductMember>> oquad_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat128GeneralTensorProductMember>> oquad_tens = new ArrayList<>();
 	
 	// type.octonion.float16
 	public List<DimensionedDataSource<OctonionFloat16Member>> ohlfs = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat16RModuleMember>> ohlf_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat16MatrixMember>> ohlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat16CartesianTensorProductMember>> ohlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat16GeneralTensorProductMember>> ohlf_tens = new ArrayList<>();
 	
 	// type.octonion.float32
 	public List<DimensionedDataSource<OctonionFloat32Member>> oflts = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat32RModuleMember>> oflt_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat32MatrixMember>> oflt_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat32CartesianTensorProductMember>> oflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat32GeneralTensorProductMember>> oflt_tens = new ArrayList<>();
 	
 	// type.octonion.float64
 	public List<DimensionedDataSource<OctonionFloat64Member>> odbls = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat64RModuleMember>> odbl_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat64MatrixMember>> odbl_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat64CartesianTensorProductMember>> odbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat64GeneralTensorProductMember>> odbl_tens = new ArrayList<>();
 	
 	// type.octonion.highprec
 	public List<DimensionedDataSource<OctonionHighPrecisionMember>> ohps = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionHighPrecisionRModuleMember>> ohp_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionHighPrecisionMatrixMember>> ohp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionHighPrecisionCartesianTensorProductMember>> ohp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionHighPrecisionGeneralTensorProductMember>> ohp_tens = new ArrayList<>();
 	
 	// type.point
 	public List<DimensionedDataSource<Point>> points = new ArrayList<>();
@@ -751,7 +751,7 @@ public class DataBundle {
 			oquad_mats.add(ds);
 	}
 	
-	public void mergeOct128Tens(DimensionedDataSource<OctonionFloat128CartesianTensorProductMember> ds) {
+	public void mergeOct128Tens(DimensionedDataSource<OctonionFloat128GeneralTensorProductMember> ds) {
 		if (ds != null)
 			oquad_tens.add(ds);
 	}
@@ -773,7 +773,7 @@ public class DataBundle {
 			ohlf_mats.add(ds);
 	}
 	
-	public void mergeOct16Tens(DimensionedDataSource<OctonionFloat16CartesianTensorProductMember> ds) {
+	public void mergeOct16Tens(DimensionedDataSource<OctonionFloat16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			ohlf_tens.add(ds);
 	}
@@ -795,7 +795,7 @@ public class DataBundle {
 			oflt_mats.add(ds);
 	}
 	
-	public void mergeOct32Tens(DimensionedDataSource<OctonionFloat32CartesianTensorProductMember> ds) {
+	public void mergeOct32Tens(DimensionedDataSource<OctonionFloat32GeneralTensorProductMember> ds) {
 		if (ds != null)
 			oflt_tens.add(ds);
 	}
@@ -817,7 +817,7 @@ public class DataBundle {
 			odbl_mats.add(ds);
 	}
 	
-	public void mergeOct64Tens(DimensionedDataSource<OctonionFloat64CartesianTensorProductMember> ds) {
+	public void mergeOct64Tens(DimensionedDataSource<OctonionFloat64GeneralTensorProductMember> ds) {
 		if (ds != null)
 			odbl_tens.add(ds);
 	}
@@ -839,7 +839,7 @@ public class DataBundle {
 			ohp_mats.add(ds);
 	}
 	
-	public void mergeOctHPTens(DimensionedDataSource<OctonionHighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeOctHPTens(DimensionedDataSource<OctonionHighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			ohp_tens.add(ds);
 	}

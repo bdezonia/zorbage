@@ -102,23 +102,23 @@ import nom.bdezonia.zorbage.type.integer.int9.SignedInt9Algebra;
 import nom.bdezonia.zorbage.type.integer.int9.UnsignedInt9Algebra;
 import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntAlgebra;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Algebra;
-import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Matrix;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128RModule;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Algebra;
-import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Matrix;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16RModule;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Algebra;
-import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Matrix;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32RModule;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Algebra;
-import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64CartesianTensorProduct;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64GeneralTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Matrix;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64RModule;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionAlgebra;
-import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesianTensorProduct;
+import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionGeneralTensorProduct;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrix;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModule;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Algebra;
@@ -214,7 +214,7 @@ public class G {
 	public static final OctonionFloat16Algebra OHLF = new OctonionFloat16Algebra();
 	public static final OctonionFloat16RModule OHLF_RMOD = new OctonionFloat16RModule();
 	public static final OctonionFloat16Matrix OHLF_MAT = new OctonionFloat16Matrix();
-	public static final OctonionFloat16CartesianTensorProduct OHLF_TEN = new OctonionFloat16CartesianTensorProduct();
+	public static final OctonionFloat16GeneralTensorProduct OHLF_TEN = new OctonionFloat16GeneralTensorProduct();
 
 	public static final Float32Algebra FLT = new Float32Algebra();
 	public static final Float32Vector FLT_VEC = new Float32Vector();
@@ -234,7 +234,7 @@ public class G {
 	public static final OctonionFloat32Algebra OFLT = new OctonionFloat32Algebra();
 	public static final OctonionFloat32RModule OFLT_RMOD = new OctonionFloat32RModule();
 	public static final OctonionFloat32Matrix OFLT_MAT = new OctonionFloat32Matrix();
-	public static final OctonionFloat32CartesianTensorProduct OFLT_TEN = new OctonionFloat32CartesianTensorProduct();
+	public static final OctonionFloat32GeneralTensorProduct OFLT_TEN = new OctonionFloat32GeneralTensorProduct();
 
 	public static final Float64Algebra DBL = new Float64Algebra();
 	public static final Float64Vector DBL_VEC = new Float64Vector();
@@ -254,7 +254,7 @@ public class G {
 	public static final OctonionFloat64Algebra ODBL = new OctonionFloat64Algebra();
 	public static final OctonionFloat64RModule ODBL_RMOD = new OctonionFloat64RModule();
 	public static final OctonionFloat64Matrix ODBL_MAT = new OctonionFloat64Matrix();
-	public static final OctonionFloat64CartesianTensorProduct ODBL_TEN = new OctonionFloat64CartesianTensorProduct();
+	public static final OctonionFloat64GeneralTensorProduct ODBL_TEN = new OctonionFloat64GeneralTensorProduct();
 
 	public static final Float128Algebra QUAD = new Float128Algebra();
 	public static final Float128Vector QUAD_VEC = new Float128Vector();
@@ -274,7 +274,7 @@ public class G {
 	public static final OctonionFloat128Algebra OQUAD = new OctonionFloat128Algebra();
 	public static final OctonionFloat128RModule OQUAD_RMOD = new OctonionFloat128RModule();
 	public static final OctonionFloat128Matrix OQUAD_MAT = new OctonionFloat128Matrix();
-	public static final OctonionFloat128CartesianTensorProduct OQUAD_TEN = new OctonionFloat128CartesianTensorProduct();
+	public static final OctonionFloat128GeneralTensorProduct OQUAD_TEN = new OctonionFloat128GeneralTensorProduct();
 
 	public static final HighPrecisionAlgebra HP = new HighPrecisionAlgebra();
 	public static final HighPrecisionVector HP_VEC = new HighPrecisionVector();
@@ -294,7 +294,7 @@ public class G {
 	public static final OctonionHighPrecisionAlgebra OHP = new OctonionHighPrecisionAlgebra();
 	public static final OctonionHighPrecisionRModule OHP_RMOD = new OctonionHighPrecisionRModule();
 	public static final OctonionHighPrecisionMatrix OHP_MAT = new OctonionHighPrecisionMatrix();
-	public static final OctonionHighPrecisionCartesianTensorProduct OHP_TEN = new OctonionHighPrecisionCartesianTensorProduct();
+	public static final OctonionHighPrecisionGeneralTensorProduct OHP_TEN = new OctonionHighPrecisionGeneralTensorProduct();
 
 	public static final UnsignedInt1Algebra UINT1 = new UnsignedInt1Algebra();
 	public static final UnsignedInt2Algebra UINT2 = new UnsignedInt2Algebra();
