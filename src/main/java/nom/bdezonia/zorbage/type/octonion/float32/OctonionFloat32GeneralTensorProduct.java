@@ -43,14 +43,13 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -65,10 +64,9 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -77,7 +75,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class OctonionFloat32GeneralTensorProduct
 	implements
-		TensorLikeProduct<OctonionFloat32GeneralTensorProduct,OctonionFloat32GeneralTensorProductMember,OctonionFloat32Algebra,OctonionFloat32Member>,
+		TensorProduct<OctonionFloat32GeneralTensorProduct,OctonionFloat32GeneralTensorProductMember,Float32Algebra,Float32Member>,
 		Norm<OctonionFloat32GeneralTensorProductMember,Float32Member>,
 		Scale<OctonionFloat32GeneralTensorProductMember,OctonionFloat32Member>,
 		Rounding<Float32Member,OctonionFloat32GeneralTensorProductMember>,
@@ -90,7 +88,8 @@ public class OctonionFloat32GeneralTensorProduct
 		ScaleByTwo<OctonionFloat32GeneralTensorProductMember>,
 		Tolerance<Float32Member, OctonionFloat32GeneralTensorProductMember>,
 		ArrayLikeMethods<OctonionFloat32GeneralTensorProductMember, OctonionFloat32Member>,
-		MadeOfElements<OctonionFloat32Algebra,OctonionFloat32Member>
+		MadeOfElements<OctonionFloat32Algebra,OctonionFloat32Member>,
+		ConstructibleTensor<OctonionFloat32GeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
@@ -235,19 +234,9 @@ public class OctonionFloat32GeneralTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> CONJ =
-			new Procedure2<OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.OFLT, G.OFLT.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<OctonionFloat32Member,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> SCALE =
@@ -321,7 +310,7 @@ public class OctonionFloat32GeneralTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.OFLT, G.OFLT.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.OFLT, G.OFLT.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -353,41 +342,13 @@ public class OctonionFloat32GeneralTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
-			TensorContract.compute(G.OFLT, a.rank(), i, j, a, b);
+			TensorContract.compute(G.OFLT, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-		
-	private final Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.OFLT_TEN, G.OFLT, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.OFLT_TEN, G.OFLT, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,OctonionFloat32GeneralTensorProductMember,OctonionFloat32GeneralTensorProductMember> POWER =
@@ -592,40 +553,34 @@ public class OctonionFloat32GeneralTensorProduct
 	public Procedure3<OctonionFloat32Member, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, OctonionFloat32GeneralTensorProductMember metricInverse, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.OFLT, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, OctonionFloat32GeneralTensorProductMember metric, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.OFLT, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember, OctonionFloat32GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -672,7 +627,7 @@ public class OctonionFloat32GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.OFLT_TEN, G.OFLT, new OctonionFloat32Member(2, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
+			ScaleHelper.compute(G.OFLT_TEN, G.OFLT, new OctonionFloat32Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -687,7 +642,7 @@ public class OctonionFloat32GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, OctonionFloat32GeneralTensorProductMember a, OctonionFloat32GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.OFLT_TEN, G.OFLT, new OctonionFloat32Member(0.5f, 0, 0, 0, 0, 0, 0, 0), numTimes, a, b);
+			ScaleHelper.compute(G.OFLT_TEN, G.OFLT, new OctonionFloat32Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 
@@ -713,5 +668,11 @@ public class OctonionFloat32GeneralTensorProduct
 	@Override
 	public OctonionFloat32Algebra getElementAlgebra() {
 		return G.OFLT;
+	}
+
+	@Override
+	public OctonionFloat32GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new OctonionFloat32GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }
