@@ -1411,10 +1411,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		byte[] values = new byte[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = (byte) value.r();
-			values[2*i + 1] = (byte) value.i();
-			values[2*i + 2] = (byte) value.j();
-			values[2*i + 3] = (byte) value.k();
+			values[4*i + 0] = (byte) value.r();
+			values[4*i + 1] = (byte) value.i();
+			values[4*i + 2] = (byte) value.j();
+			values[4*i + 3] = (byte) value.k();
 		}
 		return values;
 	}
@@ -1428,10 +1428,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		short[] values = new short[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = (short) value.r();
-			values[2*i + 1] = (short) value.i();
-			values[2*i + 2] = (short) value.j();
-			values[2*i + 3] = (short) value.k();
+			values[4*i + 0] = (short) value.r();
+			values[4*i + 1] = (short) value.i();
+			values[4*i + 2] = (short) value.j();
+			values[4*i + 3] = (short) value.k();
 		}
 		return values;
 	}
@@ -1445,10 +1445,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		int[] values = new int[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = (int) value.r();
-			values[2*i + 1] = (int) value.i();
-			values[2*i + 2] = (int) value.j();
-			values[2*i + 3] = (int) value.k();
+			values[4*i + 0] = (int) value.r();
+			values[4*i + 1] = (int) value.i();
+			values[4*i + 2] = (int) value.j();
+			values[4*i + 3] = (int) value.k();
 		}
 		return values;
 	}
@@ -1462,10 +1462,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		long[] values = new long[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = (long) value.r();
-			values[2*i + 1] = (long) value.i();
-			values[2*i + 2] = (long) value.j();
-			values[2*i + 3] = (long) value.k();
+			values[4*i + 0] = (long) value.r();
+			values[4*i + 1] = (long) value.i();
+			values[4*i + 2] = (long) value.j();
+			values[4*i + 3] = (long) value.k();
 		}
 		return values;
 	}
@@ -1479,10 +1479,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		float[] values = new float[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = value.r();
-			values[2*i + 1] = value.i();
-			values[2*i + 2] = value.j();
-			values[2*i + 3] = value.k();
+			values[4*i + 0] = value.r();
+			values[4*i + 1] = value.i();
+			values[4*i + 2] = value.j();
+			values[4*i + 3] = value.k();
 		}
 		return values;
 	}
@@ -1496,10 +1496,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		double[] values = new double[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = value.r();
-			values[2*i + 1] = value.i();
-			values[2*i + 2] = value.j();
-			values[2*i + 3] = value.k();
+			values[4*i + 0] = value.r();
+			values[4*i + 1] = value.i();
+			values[4*i + 2] = value.j();
+			values[4*i + 3] = value.k();
 		}
 		return values;
 	}
@@ -1513,10 +1513,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		BigInteger[] values = new BigInteger[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = BigDecimal.valueOf(value.r()).toBigInteger();
-			values[2*i + 1] = BigDecimal.valueOf(value.i()).toBigInteger();
-			values[2*i + 2] = BigDecimal.valueOf(value.j()).toBigInteger();
-			values[2*i + 3] = BigDecimal.valueOf(value.k()).toBigInteger();
+			values[4*i + 0] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[4*i + 1] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[4*i + 2] = BigDecimal.valueOf(value.j()).toBigInteger();
+			values[4*i + 3] = BigDecimal.valueOf(value.k()).toBigInteger();
 		}
 		return values;
 	}
@@ -1530,10 +1530,10 @@ public final class QuaternionFloat16GeneralTensorProductMember
 		BigDecimal[] values = new BigDecimal[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[2*i + 0] = BigDecimal.valueOf(value.r());
-			values[2*i + 1] = BigDecimal.valueOf(value.i());
-			values[2*i + 2] = BigDecimal.valueOf(value.j());
-			values[2*i + 3] = BigDecimal.valueOf(value.k());
+			values[4*i + 0] = BigDecimal.valueOf(value.r());
+			values[4*i + 1] = BigDecimal.valueOf(value.i());
+			values[4*i + 2] = BigDecimal.valueOf(value.j());
+			values[4*i + 3] = BigDecimal.valueOf(value.k());
 		}
 		return values;
 	}

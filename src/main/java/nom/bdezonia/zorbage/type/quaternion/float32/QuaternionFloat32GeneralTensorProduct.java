@@ -43,14 +43,13 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
@@ -65,10 +64,9 @@ import nom.bdezonia.zorbage.procedure.Procedure3;
 import nom.bdezonia.zorbage.procedure.Procedure4;
 import nom.bdezonia.zorbage.procedure.Procedure5;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
+import nom.bdezonia.zorbage.type.real.float32.Float32Algebra;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
-
-// Note that for now the implementation is only for Cartesian tensors
 
 /**
  * 
@@ -77,7 +75,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class QuaternionFloat32GeneralTensorProduct
 	implements
-		TensorLikeProduct<QuaternionFloat32GeneralTensorProduct,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32Algebra,QuaternionFloat32Member>,
+		TensorProduct<QuaternionFloat32GeneralTensorProduct,QuaternionFloat32GeneralTensorProductMember,Float32Algebra,Float32Member>,
 		Norm<QuaternionFloat32GeneralTensorProductMember,Float32Member>,
 		Scale<QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32Member>,
 		Rounding<Float32Member,QuaternionFloat32GeneralTensorProductMember>,
@@ -90,7 +88,8 @@ public class QuaternionFloat32GeneralTensorProduct
 		ScaleByTwo<QuaternionFloat32GeneralTensorProductMember>,
 		Tolerance<Float32Member, QuaternionFloat32GeneralTensorProductMember>,
 		ArrayLikeMethods<QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32Member>,
-		MadeOfElements<QuaternionFloat32Algebra,QuaternionFloat32Member>
+		MadeOfElements<QuaternionFloat32Algebra,QuaternionFloat32Member>,
+		ConstructibleTensor<QuaternionFloat32GeneralTensorProductMember>
 {
 	@Override
 	public String typeDescription() {
@@ -235,19 +234,9 @@ public class QuaternionFloat32GeneralTensorProduct
 		return NORM;
 	}
 
-	private final Procedure2<QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> CONJ =
-			new Procedure2<QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
-			TensorShape.compute(a, b);
-			Transform2.compute(G.QFLT, G.QFLT.conjugate(), a.rawData(), b.rawData());
-		}
-	};
-
 	@Override
 	public Procedure2<QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> conjugate() {
-		return CONJ;
+		return ASSIGN;
 	}
 
 	private final Procedure3<QuaternionFloat32Member,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> SCALE =
@@ -321,7 +310,7 @@ public class QuaternionFloat32GeneralTensorProduct
 			if (!ShapesMatch.compute(a, b))
 				throw new IllegalArgumentException("mismatched shapes");
 			TensorShape.compute(a, c);
-			Transform3.compute(G.QFLT, G.QFLT.divide(), a.rawData(), b.rawData(), c.rawData());
+			Transform3.compute(G.QFLT, G.QFLT.divide(),a.rawData(),b.rawData(),c.rawData());
 		}
 	};
 	
@@ -353,41 +342,13 @@ public class QuaternionFloat32GeneralTensorProduct
 	{
 		@Override
 		public void call(Integer i, Integer j, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
-			TensorContract.compute(G.QFLT, a.rank(), i, j, a, b);
+			TensorContract.compute(G.QFLT, i, j, a, b);
 		}
 	};
 	
 	@Override
 	public Procedure4<Integer,Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> contract() {
 		return CONTRACT;
-	}
-	
-	private final Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> SEMI =
-			new Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
-			TensorSemicolonDerivative.compute(G.QFLT_TEN, G.QFLT, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> semicolonDerivative() {
-		return SEMI;
-	}
-	
-	private final Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> COMMA =
-			new Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer index, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
-			TensorCommaDerivative.compute(G.QFLT_TEN, G.QFLT, index, a, b);
-		}
-	};
-	
-	@Override
-	public Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> commaDerivative() {
-		return COMMA;
 	}
 	
 	private final Procedure3<Integer,QuaternionFloat32GeneralTensorProductMember,QuaternionFloat32GeneralTensorProductMember> POWER =
@@ -592,40 +553,34 @@ public class QuaternionFloat32GeneralTensorProduct
 	public Procedure3<QuaternionFloat32Member, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> divideByScalar() {
 		return DIVBYSCALAR;
 	}
-	
-	private final Procedure3<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> RAISE =
-		new Procedure3<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember>()
-	{
-		@Override
-		public void call(Integer idx, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
-			
-			throw new IllegalArgumentException("cannot raise index of a cartesian tensor");
 
-		}
-	};
-	
+	private final Procedure4<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> RAISE =
+			new Procedure4<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember>()
+		{
+			@Override
+			public void call(Integer idx, QuaternionFloat32GeneralTensorProductMember metricInverse, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
+
+				TensorFlipIndex.compute(G.QFLT, metricInverse, idx, IndexType.CONTRAVARIANT, a, b);
+			}
+		};
+		
 	@Override
-	public Procedure3<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> raiseIndex() {
+	public Procedure4<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> raiseIndex() {
 		return RAISE;
 	}
-
-	private final Procedure3<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> LOWER =
-		new Procedure3<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember>()
+		
+	private final Procedure4<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> LOWER =
+		new Procedure4<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember>()
 	{
 		@Override
-		public void call(Integer idx, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
-			
-			if (idx < 0 || idx >= a.rank())
-				throw new IllegalArgumentException("index outside rank bounds in lowerIndex");
-			
-			// this operation should not affect a cartesian tensor
-			
-			assign().call(a, b);
+		public void call(Integer idx, QuaternionFloat32GeneralTensorProductMember metric, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
+
+			TensorFlipIndex.compute(G.QFLT, metric, idx, IndexType.COVARIANT, a, b);
 		}
 	};
 	
 	@Override
-	public Procedure3<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> lowerIndex() {
+	public Procedure4<Integer, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember, QuaternionFloat32GeneralTensorProductMember> lowerIndex() {
 		return LOWER;
 	}
 
@@ -672,7 +627,7 @@ public class QuaternionFloat32GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.QFLT_TEN, G.QFLT, new QuaternionFloat32Member(2, 0, 0, 0), numTimes, a, b);
+			ScaleHelper.compute(G.QFLT_TEN, G.QFLT, new QuaternionFloat32Member(2, 0), numTimes, a, b);
 		}
 	};
 
@@ -687,7 +642,7 @@ public class QuaternionFloat32GeneralTensorProduct
 		@Override
 		public void call(Integer numTimes, QuaternionFloat32GeneralTensorProductMember a, QuaternionFloat32GeneralTensorProductMember b) {
 			TensorShape.compute(a, b);
-			ScaleHelper.compute(G.QFLT_TEN, G.QFLT, new QuaternionFloat32Member(0.5f, 0, 0, 0), numTimes, a, b);
+			ScaleHelper.compute(G.QFLT_TEN, G.QFLT, new QuaternionFloat32Member(0.5f, 0), numTimes, a, b);
 		}
 	};
 
@@ -713,5 +668,11 @@ public class QuaternionFloat32GeneralTensorProduct
 	@Override
 	public QuaternionFloat32Algebra getElementAlgebra() {
 		return G.QFLT;
+	}
+
+	@Override
+	public QuaternionFloat32GeneralTensorProductMember construct(IndexType[] indexTypes, long[] axisSizes)
+	{
+		return new QuaternionFloat32GeneralTensorProductMember(indexTypes, axisSizes);
 	}
 }
