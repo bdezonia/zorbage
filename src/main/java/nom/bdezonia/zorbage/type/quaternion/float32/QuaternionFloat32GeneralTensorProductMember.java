@@ -1388,7 +1388,7 @@ public final class QuaternionFloat32GeneralTensorProductMember
 
 	@Override
 	public void setFromBigDecimals(BigDecimal... vals) {
-		int componentCount = 2;
+		int componentCount = 4;
 		if (vals.length/componentCount != storage.size()) {
 			throw new IllegalArgumentException(
 					"number of elements passed in do not fit allocated storage");
@@ -1454,11 +1454,11 @@ public final class QuaternionFloat32GeneralTensorProductMember
 
 	@Override
 	public int[] getAsIntArray() {
-		if (storage.size() > (Integer.MAX_VALUE / 2))
+		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
 		QuaternionFloat32Member value = G.QFLT.construct();
-		int[] values = new int[2 * (int) storage.size()];
+		int[] values = new int[4 * (int) storage.size()];
 		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
 			values[4*i + 0] = (int) value.r();

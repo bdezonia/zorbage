@@ -460,6 +460,8 @@ public final class QuaternionFloat16GeneralTensorProductMember
 			OctonionRepresentation o = tensor.get(i);
 			value.setR(o.r().floatValue());
 			value.setI(o.i().floatValue());
+			value.setJ(o.j().floatValue());
+			value.setK(o.k().floatValue());
 			storage.set(i, value);
 		}
 	}
