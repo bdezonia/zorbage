@@ -32,7 +32,6 @@ package nom.bdezonia.zorbage.type.octonion.float64;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
 
 import nom.bdezonia.zorbage.misc.BigList;
 import nom.bdezonia.zorbage.misc.LongUtils;
@@ -52,6 +51,7 @@ import nom.bdezonia.zorbage.algebra.GetAsIntArray;
 import nom.bdezonia.zorbage.algebra.GetAsLongArray;
 import nom.bdezonia.zorbage.algebra.GetAsShortArray;
 import nom.bdezonia.zorbage.algebra.Gettable;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.SetFromBigDecimals;
 import nom.bdezonia.zorbage.algebra.SetFromBigIntegers;
 import nom.bdezonia.zorbage.algebra.SetFromBytes;
@@ -88,11 +88,6 @@ import nom.bdezonia.zorbage.type.universal.UniversalRepresentation;
 import nom.bdezonia.zorbage.misc.Hasher;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.RawData;
-
-
-// TODO:
-//   rank 0 tensor getting and setting 1 value instead of 0
-//   upper and lower indices: only if not CartesianTensors
 
 /**
  * 
@@ -142,106 +137,167 @@ public final class OctonionFloat64GeneralTensorProductMember
 {
 	private static final OctonionFloat64Member ZERO = new OctonionFloat64Member();
 
-	private int rank;
-	private long dimCount;
+	private IndexType[] indexTypes;
+	private long[] axisLengths;
+	private long[] strides;
 	private IndexedDataSource<OctonionFloat64Member> storage;
-	private long[] dims;
-	private long[] multipliers;
 	private StorageConstruction s;
 
-	// rank() is also numDimensions(). Confusing. TODO - fix
+	// TODO: I hate this but can't figure out the coding I
+	//   need to do to get rid of it.
 	
 	@Override
-	public int rank() { return lowerRank() + upperRank(); }
+	public int numDimensions() {
+
+		return rank();
+	}
+
+	// TODO: I hate this but can't figure out the coding I
+	//   need to do to get rid of it.
 	
 	@Override
-	public int lowerRank() { return rank; }
+	public long dimension(int d) {
+
+		return axisSize(d);
+	}
+
+	public long axisSize(int index) {
+		
+		return axisLengths[index];
+	}
+	
+	public void shape(long[] sizes) {
+
+		if (sizes.length != this.axisLengths.length)
+			throw new IllegalArgumentException("axis count mismatch in axisLengths() method");
+		
+		for (int i = 0; i < sizes.length; i++) {
+			sizes[i] = this.axisLengths[i];
+		}
+	}
 	
 	@Override
-	public int upperRank() { return 0; }
+	public int rank() { return indexTypes.length; }
+	
+	@Override
+	public int lowerRank() {
+		
+		int rank = 0;
+		
+		for (int i = 0; i < rank(); i++)  {
+		
+			if (indexIsLower(i)) rank++;
+		}
+		
+		return rank;
+	}
+	
+	@Override
+	public int upperRank() {
+		
+		int rank = 0;
+		
+		for (int i = 0; i < rank(); i++)  {
+		
+			if (indexIsUpper(i)) rank++;
+		}
+		
+		return rank;
+	}
 	
 	@Override
 	public boolean indexIsLower(int index) {
+		
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		
+		return indexTypes[index] == IndexType.COVARIANT;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
+
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		
+		return indexTypes[index] == IndexType.CONTRAVARIANT;
 	}
 
 	@Override
-	public long dimension() { return dimCount; }
+	public IndexType indexType(int index) {
 
-	public OctonionFloat64GeneralTensorProductMember() {
-		rank = 0;
-		dimCount = 0;
-		dims = new long[0];
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionFloat64Member(), 1);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		return indexTypes[index];
 	}
 
-	public OctonionFloat64GeneralTensorProductMember(int rank, long dimCount) {
-		if (rank < 0)
-			throw new IllegalArgumentException("bad rank in tensor constructor");
-		if (dimCount < 0)
-			throw new IllegalArgumentException("bad dimensionality in tensor constructor");
-		this.rank = rank;
-		this.dimCount = dimCount;
-		dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
-		s = StorageConstruction.MEM_ARRAY;
-		storage = Storage.allocate(s, new OctonionFloat64Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+	@Override
+	public void indexTypes(IndexType[] types) {
+
+		if (types.length != rank())
+			throw new IllegalArgumentException();
+		for (int i = 0; i < types.length; i++)
+			types[i] = indexTypes[i];
 	}
 	
-	public OctonionFloat64GeneralTensorProductMember(int rank, long dimCount, double... vals) {
-		this(rank, dimCount);
+	public long numElements() {
+	
+		return storage.size();
+	}
+	
+	public OctonionFloat64GeneralTensorProductMember() {
+
+		indexTypes = new IndexType[0];
+		axisLengths = new long[0];
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionFloat64Member(), 1); // one scalar
+		strides = IndexUtils.calcMultipliers(axisLengths);
+	}
+
+	public OctonionFloat64GeneralTensorProductMember(IndexType[] indices, long[] sizes) {
+		
+		if (indices.length != sizes.length)
+			throw new IllegalArgumentException("bad input to tensor constructor");
+		indexTypes = indices.clone();
+		axisLengths = sizes.clone();
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
+		s = StorageConstruction.MEM_ARRAY;
+		storage = Storage.allocate(s, new OctonionFloat64Member(), storageElems);
+		strides = IndexUtils.calcMultipliers(axisLengths);
+	}
+	
+	public OctonionFloat64GeneralTensorProductMember(IndexType[] indices, long[] sizes, double... vals) {
+		this(indices, sizes);
 		setFromDoubles(vals);
 	}
 
 	public OctonionFloat64GeneralTensorProductMember(OctonionFloat64GeneralTensorProductMember other) {
 		set(other);
 	}
-	
+
 	public OctonionFloat64GeneralTensorProductMember(String s) {
 		TensorStringRepresentation rep = new TensorStringRepresentation(s);
 		BigList<OctonionRepresentation> data = rep.values();
 		long[] tmpDims = rep.dimensions().clone();
-		this.rank = tmpDims.length;
-		if (tmpDims.length == 0) {
-			this.dimCount = 1;
-		}
-		else {
-			long d0 = tmpDims[0];
-			for (int i = 1; i < tmpDims.length; i++) {
-				if (tmpDims[i] != d0)
-					throw new IllegalArgumentException("tensors must be the same in all dimensions");
-			}
-			this.dimCount = d0;
-		}
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		long numElems = LongUtils.numElements(this.dims);
-		if (numElems == 0) numElems = 1;
+		this.axisLengths = tmpDims;
+		this.indexTypes = indices(tmpDims.length, IndexType.CONTRAVARIANT);
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
 		this.s = StorageConstruction.MEM_ARRAY;
-		this.storage = Storage.allocate(this.s, new OctonionFloat64Member(), numElems);
-		this.multipliers = IndexUtils.calcMultipliers(dims);
+		this.storage = Storage.allocate(this.s, new OctonionFloat64Member(), storageElems);
+		this.strides = IndexUtils.calcMultipliers(axisLengths);
 		OctonionFloat64Member value = new OctonionFloat64Member();
-		if (numElems == 1) {
-			// TODO: does a rank 0 tensor have any values from a parsing?
-			OctonionRepresentation val = data.get(0);
+		if (rank() == 0) {
+			OctonionRepresentation val;
+			if (data.size() == 0)
+				val = new OctonionRepresentation();
+			else
+				val = data.get(0);
 			value.setR(val.r().doubleValue());
 			value.setI(val.i().doubleValue());
 			value.setJ(val.j().doubleValue());
@@ -255,7 +311,7 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			long i = 0;
 			SamplingIterator<IntegerIndex> iter = GridIterator.compute(tmpDims);
-			IntegerIndex index = new IntegerIndex(dims.length);
+			IntegerIndex index = new IntegerIndex(axisLengths.length);
 			while (iter.hasNext()) {
 				iter.next(index);
 				OctonionRepresentation val = data.get(i);
@@ -267,7 +323,7 @@ public final class OctonionFloat64GeneralTensorProductMember
 				value.setI0(val.i0().doubleValue());
 				value.setJ0(val.j0().doubleValue());
 				value.setK0(val.k0().doubleValue());
-				long idx = IndexUtils.indexToLong(dims, index);
+				long idx = IndexUtils.indexToLong(axisLengths, index);
 				storage.set(idx, value);
 				i++;
 			}
@@ -282,10 +338,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 	@Override
 	public void set(OctonionFloat64GeneralTensorProductMember other) {
 		if (this == other) return;
-		rank = other.rank;
-		dimCount = other.dimCount;
-		dims = other.dims.clone();
-		multipliers = other.multipliers.clone();
+		indexTypes = other.indexTypes.clone();
+		axisLengths = other.axisLengths.clone();
+		strides = other.strides.clone();
 		storage = other.storage.duplicate();
 		s = other.s;
 	}
@@ -293,22 +348,24 @@ public final class OctonionFloat64GeneralTensorProductMember
 	@Override
 	public void get(OctonionFloat64GeneralTensorProductMember other) {
 		if (this == other) return;
-		other.rank = rank;
-		other.dimCount = dimCount;
-		other.dims = dims.clone();
-		other.multipliers = multipliers.clone();
+		other.indexTypes = indexTypes.clone();
+		other.axisLengths = axisLengths.clone();
+		other.strides = strides.clone();
 		other.storage = storage.duplicate();
 		other.s = s;
 	}
 
 	@Override
-	public boolean alloc(long[] newDims) {
+	public boolean alloc(long[] newDims, IndexType[] indexTypes) {
+		if (newDims.length != indexTypes.length)
+			throw new IllegalArgumentException("trying to allocate a "+newDims.length+" rank tensor with "+indexTypes.length+"co/contra/variant designators");
+		this.indexTypes = indexTypes.clone();
 		boolean theSame = true;
-		if (newDims.length != dims.length)
+		if (newDims.length != axisLengths.length)
 			theSame = false;
 		else {
 			for (int i = 0; i < newDims.length; i++) {
-				if (newDims[i] != dims[i]) {
+				if (newDims[i] != axisLengths[i]) {
 					theSame = false;
 					break;
 				}
@@ -316,53 +373,47 @@ public final class OctonionFloat64GeneralTensorProductMember
 		}
 		if (theSame)
 			return false;
-		this.rank = newDims.length;
-		if (rank == 0) {
-			this.dimCount = 1;
-		}
-		else {
-			long d0 = newDims[0];
-			for (int i = 1; i < newDims.length; i++) {
-				if (newDims[i] != d0)
-					throw new IllegalArgumentException("tensors must be the same in all dimensions");
-			}
-			this.dimCount = d0;
-		}
-		this.dims = new long[rank];
-		for (int i = 0; i < rank; i++) {
-			this.dims[i] = dimCount;
-		}
-		this.multipliers = IndexUtils.calcMultipliers(dims);
-		long newCount = LongUtils.numElements(this.dims);
-		if (newCount == 0) newCount = 1;
-		if (storage == null || newCount != storage.size()) {
-			storage = Storage.allocate(s, new OctonionFloat64Member(), newCount);
+		this.axisLengths = newDims.clone();
+		this.strides = IndexUtils.calcMultipliers(axisLengths);
+		long storageElems;
+		if (rank() == 0)
+			storageElems = 1;
+		else
+			storageElems = LongUtils.numElements(axisLengths);
+		if (storage == null || storageElems != storage.size()) {
+			storage = Storage.allocate(s, new OctonionFloat64Member(), storageElems);
 			return true;
 		}
 		return false;
 	}
+
+	@Override
+	public boolean alloc(long[] newDims) {
+		return alloc(newDims, indexTypes);
+	}
 	
 	@Override
-	public void init(long[] newDims) {
-		if (!alloc(newDims)) {
+	public void init(long[] newDims, IndexType[] indexTypes) {
+		if (!alloc(newDims, indexTypes)) {
 			long storageSize = storage.size();
 			for (long i = 0; i < storageSize; i++) {
 				storage.set(i, ZERO);
 			}
 		}
 	}
-	
-	public long numElems() {
-		return storage.size();
+
+	@Override
+	public void init(long[] newDims) {
+		init(newDims, indexTypes);
 	}
-	
+
 	void v(long index, OctonionFloat64Member value) {
 		storage.get(index, value);
 	}
 	
 	@Override
 	public void getV(IntegerIndex index, OctonionFloat64Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index);
+		long idx = IndexUtils.safeIndexToLong(axisLengths, index);
 		storage.get(idx, value);
 	}
 	
@@ -372,7 +423,7 @@ public final class OctonionFloat64GeneralTensorProductMember
 	
 	@Override
 	public void setV(IntegerIndex index, OctonionFloat64Member value) {
-		long idx = IndexUtils.safeIndexToLong(dims, index);
+		long idx = IndexUtils.safeIndexToLong(axisLengths, index);
 		storage.set(idx, value);
 	}
 	
@@ -401,14 +452,27 @@ public final class OctonionFloat64GeneralTensorProductMember
 			o.setJ0(j0);
 			o.setK0(k0);
 		}
-		rep.setTensor(dims, values);
+		rep.setTensor(axisLengths, values);
 	}
 
 	@Override
 	public void fromRep(TensorOctonionRepresentation rep) {
 		OctonionFloat64Member value = new OctonionFloat64Member();
 		BigList<OctonionRepresentation> tensor = rep.getTensor();
-		init(rep.getTensorDims());
+		long[] dims = rep.getTensorDims();
+		// NOTE: there is a hole in our tensor rep. It does not
+		//   store variation indices. We will treat all passed
+		//   tensors as things like positions. not quantities.
+		//   So contravariant indices. Note that with this
+		//   convention you can lose data. Take a mixed index
+		//   tensor. Then tensor.toRep(rep) followed by
+		//   tensor.fromRep(rep). Al the mixed indices are now
+		//   contravariant.
+		IndexType[] indices = new IndexType[dims.length];
+		for (int i = 0; i < dims.length; i++) {
+			indices[i] = IndexType.CONTRAVARIANT;
+		}
+		init(dims, indices);
 		long tensorSize = tensor.size();
 		for (long i = 0; i < tensorSize; i++) {
 			OctonionRepresentation o = tensor.get(i);
@@ -424,79 +488,84 @@ public final class OctonionFloat64GeneralTensorProductMember
 		}
 	}
 
-	// TODO: finish me
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		// iterate values/indices and write numbers, brackets, and commas in correct order
-		// something recursive?
-		OctonionFloat64Member tmp = new OctonionFloat64Member();
-		IntegerIndex index = new IntegerIndex(this.dims.length);
-		// [2,2,2] dims
-		// [0,0,0]  [[[num
-		// [1,0,0]  [[[num,num
-		// [0,1,0]  [[[num,num][num
-		// [1,1,0]  [[[num,num][num,num
-		// [0,0,1]  [[[num,num][num,num]][[num
-		// [1,0,1]  [[[num,num][num,num]][[num,num
-		// [0,1,1]  [[[num,num][num,num]][[num,num][num
-		// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
-		long storageSize = storage.size();
-		for (long i = 0; i < storageSize; i++) {
-			storage.get(i, tmp);
-			IndexUtils.longToIntegerIndex(multipliers, dims.length, storageSize, i, index);
-			int j = 0;
-			while (j < index.numDimensions() && index.get(j++) == 0)
-				builder.append('[');
-			if (index.get(0) != 0)
-				builder.append(',');
-			builder.append('{');
-			builder.append(tmp.r());
-			builder.append(',');
-			builder.append(tmp.i());
-			builder.append(',');
-			builder.append(tmp.j());
-			builder.append(',');
-			builder.append(tmp.k());
-			builder.append(',');
-			builder.append(tmp.l());
-			builder.append(',');
-			builder.append(tmp.i0());
-			builder.append(',');
-			builder.append(tmp.j0());
-			builder.append(',');
-			builder.append(tmp.k0());
-			builder.append('}');
-			j = 0;
-			while (j < index.numDimensions() && index.get(j) == (dims[j++]-1))
-				builder.append(']');
-		}
-		return builder.toString();
-	}
+	private void appendTensor(StringBuilder sb, OctonionFloat64Member tmp, IntegerIndex index, int axis) {
 
-	@Override
-	public int numDimensions() {
-		return dims.length;
-	}
+		if (axis == rank()) {
+	        getV(index, tmp);
+	        sb.append("{");
+	        sb.append(tmp.r());
+	        sb.append(",");
+	        sb.append(tmp.i());
+	        sb.append(",");
+	        sb.append(tmp.j());
+	        sb.append(",");
+	        sb.append(tmp.k());
+	        sb.append(",");
+	        sb.append(tmp.l());
+	        sb.append(",");
+	        sb.append(tmp.i0());
+	        sb.append(",");
+	        sb.append(tmp.j0());
+	        sb.append(",");
+	        sb.append(tmp.k0());
+	        sb.append("}");
+	        return;
+	    }
 
-	@Override
-	public void reshape(long[] dims) {
-		// the idea here is to change dims and preserve values that
-		// overlap old dims / new dims.
-		if (Arrays.equals(this.dims, dims)) return;
-		// the previous line makes sure that tensor add(a,a,a) will work
-		// TODO
-		throw new IllegalArgumentException("to implement");
-	}
-
-	@Override
-	public long dimension(int d) {
-		if (d < 0)
-			throw new IllegalArgumentException("can't query negative dimension");
-		if (d >= dims.length) return 1;
-		return dims[d];
+	    sb.append('[');
+	    long n = axisSize(axis);
+	    for (long i = 0; i < n; i++) {
+	        if (i > 0) sb.append(',');
+	        index.set(axis, i);
+	        appendTensor(sb, tmp, index, axis + 1);
+	    }
+	    sb.append(']');
 	}
 	
+	// iterate values/indices and write numbers, brackets, and commas in correct order
+	// [2,2,2] dims
+	// [0,0,0]  [[[num
+	// [1,0,0]  [[[num,num
+	// [0,1,0]  [[[num,num][num
+	// [1,1,0]  [[[num,num][num,num
+	// [0,0,1]  [[[num,num][num,num]][[num
+	// [1,0,1]  [[[num,num][num,num]][[num,num
+	// [0,1,1]  [[[num,num][num,num]][[num,num][num
+	// [1,1,1]  [[[num,num][num,num]][[num,num][num,num]]]
+
+	@Override
+	public String toString() {
+
+		StringBuilder sb = new StringBuilder();
+	    OctonionFloat64Member tmp = new OctonionFloat64Member();
+
+	    if (rank() == 0) {
+	    	storage.get(0, tmp);
+	        sb.append("{");
+	        sb.append(tmp.r());
+	        sb.append(",");
+	        sb.append(tmp.i());
+	        sb.append(",");
+	        sb.append(tmp.j());
+	        sb.append(",");
+	        sb.append(tmp.k());
+	        sb.append(",");
+	        sb.append(tmp.l());
+	        sb.append(",");
+	        sb.append(tmp.i0());
+	        sb.append(",");
+	        sb.append(tmp.j0());
+	        sb.append(",");
+	        sb.append(tmp.k0());
+	        sb.append("}");
+	        return sb.toString();
+	    }
+
+	    IntegerIndex idx = new IntegerIndex(rank());
+	    appendTensor(sb, tmp, idx, 0);
+	    return sb.toString();
+	}
+
 	private static final ThreadLocal<OctonionFloat64Member> tmpOct =
 			new ThreadLocal<OctonionFloat64Member>()
 	{
@@ -520,34 +589,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetByte(IntegerIndex index, int component, byte v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v);
-				else
-					tmp.setI(v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v);
-				else
-					tmp.setK(v);
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v);
-				else
-					tmp.setI0(v);
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v);
-				else
-					tmp.setK0(v);
-			}
-		}
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		else if (component == 2)
+			tmp.setJ(v);
+		else if (component == 3)
+			tmp.setK(v);
+		else if (component == 4)
+			tmp.setL(v);
+		else if (component == 5)
+			tmp.setI0(v);
+		else if (component == 6)
+			tmp.setJ0(v);
+		else if (component == 7)
+			tmp.setK0(v);
 		setV(index, tmp);
 	}
 
@@ -555,34 +612,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetShort(IntegerIndex index, int component, short v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v);
-				else
-					tmp.setI(v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v);
-				else
-					tmp.setK(v);
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v);
-				else
-					tmp.setI0(v);
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v);
-				else
-					tmp.setK0(v);
-			}
-		}
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		else if (component == 2)
+			tmp.setJ(v);
+		else if (component == 3)
+			tmp.setK(v);
+		else if (component == 4)
+			tmp.setL(v);
+		else if (component == 5)
+			tmp.setI0(v);
+		else if (component == 6)
+			tmp.setJ0(v);
+		else if (component == 7)
+			tmp.setK0(v);
 		setV(index, tmp);
 	}
 
@@ -590,34 +635,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetInt(IntegerIndex index, int component, int v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v);
-				else
-					tmp.setI(v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v);
-				else
-					tmp.setK(v);
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v);
-				else
-					tmp.setI0(v);
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v);
-				else
-					tmp.setK0(v);
-			}
-		}
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		else if (component == 2)
+			tmp.setJ(v);
+		else if (component == 3)
+			tmp.setK(v);
+		else if (component == 4)
+			tmp.setL(v);
+		else if (component == 5)
+			tmp.setI0(v);
+		else if (component == 6)
+			tmp.setJ0(v);
+		else if (component == 7)
+			tmp.setK0(v);
 		setV(index, tmp);
 	}
 
@@ -625,34 +658,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetLong(IntegerIndex index, int component, long v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v);
-				else
-					tmp.setI(v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v);
-				else
-					tmp.setK(v);
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v);
-				else
-					tmp.setI0(v);
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v);
-				else
-					tmp.setK0(v);
-			}
-		}
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		else if (component == 2)
+			tmp.setJ(v);
+		else if (component == 3)
+			tmp.setK(v);
+		else if (component == 4)
+			tmp.setL(v);
+		else if (component == 5)
+			tmp.setI0(v);
+		else if (component == 6)
+			tmp.setJ0(v);
+		else if (component == 7)
+			tmp.setK0(v);
 		setV(index, tmp);
 	}
 
@@ -660,34 +681,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetFloat(IntegerIndex index, int component, float v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v);
-				else
-					tmp.setI(v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v);
-				else
-					tmp.setK(v);
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v);
-				else
-					tmp.setI0(v);
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v);
-				else
-					tmp.setK0(v);
-			}
-		}
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		else if (component == 2)
+			tmp.setJ(v);
+		else if (component == 3)
+			tmp.setK(v);
+		else if (component == 4)
+			tmp.setL(v);
+		else if (component == 5)
+			tmp.setI0(v);
+		else if (component == 6)
+			tmp.setJ0(v);
+		else if (component == 7)
+			tmp.setK0(v);
 		setV(index, tmp);
 	}
 
@@ -695,34 +704,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetDouble(IntegerIndex index, int component, double v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v);
-				else
-					tmp.setI(v);
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v);
-				else
-					tmp.setK(v);
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v);
-				else
-					tmp.setI0(v);
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v);
-				else
-					tmp.setK0(v);
-			}
-		}
+		if (component == 0)
+			tmp.setR(v);
+		else if (component == 1)
+			tmp.setI(v);
+		else if (component == 2)
+			tmp.setJ(v);
+		else if (component == 3)
+			tmp.setK(v);
+		else if (component == 4)
+			tmp.setL(v);
+		else if (component == 5)
+			tmp.setI0(v);
+		else if (component == 6)
+			tmp.setJ0(v);
+		else if (component == 7)
+			tmp.setK0(v);
 		setV(index, tmp);
 	}
 
@@ -730,34 +727,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetBigInteger(IntegerIndex index, int component, BigInteger v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v.doubleValue());
-				else
-					tmp.setI(v.doubleValue());
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v.doubleValue());
-				else
-					tmp.setK(v.doubleValue());
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v.doubleValue());
-				else
-					tmp.setI0(v.doubleValue());
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v.doubleValue());
-				else
-					tmp.setK0(v.doubleValue());
-			}
-		}
+		if (component == 0)
+			tmp.setR(v.doubleValue());
+		else if (component == 1)
+			tmp.setI(v.doubleValue());
+		else if (component == 2)
+			tmp.setJ(v.doubleValue());
+		else if (component == 3)
+			tmp.setK(v.doubleValue());
+		else if (component == 4)
+			tmp.setL(v.doubleValue());
+		else if (component == 5)
+			tmp.setI0(v.doubleValue());
+		else if (component == 6)
+			tmp.setJ0(v.doubleValue());
+		else if (component == 7)
+			tmp.setK0(v.doubleValue());
 		setV(index, tmp);
 	}
 
@@ -765,40 +750,28 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public void primComponentSetBigDecimal(IntegerIndex index, int component, BigDecimal v) {
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					tmp.setR(v.doubleValue());
-				else
-					tmp.setI(v.doubleValue());
-			}
-			else { // component >= 2
-				if (component == 2)
-					tmp.setJ(v.doubleValue());
-				else
-					tmp.setK(v.doubleValue());
-			}
-		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					tmp.setL(v.doubleValue());
-				else
-					tmp.setI0(v.doubleValue());
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					tmp.setJ0(v.doubleValue());
-				else
-					tmp.setK0(v.doubleValue());
-			}
-		}
+		if (component == 0)
+			tmp.setR(v.doubleValue());
+		else if (component == 1)
+			tmp.setI(v.doubleValue());
+		else if (component == 2)
+			tmp.setJ(v.doubleValue());
+		else if (component == 3)
+			tmp.setK(v.doubleValue());
+		else if (component == 4)
+			tmp.setL(v.doubleValue());
+		else if (component == 5)
+			tmp.setI0(v.doubleValue());
+		else if (component == 6)
+			tmp.setJ0(v.doubleValue());
+		else if (component == 7)
+			tmp.setK0(v.doubleValue());
 		setV(index, tmp);
 	}
 
 	@Override
 	public void primComponentSetByteSafe(IntegerIndex index, int component, byte v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -806,41 +779,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v);
-					else
-						tmp.setI(v);
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v);
-					else
-						tmp.setK(v);
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v);
-					else
-						tmp.setI0(v);
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v);
-					else
-						tmp.setK0(v);
-				}
-			}
+			if (component == 0)
+				tmp.setR(v);
+			else if (component == 1)
+				tmp.setI(v);
+			else if (component == 2)
+				tmp.setJ(v);
+			else if (component == 3)
+				tmp.setK(v);
+			else if (component == 4)
+				tmp.setL(v);
+			else if (component == 5)
+				tmp.setI0(v);
+			else if (component == 6)
+				tmp.setJ0(v);
+			else if (component == 7)
+				tmp.setK0(v);
 			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetShortSafe(IntegerIndex index, int component, short v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -848,41 +809,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v);
-					else
-						tmp.setI(v);
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v);
-					else
-						tmp.setK(v);
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v);
-					else
-						tmp.setI0(v);
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v);
-					else
-						tmp.setK0(v);
-				}
-			}
+			if (component == 0)
+				tmp.setR(v);
+			else if (component == 1)
+				tmp.setI(v);
+			else if (component == 2)
+				tmp.setJ(v);
+			else if (component == 3)
+				tmp.setK(v);
+			else if (component == 4)
+				tmp.setL(v);
+			else if (component == 5)
+				tmp.setI0(v);
+			else if (component == 6)
+				tmp.setJ0(v);
+			else if (component == 7)
+				tmp.setK0(v);
 			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetIntSafe(IntegerIndex index, int component, int v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -890,41 +839,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v);
-					else
-						tmp.setI(v);
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v);
-					else
-						tmp.setK(v);
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v);
-					else
-						tmp.setI0(v);
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v);
-					else
-						tmp.setK0(v);
-				}
-			}
+			if (component == 0)
+				tmp.setR(v);
+			else if (component == 1)
+				tmp.setI(v);
+			else if (component == 2)
+				tmp.setJ(v);
+			else if (component == 3)
+				tmp.setK(v);
+			else if (component == 4)
+				tmp.setL(v);
+			else if (component == 5)
+				tmp.setI0(v);
+			else if (component == 6)
+				tmp.setJ0(v);
+			else if (component == 7)
+				tmp.setK0(v);
 			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetLongSafe(IntegerIndex index, int component, long v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -932,41 +869,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v);
-					else
-						tmp.setI(v);
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v);
-					else
-						tmp.setK(v);
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v);
-					else
-						tmp.setI0(v);
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v);
-					else
-						tmp.setK0(v);
-				}
-			}
+			if (component == 0)
+				tmp.setR(v);
+			else if (component == 1)
+				tmp.setI(v);
+			else if (component == 2)
+				tmp.setJ(v);
+			else if (component == 3)
+				tmp.setK(v);
+			else if (component == 4)
+				tmp.setL(v);
+			else if (component == 5)
+				tmp.setI0(v);
+			else if (component == 6)
+				tmp.setJ0(v);
+			else if (component == 7)
+				tmp.setK0(v);
 			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetFloatSafe(IntegerIndex index, int component, float v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -974,41 +899,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v);
-					else
-						tmp.setI(v);
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v);
-					else
-						tmp.setK(v);
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v);
-					else
-						tmp.setI0(v);
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v);
-					else
-						tmp.setK0(v);
-				}
-			}
+			if (component == 0)
+				tmp.setR(v);
+			else if (component == 1)
+				tmp.setI(v);
+			else if (component == 2)
+				tmp.setJ(v);
+			else if (component == 3)
+				tmp.setK(v);
+			else if (component == 4)
+				tmp.setL(v);
+			else if (component == 5)
+				tmp.setI0(v);
+			else if (component == 6)
+				tmp.setJ0(v);
+			else if (component == 7)
+				tmp.setK0(v);
 			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetDoubleSafe(IntegerIndex index, int component, double v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1016,41 +929,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v);
-					else
-						tmp.setI(v);
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v);
-					else
-						tmp.setK(v);
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v);
-					else
-						tmp.setI0(v);
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v);
-					else
-						tmp.setK0(v);
-				}
-			}
+			if (component == 0)
+				tmp.setR(v);
+			else if (component == 1)
+				tmp.setI(v);
+			else if (component == 2)
+				tmp.setJ(v);
+			else if (component == 3)
+				tmp.setK(v);
+			else if (component == 4)
+				tmp.setL(v);
+			else if (component == 5)
+				tmp.setI0(v);
+			else if (component == 6)
+				tmp.setJ0(v);
+			else if (component == 7)
+				tmp.setK0(v);
 			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetBigIntegerSafe(IntegerIndex index, int component, BigInteger v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1058,40 +959,29 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v.doubleValue());
-					else
-						tmp.setI(v.doubleValue());
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v.doubleValue());
-					else
-						tmp.setK(v.doubleValue());
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v.doubleValue());
-					else
-						tmp.setI0(v.doubleValue());
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v.doubleValue());
-					else
-						tmp.setK0(v.doubleValue());
-				}
-			}
+			if (component == 0)
+				tmp.setR(v.doubleValue());
+			else if (component == 1)
+				tmp.setI(v.doubleValue());
+			else if (component == 2)
+				tmp.setJ(v.doubleValue());
+			else if (component == 3)
+				tmp.setK(v.doubleValue());
+			else if (component == 4)
+				tmp.setL(v.doubleValue());
+			else if (component == 5)
+				tmp.setI0(v.doubleValue());
+			else if (component == 6)
+				tmp.setJ0(v.doubleValue());
+			else if (component == 7)
+				tmp.setK0(v.doubleValue());
+			setV(index, tmp);
 		}
 	}
 
 	@Override
 	public void primComponentSetBigDecimalSafe(IntegerIndex index, int component, BigDecimal v) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			if (v.signum() != 0)
 				throw new IllegalArgumentException(
 						"cannot set nonzero value outside extents");
@@ -1099,34 +989,22 @@ public final class OctonionFloat64GeneralTensorProductMember
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						tmp.setR(v.doubleValue());
-					else
-						tmp.setI(v.doubleValue());
-				}
-				else { // component >= 2
-					if (component == 2)
-						tmp.setJ(v.doubleValue());
-					else
-						tmp.setK(v.doubleValue());
-				}
-			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						tmp.setL(v.doubleValue());
-					else
-						tmp.setI0(v.doubleValue());
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						tmp.setJ0(v.doubleValue());
-					else
-						tmp.setK0(v.doubleValue());
-				}
-			}
+			if (component == 0)
+				tmp.setR(v.doubleValue());
+			else if (component == 1)
+				tmp.setI(v.doubleValue());
+			else if (component == 2)
+				tmp.setJ(v.doubleValue());
+			else if (component == 3)
+				tmp.setK(v.doubleValue());
+			else if (component == 4)
+				tmp.setL(v.doubleValue());
+			else if (component == 5)
+				tmp.setI0(v.doubleValue());
+			else if (component == 6)
+				tmp.setJ0(v.doubleValue());
+			else if (component == 7)
+				tmp.setK0(v.doubleValue());
 			setV(index, tmp);
 		}
 	}
@@ -1138,34 +1016,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return (byte) tmp.r();
-				else
-					return (byte) tmp.i();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return (byte) tmp.j();
-				else
-					return (byte) tmp.k();
-			}
+		if (component == 0) {
+			return (byte) tmp.r();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return (byte) tmp.l();
-				else
-					return (byte) tmp.i0();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return (byte) tmp.j0();
-				else
-					return (byte) tmp.k0();
-			}
+		else if (component == 1) {
+			return (byte) tmp.i();
 		}
+		else if (component == 2) {
+			return (byte) tmp.j();
+		}
+		else if (component == 3) {
+			return (byte) tmp.k();
+		}
+		else if (component == 4) {
+			return (byte) tmp.l();
+		}
+		else if (component == 5) {
+			return (byte) tmp.i0();
+		}
+		else if (component == 6) {
+			return (byte) tmp.j0();
+		}
+		else if (component == 7) {
+			return (byte) tmp.k0();
+		}
+		return 0;
 	}
 
 	@Override
@@ -1175,34 +1050,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return (short) tmp.r();
-				else
-					return (short) tmp.i();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return (short) tmp.j();
-				else
-					return (short) tmp.k();
-			}
+		if (component == 0) {
+			return (short) tmp.r();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return (short) tmp.l();
-				else
-					return (short) tmp.i0();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return (short) tmp.j0();
-				else
-					return (short) tmp.k0();
-			}
+		else if (component == 1) {
+			return (short) tmp.i();
 		}
+		else if (component == 2) {
+			return (short) tmp.j();
+		}
+		else if (component == 3) {
+			return (short) tmp.k();
+		}
+		else if (component == 4) {
+			return (short) tmp.l();
+		}
+		else if (component == 5) {
+			return (short) tmp.i0();
+		}
+		else if (component == 6) {
+			return (short) tmp.j0();
+		}
+		else if (component == 7) {
+			return (short) tmp.k0();
+		}
+		return 0;
 	}
 
 	@Override
@@ -1212,34 +1084,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return (int) tmp.r();
-				else
-					return (int) tmp.i();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return (int) tmp.j();
-				else
-					return (int) tmp.k();
-			}
+		if (component == 0) {
+			return (int) tmp.r();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return (int) tmp.l();
-				else
-					return (int) tmp.i0();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return (int) tmp.j0();
-				else
-					return (int) tmp.k0();
-			}
+		else if (component == 1) {
+			return (int) tmp.i();
 		}
+		else if (component == 2) {
+			return (int) tmp.j();
+		}
+		else if (component == 3) {
+			return (int) tmp.k();
+		}
+		else if (component == 4) {
+			return (int) tmp.l();
+		}
+		else if (component == 5) {
+			return (int) tmp.i0();
+		}
+		else if (component == 6) {
+			return (int) tmp.j0();
+		}
+		else if (component == 7) {
+			return (int) tmp.k0();
+		}
+		return 0;
 	}
 
 	@Override
@@ -1249,34 +1118,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return (long) tmp.r();
-				else
-					return (long) tmp.i();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return (long) tmp.j();
-				else
-					return (long) tmp.k();
-			}
+		if (component == 0) {
+			return (long) tmp.r();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return (long) tmp.l();
-				else
-					return (long) tmp.i0();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return (long) tmp.j0();
-				else
-					return (long) tmp.k0();
-			}
+		else if (component == 1) {
+			return (long) tmp.i();
 		}
+		else if (component == 2) {
+			return (long) tmp.j();
+		}
+		else if (component == 3) {
+			return (long) tmp.k();
+		}
+		else if (component == 4) {
+			return (long) tmp.l();
+		}
+		else if (component == 5) {
+			return (long) tmp.i0();
+		}
+		else if (component == 6) {
+			return (long) tmp.j0();
+		}
+		else if (component == 7) {
+			return (long) tmp.k0();
+		}
+		return 0;
 	}
 
 	@Override
@@ -1286,34 +1152,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return (float) tmp.r();
-				else
-					return (float) tmp.i();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return (float) tmp.j();
-				else
-					return (float) tmp.k();
-			}
+		if (component == 0) {
+			return (float) tmp.r();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return (float) tmp.l();
-				else
-					return (float) tmp.i0();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return (float) tmp.j0();
-				else
-					return (float) tmp.k0();
-			}
+		else if (component == 1) {
+			return (float) tmp.i();
 		}
+		else if (component == 2) {
+			return (float) tmp.j();
+		}
+		else if (component == 3) {
+			return (float) tmp.k();
+		}
+		else if (component == 4) {
+			return (float) tmp.l();
+		}
+		else if (component == 5) {
+			return (float) tmp.i0();
+		}
+		else if (component == 6) {
+			return (float) tmp.j0();
+		}
+		else if (component == 7) {
+			return (float) tmp.k0();
+		}
+		return 0;
 	}
 
 	@Override
@@ -1323,34 +1186,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return tmp.r();
-				else
-					return tmp.i();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return tmp.j();
-				else
-					return tmp.k();
-			}
+		if (component == 0) {
+			return tmp.r();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return tmp.l();
-				else
-					return tmp.i0();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return tmp.j0();
-				else
-					return tmp.k0();
-			}
+		else if (component == 1) {
+			return tmp.i();
 		}
+		else if (component == 2) {
+			return tmp.j();
+		}
+		else if (component == 3) {
+			return tmp.k();
+		}
+		else if (component == 4) {
+			return tmp.l();
+		}
+		else if (component == 5) {
+			return tmp.i0();
+		}
+		else if (component == 6) {
+			return tmp.j0();
+		}
+		else if (component == 7) {
+			return tmp.k0();
+		}
+		return 0;
 	}
 
 	@Override
@@ -1360,34 +1220,31 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return BigDecimal.valueOf(tmp.r()).toBigInteger();
-				else
-					return BigDecimal.valueOf(tmp.i()).toBigInteger();
-			}
-			else { // component >= 2
-				if (component == 2)
-					return BigDecimal.valueOf(tmp.j()).toBigInteger();
-				else
-					return BigDecimal.valueOf(tmp.k()).toBigInteger();
-			}
+		if (component == 0) {
+			return BigDecimal.valueOf(tmp.r()).toBigInteger();
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return BigDecimal.valueOf(tmp.l()).toBigInteger();
-				else
-					return BigDecimal.valueOf(tmp.i0()).toBigInteger();
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return BigDecimal.valueOf(tmp.j0()).toBigInteger();
-				else
-					return BigDecimal.valueOf(tmp.k0()).toBigInteger();
-			}
+		else if (component == 1) {
+			return BigDecimal.valueOf(tmp.i()).toBigInteger();
 		}
+		else if (component == 2) {
+			return BigDecimal.valueOf(tmp.j()).toBigInteger();
+		}
+		else if (component == 3) {
+			return BigDecimal.valueOf(tmp.k()).toBigInteger();
+		}
+		else if (component == 4) {
+			return BigDecimal.valueOf(tmp.l()).toBigInteger();
+		}
+		else if (component == 5) {
+			return BigDecimal.valueOf(tmp.i0()).toBigInteger();
+		}
+		else if (component == 6) {
+			return BigDecimal.valueOf(tmp.j0()).toBigInteger();
+		}
+		else if (component == 7) {
+			return BigDecimal.valueOf(tmp.k0()).toBigInteger();
+		}
+		return BigInteger.ZERO;
 	}
 
 	@Override
@@ -1397,345 +1254,318 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"negative component index error");
 		OctonionFloat64Member tmp = tmpOct.get();
 		getV(index, tmp);
-		if (component < 4) {
-			if (component < 2) {
-				if (component == 0)
-					return BigDecimal.valueOf(tmp.r());
-				else
-					return BigDecimal.valueOf(tmp.i());
-			}
-			else { // component >= 2
-				if (component == 2)
-					return BigDecimal.valueOf(tmp.j());
-				else
-					return BigDecimal.valueOf(tmp.k());
-			}
+		if (component == 0) {
+			return BigDecimal.valueOf(tmp.r());
 		}
-		else { // component == 4 or 5 or 6 or 7
-			if (component < 6) {
-				if (component == 4)
-					return BigDecimal.valueOf(tmp.l());
-				else
-					return BigDecimal.valueOf(tmp.i0());
-			}
-			else { // component == 6 or 7
-				if (component == 6)
-					return BigDecimal.valueOf(tmp.j0());
-				else
-					return BigDecimal.valueOf(tmp.k0());
-			}
+		else if (component == 1) {
+			return BigDecimal.valueOf(tmp.i());
 		}
+		else if (component == 2) {
+			return BigDecimal.valueOf(tmp.j());
+		}
+		else if (component == 3) {
+			return BigDecimal.valueOf(tmp.k());
+		}
+		else if (component == 4) {
+			return BigDecimal.valueOf(tmp.l());
+		}
+		else if (component == 5) {
+			return BigDecimal.valueOf(tmp.i0());
+		}
+		else if (component == 6) {
+			return BigDecimal.valueOf(tmp.j0());
+		}
+		else if (component == 7) {
+			return BigDecimal.valueOf(tmp.k0());
+		}
+		return BigDecimal.ZERO;
 	}
 
 	@Override
 	public byte primComponentGetAsByteSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return (byte) tmp.r();
-					else
-						return (byte) tmp.i();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return (byte) tmp.j();
-					else
-						return (byte) tmp.k();
-				}
+			if (component == 0) {
+				return (byte) tmp.r();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return (byte) tmp.l();
-					else
-						return (byte) tmp.i0();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return (byte) tmp.j0();
-					else
-						return (byte) tmp.k0();
-				}
+			else if (component == 1) {
+				return (byte) tmp.i();
 			}
+			else if (component == 3) {
+				return (byte) tmp.j();
+			}
+			else if (component == 4) {
+				return (byte) tmp.k();
+			}
+			else if (component == 4) {
+				return (byte) tmp.l();
+			}
+			else if (component == 5) {
+				return (byte) tmp.i0();
+			}
+			else if (component == 6) {
+				return (byte) tmp.j0();
+			}
+			else if (component == 7) {
+				return (byte) tmp.k0();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public short primComponentGetAsShortSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return (short) tmp.r();
-					else
-						return (short) tmp.i();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return (short) tmp.j();
-					else
-						return (short) tmp.k();
-				}
+			if (component == 0) {
+				return (short) tmp.r();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return (short) tmp.l();
-					else
-						return (short) tmp.i0();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return (short) tmp.j0();
-					else
-						return (short) tmp.k0();
-				}
+			else if (component == 1) {
+				return (short) tmp.i();
 			}
+			else if (component == 2) {
+				return (short) tmp.j();
+			}
+			else if (component == 3) {
+				return (short) tmp.k();
+			}
+			else if (component == 4) {
+				return (short) tmp.l();
+			}
+			else if (component == 5) {
+				return (short) tmp.i0();
+			}
+			else if (component == 6) {
+				return (short) tmp.j0();
+			}
+			else if (component == 7) {
+				return (short) tmp.k0();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public int primComponentGetAsIntSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return (int) tmp.r();
-					else
-						return (int) tmp.i();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return (int) tmp.j();
-					else
-						return (int) tmp.k();
-				}
+			if (component == 0) {
+				return (int) tmp.r();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return (int) tmp.l();
-					else
-						return (int) tmp.i0();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return (int) tmp.j0();
-					else
-						return (int) tmp.k0();
-				}
+			else if (component == 1) {
+				return (int) tmp.i();
 			}
+			else if (component == 2) {
+				return (int) tmp.j();
+			}
+			else if (component == 3) {
+				return (int) tmp.k();
+			}
+			else if (component == 4) {
+				return (int) tmp.l();
+			}
+			else if (component == 5) {
+				return (int) tmp.i0();
+			}
+			else if (component == 6) {
+				return (int) tmp.j0();
+			}
+			else if (component == 7) {
+				return (int) tmp.k0();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public long primComponentGetAsLongSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return (long) tmp.r();
-					else
-						return (long) tmp.i();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return (long) tmp.j();
-					else
-						return (long) tmp.k();
-				}
+			if (component == 0) {
+				return (long) tmp.r();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return (long) tmp.l();
-					else
-						return (long) tmp.i0();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return (long) tmp.j0();
-					else
-						return (long) tmp.k0();
-				}
+			else if (component == 1) {
+				return (long) tmp.i();
 			}
+			else if (component == 2) {
+				return (long) tmp.j();
+			}
+			else if (component == 3) {
+				return (long) tmp.k();
+			}
+			else if (component == 4) {
+				return (long) tmp.l();
+			}
+			else if (component == 5) {
+				return (long) tmp.i0();
+			}
+			else if (component == 6) {
+				return (long) tmp.j0();
+			}
+			else if (component == 7) {
+				return (long) tmp.k0();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public float primComponentGetAsFloatSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return (float) tmp.r();
-					else
-						return (float) tmp.i();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return (float) tmp.j();
-					else
-						return (float) tmp.k();
-				}
+			if (component == 0) {
+				return (float) tmp.r();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return (float) tmp.l();
-					else
-						return (float) tmp.i0();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return (float) tmp.j0();
-					else
-						return (float) tmp.k0();
-				}
+			else if (component == 1) {
+				return (float) tmp.i();
 			}
+			else if (component == 2) {
+				return (float) tmp.j();
+			}
+			else if (component == 3) {
+				return (float) tmp.k();
+			}
+			else if (component == 4) {
+				return (float) tmp.l();
+			}
+			else if (component == 5) {
+				return (float) tmp.i0();
+			}
+			else if (component == 6) {
+				return (float) tmp.j0();
+			}
+			else if (component == 7) {
+				return (float) tmp.k0();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public double primComponentGetAsDoubleSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return 0;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return tmp.r();
-					else
-						return tmp.i();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return tmp.j();
-					else
-						return tmp.k();
-				}
+			if (component == 0) {
+				return tmp.r();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return tmp.l();
-					else
-						return tmp.i0();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return tmp.j0();
-					else
-						return tmp.k0();
-				}
+			else if (component == 1) {
+				return tmp.i();
 			}
+			else if (component == 2) {
+				return tmp.j();
+			}
+			else if (component == 3) {
+				return tmp.k();
+			}
+			else if (component == 4) {
+				return tmp.l();
+			}
+			else if (component == 5) {
+				return tmp.i0();
+			}
+			else if (component == 6) {
+				return tmp.j0();
+			}
+			else if (component == 7) {
+				return tmp.k0();
+			}
+			return 0;
 		}
 	}
 
 	@Override
 	public BigInteger primComponentGetAsBigIntegerSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return BigInteger.ZERO;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return BigDecimal.valueOf(tmp.r()).toBigInteger();
-					else
-						return BigDecimal.valueOf(tmp.i()).toBigInteger();
-				}
-				else { // component >= 2
-					if (component == 2)
-						return BigDecimal.valueOf(tmp.j()).toBigInteger();
-					else
-						return BigDecimal.valueOf(tmp.k()).toBigInteger();
-				}
+			if (component == 0) {
+				return BigDecimal.valueOf(tmp.r()).toBigInteger();
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return BigDecimal.valueOf(tmp.l()).toBigInteger();
-					else
-						return BigDecimal.valueOf(tmp.i0()).toBigInteger();
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return BigDecimal.valueOf(tmp.j0()).toBigInteger();
-					else
-						return BigDecimal.valueOf(tmp.k0()).toBigInteger();
-				}
+			else if (component == 1) {
+				return BigDecimal.valueOf(tmp.i()).toBigInteger();
 			}
+			else if (component == 2) {
+				return BigDecimal.valueOf(tmp.j()).toBigInteger();
+			}
+			else if (component == 3) {
+				return BigDecimal.valueOf(tmp.k()).toBigInteger();
+			}
+			else if (component == 4) {
+				return BigDecimal.valueOf(tmp.l()).toBigInteger();
+			}
+			else if (component == 5) {
+				return BigDecimal.valueOf(tmp.i0()).toBigInteger();
+			}
+			else if (component == 6) {
+				return BigDecimal.valueOf(tmp.j0()).toBigInteger();
+			}
+			else if (component == 7) {
+				return BigDecimal.valueOf(tmp.k0()).toBigInteger();
+			}
+			return BigInteger.ZERO;
 		}
 	}
 
 	@Override
 	public BigDecimal primComponentGetAsBigDecimalSafe(IntegerIndex index, int component) {
-		if (IndexUtils.componentOob(dims, index, component, 8)) {
+		if (IndexUtils.componentOob(axisLengths, index, component, 1)) {
 			return BigDecimal.ZERO;
 		}
 		else {
 			OctonionFloat64Member tmp = tmpOct.get();
 			getV(index, tmp);
-			if (component < 4) {
-				if (component < 2) {
-					if (component == 0)
-						return BigDecimal.valueOf(tmp.r());
-					else
-						return BigDecimal.valueOf(tmp.i());
-				}
-				else { // component >= 2
-					if (component == 2)
-						return BigDecimal.valueOf(tmp.j());
-					else
-						return BigDecimal.valueOf(tmp.k());
-				}
+			if (component == 0) {
+				return BigDecimal.valueOf(tmp.r());
 			}
-			else { // component == 4 or 5 or 6 or 7
-				if (component < 6) {
-					if (component == 4)
-						return BigDecimal.valueOf(tmp.l());
-					else
-						return BigDecimal.valueOf(tmp.i0());
-				}
-				else { // component == 6 or 7
-					if (component == 6)
-						return BigDecimal.valueOf(tmp.j0());
-					else
-						return BigDecimal.valueOf(tmp.k0());
-				}
+			else if (component == 1) {
+				return BigDecimal.valueOf(tmp.i());
 			}
+			else if (component == 2) {
+				return BigDecimal.valueOf(tmp.j());
+			}
+			else if (component == 3) {
+				return BigDecimal.valueOf(tmp.k());
+			}
+			else if (component == 4) {
+				return BigDecimal.valueOf(tmp.l());
+			}
+			else if (component == 5) {
+				return BigDecimal.valueOf(tmp.i0());
+			}
+			else if (component == 6) {
+				return BigDecimal.valueOf(tmp.j0());
+			}
+			else if (component == 7) {
+				return BigDecimal.valueOf(tmp.k0());
+			}
+			return BigDecimal.ZERO;
 		}
 	}
 
@@ -1754,7 +1584,11 @@ public final class OctonionFloat64GeneralTensorProductMember
 	@Override
 	public int hashCode() {
 		OctonionFloat64Member tmp = G.ODBL.construct();
-		long len = dimension(0);
+		long len;
+		if (rank() == 0)
+			len = 1;
+		else
+			len = axisSize(0);
 		int v = 1;
 		v = Hasher.PRIME * v + Hasher.hashCode(len);
 		if (len > 0) {
@@ -1811,9 +1645,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
 			value.setL(  vals[i + 4] );
-			value.setI0( vals[i + 5] );
-			value.setJ0( vals[i + 6] );
-			value.setK0( vals[i + 7] );
+			value.setI0(  vals[i + 5] );
+			value.setJ0(  vals[i + 6] );
+			value.setK0(  vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1832,9 +1666,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
 			value.setL(  vals[i + 4] );
-			value.setI0( vals[i + 5] );
-			value.setJ0( vals[i + 6] );
-			value.setK0( vals[i + 7] );
+			value.setI0(  vals[i + 5] );
+			value.setJ0(  vals[i + 6] );
+			value.setK0(  vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1853,9 +1687,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
 			value.setL(  vals[i + 4] );
-			value.setI0( vals[i + 5] );
-			value.setJ0( vals[i + 6] );
-			value.setK0( vals[i + 7] );
+			value.setI0(  vals[i + 5] );
+			value.setJ0(  vals[i + 6] );
+			value.setK0(  vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1874,9 +1708,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
 			value.setL(  vals[i + 4] );
-			value.setI0( vals[i + 5] );
-			value.setJ0( vals[i + 6] );
-			value.setK0( vals[i + 7] );
+			value.setI0(  vals[i + 5] );
+			value.setJ0(  vals[i + 6] );
+			value.setK0(  vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1895,9 +1729,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
 			value.setL(  vals[i + 4] );
-			value.setI0( vals[i + 5] );
-			value.setJ0( vals[i + 6] );
-			value.setK0( vals[i + 7] );
+			value.setI0(  vals[i + 5] );
+			value.setJ0(  vals[i + 6] );
+			value.setK0(  vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1916,9 +1750,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2] );
 			value.setK(  vals[i + 3] );
 			value.setL(  vals[i + 4] );
-			value.setI0( vals[i + 5] );
-			value.setJ0( vals[i + 6] );
-			value.setK0( vals[i + 7] );
+			value.setI0(  vals[i + 5] );
+			value.setJ0(  vals[i + 6] );
+			value.setK0(  vals[i + 7] );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1937,9 +1771,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2].doubleValue() );
 			value.setK(  vals[i + 3].doubleValue() );
 			value.setL(  vals[i + 4].doubleValue() );
-			value.setI0( vals[i + 5].doubleValue() );
-			value.setJ0( vals[i + 6].doubleValue() );
-			value.setK0( vals[i + 7].doubleValue() );
+			value.setI0(  vals[i + 5].doubleValue() );
+			value.setJ0(  vals[i + 6].doubleValue() );
+			value.setK0(  vals[i + 7].doubleValue() );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1958,9 +1792,9 @@ public final class OctonionFloat64GeneralTensorProductMember
 			value.setJ(  vals[i + 2].doubleValue() );
 			value.setK(  vals[i + 3].doubleValue() );
 			value.setL(  vals[i + 4].doubleValue() );
-			value.setI0( vals[i + 5].doubleValue() );
-			value.setJ0( vals[i + 6].doubleValue() );
-			value.setK0( vals[i + 7].doubleValue() );
+			value.setI0(  vals[i + 5].doubleValue() );
+			value.setJ0(  vals[i + 6].doubleValue() );
+			value.setK0(  vals[i + 7].doubleValue() );
 			storage.set(i/componentCount, value);
 		}
 	}
@@ -1969,7 +1803,7 @@ public final class OctonionFloat64GeneralTensorProductMember
 	public double[] getAsDoubleArrayExact() {
 		return getAsDoubleArray();
 	}
-	
+
 	@Override
 	public BigDecimal[] getAsBigDecimalArrayExact() {
 		return getAsBigDecimalArray();
@@ -1982,37 +1816,37 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		byte[] values = new byte[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (byte) value.r();
-			values[k++] = (byte) value.i();
-			values[k++] = (byte) value.j();
-			values[k++] = (byte) value.k();
-			values[k++] = (byte) value.l();
-			values[k++] = (byte) value.i0();
-			values[k++] = (byte) value.j0();
-			values[k++] = (byte) value.k0();
+			values[8*i + 0] = (byte) value.r();
+			values[8*i + 1] = (byte) value.i();
+			values[8*i + 2] = (byte) value.j();
+			values[8*i + 3] = (byte) value.k();
+			values[8*i + 4] = (byte) value.l();
+			values[8*i + 5] = (byte) value.i0();
+			values[8*i + 6] = (byte) value.j0();
+			values[8*i + 7] = (byte) value.k0();
 		}
 		return values;
 	}
 
 	@Override
 	public short[] getAsShortArray() {
-		if (storage.size() > (Integer.MAX_VALUE / 8))
+		if (storage.size() > (Integer.MAX_VALUE / 4))
 			throw new IllegalArgumentException(
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		short[] values = new short[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (short) value.r();
-			values[k++] = (short) value.i();
-			values[k++] = (short) value.j();
-			values[k++] = (short) value.k();
-			values[k++] = (short) value.l();
-			values[k++] = (short) value.i0();
-			values[k++] = (short) value.j0();
-			values[k++] = (short) value.k0();
+			values[8*i + 0] = (short) value.r();
+			values[8*i + 1] = (short) value.i();
+			values[8*i + 2] = (short) value.j();
+			values[8*i + 3] = (short) value.k();
+			values[8*i + 4] = (short) value.l();
+			values[8*i + 5] = (short) value.i0();
+			values[8*i + 6] = (short) value.j0();
+			values[8*i + 7] = (short) value.k0();
 		}
 		return values;
 	}
@@ -2024,16 +1858,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		int[] values = new int[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (int) value.r();
-			values[k++] = (int) value.i();
-			values[k++] = (int) value.j();
-			values[k++] = (int) value.k();
-			values[k++] = (int) value.l();
-			values[k++] = (int) value.i0();
-			values[k++] = (int) value.j0();
-			values[k++] = (int) value.k0();
+			values[8*i + 0] = (int) value.r();
+			values[8*i + 1] = (int) value.i();
+			values[8*i + 2] = (int) value.j();
+			values[8*i + 3] = (int) value.k();
+			values[8*i + 4] = (int) value.l();
+			values[8*i + 5] = (int) value.i0();
+			values[8*i + 6] = (int) value.j0();
+			values[8*i + 7] = (int) value.k0();
 		}
 		return values;
 	}
@@ -2045,16 +1879,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		long[] values = new long[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (long) value.r();
-			values[k++] = (long) value.i();
-			values[k++] = (long) value.j();
-			values[k++] = (long) value.k();
-			values[k++] = (long) value.l();
-			values[k++] = (long) value.i0();
-			values[k++] = (long) value.j0();
-			values[k++] = (long) value.k0();
+			values[8*i + 0] = (long) value.r();
+			values[8*i + 1] = (long) value.i();
+			values[8*i + 2] = (long) value.j();
+			values[8*i + 3] = (long) value.k();
+			values[8*i + 4] = (long) value.l();
+			values[8*i + 5] = (long) value.i0();
+			values[8*i + 6] = (long) value.j0();
+			values[8*i + 7] = (long) value.k0();
 		}
 		return values;
 	}
@@ -2066,16 +1900,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		float[] values = new float[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = (float) value.r();
-			values[k++] = (float) value.i();
-			values[k++] = (float) value.j();
-			values[k++] = (float) value.k();
-			values[k++] = (float) value.l();
-			values[k++] = (float) value.i0();
-			values[k++] = (float) value.j0();
-			values[k++] = (float) value.k0();
+			values[8*i + 0] = (float) value.r();
+			values[8*i + 1] = (float) value.i();
+			values[8*i + 2] = (float) value.j();
+			values[8*i + 3] = (float) value.k();
+			values[8*i + 4] = (float) value.l();
+			values[8*i + 5] = (float) value.i0();
+			values[8*i + 6] = (float) value.j0();
+			values[8*i + 7] = (float) value.k0();
 		}
 		return values;
 	}
@@ -2087,16 +1921,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		double[] values = new double[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = value.r();
-			values[k++] = value.i();
-			values[k++] = value.j();
-			values[k++] = value.k();
-			values[k++] = value.l();
-			values[k++] = value.i0();
-			values[k++] = value.j0();
-			values[k++] = value.k0();
+			values[8*i + 0] = value.r();
+			values[8*i + 1] = value.i();
+			values[8*i + 2] = value.j();
+			values[8*i + 3] = value.k();
+			values[8*i + 4] = value.l();
+			values[8*i + 5] = value.i0();
+			values[8*i + 6] = value.j0();
+			values[8*i + 7] = value.k0();
 		}
 		return values;
 	}
@@ -2108,16 +1942,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		BigInteger[] values = new BigInteger[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.j()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.k()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.l()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.i0()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.j0()).toBigInteger();
-			values[k++] = BigDecimal.valueOf(value.k0()).toBigInteger();
+			values[8*i + 0] = BigDecimal.valueOf(value.r()).toBigInteger();
+			values[8*i + 1] = BigDecimal.valueOf(value.i()).toBigInteger();
+			values[8*i + 2] = BigDecimal.valueOf(value.j()).toBigInteger();
+			values[8*i + 3] = BigDecimal.valueOf(value.k()).toBigInteger();
+			values[8*i + 4] = BigDecimal.valueOf(value.l()).toBigInteger();
+			values[8*i + 5] = BigDecimal.valueOf(value.i0()).toBigInteger();
+			values[8*i + 6] = BigDecimal.valueOf(value.j0()).toBigInteger();
+			values[8*i + 7] = BigDecimal.valueOf(value.k0()).toBigInteger();
 		}
 		return values;
 	}
@@ -2129,16 +1963,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 					"internal data too large to be encoded in an array");
 		OctonionFloat64Member value = G.ODBL.construct();
 		BigDecimal[] values = new BigDecimal[8 * (int) storage.size()];
-		for (int i = 0, k = 0; i < storage.size(); i++) {
+		for (int i = 0; i < storage.size(); i++) {
 			storage.get(i, value);
-			values[k++] = BigDecimal.valueOf(value.r());
-			values[k++] = BigDecimal.valueOf(value.i());
-			values[k++] = BigDecimal.valueOf(value.j());
-			values[k++] = BigDecimal.valueOf(value.k());
-			values[k++] = BigDecimal.valueOf(value.l());
-			values[k++] = BigDecimal.valueOf(value.i0());
-			values[k++] = BigDecimal.valueOf(value.j0());
-			values[k++] = BigDecimal.valueOf(value.k0());
+			values[8*i + 0] = BigDecimal.valueOf(value.r());
+			values[8*i + 1] = BigDecimal.valueOf(value.i());
+			values[8*i + 2] = BigDecimal.valueOf(value.j());
+			values[8*i + 3] = BigDecimal.valueOf(value.k());
+			values[8*i + 4] = BigDecimal.valueOf(value.l());
+			values[8*i + 5] = BigDecimal.valueOf(value.i0());
+			values[8*i + 6] = BigDecimal.valueOf(value.j0());
+			values[8*i + 7] = BigDecimal.valueOf(value.k0());
 		}
 		return values;
 	}
@@ -2151,7 +1985,16 @@ public final class OctonionFloat64GeneralTensorProductMember
 	
 	@Override
 	public OctonionFloat64GeneralTensorProduct getAlgebra() {
-		
+
 		return G.ODBL_TEN;
+	}
+	
+	private static IndexType[] indices(int size, IndexType value) {
+		
+		IndexType[] values = new IndexType[size];
+		for (int i = 0; i < size; i++) {
+			values[i] = value;
+		}
+		return values;
 	}
 }
