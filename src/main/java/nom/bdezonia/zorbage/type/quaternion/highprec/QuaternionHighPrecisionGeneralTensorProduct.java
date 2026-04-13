@@ -83,7 +83,7 @@ public class QuaternionHighPrecisionGeneralTensorProduct
 {
 	@Override
 	public String typeDescription() {
-		return "Arbitrary precision complex tensor";
+		return "Arbitrary precision quaternion tensor";
 	}
 
 	@Override
