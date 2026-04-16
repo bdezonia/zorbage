@@ -36,6 +36,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 
 /**
@@ -52,14 +53,16 @@ public class TestMedianValues {
 		
 		IndexedDataSource<SignedInt32Member> list1 = Storage.allocate(G.INT32.construct(), 
 				new int[] {1,77,1000,44,19,6});
-		MedianValues.compute(G.INT32, list1, result1, result2);
+		IndexedDataSource<SignedInt32Member> work1 = ArrayStorage.allocate(G.INT32.construct(), list1.size());
+		MedianValues.compute(G.INT32, work1, list1, result1, result2);
 		assertTrue(result1.v() != result2.v());
 		assertTrue(result1.v() == 19 || result1.v() == 44);
 		assertTrue(result2.v() == 19 || result2.v() == 44);
 
 		IndexedDataSource<SignedInt32Member> list2 = Storage.allocate(G.INT32.construct(), 
 				new int[] {77,1000,44,19,6});
-		MedianValues.compute(G.INT32, list2, result1, result2);
+		IndexedDataSource<SignedInt32Member> work2 = ArrayStorage.allocate(G.INT32.construct(), list2.size());
+		MedianValues.compute(G.INT32, work2, list2, result1, result2);
 		assertTrue(result1.v() == result2.v());
 		assertTrue(result1.v() == 44 && result2.v() == 44);
 	}

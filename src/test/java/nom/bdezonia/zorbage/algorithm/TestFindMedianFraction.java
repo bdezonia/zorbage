@@ -36,6 +36,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.integer.int8.SignedInt8Member;
 
 /**
@@ -53,14 +54,16 @@ public class TestFindMedianFraction {
 		IndexedDataSource<SignedInt8Member> list1 = Storage.allocate(
 				G.INT8.construct(),
 				new byte[] {1,2,3});
-		FindMedianFraction.compute(G.INT8, list1, numer, denom);
+		IndexedDataSource<SignedInt8Member> work1 = ArrayStorage.allocate(G.INT8.construct(), list1.size());
+		FindMedianFraction.compute(G.INT8, work1, list1, numer, denom);
 		assertEquals(2, numer.v());
 		assertEquals(1, denom.v());
 
 		IndexedDataSource<SignedInt8Member> list2 = Storage.allocate(
 				G.INT8.construct(),
 				new byte[] {1,2,3,4});
-		FindMedianFraction.compute(G.INT8, list2, numer, denom);
+		IndexedDataSource<SignedInt8Member> work2 = ArrayStorage.allocate(G.INT8.construct(), list1.size());
+		FindMedianFraction.compute(G.INT8, work2, list2, numer, denom);
 		assertEquals(5, numer.v());
 		assertEquals(2, denom.v());
 	}

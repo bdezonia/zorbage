@@ -65,6 +65,7 @@ import nom.bdezonia.zorbage.algorithm.SummaryStats;
 import nom.bdezonia.zorbage.algorithm.Variance;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.datasource.ReadOnlyHighPrecisionDataSource;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.integer.int64.SignedInt64Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
@@ -134,14 +135,17 @@ class Statistics {
 		
 		IndexedDataSource<Float64Member> data =
 				nom.bdezonia.zorbage.storage.Storage.allocate(new Float64Member(), 10);
-		
+
+		IndexedDataSource<Float64Member> workspace =
+				ArrayStorage.allocate(G.DBL.construct(), data.size());
+
 		Float64Member result1 = G.DBL.construct();
 
 		Float64Member result2 = G.DBL.construct();
 		
 		Mean.compute(G.DBL, data, result1);
 		
-		Median.compute(G.DBL, data, result2);
+		Median.compute(G.DBL, workspace, data, result2);
 		
 		StdDev.compute(G.DBL, data, result1);
 		
@@ -195,13 +199,16 @@ class Statistics {
 		IndexedDataSource<HighPrecisionMember> filtered =
 				new ReadOnlyHighPrecisionDataSource<>(G.DBL, data);
 		
+		IndexedDataSource<HighPrecisionMember> work =
+				ArrayStorage.allocate(G.HP.construct(), data.size());
+
 		HighPrecisionMember result1 = G.HP.construct();
 
 		HighPrecisionMember result2 = G.HP.construct();
 		
 		Mean.compute(G.HP, filtered, result1);
 		
-		Median.compute(G.HP, filtered, result2);
+		Median.compute(G.HP, work, filtered, result2);
 		
 		StdDev.compute(G.HP, filtered, result1);
 		

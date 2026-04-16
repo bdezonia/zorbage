@@ -36,6 +36,7 @@ import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
 
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
 import nom.bdezonia.zorbage.storage.Storage;
+import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.integer.int32.SignedInt32Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
@@ -50,8 +51,10 @@ public class TestMedian {
 	public void test1() {
 		IndexedDataSource<Float64Member> storage =
 				Storage.allocate(G.DBL.construct(), new double[]{0,1,2,3,4,5,6,7,8,9});
+		IndexedDataSource<Float64Member> workspace =
+				ArrayStorage.allocate(G.DBL.construct(), storage.size());
 		Float64Member result = new Float64Member();
-		Median.compute(G.DBL, storage, result);
+		Median.compute(G.DBL, workspace, storage, result);
 		assertEquals(4.5, result.v(), 0);
 	}
 
@@ -63,12 +66,16 @@ public class TestMedian {
 		IndexedDataSource<SignedInt32Member> list2 =
 				Storage.allocate(G.INT32.construct(), new int[]{4,2,1,3,5});
 
+		IndexedDataSource<SignedInt32Member> work1 = ArrayStorage.allocate(G.INT32.construct(), list1.size());
+		
+		IndexedDataSource<SignedInt32Member> work2 = ArrayStorage.allocate(G.INT32.construct(), list2.size());
+		
 		SignedInt32Member result = new SignedInt32Member();
 
-		Median.compute(G.INT32, list1, result);
+		Median.compute(G.INT32, work1, list1, result);
 		assertEquals(2, result.v());
 
-		Median.compute(G.INT32, list2, result);
+		Median.compute(G.INT32, work2, list2, result);
 		assertEquals(3, result.v());
 	}
 }

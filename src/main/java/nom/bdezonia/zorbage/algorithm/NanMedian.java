@@ -37,6 +37,7 @@ import nom.bdezonia.zorbage.algebra.NaN;
 import nom.bdezonia.zorbage.algebra.Ordered;
 import nom.bdezonia.zorbage.algebra.Unity;
 import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.storage.Storage;
 
 /**
  * 
@@ -67,7 +68,8 @@ public class NanMedian {
 		if (filteredValues.size() == 0)
 			alg.nan().call(result);
 		else {
-			Median.compute(alg, filteredValues, result);
+			IndexedDataSource<U> workspace = Storage.allocate(alg.construct(), filteredValues.size());
+			Median.compute(alg, workspace, filteredValues, result);
 		}
 	}
 }

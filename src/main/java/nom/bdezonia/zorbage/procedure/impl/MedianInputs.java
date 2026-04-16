@@ -31,6 +31,7 @@
 package nom.bdezonia.zorbage.procedure.impl;
 
 import nom.bdezonia.zorbage.procedure.Procedure;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.algebra.AdditiveGroup;
 import nom.bdezonia.zorbage.algebra.Allocatable;
 import nom.bdezonia.zorbage.algebra.Ordered;
@@ -57,7 +58,8 @@ public class MedianInputs<T extends AdditiveGroup<T,U> & Unity<U> & Ordered<U>,U
 	@Override
 	public void call(U result, U... inputs) {
 		IndexedDataSource<U> wrapper = new ArrayDataSource<T,U>(algebra, inputs);
-		Median.compute(algebra, wrapper, result);
+		IndexedDataSource<U> workspace = Storage.allocate(algebra.construct(), wrapper.size());
+		Median.compute(algebra, workspace, wrapper, result);
 	}
 
 }

@@ -60,11 +60,11 @@ public class Median {
 	 * @param result
 	 */
 	public static <T extends Algebra<T,U> & Addition<U> & Ordered<U> & Unity<U>, U extends Allocatable<U>>
-		void compute(T alg, IndexedDataSource<U> storage, U result)
+		void compute(T alg, IndexedDataSource<U> workspace, IndexedDataSource<U> storage, U result)
 	{
 		U numer = alg.construct();
 		U denom = alg.construct();
-		FindMedianFraction.compute(alg, storage, numer, denom);
+		FindMedianFraction.compute(alg, workspace, storage, numer, denom);
 		Divide.compute(alg, numer, denom, result);
 	}
 }

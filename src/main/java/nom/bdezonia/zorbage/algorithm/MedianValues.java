@@ -53,28 +53,30 @@ public class MedianValues {
 	 * values are returned.
 	 * 
 	 * @param alg
+	 * @param workspace
 	 * @param storage
 	 * @param result1
 	 * @param result2
 	 */
 	public static <T extends Algebra<T,U> & Ordered<U>, U extends Allocatable<U>>
-		void compute(T alg, IndexedDataSource<U> storage, U result1, U result2)
+		void compute(T alg, IndexedDataSource<U> workspace, IndexedDataSource<U> storage, U result1, U result2)
 	{
-		// Many IndexedDataSources only shallow copy on duplicate() call. To be safe
-		// this method needs to do a deep copy because it will sort the data. So we
-		// avoid sorting original data.
-		IndexedDataSource<U> localStorage = DeepCopy.compute(alg, storage);
-		Sort.compute(alg, localStorage);
-		long localStorageSize = localStorage.size();
-		if (localStorageSize == 0) {
+		if (storage == workspace)
+			throw new IllegalArgumentException("Median is only using one list.");
+		if (storage.size() != workspace.size())
+			throw new IllegalArgumentException("Median has mismtached dataset sizes");
+		Copy.compute(alg, storage, workspace);
+		Sort.compute(alg, workspace);
+		long workspaceSize = workspace.size();
+		if (workspaceSize == 0) {
 			throw new IllegalArgumentException("MedianValues called on an empty list");
 		}
-		else if (localStorageSize % 2 == 0) {
-			localStorage.get(localStorageSize/2 - 1, result1);
-			localStorage.get(localStorageSize/2, result2);
+		else if (workspaceSize % 2 == 0) {
+			workspace.get(workspaceSize/2 - 1, result1);
+			workspace.get(workspaceSize/2, result2);
 		}
 		else {
-			localStorage.get(localStorageSize/2, result1);
+			workspace.get(workspaceSize/2, result1);
 			alg.assign().call(result1, result2);
 		}
 	}

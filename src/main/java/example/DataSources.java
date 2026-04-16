@@ -63,6 +63,7 @@ import nom.bdezonia.zorbage.datasource.TrimmedDataSource;
 import nom.bdezonia.zorbage.datasource.WriteNotifyingDataSource;
 import nom.bdezonia.zorbage.function.Function1;
 import nom.bdezonia.zorbage.procedure.Procedure2;
+import nom.bdezonia.zorbage.storage.Storage;
 import nom.bdezonia.zorbage.storage.array.ArrayStorage;
 import nom.bdezonia.zorbage.type.bool.BooleanMember;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
@@ -151,13 +152,16 @@ class DataSources {
 		IndexedDataSource<SignedInt16Member> list =
 				new BigListDataSource<SignedInt16Algebra, SignedInt16Member>(G.INT16, 100000);
 
+		IndexedDataSource<SignedInt16Member> workspace =
+				Storage.allocate(G.INT16.construct(), list.size());
+
 		// elsewhere fill the list with values
 		
 		// then calculate a result
 		
 		SignedInt16Member result = G.INT16.construct();
 		
-		Median.compute(G.INT16, list, result);
+		Median.compute(G.INT16, workspace, list, result);
 	}
 	
 	// ConcatenatedDataSource
