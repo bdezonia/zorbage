@@ -60,7 +60,7 @@ public class FindMedianFraction {
 	{
 		U result1 = alg.construct();
 		U result2 = alg.construct();
-		MedianValues.compute(alg, storage, workspace, result1, result2);
+		MedianValues.compute(alg, workspace, storage, result1, result2);
 		TwoElementFraction.compute(alg, result1, result2, numer, denom);
 	}
 }
