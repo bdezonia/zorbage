@@ -39,9 +39,9 @@ import nom.bdezonia.zorbage.algebra.TensorMember;
 
 // https://en.wikipedia.org/wiki/Tensor_contraction
 
-// Okay, I'm not finding predefined algorithms. I think in cartesian tensors each vector is its
-// own dual. So contraction doesn't have to worry about upper and lower indices. Follow the
-// general rules but treat every upper/lower alignment with simple addition.
+// Okay, I'm not finding predefined algorithms. Follow the
+// general rules but treat every upper/lower alignment with
+// simple addition.
 
 /**
  * 

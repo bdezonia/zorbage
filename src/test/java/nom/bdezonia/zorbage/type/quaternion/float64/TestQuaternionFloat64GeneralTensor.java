@@ -53,7 +53,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class TestQuaternionFloat64CartesianTensor {
+public class TestQuaternionFloat64GeneralTensor {
 
 	@Test
 	public void test1() {

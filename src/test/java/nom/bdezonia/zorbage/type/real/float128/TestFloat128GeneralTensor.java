@@ -57,7 +57,7 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  * @author Barry DeZonia
  *
  */
-public class TestFloat128CartesianTensor {
+public class TestFloat128GeneralTensor {
 
 	private final BigDecimal TOL = BigDecimal.valueOf(0.000000000000001);
 

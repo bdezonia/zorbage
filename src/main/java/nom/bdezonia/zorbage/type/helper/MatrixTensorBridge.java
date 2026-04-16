@@ -46,29 +46,14 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
 	private MatrixMember<U> mat;
-	private long startRow, startCol, size;
 	
 	public MatrixTensorBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
 		this.mat = mat;
 		this.zero = algebra.construct();
-		this.startRow = 0;
-		this.startCol = 0;
-		this.size = Math.min(mat.rows(), mat.cols());
 	}
 	
-	public void setMat(MatrixMember<U> mat, long startRow, long startCol, long size) {
-		if (startRow < 0 || startRow >= mat.rows())
-			throw new IllegalArgumentException("startRow is of bounds");
-		if (startCol < 0 || startCol >= mat.cols())
-			throw new IllegalArgumentException("startCol is of bounds");
-		if (size < 1)
-			throw new IllegalArgumentException("size must be positive");
-		if ((startRow + size) >= mat.rows() || (startCol + size) >= mat.cols())
-			throw new IllegalArgumentException("dimensions out of bounds");
+	public void setMat(MatrixMember<U> mat) {
 		this.mat = mat;
-		this.startRow = startRow;
-		this.startCol = startCol;
-		this.size = size;
 	}
 	
 	@Override
@@ -76,7 +61,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		if (d < 0)
 			throw new IllegalArgumentException("negative index exception");
 		if (d == 0 || d == 1)
-			return size;
+			return mat.dimension(d);
 		return 1;
 	}
 
@@ -96,19 +81,13 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public void init(long[] dims) {
 		if (dimsCompatible(dims)) {
-			for (long r = startRow; r < startRow + size; r++) {
-				for (long c = startCol; c < startCol + size; c++) {
+			for (long r = 0; r < mat.rows(); r++) {
+				for (long c = 0; c < mat.cols(); c++) {
 					mat.setV(r, c, zero);
 				}
 			}
 		}
 		else
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
-	}
-
-	@Override
-	public void reshape(long[] dims) {
-		if (!dimsCompatible(dims))
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
@@ -121,7 +100,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.getV(startRow + r, startCol + c, value);
+		mat.getV(r, c, value);
 	}
 
 	@Override
@@ -132,7 +111,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.setV(startRow + r, startCol + c, value);
+		mat.setV(r, c, value);
 	}
 
 	@Override
@@ -144,35 +123,30 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	public int rank() { return lowerRank() + upperRank(); }
 	
 	@Override
-	public int lowerRank() { return 2; }
+	public int lowerRank() { return 0; }
 	
 	@Override
-	public int upperRank() { return 0; }
+	public int upperRank() { return 2; }
 	
 	@Override
 	public boolean indexIsLower(int index) {
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		return false;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
 		if (index < 0 || index >= rank())
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		return true;
 	}
 
-	@Override
-	public long dimension() { return size; }
-	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 2) return false;
 		for (int i = 2; i < newDims.length; i++) {
 			if (newDims[i] != 1) return false;
 		}
-		if (newDims[0] != size) return false;
-		if (newDims[1] != size) return false;
 		return true;
 	}
 	
