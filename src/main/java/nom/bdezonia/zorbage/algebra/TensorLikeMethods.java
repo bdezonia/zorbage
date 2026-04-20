@@ -43,6 +43,15 @@ import nom.bdezonia.zorbage.procedure.Procedure5;
  */
 public interface TensorLikeMethods<U,W>
 {
+
+	// TODO: I see some possible problems with these definitions:
+	//   1) the W parameter is not used below
+	//   2) outer product might need to be something like
+	//         <X,Y,Z> as <X,X,X> might be too restrictive
+	//         mathematically.
+	//   3) semicolon and comma derivatives should maybe be
+	//        relocated in a metric tensor space kind of class.
+
 	Procedure3<Integer,U,U> semicolonDerivative();
 	Procedure3<Integer,U,U> commaDerivative();
 	Procedure4<Integer,Integer,U,U> contract();
