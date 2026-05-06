@@ -39,13 +39,16 @@ import nom.bdezonia.zorbage.algorithm.ScaleHelper;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorAdd;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorEqual;
 import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
+import nom.bdezonia.zorbage.algorithm.TensorSubtract;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
@@ -105,9 +108,7 @@ public class HighPrecisionGeneralTensorProduct
 	{
 		@Override
 		public Boolean call(HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b) {
-			if (!ShapesMatch.compute(a, b))
-				return false;
-			return SequencesSimilar.compute(G.HP, G.HP.construct(), a.rawData(), b.rawData());
+			return TensorEqual.compute(G.HP, a, b);
 		}
 	};
 	
@@ -180,10 +181,7 @@ public class HighPrecisionGeneralTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b, HighPrecisionGeneralTensorProductMember c) {
-			if (!ShapesMatch.compute(a, b))
-				throw new IllegalArgumentException("tensor add shape mismatch");
-			TensorShape.compute(a, c);
-			Transform3.compute(G.HP, G.HP.add(), a.rawData(), b.rawData(), c.rawData());
+			TensorAdd.compute(G.HP,a,b,c);
 		}
 	};
 	
@@ -197,10 +195,7 @@ public class HighPrecisionGeneralTensorProduct
 	{
 		@Override
 		public void call(HighPrecisionGeneralTensorProductMember a, HighPrecisionGeneralTensorProductMember b, HighPrecisionGeneralTensorProductMember c) {
-			if (!ShapesMatch.compute(a, b))
-				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			TensorShape.compute(a, c);
-			Transform3.compute(G.HP, G.HP.subtract(), a.rawData(), b.rawData(), c.rawData());
+			TensorSubtract.compute(G.HP,a,b,c);
 		}
 	};
 	

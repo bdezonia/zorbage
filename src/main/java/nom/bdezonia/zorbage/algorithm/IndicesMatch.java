@@ -30,70 +30,39 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.TensorMember;
-import nom.bdezonia.zorbage.algebra.Unity;
 
 /**
- * 
  * @author Barry DeZonia
- *
  */
-public class TensorUnity {
+public class IndicesMatch {
 
 	// do not instantiate
 	
-	private TensorUnity() { }
-	
+	private IndicesMatch() { }
+
 	/**
-	 * Set an output tensor to unity (all ones along its super diagonal).
+	 * Check that two tensor members have the same count and
+	 * distribution of covariant and contravariant indices.
 	 * 
-	 * @param <S>
-	 * @param <TENSOR>
-	 * @param <M>
-	 * @param <NUMBER>
-	 * @param tensAlg
-	 * @param numberAlg
-	 * @param result
+	 * @param a First tensor memeber
+	 * @param b Second tensor member
+	 * @return true if they are equal else false
 	 */
-	public static <S extends Algebra<S,TENSOR>,
-					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M,NUMBER> & Unity<NUMBER>,
-					NUMBER>
-		void compute(S tensAlg, M numberAlg, TENSOR result)
-	{
-		NUMBER one = numberAlg.construct();
-		numberAlg.unity().call(one);
+	public static boolean compute(TensorMember<?> a, TensorMember<?> b) {
 		
-		int rank = result.rank();
-
-		IntegerIndex index = new IntegerIndex(rank);
-
-		if (rank == 0) {
-			result.setV(index, one);
-			return;
-		}
+		int rank = a.rank();
 		
-		long[] axisSizes = new long[rank];
-		result.shape(axisSizes);
-
-		long minSize = axisSizes[0];
-		for (int i = 1; i < rank; i++) {
-			if (axisSizes[i] < minSize)
-				minSize = axisSizes[i];
-		}
-
-		tensAlg.zero().call(result);
+		if (b.rank() != rank)
+			return false;
 		
-		for (int i = 0; i < minSize; i++) {
+		for (int i = 0; i < rank; i++) {
 			
-			for (int k = 0; k < rank; k++) {
-				
-				index.set(k, i);
-			}
-			
-			result.setV(index, one);
+			if (a.indexType(i) != b.indexType(i))
+				return false;
 		}
+		
+		return true;
 	}
+
 }

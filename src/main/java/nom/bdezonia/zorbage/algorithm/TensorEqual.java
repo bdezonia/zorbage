@@ -30,70 +30,60 @@
  */
 package nom.bdezonia.zorbage.algorithm;
 
-import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
 import nom.bdezonia.zorbage.algebra.TensorMember;
-import nom.bdezonia.zorbage.algebra.Unity;
+import nom.bdezonia.zorbage.datasource.IndexedDataSource;
+import nom.bdezonia.zorbage.datasource.RawData;
 
 /**
- * 
  * @author Barry DeZonia
- *
  */
-public class TensorUnity {
+public class TensorEqual {
 
 	// do not instantiate
 	
-	private TensorUnity() { }
-	
+	private  TensorEqual() { }
+
 	/**
-	 * Set an output tensor to unity (all ones along its super diagonal).
 	 * 
-	 * @param <S>
-	 * @param <TENSOR>
-	 * @param <M>
-	 * @param <NUMBER>
-	 * @param tensAlg
-	 * @param numberAlg
-	 * @param result
+	 * @param <CC>
+	 * @param <COMPONENT>
+	 * @param <TEN>
+	 * @param alg
+	 * @param a
+	 * @param b
 	 */
-	public static <S extends Algebra<S,TENSOR>,
-					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M,NUMBER> & Unity<NUMBER>,
-					NUMBER>
-		void compute(S tensAlg, M numberAlg, TENSOR result)
+	public static <TEN extends TensorMember<COMPONENT> & RawData<COMPONENT>,
+					CC extends Algebra<CC,COMPONENT>,
+					COMPONENT>
+	
+		boolean compute(CC alg, TEN a, TEN b)
+	
 	{
-		NUMBER one = numberAlg.construct();
-		numberAlg.unity().call(one);
+		if (a == b)
+			return true;
 		
-		int rank = result.rank();
-
-		IntegerIndex index = new IntegerIndex(rank);
-
-		if (rank == 0) {
-			result.setV(index, one);
-			return;
-		}
+		if (!ShapesMatch.compute(a, b))
+			return false;
 		
-		long[] axisSizes = new long[rank];
-		result.shape(axisSizes);
-
-		long minSize = axisSizes[0];
-		for (int i = 1; i < rank; i++) {
-			if (axisSizes[i] < minSize)
-				minSize = axisSizes[i];
-		}
-
-		tensAlg.zero().call(result);
+		if (!IndicesMatch.compute(a, b))
+			return false;
 		
-		for (int i = 0; i < minSize; i++) {
-			
-			for (int k = 0; k < rank; k++) {
-				
-				index.set(k, i);
-			}
-			
-			result.setV(index, one);
+		IndexedDataSource<COMPONENT> rawA = a.rawData();
+		IndexedDataSource<COMPONENT> rawB = b.rawData();
+		
+		COMPONENT aTmp = alg.construct();
+		COMPONENT bTmp = alg.construct();
+
+		for (long i = 0; i < rawA.size(); i++) {
+		
+			rawA.get(i, aTmp);
+			rawB.get(i, bTmp);
+
+			if (alg.isNotEqual().call(aTmp, bTmp))
+				return false;
 		}
+
+		return true;
 	}
 }

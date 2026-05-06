@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
 import java.math.BigDecimal;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algorithm.Round.Mode;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
@@ -61,9 +61,9 @@ public class TestQuaternionFloat64GeneralTensor {
 		QuaternionFloat64GeneralTensorProductMember a =
 				G.QDBL_TEN.construct("[[[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]][[0,0,0][0,0,0][0,0,0]]]");
 		assertEquals(3, a.rank());
-		assertEquals(3, a.dimension(0));
-		assertEquals(3, a.dimension(1));
-		assertEquals(3, a.dimension(2));
+		assertEquals(3, a.axisSize(0));
+		assertEquals(3, a.axisSize(1));
+		assertEquals(3, a.axisSize(2));
 
 		G.QDBL_TEN.unity().call(a);
 
@@ -100,18 +100,23 @@ public class TestQuaternionFloat64GeneralTensor {
 		}
 
 		QuaternionFloat64GeneralTensorProductMember x =
-				new QuaternionFloat64GeneralTensorProductMember(2, 2, 1,2,3,4, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+				new QuaternionFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT,IndexType.COVARIANT}, new long[] {2, 2}, 1,2,3,4, 0,0,0,0, 0,0,0,0, 0,0,0,0);
 		QuaternionFloat64GeneralTensorProductMember y =
-				new QuaternionFloat64GeneralTensorProductMember(2, 2, 5,6,7,8, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+				new QuaternionFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT,IndexType.COVARIANT}, new long[] {2, 2}, 5,6,7,8, 0,0,0,0, 0,0,0,0, 0,0,0,0);
 		QuaternionFloat64GeneralTensorProductMember z =
 				new QuaternionFloat64GeneralTensorProductMember();
 
 		G.QDBL_TEN.multiply().call(x, y, z);
 		
 		assertEquals(4, z.rank());
-		assertEquals(2, z.dimension());
+		assertEquals(2, z.lowerRank());
+		assertEquals(2, z.upperRank());
+		assertEquals(2, z.axisSize(0));
+		assertEquals(2, z.axisSize(1));
+		assertEquals(2, z.axisSize(2));
+		assertEquals(2, z.axisSize(3));
 
-		// TODO I only support "square" tensors. Make a non square example from
+		// TODO Make a non square example from
 		//   https://www.tensorflow.org/api_docs/python/tf/linalg/matmul
 		//   and modify my code to work with it.
 	}
@@ -119,25 +124,26 @@ public class TestQuaternionFloat64GeneralTensor {
 	@Test
 	public void test2() {
 
-		int rank = 2;
-		int dimension = 3;
-		
 		QuaternionFloat64Member tmp1 = G.QDBL.construct();
 		QuaternionFloat64Member tmp2 = G.QDBL.construct();
 		Float64Member tmp1v = G.DBL.construct();
 		Float64Member tmp2v = G.DBL.construct();
 		
 		QuaternionFloat64GeneralTensorProductMember value1 =
-				new QuaternionFloat64GeneralTensorProductMember(rank, dimension);
+				new QuaternionFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT, IndexType.CONTRAVARIANT}, new long[] {3,3});
 		QuaternionFloat64GeneralTensorProductMember value2 =
-				new QuaternionFloat64GeneralTensorProductMember(rank, dimension);
+				new QuaternionFloat64GeneralTensorProductMember(new IndexType[] {IndexType.COVARIANT, IndexType.COVARIANT}, new long[] {3,3});
 
 		assertNotNull(G.QDBL_TEN.construct());
 		QuaternionFloat64GeneralTensorProductMember junk1 = G.QDBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
 		assertEquals(2, junk1.rank());
-		assertEquals(3, junk1.dimension());
+		assertEquals(2, junk1.upperRank());
+		assertEquals(0, junk1.lowerRank());
+		assertEquals(3, junk1.axisSize(0));
+		assertEquals(3, junk1.axisSize(1));
 		junk1.v(1, tmp1);
 		assertEquals(2, tmp1.r(), 0);
+
 		QuaternionFloat64GeneralTensorProductMember junk2 = G.QDBL_TEN.construct(junk1);
 		assertTrue(G.QDBL_TEN.isEqual().call(junk1, junk2));
 		assertFalse(G.QDBL_TEN.isNotEqual().call(junk1, junk2));
@@ -185,18 +191,19 @@ public class TestQuaternionFloat64GeneralTensor {
 		value1.v(1, tmp1);
 		assertEquals(0, tmp1.r(), 0);
 
-		assertTrue(value1.numElems() > 0);
-		assertTrue(value2.numElems() > 0);
-		for (long i = 0; i < value1.numElems(); i++) {
+		assertTrue(value1.numElements() > 0);
+		assertTrue(value2.numElements() > 0);
+
+		for (long i = 0; i < value1.numElements(); i++) {
 			tmp1.setR(i);
 			tmp2.setR(43);
 			value1.setV(i, tmp1);
 			value2.setV(i, tmp2);
 		}
 		G.QDBL_TEN.divideElements().call(value1, value2, value1);
-		assertTrue(value1.numElems() > 0);
-		assertTrue(value1.numElems() == value2.numElems());
-		for (long i = 0; i < value1.numElems(); i++) {
+		assertTrue(value1.numElements() > 0);
+		assertTrue(value1.numElements() == value2.numElements());
+		for (long i = 0; i < value1.numElements(); i++) {
 			value1.v(i, tmp1);
 			assertEquals(1.0*i/43, tmp1.r(), 0.000000000000001);
 		}
@@ -206,11 +213,13 @@ public class TestQuaternionFloat64GeneralTensor {
 		
 		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
-		assertEquals(2, value1.dimension());
+		assertEquals(2, value1.axisSize(0));
+		assertEquals(2, value1.axisSize(1));
 		G.QDBL_TEN.multiply().call(value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		assertEquals(2, value2.axisSize(0));
+		assertEquals(2, value2.axisSize(1));
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			assertEquals(((i % 4)+1) * ((i / 4) + 1), tmp2.r(), 0);
@@ -232,79 +241,45 @@ public class TestQuaternionFloat64GeneralTensor {
 		value2.v(2, tmp2);
 		assertEquals(-3, tmp2.r(), 0);
 
-		G.QDBL_TEN.commaDerivative().call(0, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(1, tmp2.r(), 0);
-		value2.v(1, tmp2);
-		assertEquals(2, tmp2.r(), 0);
-		value2.v(2, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-		value2.v(3, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-
-		G.QDBL_TEN.commaDerivative().call(1, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-		value2.v(1, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-		value2.v(2, tmp2);
-		assertEquals(3, tmp2.r(), 0);
-		value2.v(3, tmp2);
-		assertEquals(4, tmp2.r(), 0);
-		
-		G.QDBL_TEN.semicolonDerivative().call(0, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(1, tmp2.r(), 0);
-		value2.v(1, tmp2);
-		assertEquals(2, tmp2.r(), 0);
-		value2.v(2, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-		value2.v(3, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-
-		G.QDBL_TEN.semicolonDerivative().call(1, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-		value2.v(1, tmp2);
-		assertEquals(0, tmp2.r(), 0);
-		value2.v(2, tmp2);
-		assertEquals(3, tmp2.r(), 0);
-		value2.v(3, tmp2);
-		assertEquals(4, tmp2.r(), 0);
-		
 		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		G.QDBL_TEN.norm().call(value1, tmp1v);
 		assertEquals(Math.sqrt(30), tmp1v.v(), 0);
 		
 		value1 = new QuaternionFloat64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
-		assertEquals(2, value1.dimension());
+		assertEquals(2, value1.axisSize(0));
+		assertEquals(2, value1.axisSize(1));
 		G.QDBL_TEN.outerProduct().call(value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		assertEquals(2, value2.axisSize(0));
+		assertEquals(2, value2.axisSize(1));
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			assertEquals(((i % 4)+1) * ((i / 4) + 1), tmp2.r(), 0);
 		}
 
 		try {
-			G.QDBL_TEN.lowerIndex().call(0, value1, value2);
+			G.QDBL_TEN.lowerIndex().call(0, metric, value1, value2);
 			assertTrue(true);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 		try {
-			G.QDBL_TEN.raiseIndex().call(0, value1, value2);
+			G.QDBL_TEN.raiseIndex().call(0, metric, value1, value2);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
-		value1 = new QuaternionFloat64GeneralTensorProductMember(3,2);
+		value1 = new QuaternionFloat64GeneralTensorProductMember(new IndexType[] {IndexType.COVARIANT, IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2,2,2});
 		assertEquals(3, value1.rank());
-		assertEquals(2, value1.dimension());
-		assertEquals(8, value1.numElems());
+		assertEquals(1, value1.upperRank());
+		assertEquals(2, value1.lowerRank());
+		assertEquals(2, value1.axisSize(0));
+		assertEquals(2, value1.axisSize(1));
+		assertEquals(2, value1.axisSize(2));
+		assertEquals(8, value1.numElements());
 		for (int i = 0; i < 8; i++) {
 			tmp1.setR(i+1);
 			value1.setV(i, tmp1);
@@ -318,7 +293,7 @@ public class TestQuaternionFloat64GeneralTensor {
 		G.QDBL_TEN.innerProduct().call(0, 1, value1, value1, value2);
 		assertEquals(4, value2.rank());
 		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			// TODO do something. Note that the impl does a simple approach

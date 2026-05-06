@@ -43,7 +43,9 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorAdd;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorEqual;
 import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
@@ -51,6 +53,7 @@ import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
+import nom.bdezonia.zorbage.algorithm.TensorSubtract;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
@@ -116,9 +119,7 @@ public class OctonionFloat16GeneralTensorProduct
 	{
 		@Override
 		public Boolean call(OctonionFloat16GeneralTensorProductMember a, OctonionFloat16GeneralTensorProductMember b) {
-			if (!ShapesMatch.compute(a, b))
-				return false;
-			return SequencesSimilar.compute(G.OHLF, G.HLF.construct(), a.rawData(), b.rawData());
+			return TensorEqual.compute(G.OHLF, a, b);
 		}
 	};
 	
@@ -191,10 +192,7 @@ public class OctonionFloat16GeneralTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16GeneralTensorProductMember a, OctonionFloat16GeneralTensorProductMember b, OctonionFloat16GeneralTensorProductMember c) {
-			if (!ShapesMatch.compute(a, b))
-				throw new IllegalArgumentException("tensor add shape mismatch");
-			TensorShape.compute(a, c);
-			Transform3.compute(G.OHLF, G.OHLF.add(), a.rawData(), b.rawData(), c.rawData());
+			TensorAdd.compute(G.OHLF,a,b,c);
 		}
 	};
 	
@@ -208,10 +206,7 @@ public class OctonionFloat16GeneralTensorProduct
 	{
 		@Override
 		public void call(OctonionFloat16GeneralTensorProductMember a, OctonionFloat16GeneralTensorProductMember b, OctonionFloat16GeneralTensorProductMember c) {
-			if (!ShapesMatch.compute(a, b))
-				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			TensorShape.compute(a, c);
-			Transform3.compute(G.OHLF, G.OHLF.subtract(), a.rawData(), b.rawData(), c.rawData());
+			TensorSubtract.compute(G.OHLF,a,b,c);
 		}
 	};
 	

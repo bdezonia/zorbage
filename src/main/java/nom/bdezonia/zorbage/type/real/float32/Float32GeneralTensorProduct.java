@@ -43,7 +43,9 @@ import nom.bdezonia.zorbage.algorithm.SequenceIsNan;
 import nom.bdezonia.zorbage.algorithm.SequenceIsZero;
 import nom.bdezonia.zorbage.algorithm.SequencesSimilar;
 import nom.bdezonia.zorbage.algorithm.ShapesMatch;
+import nom.bdezonia.zorbage.algorithm.TensorAdd;
 import nom.bdezonia.zorbage.algorithm.TensorContract;
+import nom.bdezonia.zorbage.algorithm.TensorEqual;
 import nom.bdezonia.zorbage.algorithm.TensorFlipIndex;
 import nom.bdezonia.zorbage.algorithm.TensorIsUnity;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
@@ -51,6 +53,7 @@ import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
+import nom.bdezonia.zorbage.algorithm.TensorSubtract;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.algorithm.Transform2;
 import nom.bdezonia.zorbage.algorithm.Transform3;
@@ -114,9 +117,7 @@ public class Float32GeneralTensorProduct
 	{
 		@Override
 		public Boolean call(Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b) {
-			if (!ShapesMatch.compute(a, b))
-				return false;
-			return SequencesSimilar.compute(G.FLT, G.FLT.construct(), a.rawData(), b.rawData());
+			return TensorEqual.compute(G.FLT, a, b);
 		}
 	};
 	
@@ -189,10 +190,7 @@ public class Float32GeneralTensorProduct
 	{
 		@Override
 		public void call(Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b, Float32GeneralTensorProductMember c) {
-			if (!ShapesMatch.compute(a, b))
-				throw new IllegalArgumentException("tensor add shape mismatch");
-			TensorShape.compute(a, c);
-			Transform3.compute(G.FLT, G.FLT.add(), a.rawData(), b.rawData(), c.rawData());
+			TensorAdd.compute(G.FLT,a,b,c);
 		}
 	};
 	
@@ -206,10 +204,7 @@ public class Float32GeneralTensorProduct
 	{
 		@Override
 		public void call(Float32GeneralTensorProductMember a, Float32GeneralTensorProductMember b, Float32GeneralTensorProductMember c) {
-			if (!ShapesMatch.compute(a, b))
-				throw new IllegalArgumentException("tensor subtract shape mismatch");
-			TensorShape.compute(a, c);
-			Transform3.compute(G.FLT, G.FLT.subtract(), a.rawData(), b.rawData(), c.rawData());
+			TensorSubtract.compute(G.FLT,a,b,c);
 		}
 	};
 	
