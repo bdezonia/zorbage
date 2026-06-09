@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.RModuleMember;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -45,10 +46,12 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
 	private final RModuleMember<U> rmod;
+	private IndexType[] indexTypes;
 	
 	public RModuleTensorBridge(Algebra<?,U> algebra, RModuleMember<U> rmod) {
 		this.zero = algebra.construct();
 		this.rmod = rmod;
+		this.indexTypes = null;
 	}
 	
 	@Override
@@ -72,24 +75,54 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 
 		return rmod.length();
 	}
-	
+
 	@Override
-	public boolean alloc(long[] dims) {
+	public boolean alloc(long[] dims, IndexType[] indexTypes) {
+		
+		if (indexTypes != null) {
+			
+			if (dims.length != indexTypes.length)
+				throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+
+			if (this.indexTypes != indexTypes)
+				this.indexTypes = indexTypes.clone();
+		}
+
 		if (dimsCompatible(dims)) {
 			return false;
 		}
 		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
+	
+	@Override
+	public boolean alloc(long[] dims) {
+		return alloc(dims, this.indexTypes);
+	}
+
+	@Override
+	public void init(long[] dims, IndexType[] indexTypes) {
+
+		if (indexTypes != null) {
+			
+			if (dims.length != indexTypes.length)
+				throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+			
+			if (this.indexTypes != indexTypes)
+				this.indexTypes = indexTypes.clone();
+		}
+		
+		if (!dimsCompatible(dims))
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+
+		for (long i = 0; i < rmod.length(); i++) {
+			rmod.setV(i, zero);
+		}
+	}
 
 	@Override
 	public void init(long[] dims) {
-		if (dimsCompatible(dims)) {
-			for (long i = 0; i < rmod.length(); i++) {
-				rmod.setV(i, zero);
-			}
-		}
-		else
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+		
+		init(dims, this.indexTypes);
 	}
 	
 	@Override
@@ -131,26 +164,56 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	
 	@Override
 	public int lowerRank() {
-		return 1;
+
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		int tot = 0;
+		for (int i = 0; i < indexTypes.length; i++)
+			if (indexIsLower(i))
+				tot++;
+		return tot;
 	}
 	
 	@Override
 	public int upperRank() {
-		return 0;
+
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		int tot = 0;
+		for (int i = 0; i < indexTypes.length; i++)
+			if (indexIsUpper(i))
+				tot++;
+		return tot;
 	}
-	
+
+	@Override
+	public IndexType indexType(int index) {
+		return indexTypes[index];
+	}
+
+	@Override
+	public void indexTypes(IndexType[] types) {
+		for (int i = 0; i < types.length; i++) {
+			types[i] = indexType(i);
+		}
+	}
+
 	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index >= rank())
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		return indexTypes[index] == IndexType.COVARIANT;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index >= rank())
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		return indexTypes[index] == IndexType.COVARIANT;
 	}
 
 	private boolean dimsCompatible(long[] newDims) {

@@ -75,20 +75,19 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 		return 1;
 	}
-
+	
 	@Override
 	public boolean alloc(long[] dims, IndexType[] indexTypes) {
 
-		if (dimsCompatible(dims)) {
-			
-			if (indexTypes != null && indexTypes.length != 0) {
-				throw new IllegalArgumentException("numbers cannot have variance components");
-			}
-
-			return false;
+		if (indexTypes != null && indexTypes.length != 0) {
+			throw new IllegalArgumentException("numbers do not have index values");
 		}
-		else
+
+		if (!dimsCompatible(dims)) {
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+		}
+		
+		return false;
 	}
 	
 	@Override
@@ -98,11 +97,20 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public void init(long[] dims) {
-		if (dimsCompatible(dims))
-			num.setV(zero);
-		else
+	public void init(long[] dims, IndexType[] indexTypes) {
+
+		if (indexTypes != null && indexTypes.length != 0)
+			throw new IllegalArgumentException("numbers do not have index values");
+		
+		if (!dimsCompatible(dims))
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+			
+		num.setV(zero);
+	}
+
+	@Override
+	public void init(long[] dims) {
+		init(dims, null);
 	}
 	
 	@Override
@@ -146,17 +154,28 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	public int upperRank() { return 0; }
 	
 	@Override
+	public IndexType indexType(int index) {
+
+		throw new IllegalArgumentException("numbers do not have index values");
+	}
+
+	@Override
+	public void indexTypes(IndexType[] types) {
+
+		if (types.length != 0)
+			throw new IllegalArgumentException("numbers do not have index values");
+	}
+
+	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index >= rank())
-			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+
+		return indexType(index) == IndexType.COVARIANT;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index >= rank())
-			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+
+		return indexType(index) == IndexType.CONTRAVARIANT;
 	}
 
 	private boolean dimsCompatible(long[] newDims) {
