@@ -84,10 +84,7 @@ class Tensors {
 		// construction
 		
 		Float64GeneralTensorProductMember a = new Float64GeneralTensorProductMember();
-		Float64GeneralTensorProductMember b = new Float64GeneralTensorProductMember(2, 3,
-																new double[] {2,4,6,
-																				3,5,7,
-																				10,100,1000});
+		Float64GeneralTensorProductMember b = new Float64GeneralTensorProductMember();
 		Float64GeneralTensorProductMember c = G.DBL_TEN.construct();
 		Float64GeneralTensorProductMember d = G.DBL_TEN.construct(b);
 		Float64GeneralTensorProductMember e = G.DBL_TEN.construct("[[1,2,3][4,5,6][7,8,9]]");

@@ -31,13 +31,13 @@
 package example;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.IndicesMatch;
 import nom.bdezonia.zorbage.algorithm.Round;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
+import nom.bdezonia.zorbage.algorithm.TensorEqual;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
@@ -55,19 +55,18 @@ class TensorAlgorithms {
 	
 	void example1() {
 		
-		Float64GeneralTensorProductMember a = new Float64GeneralTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a = new Float64GeneralTensorProductMember();
 		
 		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 		
-		TensorCommaDerivative.compute(G.DBL_TEN, G.DBL, 1, a, b);
-		
-		// b contains the comma derivative of a
+		if (TensorEqual.compute(G.DBL, a, b))
+			System.out.println("They are equal");
 	}
 
 	void example2() {
 		
 		ComplexFloat64GeneralTensorProductMember a =
-				new ComplexFloat64GeneralTensorProductMember(3, 4);
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		Float64Member b = G.DBL.construct();
 		
@@ -79,10 +78,10 @@ class TensorAlgorithms {
 	void example3() {
 
 		ComplexFloat64GeneralTensorProductMember a =
-				new ComplexFloat64GeneralTensorProductMember(3, 4);
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64GeneralTensorProductMember b =
-				new ComplexFloat64GeneralTensorProductMember(3, 4);
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64GeneralTensorProductMember c = G.CDBL_TEN.construct();
 		
@@ -94,7 +93,7 @@ class TensorAlgorithms {
 	void example4() {
 		
 		Float64GeneralTensorProductMember a =
-				new Float64GeneralTensorProductMember(3, 4);
+				new Float64GeneralTensorProductMember();
 
 		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
@@ -106,7 +105,7 @@ class TensorAlgorithms {
 	void example5() {
 		
 		Float64GeneralTensorProductMember a =
-				new Float64GeneralTensorProductMember(3, 4);
+				new Float64GeneralTensorProductMember();
 
 		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
@@ -120,19 +119,18 @@ class TensorAlgorithms {
 	void example6() {
 		
 		Float64GeneralTensorProductMember a =
-				new Float64GeneralTensorProductMember(3, 4);
+				new Float64GeneralTensorProductMember();
 
 		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
-
-		TensorSemicolonDerivative.compute(G.DBL_TEN, G.DBL, 2, a, b);
 		
-		// b contains the semicolon derivative of a
+		if (IndicesMatch.compute(a, b))
+			System.out.println("They are equal");
 	}
 
 	void example7() {
 		
 		ComplexFloat64GeneralTensorProductMember a =
-				new ComplexFloat64GeneralTensorProductMember(3, 4);
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64GeneralTensorProductMember b = G.CDBL_TEN.construct();
 
@@ -144,7 +142,7 @@ class TensorAlgorithms {
 	void example8() {
 
 		ComplexFloat64GeneralTensorProductMember a =
-				new ComplexFloat64GeneralTensorProductMember(3, 4);
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		TensorUnity.compute(G.CDBL_TEN, G.CDBL, a);
 		

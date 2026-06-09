@@ -64,10 +64,22 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 			return mat.dimension(d);
 		return 1;
 	}
+	
+	@Override
+	public long axisSize(int axisNum) {
+
+		return dimension(axisNum);
+	}
 
 	@Override
 	public int numDimensions() {
 		return 2;
+	}
+
+	@Override
+	public long numElements() {
+
+		return mat.rows() * mat.cols();
 	}
 
 	@Override
@@ -90,7 +102,17 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		else
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
-
+	
+	@Override
+	public void shape(long[] sizes) {
+		
+		sizes[0] = mat.cols();
+		sizes[1] = mat.rows();
+		for (int i = 2; i < sizes.length; i++) {
+			sizes[i] = 1;
+		}
+	}
+	
 	@Override
 	public void getV(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {

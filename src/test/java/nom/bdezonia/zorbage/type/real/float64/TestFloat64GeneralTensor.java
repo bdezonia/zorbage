@@ -54,6 +54,9 @@ import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
  */
 public class TestFloat64GeneralTensor {
 
+	private Float64GeneralTensorProductMember metric = G.DBL_TEN.construct();
+	private Float64GeneralTensorProductMember metricInverse = G.DBL_TEN.construct();
+
 	@Test
 	public void test1() {
 		Float64Member value = G.DBL.construct();
@@ -97,16 +100,19 @@ public class TestFloat64GeneralTensor {
 		}
 
 		Float64GeneralTensorProductMember x =
-				new Float64GeneralTensorProductMember(2, 2, 1,2,3,4);
+				new Float64GeneralTensorProductMember();
 		Float64GeneralTensorProductMember y =
-				new Float64GeneralTensorProductMember(2, 2, 5,6,7,8);
+				new Float64GeneralTensorProductMember();
 		Float64GeneralTensorProductMember z =
 				new Float64GeneralTensorProductMember();
 
 		G.DBL_TEN.multiply().call(x, y, z);
 		
 		assertEquals(4, z.rank());
-		assertEquals(2, z.dimension());
+		assertEquals(2, z.dimension(0));
+		assertEquals(2, z.dimension(1));
+		assertEquals(2, z.dimension(2));
+		assertEquals(2, z.dimension(3));
 
 		// TODO I only support "square" tensors. Make a non square example from
 		//   https://www.tensorflow.org/api_docs/python/tf/linalg/matmul
@@ -116,21 +122,18 @@ public class TestFloat64GeneralTensor {
 	@Test
 	public void test2() {
 
-		int rank = 2;
-		int dimension = 3;
-		
 		Float64Member tmp1 = G.DBL.construct();
 		Float64Member tmp2 = G.DBL.construct();
 		
 		Float64GeneralTensorProductMember value1 =
-				new Float64GeneralTensorProductMember(rank, dimension);
+				new Float64GeneralTensorProductMember();
 		Float64GeneralTensorProductMember value2 =
-				new Float64GeneralTensorProductMember(rank, dimension);
+				new Float64GeneralTensorProductMember();
 
 		assertNotNull(G.DBL_TEN.construct());
 		Float64GeneralTensorProductMember junk1 = G.DBL_TEN.construct("[1,2,3][4,5,6][7,8,9]");
 		assertEquals(2, junk1.rank());
-		assertEquals(3, junk1.dimension());
+		//assertEquals(3, junk1.dimension());
 		junk1.v(1, tmp1);
 		assertEquals(2, tmp1.v(), 0);
 		Float64GeneralTensorProductMember junk2 = G.DBL_TEN.construct(junk1);
@@ -180,18 +183,18 @@ public class TestFloat64GeneralTensor {
 		value1.v(1, tmp1);
 		assertEquals(0, tmp1.v(), 0);
 
-		assertTrue(value1.numElems() > 0);
-		assertTrue(value2.numElems() > 0);
-		for (long i = 0; i < value1.numElems(); i++) {
+		assertTrue(value1.numElements() > 0);
+		assertTrue(value2.numElements() > 0);
+		for (long i = 0; i < value1.numElements(); i++) {
 			tmp1.setV(i);
 			tmp2.setV(43);
 			value1.setV(i, tmp1);
 			value2.setV(i, tmp2);
 		}
 		G.DBL_TEN.divideElements().call(value1, value2, value1);
-		assertTrue(value1.numElems() > 0);
-		assertTrue(value1.numElems() == value2.numElems());
-		for (long i = 0; i < value1.numElems(); i++) {
+		assertTrue(value1.numElements() > 0);
+		assertTrue(value1.numElements() == value2.numElements());
+		for (long i = 0; i < value1.numElements(); i++) {
 			value1.v(i, tmp1);
 			assertEquals(1.0*i/43, tmp1.v(), 0.000000000000001);
 		}
@@ -201,11 +204,11 @@ public class TestFloat64GeneralTensor {
 		
 		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
-		assertEquals(2, value1.dimension());
+		//assertEquals(2, value1.dimension());
 		G.DBL_TEN.multiply().call(value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		//assertEquals(2, value2.dimension());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			assertEquals(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), 0);
@@ -227,79 +230,39 @@ public class TestFloat64GeneralTensor {
 		value2.v(2, tmp2);
 		assertEquals(-3, tmp2.v(), 0);
 
-		G.DBL_TEN.commaDerivative().call(0, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(1, tmp2.v(), 0);
-		value2.v(1, tmp2);
-		assertEquals(2, tmp2.v(), 0);
-		value2.v(2, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-		value2.v(3, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-
-		G.DBL_TEN.commaDerivative().call(1, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-		value2.v(1, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-		value2.v(2, tmp2);
-		assertEquals(3, tmp2.v(), 0);
-		value2.v(3, tmp2);
-		assertEquals(4, tmp2.v(), 0);
-		
-		G.DBL_TEN.semicolonDerivative().call(0, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(1, tmp2.v(), 0);
-		value2.v(1, tmp2);
-		assertEquals(2, tmp2.v(), 0);
-		value2.v(2, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-		value2.v(3, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-
-		G.DBL_TEN.semicolonDerivative().call(1, value1, value2);
-		value2.v(0, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-		value2.v(1, tmp2);
-		assertEquals(0, tmp2.v(), 0);
-		value2.v(2, tmp2);
-		assertEquals(3, tmp2.v(), 0);
-		value2.v(3, tmp2);
-		assertEquals(4, tmp2.v(), 0);
-		
 		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		G.DBL_TEN.norm().call(value1, tmp1);
 		assertEquals(Math.sqrt(30), tmp1.v(), 0);
 		
 		value1 = new Float64GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
-		assertEquals(2, value1.dimension());
+		//assertEquals(2, value1.dimension());
 		G.DBL_TEN.outerProduct().call(value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		//assertEquals(2, value2.dimension());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			assertEquals(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), 0);
 		}
 
 		try {
-			G.DBL_TEN.lowerIndex().call(0, value1, value2);
+			G.DBL_TEN.lowerIndex().call(0, metricInverse, value1, value2);
 			assertTrue(true);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 		try {
-			G.DBL_TEN.raiseIndex().call(0, value1, value2);
+			G.DBL_TEN.raiseIndex().call(0, metric, value1, value2);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
-		value1 = new Float64GeneralTensorProductMember(3,2);
+		value1 = new Float64GeneralTensorProductMember();
 		assertEquals(3, value1.rank());
-		assertEquals(2, value1.dimension());
-		assertEquals(8, value1.numElems());
+		//assertEquals(2, value1.dimension());
+		assertEquals(8, value1.numElements());
 		for (int i = 0; i < 8; i++) {
 			tmp1.setV(i+1);
 			value1.setV(i, tmp1);
@@ -312,8 +275,8 @@ public class TestFloat64GeneralTensor {
 
 		G.DBL_TEN.innerProduct().call(0, 1, value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		//assertEquals(2, value2.dimension());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			// TODO do something. Note that the impl does a simple approach
@@ -327,7 +290,7 @@ public class TestFloat64GeneralTensor {
 		// tested in test1() above
 		//G.DBL_TEN.power();
 		
-		value1 = new Float64GeneralTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember();
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -339,7 +302,7 @@ public class TestFloat64GeneralTensor {
 		tmp2.setV(5);
 		G.DBL_TEN.scale().call(tmp2, value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertEquals(15, tmp2.v(), 0);
 		value2.v(1, tmp2);
@@ -349,7 +312,7 @@ public class TestFloat64GeneralTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64GeneralTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember();
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -360,7 +323,7 @@ public class TestFloat64GeneralTensor {
 		value1.setV(3, tmp1);
 		G.DBL_TEN.scaleByDouble().call(5.0, value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertEquals(15, tmp2.v(), 0);
 		value2.v(1, tmp2);
@@ -370,7 +333,7 @@ public class TestFloat64GeneralTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64GeneralTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember();
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -381,7 +344,7 @@ public class TestFloat64GeneralTensor {
 		value1.setV(3, tmp1);
 		G.DBL_TEN.scaleByHighPrec().call(new HighPrecisionMember(BigDecimal.valueOf(5.0)), value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertEquals(15, tmp2.v(), 0);
 		value2.v(1, tmp2);
@@ -391,7 +354,7 @@ public class TestFloat64GeneralTensor {
 		value2.v(3, tmp2);
 		assertEquals(60, tmp2.v(), 0);
 
-		value1 = new Float64GeneralTensorProductMember(2,2);
+		value1 = new Float64GeneralTensorProductMember();
 		tmp1.setV(3);
 		value1.setV(0, tmp1);
 		tmp1.setV(6);
@@ -402,7 +365,7 @@ public class TestFloat64GeneralTensor {
 		value1.setV(3, tmp1);
 		G.DBL_TEN.scaleByRational().call(new RationalMember(100,20), value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertEquals(15, tmp2.v(), 0);
 		value2.v(1, tmp2);
@@ -428,7 +391,7 @@ public class TestFloat64GeneralTensor {
 		ComplexFloat64Member ctmp1 = G.CDBL.construct();
 		ComplexFloat64Member ctmp2 = G.CDBL.construct();
 		ComplexFloat64GeneralTensorProductMember cvalue1 =
-				new ComplexFloat64GeneralTensorProductMember(2,2);
+				new ComplexFloat64GeneralTensorProductMember();
 		index.set(0, 0);
 		index.set(1, 0);
 		ctmp1.setR(1);
@@ -454,7 +417,7 @@ public class TestFloat64GeneralTensor {
 		
 		G.CDBL_TEN.conjugate().call(cvalue1, cvalue2);
 		assertEquals(cvalue1.rank(), cvalue2.rank());
-		assertEquals(cvalue1.dimension(), cvalue2.dimension());
+		//assertEquals(cvalue1.dimension(), cvalue2.dimension());
 		index.set(0, 0);
 		index.set(1, 0);
 		cvalue1.getV(index, ctmp1);
@@ -502,7 +465,7 @@ public class TestFloat64GeneralTensor {
 		
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
-		value1 = new Float64GeneralTensorProductMember(0,3);
+		value1 = new Float64GeneralTensorProductMember();
 		tmp1.setV(53.9);
 		value1.setV(idx, tmp1);
 		tmp2.setV(-99999);

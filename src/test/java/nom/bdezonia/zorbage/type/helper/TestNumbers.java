@@ -275,7 +275,7 @@ public class TestNumbers {
 
 		ComplexFloat32Member tmp = new ComplexFloat32Member();
 		
-		NumberTensorBridge<ComplexFloat32Member> bridge = new NumberTensorBridge<ComplexFloat32Member>(G.CFLT, c, 3);
+		NumberTensorBridge<ComplexFloat32Member> bridge = new NumberTensorBridge<ComplexFloat32Member>(G.CFLT, c);
 		
 		try {
 			bridge.dimension(-1);
@@ -348,32 +348,6 @@ public class TestNumbers {
 			assertTrue(true);
 		}
 		
-		try {
-			bridge.reshape(new long[] {-1,-1});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {0,0});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		bridge.reshape(new long[] {1,1});
-		try {
-			bridge.reshape(new long[] {1,2});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {2,1});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		
 		assertEquals(0, bridge.numDimensions());
 		
 		tmp.setR(3);
@@ -405,8 +379,8 @@ public class TestNumbers {
 		assertEquals(0, bridge.upperRank());
 		assertEquals(0, bridge.rank());
 		
-		assertEquals(3, bridge.dimension());
-		bridge.setDimension(99);
-		assertEquals(99, bridge.dimension());
+		//assertEquals(3, bridge.dimension());
+		//bridge.setDimension(99);
+		//assertEquals(99, bridge.dimension());
 	}
 }

@@ -52,7 +52,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToNumber() {
 		
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -114,7 +114,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToRModule() {
 		
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -285,7 +285,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToMatrix() {
 
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -446,7 +446,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToSubTensor() {
 
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(2, 2, 1,2, 3,4, 5,6, 7,8);
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -458,7 +458,7 @@ public class TestTensors {
 		
 		IntegerIndex idx2 = new IntegerIndex(2);
 
-		assertEquals(2, bridge.dimension());
+		//assertEquals(2, bridge.dimension());
 		try {
 			bridge.dimension(-1);
 			fail();
@@ -587,42 +587,11 @@ public class TestTensors {
 			assertTrue(true);
 		}
 		
-		try {
-			bridge.reshape(new long[] {-1});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {0});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		bridge.reshape(new long[] {1});
 		idx.set(0,0);
 		tmp.setR(104);
 		tmp.setI(105);
 		bridge.getV(idx, tmp);
 		assertTrue(G.CDBL.isZero().call(tmp));
-		try {
-			bridge.reshape(new long[] {2});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {4});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {2, 2});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
 		
 		idx.set(0, 0);
 		tmp.setR(101);

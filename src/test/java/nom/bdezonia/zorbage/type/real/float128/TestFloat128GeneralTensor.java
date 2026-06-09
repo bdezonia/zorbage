@@ -61,6 +61,9 @@ public class TestFloat128GeneralTensor {
 
 	private final BigDecimal TOL = BigDecimal.valueOf(0.000000000000001);
 
+	private Float128GeneralTensorProductMember metric = G.QUAD_TEN.construct();
+	private Float128GeneralTensorProductMember metricInverse = G.QUAD_TEN.construct();
+
 	@Test
 	public void test1() {
 		Float128Member value = G.QUAD.construct();
@@ -102,14 +105,14 @@ public class TestFloat128GeneralTensor {
 				assertTrue(BigDecimalUtils.isNear(0, value.v(), TOL));
 		}
 
-		Float128GeneralTensorProductMember x = new Float128GeneralTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(1),BigDecimal.valueOf(2),BigDecimal.valueOf(3),BigDecimal.valueOf(4)});
-		Float128GeneralTensorProductMember y = new Float128GeneralTensorProductMember(2, 2, new BigDecimal[] {BigDecimal.valueOf(5),BigDecimal.valueOf(6),BigDecimal.valueOf(7),BigDecimal.valueOf(8)});
+		Float128GeneralTensorProductMember x = new Float128GeneralTensorProductMember();
+		Float128GeneralTensorProductMember y = new Float128GeneralTensorProductMember();
 		Float128GeneralTensorProductMember z = new Float128GeneralTensorProductMember();
 
 		G.QUAD_TEN.multiply().call(x, y, z);
 		
 		assertEquals(4, z.rank());
-		assertEquals(2, z.dimension());
+		//assertEquals(2, z.dimension());
 
 		// TODO I only support "square" tensors. Make a non square example from
 		//   https://www.tensorflow.org/api_docs/python/tf/linalg/matmul
@@ -119,19 +122,16 @@ public class TestFloat128GeneralTensor {
 	@Test
 	public void test2() {
 
-		int rank = 2;
-		int dimension = 3;
-		
 		Float128Member tmp1 = G.QUAD.construct();
 		Float128Member tmp2 = G.QUAD.construct();
 		
-		Float128GeneralTensorProductMember value1 = new Float128GeneralTensorProductMember(rank, dimension);
-		Float128GeneralTensorProductMember value2 = new Float128GeneralTensorProductMember(rank, dimension);
+		Float128GeneralTensorProductMember value1 = new Float128GeneralTensorProductMember();
+		Float128GeneralTensorProductMember value2 = new Float128GeneralTensorProductMember();
 
 		assertNotNull(G.QUAD_TEN.construct());
 		Float128GeneralTensorProductMember junk1 = G.QUAD_TEN.construct("[1,2,3][4,5,6][7,8,9]");
 		assertEquals(2, junk1.rank());
-		assertEquals(3, junk1.dimension());
+		//assertEquals(3, junk1.dimension());
 		junk1.v(1, tmp1);
 		assertTrue(BigDecimalUtils.isNear(2, tmp1.v(), TOL));
 		Float128GeneralTensorProductMember junk2 = G.QUAD_TEN.construct(junk1);
@@ -181,18 +181,18 @@ public class TestFloat128GeneralTensor {
 		value1.v(1, tmp1);
 		assertTrue(BigDecimalUtils.isNear(0, tmp1.v(), TOL));
 
-		assertTrue(value1.numElems() > 0);
-		assertTrue(value2.numElems() > 0);
-		for (long i = 0; i < value1.numElems(); i++) {
+		assertTrue(value1.numElements() > 0);
+		assertTrue(value2.numElements() > 0);
+		for (long i = 0; i < value1.numElements(); i++) {
 			tmp1.setV(BigDecimal.valueOf(i));
 			tmp2.setV(BigDecimal.valueOf(43));
 			value1.setV(i, tmp1);
 			value2.setV(i, tmp2);
 		}
 		G.QUAD_TEN.divideElements().call(value1, value2, value1);
-		assertTrue(value1.numElems() > 0);
-		assertTrue(value1.numElems() == value2.numElems());
-		for (long i = 0; i < value1.numElems(); i++) {
+		assertTrue(value1.numElements() > 0);
+		assertTrue(value1.numElements() == value2.numElements());
+		for (long i = 0; i < value1.numElements(); i++) {
 			value1.v(i, tmp1);
 			assertTrue(BigDecimalUtils.isNear(1.0*i/43, tmp1.v(), TOL));
 		}
@@ -202,11 +202,11 @@ public class TestFloat128GeneralTensor {
 		
 		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
-		assertEquals(2, value1.dimension());
+		//assertEquals(2, value1.dimension());
 		G.QUAD_TEN.multiply().call(value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		//assertEquals(2, value2.dimension());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			assertTrue(BigDecimalUtils.isNear(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), BigDecimal.ZERO));
@@ -228,79 +228,39 @@ public class TestFloat128GeneralTensor {
 		value2.v(2, tmp2);
 		assertTrue(BigDecimalUtils.isNear(-3, tmp2.v(), BigDecimal.ZERO));
 
-		G.QUAD_TEN.commaDerivative().call(0, value1, value2);
-		value2.v(0, tmp2);
-		assertTrue(BigDecimalUtils.isNear(1, tmp2.v(), BigDecimal.ZERO));
-		value2.v(1, tmp2);
-		assertTrue(BigDecimalUtils.isNear(2, tmp2.v(), BigDecimal.ZERO));
-		value2.v(2, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-		value2.v(3, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-
-		G.QUAD_TEN.commaDerivative().call(1, value1, value2);
-		value2.v(0, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-		value2.v(1, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-		value2.v(2, tmp2);
-		assertTrue(BigDecimalUtils.isNear(3, tmp2.v(), BigDecimal.ZERO));
-		value2.v(3, tmp2);
-		assertTrue(BigDecimalUtils.isNear(4, tmp2.v(), BigDecimal.ZERO));
-		
-		G.QUAD_TEN.semicolonDerivative().call(0, value1, value2);
-		value2.v(0, tmp2);
-		assertTrue(BigDecimalUtils.isNear(1, tmp2.v(), BigDecimal.ZERO));
-		value2.v(1, tmp2);
-		assertTrue(BigDecimalUtils.isNear(2, tmp2.v(), BigDecimal.ZERO));
-		value2.v(2, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-		value2.v(3, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-
-		G.QUAD_TEN.semicolonDerivative().call(1, value1, value2);
-		value2.v(0, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-		value2.v(1, tmp2);
-		assertTrue(BigDecimalUtils.isNear(0, tmp2.v(), BigDecimal.ZERO));
-		value2.v(2, tmp2);
-		assertTrue(BigDecimalUtils.isNear(3, tmp2.v(), BigDecimal.ZERO));
-		value2.v(3, tmp2);
-		assertTrue(BigDecimalUtils.isNear(4, tmp2.v(), BigDecimal.ZERO));
-		
 		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		G.QUAD_TEN.norm().call(value1, tmp1);
 		assertTrue(BigDecimalUtils.isNear(Math.sqrt(30), tmp1.v(), TOL));
 		
 		value1 = new Float128GeneralTensorProductMember("[1,2][3,4]");
 		assertEquals(2, value1.rank());
-		assertEquals(2, value1.dimension());
+		//assertEquals(2, value1.dimension());
 		G.QUAD_TEN.outerProduct().call(value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		//assertEquals(2, value2.dimension());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			assertTrue(BigDecimalUtils.isNear(((i % 4)+1) * ((i / 4) + 1), tmp2.v(), BigDecimal.ZERO));
 		}
 
 		try {
-			G.QUAD_TEN.lowerIndex().call(0, value1, value2);
+			G.QUAD_TEN.lowerIndex().call(0, metricInverse, value1, value2);
 			assertTrue(true);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 		try {
-			G.QUAD_TEN.raiseIndex().call(0, value1, value2);
+			G.QUAD_TEN.raiseIndex().call(0, metric, value1, value2);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
 
-		value1 = new Float128GeneralTensorProductMember(3,2);
+		value1 = new Float128GeneralTensorProductMember();
 		assertEquals(3, value1.rank());
-		assertEquals(2, value1.dimension());
-		assertEquals(8, value1.numElems());
+		//assertEquals(2, value1.dimension());
+		assertEquals(8, value1.numElements());
 		for (int i = 0; i < 8; i++) {
 			tmp1.setV(BigDecimal.valueOf(i+1));
 			value1.setV(i, tmp1);
@@ -313,8 +273,8 @@ public class TestFloat128GeneralTensor {
 
 		G.QUAD_TEN.innerProduct().call(0, 1, value1, value1, value2);
 		assertEquals(4, value2.rank());
-		assertEquals(2, value2.dimension());
-		assertEquals(16, value2.numElems());
+		//assertEquals(2, value2.dimension());
+		assertEquals(16, value2.numElements());
 		for (int i = 0; i < 16; i++) {
 			value2.v(i, tmp2);
 			// TODO do something. Note that the impl does a simple approach that matches theory very closely. I think we can
@@ -326,7 +286,7 @@ public class TestFloat128GeneralTensor {
 		// tested in test1() above
 		//G.QUAD_TEN.power();
 		
-		value1 = new Float128GeneralTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember();
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -338,7 +298,7 @@ public class TestFloat128GeneralTensor {
 		tmp2.setV(BigDecimal.valueOf(5));
 		G.QUAD_TEN.scale().call(tmp2, value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
@@ -348,7 +308,7 @@ public class TestFloat128GeneralTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128GeneralTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember();
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -359,7 +319,7 @@ public class TestFloat128GeneralTensor {
 		value1.setV(3, tmp1);
 		G.QUAD_TEN.scaleByDouble().call(5.0, value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
@@ -369,7 +329,7 @@ public class TestFloat128GeneralTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128GeneralTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember();
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -380,7 +340,7 @@ public class TestFloat128GeneralTensor {
 		value1.setV(3, tmp1);
 		G.QUAD_TEN.scaleByHighPrec().call(new HighPrecisionMember(BigDecimal.valueOf(5.0)), value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
@@ -390,7 +350,7 @@ public class TestFloat128GeneralTensor {
 		value2.v(3, tmp2);
 		assertTrue(BigDecimalUtils.isNear(60, tmp2.v(), BigDecimal.ZERO));
 
-		value1 = new Float128GeneralTensorProductMember(2,2);
+		value1 = new Float128GeneralTensorProductMember();
 		tmp1.setV(BigDecimal.valueOf(3));
 		value1.setV(0, tmp1);
 		tmp1.setV(BigDecimal.valueOf(6));
@@ -401,7 +361,7 @@ public class TestFloat128GeneralTensor {
 		value1.setV(3, tmp1);
 		G.QUAD_TEN.scaleByRational().call(new RationalMember(100,20), value1, value2);
 		assertEquals(value1.rank(), value2.rank());
-		assertEquals(value1.dimension(), value2.dimension());
+		//assertEquals(value1.dimension(), value2.dimension());
 		value2.v(0, tmp2);
 		assertTrue(BigDecimalUtils.isNear(15, tmp2.v(), BigDecimal.ZERO));
 		value2.v(1, tmp2);
@@ -426,7 +386,7 @@ public class TestFloat128GeneralTensor {
 		IntegerIndex index = new IntegerIndex(2);
 		ComplexFloat128Member ctmp1 = G.CQUAD.construct();
 		ComplexFloat128Member ctmp2 = G.CQUAD.construct();
-		ComplexFloat128GeneralTensorProductMember cvalue1 = new ComplexFloat128GeneralTensorProductMember(2,2);
+		ComplexFloat128GeneralTensorProductMember cvalue1 = new ComplexFloat128GeneralTensorProductMember();
 		index.set(0, 0);
 		index.set(1, 0);
 		ctmp1.setR(BigDecimal.valueOf(1));
@@ -452,7 +412,7 @@ public class TestFloat128GeneralTensor {
 		
 		G.CQUAD_TEN.conjugate().call(cvalue1, cvalue2);
 		assertEquals(cvalue1.rank(), cvalue2.rank());
-		assertEquals(cvalue1.dimension(), cvalue2.dimension());
+		//assertEquals(cvalue1.dimension(), cvalue2.dimension());
 		index.set(0, 0);
 		index.set(1, 0);
 		cvalue1.getV(index, ctmp1);
@@ -500,7 +460,7 @@ public class TestFloat128GeneralTensor {
 
 		// a test to make sure rank 0 tensors can be accessed
 		IntegerIndex idx = new IntegerIndex(0);
-		value1 = new Float128GeneralTensorProductMember(0,3);
+		value1 = new Float128GeneralTensorProductMember();
 		value1.getV(idx, tmp1);
 	}
 

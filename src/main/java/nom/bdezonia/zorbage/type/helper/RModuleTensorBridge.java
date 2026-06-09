@@ -57,10 +57,22 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
+	public long axisSize(int axisNum) {
+
+		return dimension(axisNum);
+	}
+
+	@Override
 	public int numDimensions() {
 		return 1;
 	}
 
+	@Override
+	public long numElements() {
+
+		return rmod.length();
+	}
+	
 	@Override
 	public boolean alloc(long[] dims) {
 		if (dimsCompatible(dims)) {
@@ -79,11 +91,14 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 		else
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
-
+	
 	@Override
-	public void reshape(long[] dims) {
-		if (!dimsCompatible(dims))
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+	public void shape(long[] sizes) {
+		
+		sizes[0] = rmod.length();
+		for (int i = 1; i < sizes.length; i++) {
+			sizes[i] = 1;
+		}
 	}
 
 	@Override
@@ -138,9 +153,6 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 		return false;
 	}
 
-	@Override
-	public long dimension() { return rmod.length(); }
-	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 1) return false;
 		for (int i = 1; i < newDims.length; i++) {

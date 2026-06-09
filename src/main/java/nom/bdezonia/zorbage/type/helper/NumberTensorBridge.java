@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -45,26 +46,23 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
 	private final NumberMember<U> num;
-	private long dimension;
 	
-	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num, long dimension) {
+	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num) {
 		this.zero = algebra.construct();
 		this.num = num;
-		this.dimension = dimension;
 	}
-	
-	public void setDimension(long dimension) {
-		this.dimension = dimension;
-	}
-
-	@Override
-	public long dimension() { return dimension; }
 	
 	@Override
 	public long dimension(int d) {
 		if (d < 0)
 			throw new IllegalArgumentException("negative index exception");
 		return 1;
+	}
+	
+	@Override
+	public long axisSize(int axisNum) {
+
+		return dimension(axisNum);
 	}
 
 	@Override
@@ -73,11 +71,30 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public boolean alloc(long[] dims) {
-		if (dimsCompatible(dims))
+	public long numElements() {
+
+		return 1;
+	}
+
+	@Override
+	public boolean alloc(long[] dims, IndexType[] indexTypes) {
+
+		if (dimsCompatible(dims)) {
+			
+			if (indexTypes != null && indexTypes.length != 0) {
+				throw new IllegalArgumentException("numbers cannot have variance components");
+			}
+
 			return false;
+		}
 		else
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+	}
+	
+	@Override
+	public boolean alloc(long[] dims) {
+		
+		return alloc(dims, null);
 	}
 
 	@Override
@@ -87,11 +104,13 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 		else
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
-
+	
 	@Override
-	public void reshape(long[] dims) {
-		if (!dimsCompatible(dims))
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+	public void shape(long[] sizes) {
+		
+		for (int i = 0; i < sizes.length; i++) {
+			sizes[i] = 1;
+		}
 	}
 
 	@Override
