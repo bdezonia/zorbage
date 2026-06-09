@@ -42,23 +42,23 @@ import nom.bdezonia.zorbage.type.character.CharMember;
 import nom.bdezonia.zorbage.type.color.ArgbMember;
 import nom.bdezonia.zorbage.type.color.CieXyzMember;
 import nom.bdezonia.zorbage.type.color.RgbMember;
-import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128Member;
 import nom.bdezonia.zorbage.type.complex.float128.ComplexFloat128VectorMember;
-import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16Member;
 import nom.bdezonia.zorbage.type.complex.float16.ComplexFloat16VectorMember;
-import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32Member;
 import nom.bdezonia.zorbage.type.complex.float32.ComplexFloat32VectorMember;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64VectorMember;
-import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionMember;
 import nom.bdezonia.zorbage.type.complex.highprec.ComplexHighPrecisionVectorMember;
@@ -107,64 +107,64 @@ import nom.bdezonia.zorbage.type.integer.int8.UnsignedInt8Member;
 import nom.bdezonia.zorbage.type.integer.int9.SignedInt9Member;
 import nom.bdezonia.zorbage.type.integer.int9.UnsignedInt9Member;
 import nom.bdezonia.zorbage.type.integer.unbounded.UnboundedIntMember;
-import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128Member;
 import nom.bdezonia.zorbage.type.octonion.float128.OctonionFloat128RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16Member;
 import nom.bdezonia.zorbage.type.octonion.float16.OctonionFloat16RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32Member;
 import nom.bdezonia.zorbage.type.octonion.float32.OctonionFloat32RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64Member;
 import nom.bdezonia.zorbage.type.octonion.float64.OctonionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.octonion.highprec.OctonionHighPrecisionRModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128Member;
 import nom.bdezonia.zorbage.type.quaternion.float128.QuaternionFloat128RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16Member;
 import nom.bdezonia.zorbage.type.quaternion.float16.QuaternionFloat16RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32Member;
 import nom.bdezonia.zorbage.type.quaternion.float32.QuaternionFloat32RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64Member;
 import nom.bdezonia.zorbage.type.quaternion.float64.QuaternionFloat64RModuleMember;
-import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionMember;
 import nom.bdezonia.zorbage.type.quaternion.highprec.QuaternionHighPrecisionRModuleMember;
 import nom.bdezonia.zorbage.type.rational.RationalMember;
-import nom.bdezonia.zorbage.type.real.float128.Float128CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float128.Float128GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float128.Float128MatrixMember;
 import nom.bdezonia.zorbage.type.real.float128.Float128Member;
 import nom.bdezonia.zorbage.type.real.float128.Float128VectorMember;
-import nom.bdezonia.zorbage.type.real.float16.Float16CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float16.Float16GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16MatrixMember;
 import nom.bdezonia.zorbage.type.real.float16.Float16Member;
 import nom.bdezonia.zorbage.type.real.float16.Float16VectorMember;
-import nom.bdezonia.zorbage.type.real.float32.Float32CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float32.Float32GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float32.Float32MatrixMember;
 import nom.bdezonia.zorbage.type.real.float32.Float32Member;
 import nom.bdezonia.zorbage.type.real.float32.Float32VectorMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64MatrixMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 import nom.bdezonia.zorbage.type.real.float64.Float64VectorMember;
-import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionCartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionGeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMatrixMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionMember;
 import nom.bdezonia.zorbage.type.real.highprec.HighPrecisionVectorMember;
@@ -193,31 +193,31 @@ public class DataBundle {
 	public List<DimensionedDataSource<ComplexFloat128Member>> cquads = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat128VectorMember>> cquad_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat128MatrixMember>> cquad_mats = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat128CartesianTensorProductMember>> cquad_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat128GeneralTensorProductMember>> cquad_tens = new ArrayList<>();
 	
 	// type.complex.float16
 	public List<DimensionedDataSource<ComplexFloat16Member>> chlfs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat16VectorMember>> chlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat16MatrixMember>> chlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat16CartesianTensorProductMember>> chlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat16GeneralTensorProductMember>> chlf_tens = new ArrayList<>();
 	
 	// type.complex.float32
 	public List<DimensionedDataSource<ComplexFloat32Member>> cflts = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat32VectorMember>> cflt_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat32MatrixMember>> cflt_mats = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat32CartesianTensorProductMember>> cflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat32GeneralTensorProductMember>> cflt_tens = new ArrayList<>();
 	
 	// type.complex.float64
 	public List<DimensionedDataSource<ComplexFloat64Member>> cdbls = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat64VectorMember>> cdbl_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexFloat64MatrixMember>> cdbl_mats = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexFloat64CartesianTensorProductMember>> cdbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexFloat64GeneralTensorProductMember>> cdbl_tens = new ArrayList<>();
 	
 	// type.complex.highprec
 	public List<DimensionedDataSource<ComplexHighPrecisionMember>> chps = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexHighPrecisionVectorMember>> chp_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<ComplexHighPrecisionMatrixMember>> chp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<ComplexHighPrecisionCartesianTensorProductMember>> chp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<ComplexHighPrecisionGeneralTensorProductMember>> chp_tens = new ArrayList<>();
 	
 	// type.gaussian
 	public List<DimensionedDataSource<GaussianInt8Member>> gint8s = new ArrayList<>();
@@ -271,31 +271,31 @@ public class DataBundle {
 	public List<DimensionedDataSource<OctonionFloat128Member>> oquads = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat128RModuleMember>> oquad_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat128MatrixMember>> oquad_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat128CartesianTensorProductMember>> oquad_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat128GeneralTensorProductMember>> oquad_tens = new ArrayList<>();
 	
 	// type.octonion.float16
 	public List<DimensionedDataSource<OctonionFloat16Member>> ohlfs = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat16RModuleMember>> ohlf_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat16MatrixMember>> ohlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat16CartesianTensorProductMember>> ohlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat16GeneralTensorProductMember>> ohlf_tens = new ArrayList<>();
 	
 	// type.octonion.float32
 	public List<DimensionedDataSource<OctonionFloat32Member>> oflts = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat32RModuleMember>> oflt_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat32MatrixMember>> oflt_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat32CartesianTensorProductMember>> oflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat32GeneralTensorProductMember>> oflt_tens = new ArrayList<>();
 	
 	// type.octonion.float64
 	public List<DimensionedDataSource<OctonionFloat64Member>> odbls = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat64RModuleMember>> odbl_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionFloat64MatrixMember>> odbl_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionFloat64CartesianTensorProductMember>> odbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionFloat64GeneralTensorProductMember>> odbl_tens = new ArrayList<>();
 	
 	// type.octonion.highprec
 	public List<DimensionedDataSource<OctonionHighPrecisionMember>> ohps = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionHighPrecisionRModuleMember>> ohp_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<OctonionHighPrecisionMatrixMember>> ohp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<OctonionHighPrecisionCartesianTensorProductMember>> ohp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<OctonionHighPrecisionGeneralTensorProductMember>> ohp_tens = new ArrayList<>();
 	
 	// type.point
 	public List<DimensionedDataSource<Point>> points = new ArrayList<>();
@@ -304,31 +304,31 @@ public class DataBundle {
 	public List<DimensionedDataSource<QuaternionFloat128Member>> qquads = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat128RModuleMember>> qquad_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat128MatrixMember>> qquad_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat128CartesianTensorProductMember>> qquad_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat128GeneralTensorProductMember>> qquad_tens = new ArrayList<>();
 	
 	// type.quaternion.float16
 	public List<DimensionedDataSource<QuaternionFloat16Member>> qhlfs = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat16RModuleMember>> qhlf_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat16MatrixMember>> qhlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat16CartesianTensorProductMember>> qhlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat16GeneralTensorProductMember>> qhlf_tens = new ArrayList<>();
 	
 	// type.quaternion.float32
 	public List<DimensionedDataSource<QuaternionFloat32Member>> qflts = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat32RModuleMember>> qflt_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat32MatrixMember>> qflt_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat32CartesianTensorProductMember>> qflt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat32GeneralTensorProductMember>> qflt_tens = new ArrayList<>();
 	
 	// type.quaternion.float64
 	public List<DimensionedDataSource<QuaternionFloat64Member>> qdbls = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat64RModuleMember>> qdbl_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionFloat64MatrixMember>> qdbl_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionFloat64CartesianTensorProductMember>> qdbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionFloat64GeneralTensorProductMember>> qdbl_tens = new ArrayList<>();
 	
 	// type.quaternion.highprec
 	public List<DimensionedDataSource<QuaternionHighPrecisionMember>> qhps = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionHighPrecisionRModuleMember>> qhp_rmods = new ArrayList<>();
 	public List<DimensionedDataSource<QuaternionHighPrecisionMatrixMember>> qhp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember>> qhp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<QuaternionHighPrecisionGeneralTensorProductMember>> qhp_tens = new ArrayList<>();
 	
 	// type.rational
 	public List<DimensionedDataSource<RationalMember>> rationals = new ArrayList<>();
@@ -337,31 +337,31 @@ public class DataBundle {
 	public List<DimensionedDataSource<Float128Member>> quads = new ArrayList<>();
 	public List<DimensionedDataSource<Float128VectorMember>> quad_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float128MatrixMember>> quad_mats = new ArrayList<>();
-	public List<DimensionedDataSource<Float128CartesianTensorProductMember>> quad_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float128GeneralTensorProductMember>> quad_tens = new ArrayList<>();
 	
 	// type.real.float16
 	public List<DimensionedDataSource<Float16Member>> hlfs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16VectorMember>> hlf_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float16MatrixMember>> hlf_mats = new ArrayList<>();
-	public List<DimensionedDataSource<Float16CartesianTensorProductMember>> hlf_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float16GeneralTensorProductMember>> hlf_tens = new ArrayList<>();
 	
 	// type.real.float32
 	public List<DimensionedDataSource<Float32Member>> flts = new ArrayList<>();
 	public List<DimensionedDataSource<Float32VectorMember>> flt_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float32MatrixMember>> flt_mats = new ArrayList<>();
-	public List<DimensionedDataSource<Float32CartesianTensorProductMember>> flt_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float32GeneralTensorProductMember>> flt_tens = new ArrayList<>();
 	
 	// type.real.float64
 	public List<DimensionedDataSource<Float64Member>> dbls = new ArrayList<>();
 	public List<DimensionedDataSource<Float64VectorMember>> dbl_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<Float64MatrixMember>> dbl_mats = new ArrayList<>();
-	public List<DimensionedDataSource<Float64CartesianTensorProductMember>> dbl_tens = new ArrayList<>();
+	public List<DimensionedDataSource<Float64GeneralTensorProductMember>> dbl_tens = new ArrayList<>();
 	
 	// type.real.highprec
 	public List<DimensionedDataSource<HighPrecisionMember>> hps = new ArrayList<>();
 	public List<DimensionedDataSource<HighPrecisionVectorMember>> hp_vecs = new ArrayList<>();
 	public List<DimensionedDataSource<HighPrecisionMatrixMember>> hp_mats = new ArrayList<>();
-	public List<DimensionedDataSource<HighPrecisionCartesianTensorProductMember>> hp_tens = new ArrayList<>();
+	public List<DimensionedDataSource<HighPrecisionGeneralTensorProductMember>> hp_tens = new ArrayList<>();
 	
 	// type.string
 	public List<DimensionedDataSource<FixedStringMember>> fstrs = new ArrayList<>();
@@ -417,7 +417,7 @@ public class DataBundle {
 			cquad_mats.add(ds);
 	}
 	
-	public void mergeComplexFlt128Tens(DimensionedDataSource<ComplexFloat128CartesianTensorProductMember> ds) {
+	public void mergeComplexFlt128Tens(DimensionedDataSource<ComplexFloat128GeneralTensorProductMember> ds) {
 		if (ds != null)
 			cquad_tens.add(ds);
 	}
@@ -439,7 +439,7 @@ public class DataBundle {
 			chlf_mats.add(ds);
 	}
 	
-	public void mergeComplexFlt16Tens(DimensionedDataSource<ComplexFloat16CartesianTensorProductMember> ds) {
+	public void mergeComplexFlt16Tens(DimensionedDataSource<ComplexFloat16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			chlf_tens.add(ds);
 	}
@@ -461,7 +461,7 @@ public class DataBundle {
 			cflt_mats.add(ds);
 	}
 	
-	public void mergeComplexFlt32Tens(DimensionedDataSource<ComplexFloat32CartesianTensorProductMember> ds) {
+	public void mergeComplexFlt32Tens(DimensionedDataSource<ComplexFloat32GeneralTensorProductMember> ds) {
 		if (ds != null)
 			cflt_tens.add(ds);
 	}
@@ -483,7 +483,7 @@ public class DataBundle {
 			cdbl_mats.add(ds);
 	}
 	
-	public void mergeComplexFlt64Tens(DimensionedDataSource<ComplexFloat64CartesianTensorProductMember> ds) {
+	public void mergeComplexFlt64Tens(DimensionedDataSource<ComplexFloat64GeneralTensorProductMember> ds) {
 		if (ds != null)
 			cdbl_tens.add(ds);
 	}
@@ -505,7 +505,7 @@ public class DataBundle {
 			chp_mats.add(ds);
 	}
 	
-	public void mergeComplexHPTens(DimensionedDataSource<ComplexHighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeComplexHPTens(DimensionedDataSource<ComplexHighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			chp_tens.add(ds);
 	}
@@ -751,7 +751,7 @@ public class DataBundle {
 			oquad_mats.add(ds);
 	}
 	
-	public void mergeOct128Tens(DimensionedDataSource<OctonionFloat128CartesianTensorProductMember> ds) {
+	public void mergeOct128Tens(DimensionedDataSource<OctonionFloat128GeneralTensorProductMember> ds) {
 		if (ds != null)
 			oquad_tens.add(ds);
 	}
@@ -773,7 +773,7 @@ public class DataBundle {
 			ohlf_mats.add(ds);
 	}
 	
-	public void mergeOct16Tens(DimensionedDataSource<OctonionFloat16CartesianTensorProductMember> ds) {
+	public void mergeOct16Tens(DimensionedDataSource<OctonionFloat16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			ohlf_tens.add(ds);
 	}
@@ -795,7 +795,7 @@ public class DataBundle {
 			oflt_mats.add(ds);
 	}
 	
-	public void mergeOct32Tens(DimensionedDataSource<OctonionFloat32CartesianTensorProductMember> ds) {
+	public void mergeOct32Tens(DimensionedDataSource<OctonionFloat32GeneralTensorProductMember> ds) {
 		if (ds != null)
 			oflt_tens.add(ds);
 	}
@@ -817,7 +817,7 @@ public class DataBundle {
 			odbl_mats.add(ds);
 	}
 	
-	public void mergeOct64Tens(DimensionedDataSource<OctonionFloat64CartesianTensorProductMember> ds) {
+	public void mergeOct64Tens(DimensionedDataSource<OctonionFloat64GeneralTensorProductMember> ds) {
 		if (ds != null)
 			odbl_tens.add(ds);
 	}
@@ -839,7 +839,7 @@ public class DataBundle {
 			ohp_mats.add(ds);
 	}
 	
-	public void mergeOctHPTens(DimensionedDataSource<OctonionHighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeOctHPTens(DimensionedDataSource<OctonionHighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			ohp_tens.add(ds);
 	}
@@ -868,7 +868,7 @@ public class DataBundle {
 			qquad_mats.add(ds);
 	}
 	
-	public void mergeQuatFlt128Tens(DimensionedDataSource<QuaternionFloat128CartesianTensorProductMember> ds) {
+	public void mergeQuatFlt128Tens(DimensionedDataSource<QuaternionFloat128GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qquad_tens.add(ds);
 	}
@@ -890,7 +890,7 @@ public class DataBundle {
 			qhlf_mats.add(ds);
 	}
 	
-	public void mergeQuat16Tens(DimensionedDataSource<QuaternionFloat16CartesianTensorProductMember> ds) {
+	public void mergeQuat16Tens(DimensionedDataSource<QuaternionFloat16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qhlf_tens.add(ds);
 	}
@@ -912,7 +912,7 @@ public class DataBundle {
 			qflt_mats.add(ds);
 	}
 	
-	public void mergeQuat32Tens(DimensionedDataSource<QuaternionFloat32CartesianTensorProductMember> ds) {
+	public void mergeQuat32Tens(DimensionedDataSource<QuaternionFloat32GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qflt_tens.add(ds);
 	}
@@ -934,7 +934,7 @@ public class DataBundle {
 			qdbl_mats.add(ds);
 	}
 	
-	public void mergeQuat64Tens(DimensionedDataSource<QuaternionFloat64CartesianTensorProductMember> ds) {
+	public void mergeQuat64Tens(DimensionedDataSource<QuaternionFloat64GeneralTensorProductMember> ds) {
 		if (ds != null)
 			qdbl_tens.add(ds);
 	}
@@ -956,7 +956,7 @@ public class DataBundle {
 			qhp_mats.add(ds);
 	}
 	
-	public void mergeQuatHPTens(DimensionedDataSource<QuaternionHighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeQuatHPTens(DimensionedDataSource<QuaternionHighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			qhp_tens.add(ds);
 	}
@@ -985,7 +985,7 @@ public class DataBundle {
 			quad_mats.add(ds);
 	}
 	
-	public void mergeFlt128Tens(DimensionedDataSource<Float128CartesianTensorProductMember> ds) {
+	public void mergeFlt128Tens(DimensionedDataSource<Float128GeneralTensorProductMember> ds) {
 		if (ds != null)
 			quad_tens.add(ds);
 	}
@@ -1007,7 +1007,7 @@ public class DataBundle {
 			hlf_mats.add(ds);
 	}
 	
-	public void mergeFlt16Tens(DimensionedDataSource<Float16CartesianTensorProductMember> ds) {
+	public void mergeFlt16Tens(DimensionedDataSource<Float16GeneralTensorProductMember> ds) {
 		if (ds != null)
 			hlf_tens.add(ds);
 	}
@@ -1029,7 +1029,7 @@ public class DataBundle {
 			flt_mats.add(ds);
 	}
 
-	public void mergeFlt32Tens(DimensionedDataSource<Float32CartesianTensorProductMember> ds) {
+	public void mergeFlt32Tens(DimensionedDataSource<Float32GeneralTensorProductMember> ds) {
 		if (ds != null)
 			flt_tens.add(ds);
 	}
@@ -1051,7 +1051,7 @@ public class DataBundle {
 			dbl_mats.add(ds);
 	}
 	
-	public void mergeFlt64Tens(DimensionedDataSource<Float64CartesianTensorProductMember> ds) {
+	public void mergeFlt64Tens(DimensionedDataSource<Float64GeneralTensorProductMember> ds) {
 		if (ds != null)
 			dbl_tens.add(ds);
 	}
@@ -1073,7 +1073,7 @@ public class DataBundle {
 			hp_mats.add(ds);
 	}
 	
-	public void mergeHPTens(DimensionedDataSource<HighPrecisionCartesianTensorProductMember> ds) {
+	public void mergeHPTens(DimensionedDataSource<HighPrecisionGeneralTensorProductMember> ds) {
 		if (ds != null)
 			hp_tens.add(ds);
 	}

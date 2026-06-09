@@ -32,7 +32,7 @@ package example;
 
 import nom.bdezonia.zorbage.algebra.G;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
-import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 
@@ -44,35 +44,37 @@ import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 class Tensors {
 	
 	/*
-	 * Zorbage supports various flavors of Cartesian Tensors. Cartesian tensors do not have upper indices
-	 * (unlike general tensors which do). All of Zorbage's tensors are perfectly shaped (2x2 or 5x5x5 etc.)
-	 * rather than raggedly shaped (2x1 or 5x3x4 etc.).
+	 * Zorbage supports various flavors of General Tensors. 
 	 * 
-	 * Float16CartesianTensorProductMember - 16 bit reals
-	 * Float32CartesianTensorProductMember - 32 bit reals
-	 * Float64CartesianTensorProductMember - 64 bit reals
-	 * Float64CartesianTensorProductMember - high precision reals
+	 * Float16GeneralTensorProductMember - 16 bit reals
+	 * Float32GeneralTensorProductMember - 32 bit reals
+	 * Float64GeneralTensorProductMember - 64 bit reals
+	 * Float128GeneralTensorProductMember - 128 bit reals
+	 * HighPrecisionGeneralTensorProductMember - high precision reals
 	 * 
-	 * ComplexFloat16CartesianTensorProductMember - 16 bit complexes
-	 * ComplexFloat32CartesianTensorProductMember - 32 bit complexes
-	 * ComplexFloat64CartesianTensorProductMember - 64 bit complexes
-	 * ComplexFloat64CartesianTensorProductMember - high precision complexes
+	 * ComplexFloat16GeneralTensorProductMember - 16 bit complexes
+	 * ComplexFloat32GeneralTensorProductMember - 32 bit complexes
+	 * ComplexFloat64GeneralTensorProductMember - 64 bit complexes
+	 * ComplexFloat128GeneralTensorProductMember - 128 bit complexes
+	 * ComplexHighPrecisionGeneralTensorProductMember - high precision complexes
 	 * 
-	 * QuaternionFloat16CartesianTensorProductMember - 16 bit quaternions
-	 * QuaternionFloat32CartesianTensorProductMember - 32 bit quaternions
-	 * QuaternionFloat64CartesianTensorProductMember - 64 bit quaternions
-	 * QuaternionFloat64CartesianTensorProductMember - high precision quaternions
+	 * QuaternionFloat16GeneralTensorProductMember - 16 bit quaternions
+	 * QuaternionFloat32GeneralTensorProductMember - 32 bit quaternions
+	 * QuaternionFloat64GeneralTensorProductMember - 64 bit quaternions
+	 * QuaternionFloat128GeneralTensorProductMember - 128 bit quaternions
+	 * QuaternionHoghPrecisionGeneralTensorProductMember - high precision quaternions
 	 * 
-	 * OctonionFloat16CartesianTensorProductMember - 16 bit octonions
-	 * OctonionFloat32CartesianTensorProductMember - 32 bit octonions
-	 * OctonionFloat64CartesianTensorProductMember - 64 bit octonions
-	 * OctonionFloat64CartesianTensorProductMember - high precision octonions
+	 * OctonionFloat16GeneralTensorProductMember - 16 bit octonions
+	 * OctonionFloat32GeneralTensorProductMember - 32 bit octonions
+	 * OctonionFloat64GeneralTensorProductMember - 64 bit octonions
+	 * OctonionFloat128GeneralTensorProductMember - 128 bit octonions
+	 * OctonionHighPrecisionGeneralTensorProductMember - high precision octonions
 	 * 
 	 */
 	
 	// Here are some example calls supported by tensors. 64-bit reals are shown
 	// in the examples below but all the same calls exist for the type combinations:
-	// (Precision: 16/32/64/HighPrec Type:real/complex/quaternion/octonion)
+	// (Precision: 16/32/64/127/HighPrec Type:real/complex/quaternion/octonion)
 	
 	@SuppressWarnings("unused")
 	void example1() {
@@ -81,14 +83,11 @@ class Tensors {
 		
 		// construction
 		
-		Float64CartesianTensorProductMember a = new Float64CartesianTensorProductMember();
-		Float64CartesianTensorProductMember b = new Float64CartesianTensorProductMember(2, 3,
-																new double[] {2,4,6,
-																				3,5,7,
-																				10,100,1000});
-		Float64CartesianTensorProductMember c = G.DBL_TEN.construct();
-		Float64CartesianTensorProductMember d = G.DBL_TEN.construct(b);
-		Float64CartesianTensorProductMember e = G.DBL_TEN.construct("[[1,2,3][4,5,6][7,8,9]]");
+		Float64GeneralTensorProductMember a = new Float64GeneralTensorProductMember();
+		Float64GeneralTensorProductMember b = new Float64GeneralTensorProductMember();
+		Float64GeneralTensorProductMember c = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember d = G.DBL_TEN.construct(b);
+		Float64GeneralTensorProductMember e = G.DBL_TEN.construct("[[1,2,3][4,5,6][7,8,9]]");
 
 		// java support
 		
@@ -99,9 +98,16 @@ class Tensors {
 		// basic functions
 		
 		IntegerIndex idx = new IntegerIndex(b.rank());
-		
+
 		b.rank();
-		b.dimension();
+		b.lowerRank();
+		b.upperRank();
+		b.indexIsLower(0);
+		b.indexIsUpper(0);
+		b.indexType(0);
+		b.indexTypes(null);
+		b.shape(null);
+		b.axisSize(0);
 		b.get(e);
 		b.set(c);
 		b.getV(idx, value);
@@ -155,10 +161,6 @@ class Tensors {
 		G.DBL_TEN.contract();
 		G.DBL_TEN.innerProduct();
 		G.DBL_TEN.outerProduct();
-		G.DBL_TEN.commaDerivative();
-		G.DBL_TEN.semicolonDerivative();
 
 	}
-
-	
 }

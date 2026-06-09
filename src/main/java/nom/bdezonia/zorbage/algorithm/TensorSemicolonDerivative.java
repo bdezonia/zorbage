@@ -50,25 +50,14 @@ public class TensorSemicolonDerivative {
 	// https://en.wikipedia.org/wiki/Covariant_derivative
 	// https://en.wikipedia.org/wiki/Christoffel_symbols
 		
-	/**
-	 * Calculate the semicolon derivative of a tensor and place results in an output tensor.
-	 * 
-	 * @param <S>
-	 * @param <TENSOR>
-	 * @param <M>
-	 * @param <NUMBER>
-	 * @param tensAlg
-	 * @param numAlg
-	 * @param index
-	 * @param a
-	 * @param b
-	 */
-	public static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
+	public static <TA extends Algebra<TA,TENSOR> & TensorLikeMethods<TENSOR,NUMBER> & Addition<TENSOR>,
 					TENSOR extends TensorMember<NUMBER>,
-					M extends Algebra<M,NUMBER>, NUMBER>
-		void compute(S tensAlg, M numAlg, Integer index, TENSOR a, TENSOR b)
+					NA extends Algebra<NA,NUMBER>, NUMBER>
+		void compute(TA tensAlg, NA numAlg, Integer index, TENSOR a, TENSOR b)
 	{
+		// No idea if this code is right in any way
 		
+		/*
 		TensorCommaDerivative.compute(tensAlg, numAlg, index, a, b);
 		
 		TENSOR sum = tensAlg.construct();
@@ -77,12 +66,6 @@ public class TensorSemicolonDerivative {
 		TensorShape.compute(a, tmp);
 		tensAlg.commaDerivative().call(index, a, sum);
 		for (int i = 0; i < a.rank(); i++) {
-			/*
-			
-			// TODO: since all my tensor impls are cartesian ones in euclidean space right now I think that the
-			// semicolon derivative degenerates into the comma derivative because the christoffel symbols are
-			// all zero. This might be wrong so should revisit.
-			 
 			if (a.indexIsUpper(i)) {
 				// this position is an upper index
 				christoffel(i, d, index, a, tmp);
@@ -93,18 +76,8 @@ public class TensorSemicolonDerivative {
 				christoffel(d, i, index, a, tmp);
 				tensAlg.subtract().call(sum, tmp, sum);
 			}
-			 */
 		}
 		tensAlg.assign().call(sum, b);
-	}
-	
-	/* future code
-	private static <S extends Algebra<S,TENSOR> & TensorLikeMethods<TENSOR,NUMBER>,
-						TENSOR extends TensorMember<NUMBER>,
-						M extends Algebra<M,NUMBER>, NUMBER>
-		void christoffel(int k, int i, int j, TENSOR a, TENSOR out)
-	{
-		
-	}
 	*/
+	}
 }

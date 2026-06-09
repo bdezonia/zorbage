@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.helper;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.sampling.SamplingIterator;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
 import nom.bdezonia.zorbage.algorithm.GridIterator;
@@ -75,7 +76,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			}
 		}
 		for (int i = 0; i < fixedDimValues.length; i++) {
-			if (fixedDimValues[i] < 0 || fixedDimValues[i] >= tensor.dimension())
+			if (fixedDimValues[i] < 0 || fixedDimValues[i] >= tensor.axisSize(i))
 				throw new IllegalArgumentException("fixedDim["+i+"] is out of parent tensor's bounds");
 		}
 	}
@@ -110,7 +111,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("negative dimension exception");
 		if (d >= rangingDims.length)
 			throw new IllegalArgumentException("dimension out of bounds exception");
-		return tensor.dimension();
+		return tensor.dimension(d);
 	}
 
 	@Override
@@ -136,12 +137,6 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			}
 		}
 		else
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
-	}
-
-	@Override
-	public void reshape(long[] dims) {
-		if (!dimsCompatible(dims))
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
@@ -212,11 +207,6 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return tensor.indexIsUpper(rangingDims[index]);
 	}
-
-	@Override
-	public long dimension() {
-		return tensor.dimension();
-	}
 	
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length != rangingDims.length)
@@ -231,7 +221,7 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	private boolean oob() {
 		for (int i = 0; i < index.numDimensions(); i++) {
 			long v = index.get(i);
-			if (v < 0 || v >= tensor.dimension())
+			if (v < 0 || v >= tensor.axisSize(i))
 				return true;
 		}
 		return false;
@@ -240,5 +230,47 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public boolean accessWithOneThread() {
 		return tensor.accessWithOneThread();
+	}
+
+	@Override
+	public IndexType indexType(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void indexTypes(IndexType[] types) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long axisSize(int axisNum) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void shape(long[] sizes) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean alloc(long[] dims, IndexType[] indexTypes) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void init(long[] dims, IndexType[] indexTypes) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public long numElements() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

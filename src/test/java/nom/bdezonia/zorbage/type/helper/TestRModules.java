@@ -490,7 +490,7 @@ public class TestRModules {
 		
 		RModuleTensorBridge<ComplexFloat64Member> bridge = new RModuleTensorBridge<ComplexFloat64Member>(G.CDBL, v);
 		
-		assertEquals(4, bridge.dimension());
+		//assertEquals(4, bridge.dimension());
 		
 		assertEquals(1, bridge.numDimensions());
 		
@@ -561,32 +561,6 @@ public class TestRModules {
 		}
 		try {
 			bridge.init(new long[] {5});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		
-		try {
-			bridge.reshape(new long[] {-1});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {0});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		try {
-			bridge.reshape(new long[] {1});
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertTrue(true);
-		}
-		bridge.reshape(new long[] {4});
-		try {
-			bridge.reshape(new long[] {5});
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);

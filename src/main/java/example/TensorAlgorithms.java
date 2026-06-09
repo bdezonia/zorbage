@@ -31,17 +31,17 @@
 package example;
 
 import nom.bdezonia.zorbage.algebra.G;
+import nom.bdezonia.zorbage.algorithm.IndicesMatch;
 import nom.bdezonia.zorbage.algorithm.Round;
-import nom.bdezonia.zorbage.algorithm.TensorCommaDerivative;
+import nom.bdezonia.zorbage.algorithm.TensorEqual;
 import nom.bdezonia.zorbage.algorithm.TensorNorm;
 import nom.bdezonia.zorbage.algorithm.TensorOuterProduct;
 import nom.bdezonia.zorbage.algorithm.TensorPower;
 import nom.bdezonia.zorbage.algorithm.TensorRound;
-import nom.bdezonia.zorbage.algorithm.TensorSemicolonDerivative;
 import nom.bdezonia.zorbage.algorithm.TensorShape;
 import nom.bdezonia.zorbage.algorithm.TensorUnity;
-import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64CartesianTensorProductMember;
-import nom.bdezonia.zorbage.type.real.float64.Float64CartesianTensorProductMember;
+import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
+import nom.bdezonia.zorbage.type.real.float64.Float64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.real.float64.Float64Member;
 
 /**
@@ -55,19 +55,18 @@ class TensorAlgorithms {
 	
 	void example1() {
 		
-		Float64CartesianTensorProductMember a = new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a = new Float64GeneralTensorProductMember();
 		
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 		
-		TensorCommaDerivative.compute(G.DBL_TEN, G.DBL, 1, a, b);
-		
-		// b contains the comma derivative of a
+		if (TensorEqual.compute(G.DBL, a, b))
+			System.out.println("They are equal");
 	}
 
 	void example2() {
 		
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		Float64Member b = G.DBL.construct();
 		
@@ -78,13 +77,13 @@ class TensorAlgorithms {
 
 	void example3() {
 
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember();
 		
-		ComplexFloat64CartesianTensorProductMember b =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember b =
+				new ComplexFloat64GeneralTensorProductMember();
 		
-		ComplexFloat64CartesianTensorProductMember c = G.CDBL_TEN.construct();
+		ComplexFloat64GeneralTensorProductMember c = G.CDBL_TEN.construct();
 		
 		TensorOuterProduct.compute(G.CDBL_TEN, G.CDBL, a, b, c);
 		
@@ -93,10 +92,10 @@ class TensorAlgorithms {
 
 	void example4() {
 		
-		Float64CartesianTensorProductMember a =
-				new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a =
+				new Float64GeneralTensorProductMember();
 
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
 		TensorPower.compute(G.DBL_TEN, 4, a, b);
 		
@@ -105,10 +104,10 @@ class TensorAlgorithms {
 
 	void example5() {
 		
-		Float64CartesianTensorProductMember a =
-				new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a =
+				new Float64GeneralTensorProductMember();
 
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 
 		Float64Member delta = new Float64Member(1);
 		
@@ -119,22 +118,21 @@ class TensorAlgorithms {
 
 	void example6() {
 		
-		Float64CartesianTensorProductMember a =
-				new Float64CartesianTensorProductMember(3, 4);
+		Float64GeneralTensorProductMember a =
+				new Float64GeneralTensorProductMember();
 
-		Float64CartesianTensorProductMember b = G.DBL_TEN.construct();
-
-		TensorSemicolonDerivative.compute(G.DBL_TEN, G.DBL, 2, a, b);
+		Float64GeneralTensorProductMember b = G.DBL_TEN.construct();
 		
-		// b contains the semicolon derivative of a
+		if (IndicesMatch.compute(a, b))
+			System.out.println("They are equal");
 	}
 
 	void example7() {
 		
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember();
 		
-		ComplexFloat64CartesianTensorProductMember b = G.CDBL_TEN.construct();
+		ComplexFloat64GeneralTensorProductMember b = G.CDBL_TEN.construct();
 
 		TensorShape.compute(a, b);
 		
@@ -143,8 +141,8 @@ class TensorAlgorithms {
 
 	void example8() {
 
-		ComplexFloat64CartesianTensorProductMember a =
-				new ComplexFloat64CartesianTensorProductMember(3, 4);
+		ComplexFloat64GeneralTensorProductMember a =
+				new ComplexFloat64GeneralTensorProductMember();
 		
 		TensorUnity.compute(G.CDBL_TEN, G.CDBL, a);
 		

@@ -33,6 +33,7 @@ package nom.bdezonia.zorbage.type.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.MatrixMember;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -46,29 +47,16 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
 	private MatrixMember<U> mat;
-	private long startRow, startCol, size;
+	private IndexType[] indexTypes;
 	
 	public MatrixTensorBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
 		this.mat = mat;
 		this.zero = algebra.construct();
-		this.startRow = 0;
-		this.startCol = 0;
-		this.size = Math.min(mat.rows(), mat.cols());
+		this.indexTypes = null;
 	}
 	
-	public void setMat(MatrixMember<U> mat, long startRow, long startCol, long size) {
-		if (startRow < 0 || startRow >= mat.rows())
-			throw new IllegalArgumentException("startRow is of bounds");
-		if (startCol < 0 || startCol >= mat.cols())
-			throw new IllegalArgumentException("startCol is of bounds");
-		if (size < 1)
-			throw new IllegalArgumentException("size must be positive");
-		if ((startRow + size) >= mat.rows() || (startCol + size) >= mat.cols())
-			throw new IllegalArgumentException("dimensions out of bounds");
+	public void setMat(MatrixMember<U> mat) {
 		this.mat = mat;
-		this.startRow = startRow;
-		this.startCol = startCol;
-		this.size = size;
 	}
 	
 	@Override
@@ -76,8 +64,14 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		if (d < 0)
 			throw new IllegalArgumentException("negative index exception");
 		if (d == 0 || d == 1)
-			return size;
+			return mat.dimension(d);
 		return 1;
+	}
+	
+	@Override
+	public long axisSize(int axisNum) {
+
+		return dimension(axisNum);
 	}
 
 	@Override
@@ -86,7 +80,23 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public boolean alloc(long[] dims) {
+	public long numElements() {
+
+		return mat.rows() * mat.cols();
+	}
+
+	@Override
+	public boolean alloc(long[] dims, IndexType[] indexTypes) {
+		
+		if (indexTypes != null) {
+			
+			if (dims.length != indexTypes.length)
+				throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+
+			if (this.indexTypes != indexTypes)
+				this.indexTypes = indexTypes.clone();
+		}
+
 		if (dimsCompatible(dims)) {
 			return false;
 		}
@@ -94,24 +104,47 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public void init(long[] dims) {
-		if (dimsCompatible(dims)) {
-			for (long r = startRow; r < startRow + size; r++) {
-				for (long c = startCol; c < startCol + size; c++) {
-					mat.setV(r, c, zero);
-				}
-			}
-		}
-		else
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+	public boolean alloc(long[] dims) {
+		return alloc(dims, this.indexTypes);
 	}
 
 	@Override
-	public void reshape(long[] dims) {
+	public void init(long[] dims, IndexType[] indexTypes) {
+
+		if (indexTypes != null) {
+			
+			if (dims.length != indexTypes.length)
+				throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+			
+			if (this.indexTypes != indexTypes)
+				this.indexTypes = indexTypes.clone();
+		}
+		
 		if (!dimsCompatible(dims))
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+
+		for (long r = 0; r < mat.rows(); r++) {
+			for (long c = 0; c < mat.cols(); c++) {
+				mat.setV(r, c, zero);
+			}
+		}
 	}
 
+	@Override
+	public void init(long[] dims) {
+		init(dims, this.indexTypes);
+	}
+	
+	@Override
+	public void shape(long[] sizes) {
+		
+		sizes[0] = mat.cols();
+		sizes[1] = mat.rows();
+		for (int i = 2; i < sizes.length; i++) {
+			sizes[i] = 1;
+		}
+	}
+	
 	@Override
 	public void getV(IntegerIndex index, U value) {
 		for (int i = 2; i < index.numDimensions(); i++) {
@@ -121,7 +154,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.getV(startRow + r, startCol + c, value);
+		mat.getV(r, c, value);
 	}
 
 	@Override
@@ -132,7 +165,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		}
 		long c = index.get(0);
 		long r = index.get(1);
-		mat.setV(startRow + r, startCol + c, value);
+		mat.setV(r, c, value);
 	}
 
 	@Override
@@ -142,37 +175,68 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public int rank() { return lowerRank() + upperRank(); }
+
+	@Override
+	public int lowerRank() {
+
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		int tot = 0;
+		for (int i = 0; i < indexTypes.length; i++)
+			if (indexIsLower(i))
+				tot++;
+		return tot;
+	}
 	
 	@Override
-	public int lowerRank() { return 2; }
-	
-	@Override
-	public int upperRank() { return 0; }
+	public int upperRank() {
+
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		int tot = 0;
+		for (int i = 0; i < indexTypes.length; i++)
+			if (indexIsUpper(i))
+				tot++;
+		return tot;
+	}
 	
 	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index >= rank())
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		return false;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index >= rank())
+		if (indexTypes == null)
+			throw new IllegalArgumentException("cannot find rank when index types aren't present");
+		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		return true;
 	}
 
 	@Override
-	public long dimension() { return size; }
-	
+	public IndexType indexType(int index) {
+		return indexTypes[index];
+	}
+
+	@Override
+	public void indexTypes(IndexType[] types) {
+		
+		for (int i = 0; i < types.length; i++) {
+			
+			types[i] = indexType(i);
+		}
+	}
+
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 2) return false;
 		for (int i = 2; i < newDims.length; i++) {
 			if (newDims[i] != 1) return false;
 		}
-		if (newDims[0] != size) return false;
-		if (newDims[1] != size) return false;
 		return true;
 	}
 	

@@ -32,6 +32,7 @@ package nom.bdezonia.zorbage.type.helper;
 
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.algebra.Algebra;
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.algebra.NumberMember;
 import nom.bdezonia.zorbage.algebra.StorageConstruction;
 import nom.bdezonia.zorbage.algebra.TensorMember;
@@ -45,26 +46,23 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 
 	private final U zero;
 	private final NumberMember<U> num;
-	private long dimension;
 	
-	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num, long dimension) {
+	public NumberTensorBridge(Algebra<?,U> algebra, NumberMember<U> num) {
 		this.zero = algebra.construct();
 		this.num = num;
-		this.dimension = dimension;
 	}
-	
-	public void setDimension(long dimension) {
-		this.dimension = dimension;
-	}
-
-	@Override
-	public long dimension() { return dimension; }
 	
 	@Override
 	public long dimension(int d) {
 		if (d < 0)
 			throw new IllegalArgumentException("negative index exception");
 		return 1;
+	}
+	
+	@Override
+	public long axisSize(int axisNum) {
+
+		return dimension(axisNum);
 	}
 
 	@Override
@@ -73,25 +71,54 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	}
 
 	@Override
-	public boolean alloc(long[] dims) {
-		if (dimsCompatible(dims))
-			return false;
-		else
+	public long numElements() {
+
+		return 1;
+	}
+	
+	@Override
+	public boolean alloc(long[] dims, IndexType[] indexTypes) {
+
+		if (indexTypes != null && indexTypes.length != 0) {
+			throw new IllegalArgumentException("numbers do not have index values");
+		}
+
+		if (!dimsCompatible(dims)) {
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean alloc(long[] dims) {
+		
+		return alloc(dims, null);
+	}
+
+	@Override
+	public void init(long[] dims, IndexType[] indexTypes) {
+
+		if (indexTypes != null && indexTypes.length != 0)
+			throw new IllegalArgumentException("numbers do not have index values");
+		
+		if (!dimsCompatible(dims))
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+			
+		num.setV(zero);
 	}
 
 	@Override
 	public void init(long[] dims) {
-		if (dimsCompatible(dims))
-			num.setV(zero);
-		else
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+		init(dims, null);
 	}
-
+	
 	@Override
-	public void reshape(long[] dims) {
-		if (!dimsCompatible(dims))
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
+	public void shape(long[] sizes) {
+		
+		for (int i = 0; i < sizes.length; i++) {
+			sizes[i] = 1;
+		}
 	}
 
 	@Override
@@ -127,17 +154,28 @@ public class NumberTensorBridge<U> implements TensorMember<U> {
 	public int upperRank() { return 0; }
 	
 	@Override
+	public IndexType indexType(int index) {
+
+		throw new IllegalArgumentException("numbers do not have index values");
+	}
+
+	@Override
+	public void indexTypes(IndexType[] types) {
+
+		if (types.length != 0)
+			throw new IllegalArgumentException("numbers do not have index values");
+	}
+
+	@Override
 	public boolean indexIsLower(int index) {
-		if (index < 0 || index >= rank())
-			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+
+		return indexType(index) == IndexType.COVARIANT;
 	}
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (index < 0 || index >= rank())
-			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+
+		return indexType(index) == IndexType.CONTRAVARIANT;
 	}
 
 	private boolean dimsCompatible(long[] newDims) {

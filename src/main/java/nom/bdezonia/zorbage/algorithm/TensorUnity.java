@@ -65,12 +65,34 @@ public class TensorUnity {
 	{
 		NUMBER one = numberAlg.construct();
 		numberAlg.unity().call(one);
+		
+		int rank = result.rank();
+
+		IntegerIndex index = new IntegerIndex(rank);
+
+		if (rank == 0) {
+			result.setV(index, one);
+			return;
+		}
+		
+		long[] axisSizes = new long[rank];
+		result.shape(axisSizes);
+
+		long minSize = axisSizes[0];
+		for (int i = 1; i < rank; i++) {
+			if (axisSizes[i] < minSize)
+				minSize = axisSizes[i];
+		}
+
 		tensAlg.zero().call(result);
-		IntegerIndex index = new IntegerIndex(result.rank());
-		for (long d = 0; d < result.dimension(0); d++) {
-			for (int r = 0; r < result.rank(); r++) {
-				index.set(r, d);
+		
+		for (int i = 0; i < minSize; i++) {
+			
+			for (int k = 0; k < rank; k++) {
+				
+				index.set(k, i);
 			}
+			
 			result.setV(index, one);
 		}
 	}
