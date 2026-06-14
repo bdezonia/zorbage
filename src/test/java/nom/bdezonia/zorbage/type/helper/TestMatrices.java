@@ -36,7 +36,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64MatrixMember;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
@@ -704,7 +704,7 @@ public class TestMatrices {
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
-		MatrixTensorBridge<ComplexFloat64Member> bridge = new MatrixTensorBridge<ComplexFloat64Member>(G.CDBL, m);
+		MatrixTensorBridge<ComplexFloat64Member> bridge = new MatrixTensorBridge<ComplexFloat64Member>(G.CDBL, m, new IndexType[] {IndexType.COVARIANT, IndexType.CONTRAVARIANT});
 		
 		//assertEquals(2, bridge.dimension());
 		
@@ -789,11 +789,11 @@ public class TestMatrices {
 		assertTrue(bridge.indexIsLower(0));
 		assertFalse(bridge.indexIsUpper(0));
 		
-		assertTrue(bridge.indexIsLower(1));
-		assertFalse(bridge.indexIsUpper(1));
+		assertFalse(bridge.indexIsLower(1));
+		assertTrue(bridge.indexIsUpper(1));
 		
-		assertEquals(0, bridge.upperRank());
-		assertEquals(2, bridge.lowerRank());
+		assertEquals(1, bridge.upperRank());
+		assertEquals(1, bridge.lowerRank());
 		assertEquals(2, bridge.rank());
 		
 		assertEquals(m.storageType(), bridge.storageType());

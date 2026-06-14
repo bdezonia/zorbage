@@ -49,10 +49,10 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 	private MatrixMember<U> mat;
 	private IndexType[] indexTypes;
 	
-	public MatrixTensorBridge(Algebra<?,U> algebra, MatrixMember<U> mat) {
+	public MatrixTensorBridge(Algebra<?,U> algebra, MatrixMember<U> mat, IndexType[] types) {
 		this.mat = mat;
 		this.zero = algebra.construct();
-		this.indexTypes = null;
+		this.indexTypes = types.clone();
 	}
 	
 	public void setMat(MatrixMember<U> mat) {
@@ -100,6 +100,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 		if (dimsCompatible(dims)) {
 			return false;
 		}
+		
 		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
@@ -206,7 +207,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("cannot find rank when index types aren't present");
 		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return false;
+		return indexTypes[index] == IndexType.COVARIANT;
 	}
 	
 	@Override
@@ -215,7 +216,7 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 			throw new IllegalArgumentException("cannot find rank when index types aren't present");
 		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return true;
+		return indexTypes[index] == IndexType.CONTRAVARIANT;
 	}
 
 	@Override
@@ -234,6 +235,10 @@ public class MatrixTensorBridge<U> implements TensorMember<U> {
 
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 2) return false;
+		if (newDims[0] != mat.cols())
+			return false;
+		if (newDims[1] != mat.rows())
+			return false;
 		for (int i = 2; i < newDims.length; i++) {
 			if (newDims[i] != 1) return false;
 		}
