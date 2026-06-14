@@ -53,12 +53,12 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 
 	public TensorMatrixBridge(Algebra<?,U> algebra, TensorMember<U> tensor) {
 		if (tensor.numDimensions() < 2)
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("tensor must have two or more dimensions");
 		this.zero = algebra.construct();
 		this.tensor = tensor;
 		this.fixedDims = new IntegerIndex(tensor.numDimensions());
 		this.rangingDimC = 0;
-		this.rangingDimR = 0;
+		this.rangingDimR = 1;
 	}
 	
 	public void setMatrix(int rangeR, int rangeC, IntegerIndex fixed) {
@@ -126,6 +126,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 
 	@Override
 	public void reshape(long rows, long cols) {
+		
 		if (rows != rows() && cols != cols())
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}

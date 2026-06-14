@@ -36,7 +36,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64GeneralTensorProductMember;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
@@ -52,7 +52,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToNumber() {
 		
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2,2}, 1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -114,7 +114,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToRModule() {
 		
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2,2}, 1,2, 3,4, 5,6, 7,8);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -285,7 +285,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToMatrix() {
 
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2,3}, 1.0,2.0, 3.0,4.0, 5.0,6.0, 7.0,8.0, 9.0,10.0, 11.0,12.0);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
@@ -294,7 +294,7 @@ public class TestTensors {
 		assertEquals(2, bridge.numDimensions());
 		
 		assertEquals(2, bridge.cols());
-		assertEquals(2, bridge.rows());
+		assertEquals(3, bridge.rows());
 
 		bridge.setMatrix(1, 0, new IntegerIndex(0));
 
@@ -338,7 +338,7 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-		assertEquals(2, bridge.dimension(0));
+		assertEquals(3, bridge.dimension(0));
 		assertEquals(2, bridge.dimension(1));
 		for (int i = 2; i < 10; i++) {
 			assertEquals(1, bridge.dimension(i));
@@ -363,7 +363,7 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-		assertFalse(bridge.alloc(2,2));
+		assertFalse(bridge.alloc(2,3));
 		try {
 			bridge.alloc(5,5);
 			fail();
@@ -389,7 +389,7 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-		bridge.init(2,2);
+		bridge.init(2,3);
 		for (int r = 0; r < 2; r++) {
 			for (int c = 0; c < 2; c++) {
 				tmp.setR(123);
@@ -423,9 +423,10 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-		bridge.reshape(2,2);
+		bridge.reshape(2,2);  // TODO: is this hiding a bug?
+		bridge.reshape(2,3);
 		try {
-			bridge.reshape(3,3);
+			bridge.reshape(3,4);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
@@ -446,7 +447,7 @@ public class TestTensors {
 	@Test
 	public void testTensorToSubTensor() {
 
-		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember();
+		ComplexFloat64GeneralTensorProductMember t = new ComplexFloat64GeneralTensorProductMember(new IndexType[] {IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2,3}, 1.0,2.0, 3.0,4.0, 5.0,6.0, 7.0,8.0, 9.0,10.0, 11.0,12.0);
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
