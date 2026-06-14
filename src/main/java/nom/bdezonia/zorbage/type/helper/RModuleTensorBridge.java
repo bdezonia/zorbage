@@ -48,10 +48,10 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	private final RModuleMember<U> rmod;
 	private IndexType[] indexTypes;
 	
-	public RModuleTensorBridge(Algebra<?,U> algebra, RModuleMember<U> rmod) {
+	public RModuleTensorBridge(Algebra<?,U> algebra, RModuleMember<U> rmod, IndexType indexType) {
 		this.zero = algebra.construct();
 		this.rmod = rmod;
-		this.indexTypes = null;
+		this.indexTypes = new IndexType[] {indexType};
 	}
 	
 	@Override
@@ -79,18 +79,19 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public boolean alloc(long[] dims, IndexType[] indexTypes) {
 		
-		if (indexTypes != null) {
-			
-			if (dims.length != indexTypes.length)
-				throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
-
-			if (this.indexTypes != indexTypes)
-				this.indexTypes = indexTypes.clone();
-		}
-
 		if (dimsCompatible(dims)) {
+			
+			if (indexTypes != null) {
+				
+				if (dims.length != indexTypes.length)
+					throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+
+				this.indexTypes[0] = indexTypes[0];
+			}
+			
 			return false;
 		}
+
 		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 	
@@ -102,21 +103,24 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public void init(long[] dims, IndexType[] indexTypes) {
 
-		if (indexTypes != null) {
+		if (dimsCompatible(dims)) {
 			
-			if (dims.length != indexTypes.length)
-				throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+			if (indexTypes != null) {
+				
+				if (dims.length != indexTypes.length)
+					throw new IllegalArgumentException("dimensions and indexTypes are not compatible");
+				
+				this.indexTypes[0] = indexTypes[0];
+			}
 			
-			if (this.indexTypes != indexTypes)
-				this.indexTypes = indexTypes.clone();
+			for (long i = 0; i < rmod.length(); i++) {
+				rmod.setV(i, zero);
+			}
+			
+			return;
 		}
 		
-		if (!dimsCompatible(dims))
-			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
-
-		for (long i = 0; i < rmod.length(); i++) {
-			rmod.setV(i, zero);
-		}
+		throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
@@ -165,8 +169,6 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public int lowerRank() {
 
-		if (indexTypes == null)
-			throw new IllegalArgumentException("cannot find rank when index types aren't present");
 		int tot = 0;
 		for (int i = 0; i < indexTypes.length; i++)
 			if (indexIsLower(i))
@@ -177,8 +179,6 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	@Override
 	public int upperRank() {
 
-		if (indexTypes == null)
-			throw new IllegalArgumentException("cannot find rank when index types aren't present");
 		int tot = 0;
 		for (int i = 0; i < indexTypes.length; i++)
 			if (indexIsUpper(i))
@@ -200,8 +200,6 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 
 	@Override
 	public boolean indexIsLower(int index) {
-		if (indexTypes == null)
-			throw new IllegalArgumentException("cannot find rank when index types aren't present");
 		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
 		return indexTypes[index] == IndexType.COVARIANT;
@@ -209,19 +207,18 @@ public class RModuleTensorBridge<U> implements TensorMember<U> {
 	
 	@Override
 	public boolean indexIsUpper(int index) {
-		if (indexTypes == null)
-			throw new IllegalArgumentException("cannot find rank when index types aren't present");
 		if (index < 0 || index >= indexTypes.length)
 			throw new IllegalArgumentException("index of tensor component is outside bounds");
-		return indexTypes[index] == IndexType.COVARIANT;
+		return indexTypes[index] == IndexType.CONTRAVARIANT;
 	}
 
 	private boolean dimsCompatible(long[] newDims) {
 		if (newDims.length < 1) return false;
+		if (newDims[0] != rmod.length())
+			return false;
 		for (int i = 1; i < newDims.length; i++) {
 			if (newDims[i] != 1) return false;
 		}
-		if (newDims[0] != rmod.length()) return false;
 		return true;
 	}
 	

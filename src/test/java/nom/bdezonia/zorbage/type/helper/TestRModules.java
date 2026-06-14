@@ -36,7 +36,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test; import nom.bdezonia.zorbage.algebra.G;
-
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64VectorMember;
@@ -488,7 +488,7 @@ public class TestRModules {
 		
 		ComplexFloat64Member tmp = new ComplexFloat64Member();
 		
-		RModuleTensorBridge<ComplexFloat64Member> bridge = new RModuleTensorBridge<ComplexFloat64Member>(G.CDBL, v);
+		RModuleTensorBridge<ComplexFloat64Member> bridge = new RModuleTensorBridge<ComplexFloat64Member>(G.CDBL, v, IndexType.COVARIANT);
 		
 		//assertEquals(4, bridge.dimension());
 		
