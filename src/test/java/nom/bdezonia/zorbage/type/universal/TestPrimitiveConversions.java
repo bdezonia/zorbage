@@ -74,14 +74,11 @@ public class TestPrimitiveConversions {
 	
 	@Test
 	public void oneD() {
-		IntegerIndex tmp1 = new IntegerIndex(1);
-		IntegerIndex tmp2 = new IntegerIndex(1);
-		IntegerIndex tmp3 = new IntegerIndex(1);
 		
 		Float64VectorMember fvec = new Float64VectorMember(-7, 12, Math.PI);
 		ComplexFloat64VectorMember cvec = new ComplexFloat64VectorMember(-1,-1,-1,-1,-1,-1);
 		
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec, cvec);
+		PrimitiveConverter.convert(fvec, cvec);
 		ComplexFloat64Member ctmp = new ComplexFloat64Member();
 		assertEquals(3, cvec.length());
 		cvec.getV(0, ctmp);
@@ -95,12 +92,12 @@ public class TestPrimitiveConversions {
 		assertEquals(0, ctmp.i(), 0);
 		
 		UnboundedIntMember bigint = new UnboundedIntMember();
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec, bigint);
+		PrimitiveConverter.convert(fvec, bigint);
 		assertEquals(BigInteger.valueOf(-7), bigint.v());
 		
 		Float64VectorMember fvec2 = new Float64VectorMember(55,44,33,22,11,-11);
 		Float64Member ftmp = new Float64Member();
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec, fvec2);
+		PrimitiveConverter.convert(fvec, fvec2);
 		assertEquals(3, fvec.length());
 		assertEquals(6, fvec2.length());
 		fvec2.getV(0, ftmp);
@@ -117,7 +114,7 @@ public class TestPrimitiveConversions {
 		assertEquals(0,ftmp.v(),0);
 
 		fvec2 = new Float64VectorMember(101,102,103,104,105);
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, fvec2, fvec);
+		PrimitiveConverter.convert(fvec2, fvec);
 		assertEquals(3, fvec.length());
 		assertEquals(5, fvec2.length());
 		fvec.getV(0, ftmp);
@@ -131,20 +128,16 @@ public class TestPrimitiveConversions {
 	@Test
 	public void twoD() {
 		
-		IntegerIndex tmp1 = new IntegerIndex(2);
-		IntegerIndex tmp2 = new IntegerIndex(2);
-		IntegerIndex tmp3 = new IntegerIndex(2);
-
 		Float64Member tmp = new Float64Member();
 
 		Float64MatrixMember m = new Float64MatrixMember(2, 4, 1,2,3,4,5,6,7,8);
 
 		UnboundedIntMember t = new UnboundedIntMember(BigInteger.TEN);
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, t);
+		PrimitiveConverter.convert(m, t);
 		assertEquals(BigInteger.ONE, t.v());
 		
 		Float64VectorMember v = new Float64VectorMember(9,9,9);
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, v);
+		PrimitiveConverter.convert(m, v);
 		assertEquals(3, v.length());
 		v.getV(0, tmp);
 		assertEquals(1, tmp.v(), 0);
@@ -155,7 +148,7 @@ public class TestPrimitiveConversions {
 
 		v = new Float64VectorMember(9,9,9,9,9);
 
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, v);
+		PrimitiveConverter.convert(m, v);
 		assertEquals(5, v.length());
 		v.getV(0, tmp);
 		assertEquals(1, tmp.v(), 0);
@@ -169,7 +162,7 @@ public class TestPrimitiveConversions {
 		assertEquals(0, tmp.v(), 0);
 
 		Float64MatrixMember m2 = new Float64MatrixMember(3, 3, 99,99,99,99,99,99,99,99,99);
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, m, m2);
+		PrimitiveConverter.convert(m, m2);
 		assertEquals(3, m2.rows());
 		assertEquals(3, m2.cols());
 		m2.getV(0, 0, tmp);
@@ -195,21 +188,17 @@ public class TestPrimitiveConversions {
 	@Test
 	public void nD() {
 
-		IntegerIndex tmp1 = new IntegerIndex(3);
-		IntegerIndex tmp2 = new IntegerIndex(3);
-		IntegerIndex tmp3 = new IntegerIndex(3);
-
 		Float64GeneralTensorProductMember t =
 				new Float64GeneralTensorProductMember(new IndexType[] {IndexType.COVARIANT, IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2, 2, 2}, 1,2,3,4,5,6,7,8);
 
 		Float64Member tmp = new Float64Member();
 		
 		UnsignedInt8Member uint8 = new UnsignedInt8Member();
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, uint8);
+		PrimitiveConverter.convert(t, uint8);
 		assertEquals(1, uint8.v());
 		
 		Float64VectorMember v = new Float64VectorMember(5);
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, v);
+		PrimitiveConverter.convert(t, v);
 		assertEquals(5, v.length());
 		v.getV(0, tmp);
 		assertEquals(1, tmp.v(), 0);
@@ -223,7 +212,7 @@ public class TestPrimitiveConversions {
 		assertEquals(0, tmp.v(), 0);
 
 		Float64MatrixMember m = new Float64MatrixMember(3, 2);
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, m);
+		PrimitiveConverter.convert(t, m);
 		assertEquals(3, m.rows());
 		assertEquals(2, m.cols());
 		m.getV(0, 0, tmp);
@@ -239,10 +228,6 @@ public class TestPrimitiveConversions {
 		m.getV(2, 1, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
-		tmp1 = new IntegerIndex(4);
-		tmp2 = new IntegerIndex(4);
-		tmp3 = new IntegerIndex(4);
-		
 		Float64GeneralTensorProductMember t2 =
 				new Float64GeneralTensorProductMember(
 						new IndexType[] {IndexType.COVARIANT,
@@ -256,7 +241,7 @@ public class TestPrimitiveConversions {
 					55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,
 					80,81);
 		
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, t2);
+		PrimitiveConverter.convert(t, t2);
 		
 		assertEquals(4, t2.numDimensions());
 		assertEquals(3, t2.dimension(0));
@@ -916,11 +901,7 @@ public class TestPrimitiveConversions {
 		
 		Float64GeneralTensorProductMember t3 = new Float64GeneralTensorProductMember(new IndexType[] {IndexType.COVARIANT, IndexType.CONTRAVARIANT}, new long[] {1,1});
 		
-		tmp1 = new IntegerIndex(3);
-		tmp2 = new IntegerIndex(3);
-		tmp3 = new IntegerIndex(3);
-		
-		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, t3);
+		PrimitiveConverter.convert(t, t3);
 		
 		assertEquals(2, t3.numDimensions());
 		assertEquals(1, t3.dimension(0));
