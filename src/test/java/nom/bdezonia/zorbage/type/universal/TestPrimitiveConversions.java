@@ -36,6 +36,7 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
+import nom.bdezonia.zorbage.algebra.IndexType;
 import nom.bdezonia.zorbage.sampling.IntegerIndex;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64Member;
 import nom.bdezonia.zorbage.type.complex.float64.ComplexFloat64VectorMember;
@@ -199,7 +200,7 @@ public class TestPrimitiveConversions {
 		IntegerIndex tmp3 = new IntegerIndex(3);
 
 		Float64GeneralTensorProductMember t =
-				new Float64GeneralTensorProductMember();
+				new Float64GeneralTensorProductMember(new IndexType[] {IndexType.COVARIANT, IndexType.CONTRAVARIANT, IndexType.COVARIANT}, new long[] {2, 2, 2}, 1,2,3,4,5,6,7,8);
 
 		Float64Member tmp = new Float64Member();
 		
@@ -242,7 +243,18 @@ public class TestPrimitiveConversions {
 		tmp2 = new IntegerIndex(4);
 		tmp3 = new IntegerIndex(4);
 		
-		Float64GeneralTensorProductMember t2 = new Float64GeneralTensorProductMember();
+		Float64GeneralTensorProductMember t2 =
+				new Float64GeneralTensorProductMember(
+						new IndexType[] {IndexType.COVARIANT,
+											IndexType.CONTRAVARIANT,
+											IndexType.COVARIANT,
+											IndexType.CONTRAVARIANT},
+						new long[] {3,3,3,3},
+						
+				1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,
+					30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,
+					55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,
+					80,81);
 		
 		PrimitiveConverter.convert(tmp1, tmp2, tmp3, t, t2);
 		
@@ -902,7 +914,7 @@ public class TestPrimitiveConversions {
 		t2.getV(index, tmp);
 		assertEquals(0, tmp.v(), 0);
 		
-		Float64GeneralTensorProductMember t3 = new Float64GeneralTensorProductMember();
+		Float64GeneralTensorProductMember t3 = new Float64GeneralTensorProductMember(new IndexType[] {IndexType.COVARIANT, IndexType.CONTRAVARIANT}, new long[] {1,1});
 		
 		tmp1 = new IntegerIndex(3);
 		tmp2 = new IntegerIndex(3);
