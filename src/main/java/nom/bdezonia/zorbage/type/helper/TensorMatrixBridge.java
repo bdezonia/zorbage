@@ -161,6 +161,10 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	
 	@Override
 	public boolean accessWithOneThread() {
-		return tensor.accessWithOneThread();
+		// TODO: we manipulate fixed dims so I think one
+		//   thread access is very important. if we make
+		//   fixed indices a threadlocal then this could
+		//   return tensor.accessWithOneThread();
+		return true;
 	}
 }
