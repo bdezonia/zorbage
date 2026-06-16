@@ -127,7 +127,7 @@ public class TensorMatrixBridge<U> implements MatrixMember<U> {
 	@Override
 	public void reshape(long rows, long cols) {
 		
-		if (rows != rows() && cols != cols())
+		if (rows != rows() || cols != cols())
 			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
