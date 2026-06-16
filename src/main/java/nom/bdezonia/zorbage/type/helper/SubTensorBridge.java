@@ -229,48 +229,93 @@ public class SubTensorBridge<U> implements TensorMember<U> {
 	
 	@Override
 	public boolean accessWithOneThread() {
-		return tensor.accessWithOneThread();
+		// TODO: we manipulate an internal index so one
+		//   thread access is very important. if we make
+		//   internal index a threadlocal then this could
+		//   return tensor.accessWithOneThread();
+		return true;
 	}
 
 	@Override
 	public IndexType indexType(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		int actualIndex = rangingDims[index];
+		
+		return tensor.indexType(actualIndex);
 	}
 
 	@Override
 	public void indexTypes(IndexType[] types) {
-		// TODO Auto-generated method stub
-		
+
+		for (int i = 0; i < types.length; i++) {
+			types[i] = indexType(i);
+		}
 	}
 
 	@Override
 	public long axisSize(int axisNum) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int actualIndex = rangingDims[axisNum];
+		
+		return tensor.axisSize(actualIndex) - rangingOffsets[axisNum];
 	}
 
 	@Override
 	public void shape(long[] sizes) {
-		// TODO Auto-generated method stub
 		
+		for (int i = 0; i < sizes.length; i++) {
+			sizes[i] = axisSize(i);
+		}
 	}
 
 	@Override
 	public boolean alloc(long[] dims, IndexType[] indexTypes) {
-		// TODO Auto-generated method stub
+		
+		if (indexTypes != null && dims.length != indexTypes.length)
+			throw new IllegalArgumentException("subtensor bridge alloc() given mismatched input sizes");
+		
+		for (int i = 0; i < dims.length; i++) {
+
+			if (indexTypes != null)
+				if (indexTypes[i] != indexType(i))
+					throw new IllegalArgumentException("subtensor bridge cannot change underlying index types");
+
+			if (dims[i] != axisSize(i))
+				throw new IllegalArgumentException("subtensor bridge cannot change underlying index types");
+		}
+		
 		return false;
 	}
 
 	@Override
 	public void init(long[] dims, IndexType[] indexTypes) {
-		// TODO Auto-generated method stub
-		
+
+		if (alloc(dims, indexTypes)) {
+			IntegerIndex idx = new IntegerIndex(dims.length);
+			SamplingIterator<IntegerIndex> iter = GridIterator.compute(dims);
+			while (iter.hasNext()) {
+				iter.next(idx);
+				setV(idx, zero);
+			}
+		}
+		else
+			throw new IllegalArgumentException("read only wrapper does not allow reallocation of data");
 	}
 
 	@Override
 	public long numElements() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		if (rank() == 0)
+			return 0;
+				// TODO: is 0 a bug? most such things say 1.
+		
+		long count = 1;
+		
+		for (int i = 0; i < rank(); i++) {
+		
+			count *= axisSize(i);
+		}
+
+		return count;
 	}
 }
