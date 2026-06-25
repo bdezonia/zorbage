@@ -338,6 +338,7 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
 		assertEquals(3, bridge.dimension(0));
 		assertEquals(2, bridge.dimension(1));
 		for (int i = 2; i < 10; i++) {
@@ -351,19 +352,24 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
 		try {
 			bridge.alloc(0,0);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
 		try {
 			bridge.alloc(1,1);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
+		// this one should succeed
 		assertFalse(bridge.alloc(2,3));
+		
 		try {
 			bridge.alloc(5,5);
 			fail();
@@ -377,18 +383,22 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+
 		try {
 			bridge.init(0,0);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
 		try {
 			bridge.init(1,1);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
+		// this one should succeed
 		bridge.init(2,3);
 		for (int r = 0; r < 2; r++) {
 			for (int c = 0; c < 2; c++) {
@@ -398,6 +408,7 @@ public class TestTensors {
 				assertTrue(G.CDBL.isZero().call(tmp));
 			}
 		}
+
 		try {
 			bridge.init(5,5);
 			fail();
@@ -411,20 +422,31 @@ public class TestTensors {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
 		try {
 			bridge.reshape(0,0);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
+		
 		try {
 			bridge.reshape(1,1);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-		bridge.reshape(2,2);  // TODO: is this hiding a bug?
+		
+		try {
+			bridge.reshape(2,2);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertTrue(true);
+		}
+		
+		// this one should succeed
 		bridge.reshape(2,3);
+		
 		try {
 			bridge.reshape(3,4);
 			fail();
