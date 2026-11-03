@@ -50,7 +50,7 @@ public class TensorFlipIndex {
 
 	/**
 	 * 
-	 * @param <NN>
+	 * @param <NA>
 	 * @param <NUMBER>
 	 * @param <T>
 	 * @param numberAlg

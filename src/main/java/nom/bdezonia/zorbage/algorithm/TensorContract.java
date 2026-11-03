@@ -60,7 +60,6 @@ public class TensorContract {
 	 * @param <M>
 	 * @param <NUMBER>
 	 * @param numberAlg
-	 * @param aRank
 	 * @param i
 	 * @param j
 	 * @param a

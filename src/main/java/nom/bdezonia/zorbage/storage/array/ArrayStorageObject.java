@@ -39,7 +39,6 @@ import nom.bdezonia.zorbage.storage.ObjectHolder;
  * 
  * @author Barry DeZonia
  *
- * @param <U>
  */
 public class ArrayStorageObject
 	implements IndexedDataSource<ObjectHolder>, Allocatable<ArrayStorageObject>

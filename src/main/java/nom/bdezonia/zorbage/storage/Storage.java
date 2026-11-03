@@ -420,11 +420,11 @@ public class Storage {
 		}
 		return list;
 	}
+    
 	/**
 	 * Allocate a list of Object elements and initialize their values
 	 * from a passed in Object array of data.
 	 * 
-	 * @param type
 	 * @param array
 	 * @return
 	 */
